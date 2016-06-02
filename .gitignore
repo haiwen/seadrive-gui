@@ -1,0 +1,101 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.dll.a
+
+# executables
+seafile-client
+seadrive-gui
+*.exe
+
+# backup file
+*#
+*~
+*.bak
+
+# other formats
+cscope*
+core
+*.pyc
+.DS_Store
+
+# CMake files goes here
+build/
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+CTestTestfile.cmake
+Testing/
+install_manifest.txt
+
+#### Qt files goes here
+### moc
+moc_*.cxx*
+moc_*.cpp*
+*.moc
+
+### ui
+ui_*.h
+
+### qrc
+*.qrc.depends
+qrc_*.cxx
+qrc_*.cpp
+
+i18n/*.qm
+
+### emacs files
+.emacs*
+.#*
+
+### ninja files
+.ninja_deps
+.ninja_log
+build.ninja
+rules.ninja
+
+## xcode related
+Debug
+Release
+seafile-client.xcodeproj
+CMakeScripts
+seadrive-gui.app
+seafile-fsplugin.xcodeproj
+Seafile FinderSync.appex
+
+## unittest related
+test_*
+!test_*.cpp
+!test_*.h
+
+## doxygen related
+docs
+Doxyfile
+
+## breakpad related
+third_party/gyp
+third_party/breakpad
+
+/GPATH
+/GTAGS
+/GRTAGS
+/gtags.files
+
+.deps
+compile_commands.json
+.ycm_extra_conf.py
+seadrive-gui.rc
+*.dmp
