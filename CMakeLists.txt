@@ -1,0 +1,225 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.9)
+
+PROJECT(seadrive-gui)
+
+SET(SEADRIVE_GUI_VERSION_MAJOR 0)
+SET(SEADRIVE_GUI_VERSION_MINOR 1)
+SET(SEADRIVE_GUI_VERSION_PATCH 0)
+SET(PROJECT_VERSION "${SEADRIVE_GUI_VERSION_MAJOR}.${SEADRIVE_GUI_VERSION_MINOR}.${SEADRIVE_GUI_VERSION_PATCH}")
+ADD_DEFINITIONS(-DSEADRIVE_GUI_VERSION=${PROJECT_VERSION})
+
+INCLUDE(FindPkgConfig)
+
+IF (NOT (${CMAKE_BUILD_TYPE} MATCHES Release))
+  SET(CMAKE_BUILD_TYPE Debug)
+ENDIF()
+
+IF (APPLE AND NOT CMAKE_OSX_DEPLOYMENT_TARGET)
+  SET(CMAKE_OSX_DEPLOYMENT_TARGET "10.7")
+ENDIF()
+
+option(BUILD_ENABLE_WARNINGS "Enable compiler warnings." ON)
+
+MESSAGE("Build type: ${CMAKE_BUILD_TYPE}")
+
+## build in PIC mode
+IF (NOT WIN32)
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+ENDIF()
+
+## Setup warnings ouput if enabled
+## but don't warning on unsupported warnings
+if(BUILD_ENABLE_WARNINGS)
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wsign-compare -Wno-long-long -Wno-unused-parameter")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wsign-compare -Wno-long-long -Wno-unused-parameter -Woverloaded-virtual")
+  if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unknown-warning-option")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unknown-warning-option -Wno-inconsistent-missing-override")
+  endif()
+endif()
+
+## color diagnostics fix
+if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fcolor-diagnostics")
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcolor-diagnostics")
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  execute_process(COMMAND ${CMAKE_CXX_COMPILER}
+    -dumpversion OUTPUT_VARIABLE GCC_VERSION)
+  if(GCC_VERSION VERSION_GREATER 4.9 OR GCC_VERSION VERSION_EQUAL 4.9)
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fdiagnostics-color=always")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fdiagnostics-color=always")
+  endif()
+endif()
+
+IF (WIN32)
+    SET(EXTRA_LIBS ${EXTRA_LIBS} psapi ws2_32 shlwapi mpr)
+    IF (${CMAKE_BUILD_TYPE} MATCHES Release)
+      SET(GUI_TYPE WIN32)
+    ENDIF()
+ELSEIF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "BSD")
+    INCLUDE_DIRECTORIES(${QT_QTDBUS_INCLUDE_DIR})
+    LINK_DIRECTORIES(${QT_QTDBUS_LIBRARIES})
+    SET(EXTRA_LIBS ${EXTRA_LIBS} ${QT_QTDBUS_LIBRARIES})
+ELSEIF (APPLE)
+    ## Enforce ARC for this file, since ARC is only supported after the objc
+    ## runtime changes in os x 10.10
+    SET_SOURCE_FILES_PROPERTIES(src/utils/utils-mac.mm
+      PROPERTIES COMPILE_FLAGS -fobjc-arc)
+
+    FIND_LIBRARY(COCOA_LIBRARY Cocoa)
+    MARK_AS_ADVANCED (COCOA_LIBRARY)
+    FIND_LIBRARY(Sec_LIBRARY Security)
+    MARK_AS_ADVANCED (Sec_LIBRARY)
+    SET(EXTRA_LIBS ${EXTRA_LIBS} ${COCOA_LIBRARY} ${Sec_LIBRARY})
+ENDIF()
+
+####################
+###### BEGIN: QT configuration
+####################
+SET(QT_VERSION_MAJOR 5)
+
+SET(USE_QT_LIBRARIES
+    Core Gui Widgets LinguistTools Network Test
+    )
+
+IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    SET(USE_QT_LIBRARIES ${USE_QT_LIBRARIES} "DBus")
+ENDIF()
+
+FIND_PACKAGE(Qt5 REQUIRED ${USE_QT_LIBRARIES})
+SET(QT_LUPDATE_EXECUTABLE ${Qt5_LUPDATE_EXECUTABLE})
+
+if (CYGWIN OR MINGW)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+else()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+endif()
+
+# for OS X, we requires libc++ instead
+if (APPLE)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+    SET(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++11")
+    SET(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
+endif()
+
+# MOC FILES
+SET(moc_headers
+  src/seadrive-gui.h
+  ${platform_specific_moc_headers}
+)
+
+# meta object compliation(moc)
+QT5_WRAP_CPP(moc_output ${moc_headers})
+
+# MESSAGE("moc output: ${moc_output}")
+# MESSAGE("ui output: ${ui_output}")
+
+####################
+###### END: QT configuration
+####################
+
+####################
+###### BEGIN: pthread support is required explicitly on linux
+####################
+
+IF(NOT WIN32 AND NOT APPLE)
+  SET(CMAKE_THREAD_PREFER_PTHREAD ON)
+  INCLUDE(FindThreads)
+  LINK_LIBRARIES(${CMAKE_THREAD_LIBS_INIT})
+ENDIF(NOT WIN32 AND NOT APPLE)
+
+####################
+###### BEGIN: other libraries configuration
+####################
+FIND_PACKAGE(PkgConfig REQUIRED)
+
+PKG_CHECK_MODULES(GLIB2 REQUIRED glib-2.0>=2.16.0)
+
+PKG_CHECK_MODULES(JANSSON REQUIRED jansson>=2.0)
+
+PKG_CHECK_MODULES(LIBSEARPC REQUIRED libsearpc>=1.0)
+
+PKG_CHECK_MODULES(OPENSSL REQUIRED openssl>=0.98)
+
+PKG_CHECK_MODULES(SQLITE3 REQUIRED sqlite3>=3.0.0)
+
+####################
+###### END: other libraries configuration
+####################
+
+
+# c/cpp sources
+SET(seadrive_gui_sources
+  src/main.cpp
+  ${platform_specific_sources}
+)
+
+INCLUDE_DIRECTORIES(
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_BINARY_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/src
+  )
+
+FOREACH(USE_QT_LIBRARY ${USE_QT_LIBRARIES})
+INCLUDE_DIRECTORIES(
+${Qt5${USE_QT_LIBRARY}_INCLUDE_DIRS}
+)
+ENDFOREACH()
+
+INCLUDE_DIRECTORIES(
+  ${GLIB2_INCLUDE_DIRS}
+  ${JANSSON_INCLUDE_DIRS}
+  ${LIBSEARPC_INCLUDE_DIRS}
+  ${OPENSSL_INCLUDE_DIRS}
+  ${SQLITE3_INCLUDE_DIRS}
+)
+
+LINK_DIRECTORIES(
+  ${GLIB2_LIBRARY_DIRS}
+  ${JANSSON_LIBRARRY_DIRS}
+  ${LIBSEARPC_LIBRARY_DIRS}
+  ${OPENSSL_LIBRARY_DIRS}
+  ${QT_LIBRARY_DIR}
+  ${SQLITE3_LIBRARRY_DIRS}
+)
+
+ADD_EXECUTABLE(seadrive-gui ${GUI_TYPE}
+  ${seadrive_gui_sources}
+  ${moc_output}
+  ${ui_output}
+  ${resources_ouput}
+  ${EXTRA_SOURCES}
+)
+
+INSTALL(TARGETS seadrive-gui DESTINATION bin)
+
+TARGET_LINK_LIBRARIES(seadrive-gui
+  ${GLIB2_LIBRARIES}
+  ${JANSSON_LIBRARIES}
+  ${LIBSEARPC_LIBRARIES}
+  ${OPENSSL_LIBRARIES}
+  ${QT_LIBRARIES}
+  ${SQLITE3_LIBRARIES}
+
+  ${EXTRA_LIBS}
+)
+
+QT5_USE_MODULES(seadrive-gui Core Gui Widgets Network)
+IF (BUILD_SHIBBOLETH_SUPPORT)
+QT5_USE_MODULES(seadrive-gui ${WEBKIT_NAME} ${WEBKIT_WIDGETS_NAME})
+ENDIF()
+
+## QtBus
+IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "BSD")
+  TARGET_LINK_LIBRARIES(seadrive-gui
+    ${QT_QTDBUS_LIBRARIES}
+  )
+  QT5_USE_MODULES(seadrive-gui ${USE_QT_LIBRARIES})
+ENDIF()
+
+SET(ARCHIVE_NAME ${CMAKE_PROJECT_NAME}-${PROJECT_VERSION})
+ADD_CUSTOM_TARGET(dist
+    COMMAND ${git_executable} archive -v --prefix=${ARCHIVE_NAME}/ HEAD
+        | gzip > ${CMAKE_BINARY_DIR}/${ARCHIVE_NAME}.tar.gz
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
