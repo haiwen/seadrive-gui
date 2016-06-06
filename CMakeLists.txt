@@ -106,11 +106,15 @@ endif()
 # MOC FILES
 SET(moc_headers
   src/seadrive-gui.h
+  src/ui/tray-icon.h
   ${platform_specific_moc_headers}
 )
 
 # meta object compliation(moc)
 QT5_WRAP_CPP(moc_output ${moc_headers})
+
+# resources files
+QT5_ADD_RESOURCES(resources_ouput seadrive-gui.qrc)
 
 # MESSAGE("moc output: ${moc_output}")
 # MESSAGE("ui output: ${ui_output}")
@@ -152,6 +156,8 @@ PKG_CHECK_MODULES(SQLITE3 REQUIRED sqlite3>=3.0.0)
 # c/cpp sources
 SET(seadrive_gui_sources
   src/main.cpp
+  src/seadrive-gui.cpp
+  src/ui/tray-icon.cpp
   ${platform_specific_sources}
 )
 
@@ -184,6 +190,77 @@ LINK_DIRECTORIES(
   ${SQLITE3_LIBRARRY_DIRS}
 )
 
+####################
+###### begin: lib
+####################
+
+# Helper Function to Add Seafile-Client Library
+# Usage:
+# ADD_SC_LIBRARY (name sources
+#     MOC_HEADERS moc_headers
+#     UI_FILES ui_files
+#     DEPENDS part
+#     LINK_LIBS libs
+#     )
+FUNCTION(ADD_SC_LIBRARY name)
+    MESSAGE(STATUS "Found internal library: ${name}")
+    CMAKE_PARSE_ARGUMENTS(ARG
+      ""
+      ""
+      "MOC_HEADERS;UI_FILES;DEPENDS;LINK_LIBS"
+      ${ARGN})
+    IF(ARG_MOC_HEADERS)
+        QT5_WRAP_CPP(MOC_OUTPUT ${ARG_MOC_HEADERS})
+    ENDIF()
+    IF(ARG_UI_FILES)
+        QT5_WRAP_UI(UI_OUTPUT ${ARG_UI_FILES})
+    ENDIF()
+
+    ADD_LIBRARY(${name} STATIC ${ARG_UNPARSED_ARGUMENTS}
+      ${MOC_OUTPUT} ${UI_OUTPUT})
+
+    TARGET_LINK_LIBRARIES(${name} ${QT_LIBRARIES}
+        ${SQLITE3_LIBRARIES} ${JANSSON_LIBRARIES}
+        ${EXTRA_LIBS} -lglib-2.0 ${ARG_LINK_LIBS})
+ENDFUNCTION(ADD_SC_LIBRARY)
+
+# library utils
+LIST(APPEND utils_sources
+    src/utils/utils.cpp
+    src/utils/rsa.cpp
+    src/utils/api-utils.cpp
+    src/utils/paint-utils.cpp
+    src/utils/file-utils.cpp
+    src/utils/translate-commit-desc.cpp
+    src/utils/json-utils.cpp
+    src/utils/log.c
+    src/utils/stl.cpp
+    )
+IF (WIN32)
+    LIST(APPEND utils_sources
+        src/utils/process-win.cpp
+        src/utils/registry.cpp
+        src/utils/utils-win.cpp
+        )
+ELSEIF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "BSD")
+    LIST(APPEND utils_sources
+        src/utils/process-linux.cpp
+        )
+ELSEIF(APPLE)
+    LIST(APPEND utils_sources
+        src/utils/process-mac.cpp
+        src/utils/utils-mac.mm)
+ENDIF()
+
+ADD_SC_LIBRARY(utils ${utils_sources})
+
+SET(SC_LIBS utils)
+
+####################
+###### end: lib
+####################
+
+
 ADD_EXECUTABLE(seadrive-gui ${GUI_TYPE}
   ${seadrive_gui_sources}
   ${moc_output}
@@ -195,6 +272,8 @@ ADD_EXECUTABLE(seadrive-gui ${GUI_TYPE}
 INSTALL(TARGETS seadrive-gui DESTINATION bin)
 
 TARGET_LINK_LIBRARIES(seadrive-gui
+  ${SC_LIBS}
+
   ${GLIB2_LIBRARIES}
   ${JANSSON_LIBRARIES}
   ${LIBSEARPC_LIBRARIES}

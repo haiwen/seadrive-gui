@@ -8,6 +8,8 @@
 #include <glib-object.h>
 #include <cstdio>
 
+#include "seadrive-gui.h"
+
 namespace {
 
 void initGlib()
@@ -39,6 +41,11 @@ int main(int argc, char *argv[])
 
     // set the domains of settings
     setupSettingDomain();
+
+    // start applet
+    SeadriveGui mGui;
+    gui = &mGui;
+    gui->start();
 
     // start qt eventloop
     return app.exec();
