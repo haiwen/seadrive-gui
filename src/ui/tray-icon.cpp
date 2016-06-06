@@ -127,9 +127,9 @@ void SeafileTrayIcon::createContextMenu()
     // help_menu_->addAction(open_help_action_);
 
     context_menu_ = new QMenu(NULL);
-    context_menu_->addAction(view_unread_seahub_notifications_action_);
+    // context_menu_->addAction(view_unread_seahub_notifications_action_);
     context_menu_->addAction(open_seafile_folder_action_);
-    context_menu_->addAction(settings_action_);
+    // context_menu_->addAction(settings_action_);
     context_menu_->addAction(open_log_directory_action_);
     // context_menu_->addMenu(help_menu_);
     context_menu_->addSeparator();
