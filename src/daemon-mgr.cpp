@@ -51,11 +51,7 @@ DaemonManager::~DaemonManager() {
 
 void DaemonManager::startSeadriveDaemon()
 {
-    QDir data_dir = gui->seadriveDataDir();
-    if (!data_dir.mkdir(".") && !data_dir.exists()) {
-        gui->errorAndExit(QString("Failed to create daemon data dir '%1'").arg(data_dir.absolutePath()));
-        return;
-    }
+    QDir data_dir(gui->seadriveDataDir());
 
     searpc_pipe_client_ = searpc_create_named_pipe_client(toCStr(data_dir.filePath(kSeadriveSockName)));
 
@@ -65,8 +61,9 @@ void DaemonManager::startSeadriveDaemon()
     QStringList args;
     args << "-d" << data_dir.absolutePath();
     args << "-l" << QDir(gui->logsDir()).absoluteFilePath("seadrive.log");
+    qInfo() << "starting seadrive daemon: " << args;
+
     seadrive_daemon_->start(RESOURCE_PATH(kSeadriveExecutable), args);
-    qWarning() << "starting seadrive daemon: " << args;
 }
 
 void DaemonManager::systemShutDown()

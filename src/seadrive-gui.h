@@ -21,14 +21,12 @@ class CertsManager;
 /**
  * The central class of seafile-client
  */
-class SeadriveGui : QObject {
+class SeadriveGui : public QObject {
     Q_OBJECT
 
 public:
     SeadriveGui();
     ~SeadriveGui();
-
-    void start();
 
     void refreshQss();
 
@@ -83,6 +81,9 @@ public:
     bool started() { return started_; }
     bool inExit() { return in_exit_; }
 
+public slots:
+    void start();
+
 private slots:
     void onAboutToQuit();
     void onDaemonStarted();
@@ -90,7 +91,7 @@ private slots:
 private:
     Q_DISABLE_COPY(SeadriveGui)
 
-    void initLog();
+    bool initLog();
 
     bool loadQss(const QString& path);
 

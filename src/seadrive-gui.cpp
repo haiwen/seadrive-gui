@@ -189,7 +189,11 @@ SeadriveGui::~SeadriveGui()
 
 void SeadriveGui::start()
 {
-    initLog();
+    started_ = true;
+
+    if (!initLog()) {
+        return;
+    }
 
     refreshQss();
 
@@ -218,15 +222,20 @@ void SeadriveGui::onAboutToQuit()
 // stop the main event loop and return to the main function
 void SeadriveGui::errorAndExit(const QString& error)
 {
+    qWarning("Exiting with error: %s", toCStr(error));
+
+    if (!started_) {
+        warningBox(error);
+        ::exit(1);
+    }
+
     if (in_exit_ || QCoreApplication::closingDown()) {
         return;
     }
-
-    qWarning("Exiting with error: %s", toCStr(error));
-
     in_exit_ = true;
 
     warningBox(error);
+
     // stop eventloop before exit and return to the main function
     QCoreApplication::exit(1);
 }
@@ -260,24 +269,25 @@ void SeadriveGui::restartApp()
     QCoreApplication::quit();
 }
 
-void SeadriveGui::initLog()
+bool SeadriveGui::initLog()
 {
     QDir seadrive_dir = seadriveDir();
     if (checkdir_with_mkdir(toCStr(seadrive_dir.absolutePath())) < 0) {
         errorAndExit(tr("Failed to initialize: failed to create seadrive folder"));
-        return;
+        return false;
     }
     if (checkdir_with_mkdir(toCStr(logsDir())) < 0) {
         errorAndExit(tr("Failed to initialize: failed to create seadrive logs folder"));
-        return;
+        return false;
     }
     if (checkdir_with_mkdir(toCStr(seadriveDataDir())) < 0) {
         errorAndExit(tr("Failed to initialize: failed to create seadrive data folder"));
-        return;
+        return false;
     }
 
     if (applet_log_init(toCStr(seadrive_dir.absolutePath())) < 0) {
         errorAndExit(tr("Failed to initialize log: %s").arg(g_strerror(errno)));
+        return false;
     }
 
     // give a change to override DEBUG_LEVEL by environment
@@ -290,6 +300,8 @@ void SeadriveGui::initLog()
         qInstallMessageHandler(myLogHandlerDebug);
     else
         qInstallMessageHandler(myLogHandler);
+
+    return true;
 }
 
 bool SeadriveGui::loadQss(const QString& path)

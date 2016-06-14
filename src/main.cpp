@@ -45,8 +45,12 @@ int main(int argc, char *argv[])
     // start applet
     SeadriveGui mGui;
     gui = &mGui;
-    gui->start();
+    QTimer::singleShot(0, gui, SLOT(start()));
 
     // start qt eventloop
-    return app.exec();
+    int ret = app.exec();
+
+    qWarning("app event loop exited with %d\n", ret);
+
+    return ret;
 }
