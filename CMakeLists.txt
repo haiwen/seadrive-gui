@@ -105,6 +105,7 @@ endif()
 
 # MOC FILES
 SET(moc_headers
+  src/daemon-mgr.h
   src/seadrive-gui.h
   src/ui/tray-icon.h
   ${platform_specific_moc_headers}
@@ -155,6 +156,7 @@ PKG_CHECK_MODULES(SQLITE3 REQUIRED sqlite3>=3.0.0)
 
 # c/cpp sources
 SET(seadrive_gui_sources
+  src/daemon-mgr.cpp
   src/main.cpp
   src/seadrive-gui.cpp
   src/ui/tray-icon.cpp

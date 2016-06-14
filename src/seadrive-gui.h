@@ -50,16 +50,25 @@ public:
     // ExpandedVars String
     QString readPreconfigureExpandedString(const QString& key, const QString& default_value = QString());
 
-    // accessors
+    // Accessors.
+
+    // Get the seadrive folder. It's ~/seadrive on windows and ~/.seadrive on unix.
     QString seadriveDir() const;
 
+    // Get the seadrive daemon data dir. The "data" subfolder of seadrive dir.
+    QString seadriveDataDir() const;
+
+    // Get the seadrive logs dir. The "logs" subfolder of seadrive dir.
+    QString logsDir() const;
+
     SeafileTrayIcon *trayIcon() { return tray_icon_; }
+
+    DaemonManager *daemonManager() { return daemon_mgr_; }
 
     // AccountManager *accountManager() { return account_mgr_; }
 
     // SeafileRpcClient *rpcClient() { return rpc_client_; }
 
-    // DaemonManager *daemonManager() { return daemon_mgr_; }
 
     // Configurator *configurator() { return configurator_; }
 
@@ -76,6 +85,7 @@ public:
 
 private slots:
     void onAboutToQuit();
+    void onDaemonStarted();
 
 private:
     Q_DISABLE_COPY(SeadriveGui)
@@ -86,11 +96,12 @@ private:
 
     SeafileTrayIcon *tray_icon_;
 
+    DaemonManager *daemon_mgr_;
+
     // Configurator *configurator_;
 
     // AccountManager *account_mgr_;
 
-    // DaemonManager *daemon_mgr_;
 
     QMainWindow* main_win_;
 

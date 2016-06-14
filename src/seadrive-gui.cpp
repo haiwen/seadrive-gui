@@ -19,6 +19,7 @@
 #include "utils/file-utils.h"
 #include "utils/log.h"
 #include "ui/tray-icon.h"
+#include "src/daemon-mgr.h"
 
 #if defined(Q_OS_MAC)
 #include "utils/utils-mac.h"
@@ -128,45 +129,6 @@ void myLogHandler(QtMsgType type, const QMessageLogContext &context, const QStri
     }
 }
 
-/**
- * s1 > s2 --> *ret = 1
- *    = s2 --> *ret = 0
- *    < s2 --> *ret = -1
- *
- * If any of the vesion strings is invalid, return -1; else return 0
- */
-int compareVersions(const QString& s1, const QString& s2, int *ret)
-{
-    QStringList v1 = s1.split(".");
-    QStringList v2 = s2.split(".");
-
-    int i = 0;
-    while (i < v1.size() && i < v2.size()) {
-        bool ok;
-        int a = v1[i].toInt(&ok);
-        if (!ok) {
-            return -1;
-        }
-        int b = v2[i].toInt(&ok);
-        if (!ok) {
-            return -1;
-        }
-
-        if (a > b) {
-            *ret = 1;
-            return 0;
-        } else if (a < b) {
-            *ret = -1;
-            return 0;
-        }
-
-        i++;
-    }
-
-    *ret = v1.size() - v2.size();
-
-    return 0;
-}
 
 #ifdef Q_OS_MAC
 void writeCABundleForCurl()
@@ -188,11 +150,12 @@ void writeCABundleForCurl()
 #endif
 
 
-const char *const kPreconfigureUsername = "PreconfigureUsername";
-const char *const kPreconfigureUserToken = "PreconfigureUserToken";
-const char *const kPreconfigureServerAddr = "PreconfigureServerAddr";
-const char *const kPreconfigureComputerName = "PreconfigureComputerName";
-const char* const kHideConfigurationWizard = "HideConfigurationWizard";
+// const char *const kPreconfigureUsername = "PreconfigureUsername";
+// const char *const kPreconfigureUserToken = "PreconfigureUserToken";
+// const char *const kPreconfigureServerAddr = "PreconfigureServerAddr";
+// const char *const kPreconfigureComputerName = "PreconfigureComputerName";
+// const char* const kHideConfigurationWizard = "HideConfigurationWizard";
+
 #if defined(Q_OS_WIN32)
 const char *const kSeafileConfigureFileName = "seafile.ini";
 const char *const kSeafileConfigurePath = "SOFTWARE\\Seafile";
@@ -201,14 +164,6 @@ const int kIntervalBeforeShowInitVirtualDialog = 3000;
 const char *const kSeafileConfigureFileName = ".seafilerc";
 #endif
 const char *const kSeafilePreconfigureGroupName = "preconfigure";
-
-const int kIntervalForUpdateRepoProperty = 1000;
-
-const char *kSeafileClientDownloadUrl = "https://seafile.com/en/download/";
-const char *kSeafileClientDownloadUrlChinese = "https://seafile.com/download/";
-
-const char *kRepoServerUrlProperty = "server-url";
-const char *kRepoRelayAddrProperty = "relay-address";
 
 } // namespace
 
@@ -222,12 +177,14 @@ SeadriveGui::SeadriveGui()
 {
     main_win_ = nullptr;
     tray_icon_ = new SeafileTrayIcon(this);
+    daemon_mgr_ = new DaemonManager();
     connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onAboutToQuit()));
 }
 
 SeadriveGui::~SeadriveGui()
 {
     delete tray_icon_;
+    delete daemon_mgr_;
 }
 
 void SeadriveGui::start()
@@ -242,6 +199,13 @@ void SeadriveGui::start()
     writeCABundleForCurl();
 #endif
 
+    daemon_mgr_->startSeadriveDaemon();
+    connect(daemon_mgr_, SIGNAL(daemonStarted()),
+            this, SLOT(onDaemonStarted()));
+}
+
+void SeadriveGui::onDaemonStarted()
+{
     tray_icon_->start();
     tray_icon_->setState(SeafileTrayIcon::STATE_DAEMON_UP);
 }
@@ -257,6 +221,8 @@ void SeadriveGui::errorAndExit(const QString& error)
     if (in_exit_ || QCoreApplication::closingDown()) {
         return;
     }
+
+    qWarning("Exiting with error: %s", toCStr(error));
 
     in_exit_ = true;
 
@@ -297,11 +263,17 @@ void SeadriveGui::restartApp()
 void SeadriveGui::initLog()
 {
     QDir seadrive_dir = seadriveDir();
-    if (!seadrive_dir.exists() && !seadrive_dir.mkdir(".")) {
+    if (checkdir_with_mkdir(toCStr(seadrive_dir.absolutePath())) < 0) {
         errorAndExit(tr("Failed to initialize: failed to create seadrive folder"));
+        return;
     }
-    if (!seadrive_dir.exists("logs") && !seadrive_dir.mkdir("logs")) {
+    if (checkdir_with_mkdir(toCStr(logsDir())) < 0) {
         errorAndExit(tr("Failed to initialize: failed to create seadrive logs folder"));
+        return;
+    }
+    if (checkdir_with_mkdir(toCStr(seadriveDataDir())) < 0) {
+        errorAndExit(tr("Failed to initialize: failed to create seadrive data folder"));
+        return;
     }
 
     if (applet_log_init(toCStr(seadrive_dir.absolutePath())) < 0) {
@@ -477,5 +449,15 @@ QString SeadriveGui::readPreconfigureExpandedString(const QString& key, const QS
 
 QString SeadriveGui::seadriveDir() const
 {
-    return QDir::home().filePath(kSeadriveDirName);
+    return QDir::home().absoluteFilePath(kSeadriveDirName);
+}
+
+QString SeadriveGui::seadriveDataDir() const
+{
+    return QDir(seadriveDir()).filePath("data");
+}
+
+QString SeadriveGui::logsDir() const
+{
+    return QDir(seadriveDir()).filePath("logs");
 }
