@@ -7,7 +7,6 @@
 
 class QMainWindow;
 
-class Configurator;
 class DaemonManager;
 class SeafileRpcClient;
 class AccountManager;
@@ -63,18 +62,13 @@ public:
 
     DaemonManager *daemonManager() { return daemon_mgr_; }
 
-    // AccountManager *accountManager() { return account_mgr_; }
+    AccountManager *accountManager() { return account_mgr_; }
 
-    // SeafileRpcClient *rpcClient() { return rpc_client_; }
+    SeafileRpcClient *rpcClient() { return rpc_client_; }
 
-
-    // Configurator *configurator() { return configurator_; }
-
-    // MainWindow *mainWindow() { return main_win_; }
+    SettingsManager *settingsManager() { return settings_mgr_; }
 
     // SettingsDialog *settingsDialog() { return settings_dialog_; }
-
-    // SettingsManager *settingsManager() { return settings_mgr_; }
 
     // CertsManager *certsManager() { return certs_mgr_; }
 
@@ -99,20 +93,17 @@ private:
 
     DaemonManager *daemon_mgr_;
 
-    // Configurator *configurator_;
+    AccountManager *account_mgr_;
 
-    // AccountManager *account_mgr_;
+    SeafileRpcClient *rpc_client_;
 
+    SettingsManager *settings_mgr_;
 
     QMainWindow* main_win_;
-
-    // SeafileRpcClient *rpc_client_;
 
     // MessageListener *message_listener_;
 
     // SettingsDialog *settings_dialog_;
-
-    // SettingsManager *settings_mgr_;
 
     // CertsManager *certs_mgr_;
 
@@ -123,6 +114,8 @@ private:
     QString style_;
 
     bool is_pro_;
+
+    bool first_use_;
 };
 
 /**

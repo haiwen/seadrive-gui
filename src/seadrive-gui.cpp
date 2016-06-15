@@ -19,7 +19,11 @@
 #include "utils/file-utils.h"
 #include "utils/log.h"
 #include "ui/tray-icon.h"
+#include "ui/login-dialog.h"
 #include "src/daemon-mgr.h"
+#include "rpc/rpc-client.h"
+#include "account-mgr.h"
+#include "settings-mgr.h"
 
 #if defined(Q_OS_MAC)
 #include "utils/utils-mac.h"
@@ -149,12 +153,11 @@ void writeCABundleForCurl()
 }
 #endif
 
-
-// const char *const kPreconfigureUsername = "PreconfigureUsername";
-// const char *const kPreconfigureUserToken = "PreconfigureUserToken";
-// const char *const kPreconfigureServerAddr = "PreconfigureServerAddr";
-// const char *const kPreconfigureComputerName = "PreconfigureComputerName";
-// const char* const kHideConfigurationWizard = "HideConfigurationWizard";
+const char *const kPreconfigureUsername = "PreconfigureUsername";
+const char *const kPreconfigureUserToken = "PreconfigureUserToken";
+const char *const kPreconfigureServerAddr = "PreconfigureServerAddr";
+const char *const kPreconfigureComputerName = "PreconfigureComputerName";
+const char* const kHideConfigurationWizard = "HideConfigurationWizard";
 
 #if defined(Q_OS_WIN32)
 const char *const kSeafileConfigureFileName = "seafile.ini";
@@ -178,13 +181,18 @@ SeadriveGui::SeadriveGui()
     main_win_ = nullptr;
     tray_icon_ = new SeafileTrayIcon(this);
     daemon_mgr_ = new DaemonManager();
+    rpc_client_ = new SeafileRpcClient();
+    account_mgr_ = new AccountManager();
+    settings_mgr_ = new SettingsManager();
     connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onAboutToQuit()));
 }
 
 SeadriveGui::~SeadriveGui()
 {
     delete tray_icon_;
+    delete rpc_client_;
     delete daemon_mgr_;
+    delete account_mgr_;
 }
 
 void SeadriveGui::start()
@@ -194,6 +202,8 @@ void SeadriveGui::start()
     if (!initLog()) {
         return;
     }
+
+    account_mgr_->start();
 
     refreshQss();
 
@@ -210,8 +220,42 @@ void SeadriveGui::start()
 
 void SeadriveGui::onDaemonStarted()
 {
+    rpc_client_->connectDaemon();
+
     tray_icon_->start();
     tray_icon_->setState(SeafileTrayIcon::STATE_DAEMON_UP);
+
+    if (first_use_ || account_mgr_->accounts().size() == 0) {
+        do {
+            QString username = readPreconfigureExpandedString(kPreconfigureUsername);
+            QString token = readPreconfigureExpandedString(kPreconfigureUserToken);
+            QString url = readPreconfigureExpandedString(kPreconfigureServerAddr);
+            QString computer_name = readPreconfigureExpandedString(kPreconfigureComputerName, settingsManager()->getComputerName());
+            if (!computer_name.isEmpty())
+                settingsManager()->setComputerName(computer_name);
+            if (!username.isEmpty() && !token.isEmpty() && !url.isEmpty()) {
+                Account account(url, username, token);
+                if (account_mgr_->saveAccount(account) < 0) {
+                    errorAndExit(tr("failed to add default account"));
+                    return;
+                }
+                break;
+            }
+
+            if (readPreconfigureEntry(kHideConfigurationWizard).toInt())
+                break;
+            LoginDialog login_dialog;
+            login_dialog.exec();
+        } while (0);
+    }
+
+    if (!account_mgr_->accounts().empty()) {
+        const Account &account = account_mgr_->currentAccount();
+        rpc_client_->switchAccount(account.serverUrl.toString(),
+                                   account.username,
+                                   account.token,
+                                   account.isPro());
+    }
 }
 
 void SeadriveGui::onAboutToQuit()

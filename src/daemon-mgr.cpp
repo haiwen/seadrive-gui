@@ -80,12 +80,14 @@ void DaemonManager::onDaemonStarted()
 void DaemonManager::checkDaemonReady()
 {
     QString str;
-    // Because some settings need to be loaded from the daemon, we only emit
-    // the "daemonStarted" signal after we're sure the daemon rpc is ready.
     if (searpc_named_pipe_client_connect(searpc_pipe_client_) == 0) {
+        // TODO: Instead of only connecting to the rpc server, we should make a
+        // real rpc call here so we can guarantee the daemon is ready to answer
+        // rpc requests.
         qDebug("seadrive daemon is ready");
         conn_daemon_timer_->stop();
         emit daemonStarted();
+        // TODO: Free the searpc client.
         return;
     }
     qDebug("seadrive daemon is not ready");

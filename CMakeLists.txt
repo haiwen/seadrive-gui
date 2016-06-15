@@ -105,14 +105,29 @@ endif()
 
 # MOC FILES
 SET(moc_headers
+  src/account-mgr.h
+
+  src/api/api-client.h
+  src/api/api-request.h
+  src/api/requests.h
+
   src/daemon-mgr.h
+  src/network-mgr.h
+  src/rpc/rpc-client.h
   src/seadrive-gui.h
+  src/settings-mgr.h
+
+  src/ui/login-dialog.h
   src/ui/tray-icon.h
+
   ${platform_specific_moc_headers}
 )
-
-# meta object compliation(moc)
 QT5_WRAP_CPP(moc_output ${moc_headers})
+
+SET(ui_files
+  ui/login-dialog.ui
+)
+QT5_WRAP_UI(ui_output ${ui_files})
 
 # resources files
 QT5_ADD_RESOURCES(resources_ouput seadrive-gui.qrc)
@@ -156,9 +171,29 @@ PKG_CHECK_MODULES(SQLITE3 REQUIRED sqlite3>=3.0.0)
 
 # c/cpp sources
 SET(seadrive_gui_sources
+  src/account-mgr.cpp
+  src/account.cpp
+
+  src/api/api-client.cpp
+  src/api/api-error.cpp
+  src/api/api-request.cpp
+  src/api/commit-details.cpp
+  src/api/contact-share-info.cpp
+  src/api/event.cpp
+  src/api/requests.cpp
+  src/api/server-repo.cpp
+  src/api/starred-file.cpp
+
   src/daemon-mgr.cpp
   src/main.cpp
+  src/network-mgr.cpp
+
+  src/rpc/rpc-client.cpp
+
   src/seadrive-gui.cpp
+  src/settings-mgr.cpp
+
+  src/ui/login-dialog.cpp
   src/ui/tray-icon.cpp
   ${platform_specific_sources}
 )

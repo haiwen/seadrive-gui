@@ -1,0 +1,102 @@
+#ifndef SEAFILE_CLIENT_SETTINGS_MANAGER_H
+#define SEAFILE_CLIENT_SETTINGS_MANAGER_H
+
+#include <QObject>
+#include <QRunnable>
+#include <QUrl>
+#include <QNetworkProxy>
+
+/**
+ * Settings Manager handles seafile client user settings & preferences
+ */
+class QTimer;
+
+class SettingsManager : public QObject {
+    Q_OBJECT
+
+public:
+    SettingsManager();
+
+    void loadSettings();
+    void setAutoSync(bool);
+
+    bool autoSync() { return auto_sync_; }
+
+    bool notify() { return bubbleNotifycation_; }
+    bool autoStart() { return autoStart_; }
+    bool encryptTransfer() { return transferEncrypted_; }
+    unsigned int maxDownloadRatio() { return maxDownloadRatio_; }
+    unsigned int maxUploadRatio() { return maxUploadRatio_; }
+    bool syncExtraTempFile() { return sync_extra_temp_file_; }
+
+    void setNotify(bool notify);
+    void setAutoStart(bool autoStart);
+    void setEncryptTransfer(bool encrypted);
+    void setMaxDownloadRatio(unsigned int ratio);
+    void setMaxUploadRatio(unsigned int ratio);
+    void setSyncExtraTempFile(bool sync);
+
+    bool hideMainWindowWhenStarted();
+    void setHideMainWindowWhenStarted(bool hide);
+
+    bool hideDockIcon();
+    void setHideDockIcon(bool hide);
+
+    void setCheckLatestVersionEnabled(bool enabled);
+    bool isCheckLatestVersionEnabled();
+    // bool defaultLibraryAlreadySetup();
+    // void setDefaultLibraryAlreadySetup();
+
+    void setAllowRepoNotFoundOnServer(bool enabled);
+    bool allowRepoNotFoundOnServer() const { return allow_repo_not_found_on_server_; };
+
+    void setHttpSyncCertVerifyDisabled(bool disabled);
+    bool httpSyncCertVerifyDisabled() const { return verify_http_sync_cert_disabled_; };
+
+    QString getComputerName();
+    void setComputerName(const QString& computerName);
+
+    bool isEnableSyncingWithExistingFolder() const;
+    void setEnableSyncingWithExistingFolder(bool enabled);
+
+#ifdef HAVE_SHIBBOLETH_SUPPORT
+    QString getLastShibUrl();
+    void setLastShibUrl(const QString& url);
+#endif // HAVE_SHIBBOLETH_SUPPORT
+
+#ifdef HAVE_FINDER_SYNC_SUPPORT
+    bool getFinderSyncExtension() const;
+    bool getFinderSyncExtensionAvailable() const;
+    void setFinderSyncExtension(bool enabled);
+#endif // HAVE_FINDER_SYNC_SUPPORT
+
+#ifdef Q_OS_WIN32
+    void setShellExtensionEnabled(bool enabled);
+    bool shellExtensionEnabled() const { return shell_ext_enabled_; }
+#endif // HAVE_FINDER_SYNC_SUPPORT
+
+public:
+
+    // Remove all settings from system when uninstall
+    static void removeAllSettings();
+
+signals:
+    void autoSyncChanged(bool auto_sync);
+
+private:
+    Q_DISABLE_COPY(SettingsManager)
+
+    bool auto_sync_;
+    bool bubbleNotifycation_;
+    bool autoStart_;
+    bool transferEncrypted_;
+    bool allow_repo_not_found_on_server_;
+    bool sync_extra_temp_file_;
+    unsigned int maxDownloadRatio_;
+    unsigned int maxUploadRatio_;
+    bool verify_http_sync_cert_disabled_;
+    bool shell_ext_enabled_;
+};
+
+
+#endif // SEAFILE_CLIENT_SETTINGS_MANAGER_H

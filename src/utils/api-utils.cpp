@@ -3,7 +3,6 @@
 
 #include "utils.h"
 #include "seadrive-gui.h"
-// #include "rpc/rpc-client.h"
 #include "api-utils.h"
 
 namespace {
@@ -25,12 +24,13 @@ getSeafileLoginParams(const QString& computer_name, const QString& prefix)
     QHash<QString, QString> params;
 
     QString client_version = STRINGIZE(SEADRIVE_GUI_VERSION);
-    // QString device_id = seafApplet->rpcClient()->getCcnetPeerId();
-    QString computper = computer_name.isEmpty() ? QHostInfo::localHostName() 
+    QString computper = computer_name.isEmpty() ? QHostInfo::localHostName()
         : computer_name;
 
     params.insert(prefix + "platform", kOsName);
-    // params.insert(prefix + "device_id", device_id);
+    // TODO: Find an id that doesn't change for a given computer as the device
+    // id, e.g. (mac address)
+    params.insert(prefix + "device_id", "4222bdbf4a676c117f445c1b20d3b60cf0b2c0ac");
     params.insert(prefix + "device_name", computer_name);
     params.insert(prefix + "client_version", client_version);
     params.insert(prefix + "platform_version", "");

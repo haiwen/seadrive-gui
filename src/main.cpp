@@ -35,6 +35,7 @@ void setupSettingDomain()
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    app.setQuitOnLastWindowClosed(false);
 
     // call glib's init functions
     initGlib();
