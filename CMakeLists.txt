@@ -118,6 +118,7 @@ SET(moc_headers
   src/settings-mgr.h
 
   src/ui/login-dialog.h
+  src/ui/settings-dialog.h
   src/ui/tray-icon.h
 
   ${platform_specific_moc_headers}
@@ -126,6 +127,7 @@ QT5_WRAP_CPP(moc_output ${moc_headers})
 
 SET(ui_files
   ui/login-dialog.ui
+  ui/settings-dialog.ui
 )
 QT5_WRAP_UI(ui_output ${ui_files})
 
@@ -194,6 +196,7 @@ SET(seadrive_gui_sources
   src/settings-mgr.cpp
 
   src/ui/login-dialog.cpp
+  src/ui/settings-dialog.cpp
   src/ui/tray-icon.cpp
   ${platform_specific_sources}
 )
