@@ -247,14 +247,14 @@ void SeadriveGui::onDaemonStarted()
             LoginDialog login_dialog;
             login_dialog.exec();
         } while (0);
-    }
-
-    if (!account_mgr_->accounts().empty()) {
-        const Account &account = account_mgr_->currentAccount();
-        rpc_client_->switchAccount(account.serverUrl.toString(),
-                                   account.username,
-                                   account.token,
-                                   account.isPro());
+    } else {
+        if (!account_mgr_->accounts().empty()) {
+            const Account &account = account_mgr_->currentAccount();
+            rpc_client_->switchAccount(account.serverUrl.toString(),
+                                    account.username,
+                                    account.token,
+                                    account.isPro());
+        }
     }
 }
 
