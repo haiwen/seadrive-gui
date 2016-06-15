@@ -20,7 +20,8 @@
 #include "utils/log.h"
 #include "ui/tray-icon.h"
 #include "ui/login-dialog.h"
-#include "src/daemon-mgr.h"
+#include "ui/settings-dialog.h"
+#include "daemon-mgr.h"
 #include "rpc/rpc-client.h"
 #include "account-mgr.h"
 #include "settings-mgr.h"
@@ -184,6 +185,7 @@ SeadriveGui::SeadriveGui()
     rpc_client_ = new SeafileRpcClient();
     account_mgr_ = new AccountManager();
     settings_mgr_ = new SettingsManager();
+    settings_dlg_ = new SettingsDialog();
     connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onAboutToQuit()));
 }
 
@@ -256,6 +258,10 @@ void SeadriveGui::onDaemonStarted()
                                     account.isPro());
         }
     }
+
+    // settings_dlg_->show();
+    // settings_dlg_->raise();
+    // settings_dlg_->activateWindow();
 }
 
 void SeadriveGui::onAboutToQuit()

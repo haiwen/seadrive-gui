@@ -67,6 +67,8 @@ public:
     SeafileRpcClient *rpcClient() { return rpc_client_; }
 
     SettingsManager *settingsManager() { return settings_mgr_; }
+    
+    SettingsDialog *settingsDialog() { return settings_dlg_; }
 
     // SettingsDialog *settingsDialog() { return settings_dialog_; }
 
@@ -98,6 +100,8 @@ private:
     SeafileRpcClient *rpc_client_;
 
     SettingsManager *settings_mgr_;
+
+    SettingsDialog *settings_dlg_;
 
     QMainWindow* main_win_;
 

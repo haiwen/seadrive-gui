@@ -9,6 +9,9 @@ class QAction;
 class QMenu;
 class QMenuBar;
 
+class LoginDialog;
+
+
 class SeafileTrayIcon : public QSystemTrayIcon {
     Q_OBJECT
 
@@ -43,6 +46,8 @@ public:
 
 public slots:
     void showSettingsWindow();
+    void showLoginDialog();
+    void onLoginDialogClosed();
 
 private slots:
     void quitSeafile();
@@ -79,6 +84,7 @@ private:
     // Actions for tray icon menu
     QAction *quit_action_;
     QAction *settings_action_;
+    QAction *login_action_;
     QAction *open_seafile_folder_action_;
     QAction *open_log_directory_action_;
     QAction *view_unread_seahub_notifications_action_;
@@ -114,6 +120,8 @@ private:
     // displayed at least several seconds.
     QQueue<TrayMessage> pending_messages_;
     qint64 next_message_msec_;
+
+    LoginDialog *login_dlg_;
 };
 
 #endif // SEAFILE_CLIENT_TRAY_ICON_H

@@ -20,6 +20,8 @@ extern "C" {
 #include "utils/utils.h"
 #include "utils/utils-mac.h"
 #include "utils/file-utils.h"
+#include "src/ui/settings-dialog.h"
+#include "src/ui/login-dialog.h"
 #include "seadrive-gui.h"
 
 #include "tray-icon.h"
@@ -57,7 +59,8 @@ SeafileTrayIcon::SeafileTrayIcon(QObject *parent)
       nth_trayicon_(0),
       rotate_counter_(0),
       state_(STATE_DAEMON_UP),
-      next_message_msec_(0)
+      next_message_msec_(0),
+      login_dlg_(nullptr)
 {
     setState(STATE_DAEMON_DOWN);
     rotate_timer_ = new QTimer(this);
@@ -100,8 +103,11 @@ void SeafileTrayIcon::createActions()
     quit_action_ = new QAction(tr("&Quit"), this);
     connect(quit_action_, SIGNAL(triggered()), this, SLOT(quitSeafile()));
 
-    // settings_action_ = new QAction(tr("Settings"), this);
-    // connect(settings_action_, SIGNAL(triggered()), this, SLOT(showSettingsWindow()));
+    settings_action_ = new QAction(tr("Settings"), this);
+    connect(settings_action_, SIGNAL(triggered()), this, SLOT(showSettingsWindow()));
+
+    login_action_ = new QAction(tr("Add another account"), this);
+    connect(login_action_, SIGNAL(triggered()), this, SLOT(showLoginDialog()));
 
     open_seafile_folder_action_ = new QAction(tr("Open %1 &folder").arg(getBrand()), this);
     open_seafile_folder_action_->setStatusTip(tr("open %1 folder").arg(getBrand()));
@@ -129,8 +135,9 @@ void SeafileTrayIcon::createContextMenu()
     context_menu_ = new QMenu(NULL);
     // context_menu_->addAction(view_unread_seahub_notifications_action_);
     context_menu_->addAction(open_seafile_folder_action_);
-    // context_menu_->addAction(settings_action_);
     context_menu_->addAction(open_log_directory_action_);
+    context_menu_->addAction(login_action_);
+    context_menu_->addAction(settings_action_);
     // context_menu_->addMenu(help_menu_);
     context_menu_->addSeparator();
     context_menu_->addAction(about_action_);
@@ -394,9 +401,23 @@ void SeafileTrayIcon::openLogDirectory()
 
 void SeafileTrayIcon::showSettingsWindow()
 {
-    // gui->settingsDialog()->show();
-    // gui->settingsDialog()->raise();
-    // gui->settingsDialog()->activateWindow();
+    gui->settingsDialog()->show();
+    gui->settingsDialog()->raise();
+    gui->settingsDialog()->activateWindow();
+}
+
+void SeafileTrayIcon::showLoginDialog()
+{
+    if (!login_dlg_) {
+        login_dlg_ = new LoginDialog(gui->settingsDialog());
+        login_dlg_->setAttribute(Qt::WA_DeleteOnClose);
+    }
+
+    login_dlg_->show();
+    login_dlg_->raise();
+    login_dlg_->activateWindow();
+    connect(login_dlg_, SIGNAL(finished(int)),
+            this, SLOT(onLoginDialogClosed()));
 }
 
 void SeafileTrayIcon::onActivated(QSystemTrayIcon::ActivationReason reason)
@@ -509,4 +530,9 @@ void SeafileTrayIcon::onMessageClicked()
 
     // DiffReader *reader = new DiffReader(repo, previous_commit_id_, commit_id_);
     // QThreadPool::globalInstance()->start(reader);
+}
+
+void SeafileTrayIcon::onLoginDialogClosed()
+{
+    login_dlg_ = nullptr;
 }
