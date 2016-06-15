@@ -117,8 +117,6 @@ private:
 
     QString style_;
 
-    bool is_pro_;
-
     bool first_use_;
 };
 

@@ -3,6 +3,7 @@ extern "C" {
 #include <searpc-named-pipe-transport.h>
 }
 
+#include <unistd.h>
 #include <glib-object.h>
 #include <cstdio>
 #include <cstdlib>
@@ -61,6 +62,13 @@ void DaemonManager::startSeadriveDaemon()
     QStringList args;
     args << "-d" << data_dir.absolutePath();
     args << "-l" << QDir(gui->logsDir()).absoluteFilePath("seadrive.log");
+
+    QString fuse_opts = qgetenv("SEADRIVE_FUSE_OPTS");
+    if (fuse_opts.isEmpty()) {
+        checkdir_with_mkdir("/tmp/seadrive");
+        fuse_opts = "/tmp/seadrive";
+    }
+    args << fuse_opts.split(" ");
     qInfo() << "starting seadrive daemon: " << args;
 
     seadrive_daemon_->start(RESOURCE_PATH(kSeadriveExecutable), args);
@@ -88,6 +96,7 @@ void DaemonManager::checkDaemonReady()
         conn_daemon_timer_->stop();
         emit daemonStarted();
         // TODO: Free the searpc client.
+        ::close(searpc_pipe_client_->pipe_fd);
         return;
     }
     qDebug("seadrive daemon is not ready");

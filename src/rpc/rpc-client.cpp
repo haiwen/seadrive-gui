@@ -322,5 +322,6 @@ bool SeafileRpcClient::switchAccount(const QString &server,
         g_error_free(error);
         return false;
     }
+    qInfo("Switched to account %s %s", toCStr(server), toCStr(username));
     return true;
 }

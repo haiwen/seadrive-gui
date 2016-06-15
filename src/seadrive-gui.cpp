@@ -177,7 +177,7 @@ SeadriveGui *gui;
 SeadriveGui::SeadriveGui()
     : started_(false),
       in_exit_(false),
-      is_pro_(false)
+      first_use_(false)
 {
     main_win_ = nullptr;
     tray_icon_ = new SeafileTrayIcon(this);
@@ -249,14 +249,14 @@ void SeadriveGui::onDaemonStarted()
             LoginDialog login_dialog;
             login_dialog.exec();
         } while (0);
-    } else {
-        if (!account_mgr_->accounts().empty()) {
+    }
+
+    if (!account_mgr_->accounts().empty()) {
             const Account &account = account_mgr_->currentAccount();
             rpc_client_->switchAccount(account.serverUrl.toString(),
                                     account.username,
                                     account.token,
                                     account.isPro());
-        }
     }
 
     // settings_dlg_->show();
