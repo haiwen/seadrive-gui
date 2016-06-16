@@ -60,7 +60,7 @@ void DaemonManager::startSeadriveDaemon()
     connect(seadrive_daemon_, SIGNAL(started()), this, SLOT(onDaemonStarted()));
 
     QStringList args;
-    args << "-d" << data_dir.absolutePath();
+    args << "-f" << "-d" << data_dir.absolutePath();
     args << "-l" << QDir(gui->logsDir()).absoluteFilePath("seadrive.log");
 
     QString fuse_opts = qgetenv("SEADRIVE_FUSE_OPTS");
