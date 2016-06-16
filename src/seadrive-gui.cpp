@@ -335,6 +335,11 @@ bool SeadriveGui::initLog()
         return false;
     }
 
+    if (checkdir_with_mkdir(toCStr(gui->mountDir())) < 0) {
+        errorAndExit(tr("Failed to initialize: failed to create seadrive mount folder"));
+        return false;
+    }
+
     if (applet_log_init(toCStr(seadrive_dir.absolutePath())) < 0) {
         errorAndExit(tr("Failed to initialize log: %s").arg(g_strerror(errno)));
         return false;
@@ -522,4 +527,9 @@ QString SeadriveGui::seadriveDataDir() const
 QString SeadriveGui::logsDir() const
 {
     return QDir(seadriveDir()).filePath("logs");
+}
+
+QString SeadriveGui::mountDir() const
+{
+    return QDir::home().absoluteFilePath("SeaDrive");
 }

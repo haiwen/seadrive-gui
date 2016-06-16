@@ -58,6 +58,9 @@ public:
     // Get the seadrive logs dir. The "logs" subfolder of seadrive dir.
     QString logsDir() const;
 
+    // Get the seadrive mount dir, $HOME/SeaDrive
+    QString mountDir() const;
+
     SeafileTrayIcon *trayIcon() { return tray_icon_; }
 
     DaemonManager *daemonManager() { return daemon_mgr_; }
