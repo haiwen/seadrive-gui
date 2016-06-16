@@ -30,6 +30,29 @@ void setupSettingDomain()
     QCoreApplication::setApplicationName(QString("Seafile Drive"));
 }
 
+void handleCommandLineOption(int argc, char *argv[])
+{
+    int c;
+    static const char *short_options = "o:";
+    static const struct option long_options[] = {
+        { "fuse-opts", required_argument, NULL, 'o' },
+        { NULL, 0, NULL, 0, },
+    };
+
+    while ((c = getopt_long (argc, argv, short_options,
+                             long_options, NULL)) != EOF) {
+        switch (c) {
+        case 'o':
+            g_setenv ("SEADRIVE_FUSE_OPTS", optarg, 1);
+            break;
+        default:
+            exit(1);
+        }
+    }
+
+}
+
+
 } // anonymous namespace
 
 int main(int argc, char *argv[])
@@ -42,6 +65,8 @@ int main(int argc, char *argv[])
 
     // set the domains of settings
     setupSettingDomain();
+
+    handleCommandLineOption(argc, argv);
 
     // start applet
     SeadriveGui mGui;
