@@ -111,7 +111,7 @@ void DaemonManager::checkDaemonReady()
 
 void DaemonManager::stopAllDaemon()
 {
-    qWarning("[Daemon Mgr] stopping ccnet/seafile daemon");
+    qWarning("[Daemon Mgr] stopping seadrive daemon");
 
     if (conn_daemon_timer_)
         conn_daemon_timer_->stop();
