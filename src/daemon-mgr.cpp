@@ -60,9 +60,7 @@ void DaemonManager::startSeadriveDaemon()
     connect(seadrive_daemon_, SIGNAL(started()), this, SLOT(onDaemonStarted()));
 
     QStringList args;
-#ifndef Q_OS_MAC
     args << "-f";
-#endif
     args << "-d" << data_dir.absolutePath();
     args << "-l" << QDir(gui->logsDir()).absoluteFilePath("seadrive.log");
 
