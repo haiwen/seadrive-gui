@@ -69,7 +69,10 @@ void DaemonManager::startSeadriveDaemon()
         fuse_opts = gui->mountDir();
     }
     args << fuse_opts.split(" ");
-    qInfo() << "starting seadrive daemon: " << args;
+    auto stream = qInfo() << "starting seadrive daemon:" << kSeadriveExecutable;
+    foreach (const QString& arg, args) {
+        stream << arg;
+    }
 
     seadrive_daemon_->start(RESOURCE_PATH(kSeadriveExecutable), args);
 }
