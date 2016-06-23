@@ -66,8 +66,11 @@ void DaemonManager::startSeadriveDaemon()
 
     QString fuse_opts = qgetenv("SEADRIVE_FUSE_OPTS");
     if (fuse_opts.isEmpty()) {
-        fuse_opts = gui->mountDir();
         QProcess::execute("umount", QStringList(gui->mountDir()));
+        fuse_opts = gui->mountDir();
+#if defined(Q_OS_MAC)
+        fuse_opts += " -o volname=SeaDrive,noappledouble";
+#endif
     }
     args << fuse_opts.split(" ");
     auto stream = qInfo() << "starting seadrive daemon:" << kSeadriveExecutable;
