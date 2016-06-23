@@ -461,7 +461,7 @@ void SeafileTrayIcon::openHelp()
 
 void SeafileTrayIcon::openSeafileFolder()
 {
-    QDesktopServices::openUrl(QUrl::fromLocalFile(gui->seadriveDir()));
+    QDesktopServices::openUrl(QUrl::fromLocalFile(gui->mountDir()));
 }
 
 void SeafileTrayIcon::openLogDirectory()
