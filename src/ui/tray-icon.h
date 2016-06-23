@@ -9,6 +9,8 @@ class QAction;
 class QMenu;
 class QMenuBar;
 
+class Account;
+class ApiError;
 class LoginDialog;
 
 
@@ -63,6 +65,9 @@ private slots:
     void checkTrayIconMessageQueue();
 
     void onAccountItemClicked();
+    void logoutAccount();
+    void onLogoutDeviceRequestSuccess();
+    void onLogoutDeviceRequestFailed(const ApiError& error);
 
     // only used on windows
     void onMessageClicked();
@@ -76,6 +81,8 @@ private:
 
     QIcon stateToIcon(TrayState state);
     QIcon getIcon(const QString& name);
+
+    void reloginAccount(const Account &account);
 
     QMenu *context_menu_;
     QMenu *help_menu_;

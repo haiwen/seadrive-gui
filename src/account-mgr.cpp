@@ -241,10 +241,7 @@ int AccountManager::saveAccount(const Account& account)
     sqlite_query_exec(db, zql);
     sqlite3_free(zql);
 
-    gui->rpcClient()->switchAccount(new_account.serverUrl.toString(),
-                                    new_account.username,
-                                    new_account.token,
-                                    new_account.isPro());
+    gui->rpcClient()->switchAccount(new_account);
 
     emit accountsChanged();
 

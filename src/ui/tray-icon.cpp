@@ -19,6 +19,8 @@
 #include "utils/file-utils.h"
 #include "src/ui/settings-dialog.h"
 #include "src/ui/login-dialog.h"
+#include "api/api-error.h"
+#include "api/requests.h"
 #include "seadrive-gui.h"
 #include "account-mgr.h"
 
@@ -194,16 +196,16 @@ void SeafileTrayIcon::prepareContextMenu()
             // connect(account_settings_action, SIGNAL(triggered()), this, SLOT(editAccountSettings()));
             // submenu->addAction(account_settings_action);
 
-            // QAction *toggle_action = new QAction(this);
-            // toggle_action->setIcon(QIcon(":/images/logout.png"));
-            // toggle_action->setIconVisibleInMenu(true);
-            // toggle_action->setData(QVariant::fromValue(account));
-            // connect(toggle_action, SIGNAL(triggered()), this, SLOT(toggleAccount()));
-            // if (account.isValid())
-            //     toggle_action->setText(tr("Logout"));
-            // else
-            //     toggle_action->setText(tr("Login"));
-            // submenu->addAction(toggle_action);
+            QAction *toggle_action = new QAction(this);
+            toggle_action->setIcon(QIcon(":/images/logout.png"));
+            toggle_action->setIconVisibleInMenu(true);
+            toggle_action->setData(QVariant::fromValue(account));
+            connect(toggle_action, SIGNAL(triggered()), this, SLOT(logoutAccount()));
+            if (account.isValid())
+                toggle_action->setText(tr("Logout"));
+            else
+                toggle_action->setText(tr("Login"));
+            submenu->addAction(toggle_action);
 
             // QAction *delete_account_action = new QAction(tr("Delete"), this);
             // delete_account_action->setIcon(QIcon(":/images/delete-account.png"));
@@ -620,4 +622,74 @@ void SeafileTrayIcon::onAccountItemClicked()
     // } else {
     //     gui->accountManager()->setCurrentAccount(account);
     // }
+}
+
+void SeafileTrayIcon::logoutAccount()
+{
+    QAction *action = qobject_cast<QAction*>(sender());
+    if (!action)
+        return;
+    Account account = qvariant_cast<Account>(action->data());
+    if (!account.isValid()) {
+        reloginAccount(account);
+        return;
+    }
+
+    qWarning() << "trying to log out account" << account;
+
+    // logout Account
+    LogoutDeviceRequest *req = new LogoutDeviceRequest(account);
+    connect(req, SIGNAL(success()),
+            this, SLOT(onLogoutDeviceRequestSuccess()));
+    connect(req, SIGNAL(failed(const ApiError&)),
+            this, SLOT(onLogoutDeviceRequestFailed(const ApiError&)));
+    req->send();
+}
+
+void SeafileTrayIcon::onLogoutDeviceRequestSuccess()
+{
+    LogoutDeviceRequest *req = (LogoutDeviceRequest *)QObject::sender();
+    const Account& account = req->account();
+
+    // TODO: ask seadrive daemon to remove the cached data for this account?
+
+    // QString error;
+    // if (gui->rpcClient()->removeSyncTokensByAccount(account.serverUrl.host(),
+    //                                                        account.username,
+    //                                                        &error)  < 0) {
+    //     gui->warningBox(
+    //         tr("Failed to remove local repos sync token: %1").arg(error),
+    //         this);
+    //     return;
+    // }
+
+    gui->accountManager()->clearAccountToken(account);
+    req->deleteLater();
+}
+
+void SeafileTrayIcon::onLogoutDeviceRequestFailed(const ApiError& error)
+{
+    LogoutDeviceRequest *req = (LogoutDeviceRequest *)QObject::sender();
+    req->deleteLater();
+    QString msg;
+    msg = tr("Failed to remove information on server: %1").arg(error.toString());
+    qWarning() << "Failed to log out account" << req->account() << msg;
+    gui->warningBox(msg);
+}
+
+void SeafileTrayIcon::reloginAccount(const Account &account)
+{
+    bool accepted;
+    do {
+#ifdef HAVE_SHIBBOLETH_SUPPORT
+        if (account.isShibboleth) {
+            ShibLoginDialog shib_dialog(account.serverUrl, seafApplet->settingsManager()->getComputerName(), this);
+            accepted = shib_dialog.exec() == QDialog::Accepted;
+            break;
+        }
+#endif
+        LoginDialog dialog;
+        dialog.initFromAccount(account);
+        accepted = dialog.exec() == QDialog::Accepted;
+    } while (0);
 }

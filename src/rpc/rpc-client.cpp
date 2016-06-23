@@ -11,6 +11,7 @@ extern "C" {
 #include "seadrive-gui.h"
 #include "settings-mgr.h"
 
+#include "account.h"
 #include "utils/utils.h"
 #include "api/commit-details.h"
 #include "rpc-client.h"
@@ -296,10 +297,7 @@ bool SeafileRpcClient::setServerProperty(const QString &url,
 }
 
 
-bool SeafileRpcClient::switchAccount(const QString &server,
-                                     const QString &username,
-                                     const QString &token,
-                                     bool is_pro)
+bool SeafileRpcClient::switchAccount(const Account& account)
 {
     GError *error = NULL;
     searpc_client_call__int(seadrive_rpc_client_,
@@ -307,21 +305,19 @@ bool SeafileRpcClient::switchAccount(const QString &server,
                             &error,
                             4,
                             "string",
-                            toCStr(server),
+                            toCStr(account.serverUrl.toString()),
                             "string",
-                            toCStr(username),
+                            toCStr(account.username),
                             "string",
-                            toCStr(token),
+                            toCStr(account.token),
                             "int",
-                            is_pro ? 1 : 0);
+                            account.isPro() ? 1 : 0);
     if (error) {
-        qWarning("Unable to switch account %s %s: %s",
-                 toCStr(server),
-                 toCStr(username),
-                 error->message ? error->message : "");
+        qWarning() << "Unable to switch to account" << account << ":"
+                   << (error->message ? error->message : "");
         g_error_free(error);
         return false;
     }
-    qInfo("Switched to account %s %s", toCStr(server), toCStr(username));
+    qInfo() << "Switched to account" << account;
     return true;
 }

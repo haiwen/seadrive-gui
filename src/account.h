@@ -4,6 +4,7 @@
 #include <QUrl>
 #include <QString>
 #include <QMetaType>
+#include <QDebug>
 
 #include "api/server-info.h"
 
@@ -117,14 +118,37 @@ public:
     qint32 getTotalStorage() const {
         return accountInfo.totalStorage;
     }
-    
+
     qint32 getUsedStorage() const {
         return accountInfo.usedStorage;
     }
 
     QUrl getAbsoluteUrl(const QString& relativeUrl) const;
     QString getSignature() const;
+
+    QString toString() const
+    {
+        if (!isValid()) {
+            return "<invalid account>";
+        }
+        return QString("%1 %2 %3")
+            .arg(serverUrl.toString())
+            .arg(username)
+            .arg(token.mid(0, 7));
+    }
 };
+
+// Add converter so we can do things like:
+//  qDebug() << "account is" << account;
+inline QDebug operator<<(QDebug debug, const Account &account)
+{
+    QDebugStateSaver saver(debug);
+    debug.nospace() << account.toString().toUtf8().data();
+
+    return debug;
+}
+
+
 
 Q_DECLARE_METATYPE(Account)
 

@@ -14,6 +14,7 @@ struct _SearpcClient;
 
 }
 
+class Account;
 class CommitDetails;
 
 class SeafileRpcClient : public QObject {
@@ -62,10 +63,7 @@ public:
                            const QString &key,
                            const QString &value);
 
-    bool switchAccount(const QString &server,
-                       const QString &username,
-                       const QString &token,
-                       bool is_pro);
+    bool switchAccount(const Account& account);
 
 private:
     Q_DISABLE_COPY(SeafileRpcClient)
