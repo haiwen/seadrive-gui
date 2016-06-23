@@ -62,6 +62,8 @@ private slots:
     void about();
     void checkTrayIconMessageQueue();
 
+    void onAccountItemClicked();
+
     // only used on windows
     void onMessageClicked();
 
@@ -77,6 +79,8 @@ private:
 
     QMenu *context_menu_;
     QMenu *help_menu_;
+    QMenu *account_menu_;
+
     QMenu *global_menu_;
     QMenu *dock_menu_;
     QMenuBar *global_menubar_;

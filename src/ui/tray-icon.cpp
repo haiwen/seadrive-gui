@@ -20,6 +20,7 @@
 #include "src/ui/settings-dialog.h"
 #include "src/ui/login-dialog.h"
 #include "seadrive-gui.h"
+#include "account-mgr.h"
 
 #include "tray-icon.h"
 
@@ -103,8 +104,8 @@ void SeafileTrayIcon::createActions()
     settings_action_ = new QAction(tr("Settings"), this);
     connect(settings_action_, SIGNAL(triggered()), this, SLOT(showSettingsWindow()));
 
-    login_action_ = new QAction(tr("Add another account"), this);
-    connect(login_action_, SIGNAL(triggered()), this, SLOT(showLoginDialog()));
+    // login_action_ = new QAction(tr("Add another account"), this);
+    // connect(login_action_, SIGNAL(triggered()), this, SLOT(showLoginDialog()));
 
     open_seafile_folder_action_ = new QAction(tr("Open %1 &folder").arg(getBrand()), this);
     open_seafile_folder_action_->setStatusTip(tr("open %1 folder").arg(getBrand()));
@@ -133,13 +134,18 @@ void SeafileTrayIcon::createContextMenu()
     // context_menu_->addAction(view_unread_seahub_notifications_action_);
     context_menu_->addAction(open_seafile_folder_action_);
     context_menu_->addAction(open_log_directory_action_);
-    context_menu_->addAction(login_action_);
+    // context_menu_->addAction(login_action_);
     context_menu_->addAction(settings_action_);
     // context_menu_->addMenu(help_menu_);
+
+    context_menu_->addSeparator();
+    account_menu_ = new QMenu(tr("Accounts"), NULL);
+    context_menu_->addMenu(account_menu_);
+
     context_menu_->addSeparator();
     context_menu_->addAction(about_action_);
     context_menu_->addAction(open_help_action_);
-    context_menu_->addSeparator();
+
     context_menu_->addSeparator();
     context_menu_->addAction(quit_action_);
 
@@ -149,6 +155,74 @@ void SeafileTrayIcon::createContextMenu()
 
 void SeafileTrayIcon::prepareContextMenu()
 {
+    const std::vector<Account>& accounts = gui->accountManager()->accounts();
+
+    // Remove all menu items
+    account_menu_->clear();
+
+    if (!accounts.empty()) {
+        for (size_t i = 0, n = accounts.size(); i < n; i++) {
+            const Account &account = accounts[i];
+            QString text = account.username + "(" + account.serverUrl.host() + ")";
+            if (!account.isValid()) {
+                text += ", " + tr("not logged in");
+            }
+            QMenu *submenu = new QMenu(text, account_menu_);
+            if (i == 0) {
+                submenu->setIcon(QIcon(":/images/account-checked.png"));
+            } else {
+                submenu->setIcon(QIcon(":/images/account-else.png"));
+            }
+
+            QAction *submenu_action = submenu->menuAction();
+            submenu_action->setData(QVariant::fromValue(account));
+            connect(submenu_action, SIGNAL(triggered()), this, SLOT(onAccountItemClicked()));
+
+            QAction *action = new QAction(tr("Choose"), submenu);
+            action->setIcon(QIcon(":/images/account-checked.png"));
+            action->setIconVisibleInMenu(true);
+            action->setData(QVariant::fromValue(account));
+            connect(action, SIGNAL(triggered()), this, SLOT(onAccountItemClicked()));
+
+            submenu->addAction(action);
+            submenu->setDefaultAction(action);
+
+            // QAction *account_settings_action = new QAction(tr("Account settings"), this);
+            // account_settings_action->setIcon(QIcon(":/images/account-settings.png"));
+            // account_settings_action->setIconVisibleInMenu(true);
+            // account_settings_action->setData(QVariant::fromValue(account));
+            // connect(account_settings_action, SIGNAL(triggered()), this, SLOT(editAccountSettings()));
+            // submenu->addAction(account_settings_action);
+
+            // QAction *toggle_action = new QAction(this);
+            // toggle_action->setIcon(QIcon(":/images/logout.png"));
+            // toggle_action->setIconVisibleInMenu(true);
+            // toggle_action->setData(QVariant::fromValue(account));
+            // connect(toggle_action, SIGNAL(triggered()), this, SLOT(toggleAccount()));
+            // if (account.isValid())
+            //     toggle_action->setText(tr("Logout"));
+            // else
+            //     toggle_action->setText(tr("Login"));
+            // submenu->addAction(toggle_action);
+
+            // QAction *delete_account_action = new QAction(tr("Delete"), this);
+            // delete_account_action->setIcon(QIcon(":/images/delete-account.png"));
+            // delete_account_action->setIconVisibleInMenu(true);
+            // delete_account_action->setData(QVariant::fromValue(account));
+            // connect(delete_account_action, SIGNAL(triggered()), this, SLOT(deleteAccount()));
+            // submenu->addAction(delete_account_action);
+
+            account_menu_->addMenu(submenu);
+        }
+
+        account_menu_->addSeparator();
+    }
+
+    login_action_ = new QAction(tr("Add an account"), this);
+    login_action_->setIcon(QIcon(":/images/add-account.png"));
+    login_action_->setIconVisibleInMenu(true);
+    connect(login_action_, SIGNAL(triggered()), this, SLOT(showLoginDialog()));
+    account_menu_->addAction(login_action_);
 }
 
 void SeafileTrayIcon::createGlobalMenuBar()
@@ -532,4 +606,18 @@ void SeafileTrayIcon::onMessageClicked()
 void SeafileTrayIcon::onLoginDialogClosed()
 {
     login_dlg_ = nullptr;
+}
+
+// Switch to the clicked account in the account menu
+void SeafileTrayIcon::onAccountItemClicked()
+{
+    QAction *action = (QAction *)(sender());
+    Account account = qvariant_cast<Account>(action->data());
+
+    gui->accountManager()->setCurrentAccount(account);
+    // if (!account.isValid()) {
+    //     reloginAccount(account);
+    // } else {
+    //     gui->accountManager()->setCurrentAccount(account);
+    // }
 }
