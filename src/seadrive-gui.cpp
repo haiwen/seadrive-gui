@@ -205,6 +205,8 @@ void SeadriveGui::start()
         return;
     }
 
+    qInfo("client id is %s", toCStr(getUniqueClientId()));
+
     account_mgr_->start();
 
     refreshQss();
@@ -532,4 +534,48 @@ QString SeadriveGui::logsDir() const
 QString SeadriveGui::mountDir() const
 {
     return QDir::home().absoluteFilePath("SeaDrive");
+}
+
+QString SeadriveGui::getUniqueClientId()
+{
+    // Id file path is `~/.seadrive/id`
+    QFile id_file(QDir(seadriveDir()).absoluteFilePath("id"));
+    if (!id_file.exists()) {
+        srand(time(NULL));
+        QString id;
+        while (id.length() < 40) {
+            int r = rand() % 0xff;
+            id += QString("%1").arg(r, 0, 16);
+        }
+        id = id.mid(0, 40);
+
+        if (!id_file.open(QIODevice::WriteOnly)) {
+            errorAndExit(tr("failed to save client id"));
+            return "";
+        }
+
+        id_file.write(id.toUtf8().data());
+        return id;
+    }
+
+    if (!id_file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        errorAndExit(tr("failed to access %1").arg(id_file.fileName()));
+        return "";
+    }
+
+    QTextStream input(&id_file);
+    input.setCodec("UTF-8");
+
+    if (input.atEnd()) {
+        errorAndExit(tr("incorrect client id"));
+        return "";
+    }
+
+    QString id = input.readLine().trimmed();
+    if (id.length() != 40) {
+        errorAndExit(tr("failed to read %1").arg(id_file.fileName()));
+        return "";
+    }
+
+    return id;
 }

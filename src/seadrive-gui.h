@@ -42,6 +42,10 @@ public:
     void errorAndExit(const QString& error);
     void restartApp();
 
+    // We generate a unique id for this computer in ~/.seadrive/uuid, which can
+    // be reused until the software is uninstalled and user data removed.
+    QString getUniqueClientId();
+
     // Read preconfigure settings
     QVariant readPreconfigureEntry(const QString& key, const QVariant& default_value = QVariant());
     // ExpandedVars String

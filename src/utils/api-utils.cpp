@@ -28,9 +28,7 @@ getSeafileLoginParams(const QString& computer_name, const QString& prefix)
         : computer_name;
 
     params.insert(prefix + "platform", kOsName);
-    // TODO: Find an id that doesn't change for a given computer as the device
-    // id, e.g. (mac address)
-    params.insert(prefix + "device_id", "4222bdbf4a676c117f445c1b20d3b60cf0b2c0ac");
+    params.insert(prefix + "device_id", gui->getUniqueClientId());
     params.insert(prefix + "device_name", computer_name);
     params.insert(prefix + "client_version", client_version);
     params.insert(prefix + "platform_version", "");

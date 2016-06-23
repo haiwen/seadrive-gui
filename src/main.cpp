@@ -57,6 +57,7 @@ void handleCommandLineOption(int argc, char *argv[])
 
 int main(int argc, char *argv[])
 {
+    srand(time(NULL));
     QApplication app(argc, argv);
     app.setQuitOnLastWindowClosed(false);
 
