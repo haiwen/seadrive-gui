@@ -291,6 +291,8 @@ void LoginDialog::onFetchAccountInfoSuccess(const AccountInfo& info)
     }
     else {
         gui->accountManager()->updateAccountInfo(account, info);
+        gui->messageBox(tr("Your cloud files are now accessible from \"%1\"").arg(gui->mountDir()), this);
+        QDesktopServices::openUrl(QUrl::fromLocalFile(gui->mountDir()));
         done(QDialog::Accepted);
     }
 }
