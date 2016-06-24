@@ -65,9 +65,12 @@ private slots:
     void checkTrayIconMessageQueue();
 
     void onAccountItemClicked();
+
     void logoutAccount();
     void onLogoutDeviceRequestSuccess();
     void onLogoutDeviceRequestFailed(const ApiError& error);
+
+    void deleteAccount();
 
     // only used on windows
     void onMessageClicked();

@@ -207,12 +207,12 @@ void SeafileTrayIcon::prepareContextMenu()
                 toggle_action->setText(tr("Login"));
             submenu->addAction(toggle_action);
 
-            // QAction *delete_account_action = new QAction(tr("Delete"), this);
-            // delete_account_action->setIcon(QIcon(":/images/delete-account.png"));
-            // delete_account_action->setIconVisibleInMenu(true);
-            // delete_account_action->setData(QVariant::fromValue(account));
-            // connect(delete_account_action, SIGNAL(triggered()), this, SLOT(deleteAccount()));
-            // submenu->addAction(delete_account_action);
+            QAction *delete_account_action = new QAction(tr("Delete"), this);
+            delete_account_action->setIcon(QIcon(":/images/delete-account.png"));
+            delete_account_action->setIconVisibleInMenu(true);
+            delete_account_action->setData(QVariant::fromValue(account));
+            connect(delete_account_action, SIGNAL(triggered()), this, SLOT(deleteAccount()));
+            submenu->addAction(delete_account_action);
 
             account_menu_->addMenu(submenu);
         }
@@ -692,4 +692,28 @@ void SeafileTrayIcon::reloginAccount(const Account &account)
         dialog.initFromAccount(account);
         accepted = dialog.exec() == QDialog::Accepted;
     } while (0);
+}
+
+void SeafileTrayIcon::deleteAccount()
+{
+    QAction *action = qobject_cast<QAction*>(sender());
+    if (!action)
+        return;
+    Account account = qvariant_cast<Account>(action->data());
+
+    QString question = tr("Are you sure to remove account from \"%1\"?").arg(account.serverUrl.toString());
+
+    if (gui->yesOrNoBox(question, nullptr, false)) {
+        // QString error, server_addr = account.serverUrl.host();
+        // if (gui->rpcClient()->unsyncReposByAccount(server_addr,
+        //                                                   account.username,
+        //                                                   &error) < 0) {
+
+        //     gui->warningBox(
+        //         tr("Failed to unsync libraries of this account: %1").arg(error),
+        //         this);
+        // }
+
+        gui->accountManager()->removeAccount(account);
+    }
 }
