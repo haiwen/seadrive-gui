@@ -85,8 +85,6 @@ private:
     QIcon stateToIcon(TrayState state);
     QIcon getIcon(const QString& name);
 
-    void reloginAccount(const Account &account);
-
     QMenu *context_menu_;
     QMenu *help_menu_;
     QMenu *account_menu_;

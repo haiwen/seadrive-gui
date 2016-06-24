@@ -205,7 +205,7 @@ void SeadriveGui::start()
         return;
     }
 
-    qInfo("client id is %s", toCStr(getUniqueClientId()));
+    qDebug("client id is %s", toCStr(getUniqueClientId()));
 
     account_mgr_->start();
 
@@ -253,14 +253,8 @@ void SeadriveGui::onDaemonStarted()
         } while (0);
     } else {
         if (!account_mgr_->accounts().empty()) {
-            const Account &account = account_mgr_->currentAccount();
-            if (account.isValid()) {
-                rpc_client_->switchAccount(account);
-            } else {
-                LoginDialog login_dialog;
-                login_dialog.initFromAccount(account);
-                login_dialog.exec();
-            }
+            const Account &account = account_mgr_->accounts()[0];
+            account_mgr_->validateAndUseAccount(account);
         }
     }
 

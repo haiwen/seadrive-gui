@@ -13,6 +13,7 @@
 #include "api/api-error.h"
 #include "api/requests.h"
 #include "rpc/rpc-client.h"
+#include "ui/login-dialog.h"
 // #include "account-info-service.h"
 
 namespace {
@@ -241,6 +242,8 @@ int AccountManager::saveAccount(const Account& account)
     sqlite_query_exec(db, zql);
     sqlite3_free(zql);
 
+    current_account_ = new_account;
+
     gui->rpcClient()->switchAccount(new_account);
 
     emit accountsChanged();
@@ -259,9 +262,24 @@ int AccountManager::removeAccount(const Account& account)
     sqlite_query_exec(db, zql);
     sqlite3_free(zql);
 
-    QMutexLocker lock(&accounts_mutex_);
-    accounts_.erase(std::remove(accounts_.begin(), accounts_.end(), account),
-                    accounts_.end());
+    bool need_switch_account = current_account_ == account;
+
+    {
+        QMutexLocker lock(&accounts_mutex_);
+        accounts_.erase(
+            std::remove(accounts_.begin(), accounts_.end(), account),
+            accounts_.end());
+    }
+
+    if (need_switch_account) {
+        current_account_ = Account();
+        if (!accounts_.empty()) {
+            validateAndUseAccount(accounts_[0]);
+        } else {
+            LoginDialog login_dialog;
+            login_dialog.exec();
+        }
+    }
 
     emit accountsChanged();
 
@@ -294,9 +312,20 @@ bool AccountManager::accountExists(const QUrl& url, const QString& username)
     return false;
 }
 
+bool AccountManager::validateAndUseAccount(const Account& account)
+{
+    if (!account.isValid()) {
+        return reloginAccount(account);
+    } else {
+        return setCurrentAccount(account);
+    }
+}
+
 bool AccountManager::setCurrentAccount(const Account& account)
 {
-    if (account == currentAccount()) {
+    Q_ASSERT(account.isValid());
+
+    if (account == current_account_) {
         return false;
     }
 
@@ -441,10 +470,10 @@ void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo 
 
     for (size_t i = 0; i < accounts_.size(); i++) {
         if (accounts_[i] == account) {
-            if (i == 0)
+            if (account == current_account_)
                 emit beforeAccountChanged();
             accounts_[i].serverInfo = info;
-            if (i == 0)
+            if (account == current_account_)
                 emit accountsChanged();
             break;
         }
@@ -511,4 +540,22 @@ void AccountManager::invalidateCurrentLogin()
     gui->warningBox(tr("Authorization expired, please re-login"));
 
     emit accountRequireRelogin(account);
+}
+
+bool AccountManager::reloginAccount(const Account &account)
+{
+    bool accepted;
+    do {
+#ifdef HAVE_SHIBBOLETH_SUPPORT
+        if (account.isShibboleth) {
+            ShibLoginDialog shib_dialog(account.serverUrl, seafApplet->settingsManager()->getComputerName(), this);
+            accepted = shib_dialog.exec() == QDialog::Accepted;
+            break;
+        }
+#endif
+        LoginDialog dialog;
+        dialog.initFromAccount(account);
+        accepted = dialog.exec() == QDialog::Accepted;
+    } while (0);
+    return accepted;
 }

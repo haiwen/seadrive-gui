@@ -196,16 +196,16 @@ void SeafileTrayIcon::prepareContextMenu()
             // connect(account_settings_action, SIGNAL(triggered()), this, SLOT(editAccountSettings()));
             // submenu->addAction(account_settings_action);
 
-            QAction *toggle_action = new QAction(this);
-            toggle_action->setIcon(QIcon(":/images/logout.png"));
-            toggle_action->setIconVisibleInMenu(true);
-            toggle_action->setData(QVariant::fromValue(account));
-            connect(toggle_action, SIGNAL(triggered()), this, SLOT(logoutAccount()));
+            QAction *logout_action = new QAction(this);
+            logout_action->setIcon(QIcon(":/images/logout.png"));
+            logout_action->setIconVisibleInMenu(true);
+            logout_action->setData(QVariant::fromValue(account));
+            connect(logout_action, SIGNAL(triggered()), this, SLOT(logoutAccount()));
             if (account.isValid())
-                toggle_action->setText(tr("Logout"));
+                logout_action->setText(tr("Logout"));
             else
-                toggle_action->setText(tr("Login"));
-            submenu->addAction(toggle_action);
+                logout_action->setText(tr("Login"));
+            submenu->addAction(logout_action);
 
             QAction *delete_account_action = new QAction(tr("Delete"), this);
             delete_account_action->setIcon(QIcon(":/images/delete-account.png"));
@@ -616,12 +616,7 @@ void SeafileTrayIcon::onAccountItemClicked()
     QAction *action = (QAction *)(sender());
     Account account = qvariant_cast<Account>(action->data());
 
-    gui->accountManager()->setCurrentAccount(account);
-    // if (!account.isValid()) {
-    //     reloginAccount(account);
-    // } else {
-    //     gui->accountManager()->setCurrentAccount(account);
-    // }
+    gui->accountManager()->validateAndUseAccount(account);
 }
 
 void SeafileTrayIcon::logoutAccount()
@@ -630,10 +625,7 @@ void SeafileTrayIcon::logoutAccount()
     if (!action)
         return;
     Account account = qvariant_cast<Account>(action->data());
-    if (!account.isValid()) {
-        reloginAccount(account);
-        return;
-    }
+    Q_ASSERT(account.isValid());
 
     qWarning() << "trying to log out account" << account;
 
@@ -675,23 +667,6 @@ void SeafileTrayIcon::onLogoutDeviceRequestFailed(const ApiError& error)
     msg = tr("Failed to remove information on server: %1").arg(error.toString());
     qWarning() << "Failed to log out account" << req->account() << msg;
     gui->warningBox(msg);
-}
-
-void SeafileTrayIcon::reloginAccount(const Account &account)
-{
-    bool accepted;
-    do {
-#ifdef HAVE_SHIBBOLETH_SUPPORT
-        if (account.isShibboleth) {
-            ShibLoginDialog shib_dialog(account.serverUrl, seafApplet->settingsManager()->getComputerName(), this);
-            accepted = shib_dialog.exec() == QDialog::Accepted;
-            break;
-        }
-#endif
-        LoginDialog dialog;
-        dialog.initFromAccount(account);
-        accepted = dialog.exec() == QDialog::Accepted;
-    } while (0);
 }
 
 void SeafileTrayIcon::deleteAccount()
