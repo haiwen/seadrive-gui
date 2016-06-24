@@ -272,6 +272,7 @@ int AccountManager::removeAccount(const Account& account)
     }
 
     if (need_switch_account) {
+        // TODO: notify daemon this account is logged out.
         current_account_ = Account();
         if (!accounts_.empty()) {
             validateAndUseAccount(accounts_[0]);
@@ -507,7 +508,13 @@ bool AccountManager::clearAccountToken(const Account& account)
     sqlite_query_exec(db, zql);
     sqlite3_free(zql);
 
-    emit accountsChanged();
+    // TODO: notify daemon the account is logged out
+    if (account == current_account_) {
+        current_account_.token = "";
+        reloginAccount(current_account_);
+    } else {
+        emit accountsChanged();
+    }
 
     return true;
 }

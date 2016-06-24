@@ -479,11 +479,14 @@ void SeafileTrayIcon::showSettingsWindow()
     gui->settingsDialog()->activateWindow();
 }
 
-void SeafileTrayIcon::showLoginDialog()
+void SeafileTrayIcon::showLoginDialog(const Account& account)
 {
     if (!login_dlg_) {
         login_dlg_ = new LoginDialog(gui->settingsDialog());
         login_dlg_->setAttribute(Qt::WA_DeleteOnClose);
+        if (!account.username.isEmpty()) {
+            login_dlg_->initFromAccount(account);
+        }
     }
 
     login_dlg_->show();
