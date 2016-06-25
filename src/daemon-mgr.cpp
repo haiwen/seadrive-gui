@@ -103,7 +103,7 @@ void DaemonManager::checkDaemonReady()
         conn_daemon_timer_->stop();
         emit daemonStarted();
         // TODO: Free the searpc client.
-        ::close(searpc_pipe_client_->pipe_fd);
+        // ::close(searpc_pipe_client_->pipe_fd);
         return;
     }
     qDebug("seadrive daemon is not ready");
