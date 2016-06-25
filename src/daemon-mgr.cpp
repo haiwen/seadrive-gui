@@ -69,7 +69,7 @@ void DaemonManager::startSeadriveDaemon()
         QProcess::execute("umount", QStringList(gui->mountDir()));
         fuse_opts = gui->mountDir();
 #if defined(Q_OS_MAC)
-        fuse_opts += " -o volname=SeaDrive,noappledouble";
+        fuse_opts += " -o volname=SeaDrive,noappledouble,nolocalcaches";
 #endif
     }
     args << fuse_opts.split(" ");
@@ -108,9 +108,9 @@ void DaemonManager::checkDaemonReady()
     }
     qDebug("seadrive daemon is not ready");
     static int maxcheck = 0;
-    if (++maxcheck > 15) {
+    if (++maxcheck > 3) {
         qWarning("seadrive rpc is not ready after %d retry, abort", maxcheck);
-        gui->errorAndExit(tr("%1 drive failed to initialize").arg(getBrand()));
+        gui->errorAndExit(tr("%1 failed to start").arg(getBrand()));
     }
 }
 
