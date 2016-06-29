@@ -74,6 +74,17 @@ ELSEIF (APPLE)
     SET(EXTRA_LIBS ${EXTRA_LIBS} ${COCOA_LIBRARY} ${Sec_LIBRARY})
 ENDIF()
 
+IF(APPLE)
+    ADD_DEFINITIONS(-DHAVE_FINDER_SYNC_SUPPORT)
+    SET(platform_specific_moc_headers src/finder-sync/finder-sync-host.h)
+    SET(platform_specific_sources ${platform_specific_sources}
+        src/finder-sync/finder-sync.cpp src/finder-sync/finder-sync-listener.mm
+        src/finder-sync/finder-sync-host.cpp)
+    SET_SOURCE_FILES_PROPERTIES(src/finder-sync/finder-sync-listener.mm
+        PROPERTIES COMPILE_FLAGS -fobjc-arc)
+ENDIF()
+
+
 ####################
 ###### BEGIN: QT configuration
 ####################
