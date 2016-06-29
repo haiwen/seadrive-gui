@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.11)
 
-PROJECT(seafile-fsplugin)
+PROJECT(seadrive-fsplugin)
 SET(PROJECT_VERSION "1.0.0")
 
 IF (NOT (${CMAKE_BUILD_TYPE} MATCHES Release))
@@ -50,12 +50,12 @@ ADD_CUSTOM_TARGET(update-lproj
   COMMAND genstrings -o en.lproj ${FSPLUGIN_SRC}
   DEPENDS ${FSPLUGIN_SRC})
 
-ADD_EXECUTABLE(seafile-finder-sync MACOSX_BUNDLE
+ADD_EXECUTABLE(seadrive-finder-sync MACOSX_BUNDLE
   ${FSPLUGIN_SRC}
 )
 
-SET_TARGET_PROPERTIES(seafile-finder-sync PROPERTIES
-  OUTPUT_NAME "Seafile FinderSync"
+SET_TARGET_PROPERTIES(seadrive-finder-sync PROPERTIES
+  OUTPUT_NAME "SeaDrive FinderSync"
   MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist
   XCODE_ATTRIBUTE_MACOSX_DEPLOYMENT_TARGET "10.10"
   XCODE_ATTRIBUTE_LD_RUNPATH_SEARCH_PATHS "@executable_path/../Frameworks @executable_path/../../../../Frameworks"
@@ -63,28 +63,28 @@ SET_TARGET_PROPERTIES(seafile-finder-sync PROPERTIES
   XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++11"
   XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++"
   XCODE_ATTRIBUTE_DEVELOPMENT_LANGUAGE "English"
-  XCODE_ATTRIBUTE_LOCALIZED_RESOURCES_FOLDER_PATH "Seafile FinderSync.appex/English.lproj"
-  XCODE_ATTRIBUTE_INFOSTRINGS_PATH "Seafile FinderSync.appex/English.lproj/InfoPlist.strings"
-  XCODE_ATTRIBUTE_UNLOCALIZED_RESOURCES_FOLDER_PATH "Seafile FinderSync.appex"
+  XCODE_ATTRIBUTE_LOCALIZED_RESOURCES_FOLDER_PATH "SeaDrive FinderSync.appex/English.lproj"
+  XCODE_ATTRIBUTE_INFOSTRINGS_PATH "SeaDrive FinderSync.appex/English.lproj/InfoPlist.strings"
+  XCODE_ATTRIBUTE_UNLOCALIZED_RESOURCES_FOLDER_PATH "SeaDrive FinderSync.appex"
   )
 
-TARGET_LINK_LIBRARIES(seafile-finder-sync
+TARGET_LINK_LIBRARIES(seadrive-finder-sync
   ${FinderSync_LIBRARY}
   ${PlugInKit_LIBRARY}
   ${AppKit_LIBRARY}
 )
 
-### rename to Seafile Client.appex and copy related resource files
+### rename to SeaDrive Client.appex and copy related resource files
 
-SET(BUILD_DIR "${CMAKE_CURRENT_BINARY_DIR}/\${CONFIGURATION}/Seafile FinderSync.app")
-SET(TARGET_DIR "${CMAKE_CURRENT_BINARY_DIR}/Seafile FinderSync.appex")
+SET(BUILD_DIR "${CMAKE_CURRENT_BINARY_DIR}/\${CONFIGURATION}/SeaDrive FinderSync.app")
+SET(TARGET_DIR "${CMAKE_CURRENT_BINARY_DIR}/SeaDrive FinderSync.appex")
 
 ADD_CUSTOM_TARGET(clean_old_target
   COMMAND ${CMAKE_COMMAND} -E remove -f ${TARGET_DIR}
   )
 ADD_CUSTOM_TARGET(copy_fsplugin
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${BUILD_DIR} ${TARGET_DIR}
-  DEPENDS seafile-finder-sync clean_old_target
+  DEPENDS seadrive-finder-sync clean_old_target
   )
 
 ADD_CUSTOM_TARGET(create_resource_dir
@@ -92,7 +92,7 @@ ADD_CUSTOM_TARGET(create_resource_dir
   DEPENDS copy_fsplugin
   )
 ADD_CUSTOM_TARGET(copy_resources_icns
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/../seafile.icns ${TARGET_DIR}/Contents/Resources/
+  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/../seadrive.icns ${TARGET_DIR}/Contents/Resources/
   COMMAND ${CMAKE_COMMAND} -E copy status-done.icns ${TARGET_DIR}/Contents/Resources/
   COMMAND ${CMAKE_COMMAND} -E copy status-error.icns ${TARGET_DIR}/Contents/Resources/
   COMMAND ${CMAKE_COMMAND} -E copy status-syncing.icns ${TARGET_DIR}/Contents/Resources/
@@ -124,6 +124,6 @@ ENDFOREACH()
 FIND_PROGRAM(CODESIGN codesign)
 
 ADD_CUSTOM_TARGET(codesign ALL
-  COMMAND ${CODESIGN} --force --sign ${CODESIGN_CERTIFICATE} --entitlements ${CMAKE_CURRENT_SOURCE_DIR}/seafile-fsplugin.entitlements ${TARGET_DIR}
+  COMMAND ${CODESIGN} --force --sign ${CODESIGN_CERTIFICATE} --entitlements ${CMAKE_CURRENT_SOURCE_DIR}/seadrive-fsplugin.entitlements ${TARGET_DIR}
   DEPENDS copy_resources_icns copy_resources_lproj
   )

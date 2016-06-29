@@ -1,6 +1,6 @@
 //
 //  FinderSyncClient.m
-//  seafile-client-fsplugin
+//  seadrive-fsplugin
 //
 //  Created by Chilledheart on 1/10/15.
 //  Copyright (c) 2015 Haiwen. All rights reserved.
@@ -16,7 +16,7 @@
 #endif
 
 static NSString *const kFinderSyncMachPort =
-    @"com.seafile.seafile-client.findersync.machport";
+    @"com.seafile.seadrive.findersync.machport";
 
 static constexpr int kWatchDirMax = 100;
 static constexpr int kPathMaxSize = 1024;

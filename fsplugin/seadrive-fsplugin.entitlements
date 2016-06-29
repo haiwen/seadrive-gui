@@ -8,7 +8,7 @@
     <true/>
     <key>com.apple.security.application-groups</key>
     <array>
-        <string>com.seafile.seafile-client.findersync</string>
+        <string>com.seafile.seadrive.findersync</string>
     </array>
 </dict>
 </plist>

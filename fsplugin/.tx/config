@@ -1,7 +1,7 @@
 [main]
 host = https://www.transifex.com
 
-[seafile-client.finder-sync]
+[seadrive.finder-sync]
 file_filter = <lang>.lproj/Localizable.strings
 source_file = en.lproj/Localizable.strings
 source_lang = en

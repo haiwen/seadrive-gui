@@ -1,6 +1,6 @@
 //
 //  FinderSync.m
-//  seafile-client-fsplugin
+//  seadrive-fsplugin
 //
 //  Created by Chilledheart on 1/10/15.
 //  Copyright (c) 2015 Haiwen. All rights reserved.
@@ -25,7 +25,7 @@
 @end
 
 static const char *const kClientCommandQueueName =
-    "com.seafile.seafile-client.findersync.ClientCommandQueue";
+    "com.seafile.seadrive.findersync.ClientCommandQueue";
 static const NSArray *const kBadgetIdentifiers = @[
     // According to the document
     // https://developer.apple.com/library/mac/documentation/FinderSync/Reference/FIFinderSyncController_Class/#//apple_ref/occ/instm/FIFinderSyncController/setBadgeIdentifier:forURL:
