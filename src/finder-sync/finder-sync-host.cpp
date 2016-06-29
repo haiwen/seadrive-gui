@@ -11,12 +11,11 @@
 #include "account-mgr.h"
 #include "auto-login-service.h"
 #include "settings-mgr.h"
-#include "seafile-applet.h"
-#include "rpc/local-repo.h"
+#include "seadrive-gui.h"
 #include "rpc/rpc-client.h"
-#include "filebrowser/file-browser-requests.h"
-#include "filebrowser/sharedlink-dialog.h"
-#include "filebrowser/seafilelink-dialog.h"
+#include "api/requests.h"
+#include "ui/sharedlink-dialog.h"
+#include "ui/seafilelink-dialog.h"
 #include "utils/utils.h"
 
 enum PathStatus {
@@ -64,7 +63,7 @@ inline static bool isContainsPrefix(const QString &path,
 }
 
 static std::mutex update_mutex_;
-static std::vector<LocalRepo> watch_set_;
+// static std::vector<LocalRepo> watch_set_;
 static std::unique_ptr<GetSharedLinkRequest, QtLaterDeleter> get_shared_link_req_;
 static std::unique_ptr<LockFileRequest, QtLaterDeleter> lock_file_req_;
 
@@ -79,53 +78,53 @@ FinderSyncHost::~FinderSyncHost() {
 
 utils::BufferArray FinderSyncHost::getWatchSet(size_t header_size,
                                                int max_size) {
-    updateWatchSet(); // lock is inside
+    // updateWatchSet(); // lock is inside
 
-    std::unique_lock<std::mutex> lock(update_mutex_);
+    // std::unique_lock<std::mutex> lock(update_mutex_);
 
-    std::vector<QByteArray> array;
-    size_t byte_count = header_size;
+    // std::vector<QByteArray> array;
+    // size_t byte_count = header_size;
 
-    unsigned count = (max_size >= 0 && watch_set_.size() > (unsigned)max_size)
-                         ? max_size
-                         : watch_set_.size();
-    for (unsigned i = 0; i < count; ++i) {
-        array.emplace_back(watch_set_[i].worktree.toUtf8());
-        byte_count += 36 + array.back().size() + 3;
-    }
-    // rount byte_count to longword-size
-    size_t round_end = byte_count & 3;
-    if (round_end)
-        byte_count += 4 - round_end;
+    // unsigned count = (max_size >= 0 && watch_set_.size() > (unsigned)max_size)
+    //                      ? max_size
+    //                      : watch_set_.size();
+    // for (unsigned i = 0; i < count; ++i) {
+    //     array.emplace_back(watch_set_[i].worktree.toUtf8());
+    //     byte_count += 36 + array.back().size() + 3;
+    // }
+    // // rount byte_count to longword-size
+    // size_t round_end = byte_count & 3;
+    // if (round_end)
+    //     byte_count += 4 - round_end;
 
     utils::BufferArray retval;
-    retval.resize(byte_count);
+    // retval.resize(byte_count);
 
-    // zeroize rounds
-    switch (round_end) {
-    case 1:
-        retval[byte_count - 3] = '\0';
-    case 2:
-        retval[byte_count - 2] = '\0';
-    case 3:
-        retval[byte_count - 1] = '\0';
-    default:
-        break;
-    }
+    // // zeroize rounds
+    // switch (round_end) {
+    // case 1:
+    //     retval[byte_count - 3] = '\0';
+    // case 2:
+    //     retval[byte_count - 2] = '\0';
+    // case 3:
+    //     retval[byte_count - 1] = '\0';
+    // default:
+    //     break;
+    // }
 
-    assert(retval.size() == byte_count);
-    char *pos = retval.data() + header_size;
-    for (unsigned i = 0; i != count; ++i) {
-        // copy repo_id
-        memcpy(pos, watch_set_[i].id.toUtf8().data(), 36);
-        pos += 36;
-        // copy worktree
-        memcpy(pos, array[i].data(), array[i].size() + 1);
-        pos += array[i].size() + 1;
-        // copy status
-        *pos++ = watch_set_[i].sync_state;
-        *pos++ = '\0';
-    }
+    // assert(retval.size() == byte_count);
+    // char *pos = retval.data() + header_size;
+    // for (unsigned i = 0; i != count; ++i) {
+    //     // copy repo_id
+    //     memcpy(pos, watch_set_[i].id.toUtf8().data(), 36);
+    //     pos += 36;
+    //     // copy worktree
+    //     memcpy(pos, array[i].data(), array[i].size() + 1);
+    //     pos += array[i].size() + 1;
+    //     // copy status
+    //     *pos++ = watch_set_[i].sync_state;
+    //     *pos++ = '\0';
+    // }
 
     return retval;
 }
@@ -133,14 +132,14 @@ utils::BufferArray FinderSyncHost::getWatchSet(size_t header_size,
 void FinderSyncHost::updateWatchSet() {
     std::unique_lock<std::mutex> lock(update_mutex_);
 
-    // update watch_set_
-    if (rpc_client_->listLocalRepos(&watch_set_)) {
-        qWarning("[FinderSync] update watch set failed");
-        watch_set_.clear();
-        return;
-    }
-    for (LocalRepo &repo : watch_set_)
-        rpc_client_->getSyncStatus(repo);
+    // // update watch_set_
+    // if (rpc_client_->listLocalRepos(&watch_set_)) {
+    //     qWarning("[FinderSync] update watch set failed");
+    //     watch_set_.clear();
+    //     return;
+    // }
+    // for (LocalRepo &repo : watch_set_)
+    //     rpc_client_->getSyncStatus(repo);
     lock.unlock();
 }
 
@@ -229,34 +228,37 @@ void FinderSyncHost::onLockFileSuccess()
 
 bool FinderSyncHost::lookUpFileInformation(const QString &path, QString *repo_id, Account *account, QString *path_in_repo)
 {
-    QString worktree;
-    // work in a mutex
-    {
-        std::unique_lock<std::mutex> watch_set_lock(update_mutex_);
-        for (const LocalRepo &repo : watch_set_)
-            if (isContainsPrefix(path, repo.worktree)) {
-                *repo_id = repo.id;
-                worktree = repo.worktree;
-                break;
-            }
-    }
-    if (worktree.isEmpty() || repo_id->isEmpty())
-        return false;
+    // TODO: Implement it for seadrive
+    return false;
 
-    *path_in_repo = QDir(worktree).relativeFilePath(path);
-    if (path.endsWith("/"))
-        *path_in_repo += "/";
+    // QString worktree;
+    // // work in a mutex
+    // {
+    //     std::unique_lock<std::mutex> watch_set_lock(update_mutex_);
+    //     for (const LocalRepo &repo : watch_set_)
+    //         if (isContainsPrefix(path, repo.worktree)) {
+    //             *repo_id = repo.id;
+    //             worktree = repo.worktree;
+    //             break;
+    //         }
+    // }
+    // if (worktree.isEmpty() || repo_id->isEmpty())
+    //     return false;
 
-    // we have a empty path_in_repo representing the root of the directory,
-    // and we are okay!
-    if (path_in_repo->startsWith("."))
-        return false;
+    // *path_in_repo = QDir(worktree).relativeFilePath(path);
+    // if (path.endsWith("/"))
+    //     *path_in_repo += "/";
 
-    *account = seafApplet->accountManager()->getAccountByRepo(*repo_id);
-    if (!account->isValid())
-        return false;
+    // // we have a empty path_in_repo representing the root of the directory,
+    // // and we are okay!
+    // if (path_in_repo->startsWith("."))
+    //     return false;
 
-    return true;
+    // *account = gui->accountManager()->getAccountByRepo(*repo_id);
+    // if (!account->isValid())
+    //     return false;
+
+    // return true;
 }
 
 void FinderSyncHost::doShowFileHistory(const QString &path)

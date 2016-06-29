@@ -122,6 +122,7 @@ SET(moc_headers
   src/api/api-request.h
   src/api/requests.h
 
+  src/auto-login-service.h
   src/daemon-mgr.h
   src/network-mgr.h
   src/rpc/rpc-client.h
@@ -129,7 +130,9 @@ SET(moc_headers
   src/settings-mgr.h
 
   src/ui/login-dialog.h
+  src/ui/seafilelink-dialog.h
   src/ui/settings-dialog.h
+  src/ui/sharedlink-dialog.h
   src/ui/tray-icon.h
 
   ${platform_specific_moc_headers}
@@ -195,8 +198,10 @@ SET(seadrive_gui_sources
   src/api/event.cpp
   src/api/requests.cpp
   src/api/server-repo.cpp
+  src/api/seaf-dirent.cpp
   src/api/starred-file.cpp
 
+  src/auto-login-service.cpp
   src/daemon-mgr.cpp
   src/main.cpp
   src/network-mgr.cpp
@@ -207,7 +212,9 @@ SET(seadrive_gui_sources
   src/settings-mgr.cpp
 
   src/ui/login-dialog.cpp
+  src/ui/seafilelink-dialog.cpp
   src/ui/settings-dialog.cpp
+  src/ui/sharedlink-dialog.cpp
   src/ui/tray-icon.cpp
   ${platform_specific_sources}
 )

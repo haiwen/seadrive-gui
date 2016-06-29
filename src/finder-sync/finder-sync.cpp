@@ -8,7 +8,7 @@
 #include "utils/utils-mac.h"
 
 static const char* kApplePluginkitBinary = "/usr/bin/pluginkit";
-static const char* kFinderSyncBundleIdentifier = "com.seafile.seafile-client.findersync";
+static const char* kFinderSyncBundleIdentifier = "com.seafile.seadrive.findersync";
 
 // run command and arugments,
 // and return the termination status
@@ -26,9 +26,9 @@ static int runAsCommand(const QString &binary, const QStringList &arguments, QSt
 
 static inline QString pluginPath() {
 #ifdef XCODE_APP
-    return QDir(utils::mac::mainBundlePath()).filePath("Contents/PlugIns/Seafile FinderSync.appex");
+    return QDir(utils::mac::mainBundlePath()).filePath("Contents/PlugIns/SeaDrive FinderSync.appex");
 #else
-    return QDir(utils::mac::mainBundlePath()).filePath("fsplugin/Seafile FinderSync.appex");
+    return QDir(utils::mac::mainBundlePath()).filePath("fsplugin/SeaDrive FinderSync.appex");
 #endif
 }
 
