@@ -73,8 +73,8 @@ Release
 seafile-client.xcodeproj
 CMakeScripts
 seadrive-gui.app
-seafile-fsplugin.xcodeproj
-Seafile FinderSync.appex
+seadrive-fsplugin.xcodeproj
+SeaDrive FinderSync.appex
 
 ## unittest related
 test_*

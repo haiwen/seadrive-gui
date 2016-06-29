@@ -24,4 +24,3 @@ cmake -G Xcode -DCMAKE_BUILD_TYPE="$CONFIG"
 xcodebuild clean
 xcodebuild -jobs "$(sysctl -n hw.ncpu)" -configuration "$CONFIG"
 popd
-
