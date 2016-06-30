@@ -66,8 +66,8 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 
 void SettingsDialog::updateSettings()
 {
+    SettingsManager *mgr = gui->settingsManager();
 
-//     SettingsManager *mgr = gui->settingsManager();
 //     mgr->setNotify(mNotifyCheckBox->checkState() == Qt::Checked);
 //     mgr->setAutoStart(mAutoStartCheckBox->checkState() == Qt::Checked);
 //     mgr->setHideDockIcon(mHideDockIconCheckBox->checkState() == Qt::Checked);
@@ -78,10 +78,12 @@ void SettingsDialog::updateSettings()
 //     mgr->setAllowInvalidWorktree(mAllowInvalidWorktreeCheckBox->checkState() == Qt::Checked);
 //     mgr->setHttpSyncCertVerifyDisabled(mDisableVerifyHttpSyncCert->checkState() == Qt::Checked);
 //     mgr->setAllowRepoNotFoundOnServer(mAllowRepoNotFoundCheckBox->checkState() == Qt::Checked);
-// #ifdef HAVE_FINDER_SYNC_SUPPORT
-//     if(mFinderSyncCheckBox->isEnabled())
-//         mgr->setFinderSyncExtension(mFinderSyncCheckBox->checkState() == Qt::Checked);
-// #endif
+
+#ifdef HAVE_FINDER_SYNC_SUPPORT
+    if(mFinderSyncCheckBox->isEnabled())
+        mgr->setFinderSyncExtension(mFinderSyncCheckBox->checkState() == Qt::Checked);
+#endif
+
 // #ifdef Q_OS_WIN32
 //     mgr->setShellExtensionEnabled(mShellExtCheckBox->checkState() == Qt::Checked);
 // #endif
@@ -120,10 +122,11 @@ void SettingsDialog::closeEvent(QCloseEvent *event)
 
 void SettingsDialog::showEvent(QShowEvent *event)
 {
-//     SettingsManager *mgr = gui->settingsManager();
-//     // mgr->loadSettings();
+    SettingsManager *mgr = gui->settingsManager();
+    mgr->loadSettings();
 
-//     Qt::CheckState state;
+    Qt::CheckState state;
+
 //     state = mgr->hideMainWindowWhenStarted() ? Qt::Checked : Qt::Unchecked;
 //     mHideMainWinCheckBox->setCheckState(state);
 
@@ -145,17 +148,18 @@ void SettingsDialog::showEvent(QShowEvent *event)
 // #if !defined(Q_OS_WIN32) && !defined(Q_OS_MAC)
 //     mAutoStartCheckBox->hide();
 // #endif
-// #ifdef HAVE_FINDER_SYNC_SUPPORT
-//     if (mgr->getFinderSyncExtensionAvailable()) {
-//         mFinderSyncCheckBox->setEnabled(true);
-//         state = mgr->getFinderSyncExtension() ? Qt::Checked : Qt::Unchecked;
-//         mFinderSyncCheckBox->setCheckState(state);
-//     } else {
-//         mFinderSyncCheckBox->setEnabled(false);
-//     }
-// #else
-//     mFinderSyncCheckBox->hide();
-// #endif
+
+#ifdef HAVE_FINDER_SYNC_SUPPORT
+    if (mgr->getFinderSyncExtensionAvailable()) {
+        mFinderSyncCheckBox->setEnabled(true);
+        state = mgr->getFinderSyncExtension() ? Qt::Checked : Qt::Unchecked;
+        mFinderSyncCheckBox->setCheckState(state);
+    } else {
+        mFinderSyncCheckBox->setEnabled(false);
+    }
+#else
+    mFinderSyncCheckBox->hide();
+#endif
 
 // #if defined(Q_OS_WIN32)
 //     state = mgr->shellExtensionEnabled() ? Qt::Checked : Qt::Unchecked;

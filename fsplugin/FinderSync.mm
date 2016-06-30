@@ -328,11 +328,11 @@ static constexpr double kGetFileStatusInterval = 2.0; // seconds
 
 #if 0
 - (NSString *)toolbarItemName {
-  return @"Seafile FinderSync";
+  return @"SeaDrive FinderSync";
 }
 
 - (NSString *)toolbarItemToolTip {
-  return @"Seafile FinderSync: Click the toolbar item for a menu.";
+  return @"SeaDrive FinderSync: Click the toolbar item for a menu.";
 }
 
 - (NSImage *)toolbarItemImage {

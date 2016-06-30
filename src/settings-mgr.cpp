@@ -68,7 +68,7 @@ SettingsManager::SettingsManager()
 
 void SettingsManager::loadSettings()
 {
-    QString str;
+    // QString str;
     // int value;
 
     // if (gui->rpcClient()->seafileGetConfig("notify_sync", &str) >= 0)
