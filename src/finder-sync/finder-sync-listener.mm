@@ -64,7 +64,7 @@ public:
 };
 } // anonymous namespace
 
-static NSString *const kFinderSyncMachPort = @"com.seafile.seafile-client.findersync.machport";
+static NSString *const kFinderSyncMachPort = @"com.seafile.seadrive.findersync.machport";
 // listener related
 static NSThread *finder_sync_listener_thread_ = nil;
 // atomic value
@@ -216,10 +216,12 @@ static void handleGetWatchSet(mach_msg_command_rcv_t* msg) {
         return;
     }
 
+    qDebug("get a mach msg, command = %d", int(msg->command));
+
     switch (msg->command) {
-    case GetWatchSet:
-        handleGetWatchSet(msg);
-        break;
+    // case GetWatchSet:
+    //     handleGetWatchSet(msg);
+    //     break;
     case DoShareLink:
         // handle DoShareLink
         QMetaObject::invokeMethod(finder_sync_host_.get(), "doShareLink",

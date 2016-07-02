@@ -96,7 +96,7 @@ FinderSyncClient::~FinderSyncClient() {
                            MACH_PORT_RIGHT_RECEIVE, -1);
     }
     if (remote_port_) {
-        NSLog(@"disconnecting from Seafile Client");
+        NSLog(@"disconnecting from SeaDrive Client");
         mach_port_deallocate(mach_task_self(), remote_port_);
     }
 }
@@ -109,7 +109,7 @@ void FinderSyncClient::connectionBecomeInvalid() {
         local_port_ = MACH_PORT_NULL;
     }
     if (remote_port_) {
-        NSLog(@"lost connection with Seafile Client");
+        NSLog(@"lost connection with SeaDrive Client");
         mach_port_deallocate(mach_task_self(), remote_port_);
         dispatch_async(dispatch_get_main_queue(), ^{
           [parent_ updateWatchSet:nil];
@@ -139,7 +139,7 @@ bool FinderSyncClient::connect() {
         if (kr != KERN_SUCCESS) {
             return false;
         }
-        NSLog(@"connected to Seafile Client");
+        NSLog(@"connected to SeaDrive Client");
     }
 
     return true;
@@ -177,7 +177,7 @@ void FinderSyncClient::getWatchSet() {
             connectionBecomeInvalid();
             return;
         }
-        NSLog(@"failed to send request to Seafile Client");
+        NSLog(@"failed to send request to SeaDrive Client");
         NSLog(@"mach error %s", mach_error_string(kr));
         connectionBecomeInvalid();
         return;
@@ -216,7 +216,7 @@ void FinderSyncClient::getWatchSet() {
                       MACH_PORT_NULL); /*no notification*/
     }
     if (kr != MACH_MSG_SUCCESS) {
-        NSLog(@"failed to receive Seafile Client's reply");
+        NSLog(@"failed to receive SeaDrive Client's reply");
         NSLog(@"mach error %s", mach_error_string(kr));
         connectionBecomeInvalid();
         return;
@@ -307,7 +307,7 @@ void FinderSyncClient::doGetFileStatus(const char *repo, const char *fileName) {
             connectionBecomeInvalid();
             return;
         }
-        NSLog(@"failed to send request to Seafile Client");
+        NSLog(@"failed to send request to SeaDrive Client");
         NSLog(@"mach error %s", mach_error_string(kr));
         connectionBecomeInvalid();
         return;
@@ -330,7 +330,7 @@ void FinderSyncClient::doGetFileStatus(const char *repo, const char *fileName) {
                   100,             /*timeout, in milliseconds*/
                   MACH_PORT_NULL); /*no notification*/
     if (kr != MACH_MSG_SUCCESS) {
-        NSLog(@"failed to receive Seafile Client's reply");
+        NSLog(@"failed to receive SeaDrive Client's reply");
         NSLog(@"mach error %s", mach_error_string(kr));
         connectionBecomeInvalid();
         return;

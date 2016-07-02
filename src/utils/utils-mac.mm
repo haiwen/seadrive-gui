@@ -297,7 +297,7 @@ void set_auto_start(bool enabled)
         }
 
         if (enabled && !found) {
-            NSString *displayName = @"Seafile Client";
+            NSString *displayName = @"SeaDrive Client";
             IconRef icon = NULL;
             FSRef ref;
             // TODO: replace the deprecated CFURLGetFSRef

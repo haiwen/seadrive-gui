@@ -25,6 +25,9 @@
 #include "rpc/rpc-client.h"
 #include "account-mgr.h"
 #include "settings-mgr.h"
+#ifdef HAVE_FINDER_SYNC_SUPPORT
+#include "finder-sync/finder-sync-listener.h"
+#endif
 
 #if defined(Q_OS_MAC)
 #include "utils/utils-mac.h"
@@ -261,6 +264,9 @@ void SeadriveGui::onDaemonStarted()
     // settings_dlg_->show();
     // settings_dlg_->raise();
     // settings_dlg_->activateWindow();
+#ifdef HAVE_FINDER_SYNC_SUPPORT
+    finderSyncListenerStart();
+#endif
 }
 
 void SeadriveGui::onAboutToQuit()

@@ -218,6 +218,7 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
 }
 
 static std::vector<LocalRepo> watched_repos_;
+static std::string mount_point_;
 static std::unordered_map<std::string, PathStatus> file_status_;
 static FinderSyncClient *client_ = nullptr;
 static constexpr double kGetWatchSetInterval = 5.0;   // seconds
@@ -255,7 +256,15 @@ static constexpr double kGetFileStatusInterval = 2.0; // seconds
                               userInfo:nil
                                repeats:YES];
 
-    [FIFinderSyncController defaultController].directoryURLs = nil;
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:1];
+    // NSString *path = [NSString stringWithUTF8String:"/Users/lin/SeaDrive"];
+    // NSString *path = [NSString stringWithUTF8String:"/Users/lin/"];
+    NSString *path = [NSString stringWithUTF8String:"/"];
+    [array addObject:[NSURL fileURLWithPath:path isDirectory:YES]];
+
+    [FIFinderSyncController defaultController].directoryURLs = [NSSet setWithArray:array];
+
+    // [FIFinderSyncController defaultController].directoryURLs = nil;
 
     return self;
 }
@@ -265,12 +274,17 @@ static constexpr double kGetFileStatusInterval = 2.0; // seconds
     self.client_command_queue_ = nil;
 }
 
+#define DLOG NSLog
+
 #pragma mark - Primary Finder Sync protocol methods
 
 - (void)beginObservingDirectoryAtURL:(NSURL *)url {
     // convert NFD to NFC
     std::string absolute_path =
         url.path.precomposedStringWithCanonicalMapping.UTF8String;
+
+    DLOG (@"FinderSync: NSURL = %@", url);
+    DLOG (@"FinderSync: beginObservingDirectoryAtURL called for %s", absolute_path.c_str());
 
     // find where we have it
     auto repo = findRepoContainPath(watched_repos_, absolute_path);
@@ -288,6 +302,8 @@ static constexpr double kGetFileStatusInterval = 2.0; // seconds
     std::string absolute_path =
         url.path.precomposedStringWithCanonicalMapping.UTF8String;
 
+    // DLOG (@"FinderSync: endObservingDirectoryAtURL called for %s", absolute_path.c_str());
+
     if (absolute_path.back() != '/')
         absolute_path += "/";
 
@@ -298,6 +314,8 @@ static constexpr double kGetFileStatusInterval = 2.0; // seconds
     // convert NFD to NFC
     std::string file_path =
         url.path.precomposedStringWithCanonicalMapping.UTF8String;
+
+    // DLOG (@"FinderSync: requestBadgeIdentifierForURL called for %s", file_path.c_str());
 
     // find where we have it
     auto repo = findRepoContainPath(watched_repos_, file_path);
@@ -344,6 +362,8 @@ static constexpr double kGetFileStatusInterval = 2.0; // seconds
     if (whichMenu != FIMenuKindContextualMenuForItems &&
         whichMenu != FIMenuKindContextualMenuForContainer)
         return nil;
+
+    // DLOG (@"FinderSync: menuForMenuKind called for");
 
     // Produce a menu for the extension.
     NSMenu *menu = [[NSMenu alloc] initWithTitle:@""];
