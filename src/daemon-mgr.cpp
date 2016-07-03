@@ -66,10 +66,15 @@ void DaemonManager::startSeadriveDaemon()
 
     QString fuse_opts = qgetenv("SEADRIVE_FUSE_OPTS");
     if (fuse_opts.isEmpty()) {
+#if defined(Q_OS_MAC)
         QProcess::execute("umount", QStringList(gui->mountDir()));
         fuse_opts = gui->mountDir();
-#if defined(Q_OS_MAC)
         fuse_opts += " -o volname=SeaDrive,noappledouble";
+#elif defined(Q_OS_LINUX)
+        QStringList umount_arguments;
+        umount_arguments << "-u" << gui->mountDir();
+        QProcess::execute("fusermount", umount_arguments);
+        fuse_opts = gui->mountDir();
 #endif
     }
     args << fuse_opts.split(" ");
