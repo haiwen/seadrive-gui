@@ -280,6 +280,7 @@ void FinderSyncClient::getWatchSet() {
         connectionBecomeInvalid();
         return;
     }
+
     if (recv_msg_header->msgh_id != recv_msgh_id) {
         NSLog(@"mach error unmatched message id %d, expected %d",
               recv_msg_header->msgh_id, recv_msgh_id);

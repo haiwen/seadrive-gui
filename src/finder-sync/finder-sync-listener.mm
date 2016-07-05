@@ -107,19 +107,33 @@ static void handleGetWatchSet(mach_msg_command_rcv_t* msg) {
         return;
 
     std::string reply_msg = finder_sync_host_->getWatchSet();
-    printf("reply_msg = %s\n", reply_msg.c_str());
-    uint32_t size = sizeof(mach_msg_header_t) + reply_msg.size();
+    size_t size = sizeof(mach_msg_header_t) + reply_msg.size();
 
-    std::unique_ptr<char[]> buf(new char[size]);
+    // std::unique_ptr<char[]> buf(new char[size]);
+    // bzero((char *)(buf.get()), sizeof(mach_msg_header_t));
+    // memcpy((char *)(buf.get()) + sizeof(mach_msg_header_t),
+    //        reply_msg.c_str(),
+    //        reply_msg.size());
 
-    bzero((char *)(buf.get()), sizeof(mach_msg_header_t));
-    memcpy(buf.get() + sizeof(mach_msg_header_t),
+    utils::BufferArray buf;
+
+    // Apple requires the message buffer to be aligned on word boundary.
+    if (size & 0x3) {
+        int new_size = size + 4 - (size & 0x3);
+        buf.resize(new_size);
+        buf.data()[size] = 0;
+        size = new_size;
+    } else {
+        buf.resize(size);
+    }
+    bzero(buf.data(), sizeof(mach_msg_header_t));
+    memcpy(buf.data() + sizeof(mach_msg_header_t),
            reply_msg.c_str(),
            reply_msg.size());
 
     mach_msg_header_t *reply_msg_header =
-      reinterpret_cast<mach_msg_header_t*>(buf.get());
-    printf("header.msgh_id = %d\n", (int)(msg->header.msgh_id));
+      reinterpret_cast<mach_msg_header_t*>(buf.data());
+
     reply_msg_header->msgh_id = msg->header.msgh_id + 1;
     reply_msg_header->msgh_size = size;
     reply_msg_header->msgh_local_port = MACH_PORT_NULL;

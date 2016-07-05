@@ -17,6 +17,7 @@
 #include "ui/sharedlink-dialog.h"
 #include "ui/seafilelink-dialog.h"
 #include "utils/utils.h"
+#include "utils/file-utils.h"
 
 enum PathStatus {
     SYNC_STATUS_NONE = 0,
@@ -84,7 +85,7 @@ std::string FinderSyncHost::getWatchSet()
     std::unique_lock<std::mutex> lock(update_mutex_);
     QStringList repos;
     foreach (const std::string& repo, watch_set_) {
-        repos << QString::fromUtf8(repo.c_str());
+        repos << toCStr(pathJoin(gui->mountDir(), QString::fromUtf8(repo.c_str())));
     }
 
     return repos.join("\n").toUtf8().data();
