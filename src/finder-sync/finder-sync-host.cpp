@@ -64,6 +64,7 @@ inline static bool isContainsPrefix(const QString &path,
 
 static std::mutex update_mutex_;
 // static std::vector<LocalRepo> watch_set_;
+static std::vector<std::string> watch_set_;
 static std::unique_ptr<GetSharedLinkRequest, QtLaterDeleter> get_shared_link_req_;
 static std::unique_ptr<LockFileRequest, QtLaterDeleter> lock_file_req_;
 
@@ -76,70 +77,31 @@ FinderSyncHost::~FinderSyncHost() {
     lock_file_req_.reset();
 }
 
-utils::BufferArray FinderSyncHost::getWatchSet(size_t header_size,
-                                               int max_size) {
-    // updateWatchSet(); // lock is inside
+std::string FinderSyncHost::getWatchSet()
+{
+    updateWatchSet(); // lock is inside
 
-    // std::unique_lock<std::mutex> lock(update_mutex_);
+    std::unique_lock<std::mutex> lock(update_mutex_);
+    QStringList repos;
+    foreach (const std::string& repo, watch_set_) {
+        repos << QString::fromUtf8(repo.c_str());
+    }
 
-    // std::vector<QByteArray> array;
-    // size_t byte_count = header_size;
-
-    // unsigned count = (max_size >= 0 && watch_set_.size() > (unsigned)max_size)
-    //                      ? max_size
-    //                      : watch_set_.size();
-    // for (unsigned i = 0; i < count; ++i) {
-    //     array.emplace_back(watch_set_[i].worktree.toUtf8());
-    //     byte_count += 36 + array.back().size() + 3;
-    // }
-    // // rount byte_count to longword-size
-    // size_t round_end = byte_count & 3;
-    // if (round_end)
-    //     byte_count += 4 - round_end;
-
-    utils::BufferArray retval;
-    // retval.resize(byte_count);
-
-    // // zeroize rounds
-    // switch (round_end) {
-    // case 1:
-    //     retval[byte_count - 3] = '\0';
-    // case 2:
-    //     retval[byte_count - 2] = '\0';
-    // case 3:
-    //     retval[byte_count - 1] = '\0';
-    // default:
-    //     break;
-    // }
-
-    // assert(retval.size() == byte_count);
-    // char *pos = retval.data() + header_size;
-    // for (unsigned i = 0; i != count; ++i) {
-    //     // copy repo_id
-    //     memcpy(pos, watch_set_[i].id.toUtf8().data(), 36);
-    //     pos += 36;
-    //     // copy worktree
-    //     memcpy(pos, array[i].data(), array[i].size() + 1);
-    //     pos += array[i].size() + 1;
-    //     // copy status
-    //     *pos++ = watch_set_[i].sync_state;
-    //     *pos++ = '\0';
-    // }
-
-    return retval;
+    return repos.join("\n").toUtf8().data();
 }
 
-void FinderSyncHost::updateWatchSet() {
+void FinderSyncHost::updateWatchSet()
+{
     std::unique_lock<std::mutex> lock(update_mutex_);
 
-    // // update watch_set_
-    // if (rpc_client_->listLocalRepos(&watch_set_)) {
-    //     qWarning("[FinderSync] update watch set failed");
-    //     watch_set_.clear();
-    //     return;
-    // }
-    // for (LocalRepo &repo : watch_set_)
-    //     rpc_client_->getSyncStatus(repo);
+    QDir mountPoint(gui->mountDir());
+    QStringList subdirs = mountPoint.entryList(
+        QStringList(), QDir::Dirs | QDir::NoDot | QDir::NoDotDot);
+    watch_set_.clear();
+    foreach (const QString& subdir, subdirs) {
+        watch_set_.emplace_back(subdir.toUtf8().data());
+    }
+
     lock.unlock();
 }
 

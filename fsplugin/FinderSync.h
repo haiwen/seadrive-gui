@@ -11,7 +11,7 @@
 
 @interface FinderSync : FIFinderSync
 - (void)updateWatchSet:(void *)ptr_to_new_repos;
-- (void)updateFileStatus:(const char *)repo_id
+- (void)updateFileStatus:(const char *)subdir
                     path:(const char *)path
                   status:(uint32_t)status;
 @end

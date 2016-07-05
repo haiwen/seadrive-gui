@@ -27,38 +27,38 @@ enum PathStatus : uint32_t {
     MAX_SYNC_STATUS,
 };
 
-struct LocalRepo {
-    LocalRepo() = default;
-    LocalRepo(const LocalRepo &) = delete;
-    LocalRepo &operator=(const LocalRepo &) = delete;
+// struct LocalRepo {
+//     LocalRepo() = default;
+//     LocalRepo(const LocalRepo &) = delete;
+//     LocalRepo &operator=(const LocalRepo &) = delete;
 
-    LocalRepo(LocalRepo &&) = default;
-    LocalRepo &operator=(LocalRepo &&) = default;
-    enum SyncState : uint8_t {
-        SYNC_STATE_DISABLED = 0,
-        SYNC_STATE_WAITING = 1,
-        SYNC_STATE_INIT = 2,
-        SYNC_STATE_ING = 3,
-        SYNC_STATE_DONE = 4,
-        SYNC_STATE_ERROR = 5,
-        SYNC_STATE_UNKNOWN = 6,
-        SYNC_STATE_UNSET = 7,
-        MAX_SYNC_STATE,
-    };
-    LocalRepo(std::string &&r, std::string &&w, SyncState s)
-        : repo_id(std::move(r)), worktree(std::move(w)), status(s) {}
-    LocalRepo(const std::string &r, const std::string &w, SyncState s)
-        : repo_id(r), worktree(w), status(s) {}
-    std::string repo_id;
-    std::string worktree;
-    SyncState status;
-    friend bool operator==(const LocalRepo &lhs, const LocalRepo &rhs) {
-        return lhs.repo_id == rhs.repo_id;
-    }
-    friend bool operator!=(const LocalRepo &lhs, const LocalRepo &rhs) {
-        return !(lhs == rhs);
-    }
-};
+//     LocalRepo(LocalRepo &&) = default;
+//     LocalRepo &operator=(LocalRepo &&) = default;
+//     enum SyncState : uint8_t {
+//         SYNC_STATE_DISABLED = 0,
+//         SYNC_STATE_WAITING = 1,
+//         SYNC_STATE_INIT = 2,
+//         SYNC_STATE_ING = 3,
+//         SYNC_STATE_DONE = 4,
+//         SYNC_STATE_ERROR = 5,
+//         SYNC_STATE_UNKNOWN = 6,
+//         SYNC_STATE_UNSET = 7,
+//         MAX_SYNC_STATE,
+//     };
+//     LocalRepo(std::string &&r, std::string &&w, SyncState s)
+//         : repo_id(std::move(r)), worktree(std::move(w)), status(s) {}
+//     LocalRepo(const std::string &r, const std::string &w, SyncState s)
+//         : repo_id(r), worktree(w), status(s) {}
+//     std::string repo_id;
+//     std::string worktree;
+//     SyncState status;
+//     friend bool operator==(const LocalRepo &lhs, const LocalRepo &rhs) {
+//         return lhs.repo_id == rhs.repo_id;
+//     }
+//     friend bool operator!=(const LocalRepo &lhs, const LocalRepo &rhs) {
+//         return !(lhs == rhs);
+//     }
+// };
 
 class FinderSyncClient {
   public:

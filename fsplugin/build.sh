@@ -1,7 +1,6 @@
 #!/bin/bash
 
-set -x
-set -e
+set -x -e
 
 CURRENT_PWD="$(dirname "${BASH_SOURCE[0]}")"
 
@@ -15,12 +14,15 @@ export CXX=$(xcrun -f clang)
 unset CFLAGS CXXFLAGS LDFLAGS
 
 pushd $CURRENT_PWD
-CONFIG=Debug
-if [ a"$1" != "adebug" ]; then
-  rm -rf CMakeCache.txt CMakeFiles
-  CONFIG=Release
+
+if [[ $1 == "debug" ]]; then
+    CONFIG=Debug
+    [[ -f CMakeCache.txt ]] || cmake -G Xcode -DCMAKE_BUILD_TYPE="$CONFIG"
+else
+    CONFIG=Release
+    rm -rf CMakeCache.txt CMakeFiles
+    cmake -G Xcode -DCMAKE_BUILD_TYPE="$CONFIG"
+    xcodebuild clean
 fi
-cmake -G Xcode -DCMAKE_BUILD_TYPE="$CONFIG"
-xcodebuild clean
+
 xcodebuild -jobs "$(sysctl -n hw.ncpu)" -configuration "$CONFIG"
-popd

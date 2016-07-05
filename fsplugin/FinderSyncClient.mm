@@ -8,8 +8,11 @@
 
 #import "FinderSyncClient.h"
 #include <cstdint>
+#include <sstream>
 #include <servers/bootstrap.h>
+
 #include "../src/utils/stl.h"
+
 
 #if !__has_feature(objc_arc)
 #error this file must be built with ARC support
@@ -34,38 +37,58 @@ static volatile int32_t message_id_ =
 //
 //
 
+static std::vector<std::string> split(const std::string &s, char delim)
+{
+    std::vector<std::string> elems;
+    std::stringstream ss(s);
+    std::string item;
+    while (std::getline(ss, item, delim) && !item.empty()) {
+        elems.push_back(item);
+    }
+    return elems;
+}
+
+
 // buffer
 // <-char[36]-><----- char? ------------>1   1      1
 // <-repo_id--><---- [worktree name] --->0<[status]>0
-static std::vector<LocalRepo> *deserializeWatchSet(const char *buffer,
-                                                   uint32_t size) {
-    std::vector<LocalRepo> *repos = new std::vector<LocalRepo>();
-    const char *const end = buffer + size - 1;
-    const char *pos;
-    while (buffer != end) {
-        unsigned worktree_size;
-        uint8_t status;
-        const char *repo_id = buffer;
-        buffer += 36;
-        pos = buffer;
+static std::vector<std::string>
+*deserializeWatchSet(const std::string& raw_resp)
+{
+    std::vector<std::string> *repos = new std::vector<std::string>();
+    // const char *const end = buffer + size - 1;
+    // const char *pos;
+    // while (buffer != end) {
+    //     unsigned worktree_size;
+    //     uint8_t status;
+    //     const char *repo_id = buffer;
+    //     buffer += 36;
+    //     pos = buffer;
 
-        while (*pos != '\0' && pos != end)
-            ++pos;
-        worktree_size = pos - buffer;
-        pos += 2;
-        if (pos > end || *pos != '\0')
-            break;
+    //     while (*pos != '\0' && pos != end)
+    //         ++pos;
+    //     worktree_size = pos - buffer;
+    //     pos += 2;
+    //     if (pos > end || *pos != '\0')
+    //         break;
 
-        status = *(pos - 1);
-        if (status >= LocalRepo::MAX_SYNC_STATE) {
-            status = LocalRepo::SYNC_STATE_UNSET;
-        }
+    //     status = *(pos - 1);
+    //     if (status >= LocalRepo::MAX_SYNC_STATE) {
+    //         status = LocalRepo::SYNC_STATE_UNSET;
+    //     }
 
-        repos->emplace_back(std::string(repo_id, 36),
-                            std::string(buffer, worktree_size),
-                            static_cast<LocalRepo::SyncState>(status));
-        buffer = ++pos;
+    //     repos->emplace_back(std::string(repo_id, 36),
+    //                         std::string(buffer, worktree_size),
+    //                         static_cast<LocalRepo::SyncState>(status));
+    //     buffer = ++pos;
+    // }
+
+    std::vector<std::string> lines = split(raw_resp, '\n');
+    for (size_t i = 0; i < lines.size(); i++) {
+        std::string line = lines[i];
+        repos->emplace_back(line);
     }
+
     return repos;
 }
 
@@ -77,6 +100,31 @@ struct mach_msg_command_send_t {
     char repo[36];
     char body[kPathMaxSize];
 };
+
+// This is useless. The extension runs in a sandbox environment, and has no
+// permission to access the file system.
+#if 0
+static void listSubDirectories(const std::string& parentDir, std::vector<std::string> *subdirs)
+{
+    NSString *sourcePath = [NSString stringWithUTF8String:parentDir.c_str()];
+    NSArray* dirs = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:sourcePath
+                                                                        error:NULL];
+    if (!dirs) {
+        return;
+    }
+    [dirs enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSString *filename = (NSString *)obj;
+            NSArray *parts = [NSArray arrayWithObjects: sourcePath, filename, nil];
+            NSString *fullpath = [NSString pathWithComponents:parts];
+
+            NSDictionary *attrs = [[NSFileManager defaultManager] attributesOfItemAtPath:fullpath
+                                                                                   error:NULL];
+            if (attrs && [attrs objectForKey:NSFileType] == NSFileTypeDirectory) {
+                subdirs->push_back(fullpath.UTF8String);
+            }
+        }];
+}
+#endif
 
 struct mach_msg_file_status_rcv_t {
     mach_msg_header_t header;
@@ -153,6 +201,17 @@ void FinderSyncClient::getWatchSet() {
     }
     if (!connect())
         return;
+
+    // if (true) {
+    //     std::vector<std::string> *repos = new std::vector<std::string>();
+    //     listSubDirectories("/Users/lin/SeaDrive", repos);
+    //     dispatch_async(dispatch_get_main_queue(), ^{
+    //             [parent_ updateWatchSet:repos];
+    //             delete repos;
+    //         });
+    //     return;
+    // }
+
     mach_msg_command_send_t msg;
     const int32_t recv_msgh_id = OSAtomicAdd32(2, &message_id_) - 1;
     bzero(&msg, sizeof(mach_msg_header_t));
@@ -228,9 +287,13 @@ void FinderSyncClient::getWatchSet() {
         return;
     }
     const char *body = recv_msg.data() + sizeof(mach_msg_header_t);
-    uint32_t body_size =
-        (recv_msg_header->msgh_size - sizeof(mach_msg_header_t));
-    std::vector<LocalRepo> *repos = deserializeWatchSet(body, body_size);
+    uint32_t body_size = (recv_msg_header->msgh_size - sizeof(mach_msg_header_t));
+
+    std::unique_ptr<char[]> buf(new char[body_size+1]);
+    memcpy(buf.get(), body, body_size);
+    buf.get()[body_size] = 0;
+
+    std::vector<std::string> *repos = deserializeWatchSet(buf.get());
     dispatch_async(dispatch_get_main_queue(), ^{
       [parent_ updateWatchSet:repos];
       delete repos;

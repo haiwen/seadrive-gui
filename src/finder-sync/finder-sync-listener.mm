@@ -105,13 +105,23 @@ static void handleGetWatchSet(mach_msg_command_rcv_t* msg) {
     mach_port_t port = msg->header.msgh_remote_port;
     if (!port)
         return;
-    utils::BufferArray reply_msg =
-      finder_sync_host_->getWatchSet(sizeof(mach_msg_header_t));
-    bzero(reply_msg.data(), sizeof(mach_msg_header_t));
+
+    std::string reply_msg = finder_sync_host_->getWatchSet();
+    printf("reply_msg = %s\n", reply_msg.c_str());
+    uint32_t size = sizeof(mach_msg_header_t) + reply_msg.size();
+
+    std::unique_ptr<char[]> buf(new char[size]);
+
+    bzero((char *)(buf.get()), sizeof(mach_msg_header_t));
+    memcpy(buf.get() + sizeof(mach_msg_header_t),
+           reply_msg.c_str(),
+           reply_msg.size());
+
     mach_msg_header_t *reply_msg_header =
-      reinterpret_cast<mach_msg_header_t*>(reply_msg.data());
+      reinterpret_cast<mach_msg_header_t*>(buf.get());
+    printf("header.msgh_id = %d\n", (int)(msg->header.msgh_id));
     reply_msg_header->msgh_id = msg->header.msgh_id + 1;
-    reply_msg_header->msgh_size = reply_msg.size();
+    reply_msg_header->msgh_size = size;
     reply_msg_header->msgh_local_port = MACH_PORT_NULL;
     reply_msg_header->msgh_remote_port = port;
     reply_msg_header->msgh_bits = MACH_MSGH_BITS_REMOTE(msg->header.msgh_bits);
@@ -119,8 +129,7 @@ static void handleGetWatchSet(mach_msg_command_rcv_t* msg) {
     // send the reply
     kern_return_t kr = mach_msg_send(reply_msg_header);
     if (kr != MACH_MSG_SUCCESS) {
-        qDebug("[FinderSync] mach error %s", mach_error_string(kr));
-        qWarning("[FinderSync] failed to send reply");
+        qWarning("[FinderSync] failed to send reply: mach error %s", mach_error_string(kr));
     }
 
     // destroy
@@ -219,9 +228,9 @@ static void handleGetWatchSet(mach_msg_command_rcv_t* msg) {
     qDebug("get a mach msg, command = %d", int(msg->command));
 
     switch (msg->command) {
-    // case GetWatchSet:
-    //     handleGetWatchSet(msg);
-    //     break;
+    case GetWatchSet:
+        handleGetWatchSet(msg);
+        break;
     case DoShareLink:
         // handle DoShareLink
         QMetaObject::invokeMethod(finder_sync_host_.get(), "doShareLink",

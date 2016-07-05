@@ -17,7 +17,7 @@ public:
     FinderSyncHost();
     ~FinderSyncHost();
     // called from another thread
-    utils::BufferArray getWatchSet(size_t header_size, int max_size = -1);
+    std::string getWatchSet();
     // called from another thread
     uint32_t getFileStatus(const char* repo_id, const char* path);
 private slots:
