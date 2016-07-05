@@ -374,7 +374,7 @@ static constexpr double kGetFileStatusInterval = 2.0; // seconds
                                                  @"Get Seafile Internal Link")
                         action:@selector(internalLinkAction:)
                  keyEquivalent:@""];
-    NSImage *seafileImage = [NSImage imageNamed:@"seafile.icns"];
+    NSImage *seafileImage = [NSImage imageNamed:@"seadrive.icns"];
     [shareLinkItem setImage:seafileImage];
     [internalLinkItem setImage:seafileImage];
 
