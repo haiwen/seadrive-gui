@@ -295,6 +295,14 @@ static constexpr double kGetFileStatusInterval = 2.0; // seconds
 }
 
 - (void)endObservingDirectoryAtURL:(NSURL *)url {
+    // This check is for the situation that there are subdirs of the seadrive
+    // mounted point opened in finder, then at the moment when seadrive exits,
+    // this callback would be invoked, but since the NSURL is no longer valid
+    // (because seadrive is unmounted), the `path` property of the url is nil.
+    if (!url.path) {
+        return;
+    }
+
     // convert NFD to NFC
     std::string absolute_path =
         url.path.precomposedStringWithCanonicalMapping.UTF8String;
