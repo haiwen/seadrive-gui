@@ -31,7 +31,7 @@ static const NSArray *const kBadgetIdentifiers = @[
     // According to the document
     // https://developer.apple.com/library/mac/documentation/FinderSync/Reference/FIFinderSyncController_Class/#//apple_ref/occ/instm/FIFinderSyncController/setBadgeIdentifier:forURL:
     // Setting the identifier to an empty string (@"") removes the badge.
-    @"",            // none
+    @"cloud",            // none
     @"syncing",      // syncing
     @"error",        // error
     @"",            // ignored
@@ -44,9 +44,12 @@ static const NSArray *const kBadgetIdentifiers = @[
 
 // Set up images for our badge identifiers. For demonstration purposes,
 static void initializeBadgeImages() {
-    // Set up images for our badge identifiers. For demonstration purposes,
-    // NONE,
-    // @""
+    // Set up images for our badge identifiers.
+    [[FIFinderSyncController defaultController]
+             setBadgeImage:[NSImage imageNamed:@"status-cloud.icns"]
+                     label:NSLocalizedString(@"Cloud", @"Status Cloud")
+        forBadgeIdentifier:kBadgetIdentifiers[PathStatus::SYNC_STATUS_NONE]];
+
     // SYNCING,
     [[FIFinderSyncController defaultController]
              setBadgeImage:[NSImage imageNamed:@"status-syncing.icns"]
