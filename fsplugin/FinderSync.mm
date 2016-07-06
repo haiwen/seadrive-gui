@@ -250,12 +250,12 @@ static constexpr double kGetFileStatusInterval = 2.0; // seconds
                                        userInfo:nil
                                         repeats:YES];
 
-    // self.update_file_status_timer_ = [NSTimer
-    //     scheduledTimerWithTimeInterval:kGetFileStatusInterval
-    //                             target:self
-    //                           selector:@selector(requestUpdateFileStatus)
-    //                           userInfo:nil
-    //                            repeats:YES];
+    self.update_file_status_timer_ = [NSTimer
+        scheduledTimerWithTimeInterval:kGetFileStatusInterval
+                                target:self
+                              selector:@selector(requestUpdateFileStatus)
+                              userInfo:nil
+                               repeats:YES];
 
     // NSMutableArray *array = [NSMutableArray arrayWithCapacity:1];
     // NSString *path = [NSString stringWithUTF8String:"/Users/lin/SeaDrive/My Library"];
@@ -281,7 +281,6 @@ static constexpr double kGetFileStatusInterval = 2.0; // seconds
     std::string absolute_path =
         url.path.precomposedStringWithCanonicalMapping.UTF8String;
 
-    DLOG (@"FinderSync: NSURL = %@", url);
     DLOG (@"FinderSync: beginObservingDirectoryAtURL called for %s", absolute_path.c_str());
 
     // find where we have it
@@ -289,8 +288,8 @@ static constexpr double kGetFileStatusInterval = 2.0; // seconds
     if (repo == watched_repos_.end())
         return;
 
-    if (absolute_path.back() != '/')
-        absolute_path += "/";
+    // if (absolute_path.back() != '/')
+    //     absolute_path += "/";
 
     file_status_.emplace(absolute_path, PathStatus::SYNC_STATUS_NONE);
 }
@@ -302,8 +301,8 @@ static constexpr double kGetFileStatusInterval = 2.0; // seconds
 
     DLOG (@"FinderSync: endObservingDirectoryAtURL called for %s", absolute_path.c_str());
 
-    if (absolute_path.back() != '/')
-        absolute_path += "/";
+    // if (absolute_path.back() != '/')
+    //     absolute_path += "/";
 
     cleanDirectoryStatus(&file_status_, absolute_path);
 }
@@ -320,22 +319,23 @@ static constexpr double kGetFileStatusInterval = 2.0; // seconds
     if (repo == watched_repos_.end())
         return;
 
-    NSNumber *isDirectory;
-    if ([url getResourceValue:&isDirectory
-                       forKey:NSURLIsDirectoryKey
-                        error:nil] &&
-        [isDirectory boolValue]) {
-        file_path += "/";
-    }
+    // NSNumber *isDirectory;
+    // if ([url getResourceValue:&isDirectory
+    //                    forKey:NSURLIsDirectoryKey
+    //                     error:nil] &&
+    //     [isDirectory boolValue]) {
+    //     file_path += "/";
+    // }
 
-    std::string relative_path = getRelativePath(file_path, *repo);
-    if (relative_path.empty())
-        return;
+    // std::string relative_path = getRelativePath(file_path, *repo);
+    // if (relative_path.empty())
+    //     return;
 
     file_status_.emplace(file_path, PathStatus::SYNC_STATUS_NONE);
     setBadgeIdentifierFor(file_path, PathStatus::SYNC_STATUS_NONE);
+
     dispatch_async(self.client_command_queue_, ^{
-        client_->doGetFileStatus(repo->c_str(), relative_path.c_str());
+            client_->doGetFileStatus(file_path.c_str());
     });
 }
 
@@ -577,34 +577,26 @@ static constexpr double kGetFileStatusInterval = 2.0; // seconds
         if (repo == watched_repos_.end()) /* erase it ?*/
             continue;
 
-        std::string relative_path = getRelativePath(pair.first, *repo);
-        if (relative_path.empty())
-            relative_path = "/";
-        // std::string repo_id = repo->repo_id;
-        // dispatch_async(self.client_command_queue_, ^{
-        //   client_->doGetFileStatus(repo_id.c_str(), relative_path.c_str());
-        // });
+        // std::string relative_path = getRelativePath(pair.first, *repo);
+        // if (relative_path.empty())
+        //     relative_path = "/";
+
+        dispatch_async(self.client_command_queue_, ^{
+                client_->doGetFileStatus(pair.first.c_str());
+        });
     }
 }
 
-- (void)updateFileStatus:(const char *)subdir
-                    path:(const char *)path
+- (void)updateFileStatus:(const char *)path
                   status:(uint32_t)status {
-    auto repo = findRepo(watched_repos_, subdir);
-    if (repo == watched_repos_.end())
-        return;
-
-    std::string absolute_path =
-        *repo + (*path == '/' ? "" : "/") + path;
-
-    // if the path is erased, ignore it!
-    auto file = file_status_.find(absolute_path);
+    // Ignore the update if if the path is not monitored anymore.
+    auto file = file_status_.find(path);
     if (file == file_status_.end())
         return;
 
     // always set up, avoid some bugs
     file->second = static_cast<PathStatus>(status);
-    setBadgeIdentifierFor(absolute_path, static_cast<PathStatus>(status));
+    setBadgeIdentifierFor(path, static_cast<PathStatus>(status));
 }
 
 @end

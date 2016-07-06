@@ -479,6 +479,11 @@ void SeafileTrayIcon::showSettingsWindow()
     gui->settingsDialog()->activateWindow();
 }
 
+void SeafileTrayIcon::showLoginDialog()
+{
+    showLoginDialog(Account());
+}
+
 void SeafileTrayIcon::showLoginDialog(const Account& account)
 {
     if (!login_dlg_) {

@@ -87,7 +87,7 @@ static void handleGetFileStatus(mach_msg_command_rcv_t* msg) {
     reply_msg_header->msgh_local_port = MACH_PORT_NULL;
     reply_msg_header->msgh_remote_port = port;
     reply_msg_header->msgh_bits = MACH_MSGH_BITS_REMOTE(msg->header.msgh_bits);
-    reply_msg.status = finder_sync_host_->getFileStatus(msg->repo, msg->body);
+    reply_msg.status = finder_sync_host_->getFileStatus(QString::fromUtf8(msg->body));
 
     // send the reply
     kern_return_t kr = mach_msg_send(reply_msg_header);
@@ -239,7 +239,7 @@ static void handleGetWatchSet(mach_msg_command_rcv_t* msg) {
         return;
     }
 
-    qDebug("get a mach msg, command = %d", int(msg->command));
+    // qDebug("get a mach msg, command = %d", int(msg->command));
 
     switch (msg->command) {
     case GetWatchSet:

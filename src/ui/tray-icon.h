@@ -48,6 +48,7 @@ public:
 
 public slots:
     void showSettingsWindow();
+    void showLoginDialog();
     void showLoginDialog(const Account& account);
     void onLoginDialogClosed();
 

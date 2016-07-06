@@ -19,7 +19,7 @@ public:
     // called from another thread
     std::string getWatchSet();
     // called from another thread
-    uint32_t getFileStatus(const char* repo_id, const char* path);
+    uint32_t getFileStatus(const QString& path);
 private slots:
     void updateWatchSet();
     void doLockFile(const QString &path, bool lock);

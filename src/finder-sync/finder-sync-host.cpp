@@ -106,19 +106,36 @@ void FinderSyncHost::updateWatchSet()
     lock.unlock();
 }
 
-uint32_t FinderSyncHost::getFileStatus(const char *repo_id, const char *path) {
+uint32_t FinderSyncHost::getFileStatus(const QString& path) {
     std::unique_lock<std::mutex> lock(update_mutex_);
+    
+    // printf("path = %s\n", toCStr(path));
 
-    QString repo = QString::fromUtf8(repo_id, 36);
-    QString path_in_repo = path;
+    // The path of the file in relative to the mount point.
+    QString relative_path = path.mid(gui->mountDir().length() + 1);
+
+    if (relative_path.endsWith("/")) {
+        relative_path = relative_path.left(relative_path.length() - 1);
+    }
+
+    // printf("relative_path is %s\n", toCStr(relative_path));
+
+    QString repo;
+    QString path_in_repo = "";
+    if (relative_path.contains('/')) {
+        int pos = relative_path.indexOf('/');
+        repo = relative_path.left(pos);
+        path_in_repo = relative_path.mid(pos);
+        // printf("repo = %s, path_in_repo = %s\n", repo.toUtf8().data(), path_in_repo.toUtf8().data());
+    } else {
+        repo = relative_path;
+    }
+
     QString status;
-    bool isDirectory = path_in_repo.endsWith('/');
-    if (isDirectory)
-        path_in_repo.resize(path_in_repo.size() - 1);
     if (rpc_client_->getRepoFileStatus(
             repo,
             path_in_repo,
-            isDirectory, &status) != 0) {
+            &status) != 0) {
         return PathStatus::SYNC_STATUS_NONE;
     }
 

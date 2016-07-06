@@ -50,9 +50,8 @@ public:
     int setRepoToken(const QString &repo_id,
                      const QString& token);
 
-    int getRepoFileStatus(const QString& repo_id,
+    int getRepoFileStatus(const QString& repo_uname,
                           const QString& path_in_repo,
-                          bool isdir,
                           QString *status);
 
     int markFileLockState(const QString& repo_id,

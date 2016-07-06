@@ -76,7 +76,7 @@ class FinderSyncClient {
     ~FinderSyncClient();
     void getWatchSet();
     void doSendCommandWithPath(CommandType command, const char *fileName);
-    void doGetFileStatus(const char *repo, const char *fileName);
+    void doGetFileStatus(const char *path);
 
   private:
     bool connect();

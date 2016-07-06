@@ -337,7 +337,7 @@ void FinderSyncClient::doSendCommandWithPath(CommandType command,
     mach_msg_destroy(&msg.header);
 }
 
-void FinderSyncClient::doGetFileStatus(const char *repo, const char *fileName) {
+void FinderSyncClient::doGetFileStatus(const char *path) {
     if ([NSThread isMainThread]) {
         NSLog(@"%s isn't supported to be called from main thread",
               __PRETTY_FUNCTION__);
@@ -354,8 +354,7 @@ void FinderSyncClient::doGetFileStatus(const char *repo, const char *fileName) {
     msg.header.msgh_size = sizeof(msg);
     msg.header.msgh_bits =
         MACH_MSGH_BITS(MACH_MSG_TYPE_COPY_SEND, MACH_MSG_TYPE_MAKE_SEND_ONCE);
-    strncpy(msg.repo, repo, 36);
-    strncpy(msg.body, fileName, kPathMaxSize);
+    strncpy(msg.body, path, kPathMaxSize);
     msg.version = kFinderSyncProtocolVersion;
     msg.command = DoGetFileStatus;
     // send a message and wait for the reply
@@ -409,12 +408,8 @@ void FinderSyncClient::doGetFileStatus(const char *repo, const char *fileName) {
     if (status >= PathStatus::MAX_SYNC_STATUS)
         status = PathStatus::SYNC_STATUS_NONE;
 
-    // copy to heap before starting block
-    std::string repo_id = repo;
-    std::string path = fileName;
     dispatch_async(dispatch_get_main_queue(), ^{
-      [parent_ updateFileStatus:repo_id.c_str()
-                           path:path.c_str()
+      [parent_ updateFileStatus:path
                          status:status];
     });
     mach_msg_destroy(recv_msg_header);
