@@ -65,6 +65,13 @@ static void initializeBadgeImages() {
              setBadgeImage:[NSImage imageNamed:@"status-done.icns"]
                      label:NSLocalizedString(@"Finished", @"Status Finished")
         forBadgeIdentifier:kBadgetIdentifiers[PathStatus::SYNC_STATUS_SYNCED]];
+
+    // READONLY
+    [[FIFinderSyncController defaultController]
+             setBadgeImage:[NSImage imageNamed:@"status-readonly.icns"]
+                     label:NSLocalizedString(@"ReadOnly", @"Status ReadOnly")
+        forBadgeIdentifier:kBadgetIdentifiers[PathStatus::SYNC_STATUS_READONLY]];
+
     // PAUSED,
     [[FIFinderSyncController defaultController]
              setBadgeImage:[NSImage imageNamed:@"status-ignored.icns"]
