@@ -3,15 +3,49 @@
 #include <QtGlobal>
 #include <QtWidgets>
 // #include "QtAwesome.h"
+#include "account.h"
 #include "utils/utils.h"
 #include "utils/utils-mac.h"
 
-SeafileLinkDialog::SeafileLinkDialog(const QString& repo_id, const Account& account, const QString& path, QWidget *parent)
-    // : web_link_(OpenLocalHelper::instance()->generateLocalFileWebUrl(repo_id, account, path).toEncoded())
-    // , protocol_link_(OpenLocalHelper::instance()->generateLocalFileSeafileUrl(repo_id, account, path).toEncoded())
+namespace {
+
+const char *kSeafileProtocolScheme = "seafile";
+const char *kSeafileProtocolHostOpenFile = "openfile";
+
+} // namespace
+
+SeafileLinkDialog::SeafileLinkDialog(const QString &repo_id,
+                                     const Account &account,
+                                     const QString &path,
+                                     QWidget *parent)
 {
     setWindowTitle(tr("%1 Internal Link").arg(getBrand()));
     setWindowIcon(QIcon(":/images/seafile.png"));
+
+    {
+        QString fixed_path = path.startsWith("/") ? path : "/" + path;
+        if (fixed_path.endsWith("/"))
+            web_link_ = account.getAbsoluteUrl(
+                                "/#common/lib/" + repo_id +
+                                (fixed_path == "/" ? "/" : fixed_path.left(fixed_path.size() - 1)))
+                            .toEncoded();
+        else
+            web_link_ =
+                account.getAbsoluteUrl("/lib/" + repo_id + "/file" + fixed_path).toEncoded();
+    }
+
+    {
+        QUrl url;
+        url.setScheme(kSeafileProtocolScheme);
+        url.setHost(kSeafileProtocolHostOpenFile);
+
+        QUrlQuery url_query;
+        url_query.addQueryItem("repo_id",  repo_id);
+        url_query.addQueryItem("path",  path);
+        url.setQuery(url_query);
+
+        protocol_link_ = url.toEncoded();
+    }
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->setSpacing(5);

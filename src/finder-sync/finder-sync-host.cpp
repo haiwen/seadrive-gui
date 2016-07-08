@@ -83,16 +83,16 @@ static inline PathStatus getPathStatusFromString(const QString &status) {
     return SYNC_STATUS_NONE;
 }
 
-inline static bool isContainsPrefix(const QString &path,
-                                    const QString &prefix) {
-    if (prefix.size() > path.size())
-        return false;
-    if (!path.startsWith(prefix))
-        return false;
-    if (prefix.size() < path.size() && path[prefix.size()] != '/')
-        return false;
-    return true;
-}
+// inline static bool isContainsPrefix(const QString &path,
+//                                     const QString &prefix) {
+//     if (prefix.size() > path.size())
+//         return false;
+//     if (!path.startsWith(prefix))
+//         return false;
+//     if (prefix.size() < path.size() && path[prefix.size()] != '/')
+//         return false;
+//     return true;
+// }
 
 static std::mutex update_mutex_;
 // static std::vector<LocalRepo> watch_set_;
@@ -180,20 +180,32 @@ void FinderSyncHost::doShareLink(const QString &path) {
 
 void FinderSyncHost::doInternalLink(const QString &path)
 {
+    const Account& account = gui->accountManager()->currentAccount();
+    if (!account.isValid()) {
+        return;
+    }
+
     QString repo_id;
-    Account account;
     QString path_in_repo;
     if (!lookUpFileInformation(path, &repo_id, &path_in_repo)) {
         qWarning("[FinderSync] invalid path %s", path.toUtf8().data());
         return;
     }
-    SeafileLinkDialog(repo_id, account, path_in_repo).exec();
+    SeafileLinkDialog *dialog = new SeafileLinkDialog(repo_id, account, path_in_repo);
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+    dialog->show();
+    dialog->raise();
+    dialog->activateWindow();
 }
 
 void FinderSyncHost::doLockFile(const QString &path, bool lock)
 {
+    const Account& account = gui->accountManager()->currentAccount();
+    if (!account.isValid()) {
+        return;
+    }
+
     QString repo_id;
-    Account account;
     QString path_in_repo;
     if (!lookUpFileInformation(path, &repo_id, &path_in_repo)) {
         qWarning("[FinderSync] invalid path %s", path.toUtf8().data());

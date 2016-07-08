@@ -15,8 +15,8 @@ private slots:
     void onCopyProtocolText();
 
 private:
-    const QString web_link_;
-    const QString protocol_link_;
+    QString web_link_;
+    QString protocol_link_;
     QLineEdit *web_editor_;
     QLineEdit *protocol_editor_;
 };

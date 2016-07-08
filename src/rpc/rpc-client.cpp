@@ -242,7 +242,10 @@ int SeafileRpcClient::getRepoFileStatus(const QString& repo_uname,
         "string", toCStr(repo_uname),
         "string", toCStr(path_in_repo));
     if (error) {
-        qWarning("failed to get path status: %s\n", error->message);
+        qWarning("failed to get path status for %s/%s: %s\n",
+                 toCStr(repo_uname),
+                 toCStr(path_in_repo),
+                 error->message);
         g_error_free(error);
         return -1;
     }
