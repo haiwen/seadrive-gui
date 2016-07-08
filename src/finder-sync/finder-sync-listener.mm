@@ -246,13 +246,11 @@ static void handleGetWatchSet(mach_msg_command_rcv_t* msg) {
         handleGetWatchSet(msg);
         break;
     case DoShareLink:
-        // handle DoShareLink
         QMetaObject::invokeMethod(finder_sync_host_.get(), "doShareLink",
                                   Qt::QueuedConnection,
                                   Q_ARG(QString, msg->body));
         break;
     case DoInternalLink:
-        // handle DoShareLink
         QMetaObject::invokeMethod(finder_sync_host_.get(), "doInternalLink",
                                   Qt::QueuedConnection,
                                   Q_ARG(QString, msg->body));

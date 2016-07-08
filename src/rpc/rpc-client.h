@@ -64,6 +64,8 @@ public:
 
     bool switchAccount(const Account& account);
 
+    bool getRepoIdByPath(const QString& repo_uname, QString *repo_id);
+
 private:
     Q_DISABLE_COPY(SeafileRpcClient)
 

@@ -29,7 +29,7 @@ private slots:
     void onLockFileSuccess();
     void doShowFileHistory(const QString& path);
 private:
-    bool lookUpFileInformation(const QString &path, QString *repo_id, Account *account, QString *path_in_repo);
+    bool lookUpFileInformation(const QString &path, QString *repo_id, QString *path_in_repo);
     SeafileRpcClient *rpc_client_;
 };
 

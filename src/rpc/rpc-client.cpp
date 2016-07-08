@@ -321,3 +321,26 @@ bool SeafileRpcClient::switchAccount(const Account& account)
     qInfo() << "Switched to account" << account;
     return true;
 }
+
+bool SeafileRpcClient::getRepoIdByPath(const QString &repo_uname,
+                                       QString *repo_id)
+{
+    GError *error = NULL;
+    char *ret = searpc_client_call__string (
+        seadrive_rpc_client_,
+        "seafile_get_repo_id_by_uname",
+        &error, 1,
+        "string", toCStr(repo_uname));
+    if (error) {
+        qWarning("failed to get repo id of %s: %s\n",
+                 toCStr(repo_uname),
+                 error->message);
+        g_error_free(error);
+        return -1;
+    }
+
+    *repo_id = ret;
+
+    g_free(ret);
+    return true;
+}

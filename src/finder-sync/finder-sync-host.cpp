@@ -39,6 +39,37 @@ public:
     ptr->deleteLater();
   }
 };
+
+bool getRepoAndRelativePath(const QString &path,
+                            QString *repo,
+                            QString *path_in_repo)
+{
+    // The path of the file in relative to the mount point.
+    QString relative_path = path.mid(gui->mountDir().length() + 1);
+
+    if (relative_path.isEmpty()) {
+        return false;
+    }
+
+    if (relative_path.endsWith("/")) {
+        relative_path = relative_path.left(relative_path.length() - 1);
+    }
+
+    // printf("relative_path is %s\n", toCStr(relative_path));
+
+    if (relative_path.contains('/')) {
+        int pos = relative_path.indexOf('/');
+        *repo = relative_path.left(pos);
+        *path_in_repo = relative_path.mid(pos);
+        // printf("repo = %s, path_in_repo = %s\n", repo.toUtf8().data(),
+        // path_in_repo.toUtf8().data());
+    } else {
+        *repo = relative_path;
+        *path_in_repo = "";
+    }
+    return true;
+}
+
 } // anonymous namespace
 
 static const char *const kPathStatus[] = {
@@ -106,36 +137,18 @@ void FinderSyncHost::updateWatchSet()
     lock.unlock();
 }
 
-uint32_t FinderSyncHost::getFileStatus(const QString& path) {
+uint32_t FinderSyncHost::getFileStatus(const QString &path)
+{
     std::unique_lock<std::mutex> lock(update_mutex_);
-    
-    // printf("path = %s\n", toCStr(path));
-
-    // The path of the file in relative to the mount point.
-    QString relative_path = path.mid(gui->mountDir().length() + 1);
-
-    if (relative_path.endsWith("/")) {
-        relative_path = relative_path.left(relative_path.length() - 1);
-    }
-
-    // printf("relative_path is %s\n", toCStr(relative_path));
 
     QString repo;
     QString path_in_repo = "";
-    if (relative_path.contains('/')) {
-        int pos = relative_path.indexOf('/');
-        repo = relative_path.left(pos);
-        path_in_repo = relative_path.mid(pos);
-        // printf("repo = %s, path_in_repo = %s\n", repo.toUtf8().data(), path_in_repo.toUtf8().data());
-    } else {
-        repo = relative_path;
+    if (!getRepoAndRelativePath(path, &repo, &path_in_repo)) {
+        return SYNC_STATUS_NONE;
     }
 
     QString status;
-    if (rpc_client_->getRepoFileStatus(
-            repo,
-            path_in_repo,
-            &status) != 0) {
+    if (rpc_client_->getRepoFileStatus(repo, path_in_repo, &status) != 0) {
         return PathStatus::SYNC_STATUS_NONE;
     }
 
@@ -144,10 +157,14 @@ uint32_t FinderSyncHost::getFileStatus(const QString& path) {
 
 void FinderSyncHost::doShareLink(const QString &path) {
     QString repo_id;
-    Account account;
     QString path_in_repo;
-    if (!lookUpFileInformation(path, &repo_id, &account, &path_in_repo)) {
+    if (!lookUpFileInformation(path, &repo_id, &path_in_repo)) {
         qWarning("[FinderSync] invalid path %s", path.toUtf8().data());
+        return;
+    }
+
+    const Account& account = gui->accountManager()->currentAccount();
+    if (!account.isValid()) {
         return;
     }
 
@@ -166,7 +183,7 @@ void FinderSyncHost::doInternalLink(const QString &path)
     QString repo_id;
     Account account;
     QString path_in_repo;
-    if (!lookUpFileInformation(path, &repo_id, &account, &path_in_repo)) {
+    if (!lookUpFileInformation(path, &repo_id, &path_in_repo)) {
         qWarning("[FinderSync] invalid path %s", path.toUtf8().data());
         return;
     }
@@ -178,7 +195,7 @@ void FinderSyncHost::doLockFile(const QString &path, bool lock)
     QString repo_id;
     Account account;
     QString path_in_repo;
-    if (!lookUpFileInformation(path, &repo_id, &account, &path_in_repo)) {
+    if (!lookUpFileInformation(path, &repo_id, &path_in_repo)) {
         qWarning("[FinderSync] invalid path %s", path.toUtf8().data());
         return;
     }
@@ -206,47 +223,23 @@ void FinderSyncHost::onLockFileSuccess()
     rpc_client_->markFileLockState(req->repoId(), req->path(), req->lock());
 }
 
-bool FinderSyncHost::lookUpFileInformation(const QString &path, QString *repo_id, Account *account, QString *path_in_repo)
+bool FinderSyncHost::lookUpFileInformation(const QString &path,
+                                           QString *ptr_repo_id,
+                                           QString *ptr_path_in_repo)
 {
-    // TODO: Implement it for seadrive
-    return false;
+    QString repo;
+    if (!getRepoAndRelativePath(path, &repo, ptr_path_in_repo)) {
+        return false;
+    }
 
-    // QString worktree;
-    // // work in a mutex
-    // {
-    //     std::unique_lock<std::mutex> watch_set_lock(update_mutex_);
-    //     for (const LocalRepo &repo : watch_set_)
-    //         if (isContainsPrefix(path, repo.worktree)) {
-    //             *repo_id = repo.id;
-    //             worktree = repo.worktree;
-    //             break;
-    //         }
-    // }
-    // if (worktree.isEmpty() || repo_id->isEmpty())
-    //     return false;
-
-    // *path_in_repo = QDir(worktree).relativeFilePath(path);
-    // if (path.endsWith("/"))
-    //     *path_in_repo += "/";
-
-    // // we have a empty path_in_repo representing the root of the directory,
-    // // and we are okay!
-    // if (path_in_repo->startsWith("."))
-    //     return false;
-
-    // *account = gui->accountManager()->getAccountByRepo(*repo_id);
-    // if (!account->isValid())
-    //     return false;
-
-    // return true;
+    return rpc_client_->getRepoIdByPath(repo, ptr_repo_id);
 }
 
 void FinderSyncHost::doShowFileHistory(const QString &path)
 {
     QString repo_id;
-    Account account;
     QString path_in_repo;
-    if (!lookUpFileInformation(path, &repo_id, &account, &path_in_repo)) {
+    if (!lookUpFileInformation(path, &repo_id, &path_in_repo)) {
         qWarning("[FinderSync] invalid path %s", path.toUtf8().data());
         return;
     }
