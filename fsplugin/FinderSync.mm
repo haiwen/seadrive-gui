@@ -291,9 +291,6 @@ static constexpr double kGetFileStatusInterval = 2.0; // seconds
     if (repo == watched_repos_.end())
         return;
 
-    // if (absolute_path.back() != '/')
-    //     absolute_path += "/";
-
     file_status_.emplace(absolute_path, PathStatus::SYNC_STATUS_NONE);
 }
 
@@ -319,28 +316,18 @@ static constexpr double kGetFileStatusInterval = 2.0; // seconds
 }
 
 - (void)requestBadgeIdentifierForURL:(NSURL *)url {
-    // convert NFD to NFC
+    if (!url.path) {
+        return;
+    }
+
     std::string file_path =
         url.path.precomposedStringWithCanonicalMapping.UTF8String;
 
     DLOG (@"FinderSync: requestBadgeIdentifierForURL called for %s", file_path.c_str());
 
-    // find where we have it
     auto repo = findRepoContainPath(watched_repos_, file_path);
     if (repo == watched_repos_.end())
         return;
-
-    // NSNumber *isDirectory;
-    // if ([url getResourceValue:&isDirectory
-    //                    forKey:NSURLIsDirectoryKey
-    //                     error:nil] &&
-    //     [isDirectory boolValue]) {
-    //     file_path += "/";
-    // }
-
-    // std::string relative_path = getRelativePath(file_path, *repo);
-    // if (relative_path.empty())
-    //     return;
 
     file_status_.emplace(file_path, PathStatus::SYNC_STATUS_NONE);
     setBadgeIdentifierFor(file_path, PathStatus::SYNC_STATUS_NONE);
@@ -585,15 +572,19 @@ static constexpr double kGetFileStatusInterval = 2.0; // seconds
 - (void)requestUpdateFileStatus {
     for (const auto &pair : file_status_) {
         auto repo = findRepoContainPath(watched_repos_, pair.first);
-        if (repo == watched_repos_.end()) /* erase it ?*/
+        if (repo == watched_repos_.end())
             continue;
 
-        // std::string relative_path = getRelativePath(pair.first, *repo);
-        // if (relative_path.empty())
-        //     relative_path = "/";
+        // Capture the current value of the pair so we can use it in the blocks
+        // safely.
+        auto pair_for_capture = pair;
 
         dispatch_async(self.client_command_queue_, ^{
-                client_->doGetFileStatus(pair.first.c_str());
+                // if (pair.first.size() == 0) {
+                //     DLOG (@"FinderSync: pair.first.size() = 0 (pair_for_capture.first.size() = %d)", pair_for_capture.first.size());
+                // }
+                // client_->doGetFileStatus(pair.first.c_str());
+                client_->doGetFileStatus(pair_for_capture.first.c_str());
         });
     }
 }
