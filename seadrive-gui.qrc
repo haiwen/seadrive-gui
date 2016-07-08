@@ -165,6 +165,8 @@
     <file>images/account-else@2x.png</file>
     <file>images/logout.png</file>
     <file>images/logout@2x.png</file>
+    <file>images/copy.png</file>
+    <file>images/copy@2x.png</file>
     <file>images/filebrowser/backward.png</file>
     <file>images/filebrowser/backward@2x.png</file>
     <file>images/filebrowser/forward.png</file>

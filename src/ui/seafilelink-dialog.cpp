@@ -52,7 +52,7 @@ SeafileLinkDialog::SeafileLinkDialog(const QString &repo_id,
     layout->setContentsMargins(9, 9, 9, 9);
 
     QString copy_to_str = tr("Copy to clipboard");
-    // QIcon copy_to_icon = awesome->icon(icon_copy);
+    QIcon copy_to_icon(":/images/copy.png");
 
     //
     // create web link related
@@ -70,7 +70,8 @@ SeafileLinkDialog::SeafileLinkDialog(const QString &repo_id,
     web_layout->addWidget(web_editor_);
 
     QPushButton *web_copy_to = new QPushButton;
-    // web_copy_to->setIcon(copy_to_icon);
+    web_copy_to->setIcon(copy_to_icon);
+    web_copy_to->setIconSize(QSize(16, 16));
     web_copy_to->setToolTip(copy_to_str);
     web_layout->addWidget(web_copy_to);
     connect(web_copy_to, SIGNAL(clicked()), this, SLOT(onCopyWebText()));
@@ -92,7 +93,8 @@ SeafileLinkDialog::SeafileLinkDialog(const QString &repo_id,
     protocol_layout->addWidget(protocol_editor_);
 
     QPushButton *protocol_copy_to = new QPushButton;
-    // protocol_copy_to->setIcon(copy_to_icon);
+    protocol_copy_to->setIcon(copy_to_icon);
+    protocol_copy_to->setIconSize(QSize(16, 16));
     protocol_copy_to->setToolTip(copy_to_str);
     protocol_layout->addWidget(protocol_copy_to);
     connect(protocol_copy_to, SIGNAL(clicked()), this, SLOT(onCopyProtocolText()));
