@@ -582,21 +582,17 @@ static constexpr double kGetFileStatusInterval = 2.0; // seconds
         if (repo == watched_repos_.end())
             continue;
 
-        // Capture the current value of the pair so we can use it in the blocks
+        // Capture the current value of the path so we can use it in the blocks
         // safely.
-        auto pair_for_capture = pair;
+        std::string path_in_block = pair.first;
 
         dispatch_async(self.client_command_queue_, ^{
-                // if (pair.first.size() == 0) {
-                //     DLOG (@"FinderSync: pair.first.size() = 0 (pair_for_capture.first.size() = %d)", pair_for_capture.first.size());
-                // }
-                // client_->doGetFileStatus(pair.first.c_str());
-                client_->doGetFileStatus(pair_for_capture.first.c_str());
+                client_->doGetFileStatus(path_in_block.c_str());
         });
     }
 }
 
-- (void)updateFileStatus:(const char *)path
+- (void)updateFileStatus:(const char*)path
                   status:(uint32_t)status {
     // Ignore the update if if the path is not monitored anymore.
     auto file = file_status_.find(path);

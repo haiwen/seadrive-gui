@@ -337,7 +337,7 @@ void FinderSyncClient::doSendCommandWithPath(CommandType command,
     mach_msg_destroy(&msg.header);
 }
 
-void FinderSyncClient::doGetFileStatus(const char *path) {
+void FinderSyncClient::doGetFileStatus(const char* path) {
     if ([NSThread isMainThread]) {
         NSLog(@"%s isn't supported to be called from main thread",
               __PRETTY_FUNCTION__);
@@ -408,8 +408,13 @@ void FinderSyncClient::doGetFileStatus(const char *path) {
     if (status >= PathStatus::MAX_SYNC_STATUS)
         status = PathStatus::SYNC_STATUS_NONE;
 
+    // Copy the path to a std::string so it can would captured in the block.
+    //
+    // If we use the (const char*) `path` in the block, the content of `path` may
+    // become invalid when the block is executed in the main thread.
+    std::string path_in_block = path;
     dispatch_async(dispatch_get_main_queue(), ^{
-      [parent_ updateFileStatus:path
+      [parent_ updateFileStatus:path_in_block.c_str()
                          status:status];
     });
     mach_msg_destroy(recv_msg_header);
