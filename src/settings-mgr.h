@@ -15,6 +15,42 @@ class SettingsManager : public QObject {
     Q_OBJECT
 
 public:
+    enum ProxyType {
+        NoProxy = 0,
+        HttpProxy = 1,
+        SocksProxy = 2,
+        SystemProxy = 3
+    };
+
+    struct SeafileProxy {
+        ProxyType type;
+
+        QString host;
+        int port;
+        QString username;
+        QString password;
+
+        SeafileProxy(ProxyType _type = NoProxy,
+                     const QString _host = QString(),
+                     int _port = 0,
+                     const QString& _username = QString(),
+                     const QString& _password = QString())
+            : type(_type),
+              host(_host),
+              port(_port),
+              username(_username),
+              password(_password)
+        {
+        }
+
+        void toQtNetworkProxy(QNetworkProxy *proxy) const;
+
+        bool operator==(const SeafileProxy& rhs) const;
+        bool operator!=(const SeafileProxy& rhs) const { return !(*this == rhs); };
+
+        static SeafileProxy fromQtNetworkProxy(const QNetworkProxy& proxy);
+    };
+
     SettingsManager();
 
     void loadSettings();
@@ -28,6 +64,10 @@ public:
     unsigned int maxDownloadRatio() { return maxDownloadRatio_; }
     unsigned int maxUploadRatio() { return maxUploadRatio_; }
     bool syncExtraTempFile() { return sync_extra_temp_file_; }
+
+    void getProxy(QNetworkProxy *proxy) const;
+    SeafileProxy getProxy() const { return current_proxy_; };
+    void setProxy(const SeafileProxy& proxy);
 
     void setNotify(bool notify);
     void setAutoStart(bool autoStart);
@@ -79,12 +119,23 @@ public:
 
     // Remove all settings from system when uninstall
     static void removeAllSettings();
+    // Write the system proxy information, to be read by seadrive daemon.
+    void writeSystemProxyInfo(const QUrl& url, const QString& file_path);
 
 signals:
     void autoSyncChanged(bool auto_sync);
 
+private slots:
+    void checkSystemProxy();
+    void onSystemProxyPolled(const QNetworkProxy& proxy);
+
 private:
     Q_DISABLE_COPY(SettingsManager)
+
+    void loadProxySettings();
+    void applyProxySettings();
+    void writeProxySettingsToDaemon(const SeafileProxy& proxy);
+    void writeProxyDetailsToDaemon(const SeafileProxy& proxy);
 
     bool auto_sync_;
     bool bubbleNotifycation_;
@@ -96,6 +147,27 @@ private:
     unsigned int maxUploadRatio_;
     bool verify_http_sync_cert_disabled_;
     bool shell_ext_enabled_;
+
+    // proxy settings
+    SeafileProxy current_proxy_;
+    QNetworkProxy last_system_proxy_;
+
+    QTimer *check_system_proxy_timer_;
+};
+
+
+// Use to periodically reading the current system proxy.
+class SystemProxyPoller : public QObject, public QRunnable {
+    Q_OBJECT
+public:
+    SystemProxyPoller(const QUrl& url);
+    void run();
+
+signals:
+    void systemProxyPolled(const QNetworkProxy& proxy);
+
+private:
+    QUrl url_;
 };
 
 
