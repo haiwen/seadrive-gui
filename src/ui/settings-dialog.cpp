@@ -208,40 +208,6 @@ void SettingsDialog::showEvent(QShowEvent *event)
 //     QDialog::showEvent(event);
 }
 
-
-void SettingsDialog::autoStartChanged(int state)
-{
-    qDebug("%s :%d", __func__, state);
-    // bool autoStart = (mAutoStartCheckBox->checkState() == Qt::Checked);
-    // gui->settingsManager()->setAutoStart(autoStart);
-}
-
-void SettingsDialog::hideDockIconChanged(int state)
-{
-    qDebug("%s :%d", __func__, state);
-    // bool hideDockIcon = (mHideDockIconCheckBox->checkState() == Qt::Checked);
-    // gui->settingsManager()->setHideDockIcon(hideDockIcon);
-}
-
-void SettingsDialog::notifyChanged(int state)
-{
-    qDebug("%s :%d", __func__, state);
-    // bool notify = (mNotifyCheckBox->checkState() == Qt::Checked);
-    // gui->settingsManager()->setNotify(notify);
-}
-
-void SettingsDialog::downloadChanged(int value)
-{
-    qDebug("%s :%d", __func__, value);
-    // gui->settingsManager()->setMaxDownloadRatio(mDownloadSpinBox->value());
-}
-
-void SettingsDialog::uploadChanged(int value)
-{
-    qDebug("%s :%d", __func__, value);
-    // gui->settingsManager()->setMaxUploadRatio(mUploadSpinBox->value());
-}
-
 void SettingsDialog::proxyRequirePasswordChanged(int state)
 {
     if (state == Qt::Checked) {
