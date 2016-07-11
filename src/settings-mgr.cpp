@@ -7,7 +7,7 @@
 #include "utils/utils-mac.h"
 #include "seadrive-gui.h"
 #include "ui/tray-icon.h"
-// #include "rpc/rpc-client.h"
+#include "rpc/rpc-client.h"
 #include "utils/utils.h"
 #include "network-mgr.h"
 // #include "ui/main-window.h"
@@ -69,7 +69,7 @@ SettingsManager::SettingsManager()
 void SettingsManager::loadSettings()
 {
     // QString str;
-    // int value;
+    int value;
 
     // if (gui->rpcClient()->seafileGetConfig("notify_sync", &str) >= 0)
     //     bubbleNotifycation_ = (str == "off") ? false : true;
@@ -77,13 +77,11 @@ void SettingsManager::loadSettings()
     // if (gui->rpcClient()->ccnetGetConfig("encrypt_channel", &str) >= 0)
     //     transferEncrypted_ = (str == "off") ? false : true;
 
-    // if (gui->rpcClient()->seafileGetConfigInt("download_limit",
-    //                                                  &value) >= 0)
-    //     maxDownloadRatio_ = value >> 10;
+    if (gui->rpcClient()->seafileGetConfigInt("download_limit", &value) >= 0)
+        maxDownloadRatio_ = value >> 10;
 
-    // if (gui->rpcClient()->seafileGetConfigInt("upload_limit", &value) >=
-    //     0)
-    //     maxUploadRatio_ = value >> 10;
+    if (gui->rpcClient()->seafileGetConfigInt("upload_limit", &value) >= 0)
+        maxUploadRatio_ = value >> 10;
 
     // if (gui->rpcClient()->seafileGetConfig("sync_extra_temp_file",
     //                                               &str) >= 0)
@@ -166,10 +164,9 @@ void SettingsManager::setEncryptTransfer(bool encrypted)
 void SettingsManager::setMaxDownloadRatio(unsigned int ratio)
 {
     if (maxDownloadRatio_ != ratio) {
-        // if (gui->rpcClient()->setDownloadRateLimit(ratio << 10) < 0) {
-        //     // Error
-        //     return;
-        // }
+        if (gui->rpcClient()->setDownloadRateLimit(ratio << 10) < 0) {
+            return;
+        }
         maxDownloadRatio_ = ratio;
     }
 }
@@ -177,10 +174,9 @@ void SettingsManager::setMaxDownloadRatio(unsigned int ratio)
 void SettingsManager::setMaxUploadRatio(unsigned int ratio)
 {
     if (maxUploadRatio_ != ratio) {
-        // if (gui->rpcClient()->setUploadRateLimit(ratio << 10) < 0) {
-        //     // Error
-        //     return;
-        // }
+        if (gui->rpcClient()->setUploadRateLimit(ratio << 10) < 0) {
+            return;
+        }
         maxUploadRatio_ = ratio;
     }
 }

@@ -72,8 +72,10 @@ void SettingsDialog::updateSettings()
 //     mgr->setAutoStart(mAutoStartCheckBox->checkState() == Qt::Checked);
 //     mgr->setHideDockIcon(mHideDockIconCheckBox->checkState() == Qt::Checked);
 //     mgr->setSyncExtraTempFile(mSyncExtraTempFileCheckBox->checkState() == Qt::Checked);
-//     mgr->setMaxDownloadRatio(mDownloadSpinBox->value());
-//     mgr->setMaxUploadRatio(mUploadSpinBox->value());
+
+    mgr->setMaxDownloadRatio(mDownloadSpinBox->value());
+    mgr->setMaxUploadRatio(mUploadSpinBox->value());
+
 //     mgr->setHideMainWindowWhenStarted(mHideMainWinCheckBox->checkState() == Qt::Checked);
 //     mgr->setAllowInvalidWorktree(mAllowInvalidWorktreeCheckBox->checkState() == Qt::Checked);
 //     mgr->setHttpSyncCertVerifyDisabled(mDisableVerifyHttpSyncCert->checkState() == Qt::Checked);
@@ -178,11 +180,11 @@ void SettingsDialog::showEvent(QShowEvent *event)
 //     state = mgr->notify() ? Qt::Checked : Qt::Unchecked;
 //     mNotifyCheckBox->setCheckState(state);
 
-//     int ratio;
-//     ratio = mgr->maxDownloadRatio();
-//     mDownloadSpinBox->setValue(ratio);
-//     ratio = mgr->maxUploadRatio();
-//     mUploadSpinBox->setValue(ratio);
+    int ratio;
+    ratio = mgr->maxDownloadRatio();
+    mDownloadSpinBox->setValue(ratio);
+    ratio = mgr->maxUploadRatio();
+    mUploadSpinBox->setValue(ratio);
 
 //     if (isCheckLatestVersionEnabled()) {
 //         state = mgr->isCheckLatestVersionEnabled() ? Qt::Checked : Qt::Unchecked;
