@@ -17,20 +17,13 @@
    <item>
     <widget class="QTabWidget" name="mTabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="mBasicTab">
       <attribute name="title">
        <string>Basic</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QCheckBox" name="mHideMainWinCheckBox">
-         <property name="text">
-          <string>Hide main window when started</string>
-         </property>
-        </widget>
-       </item>
        <item>
         <widget class="QCheckBox" name="mNotifyCheckBox">
          <property name="text">
@@ -144,50 +137,9 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QCheckBox" name="mAllowInvalidWorktreeCheckBox">
-         <property name="text">
-          <string>Do not automatically unsync a library</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="desc">
-         <property name="text">
-          <string>Do not automatically unsync a library when its local directory is removed or unaccessible for other reasons.</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="mAllowRepoNotFoundCheckBox">
-         <property name="text">
-          <string>Do not unsync a library when not found on server</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="desc_2">
-         <property name="text">
-          <string>Do not automatically unsync a library when it's not found on server</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QCheckBox" name="mDisableVerifyHttpSyncCert">
          <property name="text">
           <string>Do not verify server certificate in HTTPS syncing</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="mEnableSyncingWithExistingFolder">
-         <property name="text">
-          <string>Enable syncing with an existing folder with a different name</string>
          </property>
         </widget>
        </item>

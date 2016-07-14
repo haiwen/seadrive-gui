@@ -54,13 +54,9 @@ public:
     SettingsManager();
 
     void loadSettings();
-    void setAutoSync(bool);
-
-    bool autoSync() { return auto_sync_; }
 
     bool notify() { return bubbleNotifycation_; }
     bool autoStart() { return autoStart_; }
-    bool encryptTransfer() { return transferEncrypted_; }
     unsigned int maxDownloadRatio() { return maxDownloadRatio_; }
     unsigned int maxUploadRatio() { return maxUploadRatio_; }
     bool syncExtraTempFile() { return sync_extra_temp_file_; }
@@ -71,24 +67,15 @@ public:
 
     void setNotify(bool notify);
     void setAutoStart(bool autoStart);
-    void setEncryptTransfer(bool encrypted);
     void setMaxDownloadRatio(unsigned int ratio);
     void setMaxUploadRatio(unsigned int ratio);
     void setSyncExtraTempFile(bool sync);
-
-    bool hideMainWindowWhenStarted();
-    void setHideMainWindowWhenStarted(bool hide);
 
     bool hideDockIcon();
     void setHideDockIcon(bool hide);
 
     void setCheckLatestVersionEnabled(bool enabled);
     bool isCheckLatestVersionEnabled();
-    // bool defaultLibraryAlreadySetup();
-    // void setDefaultLibraryAlreadySetup();
-
-    void setAllowRepoNotFoundOnServer(bool enabled);
-    bool allowRepoNotFoundOnServer() const { return allow_repo_not_found_on_server_; };
 
     void setHttpSyncCertVerifyDisabled(bool disabled);
     bool httpSyncCertVerifyDisabled() const { return verify_http_sync_cert_disabled_; };
@@ -96,8 +83,6 @@ public:
     QString getComputerName();
     void setComputerName(const QString& computerName);
 
-    bool isEnableSyncingWithExistingFolder() const;
-    void setEnableSyncingWithExistingFolder(bool enabled);
 
 #ifdef HAVE_SHIBBOLETH_SUPPORT
     QString getLastShibUrl();
@@ -122,9 +107,6 @@ public:
     // Write the system proxy information, to be read by seadrive daemon.
     void writeSystemProxyInfo(const QUrl& url, const QString& file_path);
 
-signals:
-    void autoSyncChanged(bool auto_sync);
-
 private slots:
     void checkSystemProxy();
     void onSystemProxyPolled(const QNetworkProxy& proxy);
@@ -140,8 +122,6 @@ private:
     bool auto_sync_;
     bool bubbleNotifycation_;
     bool autoStart_;
-    bool transferEncrypted_;
-    bool allow_repo_not_found_on_server_;
     bool sync_extra_temp_file_;
     unsigned int maxDownloadRatio_;
     unsigned int maxUploadRatio_;

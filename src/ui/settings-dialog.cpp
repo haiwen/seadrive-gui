@@ -77,7 +77,6 @@ void SettingsDialog::updateSettings()
     mgr->setMaxDownloadRatio(mDownloadSpinBox->value());
     mgr->setMaxUploadRatio(mUploadSpinBox->value());
 
-//     mgr->setHideMainWindowWhenStarted(mHideMainWinCheckBox->checkState() == Qt::Checked);
 //     mgr->setAllowInvalidWorktree(mAllowInvalidWorktreeCheckBox->checkState() == Qt::Checked);
 //     mgr->setHttpSyncCertVerifyDisabled(mDisableVerifyHttpSyncCert->checkState() == Qt::Checked);
 //     mgr->setAllowRepoNotFoundOnServer(mAllowRepoNotFoundCheckBox->checkState() == Qt::Checked);
@@ -131,7 +130,6 @@ void SettingsDialog::showEvent(QShowEvent *event)
     Qt::CheckState state;
 
 //     state = mgr->hideMainWindowWhenStarted() ? Qt::Checked : Qt::Unchecked;
-//     mHideMainWinCheckBox->setCheckState(state);
 
 //     state = mgr->allowInvalidWorktree() ? Qt::Checked : Qt::Unchecked;
 //     mAllowInvalidWorktreeCheckBox->setCheckState(state);
@@ -164,12 +162,12 @@ void SettingsDialog::showEvent(QShowEvent *event)
     mFinderSyncCheckBox->hide();
 #endif
 
-// #if defined(Q_OS_WIN32)
-//     state = mgr->shellExtensionEnabled() ? Qt::Checked : Qt::Unchecked;
-//     mShellExtCheckBox->setCheckState(state);
-// #else
-//     mShellExtCheckBox->hide();
-// #endif
+#if defined(Q_OS_WIN32)
+    state = mgr->shellExtensionEnabled() ? Qt::Checked : Qt::Unchecked;
+    mShellExtCheckBox->setCheckState(state);
+#else
+    mShellExtCheckBox->hide();
+#endif
 
 //     // currently supports mac only
 //     state = mgr->hideDockIcon() ? Qt::Checked : Qt::Unchecked;

@@ -24,10 +24,8 @@
 
 namespace
 {
-const char *kHideMainWindowWhenStarted = "hideMainWindowWhenStarted";
 const char *kHideDockIcon = "hideDockIcon";
 const char *kCheckLatestVersion = "checkLatestVersion";
-const char *kEnableSyncingWithExistingFolder = "syncingWithExistingFolder";
 const char *kBehaviorGroup = "Behavior";
 
 // const char *kDefaultLibraryAlreadySetup = "defaultLibraryAlreadySetup";
@@ -100,8 +98,6 @@ SettingsManager::SettingsManager()
     : auto_sync_(true),
       bubbleNotifycation_(true),
       autoStart_(false),
-      transferEncrypted_(true),
-      allow_repo_not_found_on_server_(false),
       sync_extra_temp_file_(false),
       maxDownloadRatio_(0),
       maxUploadRatio_(0),
@@ -120,9 +116,6 @@ void SettingsManager::loadSettings()
     // if (gui->rpcClient()->seafileGetConfig("notify_sync", &str) >= 0)
     //     bubbleNotifycation_ = (str == "off") ? false : true;
 
-    // if (gui->rpcClient()->ccnetGetConfig("encrypt_channel", &str) >= 0)
-    //     transferEncrypted_ = (str == "off") ? false : true;
-
     if (gui->rpcClient()->seafileGetConfigInt("download_limit", &value) >= 0)
         maxDownloadRatio_ = value >> 10;
 
@@ -132,10 +125,6 @@ void SettingsManager::loadSettings()
     // if (gui->rpcClient()->seafileGetConfig("sync_extra_temp_file",
     //                                               &str) >= 0)
     //     sync_extra_temp_file_ = (str == "true") ? true : false;
-
-    // if (gui->rpcClient()->seafileGetConfig(
-    //         "allow_repo_not_found_on_server", &str) >= 0)
-    //     allow_repo_not_found_on_server_ = (str == "true") ? true : false;
 
     // if (gui->rpcClient()->seafileGetConfig("disable_verify_certificate",
     //                                               &str) >= 0)
@@ -225,20 +214,6 @@ void SettingsManager::loadProxySettings()
     current_proxy_ = proxy;
 }
 
-
-void SettingsManager::setAutoSync(bool auto_sync)
-{
-    // if (gui->rpcClient()->setAutoSync(auto_sync) < 0) {
-    //     // Error
-    //     return;
-    // }
-    auto_sync_ = auto_sync;
-    gui->trayIcon()->setState(
-        auto_sync ? SeafileTrayIcon::STATE_DAEMON_UP
-                  : SeafileTrayIcon::STATE_DAEMON_AUTOSYNC_DISABLED);
-    emit autoSyncChanged(auto_sync);
-}
-
 void SettingsManager::setNotify(bool notify)
 {
     if (bubbleNotifycation_ != notify) {
@@ -256,18 +231,6 @@ void SettingsManager::setAutoStart(bool autoStart)
     if (autoStart_ != autoStart) {
         if (set_seafile_auto_start(autoStart) >= 0)
             autoStart_ = autoStart;
-    }
-}
-
-void SettingsManager::setEncryptTransfer(bool encrypted)
-{
-    if (transferEncrypted_ != encrypted) {
-        // if (gui->rpcClient()->ccnetSetConfig(
-        //         "encrypt_channel", encrypted ? "on" : "off") < 0) {
-        //     // Error
-        //     return;
-        // }
-        transferEncrypted_ = encrypted;
     }
 }
 
@@ -291,26 +254,6 @@ void SettingsManager::setMaxUploadRatio(unsigned int ratio)
     }
 }
 
-bool SettingsManager::hideMainWindowWhenStarted()
-{
-    QSettings settings;
-    bool hide;
-
-    settings.beginGroup(kBehaviorGroup);
-    hide = settings.value(kHideMainWindowWhenStarted, false).toBool();
-    settings.endGroup();
-
-    return hide;
-}
-
-void SettingsManager::setHideMainWindowWhenStarted(bool hide)
-{
-    QSettings settings;
-
-    settings.beginGroup(kBehaviorGroup);
-    settings.setValue(kHideMainWindowWhenStarted, hide);
-    settings.endGroup();
-}
 
 bool SettingsManager::hideDockIcon()
 {
@@ -340,27 +283,6 @@ void SettingsManager::setHideDockIcon(bool hide)
 #endif
 }
 
-// void SettingsManager::setDefaultLibraryAlreadySetup()
-// {
-//     QSettings settings;
-
-//     settings.beginGroup(kStatusGroup);
-//     settings.setValue(kDefaultLibraryAlreadySetup, true);
-//     settings.endGroup();
-// }
-
-
-// bool SettingsManager::defaultLibraryAlreadySetup()
-// {
-//     QSettings settings;
-//     bool done;
-
-//     settings.beginGroup(kStatusGroup);
-//     done = settings.value(kDefaultLibraryAlreadySetup, false).toBool();
-//     settings.endGroup();
-
-//     return done;
-// }
 
 void SettingsManager::removeAllSettings()
 {
@@ -402,11 +324,10 @@ bool SettingsManager::isCheckLatestVersionEnabled()
 void SettingsManager::setSyncExtraTempFile(bool sync)
 {
     if (sync_extra_temp_file_ != sync) {
-        // if (gui->rpcClient()->seafileSetConfig(
-        //         "sync_extra_temp_file", sync ? "true" : "false") < 0) {
-        //     // Error
-        //     return;
-        // }
+        if (gui->rpcClient()->seafileSetConfig(
+                "sync_extra_temp_file", sync ? "true" : "false") < 0) {
+            return;
+        }
         sync_extra_temp_file_ = sync;
     }
 }
@@ -541,18 +462,6 @@ void SettingsManager::writeProxyDetailsToDaemon(const SeafileProxy& proxy)
     }
 }
 
-void SettingsManager::setAllowRepoNotFoundOnServer(bool val)
-{
-    if (allow_repo_not_found_on_server_ != val) {
-        // if (gui->rpcClient()->seafileSetConfig(
-        //         "allow_repo_not_found_on_server", val ? "true" : "false") < 0) {
-        //     // Error
-        //     return;
-        // }
-        allow_repo_not_found_on_server_ = val;
-    }
-}
-
 void SettingsManager::setHttpSyncCertVerifyDisabled(bool disabled)
 {
     if (verify_http_sync_cert_disabled_ != disabled) {
@@ -564,27 +473,6 @@ void SettingsManager::setHttpSyncCertVerifyDisabled(bool disabled)
         // }
         verify_http_sync_cert_disabled_ = disabled;
     }
-}
-
-bool SettingsManager::isEnableSyncingWithExistingFolder() const
-{
-    bool enabled;
-    QSettings settings;
-
-    settings.beginGroup(kBehaviorGroup);
-    enabled = settings.value(kEnableSyncingWithExistingFolder, false).toBool();
-    settings.endGroup();
-
-    return enabled;
-}
-
-void SettingsManager::setEnableSyncingWithExistingFolder(bool enabled)
-{
-    QSettings settings;
-
-    settings.beginGroup(kBehaviorGroup);
-    settings.setValue(kEnableSyncingWithExistingFolder, enabled);
-    settings.endGroup();
 }
 
 QString SettingsManager::getComputerName()
