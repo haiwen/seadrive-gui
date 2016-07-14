@@ -27,6 +27,7 @@
 #include "tray-icon.h"
 
 #if defined(Q_OS_MAC)
+#include "traynotificationmanager.h"
 // QT's platform apis
 // http://qt-project.org/doc/qt-4.8/exportedfunctions.html
 extern void qt_mac_set_dock_menu(QMenu *menu);
@@ -87,6 +88,9 @@ SeafileTrayIcon::SeafileTrayIcon(QObject *parent)
     hide();
 
     createGlobalMenuBar();
+#if defined(Q_OS_MAC)
+    tnm = new TrayNotificationManager(this);
+#endif
 }
 
 void SeafileTrayIcon::start()
@@ -594,7 +598,23 @@ void SeafileTrayIcon::checkTrayIconMessageQueue()
     }
 
     TrayMessage msg = pending_messages_.dequeue();
+
+    printf("[%s] tray message: %s\n",
+           QDateTime::currentDateTime().toString().toUtf8().data(),
+           msg.message.toUtf8().data());
+
+#if defined(Q_OS_MAC)
+    if (!utils::mac::isOSXMountainLionOrGreater()) {
+        QIcon info_icon(":/images/info.png");
+        TrayNotificationWidget* trayNotification = new TrayNotificationWidget(info_icon.pixmap(32, 32), msg.title, msg.message);
+        tnm->append(trayNotification);
+    } else {
+        QSystemTrayIcon::showMessage(msg.title, msg.message, msg.icon, kMessageDisplayTimeMSecs);
+    }
+#else
     QSystemTrayIcon::showMessage(msg.title, msg.message, msg.icon, kMessageDisplayTimeMSecs);
+#endif
+
     repo_id_ = msg.repo_id;
     commit_id_ = msg.commit_id;
     next_message_msec_ = now + kMessageDisplayTimeMSecs;

@@ -1,4 +1,5 @@
 #include <QTimer>
+#include <QDateTime>
 
 #include "utils/translate-commit-desc.h"
 #include "utils/json-utils.h"
@@ -34,7 +35,6 @@ void MessagePoller::start()
 
 void MessagePoller::checkNotification()
 {
-    printf ("check notification called\n");
     json_t *ret;
     if (!rpc_client_->getSyncNotification(&ret)) {
         return;
@@ -45,8 +45,6 @@ void MessagePoller::checkNotification()
 
 void MessagePoller::processNotification(const SyncNotification& notification)
 {
-    printf("notification.repo_name = %s\n", notification.repo_name.toUtf8().data());
-    printf("notification.type = %s\n", notification.type.toUtf8().data());
     if (notification.type == "sync.done") {
         QString title = tr("\"%1\" is synchronized").arg(notification.repo_name);
         gui->trayIcon()->showMessage(
@@ -69,6 +67,10 @@ SyncNotification SyncNotification::fromJson(const json_t *root)
     notification.commit_id = json.getString("commit_id");
     notification.parent_commit_id = json.getString("parent_commit_id");
     notification.commit_desc = json.getString("commit_desc");
+
+    char *s = json_dumps(root, 0);
+    printf ("[%s] %s\n", QDateTime::currentDateTime().toString().toUtf8().data(), s);
+    free (s);
 
     return notification;
 }

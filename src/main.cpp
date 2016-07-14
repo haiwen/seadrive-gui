@@ -9,6 +9,9 @@
 #include <cstdio>
 
 #include "seadrive-gui.h"
+#if defined(Q_OS_MAC)
+#include "application.h"
+#endif
 
 namespace {
 
@@ -58,7 +61,11 @@ void handleCommandLineOption(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
     srand(time(NULL));
+#if defined(Q_OS_MAC)
+    Application app(argc, argv);
+#else
     QApplication app(argc, argv);
+#endif
     app.setQuitOnLastWindowClosed(false);
 
     // call glib's init functions

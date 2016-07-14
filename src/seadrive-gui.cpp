@@ -236,6 +236,12 @@ void SeadriveGui::start()
 
 void SeadriveGui::onDaemonStarted()
 {
+    // main_win_ = new QMainWindow;
+    // main_win_->showNormal();
+    // main_win_->show();
+    // main_win_->raise();
+    // main_win_->activateWindow();
+
     rpc_client_->connectDaemon();
     message_poller_->start();
 

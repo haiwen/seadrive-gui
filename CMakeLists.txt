@@ -62,6 +62,8 @@ ELSEIF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "BS
     LINK_DIRECTORIES(${QT_QTDBUS_LIBRARIES})
     SET(EXTRA_LIBS ${EXTRA_LIBS} ${QT_QTDBUS_LIBRARIES})
 ELSEIF (APPLE)
+    SET(platform_specific_sources ${platform_specific_sources} src/application.cpp)
+    SET(platform_specific_moc_headers ${platform_specific_moc_headers} src/application.h)
     ## Enforce ARC for this file, since ARC is only supported after the objc
     ## runtime changes in os x 10.10
     SET_SOURCE_FILES_PROPERTIES(src/utils/utils-mac.mm
@@ -76,7 +78,7 @@ ENDIF()
 
 IF(APPLE)
     ADD_DEFINITIONS(-DHAVE_FINDER_SYNC_SUPPORT)
-    SET(platform_specific_moc_headers src/finder-sync/finder-sync-host.h)
+    SET(platform_specific_moc_headers ${platform_specific_moc_headers} src/finder-sync/finder-sync-host.h)
     SET(platform_specific_sources ${platform_specific_sources}
         src/finder-sync/finder-sync.cpp src/finder-sync/finder-sync-listener.mm
         src/finder-sync/finder-sync-host.cpp)
@@ -129,6 +131,9 @@ SET(moc_headers
   src/rpc/rpc-client.h
   src/seadrive-gui.h
   src/settings-mgr.h
+
+  src/traynotificationwidget.h
+  src/traynotificationmanager.h
 
   src/ui/login-dialog.h
   src/ui/seafilelink-dialog.h
@@ -212,6 +217,9 @@ SET(seadrive_gui_sources
 
   src/seadrive-gui.cpp
   src/settings-mgr.cpp
+
+  src/traynotificationwidget.cpp
+  src/traynotificationmanager.cpp
 
   src/ui/login-dialog.cpp
   src/ui/seafilelink-dialog.cpp

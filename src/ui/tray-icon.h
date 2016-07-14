@@ -12,6 +12,7 @@ class QMenuBar;
 class Account;
 class ApiError;
 class LoginDialog;
+class TrayNotificationManager;
 
 
 class SeafileTrayIcon : public QSystemTrayIcon {
@@ -135,6 +136,8 @@ private:
     qint64 next_message_msec_;
 
     LoginDialog *login_dlg_;
+
+    TrayNotificationManager *tnm;
 };
 
 #endif // SEAFILE_CLIENT_TRAY_ICON_H

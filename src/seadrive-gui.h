@@ -80,6 +80,7 @@ public:
 
     MessagePoller * messagePoller() { return message_poller_; }
 
+    QMainWindow * mainWindow() { return main_win_; }
 
     // CertsManager *certsManager() { return certs_mgr_; }
 
