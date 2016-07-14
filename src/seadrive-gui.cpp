@@ -141,19 +141,19 @@ void myLogHandler(QtMsgType type, const QMessageLogContext &context, const QStri
 #ifdef Q_OS_MAC
 void writeCABundleForCurl()
 {
-    // QString ca_bundle_path = QDir(gui->configurator()->seafileDir()).filePath("ca-bundle.pem");
-    // QFile bundle(ca_bundle_path);
-    // if (bundle.exists()) {
-    //     bundle.remove();
-    // }
-    // bundle.open(QIODevice::WriteOnly);
-    // const std::vector<QByteArray> certs = utils::mac::getSystemCaCertificates();
-    // for (size_t i = 0; i < certs.size(); i++) {
-    //     QList<QSslCertificate> list = QSslCertificate::fromData(certs[i], QSsl::Der);
-    //     foreach (const QSslCertificate& cert, list) {
-    //         bundle.write(cert.toPem());
-    //     }
-    // }
+    QString ca_bundle_path = QDir(gui->seadriveDataDir()).filePath("ca-bundle.pem");
+    QFile bundle(ca_bundle_path);
+    if (bundle.exists()) {
+        bundle.remove();
+    }
+    bundle.open(QIODevice::WriteOnly);
+    const std::vector<QByteArray> certs = utils::mac::getSystemCaCertificates();
+    for (size_t i = 0; i < certs.size(); i++) {
+        QList<QSslCertificate> list = QSslCertificate::fromData(certs[i], QSsl::Der);
+        foreach (const QSslCertificate& cert, list) {
+            bundle.write(cert.toPem());
+        }
+    }
 }
 #endif
 
