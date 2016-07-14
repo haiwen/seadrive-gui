@@ -110,11 +110,11 @@ SettingsManager::SettingsManager()
 
 void SettingsManager::loadSettings()
 {
-    // QString str;
+    QString str;
     int value;
 
-    // if (gui->rpcClient()->seafileGetConfig("notify_sync", &str) >= 0)
-    //     bubbleNotifycation_ = (str == "off") ? false : true;
+    if (gui->rpcClient()->seafileGetConfig("notify_sync", &str) >= 0)
+        bubbleNotifycation_ = (str == "off") ? false : true;
 
     if (gui->rpcClient()->seafileGetConfigInt("download_limit", &value) >= 0)
         maxDownloadRatio_ = value >> 10;
@@ -122,13 +122,13 @@ void SettingsManager::loadSettings()
     if (gui->rpcClient()->seafileGetConfigInt("upload_limit", &value) >= 0)
         maxUploadRatio_ = value >> 10;
 
-    // if (gui->rpcClient()->seafileGetConfig("sync_extra_temp_file",
-    //                                               &str) >= 0)
-    //     sync_extra_temp_file_ = (str == "true") ? true : false;
+    if (gui->rpcClient()->seafileGetConfig("sync_extra_temp_file",
+                                                  &str) >= 0)
+        sync_extra_temp_file_ = (str == "true") ? true : false;
 
-    // if (gui->rpcClient()->seafileGetConfig("disable_verify_certificate",
-    //                                               &str) >= 0)
-    //     verify_http_sync_cert_disabled_ = (str == "true") ? true : false;
+    if (gui->rpcClient()->seafileGetConfig("disable_verify_certificate",
+                                                  &str) >= 0)
+        verify_http_sync_cert_disabled_ = (str == "true") ? true : false;
 
     loadProxySettings();
     applyProxySettings();
@@ -217,11 +217,10 @@ void SettingsManager::loadProxySettings()
 void SettingsManager::setNotify(bool notify)
 {
     if (bubbleNotifycation_ != notify) {
-        // if (gui->rpcClient()->seafileSetConfig(
-        //         "notify_sync", notify ? "on" : "off") < 0) {
-        //     // Error
-        //     return;
-        // }
+        if (gui->rpcClient()->seafileSetConfig(
+                "notify_sync", notify ? "on" : "off") < 0) {
+            return;
+        }
         bubbleNotifycation_ = notify;
     }
 }
@@ -465,12 +464,10 @@ void SettingsManager::writeProxyDetailsToDaemon(const SeafileProxy& proxy)
 void SettingsManager::setHttpSyncCertVerifyDisabled(bool disabled)
 {
     if (verify_http_sync_cert_disabled_ != disabled) {
-        // if (gui->rpcClient()->seafileSetConfig(
-        //         "disable_verify_certificate", disabled ? "true" : "false") <
-        //     0) {
-        //     // Error
-        //     return;
-        // }
+        if (gui->rpcClient()->seafileSetConfig(
+                "disable_verify_certificate", disabled ? "true" : "false") < 0) {
+            return;
+        }
         verify_http_sync_cert_disabled_ = disabled;
     }
 }
