@@ -220,6 +220,12 @@ void SeadriveGui::start()
     writeCABundleForCurl();
 #endif
 
+    // Load system proxy information. This must be done before we start seadrive
+    // daemon.
+    settings_mgr_->writeSystemProxyInfo(
+        account_mgr_->currentAccount().serverUrl,
+        QDir(seadriveDataDir()).filePath("system-proxy.txt"));
+
     daemon_mgr_->startSeadriveDaemon();
     connect(daemon_mgr_, SIGNAL(daemonStarted()),
             this, SLOT(onDaemonStarted()));
