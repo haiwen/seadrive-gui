@@ -16,6 +16,7 @@ class SeafileTrayIcon;
 class SettingsManager;
 class SettingsDialog;
 class CertsManager;
+class MessagePoller;
 
 /**
  * The central class of seafile-client
@@ -74,10 +75,11 @@ public:
     SeafileRpcClient *rpcClient() { return rpc_client_; }
 
     SettingsManager *settingsManager() { return settings_mgr_; }
-    
+
     SettingsDialog *settingsDialog() { return settings_dlg_; }
 
-    // SettingsDialog *settingsDialog() { return settings_dialog_; }
+    MessagePoller * messagePoller() { return message_poller_; }
+
 
     // CertsManager *certsManager() { return certs_mgr_; }
 
@@ -112,7 +114,7 @@ private:
 
     QMainWindow* main_win_;
 
-    // MessageListener *message_listener_;
+    MessagePoller *message_poller_;
 
     // SettingsDialog *settings_dialog_;
 

@@ -69,7 +69,7 @@ SeafileTrayIcon::SeafileTrayIcon(QObject *parent)
     refresh_timer_ = new QTimer(this);
     connect(refresh_timer_, SIGNAL(timeout()), this, SLOT(refreshTrayIcon()));
     connect(refresh_timer_, SIGNAL(timeout()), this, SLOT(refreshTrayIconToolTip()));
-#if defined(Q_OS_WIN32)
+#if !defined(Q_OS_LINUX)
     connect(refresh_timer_, SIGNAL(timeout()), this, SLOT(checkTrayIconMessageQueue()));
 #endif
 

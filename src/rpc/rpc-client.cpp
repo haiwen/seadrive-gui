@@ -14,6 +14,7 @@ extern "C" {
 #include "account.h"
 #include "utils/utils.h"
 #include "api/commit-details.h"
+#include "message-poller.h"
 #include "rpc-client.h"
 
 
@@ -339,11 +340,36 @@ bool SeafileRpcClient::getRepoIdByPath(const QString &repo_uname,
                  toCStr(repo_uname),
                  error->message);
         g_error_free(error);
-        return -1;
+        return false;
     }
 
     *repo_id = ret;
 
     g_free(ret);
+    return true;
+}
+
+
+bool SeafileRpcClient::getSyncNotification(json_t **ret_obj)
+{
+    GError *error = NULL;
+    json_t *ret = searpc_client_call__json (
+        seadrive_rpc_client_,
+        "seafile_get_sync_notification",
+        &error, 0);
+    if (error) {
+        qWarning("failed to get sync notification: %s\n",
+                 error->message ? error->message : "");
+        g_error_free(error);
+        return false;
+    }
+
+    if (!ret) {
+        // No pending notifications.
+        return false;
+    }
+
+    *ret_obj = ret;
+
     return true;
 }

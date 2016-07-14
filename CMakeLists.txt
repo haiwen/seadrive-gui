@@ -124,6 +124,7 @@ SET(moc_headers
 
   src/auto-login-service.h
   src/daemon-mgr.h
+  src/message-poller.h
   src/network-mgr.h
   src/rpc/rpc-client.h
   src/seadrive-gui.h
@@ -204,6 +205,7 @@ SET(seadrive_gui_sources
   src/auto-login-service.cpp
   src/daemon-mgr.cpp
   src/main.cpp
+  src/message-poller.cpp
   src/network-mgr.cpp
 
   src/rpc/rpc-client.cpp

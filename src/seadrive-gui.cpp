@@ -25,6 +25,7 @@
 #include "rpc/rpc-client.h"
 #include "account-mgr.h"
 #include "settings-mgr.h"
+#include "message-poller.h"
 #ifdef HAVE_FINDER_SYNC_SUPPORT
 #include "finder-sync/finder-sync-listener.h"
 #endif
@@ -189,6 +190,7 @@ SeadriveGui::SeadriveGui()
     account_mgr_ = new AccountManager();
     settings_mgr_ = new SettingsManager();
     settings_dlg_ = new SettingsDialog();
+    message_poller_ = new MessagePoller();
     connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onAboutToQuit()));
 }
 
@@ -198,6 +200,7 @@ SeadriveGui::~SeadriveGui()
     delete rpc_client_;
     delete daemon_mgr_;
     delete account_mgr_;
+    delete message_poller_;
 }
 
 void SeadriveGui::start()
@@ -234,6 +237,7 @@ void SeadriveGui::start()
 void SeadriveGui::onDaemonStarted()
 {
     rpc_client_->connectDaemon();
+    message_poller_->start();
 
     tray_icon_->start();
     tray_icon_->setState(SeafileTrayIcon::STATE_DAEMON_UP);

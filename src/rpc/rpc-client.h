@@ -12,6 +12,8 @@ struct _GList;
 // Can't forward-declare type SearpcClient here because it is an anonymous typedef struct
 struct _SearpcClient;
 
+struct json_t;
+
 }
 
 class Account;
@@ -65,6 +67,8 @@ public:
     bool switchAccount(const Account& account);
 
     bool getRepoIdByPath(const QString& repo_uname, QString *repo_id);
+
+    bool getSyncNotification(json_t **ret);
 
 private:
     Q_DISABLE_COPY(SeafileRpcClient)
