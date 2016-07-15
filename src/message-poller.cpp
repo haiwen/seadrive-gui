@@ -68,9 +68,9 @@ SyncNotification SyncNotification::fromJson(const json_t *root)
     notification.parent_commit_id = json.getString("parent_commit_id");
     notification.commit_desc = json.getString("commit_desc");
 
-    char *s = json_dumps(root, 0);
-    printf ("[%s] %s\n", QDateTime::currentDateTime().toString().toUtf8().data(), s);
-    free (s);
+    // char *s = json_dumps(root, 0);
+    // printf ("[%s] %s\n", QDateTime::currentDateTime().toString().toUtf8().data(), s);
+    // free (s);
 
     return notification;
 }

@@ -599,9 +599,9 @@ void SeafileTrayIcon::checkTrayIconMessageQueue()
 
     TrayMessage msg = pending_messages_.dequeue();
 
-    printf("[%s] tray message: %s\n",
-           QDateTime::currentDateTime().toString().toUtf8().data(),
-           msg.message.toUtf8().data());
+    // printf("[%s] tray message: %s\n",
+    //        QDateTime::currentDateTime().toString().toUtf8().data(),
+    //        msg.message.toUtf8().data());
 
 #if defined(Q_OS_MAC)
     if (!utils::mac::isOSXMountainLionOrGreater()) {

@@ -365,6 +365,31 @@ IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "BSD")
   QT5_USE_MODULES(seadrive-gui ${USE_QT_LIBRARIES})
 ENDIF()
 
+### Xcode-related, build as a osx bundle
+IF(CMAKE_GENERATOR STREQUAL Xcode)
+  ADD_DEFINITIONS(-DXCODE_APP)
+  SET_TARGET_PROPERTIES(seadrive-gui PROPERTIES
+    MACOSX_BUNDLE true
+    MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist
+  )
+  FIND_PROGRAM(seadrive seadrive)
+  SET(RESOURCES_DIR ${CMAKE_CURRENT_BINARY_DIR}/\${CONFIGURATION}/seadrive-gui.app/Contents/Resources)
+  ADD_CUSTOM_COMMAND(TARGET seadrive-gui
+      POST_BUILD
+      COMMAND ${CMAKE_COMMAND} -E make_directory ${RESOURCES_DIR}
+      # We rename the icon because: when we have both the program "seadrive" and
+      # the icon "seadrive.icns" in "Resources" dir, the icon won't be able to
+      # be displayed as the bundle icon.
+      COMMAND ${CMAKE_COMMAND} -E copy seadrive.icns ${RESOURCES_DIR}/seadrive-icon.icns
+      COMMAND ${CMAKE_COMMAND} -E copy ${seadrive} ${RESOURCES_DIR}/.
+  )
+  SET(CMAKE_XCODE_ATTRIBUTE_GCC_GENERATE_DEBUGGING_SYMBOLS "YES")
+  SET(CMAKE_XCODE_ATTRIBUTE_DEBUG_INFORMATION_FORMAT "dwarf-with-dsym")
+  SET(CMAKE_XCODE_ATTRIBUTE_GCC_ENABLE_PASCAL_STRINGS "NO")
+  SET(CMAKE_XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC "YES")
+ENDIF()
+
+
 SET(ARCHIVE_NAME ${CMAKE_PROJECT_NAME}-${PROJECT_VERSION})
 ADD_CUSTOM_TARGET(dist
     COMMAND ${git_executable} archive -v --prefix=${ARCHIVE_NAME}/ HEAD

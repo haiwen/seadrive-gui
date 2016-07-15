@@ -30,6 +30,10 @@
 #include "finder-sync/finder-sync-listener.h"
 #endif
 
+#if defined(Q_OS_WIN32)
+#include "utils/registry.h"
+#endif
+
 #if defined(Q_OS_MAC)
 #include "utils/utils-mac.h"
 #endif
@@ -39,7 +43,7 @@
 namespace {
 
 #if defined(Q_OS_WIN32)
-    const char *kSeadriveDirName = "seadrive";
+    const char *kSeadriveDirName = "seadrive-data";
 #else
     const char *kSeadriveDirName = ".seadrive";
 #endif

@@ -16,7 +16,6 @@
 *.dll.a
 
 # executables
-seafile-client
 seadrive-gui
 *.exe
 
@@ -70,7 +69,7 @@ rules.ninja
 ## xcode related
 Debug
 Release
-seafile-client.xcodeproj
+seadrive-gui.xcodeproj
 CMakeScripts
 seadrive-gui.app
 seadrive-fsplugin.xcodeproj
