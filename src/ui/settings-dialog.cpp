@@ -27,7 +27,9 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
     setupUi(this);
     setWindowTitle(tr("Settings"));
     setWindowIcon(QIcon(":/images/seafile.png"));
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
+                   Qt::WindowStaysOnTopHint);
+
 
     mAutoStartCheckBox->setText(
         tr("Auto start %1 after login").arg(getBrand()));

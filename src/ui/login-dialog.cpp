@@ -70,7 +70,8 @@ LoginDialog::LoginDialog(QWidget *parent) : QDialog(parent)
     setupUi(this);
     setWindowTitle(tr("Add an account"));
     setWindowIcon(QIcon(":/images/seafile.png"));
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
+                   Qt::WindowStaysOnTopHint);
 
     request_ = NULL;
     account_info_req_ = NULL;

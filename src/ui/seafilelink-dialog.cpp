@@ -21,6 +21,8 @@ SeafileLinkDialog::SeafileLinkDialog(const QString &repo_id,
 {
     setWindowTitle(tr("%1 Internal Link").arg(getBrand()));
     setWindowIcon(QIcon(":/images/seafile.png"));
+    setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
+                   Qt::WindowStaysOnTopHint);
 
     {
         QString fixed_path = path.startsWith("/") ? path : "/" + path;

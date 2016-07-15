@@ -9,6 +9,8 @@ SharedLinkDialog::SharedLinkDialog(const QString &text, QWidget *parent)
 {
     setWindowTitle(tr("Share Link"));
     setWindowIcon(QIcon(":/images/seafile.png"));
+    setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
+                   Qt::WindowStaysOnTopHint);
     QVBoxLayout *layout = new QVBoxLayout;
 
     QLabel *label = new QLabel(tr("Share link:"));

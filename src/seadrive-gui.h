@@ -5,12 +5,9 @@
 #include <QVariant>
 #include <QMessageBox>
 
-class QMainWindow;
-
 class DaemonManager;
 class SeafileRpcClient;
 class AccountManager;
-class MainWindow;
 class MessageListener;
 class SeafileTrayIcon;
 class SettingsManager;
@@ -80,8 +77,6 @@ public:
 
     MessagePoller * messagePoller() { return message_poller_; }
 
-    QMainWindow * mainWindow() { return main_win_; }
-
     // CertsManager *certsManager() { return certs_mgr_; }
 
     bool started() { return started_; }
@@ -112,8 +107,6 @@ private:
     SettingsManager *settings_mgr_;
 
     SettingsDialog *settings_dlg_;
-
-    QMainWindow* main_win_;
 
     MessagePoller *message_poller_;
 

@@ -10,7 +10,6 @@
 #include <QMessageBox>
 #include <QTimer>
 #include <QHostInfo>
-#include <QMainWindow>
 
 #include <errno.h>
 #include <glib.h>
@@ -187,7 +186,6 @@ SeadriveGui::SeadriveGui()
       in_exit_(false),
       first_use_(false)
 {
-    main_win_ = nullptr;
     tray_icon_ = new SeafileTrayIcon(this);
     daemon_mgr_ = new DaemonManager();
     rpc_client_ = new SeafileRpcClient();
@@ -240,17 +238,7 @@ void SeadriveGui::start()
 
 void SeadriveGui::onDaemonStarted()
 {
-    // main_win_ = new QMainWindow;
-    // main_win_->showNormal();
-    // main_win_->show();
-    // main_win_->raise();
-    // main_win_->activateWindow();
-
     rpc_client_->connectDaemon();
-    message_poller_->start();
-
-    tray_icon_->start();
-    tray_icon_->setState(SeafileTrayIcon::STATE_DAEMON_UP);
 
     if (first_use_ || account_mgr_->accounts().size() == 0) {
         do {
@@ -271,6 +259,7 @@ void SeadriveGui::onDaemonStarted()
 
             if (readPreconfigureEntry(kHideConfigurationWizard).toInt())
                 break;
+
             LoginDialog login_dialog;
             login_dialog.exec();
         } while (0);
@@ -281,9 +270,10 @@ void SeadriveGui::onDaemonStarted()
         }
     }
 
-    // settings_dlg_->show();
-    // settings_dlg_->raise();
-    // settings_dlg_->activateWindow();
+    tray_icon_->start();
+    tray_icon_->setState(SeafileTrayIcon::STATE_DAEMON_UP);
+    message_poller_->start();
+
 #ifdef HAVE_FINDER_SYNC_SUPPORT
     finderSyncListenerStart();
 #endif
@@ -418,22 +408,19 @@ void SeadriveGui::refreshQss()
 
 void SeadriveGui::warningBox(const QString& msg, QWidget *parent)
 {
-    QMessageBox box(parent ? parent : main_win_);
+    QMessageBox box(parent);
     box.setText(msg);
     box.setWindowTitle(getBrand());
     box.setIcon(QMessageBox::Warning);
     box.addButton(tr("OK"), QMessageBox::YesRole);
     box.exec();
 
-    if (!parent) {
-        // main_win_->showWindow();
-    }
     qWarning("%s", msg.toUtf8().data());
 }
 
 void SeadriveGui::messageBox(const QString& msg, QWidget *parent)
 {
-    QMessageBox box(parent ? parent : main_win_);
+    QMessageBox box(parent);
     box.setText(msg);
     box.setWindowTitle(getBrand());
     box.setIcon(QMessageBox::Information);
@@ -444,7 +431,7 @@ void SeadriveGui::messageBox(const QString& msg, QWidget *parent)
 
 bool SeadriveGui::yesOrNoBox(const QString& msg, QWidget *parent, bool default_val)
 {
-    QMessageBox box(parent ? parent : main_win_);
+    QMessageBox box(parent);
     box.setText(msg);
     box.setWindowTitle(getBrand());
     box.setIcon(QMessageBox::Question);
@@ -458,7 +445,7 @@ bool SeadriveGui::yesOrNoBox(const QString& msg, QWidget *parent, bool default_v
 
 bool SeadriveGui::yesOrCancelBox(const QString& msg, QWidget *parent, bool default_yes)
 {
-    QMessageBox box(parent ? parent : main_win_);
+    QMessageBox box(parent);
     box.setText(msg);
     box.setWindowTitle(getBrand());
     box.setIcon(QMessageBox::Question);
@@ -474,7 +461,7 @@ bool SeadriveGui::yesOrCancelBox(const QString& msg, QWidget *parent, bool defau
 QMessageBox::StandardButton
 SeadriveGui::yesNoCancelBox(const QString& msg, QWidget *parent, QMessageBox::StandardButton default_btn)
 {
-    QMessageBox box(parent ? parent : main_win_);
+    QMessageBox box(parent);
     box.setText(msg);
     box.setWindowTitle(getBrand());
     box.setIcon(QMessageBox::Question);
@@ -500,7 +487,7 @@ bool SeadriveGui::detailedYesOrNoBox(const QString& msg, const QString& detailed
                        getBrand(),
                        msg,
                        QMessageBox::Yes | QMessageBox::No,
-                       parent != 0 ? parent : main_win_);
+                       parent);
     msgBox.setDetailedText(detailed_text);
     msgBox.setButtonText(QMessageBox::Yes, tr("Yes"));
     msgBox.setButtonText(QMessageBox::No, tr("No"));
