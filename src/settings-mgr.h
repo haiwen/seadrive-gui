@@ -71,9 +71,6 @@ public:
     void setMaxUploadRatio(unsigned int ratio);
     void setSyncExtraTempFile(bool sync);
 
-    bool hideDockIcon();
-    void setHideDockIcon(bool hide);
-
     void setCheckLatestVersionEnabled(bool enabled);
     bool isCheckLatestVersionEnabled();
 

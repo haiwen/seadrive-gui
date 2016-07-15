@@ -32,9 +32,6 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
     mAutoStartCheckBox->setText(
         tr("Auto start %1 after login").arg(getBrand()));
 
-    mHideDockIconCheckBox->setText(
-        tr("Hide %1 Icon from the dock").arg(getBrand()));
-
     mTabWidget->setCurrentIndex(0);
 
     if (!isCheckLatestVersionEnabled()) {
@@ -71,7 +68,6 @@ void SettingsDialog::updateSettings()
 
 //     mgr->setNotify(mNotifyCheckBox->checkState() == Qt::Checked);
 //     mgr->setAutoStart(mAutoStartCheckBox->checkState() == Qt::Checked);
-//     mgr->setHideDockIcon(mHideDockIconCheckBox->checkState() == Qt::Checked);
 //     mgr->setSyncExtraTempFile(mSyncExtraTempFileCheckBox->checkState() == Qt::Checked);
 
     mgr->setMaxDownloadRatio(mDownloadSpinBox->value());
@@ -168,13 +164,6 @@ void SettingsDialog::showEvent(QShowEvent *event)
 #else
     mShellExtCheckBox->hide();
 #endif
-
-//     // currently supports mac only
-//     state = mgr->hideDockIcon() ? Qt::Checked : Qt::Unchecked;
-//     mHideDockIconCheckBox->setCheckState(state);
-// #if !defined(Q_OS_MAC)
-//     mHideDockIconCheckBox->hide();
-// #endif
 
 //     state = mgr->notify() ? Qt::Checked : Qt::Unchecked;
 //     mNotifyCheckBox->setCheckState(state);

@@ -24,7 +24,6 @@
 
 namespace
 {
-const char *kHideDockIcon = "hideDockIcon";
 const char *kCheckLatestVersion = "checkLatestVersion";
 const char *kBehaviorGroup = "Behavior";
 
@@ -252,36 +251,6 @@ void SettingsManager::setMaxUploadRatio(unsigned int ratio)
         maxUploadRatio_ = ratio;
     }
 }
-
-
-bool SettingsManager::hideDockIcon()
-{
-    QSettings settings;
-    bool hide;
-
-    settings.beginGroup(kBehaviorGroup);
-    hide = settings.value(kHideDockIcon, false).toBool();
-    settings.endGroup();
-    return hide;
-}
-
-void SettingsManager::setHideDockIcon(bool hide)
-{
-    QSettings settings;
-
-    settings.beginGroup(kBehaviorGroup);
-    settings.setValue(kHideDockIcon, hide);
-    settings.endGroup();
-
-    set_seafile_dock_icon_style(hide);
-#ifdef Q_OS_MAC
-    // for UIElement application, the main window might sink
-    // under many applications
-    // this will force it to stand before all
-    // utils::mac::orderFrontRegardless(gui->mainWindow()->winId());
-#endif
-}
-
 
 void SettingsManager::removeAllSettings()
 {

@@ -11,6 +11,7 @@
 #include "seadrive-gui.h"
 #if defined(Q_OS_MAC)
 #include "application.h"
+#include "utils/utils-mac.h"
 #endif
 
 namespace {
