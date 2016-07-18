@@ -70,6 +70,8 @@ public:
 
     bool getSyncNotification(json_t **ret);
 
+    bool getGlobalSyncStatus(json_t **ret);
+
 private:
     Q_DISABLE_COPY(SeafileRpcClient)
 

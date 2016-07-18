@@ -373,3 +373,22 @@ bool SeafileRpcClient::getSyncNotification(json_t **ret_obj)
 
     return true;
 }
+
+bool SeafileRpcClient::getGlobalSyncStatus(json_t **ret_obj)
+{
+    GError *error = NULL;
+    json_t *ret = searpc_client_call__json (
+        seadrive_rpc_client_,
+        "seafile_get_global_sync_status",
+        &error, 0);
+    if (error || !ret) {
+        qWarning("failed to get global sync status: %s\n",
+                 error->message ? error->message : "");
+        g_error_free(error);
+        return false;
+    }
+
+    *ret_obj = ret;
+
+    return true;
+}

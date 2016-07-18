@@ -32,6 +32,7 @@ public:
 
 private slots:
     void checkNotification();
+    void checkSyncStatus();
 
 private:
     Q_DISABLE_COPY(MessagePoller)
