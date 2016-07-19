@@ -20,7 +20,12 @@ extern "C" {
 
 namespace {
 
+#if defined(Q_OS_WIN32)
+const char *kSeadriveSockName = "\\\\.\\pipe\\seadrive";
+#else
 const char *kSeadriveSockName = "seadrive.sock";
+#endif
+
 const char *kSeadriveRpcService = "seadrive-rpcserver";
 
 } // namespace
@@ -40,8 +45,12 @@ SeafileRpcClient::~SeafileRpcClient()
 
 void SeafileRpcClient::connectDaemon()
 {
+#if defined(Q_OS_WIN32)
+    SearpcNamedPipeClient *pipe_client = searpc_create_named_pipe_client(kSeadriveSockName);
+#else
     SearpcNamedPipeClient *pipe_client = searpc_create_named_pipe_client(
         toCStr(QDir(gui->seadriveDataDir()).filePath(kSeadriveSockName)));
+#endif
     if (searpc_named_pipe_client_connect(pipe_client) < 0) {
         gui->errorAndExit(tr("failed to connect to seadrive daemon"));
         return;

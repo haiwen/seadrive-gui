@@ -42,7 +42,7 @@
 namespace {
 
 #if defined(Q_OS_WIN32)
-    const char *kSeadriveDirName = "seadrive-data";
+    const char *kSeadriveDirName = "seadrive";
 #else
     const char *kSeadriveDirName = ".seadrive";
 #endif
