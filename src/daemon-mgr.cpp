@@ -53,7 +53,6 @@ DaemonManager::~DaemonManager() {
 
 void DaemonManager::startSeadriveDaemon()
 {
-    QDir data_dir(gui->seadriveDataDir());
 
 #if defined(Q_OS_WIN32)
     searpc_pipe_client_ = searpc_create_named_pipe_client(kSeadriveSockName);
@@ -65,12 +64,28 @@ void DaemonManager::startSeadriveDaemon()
     seadrive_daemon_ = new QProcess(this);
     connect(seadrive_daemon_, SIGNAL(started()), this, SLOT(onDaemonStarted()));
 
+    seadrive_daemon_->start(RESOURCE_PATH(kSeadriveExecutable), collectSeaDriveArgs());
+}
+
+QStringList DaemonManager::collectSeaDriveArgs()
+{
     QStringList args;
-    args << "-d" << data_dir.absolutePath();
+
+    args << "-d" << QDir(gui->seadriveDataDir()).absolutePath();
     args << "-l" << QDir(gui->logsDir()).absoluteFilePath("seadrive.log");
 
 #if defined(Q_OS_WIN32)
-    args << "S:";
+    QString drive_letter = QString(qgetenv("SEADRIVE_LETTER")).trimmed().toUpper().remove(":").remove("/");
+    qDebug("SEADRIVE_LETTER = %s", qgetenv("SEADRIVE_LETTER").data());
+    if (!drive_letter.isEmpty()) {
+        if (drive_letter.length() != 1 || drive_letter < QString("A") || drive_letter > QString("Z")) {
+            qWarning() << "invalid SEADRIVE_LETTER '" << drive_letter << "'";
+            drive_letter = "S";
+        }
+    } else {
+        drive_letter = "S";
+    }
+    args << drive_letter + ":";
 #else
     args << "-f";
 
@@ -95,7 +110,7 @@ void DaemonManager::startSeadriveDaemon()
         stream << arg;
     }
 
-    seadrive_daemon_->start(RESOURCE_PATH(kSeadriveExecutable), args);
+    return args;
 }
 
 void DaemonManager::systemShutDown()
@@ -122,6 +137,7 @@ void DaemonManager::checkDaemonReady()
 
         qDebug("seadrive daemon is ready");
         conn_daemon_timer_->stop();
+        g_usleep(1000000);
         emit daemonStarted();
         return;
     }

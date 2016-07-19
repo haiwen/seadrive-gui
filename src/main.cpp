@@ -37,9 +37,12 @@ void setupSettingDomain()
 void handleCommandLineOption(int argc, char *argv[])
 {
     int c;
-    static const char *short_options = "o:";
+    static const char *short_options = "o:L:";
     static const struct option long_options[] = {
         { "fuse-opts", required_argument, NULL, 'o' },
+#if defined(Q_OS_WIN32)
+        { "drive-letter", required_argument, NULL, 'L' },
+#endif
         { NULL, 0, NULL, 0, },
     };
 
@@ -49,6 +52,11 @@ void handleCommandLineOption(int argc, char *argv[])
         case 'o':
             g_setenv ("SEADRIVE_FUSE_OPTS", optarg, 1);
             break;
+#if defined(Q_OS_WIN32)
+        case 'L':
+            g_setenv ("SEADRIVE_LETTER", optarg, 1);
+            break;
+#endif
         default:
             exit(1);
         }

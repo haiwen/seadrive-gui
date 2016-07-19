@@ -32,6 +32,7 @@ private slots:
 private:
     Q_DISABLE_COPY(DaemonManager)
 
+    QStringList collectSeaDriveArgs();
     void startSeafileDaemon();
     void stopAllDaemon();
 
