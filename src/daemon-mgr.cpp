@@ -22,11 +22,12 @@ extern "C" {
 namespace {
 
 const int kConnDaemonIntervalMilli = 1000;
-const char *kSeadriveSockName = "seadrive.sock";
 
 #if defined(Q_OS_WIN32)
+const char *kSeadriveSockName = "\\\\.\\pipe\\seadrive";
 const char *kSeadriveExecutable = "seadrive.exe";
 #else
+const char *kSeadriveSockName = "seadrive.sock";
 const char *kSeadriveExecutable = "seadrive";
 #endif
 
@@ -54,15 +55,24 @@ void DaemonManager::startSeadriveDaemon()
 {
     QDir data_dir(gui->seadriveDataDir());
 
-    searpc_pipe_client_ = searpc_create_named_pipe_client(toCStr(data_dir.filePath(kSeadriveSockName)));
+#if defined(Q_OS_WIN32)
+    searpc_pipe_client_ = searpc_create_named_pipe_client(kSeadriveSockName);
+#else
+    searpc_pipe_client_ = searpc_create_named_pipe_client(
+        toCStr(QDir(gui->seadriveDataDir()).filePath(kSeadriveSockName)));
+#endif
 
     seadrive_daemon_ = new QProcess(this);
     connect(seadrive_daemon_, SIGNAL(started()), this, SLOT(onDaemonStarted()));
 
     QStringList args;
-    args << "-f";
     args << "-d" << data_dir.absolutePath();
     args << "-l" << QDir(gui->logsDir()).absoluteFilePath("seadrive.log");
+
+#if defined(Q_OS_WIN32)
+    args << "S:";
+#else
+    args << "-f";
 
     QString fuse_opts = qgetenv("SEADRIVE_FUSE_OPTS");
     if (fuse_opts.isEmpty()) {
@@ -78,6 +88,8 @@ void DaemonManager::startSeadriveDaemon()
 #endif
     }
     args << fuse_opts.split(" ");
+#endif
+
     auto stream = qInfo() << "starting seadrive daemon:" << kSeadriveExecutable;
     foreach (const QString& arg, args) {
         stream << arg;
@@ -104,16 +116,18 @@ void DaemonManager::checkDaemonReady()
         // TODO: Instead of only connecting to the rpc server, we should make a
         // real rpc call here so we can guarantee the daemon is ready to answer
         // rpc requests.
+        SearpcClient *rpc_client = searpc_client_with_named_pipe_transport(
+            searpc_pipe_client_, "seadrive-rpcserver");
+        searpc_free_client_with_pipe_transport(rpc_client);
+
         qDebug("seadrive daemon is ready");
         conn_daemon_timer_->stop();
         emit daemonStarted();
-        // TODO: Free the searpc client.
-        // ::close(searpc_pipe_client_->pipe_fd);
         return;
     }
     qDebug("seadrive daemon is not ready");
     static int maxcheck = 0;
-    if (++maxcheck > 15) {
+    if (++maxcheck > 5) {
         qWarning("seadrive rpc is not ready after %d retry, abort", maxcheck);
         gui->errorAndExit(tr("%1 drive failed to initialize").arg(getBrand()));
     }
