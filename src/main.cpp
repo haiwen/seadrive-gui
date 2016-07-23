@@ -10,6 +10,9 @@
 
 #include "seadrive-gui.h"
 
+#include "i18n.h"
+#include "utils/utils.h"
+
 namespace {
 
 void initGlib()
@@ -36,6 +39,7 @@ void handleCommandLineOption(int argc, char *argv[])
     static const char *short_options = "o:";
     static const struct option long_options[] = {
         { "fuse-opts", required_argument, NULL, 'o' },
+        { "delay", no_argument, NULL, 'D' },
         { NULL, 0, NULL, 0, },
     };
 
@@ -44,6 +48,9 @@ void handleCommandLineOption(int argc, char *argv[])
         switch (c) {
         case 'o':
             g_setenv ("SEADRIVE_FUSE_OPTS", optarg, 1);
+            break;
+        case 'D':
+            msleep(1000);
             break;
         default:
             exit(1);
@@ -66,6 +73,9 @@ int main(int argc, char *argv[])
 
     // set the domains of settings
     setupSettingDomain();
+
+    // initialize i18n settings
+    I18NHelper::getInstance()->init();
 
     handleCommandLineOption(argc, argv);
 

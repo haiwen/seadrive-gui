@@ -217,14 +217,12 @@ void SeadriveGui::start()
     writeCABundleForCurl();
 #endif
 
-    daemon_mgr_->startSeadriveDaemon();
-    connect(daemon_mgr_, SIGNAL(daemonStarted()),
-            this, SLOT(onDaemonStarted()));
+    onDaemonStarted();
 }
 
 void SeadriveGui::onDaemonStarted()
 {
-    rpc_client_->connectDaemon();
+//    rpc_client_->connectDaemon();
 
     tray_icon_->start();
     tray_icon_->setState(SeafileTrayIcon::STATE_DAEMON_UP);
@@ -258,9 +256,9 @@ void SeadriveGui::onDaemonStarted()
         }
     }
 
-    // settings_dlg_->show();
-    // settings_dlg_->raise();
-    // settings_dlg_->activateWindow();
+    settings_dlg_->show();
+    settings_dlg_->raise();
+    settings_dlg_->activateWindow();
 }
 
 void SeadriveGui::onAboutToQuit()
