@@ -126,8 +126,8 @@ bool I18NHelper::setLanguage(int langIndex) {
                                        ".qm");            // suffix
         
 	if (!success) {
-            QString pwd = QString("/home/kylin/seafile/seadrive-gui/i18n/seafile_%1.qm").arg(langs[langIndex]);
-            //QString pwd = QString(":/i18n/seafile_%1.qm").arg(langs[langIndex]);
+            // QString pwd = QString("/home/kylin/seafile/seadrive-gui/i18n/seafile_%1.qm").arg(langs[langIndex]);
+            QString pwd = QString(":/i18n/seafile_%1.qm").arg(langs[langIndex]);
             success = my_translator_->load(pwd);
         }
     }
