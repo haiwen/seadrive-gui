@@ -64,7 +64,7 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID *ppvOut)
         return hr;
     }
 
-    seafile::Status status = seafile::NoStatus;
+    seafile::Status status = seafile::InvalidStatus;
     if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_NORMAL)) {
         // seaf_ext_log ("DllGetClassObject called for ICON_NORMAL!");
         status = seafile::Normal;
@@ -83,9 +83,11 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID *ppvOut)
     } else if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_LOCKED_BY_OTHERS)) {
         // seaf_ext_log ("DllGetClassObject called for ICON_LOCKED_BY_OTHERS!");
         status = seafile::LockedByOthers;
+    } else if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_NOSTATUS)) {
+        status = seafile::NoStatus;
     }
 
-    if (status != seafile::NoStatus) {
+    if (status != seafile::InvalidStatus) {
         ShellExtClassFactory *pcf = new ShellExtClassFactory(status);
         const HRESULT hr = pcf->QueryInterface(riid, ppvOut);
         if(FAILED(hr))
