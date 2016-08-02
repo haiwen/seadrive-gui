@@ -36,10 +36,10 @@ protected:
     // IShellExtInit wrapper functions to catch exceptions and send crash reports
     STDMETHODIMP    Initialize_Wrap(LPCITEMIDLIST pIDFolder, LPDATAOBJECT pDataObj, HKEY hKeyID);
 
-    seafile::RepoInfo::Status status_;
+    seafile::Status status_;
 
 public:
-    ShellExt(seafile::RepoInfo::Status status = seafile::RepoInfo::NoStatus);
+    ShellExt(seafile::Status status = seafile::NoStatus);
     virtual ~ShellExt();
 
     // IUnknown members
@@ -84,11 +84,13 @@ private:
 
     bool getReposList(seafile::RepoInfoList *wts);
     bool pathInRepo(const std::string& path, std::string *path_in_repo, seafile::RepoInfo *repo=0);
+
+    bool isManagedFile(const std::string& path);
+
     bool isRepoTopDir(const std::string& path);
     seafile::RepoInfo getRepoInfoByPath(const std::string& path);
-    seafile::RepoInfo::Status getRepoFileStatus(const std::string& repo_id,
-                                                const std::string& path_in_repo,
-                                                bool isdir);
+    seafile::Status getFileStatus(const std::string& path);
+
     /* the file/dir current clicked on */
     std::string path_;
 

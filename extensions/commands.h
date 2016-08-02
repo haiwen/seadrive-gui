@@ -7,56 +7,42 @@
 #include "applet-connection.h"
 
 namespace seafile {
+
+static std::string mount_point; // The mount_point of seadrive disk, deafult to "S:".
+
+enum Status {
+    NoStatus = 0,
+    Paused,
+    Normal,
+    Syncing,
+    Error,
+    LockedByMe,
+    LockedByOthers,
+    ReadOnly,
+    N_Status,
+};
+
 class RepoInfo
 {
 public:
-    enum Status {
-        NoStatus = 0,
-        Paused,
-        Normal,
-        Syncing,
-        Error,
-        LockedByMe,
-        LockedByOthers,
-        ReadOnly,
-        N_Status,
-    };
+    std::string topdir;
 
-    std::string repo_id;
-    std::string repo_name;
-    std::string worktree;
-    Status status;
     bool support_file_lock;
     bool support_private_share;
 
-    RepoInfo() : status(NoStatus)
+    RepoInfo() {}
+
+    RepoInfo(const std::string topdir)
+        : topdir(topdir)
     {
     }
 
-    RepoInfo(const std::string& repo_id,
-             const std::string repo_name,
-             const std::string& worktree,
-             Status status,
-             bool support_file_lock,
-             bool support_private_share)
-        : repo_id(repo_id),
-          repo_name(repo_name),
-          worktree(worktree),
-          status(status),
-          support_file_lock(support_file_lock),
-          support_private_share(support_private_share)
-    {
-    }
-
-    bool isValid()
-    {
-        return !repo_id.empty();
-    }
 };
 
-std::string toString(RepoInfo::Status st);
+std::string toString(Status st);
 
 typedef std::vector<RepoInfo> RepoInfoList;
+typedef std::vector<std::string> RepoDirs;
 
 /**
  * Abstract base class for all commands sent to seafile applet.
@@ -76,7 +62,12 @@ public:
 
     std::string formatRequest()
     {
-        return name_ + "\t" + serialize();
+        std::string body = serialize();
+        if (body.empty()) {
+            return name_;
+        } else {
+            return name_ + "\t" + body;
+        }
     }
 
     /**
@@ -143,22 +134,20 @@ public:
 protected:
     std::string serialize();
 
-    bool parseResponse(const std::string& raw_resp, RepoInfoList *worktrees);
+    bool parseResponse(const std::string& raw_resp, RepoInfoList *infos);
 };
 
-class GetFileStatusCommand : public AppletCommand<RepoInfo::Status> {
+class GetStatusCommand : public AppletCommand<Status> {
 public:
-    GetFileStatusCommand(const std::string& repo_id, const std::string& path_in_repo, bool isdir);
+    GetStatusCommand(const std::string& path);
 
 protected:
     std::string serialize();
 
-    bool parseResponse(const std::string& raw_resp, RepoInfo::Status *status);
+    bool parseResponse(const std::string& raw_resp, Status *status);
 
 private:
-    std::string repo_id_;
-    std::string path_in_repo_;
-    bool isdir_;
+    std::string path_;
 };
 
 class LockFileCommand : public AppletCommand<void> {

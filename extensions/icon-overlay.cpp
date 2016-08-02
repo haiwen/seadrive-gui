@@ -36,7 +36,7 @@ STDMETHODIMP ShellExt::GetOverlayInfo(LPWSTR pwszIconFile, int cchMax, int* pInd
 STDMETHODIMP ShellExt::GetPriority(int *priority)
 {
     /* The priority value can be 0 ~ 100, with 0 be the highest */
-    *priority = seafile::RepoInfo::N_Status - status_;
+    *priority = seafile::N_Status - status_;
     return S_OK;
 }
 
@@ -77,40 +77,17 @@ STDMETHODIMP ShellExt::IsMemberOf(LPCWSTR path_w, DWORD attr)
     //     return S_FALSE;
     // }
 
-    std::string path_in_repo;
-    seafile::RepoInfo repo;
-    if (!pathInRepo(path, &path_in_repo, &repo)) {
+    if (!isManagedFile(path)) {
         // seaf_ext_log ("pathInRepo returns false for %s\n", path.c_str());
         return S_FALSE;
     }
 
-    // seaf_ext_log ("path in repo: %s\n", path_in_repo.c_str());
-
-    if (path_in_repo.size() <= 1) {
-        // it's a repo top folder
-        path_in_repo = "";
-    }
-
     // Now we know it's a file inside the repo
 
-    // TODO: Improve this if we later make the extension<->applet communication full duplex
-    // if (repo.status == seafile::RepoInfo::Paused) {
-    //     return S_FALSE;
-    // }
+    seafile::Status status = getFileStatus(path);
 
-    // if (repo.status == seafile::RepoInfo::Normal && repo.status == status_) {
-    //     return S_OK;
-    // }
-
-    // Then check the file status.
-    seafile::RepoInfo::Status status = getRepoFileStatus(
-        repo.repo_id, path_in_repo, attr & FILE_ATTRIBUTE_DIRECTORY);
-
-    if (status == seafile::RepoInfo::Paused && !path_in_repo.empty()) {
-        return S_FALSE;
-    }
-    if (status == status_ || (status_ == seafile::RepoInfo::Paused && status == seafile::RepoInfo::ReadOnly)) {
-        // seaf_ext_log ("[ICON] file icon %d: %s", (int)status_, path.c_str());
+    if (status == status_) {
+        seaf_ext_log ("[ICON] file icon %d: %s", (int)status_, path.c_str());
         return S_OK;
     }
 

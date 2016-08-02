@@ -121,6 +121,8 @@ private:
     QString style_;
 
     bool first_use_;
+
+    QString disk_letter_;
 };
 
 /**
