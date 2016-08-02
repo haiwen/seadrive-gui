@@ -66,7 +66,7 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID *ppvOut)
 
     seafile::Status status = seafile::NoStatus;
     if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_NORMAL)) {
-        seaf_ext_log ("DllGetClassObject called for ICON_NORMAL!");
+        // seaf_ext_log ("DllGetClassObject called for ICON_NORMAL!");
         status = seafile::Normal;
     } else if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_SYNCING)) {
         // seaf_ext_log ("DllGetClassObject called for ICON_SYNCING!");

@@ -114,6 +114,11 @@ private:
     void handleLockFile(const QStringList& args, bool lock);
     void handlePrivateShare(const QStringList& args, bool to_group);
     void handleShowHistory(const QStringList& args);
+
+    bool parseRepoFileInfo(const QString& path,
+                           QString *repo_uname,
+                           QString *repo_id,
+                           QString *path_in_repo);
 };
 
 #endif // SEADRIVE_CLIENT_EXT_HANLDER_H
