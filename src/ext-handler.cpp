@@ -458,17 +458,6 @@ void ExtCommandsHandler::handleGenShareLink(const QStringList& args, bool intern
     if (args.size() != 1) {
         return;
     }
-    // QString path = normalizedPath(args[0]);
-    // foreach (const LocalRepo& repo, listLocalRepos()) {
-    //     QString wt = normalizedPath(repo.worktree);
-    //     // qDebug("path: %s, repo: %s", path.toUtf8().data(), wt.toUtf8().data());
-    //     if (path.length() > wt.length() && path.startsWith(wt) && path.at(wt.length()) == '/') {
-    //         QString path_in_repo = path.mid(wt.size());
-    //         bool is_file = QFileInfo(path).isFile();
-    //         emit generateShareLink(repo.id, path_in_repo, is_file, internal);
-    //         break;
-    //     }
-    // }
 
     QString path = args[0];
     QString repo;
@@ -551,15 +540,46 @@ void ExtCommandsHandler::handleLockFile(const QStringList& args, bool lock)
     if (args.size() != 1) {
         return;
     }
-    // QString path = normalizedPath(args[0]);
-    // foreach (const LocalRepo& repo, listLocalRepos()) {
-    //     QString wt = normalizedPath(repo.worktree);
-    //     if (path.length() > wt.length() && path.startsWith(wt) and path.at(wt.length()) == '/') {
-    //         QString path_in_repo = path.mid(wt.size());
-    //         emit lockFile(repo.id, path_in_repo, lock);
-    //         break;
-    //     }
-    // }
+
+    QString path = args[0];
+    QString repo;
+    QString path_in_repo = "";
+    if (!getRepoAndRelativePath(path, &repo, &path_in_repo)) {
+        qWarning() << "failed to getRepoAndRelativePath for " << path;
+        return;
+    }
+
+    QString repo_id;
+
+    QMutexLocker locker(&rpc_client_mutex_);
+    if (!rpc_client_->getRepoIdByPath(repo, &repo_id)) {
+        qWarning() << "failed to get the repo id for " << path;
+        return;
+    }
+
+    if (!rpc_client_->markFileLockState(repo_id, path_in_repo, lock)) {
+        qWarning() << "failed to lock file " << path;
+        return;
+    }
+}
+
+bool ExtCommandsHandler::parseRepoFileInfo(const QString& path,
+                                           QString *p_repo_uname,
+                                           QString *p_repo_id,
+                                           QString *p_path_in_repo)
+{
+    if (!getRepoAndRelativePath(path, p_repo_uname, p_path_in_repo)) {
+        qWarning() << "failed to getRepoAndRelativePath for " << path;
+        return false;
+    }
+
+    QMutexLocker locker(&rpc_client_mutex_);
+    if (!rpc_client_->getRepoIdByPath(*p_repo_uname, p_repo_id)) {
+        qWarning() << "failed to get the repo id for " << path;
+        return false;
+    }
+
+    return true;
 }
 
 void ExtCommandsHandler::handlePrivateShare(const QStringList& args,
@@ -570,19 +590,16 @@ void ExtCommandsHandler::handlePrivateShare(const QStringList& args,
     }
     QString path = normalizedPath(args[0]);
     if (!QFileInfo(path).isDir()) {
-        qWarning("attempted to share %s, which is not a folder",
+        qWarning("attempting to share %s, which is not a folder",
                  path.toUtf8().data());
         return;
     }
-    // foreach (const LocalRepo& repo, listLocalRepos()) {
-    //     QString wt = normalizedPath(repo.worktree);
-    //     if (path.length() > wt.length() && path.startsWith(wt) &&
-    //         path.at(wt.length()) == '/') {
-    //         QString path_in_repo = path.mid(wt.size());
-    //         emit privateShare(repo.id, path_in_repo, to_group);
-    //         break;
-    //     }
-    // }
+
+    QString repo_uname, repo_id, path_in_repo;
+    if (!parseRepoFileInfo(path, &repo_uname, &repo_id, &path_in_repo)) {
+        return;
+    }
+    emit privateShare(repo_id, path_in_repo, to_group);
 }
 
 void ExtCommandsHandler::handleShowHistory(const QStringList& args)
@@ -596,17 +613,12 @@ void ExtCommandsHandler::handleShowHistory(const QStringList& args)
                  path.toUtf8().data());
         return;
     }
-    // foreach (const LocalRepo& repo, listLocalRepos()) {
-    //     QString wt = normalizedPath(repo.worktree);
-    //     if (path.length() > wt.length() && path.startsWith(wt) &&
-    //         path.at(wt.length()) == '/') {
-    //         if (repo.account.isValid()) {
-    //             QString path_in_repo = path.mid(wt.size());
-    //             QUrl url = "/repo/file_revisions/" + repo.id + "/";
-    //             url = ::includeQueryParams(url, {{"p", path_in_repo}});
-    //             emit openUrlWithAutoLogin(url);
-    //         }
-    //         break;
-    //     }
-    // }
+    QString repo_uname, repo_id, path_in_repo;
+    if (!parseRepoFileInfo(path, &repo_uname, &repo_id, &path_in_repo)) {
+        return;
+    }
+
+    QUrl url = "/repo/file_revisions/" + repo_id + "/";
+    url = ::includeQueryParams(url, {{"p", path_in_repo}});
+    emit openUrlWithAutoLogin(url);
 }
