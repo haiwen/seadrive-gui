@@ -12,6 +12,8 @@ uint64_t reposInfoTimestamp = 0;
 
 std::string toString(Status st) {
     switch (st) {
+    case InvalidStatus:
+        return "invalid status";
     case NoStatus:
         return "nostatus";
     case Paused:
