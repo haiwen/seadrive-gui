@@ -469,6 +469,28 @@ void ExtCommandsHandler::handleGenShareLink(const QStringList& args, bool intern
     //         break;
     //     }
     // }
+
+    QString path = args[0];
+    QString repo;
+    QString path_in_repo = "";
+    if (!getRepoAndRelativePath(path, &repo, &path_in_repo)) {
+        qWarning() << "failed to getRepoAndRelativePath for " << path;
+        return;
+    }
+
+    QString repo_id;
+
+    QMutexLocker locker(&rpc_client_mutex_);
+    if (!rpc_client_->getRepoIdByPath(repo, &repo_id)) {
+        qWarning() << "failed to get the repo id for " << path;
+        return;
+    }
+
+    bool is_file = QFileInfo(path).isDir();
+
+    emit generateShareLink(repo_id, path_in_repo, is_file, internal);
+
+    return;
 }
 
 QString ExtCommandsHandler::handleListRepos(const QStringList& args)
