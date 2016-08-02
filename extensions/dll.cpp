@@ -64,28 +64,28 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID *ppvOut)
         return hr;
     }
 
-    seafile::RepoInfo::Status status = seafile::RepoInfo::NoStatus;
+    seafile::Status status = seafile::NoStatus;
     if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_NORMAL)) {
-        // seaf_ext_log ("DllGetClassObject called for ICON_NORMAL!");
-        status = seafile::RepoInfo::Normal;
+        seaf_ext_log ("DllGetClassObject called for ICON_NORMAL!");
+        status = seafile::Normal;
     } else if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_SYNCING)) {
         // seaf_ext_log ("DllGetClassObject called for ICON_SYNCING!");
-        status = seafile::RepoInfo::Syncing;
+        status = seafile::Syncing;
     } else if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_ERROR)) {
         // seaf_ext_log ("DllGetClassObject called for ICON_ERROR!");
-        status = seafile::RepoInfo::Error;
+        status = seafile::Error;
     } else if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_PAUSED)) {
         // seaf_ext_log ("DllGetClassObject called for ICON_PAUSED!");
-        status = seafile::RepoInfo::Paused;
+        status = seafile::Paused;
     } else if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_LOCKED_BY_ME)) {
         // seaf_ext_log ("DllGetClassObject called for ICON_LOCKED_BY_ME!");
-        status = seafile::RepoInfo::LockedByMe;
+        status = seafile::LockedByMe;
     } else if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_LOCKED_BY_OTHERS)) {
         // seaf_ext_log ("DllGetClassObject called for ICON_LOCKED_BY_OTHERS!");
-        status = seafile::RepoInfo::LockedByOthers;
+        status = seafile::LockedByOthers;
     }
 
-    if (status != seafile::RepoInfo::NoStatus) {
+    if (status != seafile::NoStatus) {
         ShellExtClassFactory *pcf = new ShellExtClassFactory(status);
         const HRESULT hr = pcf->QueryInterface(riid, ppvOut);
         if(FAILED(hr))

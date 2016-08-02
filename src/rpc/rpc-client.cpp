@@ -45,15 +45,25 @@ SeafileRpcClient::~SeafileRpcClient()
 
 void SeafileRpcClient::connectDaemon()
 {
+    int retry = 0;
+    SearpcNamedPipeClient *pipe_client;
+    while (true) {
 #if defined(Q_OS_WIN32)
-    SearpcNamedPipeClient *pipe_client = searpc_create_named_pipe_client(kSeadriveSockName);
+        pipe_client = searpc_create_named_pipe_client(kSeadriveSockName);
 #else
-    SearpcNamedPipeClient *pipe_client = searpc_create_named_pipe_client(
-        toCStr(QDir(gui->seadriveDataDir()).filePath(kSeadriveSockName)));
+        pipe_client = searpc_create_named_pipe_client(
+            toCStr(QDir(gui->seadriveDataDir()).filePath(kSeadriveSockName)));
 #endif
-    if (searpc_named_pipe_client_connect(pipe_client) < 0) {
-        gui->errorAndExit(tr("failed to connect to seadrive daemon"));
-        return;
+        if (searpc_named_pipe_client_connect(pipe_client) < 0) {
+            if (retry++ > 5) {
+                gui->errorAndExit(tr("internal error: failed to connect to seadrive daemon"));
+                return;
+            } else {
+                g_usleep(500000);
+            }
+        } else {
+            break;
+        }
     }
     seadrive_rpc_client_ = searpc_client_with_named_pipe_transport(
         pipe_client, kSeadriveRpcService);

@@ -20,7 +20,7 @@ std::unique_ptr<seafile::RepoInfoList> ShellExt::repos_cache_;
 uint64_t ShellExt::cache_ts_;
 
 // *********************** ShellExt *************************
-ShellExt::ShellExt(seafile::RepoInfo::Status status)
+ShellExt::ShellExt(seafile::Status status)
   : main_menu_(0),
     index_(0),
     first_(0),
@@ -121,18 +121,21 @@ bool ShellExt::pathInRepo(const std::string& path,
 {
     seafile::RepoInfoList repos;
     if (!getReposList(&repos)) {
+        seaf_ext_log ("getReposList returns false");
         return false;
     }
     std::string p = utils::normalizedPath(path);
 
     for (size_t i = 0; i < repos.size(); i++) {
-        std::string wt = repos[i].worktree;
-        // seaf_ext_log ("work tree is %s, path is %s\n", wt.c_str(), p.c_str());
-        if (p.size() >= wt.size() && p.substr(0, wt.size()) == wt) {
-            if (p.size() > wt.size() && p[wt.size()] != '/') {
+        std::string topdir = repos[i].topdir;
+        // seaf_ext_log ("work tree is %s, path is %s\n", topdir.c_str(), p.c_str());
+        if (p.size() >= topdir.size() && p.substr(0, topdir.size()) == topdir) {
+            if (p.size() > topdir.size() && p[topdir.size()] != '/') {
                 continue;
             }
-            *path_in_repo = p.substr(wt.size(), p.size() - wt.size());
+            if (path_in_repo) {
+                *path_in_repo = p.substr(topdir.size(), p.size() - topdir.size());
+            }
             if (repo) {
                 *repo = repos[i];
             }
@@ -152,8 +155,7 @@ bool ShellExt::isRepoTopDir(const std::string& path)
 
     std::string p = utils::normalizedPath(path);
     for (size_t i = 0; i < repos.size(); i++) {
-        std::string wt = repos[i].worktree;
-        if (p == wt) {
+        if (p == repos[i].topdir) {
             return true;
         }
     }
@@ -170,8 +172,7 @@ seafile::RepoInfo ShellExt::getRepoInfoByPath(const std::string& path)
 
     std::string p = utils::normalizedPath(path);
     for (size_t i = 0; i < repos.size(); i++) {
-        std::string wt = repos[i].worktree;
-        if (p == wt) {
+        if (p == repos[i].topdir) {
             return repos[i];
         }
     }
@@ -179,17 +180,20 @@ seafile::RepoInfo ShellExt::getRepoInfoByPath(const std::string& path)
     return seafile::RepoInfo();
 }
 
-seafile::RepoInfo::Status
-ShellExt::getRepoFileStatus(const std::string& repo_id,
-                            const std::string& path_in_repo,
-                            bool isdir)
+seafile::Status
+ShellExt::getFileStatus(const std::string& path)
 {
     // TODO: get the files under the same folder in a single command to reduce overhead
-    seafile::GetFileStatusCommand cmd(repo_id, path_in_repo, isdir);
-    seafile::RepoInfo::Status status;
+    seafile::GetStatusCommand cmd(utils::normalizedPath(path));
+    seafile::Status status;
     if (!cmd.sendAndWait(&status)) {
-        return seafile::RepoInfo::NoStatus;
+        return seafile::NoStatus;
     }
 
     return status;
+}
+
+bool ShellExt::isManagedFile(const std::string& path)
+{
+    return pathInRepo(path, nullptr, nullptr);
 }

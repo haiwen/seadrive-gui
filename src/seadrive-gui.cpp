@@ -31,6 +31,7 @@
 
 #if defined(Q_OS_WIN32)
 #include "utils/registry.h"
+#include "ext-handler.h"
 #endif
 
 #if defined(Q_OS_MAC)
@@ -194,6 +195,11 @@ SeadriveGui::SeadriveGui()
     settings_dlg_ = new SettingsDialog();
     message_poller_ = new MessagePoller();
     connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onAboutToQuit()));
+
+#if defined(Q_OS_WIN32)
+    // TODO: what if the drive letter S is already taken?
+    disk_letter_ = "S:";
+#endif
 }
 
 SeadriveGui::~SeadriveGui()
@@ -274,6 +280,10 @@ void SeadriveGui::onDaemonStarted()
     tray_icon_->setState(SeafileTrayIcon::STATE_DAEMON_UP);
     message_poller_->start();
 
+
+#if defined(Q_OS_WIN32)
+    SeafileExtensionHandler::instance()->start();
+#endif
 #ifdef HAVE_FINDER_SYNC_SUPPORT
     finderSyncListenerStart();
 #endif
@@ -350,10 +360,12 @@ bool SeadriveGui::initLog()
         return false;
     }
 
+#if !defined(Q_OS_WIN32)
     if (checkdir_with_mkdir(toCStr(gui->mountDir())) < 0) {
         errorAndExit(tr("Failed to initialize: failed to create seadrive mount folder"));
         return false;
     }
+#endif
 
     if (applet_log_init(toCStr(seadrive_dir.absolutePath())) < 0) {
         errorAndExit(tr("Failed to initialize log: %s").arg(g_strerror(errno)));
@@ -543,7 +555,11 @@ QString SeadriveGui::logsDir() const
 
 QString SeadriveGui::mountDir() const
 {
+#if defined(Q_OS_WIN32)
+    return disk_letter_;
+#else
     return QDir::home().absoluteFilePath("SeaDrive");
+#endif
 }
 
 QString SeadriveGui::getUniqueClientId()

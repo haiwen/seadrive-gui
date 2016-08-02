@@ -5,7 +5,7 @@
 #include "shell-ext.h"
 #include "log.h"
 
-ShellExtClassFactory::ShellExtClassFactory(seafile::RepoInfo::Status status)
+ShellExtClassFactory::ShellExtClassFactory(seafile::Status status)
 {
     m_cRef = 0L;
     status_ = status;

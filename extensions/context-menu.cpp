@@ -100,6 +100,7 @@ STDMETHODIMP ShellExt::Initialize_Wrap(LPCITEMIDLIST folder,
 
     if (result == S_OK) {
         path_ = utils::normalizedPath(utils::wStringToUtf8(path_w.get()));
+        // seaf_ext_log ("init wrap: path = %s", path_.c_str());
     }
 
     return result;
@@ -116,12 +117,17 @@ STDMETHODIMP ShellExt::QueryContextMenu(HMENU hMenu,
 
 
 STDMETHODIMP ShellExt::QueryContextMenu_Wrap(HMENU menu,
-                                              UINT indexMenu,
-                                              UINT first_command,
-                                              UINT last_command,
-                                              UINT flags)
+                                             UINT indexMenu,
+                                             UINT first_command,
+                                             UINT last_command,
+                                             UINT flags)
 {
     if (!seafile::utils::isShellExtEnabled()) {
+        static bool logged = false;
+        if (!logged) {
+            seaf_ext_log("skip context menu handling because shell ext is disabled.");
+            logged = true;
+        }
         return S_OK;
     }
     /* do nothing when user is double clicking */
@@ -134,9 +140,13 @@ STDMETHODIMP ShellExt::QueryContextMenu_Wrap(HMENU menu,
 
     std::string path_in_repo;
     seafile::RepoInfo repo;
+
+    // seaf_ext_log ("before pathInRepo");
     if (!pathInRepo(path_, &path_in_repo, &repo) || path_in_repo.size() <= 1) {
         return S_OK;
     }
+    // seaf_ext_log("path_in_repo = \"%s\", repo.topdir = \"%s\"",
+    //              path_in_repo.c_str(), repo.topdir.c_str());
 
     next_active_item_ = 0;
 
@@ -335,13 +345,12 @@ void ShellExt::buildSubMenu(const seafile::RepoInfo& repo,
     }
 
     if (repo.support_file_lock && !is_dir) {
-        seafile::RepoInfo::Status status =
-            getRepoFileStatus(repo.repo_id, path_in_repo, false);
+        seafile::Status status = getFileStatus(path_);
 
-        if (status == seafile::RepoInfo::LockedByMe) {
+        if (status == seafile::LockedByMe) {
             insertSubMenuItem(SEAFILE_TR("unlock this file"), UnlockFile);
         }
-        else if (status != seafile::RepoInfo::LockedByOthers) {
+        else if (status != seafile::LockedByOthers) {
             insertSubMenuItem(SEAFILE_TR("lock this file"), LockFile);
         }
     }

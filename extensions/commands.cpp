@@ -10,25 +10,25 @@ namespace seafile {
 
 uint64_t reposInfoTimestamp = 0;
 
-std::string toString(RepoInfo::Status st) {
+std::string toString(Status st) {
     switch (st) {
-    case RepoInfo::NoStatus:
+    case NoStatus:
         return "nostatus";
-    case RepoInfo::Paused:
+    case Paused:
         return "paused";
-    case RepoInfo::Normal:
+    case Normal:
         return "synced";
-    case RepoInfo::Syncing:
+    case Syncing:
         return "syncing";
-    case RepoInfo::Error:
+    case Error:
         return "error";
-    case RepoInfo::ReadOnly:
+    case ReadOnly:
         return "readonly";
-    case RepoInfo::LockedByMe:
+    case LockedByMe:
         return "locked by me";
-    case RepoInfo::LockedByOthers:
+    case LockedByOthers:
         return "locked by someone else";
-    case RepoInfo::N_Status:
+    case N_Status:
         return "";
     }
     return "";
@@ -64,106 +64,66 @@ ListReposCommand::ListReposCommand()
 
 std::string ListReposCommand::serialize()
 {
-    char buf[512];
-    snprintf (buf, sizeof(buf), "%I64u", reposInfoTimestamp);
-    return buf;
+    return "";
 }
 
 bool ListReposCommand::parseResponse(const std::string& raw_resp,
                                      RepoInfoList* infos)
 {
+    // seaf_ext_log ("ListReposCommand: raw_resp is %s\n", raw_resp.c_str());
+
     std::vector<std::string> lines = utils::split(raw_resp, '\n');
     if (lines.empty()) {
         return true;
     }
     for (size_t i = 0; i < lines.size(); i++) {
         std::string line = lines[i];
-        std::vector<std::string> parts = utils::split(line, '\t');
-        if (parts.size() != 6) {
-            continue;
-        }
-        std::string repo_id, repo_name, worktree, status;
-        RepoInfo::Status st;
-        bool support_file_lock;
-        bool support_private_share;
-
-        repo_id = parts[0];
-        repo_name = parts[1];
-        worktree = utils::normalizedPath(parts[2]);
-        status = parts[3];
-        support_file_lock = parts[4] == "file-lock-supported";
-        support_private_share = parts[5] == "private-share-supported";
-        if (status == "paused") {
-            st = RepoInfo::Paused;
-        }
-        else if (status == "syncing") {
-            st = RepoInfo::Syncing;
-        }
-        else if (status == "error") {
-            st = RepoInfo::Error;
-        }
-        else if (status == "normal") {
-            st = RepoInfo::Normal;
-        }
-        else {
-            // impossible
-            seaf_ext_log("bad repo status \"%s\"", status.c_str());
-            continue;
-        }
-        // seaf_ext_log ("status for %s is \"%s\"", repo_name.c_str(),
-        // status.c_str());
-        infos->push_back(RepoInfo(repo_id, repo_name, worktree, st,
-                                  support_file_lock, support_private_share));
+        std::string repo_dir = utils::normalizedPath(line);
+        seaf_ext_log ("repo dir: %s\n", repo_dir.c_str());
+        infos->push_back(RepoInfo(repo_dir));
     }
 
     reposInfoTimestamp = utils::currentMSecsSinceEpoch();
     return true;
 }
 
-GetFileStatusCommand::GetFileStatusCommand(const std::string& repo_id,
-                                           const std::string& path_in_repo,
-                                           bool isdir)
-    : AppletCommand<RepoInfo::Status>("get-file-status"),
-    repo_id_(repo_id),
-    path_in_repo_(path_in_repo),
-    isdir_(isdir)
+GetStatusCommand::GetStatusCommand(const std::string& path)
+    : AppletCommand<Status>("get-file-status"),
+    path_(path)
 {
 }
 
-std::string GetFileStatusCommand::serialize()
+std::string GetStatusCommand::serialize()
 {
-    char buf[512];
-    snprintf (buf, sizeof(buf), "%s\t%s\t%s",
-              repo_id_.c_str(), path_in_repo_.c_str(), isdir_ ? "true" : "false");
-    return buf;
+    return path_;
 }
 
-bool GetFileStatusCommand::parseResponse(const std::string& raw_resp,
-                                         RepoInfo::Status *status)
+bool GetStatusCommand::parseResponse(const std::string& raw_resp,
+                                     Status *status)
 {
     // seaf_ext_log ("raw_resp is %s\n", raw_resp.c_str());
 
     if (raw_resp == "syncing") {
-        *status = RepoInfo::Syncing;
+        *status = Syncing;
     } else if (raw_resp == "synced") {
-        *status = RepoInfo::Normal;
+        *status = Normal;
     } else if (raw_resp == "error") {
-        *status = RepoInfo::Error;
+        *status = Error;
     } else if (raw_resp == "paused") {
-        *status = RepoInfo::Paused;
+        *status = Paused;
     } else if (raw_resp == "readonly") {
-        *status = RepoInfo::ReadOnly;
+        *status = ReadOnly;
     } else if (raw_resp == "locked") {
-        *status = RepoInfo::LockedByOthers;
+        *status = LockedByOthers;
     } else if (raw_resp == "locked_by_me") {
-        *status = RepoInfo::LockedByMe;
+        *status = LockedByMe;
     } else if (raw_resp == "ignored") {
-        *status = RepoInfo::NoStatus;
+        *status = NoStatus;
     } else {
-        *status = RepoInfo::NoStatus;
+        *status = NoStatus;
 
-        seaf_ext_log ("[GetFileStatusCommand] status for %s is %s, raw_resp is %s\n",
-                      path_in_repo_.c_str(),
+        seaf_ext_log ("[GetStatusCommand] status for %s is %s, raw_resp is %s\n",
+                      path_.c_str(),
                       seafile::toString(*status).c_str(), raw_resp.c_str());
     }
 

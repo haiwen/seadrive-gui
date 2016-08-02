@@ -477,7 +477,7 @@ bool isShellExtEnabled()
 {
     HKEY root = HKEY_CURRENT_USER;
     HKEY parent_key;
-    wchar_t *software_seafile = localeToWString("Software\\Seafile");
+    wchar_t *software_seafile = localeToWString("Software\\SeaDrive");
     LONG result = RegOpenKeyExW(root,
                                 software_seafile,
                                 0L,

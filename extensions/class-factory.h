@@ -16,10 +16,10 @@ class ShellExtClassFactory : public IClassFactory
 protected:
     ULONG m_cRef;
 
-    seafile::RepoInfo::Status status_;
+    seafile::Status status_;
 
 public:
-    ShellExtClassFactory(seafile::RepoInfo::Status status = seafile::RepoInfo::NoStatus);
+    ShellExtClassFactory(seafile::Status status = seafile::NoStatus);
     virtual ~ShellExtClassFactory();
 
     //@{

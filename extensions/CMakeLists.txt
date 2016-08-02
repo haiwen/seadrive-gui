@@ -1,15 +1,15 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-PROJECT(seafile_shell_ext)
+PROJECT(seadrive_shell_ext)
 
 OPTION(X32 "Build 32 bit instead of 64bit dll" OFF)
 
 IF (X32)
   SET(WINVER 0x0501)
-  SET(DLL_NAME seafile_shell_ext)
+  SET(DLL_NAME seadrive_shell_ext)
   set(CMAKE_RC_COMPILER windres)
 ELSE(X32)
   SET(WINVER 0x0502)
-  SET(DLL_NAME seafile_shell_ext64)
+  SET(DLL_NAME seadrive_shell_ext64)
   set(CMAKE_RC_COMPILER x86_64-w64-mingw32-windres)
 ENDIF()
 
@@ -35,17 +35,17 @@ SET(ext_sources
   commands.cpp
   ext-utils.cpp
   i18n.cpp
-  seafile_shell_ext.def
-  seafile_shell_ext.rc
+  seadrive_shell_ext.def
+  seadrive_shell_ext.rc
 )
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 LINK_LIBRARIES(uuid oleaut32 ole32 ws2_32 shlwapi userenv)
 
-ADD_LIBRARY(seafile_shell_ext SHARED ${ext_sources})
+ADD_LIBRARY(seadrive_shell_ext SHARED ${ext_sources})
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 
-SET_TARGET_PROPERTIES(seafile_shell_ext PROPERTIES
+SET_TARGET_PROPERTIES(seadrive_shell_ext PROPERTIES
   LINK_FLAGS "-static -lstdc++ -Wl,--enable-stdcall-fixup"
   OUTPUT_NAME "${DLL_NAME}"
   PREFIX "")
