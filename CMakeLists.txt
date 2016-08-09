@@ -391,6 +391,7 @@ ENDIF()
 
 
 SET(ARCHIVE_NAME ${CMAKE_PROJECT_NAME}-${PROJECT_VERSION})
+FIND_PROGRAM(git_executable NAMES git git.exe git.cmd)
 ADD_CUSTOM_TARGET(dist
     COMMAND ${git_executable} archive -v --prefix=${ARCHIVE_NAME}/ HEAD
         | gzip > ${CMAKE_BINARY_DIR}/${ARCHIVE_NAME}.tar.gz
