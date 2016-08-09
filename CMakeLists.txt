@@ -53,7 +53,12 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 endif()
 
 IF (WIN32)
+    CONFIGURE_FILE(
+      ${CMAKE_SOURCE_DIR}/seadrive-gui.rc.in
+      ${CMAKE_BINARY_DIR}/seadrive-gui.rc
+    )
     SET(EXTRA_LIBS ${EXTRA_LIBS} psapi ws2_32 shlwapi mpr)
+    SET(EXTRA_SOURCES ${EXTRA_SOURCES} ${CMAKE_BINARY_DIR}/seadrive-gui.rc)
     IF (${CMAKE_BUILD_TYPE} MATCHES Release)
       SET(GUI_TYPE WIN32)
     ENDIF()
