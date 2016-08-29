@@ -27,6 +27,8 @@ public:
     ~SeafileRpcClient();
     void connectDaemon();
 
+    bool isConnected() const { return connected_; }
+
     int seafileGetConfig(const QString& key, QString *value);
     int seafileGetConfigInt(const QString& key, int *value);
 
@@ -72,13 +74,16 @@ public:
 
     bool getGlobalSyncStatus(json_t **ret);
 
+    bool unmount();
+
 private:
     Q_DISABLE_COPY(SeafileRpcClient)
 
     int setRateLimit(bool upload, int limit);
 
-
     _SearpcClient *seadrive_rpc_client_;
+
+    bool connected_;
 };
 
 #endif

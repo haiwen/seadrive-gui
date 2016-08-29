@@ -20,6 +20,7 @@ public:
     DaemonManager();
     ~DaemonManager();
     void startSeadriveDaemon();
+    void doUnmount();
 
 signals:
     void daemonStarted();

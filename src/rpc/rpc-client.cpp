@@ -31,7 +31,8 @@ const char *kSeadriveRpcService = "seadrive-rpcserver";
 } // namespace
 
 SeafileRpcClient::SeafileRpcClient()
-      : seadrive_rpc_client_(0)
+    : seadrive_rpc_client_(0),
+      connected_(false)
 {
 }
 
@@ -41,6 +42,7 @@ SeafileRpcClient::~SeafileRpcClient()
         searpc_free_client_with_pipe_transport(seadrive_rpc_client_);
         seadrive_rpc_client_ = 0;
     }
+    connected_ = false;
 }
 
 void SeafileRpcClient::connectDaemon()
@@ -65,6 +67,7 @@ void SeafileRpcClient::connectDaemon()
             break;
         }
     }
+    connected_ = true;
     seadrive_rpc_client_ = searpc_client_with_named_pipe_transport(
         pipe_client, kSeadriveRpcService);
 }
@@ -408,6 +411,23 @@ bool SeafileRpcClient::getGlobalSyncStatus(json_t **ret_obj)
     }
 
     *ret_obj = ret;
+
+    return true;
+}
+
+bool SeafileRpcClient::unmount()
+{
+    GError *error = NULL;
+    int ret = searpc_client_call__int (
+        seadrive_rpc_client_,
+        "seafile_unmount",
+        &error, 0);
+    if (error || ret != 0) {
+        qWarning("failed to unmount : %s\n",
+                 error->message ? error->message : "");
+        g_error_free(error);
+        return false;
+    }
 
     return true;
 }

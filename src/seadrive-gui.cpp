@@ -204,6 +204,9 @@ SeadriveGui::SeadriveGui()
 
 SeadriveGui::~SeadriveGui()
 {
+    // Must unmount before rpc client is destroyed.
+    daemon_mgr_->doUnmount();
+
     delete tray_icon_;
     delete rpc_client_;
     delete daemon_mgr_;

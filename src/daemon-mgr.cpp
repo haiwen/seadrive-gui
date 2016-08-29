@@ -18,6 +18,7 @@ extern "C" {
 #include "utils/process.h"
 #include "seadrive-gui.h"
 #include "daemon-mgr.h"
+#include "rpc/rpc-client.h"
 
 namespace {
 
@@ -158,5 +159,14 @@ void DaemonManager::stopAllDaemon()
     if (seadrive_daemon_) {
         seadrive_daemon_->kill();
         seadrive_daemon_->waitForFinished(50);
+    }
+}
+
+void DaemonManager::doUnmount() {
+    if (gui->rpcClient() && gui->rpcClient()->isConnected()) {
+        qInfo("Unmounting before exit");
+        gui->rpcClient()->unmount();
+    } else {
+        qDebug("Not unmounting because rpc client not ready.");
     }
 }
