@@ -654,11 +654,12 @@ void ServerInfoRequest::requestSuccess(QNetworkReply& reply)
     emit success(account_, ret);
 }
 
-LogoutDeviceRequest::LogoutDeviceRequest(const Account& account)
+LogoutDeviceRequest::LogoutDeviceRequest(const Account& account, bool remove_cache)
     : SeafileApiRequest(account.getAbsoluteUrl(kLogoutDeviceUrl),
                         SeafileApiRequest::METHOD_POST,
                         account.token),
-      account_(account)
+      account_(account),
+      remove_cache_(remove_cache)
 {
 }
 

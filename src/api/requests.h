@@ -372,12 +372,14 @@ class LogoutDeviceRequest : public SeafileApiRequest
 {
     Q_OBJECT
 public:
-    LogoutDeviceRequest(const Account& account);
+    LogoutDeviceRequest(const Account& account, bool remove_cache);
 
-    const Account& account()
+    const Account& account() const
     {
         return account_;
     }
+
+    bool shouldRemoveCache() const { return remove_cache_; }
 
 signals:
     void success();
@@ -389,6 +391,8 @@ private:
     Q_DISABLE_COPY(LogoutDeviceRequest);
 
     Account account_;
+
+    bool remove_cache_;
 };
 
 class GetRepoTokensRequest : public SeafileApiRequest
