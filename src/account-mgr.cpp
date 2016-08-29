@@ -272,7 +272,6 @@ int AccountManager::removeAccount(const Account& account)
     }
 
     if (need_switch_account) {
-        // TODO: notify daemon this account is logged out.
         current_account_ = Account();
         if (!accounts_.empty()) {
             validateAndUseAccount(accounts_[0]);
