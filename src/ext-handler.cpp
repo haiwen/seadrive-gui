@@ -373,7 +373,7 @@ void ExtCommandsHandler::run()
             break;
         }
 
-        qWarning() << "get a new command: " << args;
+        // qWarning() << "get a new command: " << args;
 
         QString cmd = args.takeAt(0);
         QString resp;
@@ -496,7 +496,7 @@ QString ExtCommandsHandler::handleListRepos(const QStringList& args)
     }
 
     QDir mount_point(gui->mountDir());
-    qWarning() << "listing directory " << gui->mountDir();
+    // qWarning() << "listing directory " << gui->mountDir();
     QStringList subdirs = mount_point.entryList(
         QStringList(), QDir::Dirs | QDir::NoDot | QDir::NoDotDot);
 
@@ -522,7 +522,7 @@ QString ExtCommandsHandler::handleGetFileStatus(const QStringList& args)
         return "";
     }
 
-    qWarning() << "handleGetFileStatus: repo = " << repo << " , path_in_repo = " << path_in_repo;
+    // qWarning() << "handleGetFileStatus: repo = " << repo << " , path_in_repo = " << path_in_repo;
 
     QString status;
 
