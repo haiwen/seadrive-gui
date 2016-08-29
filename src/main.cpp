@@ -8,13 +8,18 @@
 #include <glib-object.h>
 #include <cstdio>
 
+#include "utils/utils.h"
+#include "utils/process.h"
 #include "seadrive-gui.h"
+
 #if defined(Q_OS_MAC)
 #include "application.h"
 #include "utils/utils-mac.h"
 #endif
 
 namespace {
+
+const char *appName = "seadrive-gui";
 
 void initGlib()
 {
@@ -84,6 +89,14 @@ int main(int argc, char *argv[])
     setupSettingDomain();
 
     handleCommandLineOption(argc, argv);
+
+    if (count_process(appName) > 1) {
+        QMessageBox::warning(NULL, getBrand(),
+                             QObject::tr("%1 Client is already running").arg(getBrand()),
+                             QMessageBox::Ok);
+        return -1;
+    }
+
 
     // start applet
     SeadriveGui mGui;
