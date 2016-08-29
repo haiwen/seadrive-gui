@@ -23,6 +23,7 @@
 #include "api/requests.h"
 #include "seadrive-gui.h"
 #include "account-mgr.h"
+#include "rpc/rpc-client.h"
 
 #include "tray-icon.h"
 
@@ -706,17 +707,14 @@ void SeafileTrayIcon::deleteAccount()
 
     QString question = tr("Are you sure to remove account from \"%1\"?").arg(account.serverUrl.toString());
 
-    if (gui->yesOrNoBox(question, nullptr, false)) {
-        // QString error, server_addr = account.serverUrl.host();
-        // if (gui->rpcClient()->unsyncReposByAccount(server_addr,
-        //                                                   account.username,
-        //                                                   &error) < 0) {
-
-        //     gui->warningBox(
-        //         tr("Failed to unsync libraries of this account: %1").arg(error),
-        //         this);
-        // }
-
-        gui->accountManager()->removeAccount(account);
+    if (!gui->yesOrNoBox(question, nullptr, false)) {
+        return;
     }
+
+    if (!gui->rpcClient()->deleteAccount(account, true)) {
+        gui->warningBox(tr("Failed to delete account"));
+        return;
+    }
+
+    gui->accountManager()->removeAccount(account);
 }

@@ -68,6 +68,8 @@ public:
 
     bool switchAccount(const Account& account);
 
+    bool deleteAccount(const Account& account, bool remove_cache);
+
     bool getRepoIdByPath(const QString& repo_uname, QString *repo_id);
 
     bool getSyncNotification(json_t **ret);
