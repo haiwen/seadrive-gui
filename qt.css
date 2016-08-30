@@ -235,7 +235,7 @@ CloudView QSizeGrip {
     margin-right: 2px;
 }
 
-InitVirtualDriveDialog QLabel#mStatusText {
+InitSyncDialog QLabel#mStatusText {
     font-size: 16px;
     font-family: Arial;
     padding-right: 20px;
@@ -243,7 +243,7 @@ InitVirtualDriveDialog QLabel#mStatusText {
     min-width: 350px;
 }
 
-InitVirtualDriveDialog QLabel#mStatusIcon {
+InitSyncDialog QLabel#mStatusIcon {
     min-width: 48px;
     max-width: 48px;
     margin-left: 60px;

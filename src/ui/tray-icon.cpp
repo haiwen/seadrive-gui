@@ -201,16 +201,15 @@ void SeafileTrayIcon::prepareContextMenu()
             // connect(account_settings_action, SIGNAL(triggered()), this, SLOT(editAccountSettings()));
             // submenu->addAction(account_settings_action);
 
-            QAction *logout_action = new QAction(this);
-            logout_action->setIcon(QIcon(":/images/logout.png"));
-            logout_action->setIconVisibleInMenu(true);
-            logout_action->setData(QVariant::fromValue(account));
-            connect(logout_action, SIGNAL(triggered()), this, SLOT(logoutAccount()));
-            if (account.isValid())
+            if (account.isValid()) {
+                QAction *logout_action = new QAction(this);
+                logout_action->setIcon(QIcon(":/images/logout.png"));
+                logout_action->setIconVisibleInMenu(true);
+                logout_action->setData(QVariant::fromValue(account));
+                connect(logout_action, SIGNAL(triggered()), this, SLOT(logoutAccount()));
                 logout_action->setText(tr("Logout"));
-            else
-                logout_action->setText(tr("Login"));
-            submenu->addAction(logout_action);
+                submenu->addAction(logout_action);
+            }
 
             QAction *delete_account_action = new QAction(tr("Delete"), this);
             delete_account_action->setIcon(QIcon(":/images/delete-account.png"));

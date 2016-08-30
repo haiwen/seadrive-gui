@@ -17,6 +17,7 @@
 #include "api/api-error.h"
 #include "api/requests.h"
 #include "login-dialog.h"
+#include "init-sync-dialog.h"
 #include "utils/utils.h"
 #ifdef HAVE_SHIBBOLETH_SUPPORT
 #include "shib/shib-login-dialog.h"
@@ -288,9 +289,14 @@ void LoginDialog::onFetchAccountInfoSuccess(const AccountInfo& info)
     }
     else {
         gui->accountManager()->updateAccountInfo(account, info);
-        gui->messageBox(tr("Your cloud files are now accessible from \"%1\"").arg(gui->mountDir()), this);
-        QDesktopServices::openUrl(QUrl::fromLocalFile(gui->mountDir()));
+        // gui->messageBox(tr("Your cloud files are now accessible from \"%1\"").arg(gui->mountDir()), this);
+        // QDesktopServices::openUrl(QUrl::fromLocalFile(gui->mountDir()));
         done(QDialog::Accepted);
+
+        InitSyncDialog *dlg = new InitSyncDialog(account);
+        dlg->show();
+        dlg->raise();
+        dlg->activateWindow();
     }
 }
 

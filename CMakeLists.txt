@@ -142,6 +142,7 @@ SET(moc_headers
   src/traynotificationwidget.h
   src/traynotificationmanager.h
 
+  src/ui/init-sync-dialog.h
   src/ui/login-dialog.h
   src/ui/seafilelink-dialog.h
   src/ui/settings-dialog.h
@@ -153,6 +154,7 @@ SET(moc_headers
 QT5_WRAP_CPP(moc_output ${moc_headers})
 
 SET(ui_files
+  ui/init-sync-dialog.ui
   ui/login-dialog.ui
   ui/settings-dialog.ui
 )
@@ -228,6 +230,7 @@ SET(seadrive_gui_sources
   src/traynotificationwidget.cpp
   src/traynotificationmanager.cpp
 
+  src/ui/init-sync-dialog.cpp
   src/ui/login-dialog.cpp
   src/ui/seafilelink-dialog.cpp
   src/ui/settings-dialog.cpp
