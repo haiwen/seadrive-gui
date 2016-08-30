@@ -45,6 +45,7 @@ void InitSyncDialog::checkDownloadProgress()
     // TODO: Check the initial sync status via seadrive RPC
     static int checked = 0;
     if (++checked == 5) {
+        checked = 0;
         finish();
         check_download_timer_->stop();
     }
@@ -67,7 +68,7 @@ void InitSyncDialog::finish()
 
     QString msg =
         tr("%1 has dowloaded your files list.\n"
-           "You can click the \"Finish\" button to open %1 folder.").arg(getBrand());
+           "Please click the \"Finish\" button to open %1 folder.").arg(getBrand());
     setStatusText(msg);
     setStatusIcon(":/images/sync/done@2x.png");
 

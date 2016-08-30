@@ -19,6 +19,7 @@
 #include "utils/file-utils.h"
 #include "src/ui/settings-dialog.h"
 #include "src/ui/login-dialog.h"
+#include "src/ui/init-sync-dialog.h"
 #include "api/api-error.h"
 #include "api/requests.h"
 #include "seadrive-gui.h"
@@ -644,7 +645,16 @@ void SeafileTrayIcon::onAccountItemClicked()
     QAction *action = (QAction *)(sender());
     Account account = qvariant_cast<Account>(action->data());
 
+    Account current_account = gui->accountManager()->currentAccount();
+
     gui->accountManager()->validateAndUseAccount(account);
+    if (account.isValid() && account != current_account) {
+        // TODO: What if the last InitSyncDialog is not finished yet?
+        InitSyncDialog *dlg = new InitSyncDialog(account);
+        dlg->show();
+        dlg->raise();
+        dlg->activateWindow();
+    }
 }
 
 void SeafileTrayIcon::logoutAccount()
