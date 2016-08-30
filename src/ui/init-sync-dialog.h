@@ -6,8 +6,8 @@
 #include "account.h"
 #include "api/requests.h"
 
-class LocalRepo;
 class QTimer;
+class QCloseEvent;
 
 class InitSyncDialog : public QDialog,
                        public Ui::InitSyncDialog
@@ -17,6 +17,7 @@ public:
     InitSyncDialog(const Account& account, QWidget *parent=0);
 
 private slots:
+    void closeEvent(QCloseEvent *event);
     void checkDownloadProgress();
     void openMountPointAndCloseDialog();
 
@@ -32,6 +33,8 @@ private:
     Account account_;
 
     QTimer *check_download_timer_;
+
+    bool finished_;
 };
 
 #endif // SEAFILE_CLIENT_INIT_VDRIVE_DIALOG_H

@@ -1,12 +1,7 @@
-#include <QtGlobal>
-#include <cstdio>
-
-#include <QCoreApplication>
-#include <QFile>
-#include <QFileInfo>
+#include <QtWidgets>
 #include <QPixmap>
 #include <QTimer>
-#include <QtWidgets>
+#include <QCloseEvent>
 
 #include "rpc/rpc-client.h"
 #include "seadrive-gui.h"
@@ -22,7 +17,7 @@ const int kCheckDownloadInterval = 2000;
 
 
 InitSyncDialog::InitSyncDialog(const Account &account, QWidget *parent)
-    : QDialog(parent), account_(account)
+    : QDialog(parent), account_(account), finished_(false)
 {
     setupUi(this);
     mLogo->setPixmap(QPixmap(":/images/seafile-32.png"));
@@ -49,7 +44,7 @@ void InitSyncDialog::checkDownloadProgress()
 {
     // TODO: Check the initial sync status via seadrive RPC
     static int checked = 0;
-    if (++checked == 3) {
+    if (++checked == 5) {
         finish();
         check_download_timer_->stop();
     }
@@ -63,6 +58,8 @@ void InitSyncDialog::openMountPointAndCloseDialog()
 
 void InitSyncDialog::finish()
 {
+    finished_ = true;
+
     setAttribute(Qt::WA_DeleteOnClose);
     mRunInBackgroundBtn->setVisible(false);
 
@@ -80,6 +77,7 @@ void InitSyncDialog::finish()
 
 void InitSyncDialog::fail(const QString &reason)
 {
+    finished_ = true;
     setAttribute(Qt::WA_DeleteOnClose);
     mRunInBackgroundBtn->setVisible(false);
 
@@ -106,4 +104,16 @@ void InitSyncDialog::ensureVisible()
     show();
     raise();
     activateWindow();
+}
+
+void InitSyncDialog::closeEvent(QCloseEvent *event)
+{
+    if (!finished_) {
+        event->ignore();
+        hide();
+    } else {
+        // We only set WA_DeleteOnClose when the dialog is ready to be closed.
+        setAttribute(Qt::WA_DeleteOnClose);
+        QDialog::closeEvent(event);
+    }
 }
