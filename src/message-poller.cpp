@@ -5,6 +5,7 @@
 #include "utils/json-utils.h"
 #include "utils/file-utils.h"
 #include "seadrive-gui.h"
+#include "settings-mgr.h"
 #include "rpc/rpc-client.h"
 #include "ui/tray-icon.h"
 
@@ -146,6 +147,9 @@ void MessagePoller::checkSyncStatus()
 void MessagePoller::processNotification(const SyncNotification& notification)
 {
     if (notification.type == "sync.done") {
+        if (!gui->settingsManager()->notify()) {
+            return;
+        }
         QString title = tr("\"%1\" is synchronized").arg(notification.repo_name);
         gui->trayIcon()->showMessage(
             title,

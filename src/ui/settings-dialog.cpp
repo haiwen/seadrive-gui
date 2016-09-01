@@ -68,7 +68,7 @@ void SettingsDialog::updateSettings()
 {
     SettingsManager *mgr = gui->settingsManager();
 
-//     mgr->setNotify(mNotifyCheckBox->checkState() == Qt::Checked);
+    mgr->setNotify(mNotifyCheckBox->checkState() == Qt::Checked);
 //     mgr->setAutoStart(mAutoStartCheckBox->checkState() == Qt::Checked);
 //     mgr->setSyncExtraTempFile(mSyncExtraTempFileCheckBox->checkState() == Qt::Checked);
 
@@ -167,8 +167,8 @@ void SettingsDialog::showEvent(QShowEvent *event)
     mShellExtCheckBox->hide();
 #endif
 
-//     state = mgr->notify() ? Qt::Checked : Qt::Unchecked;
-//     mNotifyCheckBox->setCheckState(state);
+    state = mgr->notify() ? Qt::Checked : Qt::Unchecked;
+    mNotifyCheckBox->setCheckState(state);
 
     int ratio;
     ratio = mgr->maxDownloadRatio();
