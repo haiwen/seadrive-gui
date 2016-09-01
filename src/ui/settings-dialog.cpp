@@ -69,24 +69,22 @@ void SettingsDialog::updateSettings()
     SettingsManager *mgr = gui->settingsManager();
 
     mgr->setNotify(mNotifyCheckBox->checkState() == Qt::Checked);
-//     mgr->setAutoStart(mAutoStartCheckBox->checkState() == Qt::Checked);
-//     mgr->setSyncExtraTempFile(mSyncExtraTempFileCheckBox->checkState() == Qt::Checked);
+    mgr->setAutoStart(mAutoStartCheckBox->checkState() == Qt::Checked);
+    mgr->setSyncExtraTempFile(mSyncExtraTempFileCheckBox->checkState() == Qt::Checked);
 
     mgr->setMaxDownloadRatio(mDownloadSpinBox->value());
     mgr->setMaxUploadRatio(mUploadSpinBox->value());
 
-//     mgr->setAllowInvalidWorktree(mAllowInvalidWorktreeCheckBox->checkState() == Qt::Checked);
-//     mgr->setHttpSyncCertVerifyDisabled(mDisableVerifyHttpSyncCert->checkState() == Qt::Checked);
-//     mgr->setAllowRepoNotFoundOnServer(mAllowRepoNotFoundCheckBox->checkState() == Qt::Checked);
+    mgr->setHttpSyncCertVerifyDisabled(mDisableVerifyHttpSyncCert->checkState() == Qt::Checked);
 
 #ifdef HAVE_FINDER_SYNC_SUPPORT
     if(mFinderSyncCheckBox->isEnabled())
         mgr->setFinderSyncExtension(mFinderSyncCheckBox->checkState() == Qt::Checked);
 #endif
 
-// #ifdef Q_OS_WIN32
-//     mgr->setShellExtensionEnabled(mShellExtCheckBox->checkState() == Qt::Checked);
-// #endif
+#ifdef Q_OS_WIN32
+    mgr->setShellExtensionEnabled(mShellExtCheckBox->checkState() == Qt::Checked);
+#endif
 
     updateProxySettings();
 
@@ -127,26 +125,18 @@ void SettingsDialog::showEvent(QShowEvent *event)
 
     Qt::CheckState state;
 
-//     state = mgr->hideMainWindowWhenStarted() ? Qt::Checked : Qt::Unchecked;
+    state = mgr->syncExtraTempFile() ? Qt::Checked : Qt::Unchecked;
+    mSyncExtraTempFileCheckBox->setCheckState(state);
 
-//     state = mgr->allowInvalidWorktree() ? Qt::Checked : Qt::Unchecked;
-//     mAllowInvalidWorktreeCheckBox->setCheckState(state);
+    state = mgr->httpSyncCertVerifyDisabled() ? Qt::Checked : Qt::Unchecked;
+    mDisableVerifyHttpSyncCert->setCheckState(state);
 
-//     state = mgr->syncExtraTempFile() ? Qt::Checked : Qt::Unchecked;
-//     mSyncExtraTempFileCheckBox->setCheckState(state);
-
-//     state = mgr->allowRepoNotFoundOnServer() ? Qt::Checked : Qt::Unchecked;
-//     mAllowRepoNotFoundCheckBox->setCheckState(state);
-
-//     state = mgr->httpSyncCertVerifyDisabled() ? Qt::Checked : Qt::Unchecked;
-//     mDisableVerifyHttpSyncCert->setCheckState(state);
-
-//     // currently supports windows only
-//     state = mgr->autoStart() ? Qt::Checked : Qt::Unchecked;
-//     mAutoStartCheckBox->setCheckState(state);
-// #if !defined(Q_OS_WIN32) && !defined(Q_OS_MAC)
-//     mAutoStartCheckBox->hide();
-// #endif
+    // currently supports windows only
+    state = mgr->autoStart() ? Qt::Checked : Qt::Unchecked;
+    mAutoStartCheckBox->setCheckState(state);
+#if !defined(Q_OS_WIN32) && !defined(Q_OS_MAC)
+    mAutoStartCheckBox->hide();
+#endif
 
 #ifdef HAVE_FINDER_SYNC_SUPPORT
     if (mgr->getFinderSyncExtensionAvailable()) {
@@ -181,8 +171,6 @@ void SettingsDialog::showEvent(QShowEvent *event)
 //         mCheckLatestVersionBox->setCheckState(state);
 //     }
 
-//     mEnableSyncingWithExistingFolder->hide();
-
     SettingsManager::SeafileProxy proxy = mgr->getProxy();
     showHideControlsBasedOnCurrentProxyType(proxy.type);
     mProxyMethodComboBox->setCurrentIndex(proxy.type);
@@ -195,7 +183,7 @@ void SettingsDialog::showEvent(QShowEvent *event)
 
 //     mLanguageComboBox->setCurrentIndex(I18NHelper::getInstance()->preferredLanguage());
 
-//     QDialog::showEvent(event);
+    QDialog::showEvent(event);
 }
 
 void SettingsDialog::proxyRequirePasswordChanged(int state)

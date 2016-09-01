@@ -84,7 +84,7 @@ bool getSystemProxyForUrl(const QUrl &url, QNetworkProxy *proxy)
 
 
 #ifdef Q_OS_WIN32
-QString softwareSeafile()
+QString softwareSeaDrive()
 {
     return QString("SOFTWARE\\%1").arg(getBrand());
 }
@@ -146,7 +146,7 @@ void SettingsManager::loadSettings()
 
 
 #ifdef Q_OS_WIN32
-    RegElement reg(HKEY_CURRENT_USER, softwareSeafile(), "ShellExtDisabled",
+    RegElement reg(HKEY_CURRENT_USER, softwareSeaDrive(), "ShellExtDisabled",
                    "");
     shell_ext_enabled_ = !reg.exists();
 #endif
@@ -524,8 +524,8 @@ void SettingsManager::setShellExtensionEnabled(bool enabled)
 {
     shell_ext_enabled_ = enabled;
 
-    RegElement reg1(HKEY_CURRENT_USER, softwareSeafile(), "", "");
-    RegElement reg2(HKEY_CURRENT_USER, softwareSeafile(), "ShellExtDisabled",
+    RegElement reg1(HKEY_CURRENT_USER, softwareSeaDrive(), "", "");
+    RegElement reg2(HKEY_CURRENT_USER, softwareSeaDrive(), "ShellExtDisabled",
                     "1");
     if (enabled) {
         reg2.remove();
