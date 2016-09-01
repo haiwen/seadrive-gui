@@ -3,6 +3,7 @@
 
 #include "utils/translate-commit-desc.h"
 #include "utils/json-utils.h"
+#include "utils/file-utils.h"
 #include "seadrive-gui.h"
 #include "rpc/rpc-client.h"
 #include "ui/tray-icon.h"
@@ -20,6 +21,78 @@ struct GlobalSyncStatus {
 
     static GlobalSyncStatus fromJson(const json_t* json);
 };
+
+
+// Copied from seadrive/src/sync-mgr.c
+#define SYNC_ERROR_ID_FILE_LOCKED_BY_APP 0
+#define SYNC_ERROR_ID_FOLDER_LOCKED_BY_APP 1
+#define SYNC_ERROR_ID_FILE_LOCKED 2
+#define SYNC_ERROR_ID_INVALID_PATH 3
+#define SYNC_ERROR_ID_INDEX_ERROR 4
+#define SYNC_ERROR_ID_ACCESS_DENIED 5
+#define SYNC_ERROR_ID_QUOTA_FULL 6
+
+
+QString translateNotificationError(SyncNotification notification)
+{
+    bool has_path = !notification.error_path.isEmpty();
+    QString file;
+    if (has_path) {
+        file = ::getBaseName(notification.error_path);
+    }
+    switch (notification.error_id) {
+    case SYNC_ERROR_ID_FILE_LOCKED_BY_APP: {
+        if (has_path) {
+            return QObject::tr("File %1 is locked by other programs").arg(file);
+        } else {
+            return QObject::tr("Some file is locked by other programs");
+        }
+        break;
+    }
+    case SYNC_ERROR_ID_FOLDER_LOCKED_BY_APP: {
+        if (has_path) {
+            return QObject::tr("Folder %1 is locked by other programs").arg(file);
+        } else {
+            return QObject::tr("Some folder is locked by other programs");
+        }
+        break;
+    }
+    case SYNC_ERROR_ID_FILE_LOCKED: {
+        if (has_path) {
+            return QObject::tr("File %1 is locked by another user").arg(file);
+        } else {
+            return QObject::tr("Some file is locked by another user");
+        }
+        break;
+    }
+    case SYNC_ERROR_ID_INVALID_PATH: {
+        if (has_path) {
+            return QObject::tr("Invalid path %1").arg(file);
+        } else {
+            return QObject::tr("Trying to access an invalid path");
+        }
+        break;
+    }
+    case SYNC_ERROR_ID_INDEX_ERROR: {
+        if (has_path) {
+            return QObject::tr("Error when indexing file %1").arg(file);
+        } else {
+            return QObject::tr("Error when indexing files");
+        }
+        break;
+    }
+    case SYNC_ERROR_ID_ACCESS_DENIED: {
+        return QObject::tr("You don't have enough permission for this library");
+        break;
+    }
+    case SYNC_ERROR_ID_QUOTA_FULL: {
+        return QObject::tr("The storage quota has been used up");
+        break;
+    }
+    default:
+        return QObject::tr("Unknown error");
+    }
+}
 
 } // namespace
 
@@ -80,6 +153,15 @@ void MessagePoller::processNotification(const SyncNotification& notification)
             notification.repo_id,
             notification.commit_id,
             notification.parent_commit_id);
+    } else if (notification.type == "sync.error") {
+        QString title = tr("Error when syncing \"%1\"").arg(notification.repo_name);
+        gui->trayIcon()->showMessage(
+            title,
+            notification.error,
+            notification.repo_id,
+            "",
+            "",
+            QSystemTrayIcon::Warning);
     }
 }
 
@@ -94,6 +176,11 @@ SyncNotification SyncNotification::fromJson(const json_t *root)
     notification.commit_id = json.getString("commit_id");
     notification.parent_commit_id = json.getString("parent_commit_id");
     notification.commit_desc = json.getString("commit_desc");
+    if (notification.isSyncError()) {
+        notification.error_id = json.getLong("err_id");
+        notification.error_path = json.getString("path");
+        notification.error = translateNotificationError(notification);
+    }
 
     // char *s = json_dumps(root, 0);
     // printf ("[%s] %s\n", QDateTime::currentDateTime().toString().toUtf8().data(), s);
@@ -101,6 +188,7 @@ SyncNotification SyncNotification::fromJson(const json_t *root)
 
     return notification;
 }
+
 
 GlobalSyncStatus GlobalSyncStatus::fromJson(const json_t *root)
 {

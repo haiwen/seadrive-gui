@@ -15,6 +15,11 @@ struct SyncNotification {
     QString commit_id;
     QString parent_commit_id;
     QString commit_desc;
+    int error_id;
+    QString error;
+    QString error_path;
+
+    bool isSyncError() const { return type == "sync.error"; }
 
     static SyncNotification fromJson(const json_t* json);
 };
