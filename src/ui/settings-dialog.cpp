@@ -173,7 +173,7 @@ void SettingsDialog::showEvent(QShowEvent *event)
     value = mgr->getCacheCleanIntervalMinutes();
     mCacheCleanInterval->setValue(value);
     value = mgr->getCacheSizeLimitGB();
-    mUploadSpinBox->setValue(value);
+    mCacheSizeLimit->setValue(value);
 
 //     if (isCheckLatestVersionEnabled()) {
 //         state = mgr->isCheckLatestVersionEnabled() ? Qt::Checked : Qt::Unchecked;

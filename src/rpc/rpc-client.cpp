@@ -472,7 +472,7 @@ bool SeafileRpcClient::setCacheCleanIntervalMinutes(int interval)
 bool SeafileRpcClient::setCacheSizeLimitGB(int limit)
 {
     GError *error = NULL;
-    gint64 limit_in_bytes = limit << 30;
+    gint64 limit_in_bytes = ((gint64)limit) << 30;
     searpc_client_call__int (seadrive_rpc_client_,
                              "seafile_set_cache_size_limit",
                              &error,
@@ -512,6 +512,6 @@ bool SeafileRpcClient::getCacheSizeLimitGB(int *value)
         return false;
     }
 
-    *value = ret >> 30;
+    *value = (int)(ret >> 30);
     return true;
 }
