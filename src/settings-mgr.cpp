@@ -101,7 +101,9 @@ SettingsManager::SettingsManager()
       maxDownloadRatio_(0),
       maxUploadRatio_(0),
       verify_http_sync_cert_disabled_(false),
-      current_proxy_(SeafileProxy())
+      current_proxy_(SeafileProxy()),
+      cache_clean_limit_minutes_(10),
+      cache_size_limit_gb_(10)
 {
     check_system_proxy_timer_ = new QTimer(this);
     connect(check_system_proxy_timer_, SIGNAL(timeout()), this, SLOT(checkSystemProxy()));
@@ -128,6 +130,14 @@ void SettingsManager::loadSettings()
     if (gui->rpcClient()->seafileGetConfig("disable_verify_certificate",
                                                   &str) >= 0)
         verify_http_sync_cert_disabled_ = (str == "true") ? true : false;
+
+    if (gui->rpcClient()->getCacheSizeLimitGB(&value)) {
+        cache_size_limit_gb_ = qMax(1, value);
+    }
+
+    if (gui->rpcClient()->getCacheCleanIntervalMinutes(&value)) {
+        cache_clean_limit_minutes_ = qMax(1, value);
+    }
 
     loadProxySettings();
     applyProxySettings();
@@ -249,6 +259,26 @@ void SettingsManager::setMaxUploadRatio(unsigned int ratio)
             return;
         }
         maxUploadRatio_ = ratio;
+    }
+}
+
+void SettingsManager::setCacheCleanIntervalMinutes(int interval)
+{
+    if (cache_clean_limit_minutes_ != interval) {
+        if (!gui->rpcClient()->setCacheCleanIntervalMinutes(interval)) {
+            return;
+        }
+        cache_clean_limit_minutes_ = interval;
+    }
+}
+
+void SettingsManager::setCacheSizeLimitGB(int limit)
+{
+    if (cache_size_limit_gb_ != limit) {
+        if (!gui->rpcClient()->setCacheSizeLimitGB(limit)) {
+            return;
+        }
+        cache_size_limit_gb_ = limit;
     }
 }
 

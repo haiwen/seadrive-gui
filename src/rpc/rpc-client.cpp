@@ -454,3 +454,63 @@ bool SeafileRpcClient::unmount()
 
     return true;
 }
+
+bool SeafileRpcClient::setCacheCleanIntervalMinutes(int interval)
+{
+    GError *error = NULL;
+    searpc_client_call__int (seadrive_rpc_client_,
+                             "seafile_set_clean_cache_interval",
+                             &error,
+                             1, "int", interval * 60);
+    if (error) {
+        g_error_free(error);
+        return false;
+    }
+    return true;
+}
+
+bool SeafileRpcClient::setCacheSizeLimitGB(int limit)
+{
+    GError *error = NULL;
+    searpc_client_call__int (seadrive_rpc_client_,
+                             "seafile_set_cache_size_limit",
+                             &error,
+                             1, "int64", limit << 30);
+    if (error) {
+        g_error_free(error);
+        return false;
+    }
+    return true;
+}
+
+bool SeafileRpcClient::getCacheCleanIntervalMinutes(int *value)
+{
+    GError *error = NULL;
+    int ret = searpc_client_call__int (seadrive_rpc_client_,
+                                       "seafile_get_clean_cache_interval",
+                                       &error, 0);
+
+    if (error) {
+        g_error_free(error);
+        return false;
+    }
+
+    *value = ret / 60;
+    return true;
+}
+
+bool SeafileRpcClient::getCacheSizeLimitGB(int *value)
+{
+    GError *error = NULL;
+    int ret = searpc_client_call__int (seadrive_rpc_client_,
+                                       "seafile_get_cache_size_limit",
+                                       &error, 0);
+
+    if (error) {
+        g_error_free(error);
+        return false;
+    }
+
+    *value = ret >> 30;
+    return true;
+}

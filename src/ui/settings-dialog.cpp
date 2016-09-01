@@ -88,6 +88,9 @@ void SettingsDialog::updateSettings()
 
     updateProxySettings();
 
+    mgr->setCacheCleanIntervalMinutes(mCacheCleanInterval->value());
+    mgr->setCacheSizeLimitGB(mCacheSizeLimit->value());
+
 //     if (isCheckLatestVersionEnabled()) {
 //         bool enabled = mCheckLatestVersionBox->checkState() == Qt::Checked;
 //         mgr->setCheckLatestVersionEnabled(enabled);
@@ -165,6 +168,12 @@ void SettingsDialog::showEvent(QShowEvent *event)
     mDownloadSpinBox->setValue(ratio);
     ratio = mgr->maxUploadRatio();
     mUploadSpinBox->setValue(ratio);
+
+    int value;
+    value = mgr->getCacheCleanIntervalMinutes();
+    mCacheCleanInterval->setValue(value);
+    value = mgr->getCacheSizeLimitGB();
+    mUploadSpinBox->setValue(value);
 
 //     if (isCheckLatestVersionEnabled()) {
 //         state = mgr->isCheckLatestVersionEnabled() ? Qt::Checked : Qt::Unchecked;

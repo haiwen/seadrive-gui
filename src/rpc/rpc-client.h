@@ -78,6 +78,14 @@ public:
 
     bool unmount();
 
+    bool setCacheCleanIntervalMinutes(int interval);
+
+    bool setCacheSizeLimitGB(int limit);
+
+    bool getCacheCleanIntervalMinutes(int *value);
+
+    bool getCacheSizeLimitGB(int *value);
+
 private:
     Q_DISABLE_COPY(SeafileRpcClient)
 
