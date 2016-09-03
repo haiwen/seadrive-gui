@@ -27,7 +27,7 @@ InitSyncDialog::InitSyncDialog(const Account &account, QWidget *parent)
                    Qt::WindowStaysOnTopHint);
 
     mStatusText->setText(
-        tr("%1 is fetching the file list, please wait ...").arg(getBrand()));
+        tr("%1 is fetching the files list, please wait ...").arg(getBrand()));
     setStatusIcon(":/images/download-48.png");
 
     mFinishBtn->setVisible(false);
