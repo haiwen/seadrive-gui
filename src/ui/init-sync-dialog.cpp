@@ -11,7 +11,7 @@
 
 namespace
 {
-const int kCheckDownloadInterval = 2000;
+const int kCheckDownloadInterval = 1000;
 
 } // namespace
 
@@ -26,8 +26,10 @@ InitSyncDialog::InitSyncDialog(const Account &account, QWidget *parent)
     setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
                    Qt::WindowStaysOnTopHint);
 
-    mStatusText->setText(
-        tr("%1 is fetching the files list, please wait ...").arg(getBrand()));
+    waiting_text_ = tr("%1 is fetching the files list, please wait").arg(getBrand());
+    dots_ = 0;
+    mStatusText->setText(waiting_text_);
+
     setStatusIcon(":/images/download-48.png");
 
     mFinishBtn->setVisible(false);
@@ -42,6 +44,13 @@ InitSyncDialog::InitSyncDialog(const Account &account, QWidget *parent)
 
 void InitSyncDialog::checkDownloadProgress()
 {
+    dots_ = (dots_ + 1) % 4;
+    QString text = waiting_text_ + " ";
+    for (int i = 0; i < dots_; i++) {
+        text += ".";
+    }
+    mStatusText->setText(text);
+
     // TODO: Check the initial sync status via seadrive RPC
     static int checked = 0;
     if (++checked == 5) {

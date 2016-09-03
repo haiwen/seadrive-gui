@@ -35,6 +35,9 @@ private:
     QTimer *check_download_timer_;
 
     bool finished_;
+
+    QString waiting_text_;
+    int dots_;
 };
 
 #endif // SEAFILE_CLIENT_INIT_VDRIVE_DIALOG_H
