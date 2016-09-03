@@ -70,7 +70,7 @@ void InitSyncDialog::finish()
         tr("%1 has dowloaded your files list.\n"
            "Please click the \"Finish\" button to open %1 folder.").arg(getBrand());
     setStatusText(msg);
-    setStatusIcon(":/images/sync/done@2x.png");
+    setStatusIcon(":/images/ok-48.png");
 
     connect(mFinishBtn, SIGNAL(clicked()), this, SLOT(openMountPointAndCloseDialog()));
     mFinishBtn->setVisible(true);

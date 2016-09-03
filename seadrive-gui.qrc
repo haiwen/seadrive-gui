@@ -99,6 +99,9 @@
     <file>images/sync/question.png</file>
     <file>images/sync/rotate.png</file>
     <file>images/download-48.png</file>
+    <file>images/download-48@2x.png</file>
+    <file>images/ok-48.png</file>
+    <file>images/ok-48@2x.png</file>
     <file>images/tabs/files.png</file>
     <file>images/tabs/files@2x.png</file>
     <file>images/tabs/history.png</file>
