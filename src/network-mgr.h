@@ -1,10 +1,13 @@
 #ifndef SEAFILE_CLIENT_NETWORK_MANAGER_H
 #define SEAFILE_CLIENT_NETWORK_MANAGER_H
+
 #include <QObject>
 #include <vector>
 #include <QNetworkReply>
+
 class QNetworkAccessManager;
 class QNetworkProxy;
+
 class NetworkManager : public QObject {
   Q_OBJECT
 public:

@@ -47,6 +47,7 @@ ShibLoginDialog::ShibLoginDialog(const QUrl& url,
     CustomCookieJar *jar = new CustomCookieJar(this);
     QNetworkAccessManager *mgr = webview_->page()->networkAccessManager();
     NetworkManager::instance()->addWatch(mgr);
+
     mgr->setCookieJar(jar);
 
     connect(mgr, SIGNAL(sslErrors(QNetworkReply*, const QList<QSslError>&)),
@@ -153,6 +154,7 @@ bool CustomCookieJar::setCookiesFromUrl(const QList<QNetworkCookie>& cookies, co
 }
 
 #if !defined(SEAFILE_USE_WEBKIT)
+
 SeafileQWebEnginePage::SeafileQWebEnginePage(QObject *parent)
     : QWebEnginePage(parent)
 {
@@ -163,5 +165,6 @@ bool SeafileQWebEnginePage::certificateError(
 {
     return true;
 }
+
 
 #endif
