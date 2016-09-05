@@ -19,9 +19,7 @@
 #include "login-dialog.h"
 #include "init-sync-dialog.h"
 #include "utils/utils.h"
-#ifdef HAVE_SHIBBOLETH_SUPPORT
 #include "shib/shib-login-dialog.h"
-#endif // HAVE_SHIBBOLETH_SUPPORT
 
 namespace {
 
@@ -96,14 +94,10 @@ LoginDialog::LoginDialog(QWidget *parent) : QDialog(parent)
     const QRect screen = QApplication::desktop()->screenGeometry();
     move(screen.center() - this->rect().center());
 
-#ifdef HAVE_SHIBBOLETH_SUPPORT
     setupShibLoginLink();
-#else
     mShibLoginLink->hide();
-#endif
 }
 
-#ifdef HAVE_SHIBBOLETH_SUPPORT
 void LoginDialog::setupShibLoginLink()
 {
     QString txt = QString("<a style=\"color:#777\" href=\"#\">%1</a>").arg(tr("Shibboleth Login"));
@@ -111,7 +105,6 @@ void LoginDialog::setupShibLoginLink()
     connect(mShibLoginLink, SIGNAL(linkActivated(const QString&)),
             this, SLOT(loginWithShib()));
 }
-#endif // HAVE_SHIBBOLETH_SUPPORT
 
 void LoginDialog::initFromAccount(const Account& account)
 {
@@ -344,7 +337,6 @@ void LoginDialog::showWarning(const QString& msg)
     gui->warningBox(msg, this);
 }
 
-#ifdef HAVE_SHIBBOLETH_SUPPORT
 void LoginDialog::loginWithShib()
 {
     QString serverAddr = gui->settingsManager()->getLastShibUrl();
@@ -375,4 +367,3 @@ void LoginDialog::loginWithShib()
         accept();
     }
 }
-#endif // HAVE_SHIBBOLETH_SUPPORT

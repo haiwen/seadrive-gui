@@ -99,6 +99,28 @@ ENDIF()
 ####################
 SET(QT_VERSION_MAJOR 5)
 
+# Qt 5.6.0 removes QtWebKit, we need to use QtWebEnigne. First we detect the
+# current qt version, then use proper name based on the version. However we
+# have to keep using QtWebKit on windows because QtWebEngine can't be
+# compiled in msys2/mingw (QtWebEnigne is based on chrome, which has to be
+# compiled with MSVC.)
+FIND_PROGRAM(qmake_executable NAMES qmake qmake.exe)
+EXECUTE_PROCESS(COMMAND
+    bash -c "${qmake_executable} --version | grep -iE '^using qt version [0-9.]+' | awk '{print $4}'"
+    OUTPUT_VARIABLE DETECTED_QT_VERSION
+    OUTPUT_STRIP_TRAILING_WHITESPACE)
+MESSAGE("qt5 version: ${DETECTED_QT_VERSION}")
+IF(WIN32 OR DETECTED_QT_VERSION VERSION_LESS 5.6.0)
+    ADD_DEFINITIONS(-DSEAFILE_USE_WEBKIT)
+    SET(WEBKIT_NAME "WebKit")
+    SET(WEBKIT_WIDGETS_NAME "WebKitWidgets")
+ELSE()
+    SET(WEBKIT_NAME "WebEngine")
+    SET(WEBENGINE_CORE "WebEngineCore")
+    SET(WEBKIT_WIDGETS_NAME "WebEngineWidgets")
+    SET(SHIB_EXTRA_HEADER "src/shib/shib-helper.h")
+ENDIF()
+
 SET(USE_QT_LIBRARIES
     Core Gui Widgets LinguistTools Network Test
     )
@@ -149,6 +171,8 @@ SET(moc_headers
   src/ui/sharedlink-dialog.h
   src/ui/tray-icon.h
 
+  src/shib/shib-login-dialog.h
+  ${SHIB_EXTRA_HEADER}
   ${platform_specific_moc_headers}
 )
 QT5_WRAP_CPP(moc_output ${moc_headers})
@@ -226,6 +250,8 @@ SET(seadrive_gui_sources
 
   src/seadrive-gui.cpp
   src/settings-mgr.cpp
+
+  src/shib/shib-login-dialog.cpp
 
   src/traynotificationwidget.cpp
   src/traynotificationmanager.cpp
@@ -363,9 +389,7 @@ TARGET_LINK_LIBRARIES(seadrive-gui
 )
 
 QT5_USE_MODULES(seadrive-gui Core Gui Widgets Network)
-IF (BUILD_SHIBBOLETH_SUPPORT)
 QT5_USE_MODULES(seadrive-gui ${WEBKIT_NAME} ${WEBKIT_WIDGETS_NAME})
-ENDIF()
 
 ## QtBus
 IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "BSD")
