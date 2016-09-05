@@ -50,6 +50,8 @@ private:
     void onSslErrors(QNetworkReply *reply, const QList<QSslError>& errors);
     void onHttpError(int code);
 
+    void startInitSyncDialog(const Account& account);
+
     QUrl url_;
     QString username_;
     QString password_;

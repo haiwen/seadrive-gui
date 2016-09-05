@@ -14,7 +14,7 @@
 #include <QNetworkReply>
 #include <QNetworkCookie>
 
-#include "gui.h"
+#include "seadrive-gui.h"
 #include "utils/utils.h"
 #include "utils/api-utils.h"
 #include "account-mgr.h"
@@ -100,6 +100,7 @@ void ShibLoginDialog::onNewCookieCreated(const QUrl& url, const QNetworkCookie& 
             gui->warningBox(tr("Failed to save current account"), this);
             reject();
         } else {
+            account_ = account;
             accept();
         }
     }

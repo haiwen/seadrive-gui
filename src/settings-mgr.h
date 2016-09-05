@@ -86,10 +86,8 @@ public:
     int getCacheSizeLimitGB() const { return cache_size_limit_gb_; }
     void setCacheSizeLimitGB(int limit);
 
-#ifdef HAVE_SHIBBOLETH_SUPPORT
     QString getLastShibUrl();
     void setLastShibUrl(const QString& url);
-#endif // HAVE_SHIBBOLETH_SUPPORT
 
 #ifdef HAVE_FINDER_SYNC_SUPPORT
     bool getFinderSyncExtension() const;

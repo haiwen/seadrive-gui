@@ -35,9 +35,7 @@ const char *kComputerName = "computerName";
 #ifdef HAVE_FINDER_SYNC_SUPPORT
 const char *kFinderSync = "finderSync";
 #endif // HAVE_FINDER_SYNC_SUPPORT
-#ifdef HAVE_SHIBBOLETH_SUPPORT
 const char *kLastShibUrl = "lastShiburl";
-#endif // HAVE_SHIBBOLETH_SUPPORT
 
 const char *kUseProxy = "use_proxy";
 const char *kUseSystemProxy = "use_system_proxy";
@@ -493,7 +491,6 @@ void SettingsManager::setComputerName(const QString &computerName)
     settings.endGroup();
 }
 
-#ifdef HAVE_SHIBBOLETH_SUPPORT
 QString SettingsManager::getLastShibUrl()
 {
     QSettings settings;
@@ -513,7 +510,6 @@ void SettingsManager::setLastShibUrl(const QString &url)
     settings.setValue(kLastShibUrl, url);
     settings.endGroup();
 }
-#endif // HAVE_SHIBBOLETH_SUPPORT
 
 #ifdef HAVE_FINDER_SYNC_SUPPORT
 bool SettingsManager::getFinderSyncExtension() const

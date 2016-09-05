@@ -32,6 +32,8 @@ public:
                     const QString& computer_name,
                     QWidget *parent=0);
 
+    Account account() const { return account_; }
+
 private slots:
     void sslErrorHandler(QNetworkReply* reply, const QList<QSslError> & ssl_errors);
     void onNewCookieCreated(const QUrl& url, const QNetworkCookie& cookie);
@@ -47,6 +49,8 @@ private:
 #endif
     QUrl url_;
     bool cookie_seen_;
+
+    Account account_;
 };
 
 

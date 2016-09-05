@@ -14,6 +14,8 @@
 #include "api/requests.h"
 #include "rpc/rpc-client.h"
 #include "ui/login-dialog.h"
+#include "shib/shib-login-dialog.h"
+#include "settings-mgr.h"
 // #include "account-info-service.h"
 
 namespace {
@@ -552,13 +554,11 @@ bool AccountManager::reloginAccount(const Account &account)
 {
     bool accepted;
     do {
-#ifdef HAVE_SHIBBOLETH_SUPPORT
         if (account.isShibboleth) {
-            ShibLoginDialog shib_dialog(account.serverUrl, seafApplet->settingsManager()->getComputerName(), this);
+            ShibLoginDialog shib_dialog(account.serverUrl, gui->settingsManager()->getComputerName());
             accepted = shib_dialog.exec() == QDialog::Accepted;
             break;
         }
-#endif
         LoginDialog dialog;
         dialog.initFromAccount(account);
         accepted = dialog.exec() == QDialog::Accepted;
