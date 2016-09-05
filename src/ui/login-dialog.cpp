@@ -95,7 +95,6 @@ LoginDialog::LoginDialog(QWidget *parent) : QDialog(parent)
     move(screen.center() - this->rect().center());
 
     setupShibLoginLink();
-    mShibLoginLink->hide();
 }
 
 void LoginDialog::setupShibLoginLink()
