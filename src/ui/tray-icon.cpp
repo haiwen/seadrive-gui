@@ -445,7 +445,7 @@ QIcon SeafileTrayIcon::stateToIcon(TrayState state)
 void SeafileTrayIcon::about()
 {
     QMessageBox::about(nullptr, tr("About %1").arg(getBrand()),
-                       tr("<h2>%1 Client %2</h2>").arg(getBrand()).arg(
+                       tr("<h2>Seafile Drive Client %2</h2>").arg(
                            STRINGIZE(SEADRIVE_GUI_VERSION))
 #if defined(SEAFILE_CLIENT_REVISION)
                        .append("<h4> REV %1 </h4>")
