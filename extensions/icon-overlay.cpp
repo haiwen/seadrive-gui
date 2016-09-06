@@ -77,8 +77,13 @@ STDMETHODIMP ShellExt::IsMemberOf(LPCWSTR path_w, DWORD attr)
     //     return S_FALSE;
     // }
 
-    if (!isManagedFile(path)) {
+    std::string path_in_repo;
+    if (!pathInRepo(path, &path_in_repo)) {
         // seaf_ext_log ("pathInRepo returns false for %s\n", path.c_str());
+        return S_FALSE;
+    }
+    if (path_in_repo.size() <= 1) {
+        // A Repo Top Dir.
         return S_FALSE;
     }
 
