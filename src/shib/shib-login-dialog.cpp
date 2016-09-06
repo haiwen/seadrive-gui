@@ -19,6 +19,7 @@
 #include "utils/api-utils.h"
 #include "account-mgr.h"
 #include "network-mgr.h"
+#include "ui/init-sync-dialog.h"
 
 #include "shib-login-dialog.h"
 
@@ -103,6 +104,9 @@ void ShibLoginDialog::onNewCookieCreated(const QUrl& url, const QNetworkCookie& 
         } else {
             account_ = account;
             accept();
+
+            InitSyncDialog *dlg = new InitSyncDialog(account);
+            dlg->ensureVisible();
         }
     }
 }

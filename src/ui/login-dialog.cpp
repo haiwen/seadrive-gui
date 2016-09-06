@@ -282,16 +282,9 @@ void LoginDialog::onFetchAccountInfoSuccess(const AccountInfo& info)
     else {
         gui->accountManager()->updateAccountInfo(account, info);
         accept();
-        startInitSyncDialog(account);
+        InitSyncDialog *dlg = new InitSyncDialog(account);
+        dlg->ensureVisible();
     }
-}
-
-void LoginDialog::startInitSyncDialog(const Account& account)
-{
-    InitSyncDialog *dlg = new InitSyncDialog(account);
-    dlg->show();
-    dlg->raise();
-    dlg->activateWindow();
 }
 
 void LoginDialog::onHttpError(int code)
@@ -366,6 +359,5 @@ void LoginDialog::loginWithShib()
     ShibLoginDialog shib_dialog(url, mComputerName->text(), this);
     if (shib_dialog.exec() == QDialog::Accepted) {
         accept();
-        startInitSyncDialog(shib_dialog.account());
     }
 }

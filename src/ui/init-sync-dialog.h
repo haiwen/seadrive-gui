@@ -15,6 +15,7 @@ class InitSyncDialog : public QDialog,
     Q_OBJECT
 public:
     InitSyncDialog(const Account& account, QWidget *parent=0);
+    void ensureVisible();
 
 private slots:
     void closeEvent(QCloseEvent *event);
@@ -26,7 +27,6 @@ private:
 
     void setStatusText(const QString& status);
     void setStatusIcon(const QString& path);
-    void ensureVisible();
     void finish();
     void fail(const QString& reason);
 
