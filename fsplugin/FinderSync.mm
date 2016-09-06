@@ -18,6 +18,15 @@
 #error this file must be built with ARC support
 #endif
 
+#define DLOG NSLog
+
+static std::vector<std::string> watched_repos_;
+static std::string mount_point_;
+static std::unordered_map<std::string, PathStatus> file_status_;
+static FinderSyncClient *client_ = nullptr;
+static constexpr double kGetWatchSetInterval = 5.0;   // seconds
+static constexpr double kGetFileStatusInterval = 2.0; // seconds
+
 @interface FinderSync ()
 
 @property(readwrite, nonatomic, strong) NSTimer *update_watch_set_timer_;
@@ -96,12 +105,28 @@ inline static void setBadgeIdentifierFor(NSURL *url, PathStatus status) {
                     forURL:url];
 }
 
+inline static std::vector<std::string>::const_iterator
+findRepo(const std::vector<std::string> &repos, const std::string &subdir) {
+    auto pos = repos.begin();
+    for (; pos != repos.end(); ++pos) {
+        if (*pos == subdir)
+            break;
+    }
+    return pos;
+}
+
+
 inline static void setBadgeIdentifierFor(const std::string &path,
                                          PathStatus status) {
+    if (findRepo(watched_repos_, path) != watched_repos_.end()) {
+        // No icon for repo top dir.
+        return;
+    }
     bool isDirectory = path.back() == '/';
     std::string file = path;
     if (isDirectory)
         file.resize(file.size() - 1);
+
     setBadgeIdentifierFor(
         [NSURL fileURLWithPath:[NSString stringWithUTF8String:file.c_str()]
                    isDirectory:isDirectory],
@@ -113,7 +138,7 @@ inline static bool isUnderFolderDirectly(const std::string &path,
     if (strncmp(dir.data(), path.data(), dir.size()) != 0) {
         return false;
     }
-    const char *pos = path.data() + dir.size();
+    const char *pos = path.data() + dir.size() + 1;
     const char *end = pos + path.size() - (dir.size());
     if (end == pos)
         return true;
@@ -124,16 +149,6 @@ inline static bool isUnderFolderDirectly(const std::string &path,
         if (*pos++ == '/')
             return false;
     return true;
-}
-
-inline static std::vector<std::string>::const_iterator
-findRepo(const std::vector<std::string> &repos, const std::string &subdir) {
-    auto pos = repos.begin();
-    for (; pos != repos.end(); ++pos) {
-        if (*pos == subdir)
-            break;
-    }
-    return pos;
 }
 
 inline static std::string getRelativePath(const std::string &path,
@@ -206,34 +221,11 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
         }
         // cleanup old
         if (!found) {
-            // clean up root
-            setBadgeIdentifierFor(repo, PathStatus::SYNC_STATUS_NONE);
-
             // clean up leafs
             cleanEntireDirectoryStatus(file_status, repo);
         }
     }
-    for (const auto &new_repo : new_watch_set) {
-        bool found = false;
-        for (const auto &repo : watch_set) {
-            if (repo == new_repo) {
-                found = true;
-                break;
-            }
-        }
-        // add new if necessary
-        if (!found)
-            file_status->emplace(new_repo + "/",
-                                 PathStatus::SYNC_STATUS_NONE);
-    }
 }
-
-static std::vector<std::string> watched_repos_;
-static std::string mount_point_;
-static std::unordered_map<std::string, PathStatus> file_status_;
-static FinderSyncClient *client_ = nullptr;
-static constexpr double kGetWatchSetInterval = 5.0;   // seconds
-static constexpr double kGetFileStatusInterval = 2.0; // seconds
 
 @implementation FinderSync
 
@@ -282,8 +274,6 @@ static constexpr double kGetFileStatusInterval = 2.0; // seconds
     self.client_command_queue_ = nil;
 }
 
-#define DLOG NSLog
-
 #pragma mark - Primary Finder Sync protocol methods
 
 - (void)beginObservingDirectoryAtURL:(NSURL *)url {
@@ -331,6 +321,11 @@ static constexpr double kGetFileStatusInterval = 2.0; // seconds
         url.path.precomposedStringWithCanonicalMapping.UTF8String;
 
     DLOG (@"FinderSync: requestBadgeIdentifierForURL called for %s", file_path.c_str());
+
+    if (findRepo(watched_repos_, file_path) != watched_repos_.end()) {
+        // No icon for repo top dir.
+        return;
+    }
 
     auto repo = findRepoContainPath(watched_repos_, file_path);
     if (repo == watched_repos_.end())
