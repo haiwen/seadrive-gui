@@ -47,6 +47,8 @@ public:
                      MessageIcon icon = Information,
                      int millisecondsTimeoutHint = 10000);
 
+    void setTransferRate(qint64 up_rate, qint64 down_rate);
+
 public slots:
     void showSettingsWindow();
     void showLoginDialog();
@@ -138,6 +140,10 @@ private:
     LoginDialog *login_dlg_;
 
     TrayNotificationManager *tnm;
+
+    QAction *transfer_rate_display_action_;
+    qint64 up_rate_;
+    qint64 down_rate_;
 };
 
 #endif // SEAFILE_CLIENT_TRAY_ICON_H

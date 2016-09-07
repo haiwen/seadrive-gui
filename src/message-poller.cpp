@@ -139,8 +139,10 @@ void MessagePoller::checkSyncStatus()
 
     if (sync_status.is_syncing) {
         gui->trayIcon()->rotate(true);
+        gui->trayIcon()->setTransferRate(sync_status.sent_bytes, sync_status.recv_bytes);
     } else {
         gui->trayIcon()->rotate(false);
+        gui->trayIcon()->setTransferRate(0, 0);
     }
 }
 

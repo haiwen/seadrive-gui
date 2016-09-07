@@ -55,6 +55,31 @@ void darkmodeWatcher(bool /*new Value*/) {
 }
 #endif
 
+QString translateTransferRate(int rate)
+{
+    QString unit;
+    QString display_rate;
+    double kbps = ((double)rate) / 1024;
+    if (kbps >= 1024) {
+        unit = "MB/s";
+        double mbps = kbps / 1024;
+        if (mbps < 10) {
+            display_rate = QString::number(mbps, 'f', 1);
+        } else {
+            display_rate = QString::number(int(mbps));
+        }
+    }
+    else {
+        display_rate = kbps;
+        unit = "kB/s";
+        display_rate = QString::number(int(kbps));
+    }
+
+    return QString("%1 %2")
+        .arg(display_rate)
+        .arg(unit);
+}
+
 } // namespace
 
 SeafileTrayIcon::SeafileTrayIcon(QObject *parent)
@@ -63,7 +88,9 @@ SeafileTrayIcon::SeafileTrayIcon(QObject *parent)
       rotate_counter_(0),
       state_(STATE_DAEMON_UP),
       next_message_msec_(0),
-      login_dlg_(nullptr)
+      login_dlg_(nullptr),
+      up_rate_(0),
+      down_rate_(0)
 {
     setState(STATE_DAEMON_DOWN);
     rotate_timer_ = new QTimer(this);
@@ -106,6 +133,9 @@ void SeafileTrayIcon::start()
 
 void SeafileTrayIcon::createActions()
 {
+    // The text would be set at the menu open time.
+    transfer_rate_display_action_ = new QAction("", this);
+
     quit_action_ = new QAction(tr("&Quit"), this);
     connect(quit_action_, SIGNAL(triggered()), this, SLOT(quitSeafile()));
 
@@ -140,6 +170,9 @@ void SeafileTrayIcon::createContextMenu()
 
     context_menu_ = new QMenu(NULL);
     // context_menu_->addAction(view_unread_seahub_notifications_action_);
+
+    context_menu_->addAction(open_seafile_folder_action_);
+
     context_menu_->addAction(open_seafile_folder_action_);
     context_menu_->addAction(open_log_directory_action_);
     // context_menu_->addAction(login_action_);
@@ -154,6 +187,8 @@ void SeafileTrayIcon::createContextMenu()
     context_menu_->addAction(about_action_);
     context_menu_->addAction(open_help_action_);
 
+    context_menu_->addAction(transfer_rate_display_action_);
+
     context_menu_->addSeparator();
     context_menu_->addAction(quit_action_);
 
@@ -164,6 +199,16 @@ void SeafileTrayIcon::createContextMenu()
 void SeafileTrayIcon::prepareContextMenu()
 {
     const std::vector<Account>& accounts = gui->accountManager()->accounts();
+
+    if (rotate_timer_->isActive()) {
+        transfer_rate_display_action_->setVisible(true);
+        transfer_rate_display_action_->setText(
+            tr("Up %1, Down %2")
+                .arg(translateTransferRate(up_rate_),
+                     translateTransferRate(down_rate_)));
+    } else {
+        transfer_rate_display_action_->setVisible(false);
+    }
 
     // Remove all menu items
     account_menu_->clear();
@@ -732,4 +777,10 @@ void SeafileTrayIcon::deleteAccount()
     }
 
     gui->accountManager()->removeAccount(account);
+}
+
+void SeafileTrayIcon::setTransferRate(qint64 up_rate, qint64 down_rate)
+{
+    up_rate_ = up_rate;
+    down_rate_ = down_rate;
 }
