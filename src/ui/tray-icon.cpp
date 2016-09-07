@@ -171,6 +171,9 @@ void SeafileTrayIcon::createContextMenu()
     context_menu_ = new QMenu(NULL);
     // context_menu_->addAction(view_unread_seahub_notifications_action_);
 
+    context_menu_->addAction(transfer_rate_display_action_);
+    context_menu_->addSeparator();
+
     context_menu_->addAction(open_seafile_folder_action_);
 
     context_menu_->addAction(open_seafile_folder_action_);
@@ -187,8 +190,6 @@ void SeafileTrayIcon::createContextMenu()
     context_menu_->addAction(about_action_);
     context_menu_->addAction(open_help_action_);
 
-    context_menu_->addAction(transfer_rate_display_action_);
-
     context_menu_->addSeparator();
     context_menu_->addAction(quit_action_);
 
@@ -200,15 +201,11 @@ void SeafileTrayIcon::prepareContextMenu()
 {
     const std::vector<Account>& accounts = gui->accountManager()->accounts();
 
-    if (rotate_timer_->isActive()) {
-        transfer_rate_display_action_->setVisible(true);
-        transfer_rate_display_action_->setText(
-            tr("Up %1, Down %2")
-                .arg(translateTransferRate(up_rate_),
-                     translateTransferRate(down_rate_)));
-    } else {
-        transfer_rate_display_action_->setVisible(false);
-    }
+    // if (rotate_timer_->isActive()) {
+    //     transfer_rate_display_action_->setVisible(true);
+    // } else {
+    //     transfer_rate_display_action_->setVisible(false);
+    // }
 
     // Remove all menu items
     account_menu_->clear();
@@ -783,4 +780,8 @@ void SeafileTrayIcon::setTransferRate(qint64 up_rate, qint64 down_rate)
 {
     up_rate_ = up_rate;
     down_rate_ = down_rate;
+    transfer_rate_display_action_->setText(
+        tr("Up %1, Down %2")
+            .arg(translateTransferRate(up_rate_),
+                    translateTransferRate(down_rate_)));
 }
