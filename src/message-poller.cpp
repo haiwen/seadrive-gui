@@ -94,6 +94,8 @@ QString translateNotificationError(SyncNotification notification)
     default:
         return QObject::tr("Unknown error");
     }
+
+    return ""; // Unreachable, just to silent compiler warnings.
 }
 
 } // namespace

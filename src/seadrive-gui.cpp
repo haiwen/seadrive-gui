@@ -35,6 +35,7 @@
 #include "utils/utils-win.h"
 #include "ext-handler.h"
 #include "ui/disk-letter-dialog.h"
+#include "auto-update-service.h"
 #endif
 
 #if defined(Q_OS_MAC)
@@ -323,6 +324,7 @@ void SeadriveGui::onDaemonStarted()
 
 #if defined(Q_OS_WIN32)
     SeafileExtensionHandler::instance()->start();
+    AutoUpdateService::instance()->start();
 #endif
 #ifdef HAVE_FINDER_SYNC_SUPPORT
     finderSyncListenerStart();
