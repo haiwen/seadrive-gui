@@ -244,8 +244,7 @@ class GetLatestVersionRequest : public SeafileApiRequest
 {
     Q_OBJECT
 public:
-    GetLatestVersionRequest(const QString& client_id,
-                            const QString& client_version);
+    GetLatestVersionRequest(const QString& client_id);
 
 signals:
     void success(const QString& latest_version);
