@@ -36,7 +36,7 @@ void setupSettingDomain()
     // see QSettings documentation
     QCoreApplication::setOrganizationName("Seafile");
     QCoreApplication::setOrganizationDomain("seafile.com");
-    QCoreApplication::setApplicationName(QString("Seafile Drive"));
+    QCoreApplication::setApplicationName(QString("Seafile Drive Client"));
 }
 
 void handleCommandLineOption(int argc, char *argv[])
