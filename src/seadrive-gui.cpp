@@ -207,6 +207,7 @@ SeadriveGui::~SeadriveGui()
 {
     // Must unmount before rpc client is destroyed.
     daemon_mgr_->doUnmount();
+    AutoUpdateService::instance()->stop();
 
     delete tray_icon_;
     delete rpc_client_;
@@ -287,7 +288,13 @@ void SeadriveGui::onDaemonStarted()
 
 #if defined(Q_OS_WIN32)
     SeafileExtensionHandler::instance()->start();
-    AutoUpdateService::instance()->start();
+
+#if HAVE_SPARKLE_SUPPORT
+    if (AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
+        AutoUpdateService::instance()->start();
+    }
+#endif // HAVE_SPARKLE_SUPPORT
+
 #endif
 #ifdef HAVE_FINDER_SYNC_SUPPORT
     finderSyncListenerStart();

@@ -12,13 +12,13 @@
 #include "api/requests.h"
 #include "settings-dialog.h"
 
+#ifdef HAVE_SPARKLE_SUPPORT
+#include "auto-update-service.h"
+#endif
+
 namespace {
 
 const char *kSettingsGroupForSettingsDialog = "SettingsDialog";
-
-bool isCheckLatestVersionEnabled() {
-    return QString(getBrand()) == "Seafile";
-}
 
 } // namespace
 
@@ -36,9 +36,11 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 
     mTabWidget->setCurrentIndex(0);
 
-    if (!isCheckLatestVersionEnabled()) {
+#ifdef HAVE_SPARKLE_SUPPORT
+    if (!AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
         mCheckLatestVersionBox->setVisible(false);
     }
+#endif
 
     // // mLanguageComboBox->addItems(I18NHelper::getInstance()->getLanguages());
 
@@ -91,10 +93,12 @@ void SettingsDialog::updateSettings()
     mgr->setCacheCleanIntervalMinutes(mCacheCleanInterval->value());
     mgr->setCacheSizeLimitGB(mCacheSizeLimit->value());
 
-//     if (isCheckLatestVersionEnabled()) {
-//         bool enabled = mCheckLatestVersionBox->checkState() == Qt::Checked;
-//         mgr->setCheckLatestVersionEnabled(enabled);
-//     }
+#ifdef HAVE_SPARKLE_SUPPORT
+    if (AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
+        bool enabled = mCheckLatestVersionBox->checkState() == Qt::Checked;
+        AutoUpdateService::instance()->setAutoUpdateEnabled(enabled);
+    }
+#endif
 
 //     bool language_changed = false;
 //     if (mLanguageComboBox->currentIndex() != I18NHelper::getInstance()->preferredLanguage()) {
@@ -175,10 +179,12 @@ void SettingsDialog::showEvent(QShowEvent *event)
     value = mgr->getCacheSizeLimitGB();
     mCacheSizeLimit->setValue(value);
 
-//     if (isCheckLatestVersionEnabled()) {
-//         state = mgr->isCheckLatestVersionEnabled() ? Qt::Checked : Qt::Unchecked;
-//         mCheckLatestVersionBox->setCheckState(state);
-//     }
+#ifdef HAVE_SPARKLE_SUPPORT
+    if (AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
+        state = AutoUpdateService::instance()->autoUpdateEnabled() ? Qt::Checked : Qt::Unchecked;
+        mCheckLatestVersionBox->setCheckState(state);
+    }
+#endif
 
     SettingsManager::SeafileProxy proxy = mgr->getProxy();
     showHideControlsBasedOnCurrentProxyType(proxy.type);
