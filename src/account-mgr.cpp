@@ -207,7 +207,7 @@ const std::vector<Account>& AccountManager::loadAccounts()
 
     std::stable_sort(accounts_.begin(), accounts_.end(), compareAccount);
 
-    qInfo("loaded %d accounts", (int)accounts_.size());
+    qWarning("loaded %d accounts", (int)accounts_.size());
 
     return accounts_;
 }

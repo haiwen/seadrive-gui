@@ -109,7 +109,7 @@ QStringList DaemonManager::collectSeaDriveArgs()
     args << fuse_opts.split(" ");
 #endif
 
-    auto stream = qInfo() << "starting seadrive daemon:" << kSeadriveExecutable;
+    auto stream = qWarning() << "starting seadrive daemon:" << kSeadriveExecutable;
     foreach (const QString& arg, args) {
         stream << arg;
     }
@@ -167,7 +167,7 @@ void DaemonManager::stopAllDaemon()
 
 void DaemonManager::doUnmount() {
     if (gui->rpcClient() && gui->rpcClient()->isConnected()) {
-        qInfo("Unmounting before exit");
+        qWarning("Unmounting before exit");
         gui->rpcClient()->unmount();
     } else {
         qDebug("Not unmounting because rpc client not ready.");

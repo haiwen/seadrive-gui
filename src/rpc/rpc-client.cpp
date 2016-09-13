@@ -344,7 +344,7 @@ bool SeafileRpcClient::switchAccount(const Account& account)
         g_error_free(error);
         return false;
     }
-    qInfo() << "Switched to account" << account;
+    qWarning() << "Switched to account" << account;
     return true;
 }
 
@@ -367,7 +367,7 @@ bool SeafileRpcClient::deleteAccount(const Account& account, bool remove_cache)
         g_error_free(error);
         return false;
     }
-    qInfo() << "Deleted account" << account;
+    qWarning() << "Deleted account" << account;
     return true;
 }
 
