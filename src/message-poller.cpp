@@ -168,6 +168,8 @@ void MessagePoller::processNotification(const SyncNotification& notification)
             "",
             "",
             QSystemTrayIcon::Warning);
+    } else if (notification.type == "fs-loaded") {
+        emit seadriveFSLoaded();
     }
 }
 

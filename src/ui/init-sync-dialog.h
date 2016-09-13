@@ -21,6 +21,7 @@ private slots:
     void closeEvent(QCloseEvent *event);
     void checkDownloadProgress();
     void openMountPointAndCloseDialog();
+    void onFSLoaded();
 
 private:
     Q_DISABLE_COPY(InitSyncDialog)

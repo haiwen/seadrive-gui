@@ -6,6 +6,7 @@
 #include "rpc/rpc-client.h"
 #include "seadrive-gui.h"
 #include "utils/utils.h"
+#include "message-poller.h"
 
 #include "init-sync-dialog.h"
 
@@ -40,6 +41,9 @@ InitSyncDialog::InitSyncDialog(const Account &account, QWidget *parent)
     check_download_timer_ = new QTimer(this);
     connect(check_download_timer_, SIGNAL(timeout()), this, SLOT(checkDownloadProgress()));
     check_download_timer_->start(kCheckDownloadInterval);
+
+    connect(gui->messagePoller(), SIGNAL(seadriveFSLoaded()),
+            this, SLOT(onFSLoaded()));
 }
 
 void InitSyncDialog::checkDownloadProgress()
@@ -50,14 +54,12 @@ void InitSyncDialog::checkDownloadProgress()
         text += ".";
     }
     mStatusText->setText(text);
+}
 
-    // TODO: Check the initial sync status via seadrive RPC
-    static int checked = 0;
-    if (++checked == 5) {
-        checked = 0;
-        finish();
-        check_download_timer_->stop();
-    }
+void InitSyncDialog::onFSLoaded()
+{
+    check_download_timer_->stop();
+    finish();
 }
 
 void InitSyncDialog::openMountPointAndCloseDialog()

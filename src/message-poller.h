@@ -27,13 +27,16 @@ struct SyncNotification {
 /**
  * Handles ccnet message
  */
-class MessagePoller : QObject {
+class MessagePoller : public QObject {
     Q_OBJECT
 public:
     MessagePoller(QObject *parent=0);
     ~MessagePoller();
 
     void start();
+
+signals:
+    void seadriveFSLoaded();
 
 private slots:
     void checkNotification();
