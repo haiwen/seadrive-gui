@@ -21,6 +21,11 @@ ENDIF()
 
 option(BUILD_ENABLE_WARNINGS "Enable compiler warnings." ON)
 
+OPTION(BUILD_SPARKLE_SUPPORT "Build Sparkle support" OFF)
+IF (BUILD_SPARKLE_SUPPORT)
+  ADD_DEFINITIONS(-DHAVE_SPARKLE_SUPPORT)
+ENDIF()
+
 MESSAGE("Build type: ${CMAKE_BUILD_TYPE}")
 
 ## build in PIC mode
@@ -63,9 +68,17 @@ IF (WIN32)
     IF (${CMAKE_BUILD_TYPE} MATCHES Release)
       SET(GUI_TYPE WIN32)
     ENDIF()
-    SET(platform_specific_moc_headers ${platform_specific_moc_headers} src/ext-handler.h src/ui/disk-letter-dialog.h src/auto-update-service.h)
-    SET(platform_specific_sources ${platform_specific_sources} src/ext-handler.cpp src/ui/disk-letter-dialog.cpp src/auto-update-service.cpp)
+    SET(platform_specific_moc_headers ${platform_specific_moc_headers} src/ext-handler.h src/auto-update-service.h src/ui/disk-letter-dialog.h )
+    SET(platform_specific_sources ${platform_specific_sources} src/ext-handler.cpp src/auto-update-service.cpp src/ui/disk-letter-dialog.cpp)
     SET(platform_specific_ui_files ${platform_specific_ui_files} ui/disk-letter-dialog.ui)
+    
+    IF (BUILD_SPARKLE_SUPPORT)
+      IF(NOT EXISTS "${CMAKE_SOURCE_DIR}/WinSparkle.lib")
+        message(FATAL_ERROR "File ${CMAKE_SOURCE_DIR}/WinSparkle.lib not found in current directory. Please setup winsparkle correctly." )
+      ENDIF()
+      SET(SPARKLE_LIBS ${CMAKE_SOURCE_DIR}/WinSparkle.lib)
+    ENDIF()
+
 ELSEIF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "BSD")
     INCLUDE_DIRECTORIES(${QT_QTDBUS_INCLUDE_DIR})
     LINK_DIRECTORIES(${QT_QTDBUS_LIBRARIES})
@@ -447,6 +460,7 @@ ADD_EXECUTABLE(seadrive-gui ${GUI_TYPE}
 INSTALL(TARGETS seadrive-gui DESTINATION bin)
 
 TARGET_LINK_LIBRARIES(seadrive-gui
+  ${SPARKLE_LIBS}
   ${SC_LIBS}
 
   ${GLIB2_LIBRARIES}

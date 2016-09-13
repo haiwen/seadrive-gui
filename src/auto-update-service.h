@@ -19,16 +19,13 @@ class AutoUpdateService : public QObject
 public:
     AutoUpdateService(QObject *parent = 0);
 
+    bool shouldSupportAutoUpdate() const;
+
+    bool autoUpdateEnabled() const;
+    void setAutoUpdateEnabled(bool enabled);
+
     void start();
-
-private slots:
-    void checkLatestVersion();
-    void onGetLatestVersionSuccess(const QString &version);
-
-private:
-    QTimer *check_timer_;
-
-    GetLatestVersionRequest *req_;
+    void stop();
 };
 
 #endif // SEADRIVE_GUI_AUTO_UPDATE_SERVICE_H

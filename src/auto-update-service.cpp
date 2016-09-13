@@ -1,5 +1,7 @@
 #include <QTimer>
 
+#include <winsparkle.h>
+
 #include "api/requests.h"
 #include "seadrive-gui.h"
 #include "utils/utils.h"
@@ -8,49 +10,43 @@
 
 SINGLETON_IMPL(AutoUpdateService)
 
-namespace {
+namespace
+{
 
-// First check happens at 5 minutes after program startup.
-// const int kFirstVersionCheckDelayMSec = 300 * 1000;
-
-const int kFirstVersionCheckDelayMSec = 5 * 1000;
-
-// Check the latest version every hour.
-const int kCheckLatestVersionIntervalMSec = 3600 * 1000;
-
-}  // namespace
+} // namespace
 
 AutoUpdateService::AutoUpdateService(QObject *parent) : QObject(parent)
 {
-    req_ = nullptr;
-
-    check_timer_ = new QTimer(this);
-    connect(check_timer_, SIGNAL(timeout()),
-            this, SLOT(checkLatestVersion()));
 }
 
 void AutoUpdateService::start()
 {
-    QTimer::singleShot(kFirstVersionCheckDelayMSec,
-                       this, SLOT(checkLatestVersion()));
-    check_timer_->start(kCheckLatestVersionIntervalMSec);
+    win_sparkle_set_appcast_url("http://local.seafile.io:81/appcast.xml");
+    win_sparkle_set_app_details(
+        L"Seafile",
+        L"Seafile Drive Client",
+        QString(STRINGIZE(SEADRIVE_GUI_VERSION)).toStdWString().c_str());
+
+    // Initialize the updater and possibly show some UI
+    win_sparkle_init();
 }
 
-void AutoUpdateService::checkLatestVersion()
+void AutoUpdateService::stop()
 {
-    if (req_) {
-        return;
-    }
-
-    req_ = new GetLatestVersionRequest(gui->getUniqueClientId());
-    connect(req_, SIGNAL(success(const QString&)),
-            this, SLOT(onGetLatestVersionSuccess(const QString&)));
-    req_->send();
+    win_sparkle_cleanup();
 }
 
-void AutoUpdateService::onGetLatestVersionSuccess(const QString &version)
-{
-    printf ("latest version is %s\n", version.toUtf8().data());
-    req_->deleteLater();
-    req_ = nullptr;
+bool AutoUpdateService::shouldSupportAutoUpdate() const {
+    // qWarning() << "shouldSupportAutoUpdate =" << (QString(getBrand()) == "SeaDrive");
+    return QString(getBrand()) == "SeaDrive";
+}
+
+bool AutoUpdateService::autoUpdateEnabled() const {
+    // qWarning() << "autoUpdateEnabled =" << win_sparkle_get_automatic_check_for_updates();
+    return win_sparkle_get_automatic_check_for_updates();
+}
+
+void AutoUpdateService::setAutoUpdateEnabled(bool enabled) {
+    // qWarning() << "setAutoUpdateEnabled:" << enabled;
+    win_sparkle_set_automatic_check_for_updates(enabled ? 1 : 0);
 }
