@@ -1,6 +1,9 @@
 #ifndef SEAFILE_CLIENT_UTILS_WIN_H_
 #define SEAFILE_CLIENT_UTILS_WIN_H_
+
 #include <QtGlobal>
+#include <QStringList>
+
 #ifdef Q_OS_WIN32
 
 namespace utils {
@@ -28,15 +31,22 @@ bool isWindowsVistaOrGreater();
 bool isWindows7OrGreater();
 bool isWindows8OrGreater();
 bool isWindows8Point1OrGreater();
+
+bool diskLetterAvailable(const QString& disk_letter);
+QStringList getAvailableDiskLetters();
+
 } // namespace win
 } // namespace utils
+
 #else
 namespace utils {
 namespace win {
+
 inline bool isWindowsVistaOrGreater() { return false; }
 inline bool isWindows7OrGreater() { return false; }
 inline bool isWindows8OrGreater() { return false; }
 inline bool isWindows8Point1OrGreater() { return false; }
+
 } // namespace win
 } // namespace utils
 #endif

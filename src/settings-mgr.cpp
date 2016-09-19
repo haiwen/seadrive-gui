@@ -26,6 +26,7 @@ namespace
 {
 const char *kCheckLatestVersion = "checkLatestVersion";
 const char *kBehaviorGroup = "Behavior";
+const char *kDiskLetter = "diskLetter";
 
 // const char *kDefaultLibraryAlreadySetup = "defaultLibraryAlreadySetup";
 // const char *kStatusGroup = "Status";
@@ -560,6 +561,32 @@ void SettingsManager::setShellExtensionEnabled(bool enabled)
         reg2.add();
     }
 }
+
+bool SettingsManager::getDiskLetter(QString *disk_letter)
+{
+    QSettings settings;
+
+    settings.beginGroup(kSettingsGroup);
+    if (!settings.contains(kDiskLetter)) {
+        return false;
+    }
+
+    *disk_letter = settings.value(kDiskLetter, true).toString();
+    settings.endGroup();
+
+    return true;
+}
+
+void SettingsManager::setDiskLetter(const QString& disk_letter)
+{
+    QSettings settings;
+
+    settings.beginGroup(kSettingsGroup);
+    settings.setValue(kDiskLetter, disk_letter);
+    settings.endGroup();
+}
+
+
 #endif // Q_OS_WIN32
 
 void SettingsManager::writeSystemProxyInfo(const QUrl &url,

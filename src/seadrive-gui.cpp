@@ -31,7 +31,9 @@
 
 #if defined(Q_OS_WIN32)
 #include "utils/registry.h"
+#include "utils/utils-win.h"
 #include "ext-handler.h"
+#include "ui/disk-letter-dialog.h"
 #endif
 
 #if defined(Q_OS_MAC)
@@ -195,11 +197,6 @@ SeadriveGui::SeadriveGui()
     settings_dlg_ = new SettingsDialog();
     message_poller_ = new MessagePoller();
     connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onAboutToQuit()));
-
-#if defined(Q_OS_WIN32)
-    // TODO: what if the drive letter S is already taken?
-    disk_letter_ = "S:";
-#endif
 }
 
 SeadriveGui::~SeadriveGui()
@@ -239,6 +236,23 @@ void SeadriveGui::start()
     settings_mgr_->writeSystemProxyInfo(
         account_mgr_->currentAccount().serverUrl,
         QDir(seadriveDataDir()).filePath("system-proxy.txt"));
+
+#if defined(Q_OS_WIN32)
+    QString disk_letter;
+    if (settings_mgr_->getDiskLetter(&disk_letter) && utils::win::diskLetterAvailable(disk_letter)) {
+        qWarning("Using disk leter %s", toCStr(disk_letter));
+        disk_letter_ = disk_letter;
+    } else {
+        qWarning("disk letter not set or set but not available");
+        DiskLetterDialog dialog;
+        if (dialog.exec() != QDialog::Accepted) {
+            errorAndExit(tr("Faild to choose a disk letter"));
+            return;
+        }
+        disk_letter_ = dialog.diskLetter();
+        settings_mgr_->setDiskLetter(disk_letter_);
+    }
+#endif
 
     daemon_mgr_->startSeadriveDaemon();
     connect(daemon_mgr_, SIGNAL(daemonStarted()),

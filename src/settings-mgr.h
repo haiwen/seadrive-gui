@@ -98,7 +98,10 @@ public:
 #ifdef Q_OS_WIN32
     void setShellExtensionEnabled(bool enabled);
     bool shellExtensionEnabled() const { return shell_ext_enabled_; }
-#endif // HAVE_FINDER_SYNC_SUPPORT
+
+    bool getDiskLetter(QString *disk_letter);
+    void setDiskLetter(const QString& disk_letter);
+#endif // Q_OS_WIN32
 
 public:
 

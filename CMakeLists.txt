@@ -62,8 +62,9 @@ IF (WIN32)
     IF (${CMAKE_BUILD_TYPE} MATCHES Release)
       SET(GUI_TYPE WIN32)
     ENDIF()
-    SET(platform_specific_moc_headers ${platform_specific_moc_headers} src/ext-handler.h)
-    SET(platform_specific_sources ${platform_specific_sources} src/ext-handler.cpp)
+    SET(platform_specific_moc_headers ${platform_specific_moc_headers} src/ext-handler.h src/ui/disk-letter-dialog.h)
+    SET(platform_specific_sources ${platform_specific_sources} src/ext-handler.cpp src/ui/disk-letter-dialog.cpp)
+    SET(platform_specific_ui_files ${platform_specific_ui_files} ui/disk-letter-dialog.ui)
 ELSEIF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "BSD")
     INCLUDE_DIRECTORIES(${QT_QTDBUS_INCLUDE_DIR})
     LINK_DIRECTORIES(${QT_QTDBUS_LIBRARIES})
@@ -181,6 +182,7 @@ SET(ui_files
   ui/init-sync-dialog.ui
   ui/login-dialog.ui
   ui/settings-dialog.ui
+  ${platform_specific_ui_files}
 )
 QT5_WRAP_UI(ui_output ${ui_files})
 

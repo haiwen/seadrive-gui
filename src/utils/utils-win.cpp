@@ -1,5 +1,8 @@
-#include "utils/utils-win.h"
 #include <windows.h>
+
+#include <QSet>
+
+#include "utils/utils-win.h"
 
 
 namespace utils {
@@ -84,5 +87,46 @@ bool isWindows8Point1OrHigher()
 {
     return isAtLeastSystemVersion<6, 3, 0>();
 }
+
+QSet<QString> getUsedLetters()
+{
+    wchar_t drives[1024];
+    wchar_t *p;
+    QSet<QString> used;
+
+    GetLogicalDriveStringsW (sizeof(drives), drives);
+    for (p = drives; *p != L'\0'; p += wcslen(p) + 1) {
+        QString d = QString::fromWCharArray(p);
+        while (d.endsWith("\\") or d.endsWith(":")) {
+            d.truncate(d.length() - 1);
+        }
+        used.insert(d);
+    }
+
+    return used;
+}
+
+bool diskLetterAvailable(const QString& disk_letter)
+{
+    return !getUsedLetters().contains(QString(disk_letter.at(0)));
+}
+
+QStringList getAvailableDiskLetters()
+{
+    QStringList letters;
+    QSet<QString> used = getUsedLetters();
+
+    // All possible disk letters with the most common ones A,B,C removed.
+    QString all_letters = "DEFGHIJKLMNOPQRSTUVWXYZ";
+    for (int i = 0; i < all_letters.length(); i++) {
+        QString letter(all_letters.at(i));
+        if (!used.contains(letter)) {
+            letters << letter;
+        }
+    }
+    return letters;
+
+}
+
 } // namespace win
 } // namespace utils
