@@ -84,5 +84,19 @@ bool isWindows8Point1OrHigher()
 {
     return isAtLeastSystemVersion<6, 3, 0>();
 }
+
+bool diskLetterAvailable(const QString& disk_letter)
+{
+    //TODO: implement it
+    return false;
+}
+
+QStringList getAvailableDiskLetters()
+{
+    QStringList letters;
+    letters << "S" << "X";
+    return letters;
+}
+
 } // namespace win
 } // namespace utils

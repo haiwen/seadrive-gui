@@ -84,9 +84,12 @@ QStringList DaemonManager::collectSeaDriveArgs()
             drive_letter = "S";
         }
     } else {
-        drive_letter = "S";
+        drive_letter = gui->mountDir();
     }
-    args << drive_letter + ":";
+    if (!drive_letter.endsWith(":")) {
+        drive_letter += ":";
+    }
+    args << drive_letter;
 #else
     args << "-f";
 
