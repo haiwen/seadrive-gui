@@ -11,7 +11,7 @@ class DiskLetterDialog : public QDialog,
 public:
     DiskLetterDialog(QWidget *parent=0);
 
-    QString diskLetter() const { return disk_letter_; }
+    QString diskLetter() const { return disk_letter_ + ":"; }
 
 private slots:
     void onOkBtnClicked();

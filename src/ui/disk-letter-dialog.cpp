@@ -33,7 +33,7 @@ DiskLetterDialog::DiskLetterDialog(QWidget *parent)
     QStringList letters = utils::win::getAvailableDiskLetters();
     int i = 0;
     foreach (const QString& letter, letters) {
-        mDiskLetter->addItem(letter + ":");
+        mDiskLetter->addItem(letter);
         if (letter == "S") {
             mDiskLetter->setCurrentIndex(i);
         }
