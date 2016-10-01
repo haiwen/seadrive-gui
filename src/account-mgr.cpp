@@ -247,6 +247,8 @@ int AccountManager::saveAccount(const Account& account)
     current_account_ = new_account;
 
     gui->rpcClient()->switchAccount(new_account);
+    gui->rpcClient()->seafileSetConfig(
+        "client_name", gui->settingsManager()->getComputerName());
 
     emit accountsChanged();
 

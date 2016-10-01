@@ -26,7 +26,9 @@ namespace
 {
 const char *kCheckLatestVersion = "checkLatestVersion";
 const char *kBehaviorGroup = "Behavior";
+#ifdef Q_OS_WIN32
 const char *kDiskLetter = "diskLetter";
+#endif
 
 // const char *kDefaultLibraryAlreadySetup = "defaultLibraryAlreadySetup";
 // const char *kStatusGroup = "Status";

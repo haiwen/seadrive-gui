@@ -297,6 +297,15 @@ void SeadriveGui::onDaemonStarted()
     tray_icon_->setState(SeafileTrayIcon::STATE_DAEMON_UP);
     message_poller_->start();
 
+    // Set the device id to the daemon so it can use it when generating commits.
+    // The "client_name" is not set here, but updated each time we call
+    // switch_account rpc.
+    QString value;
+    if (rpc_client_->seafileGetConfig("client_id", &value) < 0 ||
+        value.isEmpty() || value != getUniqueClientId()) {
+        rpc_client_->seafileSetConfig("client_id", getUniqueClientId());
+    }
+
 
 #if defined(Q_OS_WIN32)
     SeafileExtensionHandler::instance()->start();
