@@ -331,8 +331,6 @@ bool AccountManager::setCurrentAccount(const Account& account)
         return false;
     }
 
-    emit beforeAccountChanged();
-
     // Would emit "accountsChanged" signal
     saveAccount(account);
 
@@ -472,8 +470,6 @@ void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo 
 
     for (size_t i = 0; i < accounts_.size(); i++) {
         if (accounts_[i] == account) {
-            if (account == current_account_)
-                emit beforeAccountChanged();
             accounts_[i].serverInfo = info;
             if (account == current_account_)
                 emit accountsChanged();

@@ -65,7 +65,6 @@ signals:
     /**
      * Account added/removed/switched.
      */
-    void beforeAccountChanged();
     void accountsChanged();
     void accountRequireRelogin(const Account& account);
 
