@@ -159,10 +159,10 @@ min-width: 260px;
         <number>30</number>
        </property>
        <property name="rightMargin">
-        <number>140</number>
+        <number>160</number>
        </property>
        <property name="bottomMargin">
-        <number>100</number>
+        <number>115</number>
        </property>
        <item>
         <spacer name="verticalSpacer_5">
