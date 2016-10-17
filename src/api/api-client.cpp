@@ -79,7 +79,8 @@ void SeafileApiClient::prepareRequest(QNetworkRequest *req)
         req->setRawHeader(key.toUtf8().data(), headers_[key].toUtf8().data());
     }
 
-    req->setRawHeader(kSeafileClientVersionHeader, STRINGIZE(SEAFILE_CLIENT_VERSION));
+    QString client_version = QString("seadrive_%1").arg(STRINGIZE(SEADRIVE_GUI_VERSION));
+    req->setRawHeader(kSeafileClientVersionHeader, toCStr(client_version));
 }
 
 void SeafileApiClient::get(const QUrl& url)

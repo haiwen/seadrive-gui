@@ -23,7 +23,7 @@ getSeafileLoginParams(const QString& computer_name, const QString& prefix)
 
     QHash<QString, QString> params;
 
-    QString client_version = STRINGIZE(SEADRIVE_GUI_VERSION);
+    QString client_version = QString("seadrive_%1").arg(STRINGIZE(SEADRIVE_GUI_VERSION));
     QString computper = computer_name.isEmpty() ? QHostInfo::localHostName()
         : computer_name;
 
