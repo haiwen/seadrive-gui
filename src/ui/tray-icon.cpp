@@ -36,6 +36,7 @@ extern void qt_mac_set_dock_menu(QMenu *menu);
 #endif
 
 #include "utils/utils-mac.h"
+#include "utils/utils-win.h"
 
 #if defined(Q_OS_LINUX)
 #include <QDBusConnection>
@@ -404,7 +405,7 @@ QIcon SeafileTrayIcon::stateToIcon(TrayState state)
     QString icon_name;
     switch (state) {
     case STATE_DAEMON_UP:
-        icon_name = ":/images/win/daemon_up.ico";
+        icon_name = utils::win::isWindows10OrHigher() ? ":/images/win/daemon_up_white.ico" : ":/images/win/daemon_up.ico";
         break;
     case STATE_DAEMON_DOWN:
         icon_name = ":/images/win/daemon_down.ico";

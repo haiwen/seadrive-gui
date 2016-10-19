@@ -15,6 +15,7 @@
     <file>images/seafile_warning.png</file>
     <file>images/notification.png</file>
     <file>images/win/daemon_up.ico</file>
+    <file>images/win/daemon_up_white.ico</file>
     <file>images/win/daemon_down.ico</file>
     <file>images/win/seafile_warning.ico</file>
     <file>images/win/seafile_auto_sync_disabled.ico</file>

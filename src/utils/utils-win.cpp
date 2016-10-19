@@ -88,6 +88,11 @@ bool isWindows8Point1OrHigher()
     return isAtLeastSystemVersion<6, 3, 0>();
 }
 
+bool isWindows10OrHigher()
+{
+    return isAtLeastSystemVersion<10, 0, 0>();
+}
+
 QSet<QString> getUsedLetters()
 {
     wchar_t drives[1024];
