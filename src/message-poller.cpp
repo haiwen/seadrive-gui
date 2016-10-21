@@ -178,14 +178,14 @@ void MessagePoller::processNotification(const SyncNotification& notification)
         QString title, msg;
 
         if (notification.move.type == "start") {
-            title = tr("Starting to move %1").arg(src);
-            msg = tr("Starting to move %1 to %2/").arg(src, dst);
+            title = tr("Starting to move \"%1\"").arg(src);
+            msg = tr("Starting to move \"%1\" to \"%2\"/").arg(src, dst);
         } else if (notification.move.type == "done") {
-            title = tr("Successfully moved %1").arg(src);
-            msg = tr("Successfully moved %1 to %2/").arg(src, dst);
+            title = tr("Successfully moved \"%1\"").arg(src);
+            msg = tr("Successfully moved \"%1\" to \"%2\"/").arg(src, dst);
         } else if (notification.move.type == "error") {
-            title = tr("Failed to move %1").arg(src);
-            msg = tr("Failed to moved %1 to %2/").arg(src, dst);
+            title = tr("Failed to move \"%1\"").arg(src);
+            msg = tr("Failed to moved \"%1\" to \"%2\"/").arg(src, dst);
         }
 
         gui->trayIcon()->showMessage(
