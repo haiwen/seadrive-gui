@@ -174,18 +174,18 @@ void MessagePoller::processNotification(const SyncNotification& notification)
     } else if (notification.isCrossRepoMove()) {
         // printf("src path = %s, dst path = %s\n", toCStr(notification.move.src_path), toCStr(notification.move.dst_path));
         QString src = ::getBaseName(notification.move.src_path);
-        QString dst = ::getParentPath(notification.move.dst_path);
+        QString dst = ::getParentPath(notification.move.dst_path) + "/";
         QString title, msg;
 
         if (notification.move.type == "start") {
             title = tr("Starting to move \"%1\"").arg(src);
-            msg = tr("Starting to move \"%1\" to \"%2\"/").arg(src, dst);
+            msg = tr("Starting to move \"%1\" to \"%2\"").arg(src, dst);
         } else if (notification.move.type == "done") {
             title = tr("Successfully moved \"%1\"").arg(src);
-            msg = tr("Successfully moved \"%1\" to \"%2\"/").arg(src, dst);
+            msg = tr("Successfully moved \"%1\" to \"%2\"").arg(src, dst);
         } else if (notification.move.type == "error") {
             title = tr("Failed to move \"%1\"").arg(src);
-            msg = tr("Failed to moved \"%1\" to \"%2\"/").arg(src, dst);
+            msg = tr("Failed to move \"%1\" to \"%2\"").arg(src, dst);
         }
 
         gui->trayIcon()->showMessage(
