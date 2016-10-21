@@ -1,6 +1,7 @@
 #include <QTimer>
 #include <QDateTime>
 
+#include "utils/utils.h"
 #include "utils/translate-commit-desc.h"
 #include "utils/json-utils.h"
 #include "utils/file-utils.h"
@@ -170,6 +171,32 @@ void MessagePoller::processNotification(const SyncNotification& notification)
             QSystemTrayIcon::Warning);
     } else if (notification.type == "fs-loaded") {
         emit seadriveFSLoaded();
+    } else if (notification.isCrossRepoMove()) {
+        printf("src path = %s, dst path = %s\n", toCStr(notification.move.src_path), toCStr(notification.move.dst_path));
+        QString src = ::getBaseName(notification.move.src_path);
+        QString dst = ::getParentPath(notification.move.dst_path);
+        QString title, msg;
+
+        if (notification.move.type == "start") {
+            title = tr("Starting to move %1").arg(src);
+            msg = tr("Starting to move %1 to %2").arg(src, dst);
+        } else if (notification.move.type == "done") {
+            title = tr("Successfully moved %1").arg(src);
+            msg = tr("Successfully moved %1 to %2").arg(src, dst);
+        } else if (notification.move.type == "error") {
+            title = tr("Failed move %1").arg(src);
+            msg = tr("Failed to moved %1 to %2").arg(src, dst);
+        }
+
+        gui->trayIcon()->showMessage(
+            title,
+            msg,
+            "",
+            "",
+            "",
+            QSystemTrayIcon::Warning);
+    } else {
+        printf ("Unknown message %s\n", notification.type.toUtf8().data());
     }
 }
 
@@ -178,21 +205,28 @@ SyncNotification SyncNotification::fromJson(const json_t *root)
     SyncNotification notification;
     Json json(root);
 
-    notification.type = json.getString("type");
-    notification.repo_id = json.getString("repo_id");
-    notification.repo_name = json.getString("repo_name");
-    notification.commit_id = json.getString("commit_id");
-    notification.parent_commit_id = json.getString("parent_commit_id");
-    notification.commit_desc = json.getString("commit_desc");
-    if (notification.isSyncError()) {
-        notification.error_id = json.getLong("err_id");
-        notification.error_path = json.getString("path");
-        notification.error = translateNotificationError(notification);
-    }
-
     // char *s = json_dumps(root, 0);
     // printf ("[%s] %s\n", QDateTime::currentDateTime().toString().toUtf8().data(), s);
     // free (s);
+
+    notification.type = json.getString("type");
+
+    if (notification.type.startsWith("cross-repo-move.")) {
+        notification.move.src_path = json.getString("srcpath");
+        notification.move.dst_path = json.getString("dstpath");
+        notification.move.type = notification.type.split(".").last();
+    } else {
+        notification.repo_id = json.getString("repo_id");
+        notification.repo_name = json.getString("repo_name");
+        notification.commit_id = json.getString("commit_id");
+        notification.parent_commit_id = json.getString("parent_commit_id");
+        notification.commit_desc = json.getString("commit_desc");
+        if (notification.isSyncError()) {
+            notification.error_id = json.getLong("err_id");
+            notification.error_path = json.getString("path");
+            notification.error = translateNotificationError(notification);
+        }
+    }
 
     return notification;
 }
