@@ -194,7 +194,7 @@ void MessagePoller::processNotification(const SyncNotification& notification)
             "",
             "",
             "",
-            QSystemTrayIcon::Warning);
+            QSystemTrayIcon::Information);
     } else {
         printf ("Unknown message %s\n", notification.type.toUtf8().data());
     }
