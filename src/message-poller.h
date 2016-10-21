@@ -19,6 +19,16 @@ struct SyncNotification {
     QString error;
     QString error_path;
 
+    // cross repo move
+    struct {
+        QString src_path;
+        QString dst_path;
+        // start/done/error
+        QString type;
+    } move;
+
+    bool isCrossRepoMove() const { return !move.type.isEmpty(); }
+
     bool isSyncError() const { return type == "sync.error"; }
 
     static SyncNotification fromJson(const json_t* json);
