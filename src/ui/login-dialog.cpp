@@ -334,8 +334,9 @@ void LoginDialog::showWarning(const QString& msg)
 void LoginDialog::loginWithShib()
 {
     QString serverAddr = gui->settingsManager()->getLastShibUrl();
+    QString brand = getBrand() == "SeaDrive" ? "Seafile" : getBrand();
     serverAddr = QInputDialog::getText(this, tr("Shibboleth Login"),
-                                       tr("%1 Server Address").arg(getBrand()),
+                                       tr("%1 Server Address").arg(brand),
                                        QLineEdit::Normal,
                                        serverAddr);
     serverAddr = serverAddr.trimmed();
