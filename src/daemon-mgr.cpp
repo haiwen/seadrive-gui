@@ -150,7 +150,7 @@ void DaemonManager::checkDaemonReady()
     static int maxcheck = 0;
     if (++maxcheck > 5) {
         qWarning("seadrive rpc is not ready after %d retry, abort", maxcheck);
-        gui->errorAndExit(tr("%1 drive failed to initialize").arg(getBrand()));
+        gui->errorAndExit(tr("%1 failed to initialize").arg(getBrand()));
     }
 }
 

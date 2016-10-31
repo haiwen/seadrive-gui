@@ -112,7 +112,7 @@ min-width: 260px;
       <item>
        <widget class="QLabel" name="mStatusText">
         <property name="text">
-         <string>SeaDrive is fetching the file list, please wait ...</string>
+         <string notr="true">SeaDrive is fetching the file list, please wait ...</string>
         </property>
        </widget>
       </item>

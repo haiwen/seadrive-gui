@@ -739,7 +739,7 @@ void SeafileTrayIcon::onLogoutDeviceRequestSuccess()
 
     if (!gui->rpcClient()->deleteAccount(account, req->shouldRemoveCache())) {
         gui->warningBox(
-            tr("Failed to remove local cache of account %s").arg(account.toString()));
+            tr("Failed to remove local cache of account %1").arg(account.toString()));
     }
 
     gui->accountManager()->clearAccountToken(account);

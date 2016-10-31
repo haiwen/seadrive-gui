@@ -413,7 +413,7 @@ bool SeadriveGui::initLog()
 #endif
 
     if (applet_log_init(toCStr(seadrive_dir.absolutePath())) < 0) {
-        errorAndExit(tr("Failed to initialize log: %s").arg(g_strerror(errno)));
+        errorAndExit(tr("Failed to initialize log: %1").arg(g_strerror(errno)));
         return false;
     }
 
