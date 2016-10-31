@@ -12,10 +12,14 @@
 #include "utils/process.h"
 #include "seadrive-gui.h"
 
+
 #if defined(Q_OS_MAC)
 #include "application.h"
 #include "utils/utils-mac.h"
 #endif
+
+#include "i18n.h"
+#include "utils/utils.h"
 
 namespace {
 
@@ -48,6 +52,7 @@ void handleCommandLineOption(int argc, char *argv[])
 #if defined(Q_OS_WIN32)
         { "drive-letter", required_argument, NULL, 'L' },
 #endif
+        { "delay", no_argument, NULL, 'D' },
         { NULL, 0, NULL, 0, },
     };
 
@@ -62,6 +67,9 @@ void handleCommandLineOption(int argc, char *argv[])
             g_setenv ("SEADRIVE_LETTER", optarg, 1);
             break;
 #endif
+        case 'D':
+            msleep(1000);
+            break;
         default:
             exit(1);
         }
@@ -87,6 +95,9 @@ int main(int argc, char *argv[])
 
     // set the domains of settings
     setupSettingDomain();
+
+    // initialize i18n settings
+    I18NHelper::getInstance()->init();
 
     handleCommandLineOption(argc, argv);
 
