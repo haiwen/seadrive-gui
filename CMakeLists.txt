@@ -265,6 +265,8 @@ SET(seadrive_gui_sources
   src/ui/sharedlink-dialog.cpp
   src/ui/tray-icon.cpp
   ${platform_specific_sources}
+
+  src/i18n.cpp
 )
 
 INCLUDE_DIRECTORIES(
@@ -365,6 +367,70 @@ SET(SC_LIBS utils)
 ####################
 ###### end: lib
 ####################
+
+####################
+###### start: translations
+####################
+
+SET(SEAFILE_TRANSLATE_SOURCES ${seadrive_gui_sources} ${utils_sources} ${moc_output} ${ui_output})
+SET(LANGUAGES
+  ca
+  de_DE
+  en
+  es
+  es_AR
+  es_MX
+  fr_FR
+  he_IL
+  hu_HU
+  is
+  it
+  ko_KR
+  nl_BE
+  pl_PL
+  pt_BR
+  pt_PT
+  ru
+  sk_SK
+  uk
+  zh_CN
+  zh_TW
+  tr
+  nl_NL
+  lv
+  ja
+  sv
+  cs_CZ
+  el_GR
+  nb_NO
+  )
+
+SET(LANGUAGE_TS_FILES)
+SET(SEAFILE_TS_TARGETS)
+FOREACH(LANGUAGE ${LANGUAGES})
+  SET(TS_FILE "${PROJECT_SOURCE_DIR}/i18n/seafile_${LANGUAGE}.ts")
+  SET(LANGUAGE_TS_FILES ${LANGUAGE_TS_FILES} ${TS_FILE})
+  SET_SOURCE_FILES_PROPERTIES(${TS_FILE} PROPERTIES OUTPUT_LOCATION "${PROJECT_SOURCE_DIR}/i18n")
+
+  SET(TS_TARGET "${LANGUAGE}_ts")
+  ADD_CUSTOM_TARGET(${TS_TARGET}
+    COMMAND ${QT_LUPDATE_EXECUTABLE} ${SEAFILE_TRANSLATE_SOURCES}
+        -ts "${PROJECT_SOURCE_DIR}/i18n/seafile_${LANGUAGE}.ts"
+        -I "${PROJECT_SOURCE_DIR}/src"
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
+
+  SET(SEAFILE_TS_TARGETS ${SEAFILE_TS_TARGETS} ${TS_TARGET})
+
+ENDFOREACH(LANGUAGE ${LANGUAGES})
+
+QT5_ADD_TRANSLATION(qm_files ${LANGUAGE_TS_FILES})
+
+ADD_CUSTOM_TARGET(update-ts DEPENDS ${SEAFILE_TS_TARGETS})
+
+####################
+###### end: translations
+####################
+
 
 
 ADD_EXECUTABLE(seadrive-gui ${GUI_TYPE}

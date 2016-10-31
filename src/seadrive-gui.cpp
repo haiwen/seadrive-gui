@@ -269,7 +269,7 @@ void SeadriveGui::start()
 
 void SeadriveGui::onDaemonStarted()
 {
-    rpc_client_->connectDaemon();
+   rpc_client_->connectDaemon();
 
     if (first_use_ || account_mgr_->accounts().size() == 0) {
         do {

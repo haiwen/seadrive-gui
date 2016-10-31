@@ -4,7 +4,7 @@
 #include <QDebug>
 #include <QSettings>
 
-// #include "i18n.h"
+#include "i18n.h"
 #include "account-mgr.h"
 #include "utils/utils.h"
 #include "seadrive-gui.h"
@@ -40,7 +40,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
         mCheckLatestVersionBox->setVisible(false);
     }
 
-    // // mLanguageComboBox->addItems(I18NHelper::getInstance()->getLanguages());
+    mLanguageComboBox->addItems(I18NHelper::getInstance()->getLanguages());
 
     // The range of mProxyPort is set to (0, 65535) in the ui file, so we
     // don't bother with that here.
@@ -96,14 +96,14 @@ void SettingsDialog::updateSettings()
 //         mgr->setCheckLatestVersionEnabled(enabled);
 //     }
 
-//     bool language_changed = false;
-//     if (mLanguageComboBox->currentIndex() != I18NHelper::getInstance()->preferredLanguage()) {
-//         language_changed = true;
-//         I18NHelper::getInstance()->setPreferredLanguage(mLanguageComboBox->currentIndex());
-//     }
+    bool language_changed = false;
+    if (mLanguageComboBox->currentIndex() != I18NHelper::getInstance()->preferredLanguage()) {
+        language_changed = true;
+        I18NHelper::getInstance()->setPreferredLanguage(mLanguageComboBox->currentIndex());
+    }
 
-//     if (language_changed && gui->yesOrNoBox(tr("You have changed languange. Restart to apply it?"), this, true))
-//         gui->restartApp();
+    if (language_changed && gui->yesOrNoBox(tr("You have changed languange. Restart to apply it?"), this, true))
+        gui->restartApp();
 
 //     // if (proxy_changed && gui->yesOrNoBox(tr("You have changed proxy settings. Restart to apply it?"), this, true))
 //     //     gui->restartApp();
@@ -152,6 +152,8 @@ void SettingsDialog::showEvent(QShowEvent *event)
 #else
     mFinderSyncCheckBox->hide();
 #endif
+
+    mLanguageComboBox->setCurrentIndex(I18NHelper::getInstance()->preferredLanguage());
 
 #if defined(Q_OS_WIN32)
     state = mgr->shellExtensionEnabled() ? Qt::Checked : Qt::Unchecked;
