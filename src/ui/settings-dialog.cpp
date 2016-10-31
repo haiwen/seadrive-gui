@@ -155,9 +155,6 @@ void SettingsDialog::showEvent(QShowEvent *event)
 
     mLanguageComboBox->setCurrentIndex(I18NHelper::getInstance()->preferredLanguage());
 
-    QDialog::showEvent(event);
-}
-
 #if defined(Q_OS_WIN32)
     state = mgr->shellExtensionEnabled() ? Qt::Checked : Qt::Unchecked;
     mShellExtCheckBox->setCheckState(state);

@@ -239,7 +239,6 @@ void SeadriveGui::start()
     writeCABundleForCurl();
 #endif
 
-<<<<<<< HEAD
     // Load system proxy information. This must be done before we start seadrive
     // daemon.
     settings_mgr_->writeSystemProxyInfo(
@@ -270,7 +269,7 @@ void SeadriveGui::start()
 
 void SeadriveGui::onDaemonStarted()
 {
-//    rpc_client_->connectDaemon();
+   rpc_client_->connectDaemon();
 
     if (first_use_ || account_mgr_->accounts().size() == 0) {
         do {
