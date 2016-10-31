@@ -1,0 +1,9 @@
+[main]
+host = https://www.transifex.com
+
+[seadrive-gui.master]
+file_filter = i18n/seadrive_<lang>.ts
+source_file = i18n/seadrive_en.ts
+source_lang = en
+type = TS
+
