@@ -43,6 +43,7 @@ private:
     _SearpcNamedPipeClient *searpc_pipe_client_;
 
     bool system_shut_down_;
+    bool unmounted_;
 };
 
 #endif // SEAFILE_CLIENT_DAEMON_MANAGER_H

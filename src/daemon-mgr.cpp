@@ -37,7 +37,8 @@ const char *kSeadriveExecutable = "seadrive";
 
 DaemonManager::DaemonManager()
     : seadrive_daemon_(nullptr),
-      searpc_pipe_client_(nullptr)
+      searpc_pipe_client_(nullptr),
+      unmounted_(false)
 {
     conn_daemon_timer_ = new QTimer(this);
     connect(conn_daemon_timer_, SIGNAL(timeout()), this, SLOT(checkDaemonReady()));
@@ -166,6 +167,10 @@ void DaemonManager::stopAllDaemon()
 }
 
 void DaemonManager::doUnmount() {
+    if (unmounted_) {
+        return;
+    }
+    unmounted_ = true;
     if (gui->rpcClient() && gui->rpcClient()->isConnected()) {
         qWarning("Unmounting before exit");
         gui->rpcClient()->unmount();

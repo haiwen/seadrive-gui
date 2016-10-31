@@ -357,6 +357,8 @@ void SeadriveGui::restartApp()
 
     in_exit_ = true;
 
+    daemon_mgr_->doUnmount();
+
     QStringList args = QApplication::arguments();
 
     args.removeFirst();
