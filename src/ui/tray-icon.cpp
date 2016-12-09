@@ -87,13 +87,13 @@ SeafileTrayIcon::SeafileTrayIcon(QObject *parent)
     : QSystemTrayIcon(parent),
       nth_trayicon_(0),
       rotate_counter_(0),
-      state_(STATE_DAEMON_UP),
+      state_(STATE_NONE),
       next_message_msec_(0),
       login_dlg_(nullptr),
       up_rate_(0),
       down_rate_(0)
 {
-    setState(STATE_DAEMON_DOWN);
+    setState(STATE_DAEMON_UP);
     rotate_timer_ = new QTimer(this);
     connect(rotate_timer_, SIGNAL(timeout()), this, SLOT(rotateTrayIcon()));
 

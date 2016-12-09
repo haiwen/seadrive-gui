@@ -22,7 +22,8 @@ extern "C" {
 
 namespace {
 
-const int kConnDaemonIntervalMilli = 2000;
+const int kDaemonReadyCheckIntervalMilli = 2000;
+const int kMaxDaemonReadyCheck = 15;
 
 #if defined(Q_OS_WIN32)
 const char *kSeadriveSockName = "\\\\.\\pipe\\seadrive";
@@ -37,9 +38,9 @@ const char *kSeadriveExecutable = "seadrive";
 
 DaemonManager::DaemonManager()
     : seadrive_daemon_(nullptr),
-      searpc_pipe_client_(nullptr),
-      unmounted_(false),
       daemon_exited_(false),
+      searpc_pipe_client_(nullptr),
+      unmounted_(false)
 {
     conn_daemon_timer_ = new QTimer(this);
     connect(conn_daemon_timer_, SIGNAL(timeout()), this, SLOT(checkDaemonReady()));
@@ -131,7 +132,7 @@ void DaemonManager::systemShutDown()
 void DaemonManager::onDaemonStarted()
 {
     qDebug("seadrive daemon is now running, checking if the service is ready");
-    conn_daemon_timer_->start(kConnDaemonIntervalMilli);
+    conn_daemon_timer_->start(kDaemonReadyCheckIntervalMilli);
 }
 
 void DaemonManager::checkDaemonReady()
@@ -152,9 +153,9 @@ void DaemonManager::checkDaemonReady()
         return;
     }
     qDebug("seadrive daemon is not ready");
-    static int maxcheck = 0;
-    if (daemon_exited_ || ++maxcheck > 10) {
-        qWarning("seadrive rpc is not ready after %d retry, abort", maxcheck);
+    static int retried = 0;
+    if (daemon_exited_ || ++retried > kMaxDaemonReadyCheck) {
+        qWarning("seadrive rpc is not ready after %d retry, abort", retried);
         gui->errorAndExit(tr("%1 failed to initialize").arg(getBrand()));
     }
 }
@@ -184,11 +185,12 @@ void DaemonManager::doUnmount() {
     }
 }
 
-void onDaemonFinished(int exit_code, QProcess::ExitStatus exit_status)
+void DaemonManager::onDaemonFinished(int exit_code, QProcess::ExitStatus exit_status)
 {
     qWarning("Seadrive daemon process %s with code %d ",
              exit_status == QProcess::CrashExit ? "crashed" : "exited normally",
              exit_code);
 
     daemon_exited_ = true;
+    gui->errorAndExit(tr("%1 exited unexpectedly").arg(getBrand()));
 }

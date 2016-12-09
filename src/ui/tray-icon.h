@@ -22,7 +22,8 @@ public:
     explicit SeafileTrayIcon(QObject *parent=0);
 
     enum TrayState {
-        STATE_DAEMON_UP = 0,
+        STATE_NONE = 0,
+        STATE_DAEMON_UP,
         STATE_DAEMON_DOWN,
         STATE_DAEMON_AUTOSYNC_DISABLED,
         STATE_TRANSFER_1,
