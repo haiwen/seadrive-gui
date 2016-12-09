@@ -22,7 +22,7 @@ extern "C" {
 
 namespace {
 
-const int kConnDaemonIntervalMilli = 1000;
+const int kConnDaemonIntervalMilli = 2000;
 
 #if defined(Q_OS_WIN32)
 const char *kSeadriveSockName = "\\\\.\\pipe\\seadrive";
@@ -148,7 +148,7 @@ void DaemonManager::checkDaemonReady()
     }
     qDebug("seadrive daemon is not ready");
     static int maxcheck = 0;
-    if (++maxcheck > 5) {
+    if (++maxcheck > 10) {
         qWarning("seadrive rpc is not ready after %d retry, abort", maxcheck);
         gui->errorAndExit(tr("%1 failed to initialize").arg(getBrand()));
     }
