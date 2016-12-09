@@ -38,7 +38,8 @@ const char *kSeadriveExecutable = "seadrive";
 DaemonManager::DaemonManager()
     : seadrive_daemon_(nullptr),
       searpc_pipe_client_(nullptr),
-      unmounted_(false)
+      unmounted_(false),
+      daemon_exited_(false),
 {
     conn_daemon_timer_ = new QTimer(this);
     connect(conn_daemon_timer_, SIGNAL(timeout()), this, SLOT(checkDaemonReady()));
@@ -65,6 +66,10 @@ void DaemonManager::startSeadriveDaemon()
 
     seadrive_daemon_ = new QProcess(this);
     connect(seadrive_daemon_, SIGNAL(started()), this, SLOT(onDaemonStarted()));
+    connect(seadrive_daemon_,
+            SIGNAL(finished(int, QProcess::ExitStatus)),
+            this,
+            SLOT(onDaemonFinished(int, QProcess::ExitStatus)));
 
     seadrive_daemon_->start(RESOURCE_PATH(kSeadriveExecutable), collectSeaDriveArgs());
 }
@@ -148,7 +153,7 @@ void DaemonManager::checkDaemonReady()
     }
     qDebug("seadrive daemon is not ready");
     static int maxcheck = 0;
-    if (++maxcheck > 10) {
+    if (daemon_exited_ || ++maxcheck > 10) {
         qWarning("seadrive rpc is not ready after %d retry, abort", maxcheck);
         gui->errorAndExit(tr("%1 failed to initialize").arg(getBrand()));
     }
@@ -177,4 +182,13 @@ void DaemonManager::doUnmount() {
     } else {
         qDebug("Not unmounting because rpc client not ready.");
     }
+}
+
+void onDaemonFinished(int exit_code, QProcess::ExitStatus exit_status)
+{
+    qWarning("Seadrive daemon process %s with code %d ",
+             exit_status == QProcess::CrashExit ? "crashed" : "exited normally",
+             exit_code);
+
+    daemon_exited_ = true;
 }

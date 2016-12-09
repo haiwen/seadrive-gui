@@ -27,6 +27,7 @@ signals:
 
 private slots:
     void onDaemonStarted();
+    void onDaemonFinished(int exit_code, QProcess::ExitStatus exit_status);
     void checkDaemonReady();
     void systemShutDown();
 
@@ -39,6 +40,8 @@ private:
 
     QTimer *conn_daemon_timer_;
     QProcess *seadrive_daemon_;
+
+    bool daemon_exited_;
 
     _SearpcNamedPipeClient *searpc_pipe_client_;
 
