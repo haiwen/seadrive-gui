@@ -67,7 +67,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <location filename="../src/ui/login-dialog.cpp" line="66"/>
         <location filename="../ui_login-dialog.h" line="261"/>
         <source>Add an account</source>
-        <translation>Добавить аккаунт</translation>
+        <translation>Добавить учетную запись</translation>
     </message>
     <message>
         <location filename="../src/ui/login-dialog.cpp" line="110"/>
@@ -225,7 +225,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../ui_login-dialog.h" line="272"/>
         <source>Login</source>
-        <translation>Логин</translation>
+        <translation>Войти</translation>
     </message>
     <message>
         <location filename="../ui_login-dialog.h" line="273"/>

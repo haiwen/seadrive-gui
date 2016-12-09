@@ -361,7 +361,7 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     <message>
         <location filename="../src/api/event.cpp" line="50"/>
         <source>Created library &quot;%1&quot;</source>
-        <translation>Bibliothek %1 wurde erstellt</translation>
+        <translation>Bibliothek &quot;%1&quot; wurde erstellt</translation>
     </message>
     <message>
         <location filename="../src/api/event.cpp" line="52"/>

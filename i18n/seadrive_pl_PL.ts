@@ -17,7 +17,7 @@
     <message>
         <location filename="../src/daemon-mgr.cpp" line="153"/>
         <source>%1 failed to initialize</source>
-        <translation type="unfinished"/>
+        <translation>Nie udało się zainicjalizować %1</translation>
     </message>
 </context>
 <context>
@@ -26,38 +26,39 @@
         <location filename="../src/ui/init-sync-dialog.cpp" line="25"/>
         <location filename="../ui_init-sync-dialog.h" line="165"/>
         <source>Download files list</source>
-        <translation type="unfinished"/>
+        <translation>Pobierz listę plików</translation>
     </message>
     <message>
         <location filename="../src/ui/init-sync-dialog.cpp" line="30"/>
         <source>%1 is fetching the files list, please wait</source>
-        <translation type="unfinished"/>
+        <translation>%1 pobiera listę plików, proszę czekać</translation>
     </message>
     <message>
         <location filename="../src/ui/init-sync-dialog.cpp" line="81"/>
         <source>%1 has dowloaded your files list.
 Please click the &quot;Finish&quot; button to open %1 folder.</source>
-        <translation type="unfinished"/>
+        <translation>%1 pobrał listę Twoich plików.
+Naciśnij przycisk &quot;Zakończ&quot;, aby otworzyć folder %1.</translation>
     </message>
     <message>
         <location filename="../ui_init-sync-dialog.h" line="164"/>
         <source>Dialog</source>
-        <translation type="unfinished"/>
+        <translation>Dialog</translation>
     </message>
     <message>
         <location filename="../ui_init-sync-dialog.h" line="166"/>
         <source>logo</source>
-        <translation type="unfinished"/>
+        <translation>logo</translation>
     </message>
     <message>
         <location filename="../ui_init-sync-dialog.h" line="167"/>
         <source>Run in Background</source>
-        <translation type="unfinished"/>
+        <translation>Uruchom w tle</translation>
     </message>
     <message>
         <location filename="../ui_init-sync-dialog.h" line="168"/>
         <source>Finish</source>
-        <translation type="unfinished"/>
+        <translation>Zakończ</translation>
     </message>
 </context>
 <context>
@@ -237,42 +238,42 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/message-poller.cpp" line="156"/>
         <source>&quot;%1&quot; is synchronized</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; jest zsynchronizowana</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="164"/>
         <source>Error when syncing &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Błąd podczas synchronizacji &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="181"/>
         <source>Starting to move &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Rozpoczynanie przenoszenia &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="182"/>
         <source>Starting to move &quot;%1&quot; to &quot;%2&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Rozpoczynanie przenoszenia &quot;%1&quot; do &quot;%2&quot;</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="184"/>
         <source>Successfully moved &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Pomyślnie przeniesiono &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="185"/>
         <source>Successfully moved &quot;%1&quot; to &quot;%2&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Pomyślnie przeniesiono &quot;%1&quot; do &quot;%2&quot;</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="187"/>
         <source>Failed to move &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Nie udało się przenieść &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="188"/>
         <source>Failed to move &quot;%1&quot; to &quot;%2&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Nie udało się przenieść &quot;%1&quot; do &quot;%2&quot;</translation>
     </message>
 </context>
 <context>
@@ -280,57 +281,57 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/message-poller.cpp" line="48"/>
         <source>File %1 is locked by other programs</source>
-        <translation type="unfinished"/>
+        <translation>Plik %1 jest zablokowany przez inne programy</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="50"/>
         <source>Some file is locked by other programs</source>
-        <translation type="unfinished"/>
+        <translation>Któryś plik jest zablokowany przez inne programy</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="56"/>
         <source>Folder %1 is locked by other programs</source>
-        <translation type="unfinished"/>
+        <translation>Folder %1 jest zablokowany przez inne programy</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="58"/>
         <source>Some folder is locked by other programs</source>
-        <translation type="unfinished"/>
+        <translation>Któryś folder jest zablokowany przez inne programy</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="64"/>
         <source>File %1 is locked by another user</source>
-        <translation type="unfinished"/>
+        <translation>Plik %1 jest zablokowany przez innego użytkownika</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="66"/>
         <source>Some file is locked by another user</source>
-        <translation type="unfinished"/>
+        <translation>Któryś plik jest zablokowany przez innego użytkownika</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="72"/>
         <source>Invalid path %1</source>
-        <translation type="unfinished"/>
+        <translation>Nieprawidłowa ścieżka %1</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="74"/>
         <source>Trying to access an invalid path</source>
-        <translation type="unfinished"/>
+        <translation>Próba odczytu nieprawidłowej ścieżki</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="80"/>
         <source>Error when indexing file %1</source>
-        <translation type="unfinished"/>
+        <translation>Błąd podczas indeksowania pliku %1</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="82"/>
         <source>Error when indexing files</source>
-        <translation type="unfinished"/>
+        <translation>Błąd podczas indeksowania plików</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="87"/>
         <source>You don&apos;t have enough permission for this library</source>
-        <translation type="unfinished"/>
+        <translation>Nie masz wystarczających uprawnień do tej biblioteki</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="95"/>
@@ -566,7 +567,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/main.cpp" line="106"/>
         <source>%1 Client is already running</source>
-        <translation type="unfinished"/>
+        <translation>Klient %1 jest już uruchomiony</translation>
     </message>
 </context>
 <context>
@@ -574,43 +575,43 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/seadrive-gui.cpp" line="257"/>
         <source>Faild to choose a disk letter</source>
-        <translation type="unfinished"/>
+        <translation>Nie udało się wybrać litery dysku</translation>
     </message>
     <message>
         <location filename="../src/seadrive-gui.cpp" line="285"/>
         <source>failed to add default account</source>
-        <translation type="unfinished"/>
+        <translation>nie udało się dodać konta domyślnego</translation>
     </message>
     <message>
         <location filename="../src/seadrive-gui.cpp" line="387"/>
         <source>Failed to initialize: failed to create seadrive folder</source>
-        <translation type="unfinished"/>
+        <translation>Błąd inicjalizacji: nie udało się stworzyć folderu seadrive</translation>
     </message>
     <message>
         <location filename="../src/seadrive-gui.cpp" line="391"/>
         <source>Failed to initialize: failed to create seadrive logs folder</source>
-        <translation type="unfinished"/>
+        <translation>Błąd inicjalizacji: nie udało się stworzyć folderu logów seadrive</translation>
     </message>
     <message>
         <location filename="../src/seadrive-gui.cpp" line="395"/>
         <source>Failed to initialize: failed to create seadrive data folder</source>
-        <translation type="unfinished"/>
+        <translation>Błąd inicjalizacji: nie udało się stworzyć folderu danych seadrive</translation>
     </message>
     <message>
         <location filename="../src/seadrive-gui.cpp" line="410"/>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
-        <translation type="unfinished"/>
+        <translation>Błąd inicjalizacji: nie udało się stworzyć folderu montowania seadrive</translation>
     </message>
     <message>
         <location filename="../src/seadrive-gui.cpp" line="416"/>
         <source>Failed to initialize log: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nie udało się zainicjalizować logu: %1</translation>
     </message>
     <message>
         <location filename="../src/seadrive-gui.cpp" line="472"/>
         <location filename="../src/seadrive-gui.cpp" line="484"/>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../src/seadrive-gui.cpp" line="495"/>
@@ -618,40 +619,40 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <location filename="../src/seadrive-gui.cpp" line="525"/>
         <location filename="../src/seadrive-gui.cpp" line="549"/>
         <source>Yes</source>
-        <translation type="unfinished"/>
+        <translation>Tak</translation>
     </message>
     <message>
         <location filename="../src/seadrive-gui.cpp" line="496"/>
         <location filename="../src/seadrive-gui.cpp" line="526"/>
         <location filename="../src/seadrive-gui.cpp" line="550"/>
         <source>No</source>
-        <translation type="unfinished"/>
+        <translation>Nie</translation>
     </message>
     <message>
         <location filename="../src/seadrive-gui.cpp" line="510"/>
         <location filename="../src/seadrive-gui.cpp" line="527"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Anuluj</translation>
     </message>
     <message>
         <location filename="../src/seadrive-gui.cpp" line="624"/>
         <source>failed to save client id</source>
-        <translation type="unfinished"/>
+        <translation>nie udało się zapisać id klienta</translation>
     </message>
     <message>
         <location filename="../src/seadrive-gui.cpp" line="633"/>
         <source>failed to access %1</source>
-        <translation type="unfinished"/>
+        <translation>nie udało się uzyskać dostępu do %1</translation>
     </message>
     <message>
         <location filename="../src/seadrive-gui.cpp" line="641"/>
         <source>incorrect client id</source>
-        <translation type="unfinished"/>
+        <translation>nieprawidłowy id klienta</translation>
     </message>
     <message>
         <location filename="../src/seadrive-gui.cpp" line="647"/>
         <source>failed to read %1</source>
-        <translation type="unfinished"/>
+        <translation>nie udało się odczytać %1</translation>
     </message>
 </context>
 <context>
@@ -687,7 +688,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/rpc/rpc-client.cpp" line="61"/>
         <source>internal error: failed to connect to seadrive daemon</source>
-        <translation type="unfinished"/>
+        <translation>błąd wewnętrzny: nie udało się połączyć demonem seadrive</translation>
     </message>
 </context>
 <context>
@@ -735,32 +736,32 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="187"/>
         <source>Accounts</source>
-        <translation type="unfinished"/>
+        <translation>Konta</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="219"/>
         <source>not logged in</source>
-        <translation type="unfinished"/>
+        <translation>niezalogowany</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="232"/>
         <source>Choose</source>
-        <translation type="unfinished"/>
+        <translation>Wybierz</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="254"/>
         <source>Logout</source>
-        <translation type="unfinished"/>
+        <translation>Wyloguj</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="258"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Usuń</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="271"/>
         <source>Add an account</source>
-        <translation type="unfinished"/>
+        <translation>Dodaj konto</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="284"/>
@@ -770,37 +771,37 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="491"/>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;h2&gt;Klient Dysku Seafile %2&lt;/h2&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="713"/>
         <source>Do you want to remove the local cache?</source>
-        <translation type="unfinished"/>
+        <translation>Czy chcesz usunąć lokalną pamięć podręczną?</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="742"/>
         <source>Failed to remove local cache of account %1</source>
-        <translation type="unfinished"/>
+        <translation>Nie udało się usunąć lokalnej pamięci podręcznej dla konta %1</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="754"/>
         <source>Failed to remove information on server: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nie udało się usunąć informacji na serwerze: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="766"/>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
-        <translation type="unfinished"/>
+        <translation>Czy na pewno chcesz usunąć konto z &quot;%1&quot;?</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="773"/>
         <source>Failed to delete account</source>
-        <translation type="unfinished"/>
+        <translation>Nie udało się usunąć konta</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="785"/>
         <source>Up %1, Down %2</source>
-        <translation type="unfinished"/>
+        <translation>Góra %1, Dół %2</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="490"/>
@@ -929,12 +930,12 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../ui_settings-dialog.h" line="405"/>
         <source>Cache clean interval (in minutes):</source>
-        <translation type="unfinished"/>
+        <translation>Interwał oczyszczania pamięci podręcznej (w minutach):</translation>
     </message>
     <message>
         <location filename="../ui_settings-dialog.h" line="406"/>
         <source>Cache size limit (in GB):</source>
-        <translation type="unfinished"/>
+        <translation>Limit pamięci podręcznej (w GB):</translation>
     </message>
     <message>
         <location filename="../ui_settings-dialog.h" line="407"/>
@@ -1035,12 +1036,12 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/shib/shib-login-dialog.cpp" line="39"/>
         <source>Login with Shibboleth</source>
-        <translation type="unfinished"/>
+        <translation>Logowanie z Shibboleth</translation>
     </message>
     <message>
         <location filename="../src/shib/shib-login-dialog.cpp" line="102"/>
         <source>Failed to save current account</source>
-        <translation type="unfinished"/>
+        <translation>Nie udało się zapisać aktualnego konta</translation>
     </message>
 </context>
 </TS>

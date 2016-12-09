@@ -575,7 +575,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     <message>
         <location filename="../src/seadrive-gui.cpp" line="257"/>
         <source>Faild to choose a disk letter</source>
-        <translation>Fallo al escoger una letra de disco</translation>
+        <translation>Fallo al elegir una letra de disco</translation>
     </message>
     <message>
         <location filename="../src/seadrive-gui.cpp" line="285"/>
@@ -746,7 +746,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="232"/>
         <source>Choose</source>
-        <translation>Escoger</translation>
+        <translation>Elegir</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="254"/>
@@ -801,7 +801,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="785"/>
         <source>Up %1, Down %2</source>
-        <translation>Arriba %1, Abajo %2</translation>
+        <translation>Sube %1, Baja %2</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="490"/>
