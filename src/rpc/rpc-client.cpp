@@ -446,8 +446,9 @@ bool SeafileRpcClient::unmount()
         "seafile_unmount",
         &error, 0);
     if (error || ret != 0) {
-        qWarning("failed to unmount : %s\n",
-                 error->message ? error->message : "");
+        // The unmount rpc would case seadrive daemon to exit, so the rpc would always fail.
+        qDebug("failed to unmount : %s\n",
+               error->message ? error->message : "");
         g_error_free(error);
         return false;
     }
