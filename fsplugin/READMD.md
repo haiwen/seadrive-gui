@@ -12,6 +12,6 @@ cd seadrive-gui/fsplugin
 ./build.sh
 
 mkdir -p /Applications/SeaDrive.app/Contents/Plugins/
-cp "SeaDrive FinderSync.appex" /Applications/SeaDrive.app/Contents/Plugins/
+cp -a "SeaDrive FinderSync.appex" /Applications/SeaDrive.app/Contents/Plugins/
 pluginkit -a /Applications/SeaDrive.app/Contents/Plugins/SeaDrive\ FinderSync.appex/
 ```
