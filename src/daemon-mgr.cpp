@@ -13,6 +13,7 @@ extern "C" {
 #include <QDebug>
 #include <QDir>
 #include <QCoreApplication>
+#include <QMetaEnum>
 
 #include "utils/utils.h"
 #include "utils/process.h"
@@ -71,6 +72,10 @@ void DaemonManager::startSeadriveDaemon()
             SIGNAL(finished(int, QProcess::ExitStatus)),
             this,
             SLOT(onDaemonFinished(int, QProcess::ExitStatus)));
+    connect(seadrive_daemon_,
+            SIGNAL(errorOccurred(QProcess::ProcessError)),
+            this,
+            SLOT(onDaemonErrorOccurred(QProcess::ProcessError)));
 
     seadrive_daemon_->start(RESOURCE_PATH(kSeadriveExecutable), collectSeaDriveArgs());
 }
@@ -191,6 +196,14 @@ void DaemonManager::onDaemonFinished(int exit_code, QProcess::ExitStatus exit_st
              exit_status == QProcess::CrashExit ? "crashed" : "exited normally",
              exit_code);
 
+    daemon_exited_ = true;
+    gui->errorAndExit(tr("%1 exited unexpectedly").arg(getBrand()));
+}
+
+void DaemonManager::onDaemonErrorOccurred(QProcess::ProcessError error)
+{
+    QMetaEnum metaEnum = QMetaEnum::fromType<QProcess::ProcessError>();
+    qWarning("Error %s occured in running Seadrive daemon process", metaEnum.valueToKey(error));
     daemon_exited_ = true;
     gui->errorAndExit(tr("%1 exited unexpectedly").arg(getBrand()));
 }
