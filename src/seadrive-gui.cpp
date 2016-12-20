@@ -20,6 +20,7 @@
 #include "ui/tray-icon.h"
 #include "ui/login-dialog.h"
 #include "ui/settings-dialog.h"
+#include "ui/about-dialog.h"
 #include "daemon-mgr.h"
 #include "rpc/rpc-client.h"
 #include "account-mgr.h"
@@ -205,6 +206,7 @@ SeadriveGui::SeadriveGui()
     account_mgr_ = new AccountManager();
     settings_mgr_ = new SettingsManager();
     settings_dlg_ = new SettingsDialog();
+    about_dlg_ = new AboutDialog();
     message_poller_ = new MessagePoller();
     connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onAboutToQuit()));
 }
@@ -328,6 +330,8 @@ void SeadriveGui::onDaemonStarted()
 
 #if HAVE_SPARKLE_SUPPORT
     if (AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
+	AutoUpdateService::instance()->setRequestParams();
+	AutoUpdateService::instance()->setRegistryPath();
         AutoUpdateService::instance()->start();
     }
 #endif // HAVE_SPARKLE_SUPPORT

@@ -186,6 +186,7 @@ SET(moc_headers
   src/ui/settings-dialog.h
   src/ui/sharedlink-dialog.h
   src/ui/tray-icon.h
+  src/ui/about-dialog.h
 
   src/shib/shib-login-dialog.h
   ${SHIB_EXTRA_HEADER}
@@ -197,6 +198,7 @@ SET(ui_files
   ui/init-sync-dialog.ui
   ui/login-dialog.ui
   ui/settings-dialog.ui
+  ui/about-dialog.ui
   ${platform_specific_ui_files}
 )
 QT5_WRAP_UI(ui_output ${ui_files})
@@ -280,6 +282,7 @@ SET(seadrive_gui_sources
   src/ui/settings-dialog.cpp
   src/ui/sharedlink-dialog.cpp
   src/ui/tray-icon.cpp
+  src/ui/about-dialog.cpp
   ${platform_specific_sources}
 
   src/i18n.cpp
