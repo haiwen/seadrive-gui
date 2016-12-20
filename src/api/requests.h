@@ -949,5 +949,19 @@ private:
     const QString path_;
 };
 
+class AuthPingRequest: public SeafileApiRequest
+{
+    Q_OBJECT
+public:
+    explicit AuthPingRequest(const Account& account);
+protected slots:
+    void requestSuccess(QNetworkReply& reply);
+signals:
+    void success();
+
+private:
+    Q_DISABLE_COPY(AuthPingRequest)
+};
+
 
 #endif // SEAFILE_CLIENT_API_REQUESTS_H

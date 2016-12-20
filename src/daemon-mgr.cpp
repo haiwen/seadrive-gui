@@ -181,7 +181,7 @@ void DaemonManager::doUnmount() {
         qWarning("Unmounting before exit");
         gui->rpcClient()->unmount();
     } else {
-        qDebug("Not unmounting because rpc client not ready.");
+        qWarning("Not unmounting because rpc client not ready.");
     }
 }
 
@@ -192,5 +192,7 @@ void DaemonManager::onDaemonFinished(int exit_code, QProcess::ExitStatus exit_st
              exit_code);
 
     daemon_exited_ = true;
-    gui->errorAndExit(tr("%1 exited unexpectedly").arg(getBrand()));
+    if (!system_shut_down_) {
+        gui->errorAndExit(tr("%1 exited unexpectedly").arg(getBrand()));
+    }
 }

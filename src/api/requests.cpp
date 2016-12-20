@@ -52,6 +52,7 @@ const char* kGetFileUpdateUrl = "api2/repos/%1/update-link/";
 const char* kGetStarredFilesUrl = "api2/starredfiles/";
 const char* kFileOperationCopy = "api2/repos/%1/fileops/copy/";
 const char* kFileOperationMove = "api2/repos/%1/fileops/move/";
+const char* kAuthPingURL = "api2/auth/ping/";
 
 const char* kLatestVersionUrl = "https://seafile.com/api/client-versions/";
 
@@ -1422,6 +1423,21 @@ LockFileRequest::LockFileRequest(const Account &account, const QString &repo_id,
 }
 
 void LockFileRequest::requestSuccess(QNetworkReply& reply)
+{
+    emit success();
+}
+
+/**
+ * AuthPingRequest
+ */
+AuthPingRequest::AuthPingRequest(const Account &account)
+    : SeafileApiRequest(account.getAbsoluteUrl(kAuthPingURL),
+                        SeafileApiRequest::METHOD_GET,
+                        account.token)
+{
+}
+
+void AuthPingRequest::requestSuccess(QNetworkReply &reply)
 {
     emit success();
 }

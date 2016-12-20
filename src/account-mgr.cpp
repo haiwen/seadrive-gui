@@ -198,7 +198,7 @@ bool AccountManager::loadServerInfoCB(sqlite3_stmt *stmt, void *data)
 
 const std::vector<Account>& AccountManager::loadAccounts()
 {
-    const char *sql = "SELECT url, username, token, lastVisited, isShibboleth FROM Accounts ";
+    const char *sql = "SELECT url, username, token, lastVisited, isShibboleth FROM Accounts ORDER BY lastVisited DESC";
     accounts_.clear();
     UserData userdata;
     userdata.accounts = &accounts_;
@@ -535,17 +535,7 @@ void AccountManager::invalidateCurrentLogin()
     if (account.token.isEmpty())
         return;
 
-    // QString error;
-    // TODO: Add it back
-    // if (gui->rpcClient()->removeSyncTokensByAccount(account.serverUrl.host(),
-    //                                                        account.username,
-    //                                                        &error) < 0) {
-    //     qWarning("Failed to remove local repos sync token %s", error.toUtf8().data());
-    // }
     clearAccountToken(account);
-    gui->warningBox(tr("Authorization expired, please re-login"));
-
-    emit accountRequireRelogin(account);
 }
 
 bool AccountManager::reloginAccount(const Account &account)

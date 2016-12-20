@@ -158,6 +158,7 @@ SET(moc_headers
   src/daemon-mgr.h
   src/message-poller.h
   src/network-mgr.h
+  src/remote-wipe-service.h
   src/rpc/rpc-client.h
   src/seadrive-gui.h
   src/settings-mgr.h
@@ -247,6 +248,7 @@ SET(seadrive_gui_sources
   src/main.cpp
   src/message-poller.cpp
   src/network-mgr.cpp
+  src/remote-wipe-service.cpp
 
   src/rpc/rpc-client.cpp
 
