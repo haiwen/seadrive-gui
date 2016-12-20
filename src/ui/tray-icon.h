@@ -53,6 +53,7 @@ public slots:
     void showSettingsWindow();
     void showLoginDialog();
     void showLoginDialog(const Account& account);
+    void showAboutDialog();
     void onLoginDialogClosed();
 
 private slots:

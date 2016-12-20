@@ -20,6 +20,7 @@
 #include "src/ui/settings-dialog.h"
 #include "src/ui/login-dialog.h"
 #include "src/ui/init-sync-dialog.h"
+#include "src/ui/about-dialog.h"
 #include "api/api-error.h"
 #include "api/requests.h"
 #include "seadrive-gui.h"
@@ -155,7 +156,8 @@ void SeafileTrayIcon::createActions()
 
     about_action_ = new QAction(tr("&About"), this);
     about_action_->setStatusTip(tr("Show the application's About box"));
-    connect(about_action_, SIGNAL(triggered()), this, SLOT(about()));
+//    connect(about_action_, SIGNAL(triggered()), this, SLOT(about()));
+    connect(about_action_, SIGNAL(triggered()), this, SLOT(showAboutDialog()));
 
     open_help_action_ = new QAction(tr("&Online help"), this);
     open_help_action_->setStatusTip(tr("open %1 online help").arg(getBrand()));
@@ -546,6 +548,13 @@ void SeafileTrayIcon::showLoginDialog(const Account& account)
     login_dlg_->activateWindow();
     connect(login_dlg_, SIGNAL(finished(int)),
             this, SLOT(onLoginDialogClosed()));
+}
+
+void SeafileTrayIcon::showAboutDialog()
+{
+    gui->aboutDialog()->show();
+    gui->aboutDialog()->raise();
+    gui->aboutDialog()->activateWindow();
 }
 
 void SeafileTrayIcon::onActivated(QSystemTrayIcon::ActivationReason reason)

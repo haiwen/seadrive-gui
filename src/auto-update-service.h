@@ -21,11 +21,19 @@ public:
 
     bool shouldSupportAutoUpdate() const;
 
+    void setRequestParams();
     bool autoUpdateEnabled() const;
     void setAutoUpdateEnabled(bool enabled);
+    uint updateCheckInterval() const;
+    void setUpdateCheckInterval(uint interval);
+    void setRegistryPath();
 
     void start();
     void stop();
+
+    void checkUpdate();
+    void checkAndInstallUpdate();
+    void checkUpdateWithoutUI();
 };
 
 #endif // SEADRIVE_GUI_AUTO_UPDATE_SERVICE_H
