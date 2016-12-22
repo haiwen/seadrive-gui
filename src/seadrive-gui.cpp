@@ -249,7 +249,7 @@ void SeadriveGui::start()
 #if defined(Q_OS_WIN32)
     QString disk_letter;
     if (settings_mgr_->getDiskLetter(&disk_letter) && utils::win::diskLetterAvailable(disk_letter)) {
-        qWarning("Using disk leter %s", toCStr(disk_letter));
+        qWarning("Using disk letter %s", toCStr(disk_letter));
         disk_letter_ = disk_letter;
     } else {
         qWarning("disk letter not set or set but not available");
