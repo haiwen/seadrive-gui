@@ -21,8 +21,6 @@ bool isCheckLatestVersionEnabled() {
     return QString(getBrand()) == "Seafile";
 }
 
-QString kPreferredDiskLetter;
-
 } // namespace
 
 SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
@@ -112,7 +110,7 @@ void SettingsDialog::updateSettings()
 //     //     gui->restartApp();
 
     bool diskLetter_changed = false;
-    if (!kPreferredDiskLetter.contains(mDiskLetter->currentText())) {
+    if (!preferred_disk_letter_.contains(mDiskLetter->currentText())) {
         diskLetter_changed = true;
         mgr->setDiskLetter(mDiskLetter->currentText() + ":");
     }
@@ -206,15 +204,16 @@ void SettingsDialog::showEvent(QShowEvent *event)
 //     mLanguageComboBox->setCurrentIndex(I18NHelper::getInstance()->preferredLanguage());
 
     QStringList letters = utils::win::getAvailableDiskLetters();
-    bool set = mgr->getDiskLetter(&kPreferredDiskLetter);
+    bool has_preferred_letter = mgr->getDiskLetter(&preferred_disk_letter_);
+    mDiskLetter->clear();
     int i = 0;
     foreach (const QString& letter, letters) {
         mDiskLetter->addItem(letter);
-        if (set && kPreferredDiskLetter.contains(letter)) {
+        if (has_preferred_letter && preferred_disk_letter_.contains(letter)) {
             mDiskLetter->setCurrentIndex(i);
         } else if (letter == "S") {
             mDiskLetter->setCurrentIndex(i);
-	}
+        }
         i++;
     }
 
