@@ -554,6 +554,7 @@ void SeafileTrayIcon::onActivated(QSystemTrayIcon::ActivationReason reason)
 #if !defined(Q_OS_MAC)
     switch(reason) {
     case QSystemTrayIcon::Trigger: // single click
+        openSeafileFolder();
     case QSystemTrayIcon::MiddleClick:
     case QSystemTrayIcon::DoubleClick:
         // showMainWindow();
