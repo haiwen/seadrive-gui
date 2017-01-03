@@ -7,6 +7,7 @@
 #include "i18n.h"
 #include "account-mgr.h"
 #include "utils/utils.h"
+#include "utils/utils-win.h"
 #include "seadrive-gui.h"
 #include "settings-mgr.h"
 #include "api/requests.h"
@@ -108,6 +109,14 @@ void SettingsDialog::updateSettings()
 //     // if (proxy_changed && gui->yesOrNoBox(tr("You have changed proxy settings. Restart to apply it?"), this, true))
 //     //     gui->restartApp();
 
+    bool diskLetter_changed = false;
+    if (!preferred_disk_letter_.contains(mDiskLetter->currentText())) {
+        diskLetter_changed = true;
+        mgr->setDiskLetter(mDiskLetter->currentText() + ":");
+    }
+
+    if (diskLetter_changed && gui->yesOrNoBox(tr("You have changed disk letter. Restart to apply it?"), this, true))
+        gui->restartApp();
 }
 
 void SettingsDialog::closeEvent(QCloseEvent *event)
@@ -193,6 +202,20 @@ void SettingsDialog::showEvent(QShowEvent *event)
         mProxyRequirePassword->setChecked(true);
 
 //     mLanguageComboBox->setCurrentIndex(I18NHelper::getInstance()->preferredLanguage());
+
+    QStringList letters = utils::win::getAvailableDiskLetters();
+    bool has_preferred_letter = mgr->getDiskLetter(&preferred_disk_letter_);
+    mDiskLetter->clear();
+    int i = 0;
+    foreach (const QString& letter, letters) {
+        mDiskLetter->addItem(letter);
+        if (has_preferred_letter && preferred_disk_letter_.contains(letter)) {
+            mDiskLetter->setCurrentIndex(i);
+        } else if (letter == "S") {
+            mDiskLetter->setCurrentIndex(i);
+        }
+        i++;
+    }
 
     QDialog::showEvent(event);
 }

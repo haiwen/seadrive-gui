@@ -26,5 +26,7 @@ private:
     bool updateProxySettings();
     bool validateProxyInputs();
 
+    QString preferred_disk_letter_;
+
     Q_DISABLE_COPY(SettingsDialog);
 };
