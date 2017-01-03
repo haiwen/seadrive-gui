@@ -12,7 +12,7 @@ SINGLETON_IMPL(AutoUpdateService)
 
 namespace
 {
-    const char *kappcastURL = "http://localhost/appcast.xml";
+    const char *kSparkleAppcastURI = "https://seafile.com/api/seadrive/appcast.xml";
     const char *kWinSparkleRegistryPath = "SOFTWARE\\Seafile\\Seafile Drive Client\\WinSparkle";
 } // namespace
 
@@ -47,7 +47,13 @@ void AutoUpdateService::checkUpdateWithoutUI() {
 
 
 void AutoUpdateService::setRequestParams() {
-    win_sparkle_set_appcast_url(kappcastURL);
+    // Note that @param path is relative to HKCU/HKLM root 
+    // and the root is not part of it. For example:
+    // @code
+    //     win_sparkle_set_registry_path("Software\\My App\\Updates");
+    // @endcode
+    win_sparkle_set_registry_path(kWinSparkleRegistryPath);
+    win_sparkle_set_appcast_url(getAppcastURI().toUtf8().data());
     win_sparkle_set_app_details(
         L"Seafile",
         L"Seafile Drive Client",
@@ -77,11 +83,11 @@ void AutoUpdateService::setUpdateCheckInterval(uint interval) {
     win_sparkle_set_update_check_interval(interval);
 }
 
-// Note that @param path is relative to HKCU/HKLM root 
-// and the root is not part of it. For example:
-// @code
-//     win_sparkle_set_registry_path("Software\\My App\\Updates");
-// @endcode
-void AutoUpdateService::setRegistryPath() {
-    win_sparkle_set_registry_path(kWinSparkleRegistryPath);
+QString AutoUpdateService::getAppcastURI() {
+#if defined(SEADRIVE_GUI_DEBUG)
+    QString url_from_env = qgetenv("SEADRIVE_APPCAST_URI");
+    return url_from_env.isEmpty() ? kSparkleAppcastURI : url_from_env;
+#else
+    return kSparkleAppcastURI;
+#endif
 }

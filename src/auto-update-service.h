@@ -6,8 +6,6 @@
 
 #include "utils/singleton.h"
 
-class QTimer;
-
 class GetLatestVersionRequest;
 
 // Auto update seadrive client program. Only used on windows.
@@ -26,7 +24,6 @@ public:
     void setAutoUpdateEnabled(bool enabled);
     uint updateCheckInterval() const;
     void setUpdateCheckInterval(uint interval);
-    void setRegistryPath();
 
     void start();
     void stop();
@@ -34,6 +31,9 @@ public:
     void checkUpdate();
     void checkAndInstallUpdate();
     void checkUpdateWithoutUI();
+
+private:
+    QString getAppcastURI();
 };
 
 #endif // SEADRIVE_GUI_AUTO_UPDATE_SERVICE_H

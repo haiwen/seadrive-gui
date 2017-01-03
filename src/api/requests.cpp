@@ -479,7 +479,7 @@ void GetLatestVersionRequest::requestSuccess(QNetworkReply& reply)
 
     if (dict.contains("version")) {
         QString version = dict.value("version").toString();
-        qInfo("The latest version is %s", toCStr(version));
+        qWarning("The latest version is %s", toCStr(version));
         emit success(version);
         return;
     }

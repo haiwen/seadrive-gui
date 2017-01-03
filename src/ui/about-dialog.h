@@ -13,7 +13,7 @@ class AboutDialog : public QDialog,
 public:
     AboutDialog(QWidget *parent=0);
 
-#if HAVE_SPARKLE_SUPPORT
+#ifdef HAVE_SPARKLE_SUPPORT
 private slots:
     void checkUpdate();
 #endif

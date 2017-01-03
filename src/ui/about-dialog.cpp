@@ -5,7 +5,7 @@
 
 #include "about-dialog.h"
 
-#if HAVE_SPARKLE_SUPPORT
+#ifdef HAVE_SPARKLE_SUPPORT
 #include "auto-update-service.h"
 
 namespace {
@@ -24,8 +24,8 @@ AboutDialog::AboutDialog(QWidget *parent)
 
     version_text_ = tr("<h4>Seafile Drive Client %2</h4>")
 	               .arg(STRINGIZE(SEADRIVE_GUI_VERSION))
-#if defined(SEAFILE_CLIENT_REVISION)
-                       .append("<h5> REV %1 </h5>")
+#ifdef SEAFILE_CLIENT_REVISION
+                       .append(tr("<h5> REV %1 </h5>"))
                        .arg(STRINGIZE(SEAFILE_CLIENT_REVISION))
 #endif
 		       ;
@@ -33,7 +33,7 @@ AboutDialog::AboutDialog(QWidget *parent)
 
     connect(mOKBtn, SIGNAL(clicked()), this, SLOT(close()));
 
-#if HAVE_SPARKLE_SUPPORT
+#ifdef HAVE_SPARKLE_SUPPORT
     mCheckUpdateBtn->setVisible(true);
     connect(mCheckUpdateBtn, SIGNAL(clicked()), this, SLOT(checkUpdate()));
 #else
@@ -41,10 +41,9 @@ AboutDialog::AboutDialog(QWidget *parent)
 #endif
 }
 
-#if HAVE_SPARKLE_SUPPORT
+#ifdef HAVE_SPARKLE_SUPPORT
 void AboutDialog::checkUpdate()
 {
-    AutoUpdateService::instance()->setRegistryPath();
     AutoUpdateService::instance()->setRequestParams();
     AutoUpdateService::instance()->checkUpdate();
 }
