@@ -109,6 +109,7 @@ void SettingsDialog::updateSettings()
 //     // if (proxy_changed && gui->yesOrNoBox(tr("You have changed proxy settings. Restart to apply it?"), this, true))
 //     //     gui->restartApp();
 
+#ifdef Q_OS_WIN32
     bool diskLetter_changed = false;
     if (!preferred_disk_letter_.contains(mDiskLetter->currentText())) {
         diskLetter_changed = true;
@@ -117,6 +118,7 @@ void SettingsDialog::updateSettings()
 
     if (diskLetter_changed && gui->yesOrNoBox(tr("You have changed disk letter. Restart to apply it?"), this, true))
         gui->restartApp();
+#endif // Q_OS_WIN32
 }
 
 void SettingsDialog::closeEvent(QCloseEvent *event)
@@ -203,6 +205,7 @@ void SettingsDialog::showEvent(QShowEvent *event)
 
 //     mLanguageComboBox->setCurrentIndex(I18NHelper::getInstance()->preferredLanguage());
 
+#ifdef Q_OS_WIN32
     QStringList letters = utils::win::getAvailableDiskLetters();
     bool has_preferred_letter = mgr->getDiskLetter(&preferred_disk_letter_);
     mDiskLetter->clear();
@@ -216,6 +219,9 @@ void SettingsDialog::showEvent(QShowEvent *event)
         }
         i++;
     }
+#else
+    mDiskLetter->setVisible(false);
+#endif // Q_OS_WIN32
 
     QDialog::showEvent(event);
 }
