@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="mTabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="mBasicTab">
       <attribute name="title">
@@ -62,7 +62,7 @@
        <item>
         <widget class="QCheckBox" name="mCheckLatestVersionBox">
          <property name="text">
-          <string>Check for new version on startup</string>
+          <string>Check for updates automatically</string>
          </property>
         </widget>
        </item>

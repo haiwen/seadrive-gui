@@ -20,6 +20,7 @@
 #include "ui/tray-icon.h"
 #include "ui/login-dialog.h"
 #include "ui/settings-dialog.h"
+#include "ui/about-dialog.h"
 #include "daemon-mgr.h"
 #include "rpc/rpc-client.h"
 #include "account-mgr.h"
@@ -35,6 +36,9 @@
 #include "utils/utils-win.h"
 #include "ext-handler.h"
 #include "ui/disk-letter-dialog.h"
+#ifdef HAVE_SPARKLE_SUPPORT
+#include "auto-update-service.h"
+#endif
 #endif
 
 #if defined(Q_OS_MAC)
@@ -204,6 +208,7 @@ SeadriveGui::SeadriveGui()
     account_mgr_ = new AccountManager();
     settings_mgr_ = new SettingsManager();
     settings_dlg_ = new SettingsDialog();
+    about_dlg_ = new AboutDialog();
     message_poller_ = new MessagePoller();
     connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onAboutToQuit()));
 }
@@ -212,6 +217,7 @@ SeadriveGui::~SeadriveGui()
 {
     // Must unmount before rpc client is destroyed.
     daemon_mgr_->doUnmount();
+    AutoUpdateService::instance()->stop();
 
     delete tray_icon_;
     delete rpc_client_;
@@ -323,6 +329,14 @@ void SeadriveGui::onDaemonStarted()
 
 #if defined(Q_OS_WIN32)
     SeafileExtensionHandler::instance()->start();
+
+#ifdef HAVE_SPARKLE_SUPPORT
+    if (AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
+	AutoUpdateService::instance()->setRequestParams();
+        AutoUpdateService::instance()->start();
+    }
+#endif // HAVE_SPARKLE_SUPPORT
+
 #endif
 #ifdef HAVE_FINDER_SYNC_SUPPORT
     finderSyncListenerStart();

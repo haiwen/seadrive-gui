@@ -54,15 +54,26 @@ const char* kFileOperationCopy = "api2/repos/%1/fileops/copy/";
 const char* kFileOperationMove = "api2/repos/%1/fileops/move/";
 const char* kAuthPingURL = "api2/auth/ping/";
 
-const char* kLatestVersionUrl = "https://seafile.com/api/client-versions/";
+const char* kLatestVersionUrl = "https://seafile.com/api/seadrive-latest/";
 
-#if defined(Q_OS_WIN32)
-const char* kOsName = "windows";
-#elif defined(Q_OS_LINUX)
-const char* kOsName = "linux";
+// #if defined(Q_OS_WIN32)
+// const char* kOsName = "windows";
+// #elif defined(Q_OS_LINUX)
+// const char* kOsName = "linux";
+// #else
+// const char* kOsName = "mac";
+// #endif
+
+// Use `SEADRIVE_LATEST_VERSION_URL` to set the alternative url for checking
+// latest version info when developing. E.g. http://localhost:8001
+QString getLatestVersionUrl() {
+#if defined(SEADRIVE_GUI_DEBUG)
+    QString url_from_env = qgetenv("SEADRIVE_LATEST_VERSION_URL");
+    return url_from_env.isEmpty() ? kLatestVersionUrl : url_from_env;
 #else
-const char* kOsName = "mac";
+    return kLatestVersionUrl;
 #endif
+}
 
 } // namespace
 
@@ -445,12 +456,10 @@ void CreateDefaultRepoRequest::requestSuccess(QNetworkReply& reply)
     emit success(dict.value("repo_id").toString());
 }
 
-GetLatestVersionRequest::GetLatestVersionRequest(const QString& client_id,
-                                                 const QString& client_version)
-    : SeafileApiRequest(QUrl(kLatestVersionUrl), SeafileApiRequest::METHOD_GET)
+GetLatestVersionRequest::GetLatestVersionRequest(const QString& client_id)
+    : SeafileApiRequest(QUrl(getLatestVersionUrl()), SeafileApiRequest::METHOD_GET)
 {
     setUrlParam("id", client_id.left(8));
-    setUrlParam("v", QString(kOsName) + "-" + client_version);
 }
 
 void GetLatestVersionRequest::requestSuccess(QNetworkReply& reply)
@@ -468,8 +477,8 @@ void GetLatestVersionRequest::requestSuccess(QNetworkReply& reply)
 
     QMap<QString, QVariant> dict = mapFromJSON(json.data(), &error);
 
-    if (dict.contains(kOsName)) {
-        QString version = dict.value(kOsName).toString();
+    if (dict.contains("version")) {
+        QString version = dict.value("version").toString();
         qWarning("The latest version is %s", toCStr(version));
         emit success(version);
         return;
