@@ -66,6 +66,11 @@ void handleCommandLineOption(int argc, char *argv[])
         case 'L':
             g_setenv ("SEADRIVE_LETTER", optarg, 1);
             break;
+#if defined(HAVE_SPARKLE_SUPPORT) && defined(SEADRIVE_GUI_DEBUG)
+        case 'U':
+            g_setenv ("SEADRIVE_APPCAST_URI", optarg, 1);
+            break;
+#endif
 #endif
         case 'D':
             msleep(1000);

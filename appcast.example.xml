@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+<channel>
+    <title>Seadrive updates</title>
+    <description>Appcast for test Seadrive updates.</description>
+    <language>en</language>
+    <item>
+      <title>Version 0.4.1</title>
+      <sparkle:releaseNotesLink>http://localhost/SeaDriveClientChangeLog.html</sparkle:releaseNotesLink>
+      <pubDate>Tue, 16 Sep 2016 18:11:12 +0200</pubDate>
+      <enclosure url="http://localhost/qt.exe"
+                 sparkle:version="0.4.1"
+                 length="0"
+                 type="application/octet-stream"/>
+    </item>
+  </channel>
+</rss>

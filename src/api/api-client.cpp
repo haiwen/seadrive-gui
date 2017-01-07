@@ -16,6 +16,16 @@
 
 namespace {
 
+// Matches the UA used in seadrive daemon.
+#if defined(Q_OS_WIN32)
+const char* kUserAgentOS = "Windows NT";
+#elif defined(Q_OS_LINUX)
+const char* kUserAgentOS = "Linux";
+#else
+const char* kUserAgentOS = "Apple OS X";
+#endif
+
+
 const char *kContentTypeForm = "application/x-www-form-urlencoded";
 const char *kAuthHeader = "Authorization";
 const char *kSeafileClientVersionHeader = "X-Seafile-Client-Version";
@@ -33,6 +43,12 @@ QString getQueryValue(const QUrl& url, const QString& name)
     QString v;
     v = QUrlQuery(url.query()).queryItemValue(name);
     return QUrl::fromPercentEncoding(v.toUtf8());
+}
+
+// Construct the UA, e.g. "SeaDriveGUI/0.1.0 (Apple OS X)"
+QString getUserAgentString()
+{
+    return QString("SeaDriveGUI/%1 (%2)").arg(STRINGIZE(SEADRIVE_GUI_VERSION)).arg(kUserAgentOS);
 }
 
 } // namespace
@@ -81,6 +97,7 @@ void SeafileApiClient::prepareRequest(QNetworkRequest *req)
 
     QString client_version = QString("seadrive_%1").arg(STRINGIZE(SEADRIVE_GUI_VERSION));
     req->setRawHeader(kSeafileClientVersionHeader, toCStr(client_version));
+    req->setRawHeader("User-Agent", getUserAgentString().toUtf8().data());
 }
 
 void SeafileApiClient::get(const QUrl& url)
