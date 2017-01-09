@@ -217,7 +217,9 @@ SeadriveGui::~SeadriveGui()
 {
     // Must unmount before rpc client is destroyed.
     daemon_mgr_->doUnmount();
+#ifdef HAVE_SPARKLE_SUPPORT
     AutoUpdateService::instance()->stop();
+#endif
 
     delete tray_icon_;
     delete rpc_client_;

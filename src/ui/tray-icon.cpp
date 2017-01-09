@@ -435,6 +435,7 @@ QIcon SeafileTrayIcon::stateToIcon(TrayState state)
     QString icon_name;
 
     switch (state) {
+    case STATE_NONE:
     case STATE_DAEMON_UP:
         icon_name = ":/images/mac/daemon_up";
         break;
