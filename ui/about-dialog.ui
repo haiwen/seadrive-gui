@@ -140,7 +140,7 @@
         </size>
        </property>
        <property name="text">
-        <string>Check Update</string>
+        <string>Check For Updates</string>
        </property>
       </widget>
      </item>
