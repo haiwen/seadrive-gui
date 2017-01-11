@@ -46,5 +46,6 @@ void AboutDialog::checkUpdate()
 {
     AutoUpdateService::instance()->setRequestParams();
     AutoUpdateService::instance()->checkUpdate();
+    close();
 }
 #endif
