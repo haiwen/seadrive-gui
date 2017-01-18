@@ -1,23 +1,56 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS language="ko_KR" version="2.1">
 <context>
+    <name>AboutDialog</name>
+    <message>
+        <location filename="../src/ui/about-dialog.cpp" line="20"/>
+        <source>About %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/about-dialog.cpp" line="25"/>
+        <source>&lt;h4&gt;Seafile Drive Client %2&lt;/h4&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/about-dialog.cpp" line="28"/>
+        <source>&lt;h5&gt; REV %1 &lt;/h5&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../ui_about-dialog.h" line="130"/>
+        <source>About</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../ui_about-dialog.h" line="131"/>
+        <source>Check For Updates</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../ui_about-dialog.h" line="132"/>
+        <source>OK</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>AccountManager</name>
     <message>
         <location filename="../src/account-mgr.cpp" line="106"/>
         <source>failed to open account database</source>
         <translation>계정 데이터베이스 열기에 실패했습니다</translation>
     </message>
-    <message>
-        <location filename="../src/account-mgr.cpp" line="546"/>
-        <source>Authorization expired, please re-login</source>
-        <translation>인증 유효시간이 지났습니다. 다시 로그인하세요</translation>
-    </message>
 </context>
 <context>
     <name>DaemonManager</name>
     <message>
-        <location filename="../src/daemon-mgr.cpp" line="153"/>
+        <location filename="../src/daemon-mgr.cpp" line="159"/>
         <source>%1 failed to initialize</source>
         <translation>%1 초기화에 실패했습니다</translation>
+    </message>
+    <message>
+        <location filename="../src/daemon-mgr.cpp" line="196"/>
+        <source>%1 exited unexpectedly</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -236,42 +269,42 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>MessagePoller</name>
     <message>
-        <location filename="../src/message-poller.cpp" line="156"/>
+        <location filename="../src/message-poller.cpp" line="158"/>
         <source>&quot;%1&quot; is synchronized</source>
         <translation>&quot;%1&quot;을(를) 동기화했습니다</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="164"/>
+        <location filename="../src/message-poller.cpp" line="166"/>
         <source>Error when syncing &quot;%1&quot;</source>
         <translation>&quot;%1&quot; 동기화 중 오류</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="181"/>
+        <location filename="../src/message-poller.cpp" line="183"/>
         <source>Starting to move &quot;%1&quot;</source>
         <translation>&quot;%1&quot; 이동 시작</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="182"/>
+        <location filename="../src/message-poller.cpp" line="184"/>
         <source>Starting to move &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>&quot;%1&quot;을(를) &quot;%2&quot;(으)로 이동 시작</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="184"/>
+        <location filename="../src/message-poller.cpp" line="186"/>
         <source>Successfully moved &quot;%1&quot;</source>
         <translation>&quot;%1&quot; 이동 성공</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="185"/>
+        <location filename="../src/message-poller.cpp" line="187"/>
         <source>Successfully moved &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>&quot;%2&quot;(으)로의 &quot;%1&quot; 이동에 성공했습니다</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="187"/>
+        <location filename="../src/message-poller.cpp" line="189"/>
         <source>Failed to move &quot;%1&quot;</source>
         <translation>&quot;%1&quot; 이동 실패</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="188"/>
+        <location filename="../src/message-poller.cpp" line="190"/>
         <source>Failed to move &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>&quot;%2&quot;(으)로의 &quot;%1&quot; 이동에 실패했습니다</translation>
     </message>
@@ -565,92 +598,100 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>엑셀 문서</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="106"/>
+        <location filename="../src/main.cpp" line="111"/>
         <source>%1 Client is already running</source>
         <translation>%1 클라이언트를 이미 실행하고 있습니다</translation>
     </message>
 </context>
 <context>
+    <name>RemoteWipeService</name>
+    <message>
+        <location filename="../src/remote-wipe-service.cpp" line="103"/>
+        <source>Authorization expired, please re-login</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>SeadriveGui</name>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="257"/>
+        <location filename="../src/seadrive-gui.cpp" line="266"/>
         <source>Faild to choose a disk letter</source>
         <translation>디스크 문자 선택에 실패했습니다</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="285"/>
+        <location filename="../src/seadrive-gui.cpp" line="298"/>
         <source>failed to add default account</source>
         <translation>기본 계정 추가에 실패했습니다</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="387"/>
+        <location filename="../src/seadrive-gui.cpp" line="409"/>
         <source>Failed to initialize: failed to create seadrive folder</source>
         <translation>초기화 실패: Seadrive 폴더 만들기에 실패했습니다</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="391"/>
+        <location filename="../src/seadrive-gui.cpp" line="413"/>
         <source>Failed to initialize: failed to create seadrive logs folder</source>
         <translation>초기화 실패: Seadrive 로그 폴더 만들기에 실패했습니다</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="395"/>
+        <location filename="../src/seadrive-gui.cpp" line="417"/>
         <source>Failed to initialize: failed to create seadrive data folder</source>
         <translation>초기화 실패: Seadrive 데이터 폴더 만들기에 실패했습니다</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="410"/>
+        <location filename="../src/seadrive-gui.cpp" line="432"/>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
         <translation>초기화 실패: Seadrive 마운트 폴더 만들기에 실패했습니다</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="416"/>
+        <location filename="../src/seadrive-gui.cpp" line="438"/>
         <source>Failed to initialize log: %1</source>
         <translation>로그 초기화 실패: %1</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="472"/>
-        <location filename="../src/seadrive-gui.cpp" line="484"/>
+        <location filename="../src/seadrive-gui.cpp" line="494"/>
+        <location filename="../src/seadrive-gui.cpp" line="506"/>
         <source>OK</source>
         <translation>확인</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="495"/>
-        <location filename="../src/seadrive-gui.cpp" line="509"/>
-        <location filename="../src/seadrive-gui.cpp" line="525"/>
-        <location filename="../src/seadrive-gui.cpp" line="549"/>
+        <location filename="../src/seadrive-gui.cpp" line="517"/>
+        <location filename="../src/seadrive-gui.cpp" line="531"/>
+        <location filename="../src/seadrive-gui.cpp" line="547"/>
+        <location filename="../src/seadrive-gui.cpp" line="571"/>
         <source>Yes</source>
         <translation>예</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="496"/>
-        <location filename="../src/seadrive-gui.cpp" line="526"/>
-        <location filename="../src/seadrive-gui.cpp" line="550"/>
+        <location filename="../src/seadrive-gui.cpp" line="518"/>
+        <location filename="../src/seadrive-gui.cpp" line="548"/>
+        <location filename="../src/seadrive-gui.cpp" line="572"/>
         <source>No</source>
         <translation>아니요</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="510"/>
-        <location filename="../src/seadrive-gui.cpp" line="527"/>
+        <location filename="../src/seadrive-gui.cpp" line="532"/>
+        <location filename="../src/seadrive-gui.cpp" line="549"/>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="624"/>
+        <location filename="../src/seadrive-gui.cpp" line="646"/>
         <source>failed to save client id</source>
         <translation>클라이언트 ID 저장에 실패했습니다</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="633"/>
+        <location filename="../src/seadrive-gui.cpp" line="655"/>
         <source>failed to access %1</source>
         <translation>%1 접근에 실패했습니다</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="641"/>
+        <location filename="../src/seadrive-gui.cpp" line="663"/>
         <source>incorrect client id</source>
         <translation>올바르지 않은 클라이언트 ID</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="647"/>
+        <location filename="../src/seadrive-gui.cpp" line="669"/>
         <source>failed to read %1</source>
         <translation>%1 읽기에 실패했습니다</translation>
     </message>
@@ -694,127 +735,127 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SeafileTrayIcon</name>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="140"/>
+        <location filename="../src/ui/tray-icon.cpp" line="141"/>
         <source>&amp;Quit</source>
         <translation>끝내기(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="143"/>
+        <location filename="../src/ui/tray-icon.cpp" line="144"/>
         <source>Settings</source>
         <translation>설정</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="149"/>
+        <location filename="../src/ui/tray-icon.cpp" line="150"/>
         <source>Open %1 &amp;folder</source>
         <translation>%1 폴더 열기(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="150"/>
+        <location filename="../src/ui/tray-icon.cpp" line="151"/>
         <source>open %1 folder</source>
         <translation>%1  폴더 열기</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="153"/>
+        <location filename="../src/ui/tray-icon.cpp" line="154"/>
         <source>Open &amp;logs folder</source>
         <translation>기록 폴더 열기(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="157"/>
+        <location filename="../src/ui/tray-icon.cpp" line="158"/>
         <source>&amp;About</source>
         <translation>정보(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="158"/>
+        <location filename="../src/ui/tray-icon.cpp" line="159"/>
         <source>Show the application&apos;s About box</source>
         <translation>프로그램 정보 상자 표시</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="161"/>
+        <location filename="../src/ui/tray-icon.cpp" line="163"/>
         <source>&amp;Online help</source>
         <translation>온라인 도움말(&amp;O)</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="187"/>
+        <location filename="../src/ui/tray-icon.cpp" line="189"/>
         <source>Accounts</source>
         <translation>계정</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="219"/>
+        <location filename="../src/ui/tray-icon.cpp" line="221"/>
         <source>not logged in</source>
         <translation>로그인하지 않음</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="232"/>
+        <location filename="../src/ui/tray-icon.cpp" line="234"/>
         <source>Choose</source>
         <translation>선택</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="254"/>
+        <location filename="../src/ui/tray-icon.cpp" line="256"/>
         <source>Logout</source>
         <translation>로그아웃</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="258"/>
+        <location filename="../src/ui/tray-icon.cpp" line="260"/>
         <source>Delete</source>
         <translation>삭제</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="271"/>
+        <location filename="../src/ui/tray-icon.cpp" line="273"/>
         <source>Add an account</source>
         <translation>계정 추가</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="284"/>
+        <location filename="../src/ui/tray-icon.cpp" line="286"/>
         <source>File</source>
         <translation>파일</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="491"/>
+        <location filename="../src/ui/tray-icon.cpp" line="494"/>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
         <translation>&lt;h2&gt;Seafile 드라이브 클라이언트 %2&lt;/h2&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="713"/>
+        <location filename="../src/ui/tray-icon.cpp" line="724"/>
         <source>Do you want to remove the local cache?</source>
         <translation>로컬 캐시를 제거할까요?</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="742"/>
+        <location filename="../src/ui/tray-icon.cpp" line="753"/>
         <source>Failed to remove local cache of account %1</source>
         <translation>%1 계정 로컬 캐시 제거에 실패했습니다</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="754"/>
+        <location filename="../src/ui/tray-icon.cpp" line="765"/>
         <source>Failed to remove information on server: %1</source>
         <translation>서버 정보 제거에 실패했습니다: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="766"/>
+        <location filename="../src/ui/tray-icon.cpp" line="777"/>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
         <translation>정말로 &quot;%1&quot;의 계정을 제거할까요?</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="773"/>
+        <location filename="../src/ui/tray-icon.cpp" line="784"/>
         <source>Failed to delete account</source>
         <translation>계정 삭제에 실패했습니다</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="785"/>
+        <location filename="../src/ui/tray-icon.cpp" line="796"/>
         <source>Up %1, Down %2</source>
         <translation>송신 %1, 수신 %2</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="490"/>
+        <location filename="../src/ui/tray-icon.cpp" line="493"/>
         <source>About %1</source>
         <translation>%1 정보</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="154"/>
+        <location filename="../src/ui/tray-icon.cpp" line="155"/>
         <source>open %1 log folder</source>
         <translation>%1 기록 폴더 열기</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="162"/>
+        <location filename="../src/ui/tray-icon.cpp" line="164"/>
         <source>open %1 online help</source>
         <translation>%1 온라인 도움말 열기</translation>
     </message>
@@ -822,183 +863,198 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SettingsDialog</name>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="28"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="29"/>
         <source>Settings</source>
         <translation>설정</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="35"/>
-        <location filename="../ui_settings-dialog.h" line="397"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="36"/>
+        <location filename="../ui_settings-dialog.h" line="411"/>
         <source>Auto start %1 after login</source>
         <translation>로그인 후 %1 자동 시작</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="47"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="50"/>
         <source>None</source>
         <translation>없음</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="48"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="51"/>
         <source>HTTP Proxy</source>
         <translation>HTTP 프록시</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="49"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="52"/>
         <source>Socks5 Proxy</source>
         <translation>Socks5 프록시</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="50"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="53"/>
         <source>System Proxy</source>
         <translation>시스템 프록시</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="105"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="110"/>
         <source>You have changed languange. Restart to apply it?</source>
         <translation>언어를 바꿨습니다. 다시 시작해서 적용할까요?</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="334"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="123"/>
+        <source>You have changed disk letter. Restart to apply it?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/settings-dialog.cpp" line="369"/>
         <source>The proxy host address can&apos;t be empty</source>
         <translation>프록시 호스트 주소를 비워둘 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="341"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="376"/>
         <source>The proxy port is incorrect</source>
         <translation>프록시 포트가 올바르지 않습니다</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="350"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="385"/>
         <source>Proxy username can&apos;t be empty</source>
         <translation>프록시 사용자 이름을 비워둘 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="353"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="388"/>
         <source>Proxy password can&apos;t be empty</source>
         <translation>프록시 암호를 비워둘 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="394"/>
+        <location filename="../ui_settings-dialog.h" line="408"/>
         <source>Dialog</source>
         <translation>대화상자</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="395"/>
+        <location filename="../ui_settings-dialog.h" line="409"/>
         <source>Notify when libraries are synchronized</source>
         <translation>라이브러리를 동기화하면 알림</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="396"/>
+        <location filename="../ui_settings-dialog.h" line="410"/>
         <source>Enable sync temporary files of MSOffice/Libreoffice</source>
         <translation>MS 오피스/리버오피스 임시 파일 동기화 활성화</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="400"/>
-        <source>Check for new version on startup</source>
-        <translation>시작시 새 버전 확인</translation>
-    </message>
-    <message>
-        <location filename="../ui_settings-dialog.h" line="401"/>
+        <location filename="../ui_settings-dialog.h" line="415"/>
         <source>Download speed limit (KB/s):</source>
         <translation>다운로드 속도 제한(KB/s):</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="402"/>
+        <location filename="../ui_settings-dialog.h" line="416"/>
         <source>Upload speed limit (KB/s):</source>
         <translation>업로드 속도 제한(KB/s):</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="403"/>
+        <location filename="../ui_settings-dialog.h" line="422"/>
         <source>Basic</source>
         <translation>기본</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="398"/>
+        <location filename="../ui_settings-dialog.h" line="412"/>
         <source>Enable FinderSync Extension</source>
         <translation>FinderSync 확장 기능 활성화</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="399"/>
+        <location filename="../ui_settings-dialog.h" line="413"/>
         <source>Enable Explorer Extension</source>
         <translation>Explorer 확장 기능 활성화</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="404"/>
+        <location filename="../ui_settings-dialog.h" line="414"/>
+        <source>Check for updates automatically</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../ui_settings-dialog.h" line="417"/>
+        <source>Disk letter (need restart): </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../ui_settings-dialog.h" line="420"/>
+        <source>S</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../ui_settings-dialog.h" line="423"/>
         <source>Do not verify server certificate in HTTPS syncing</source>
         <translation>HTTPS 동기화시 서버 인증서 검증하지 않음</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="405"/>
+        <location filename="../ui_settings-dialog.h" line="424"/>
         <source>Cache clean interval (in minutes):</source>
         <translation>캐시 정리 주기(단위: 분):</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="406"/>
+        <location filename="../ui_settings-dialog.h" line="425"/>
         <source>Cache size limit (in GB):</source>
         <translation>캐시 제한 크기(단위: GB):</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="407"/>
+        <location filename="../ui_settings-dialog.h" line="426"/>
         <source>Advanced</source>
         <translation>고급</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="408"/>
+        <location filename="../ui_settings-dialog.h" line="427"/>
         <source>Language (need restart)</source>
         <translation>언어(다시 시작해야 함)</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="409"/>
+        <location filename="../ui_settings-dialog.h" line="428"/>
         <source>Language</source>
         <translation>언어</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="410"/>
+        <location filename="../ui_settings-dialog.h" line="429"/>
         <source>Proxy Type:</source>
         <translation>프록시 형식:</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="411"/>
+        <location filename="../ui_settings-dialog.h" line="430"/>
         <source>Host:</source>
         <translation>호스트:</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="412"/>
+        <location filename="../ui_settings-dialog.h" line="431"/>
         <source>Port:</source>
         <translation>포   트:</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="413"/>
+        <location filename="../ui_settings-dialog.h" line="432"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="414"/>
+        <location filename="../ui_settings-dialog.h" line="433"/>
         <source>Username:</source>
         <translation>사용자 이름:</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="415"/>
+        <location filename="../ui_settings-dialog.h" line="434"/>
         <source>Password:</source>
         <translation>암호:</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="416"/>
+        <location filename="../ui_settings-dialog.h" line="435"/>
         <source>Proxy server requires a password</source>
         <translation>프록시 서버에 암호가 필요합니다</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="417"/>
+        <location filename="../ui_settings-dialog.h" line="436"/>
         <source>Network</source>
         <translation>네트워크</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="418"/>
+        <location filename="../ui_settings-dialog.h" line="437"/>
         <source>OK</source>
         <translation>확인</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="419"/>
+        <location filename="../ui_settings-dialog.h" line="438"/>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>

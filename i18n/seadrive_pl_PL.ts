@@ -17,19 +17,14 @@
         <translation>&lt;h5&gt; REV %1 &lt;/h5&gt;</translation>
     </message>
     <message>
-        <location filename="../ui_about-dialog.h" line="129"/>
+        <location filename="../ui_about-dialog.h" line="130"/>
         <source>About</source>
         <translation>O programie</translation>
     </message>
     <message>
-        <location filename="../ui_about-dialog.h" line="130"/>
-        <source>Current Version</source>
-        <translation>Aktualna wersja</translation>
-    </message>
-    <message>
         <location filename="../ui_about-dialog.h" line="131"/>
-        <source>Check Update</source>
-        <translation>Sprawdź aktualizacje</translation>
+        <source>Check For Updates</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../ui_about-dialog.h" line="132"/>
