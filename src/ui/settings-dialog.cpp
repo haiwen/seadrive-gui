@@ -21,6 +21,27 @@ namespace {
 
 const char *kSettingsGroupForSettingsDialog = "SettingsDialog";
 
+
+#ifdef Q_OS_WIN32
+// Insert the current disk letter into the proper position of the available disk
+// letters list.
+void insertDiskLetter(QStringList* letters, QString letter_to_insert)
+{
+    if (letters->contains(letter_to_insert)) {
+        return;
+    }
+    QStringList new_letters;
+    int i = 0;
+    foreach (const QString &letter, *letters) {
+        if (letter > letter_to_insert) {
+            break;
+        }
+        i++;
+    }
+    letters->insert(i, letter_to_insert);
+}
+#endif
+
 } // namespace
 
 SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
@@ -213,14 +234,17 @@ void SettingsDialog::showEvent(QShowEvent *event)
 
 #ifdef Q_OS_WIN32
     QStringList letters = utils::win::getAvailableDiskLetters();
-    bool has_preferred_letter = mgr->getDiskLetter(&preferred_disk_letter_);
+    if (!mgr->getDiskLetter(&preferred_disk_letter_)) {
+        preferred_disk_letter_ = gui->mountDir();
+    }
+    preferred_disk_letter_ = preferred_disk_letter_.at(0);
+    insertDiskLetter(&letters, gui->mountDir().at(0));
+
     mDiskLetter->clear();
     int i = 0;
     foreach (const QString& letter, letters) {
         mDiskLetter->addItem(letter);
-        if (has_preferred_letter && preferred_disk_letter_.contains(letter)) {
-            mDiskLetter->setCurrentIndex(i);
-        } else if (letter == "S") {
+        if (preferred_disk_letter_.contains(letter)) {
             mDiskLetter->setCurrentIndex(i);
         }
         i++;
