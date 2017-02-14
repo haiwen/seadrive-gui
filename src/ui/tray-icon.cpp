@@ -504,9 +504,9 @@ void SeafileTrayIcon::openHelp()
 {
     QString url;
     if (QLocale::system().name() == "zh_CN") {
-        url = "https://seafile.com/help/install_v2/";
+        url = "https://www.seafile.com/help/drive_client/";
     } else {
-        url = "https://seafile.com/en/help/install_v2/";
+        url = "https://www.seafile.com/en/help/drive_client/";
     }
 
     QDesktopServices::openUrl(QUrl(url));
