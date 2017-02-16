@@ -324,6 +324,12 @@ void SeafileTrayIcon::rotate(bool start)
     }
 }
 
+void SeafileTrayIcon::showWarningMessage(const QString &title,
+                                         const QString &message)
+{
+    showMessage(title, message, "", "", "", QSystemTrayIcon::Warning);
+}
+
 void SeafileTrayIcon::showMessage(const QString &title,
                                   const QString &message,
                                   const QString &repo_id,

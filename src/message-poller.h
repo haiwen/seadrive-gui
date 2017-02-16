@@ -7,6 +7,7 @@
 class QTimer;
 
 class SeafileRpcClient;
+class SeaDriveEvent;
 
 struct SyncNotification {
     QString type;
@@ -49,12 +50,14 @@ signals:
     void seadriveFSLoaded();
 
 private slots:
+    void checkSeaDriveEvents();
     void checkNotification();
     void checkSyncStatus();
 
 private:
     Q_DISABLE_COPY(MessagePoller)
 
+    void processSeaDriveEvent(const SeaDriveEvent& event);
     void processNotification(const SyncNotification& notification);
 
     SeafileRpcClient *rpc_client_;

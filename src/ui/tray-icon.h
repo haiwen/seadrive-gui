@@ -48,6 +48,9 @@ public:
                      MessageIcon icon = Information,
                      int millisecondsTimeoutHint = 10000);
 
+    void showWarningMessage(const QString& title,
+                            const QString& message);
+
     void setTransferRate(qint64 up_rate, qint64 down_rate);
 
 public slots:

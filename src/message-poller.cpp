@@ -24,7 +24,6 @@ struct GlobalSyncStatus {
     static GlobalSyncStatus fromJson(const json_t* json);
 };
 
-
 // Copied from seadrive/src/sync-mgr.c
 #define SYNC_ERROR_ID_FILE_LOCKED_BY_APP 0
 #define SYNC_ERROR_ID_FOLDER_LOCKED_BY_APP 1
@@ -100,11 +99,46 @@ QString translateNotificationError(SyncNotification notification)
 
 } // namespace
 
+class SeaDriveEvent {
+public:
+    enum FsOpError {
+        UNKNOWN_ERROR = 0,
+        CREATE_ROOT_FILE,
+        REMOVE_REPO,
+    };
+
+    FsOpError fs_op_error;
+    QString path;
+
+    static SeaDriveEvent fromJson(json_t * root) {
+        // char *s = json_dumps(root, 0);
+        // printf ("[%s] %s\n", QDateTime::currentDateTime().toString().toUtf8().data(), s);
+        // free (s);
+
+        SeaDriveEvent event;
+        Json json(root);
+
+        QString type = json.getString("type");
+        if (type == "fs_op_error.create_root_file") {
+            event.fs_op_error = CREATE_ROOT_FILE;
+        } else if (type == "fs_op_error.remove_repo") {
+            event.fs_op_error = REMOVE_REPO;
+        } else {
+            qWarning("unknown type of seadrive event %s", toCStr(type));
+            event.fs_op_error = UNKNOWN_ERROR;
+        }
+        event.path = json.getString("path");
+
+        return event;
+    }
+};
+
 
 MessagePoller::MessagePoller(QObject *parent): QObject(parent)
 {
     rpc_client_ = new SeafileRpcClient();
     check_notification_timer_ = new QTimer(this);
+    connect(check_notification_timer_, SIGNAL(timeout()), this, SLOT(checkSeaDriveEvents()));
     connect(check_notification_timer_, SIGNAL(timeout()), this, SLOT(checkNotification()));
     connect(check_notification_timer_, SIGNAL(timeout()), this, SLOT(checkSyncStatus()));
 }
@@ -117,6 +151,18 @@ void MessagePoller::start()
 {
     rpc_client_->connectDaemon();
     check_notification_timer_->start(kCheckNotificationIntervalMSecs);
+}
+
+void MessagePoller::checkSeaDriveEvents()
+{
+    json_t *ret;
+    if (!rpc_client_->getSeaDriveEvents(&ret)) {
+        return;
+    }
+    SeaDriveEvent event = SeaDriveEvent::fromJson(ret);
+    json_decref(ret);
+
+    processSeaDriveEvent(event);
 }
 
 void MessagePoller::checkNotification()
@@ -198,7 +244,27 @@ void MessagePoller::processNotification(const SyncNotification& notification)
             "",
             QSystemTrayIcon::Information);
     } else {
-        printf ("Unknown message %s\n", notification.type.toUtf8().data());
+        qWarning ("Unknown message %s\n", notification.type.toUtf8().data());
+    }
+}
+
+void MessagePoller::processSeaDriveEvent(const SeaDriveEvent &event)
+{
+    switch (event.fs_op_error) {
+        case SeaDriveEvent::CREATE_ROOT_FILE: {
+            QString title = tr("Failed to create file");
+            QString msg =
+                tr("You can't create files in the %1 drive directly")
+                    .arg(gui->mountDir());
+            gui->trayIcon()->showWarningMessage(title, msg);
+        } break;
+        case SeaDriveEvent::REMOVE_REPO: {
+            QString title = tr("Failed to delete folder");
+            QString msg = tr("You can't delete the library \"%1\" directly").arg(::getBaseName(event.path));
+            gui->trayIcon()->showWarningMessage(title, msg);
+        } break;
+    default:
+        break;
     }
 }
 

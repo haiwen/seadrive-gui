@@ -428,8 +428,10 @@ bool SeafileRpcClient::getGlobalSyncStatus(json_t **ret_obj)
         &error, 0);
     if (error || !ret) {
         qWarning("failed to get global sync status: %s\n",
-                 error->message ? error->message : "");
-        g_error_free(error);
+                 (error && error->message) ? error->message : "");
+        if (error) {
+            g_error_free(error);
+        }
         return false;
     }
 
@@ -448,8 +450,10 @@ bool SeafileRpcClient::unmount()
     if (error || ret != 0) {
         // The unmount rpc would case seadrive daemon to exit, so the rpc would always fail.
         qDebug("failed to unmount : %s\n",
-               error->message ? error->message : "");
-        g_error_free(error);
+               (error && error->message) ? error->message : "");
+        if (error) {
+            g_error_free(error);
+        }
         return false;
     }
 
@@ -514,5 +518,27 @@ bool SeafileRpcClient::getCacheSizeLimitGB(int *value)
     }
 
     *value = (int)(ret / 1e9);
+    return true;
+}
+
+bool SeafileRpcClient::getSeaDriveEvents(json_t **ret_obj)
+{
+    GError *error = NULL;
+    json_t *ret = searpc_client_call__json (
+        seadrive_rpc_client_,
+        "seafile_get_events_notification",
+        &error, 0);
+    if (error) {
+        qWarning("failed to get seadrive.events: %s\n",
+                 error->message ? error->message : "");
+        g_error_free(error);
+        return false;
+    }
+
+    if (!ret) {
+        return false;
+    }
+
+    *ret_obj = ret;
     return true;
 }

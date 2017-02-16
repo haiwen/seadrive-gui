@@ -76,6 +76,8 @@ public:
 
     bool getGlobalSyncStatus(json_t **ret);
 
+    bool getSeaDriveEvents(json_t **ret_obj);
+
     bool unmount();
 
     bool setCacheCleanIntervalMinutes(int interval);
