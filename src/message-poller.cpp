@@ -252,7 +252,7 @@ void MessagePoller::processSeaDriveEvent(const SeaDriveEvent &event)
 {
     switch (event.fs_op_error) {
         case SeaDriveEvent::CREATE_ROOT_FILE: {
-            QString title = tr("Failed to create file");
+            QString title = tr("Failed to create file \"%1\"").arg(::getBaseName(event.path));
             QString msg =
                 tr("You can't create files in the %1 drive directly")
                     .arg(gui->mountDir());
