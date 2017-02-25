@@ -1,0 +1,15 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+%:
+	dh $@ --builddirectory=build
+
+override_dh_auto_configure:
+	export QT_SELECT=5
+	dh_auto_configure -- -DCMAKE_BUILD_TYPE=Release
+
+override_dh_auto_build:
+	dh_auto_build --parallel
+
+override_dh_strip:
+	dh_strip -pseadrive-gui --dbg-package=seadrive-gui-dbg

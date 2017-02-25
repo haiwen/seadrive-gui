@@ -1,0 +1,48 @@
+Source: seadrive-gui
+Section: net
+Priority: extra
+Maintainer: m.eik michalke <meik.michalke@hhu.de>
+Build-Depends:
+    debhelper (>= 7),
+    libssl-dev,
+    libcurl4-openssl-dev,
+    libsqlite3-dev,
+    intltool,
+    libglib2.0-dev,
+    libevent-dev,
+    uuid-dev,
+    qtbase5-dev,
+    libqt5webkit5-dev,
+    qttools5-dev,
+    libtool,
+    valac,
+    libjansson-dev,
+    cmake,
+    qtchooser,
+    qttools5-dev-tools,
+    libsearpc-dev,
+Standards-Version: 3.9.5
+Homepage: http://seafile.com
+
+Package: seadrive-gui
+Architecture: any
+Depends:
+    ${shlibs:Depends},
+    ${misc:Depends},
+    seadrive-daemon (= ${binary:Version})
+Description: Seafile Drive client.
+ Seafile is an open source cloud storage system with features
+ on privacy protection and teamwork. Collections of files are
+ called libraries, and each library can be synced separately.
+ A library can also be encrypted with a user chosen password.
+ Seafile also allows users to create groups and easily sharing
+ files into groups.
+
+Package: seadrive-gui-dbg
+Section: debug
+Architecture: any
+Depends:
+    seadrive-gui (= ${binary:Version}),
+    ${misc:Depends},
+Description: Debugging symbols for the seadrive-gui package.
+ This package contains the debugging symbols for the seadrive-gui package.
