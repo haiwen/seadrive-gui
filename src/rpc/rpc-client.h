@@ -6,13 +6,16 @@
 #include <QObject>
 #include <QMutex>
 
+// Here we can't forward-declare type json_t because it is an anonymous typedef
+// struct, and unlike libsearpc we have no way to rewrite its definition to give
+// it a name.
+#include <jansson.h>
+
 extern "C" {
 
 struct _GList;
 // Can't forward-declare type SearpcClient here because it is an anonymous typedef struct
 struct _SearpcClient;
-
-struct json_t;
 
 }
 
