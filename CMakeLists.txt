@@ -452,6 +452,37 @@ ADD_CUSTOM_TARGET(update-ts DEPENDS ${SEADRIVE_TS_TARGETS})
 ###### end: translations
 ####################
 
+####################
+###### start: freedesktop files
+####################
+
+if(NOT WIN32)
+install(DIRECTORY
+  ${CMAKE_SOURCE_DIR}/data/icons/16x16
+  ${CMAKE_SOURCE_DIR}/data/icons/22x22
+  ${CMAKE_SOURCE_DIR}/data/icons/24x24
+  ${CMAKE_SOURCE_DIR}/data/icons/32x32
+  ${CMAKE_SOURCE_DIR}/data/icons/48x48
+  ${CMAKE_SOURCE_DIR}/data/icons/128x128
+  ${CMAKE_SOURCE_DIR}/data/icons/scalable
+  DESTINATION share/icons/hicolor
+)
+
+install(FILES
+  ${CMAKE_SOURCE_DIR}/data/seadrive.desktop
+  DESTINATION share/applications
+)
+
+install(FILES
+  ${CMAKE_SOURCE_DIR}/data/icons/128x128/apps/seadrive.png
+  DESTINATION share/pixmaps
+)
+
+endif()
+
+####################
+###### end: freedesktop files
+####################
 
 
 ADD_EXECUTABLE(seadrive-gui ${GUI_TYPE}

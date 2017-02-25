@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=SeaDrive
+Comment=Seafile drive client
+TryExec=seadrive-gui
+Exec=seadrive-gui
+Icon=seadrive
+Type=Application
+Categories=Network;FileTransfer;
