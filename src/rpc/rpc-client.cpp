@@ -542,3 +542,27 @@ bool SeafileRpcClient::getSeaDriveEvents(json_t **ret_obj)
     *ret_obj = ret;
     return true;
 }
+
+bool SeafileRpcClient::getSyncErrors(json_t **ret_obj)
+{
+    GError *error = NULL;
+    json_t *ret = searpc_client_call__json (
+        seadrive_rpc_client_,
+        "seafile_list_sync_errors",
+        &error, 0);
+    if (error) {
+        qWarning("failed to get sync errors: %s\n",
+                 error->message ? error->message : "");
+        g_error_free(error);
+        return false;
+    }
+
+    if (!ret) {
+        // No pending errors.
+        return false;
+    }
+
+    *ret_obj = ret;
+
+    return true;
+}

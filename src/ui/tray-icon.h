@@ -4,6 +4,9 @@
 #include <QSystemTrayIcon>
 #include <QHash>
 #include <QQueue>
+#include <QList>
+
+#include "rpc/sync-error.h"
 
 class QAction;
 class QMenu;
@@ -29,6 +32,7 @@ public:
         STATE_TRANSFER_1,
         STATE_TRANSFER_2,
         STATE_SERVERS_NOT_CONNECTED,
+        STATE_HAS_SYNC_ERRORS,
         STATE_HAVE_UNREAD_MESSAGE,
     };
 
@@ -52,6 +56,8 @@ public:
                             const QString& message);
 
     void setTransferRate(qint64 up_rate, qint64 down_rate);
+
+    void setSyncErrors(const QList<SyncError> errors);
 
 public slots:
     void showSettingsWindow();
@@ -149,6 +155,8 @@ private:
     QAction *transfer_rate_display_action_;
     qint64 up_rate_;
     qint64 down_rate_;
+
+    QList<SyncError> sync_errors_;
 };
 
 #endif // SEAFILE_CLIENT_TRAY_ICON_H

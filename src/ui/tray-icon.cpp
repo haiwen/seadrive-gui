@@ -458,6 +458,7 @@ QIcon SeafileTrayIcon::stateToIcon(TrayState state)
         icon_name = ":/images/mac/seafile_transfer_2";
         break;
     case STATE_SERVERS_NOT_CONNECTED:
+    case STATE_HAS_SYNC_ERRORS:
         icon_name = ":/images/mac/seafile_warning";
         break;
     case STATE_HAVE_UNREAD_MESSAGE:
@@ -593,57 +594,11 @@ void SeafileTrayIcon::refreshTrayIcon()
         return;
     }
 
-    // int n_unread_msg = SeahubNotificationsMonitor::instance()->getUnreadNotifications();
-    // if (n_unread_msg > 0) {
-    //     setState(STATE_HAVE_UNREAD_MESSAGE,
-    //              tr("You have %n message(s)", "", n_unread_msg));
-    //     return;
-    // }
-
-    // if (!gui->settingsManager()->autoSync()) {
-    //     setState(STATE_DAEMON_AUTOSYNC_DISABLED,
-    //              tr("auto sync is disabled"));
-    //     return;
-    // }
-
-    // if (!ServerStatusService::instance()->allServersConnected()) {
-    //     setState(STATE_SERVERS_NOT_CONNECTED, tr("some servers not connected"));
-    //     return;
-    // }
-
     setState(STATE_DAEMON_UP);
 }
 
 void SeafileTrayIcon::refreshTrayIconToolTip()
 {
-    // if (!gui->settingsManager()->autoSync())
-    //     return;
-
-    // int up_rate, down_rate;
-    // if (gui->rpcClient()->getUploadRate(&up_rate) < 0 ||
-    //     gui->rpcClient()->getDownloadRate(&down_rate) < 0) {
-    //     return;
-    // }
-
-    // if (up_rate <= 0 && down_rate <= 0) {
-    //     return;
-    // }
-
-    // QString uploadStr = tr("Uploading");
-    // QString downloadStr =  tr("Downloading");
-    // if (up_rate > 0 && down_rate > 0) {
-    //     setToolTip(QString("%1 %2/s, %3 %4/s\n").
-    //                arg(uploadStr).arg(readableFileSize(up_rate)).
-    //                arg(downloadStr).arg(readableFileSize(down_rate)));
-    // } else if (up_rate > 0) {
-    //     setToolTip(QString("%1 %2/s\n").
-    //                arg(uploadStr).arg(readableFileSize(up_rate)));
-    // } else /* down_rate > 0*/ {
-    //     setToolTip(QString("%1 %2/s\n").
-    //                arg(downloadStr).arg(readableFileSize(down_rate)));
-    // }
-
-    // rotate(true);
 }
 
 
@@ -802,4 +757,9 @@ void SeafileTrayIcon::setTransferRate(qint64 up_rate, qint64 down_rate)
         tr("Up %1, Down %2")
             .arg(translateTransferRate(up_rate_),
                     translateTransferRate(down_rate_)));
+}
+
+void SeafileTrayIcon::setSyncErrors(const QList<SyncError> errors)
+{
+    sync_errors_ = errors;
 }

@@ -91,6 +91,8 @@ public:
 
     bool getCacheSizeLimitGB(int *value);
 
+    bool getSyncErrors(json_t **ret_obj);
+
 private:
     Q_DISABLE_COPY(SeafileRpcClient)
 

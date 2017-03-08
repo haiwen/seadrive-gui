@@ -8,6 +8,7 @@
 #include "seadrive-gui.h"
 #include "settings-mgr.h"
 #include "rpc/rpc-client.h"
+#include "rpc/sync-error.h"
 #include "ui/tray-icon.h"
 
 #include "message-poller.h"
@@ -141,6 +142,7 @@ MessagePoller::MessagePoller(QObject *parent): QObject(parent)
     connect(check_notification_timer_, SIGNAL(timeout()), this, SLOT(checkSeaDriveEvents()));
     connect(check_notification_timer_, SIGNAL(timeout()), this, SLOT(checkNotification()));
     connect(check_notification_timer_, SIGNAL(timeout()), this, SLOT(checkSyncStatus()));
+    connect(check_notification_timer_, SIGNAL(timeout()), this, SLOT(checkSyncErrors()));
 }
 
 MessagePoller::~MessagePoller()
@@ -193,6 +195,20 @@ void MessagePoller::checkSyncStatus()
         gui->trayIcon()->rotate(false);
         gui->trayIcon()->setTransferRate(0, 0);
     }
+}
+
+void MessagePoller::checkSyncErrors()
+{
+    json_t *ret;
+    if (!rpc_client_->getSyncErrors(&ret)) {
+        gui->trayIcon()->setSyncErrors(QList<SyncError>());
+        return;
+    }
+
+    QList<SyncError> errors = SyncError::listFromJSON(ret);
+    json_decref(ret);
+
+    gui->trayIcon()->setSyncErrors(errors);
 }
 
 void MessagePoller::processNotification(const SyncNotification& notification)
