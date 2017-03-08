@@ -784,12 +784,27 @@ private:
     const QString path_;
 };
 
+struct SharedLinkResult {
+    qint64 ctime;
+    QString expire_date;
+    bool is_dir;
+    bool is_expired;
+    QString link;
+    QString obj_name;
+    QString path;
+    QString repo_id;
+    QString repo_name;
+    QString token;
+    QString username;
+    quint64 view_cnt;
+};
 
 class GetSharedLinkRequest : public SeafileApiRequest {
     Q_OBJECT
 public:
-    GetSharedLinkRequest(const Account &account, const QString &repo_id,
-                             const QString &path, bool is_file);
+    GetSharedLinkRequest(const Account &account,
+                         const QString &repo_id,
+                         const QString &path);
 
 signals:
     void success(const QString& url);

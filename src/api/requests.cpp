@@ -46,7 +46,7 @@ const char* kSearchUsersUrl = "api2/search-user/";
 
 const char* kGetDirentsUrl = "api2/repos/%1/dir/";
 const char* kGetFilesUrl = "api2/repos/%1/file/";
-const char* kGetFileSharedLinkUrl = "api2/repos/%1/file/shared-link/";
+const char* kGetFileSharedLinkUrl = "api/v2.1/share-links/";
 const char* kGetFileUploadUrl = "api2/repos/%1/upload-link/";
 const char* kGetFileUpdateUrl = "api2/repos/%1/update-link/";
 const char* kGetStarredFilesUrl = "api2/starredfiles/";
@@ -1207,21 +1207,42 @@ void GetFileDownloadLinkRequest::requestSuccess(QNetworkReply& reply)
 
 GetSharedLinkRequest::GetSharedLinkRequest(const Account &account,
                                            const QString &repo_id,
-                                           const QString &path,
-                                           bool is_file)
+                                           const QString &path)
     : SeafileApiRequest(
-          account.getAbsoluteUrl(QString(kGetFileSharedLinkUrl).arg(repo_id)),
-          SeafileApiRequest::METHOD_PUT, account.token)
+          account.getAbsoluteUrl(QString(kGetFileSharedLinkUrl)),
+          SeafileApiRequest::METHOD_GET, account.token)
 {
-    setFormParam("type", is_file ? "f" : "d");
-    setFormParam("p", path);
+    setUrlParam("repo_id", repo_id);
+    setUrlParam("path", path);
 }
 
 void GetSharedLinkRequest::requestSuccess(QNetworkReply& reply)
 {
-    QString reply_content(reply.rawHeader("Location"));
+    json_error_t error;
+    json_t* root = parseJSON(reply, &error);
+    if (!root) {
+        qWarning("GetSharedLinkRequest: failed to parse json:%s\n",
+                 error.text);
+        emit failed(ApiError::fromJsonError());
+        return;
+    }
 
-    emit success(reply_content);
+    if (json_array_size(root) == 0) {
+        qWarning("GetSharedLinkRequest: failed to get json.\n");
+        emit failed(ApiError::fromJsonError());
+        return;
+    }
+
+    QScopedPointer<json_t, JsonPointerCustomDeleter> json(json_array_get(root, 0));
+    QMap<QString, QVariant> dict = mapFromJSON(json.data(), &error);
+    
+    if (!dict.contains("link")) {
+        emit failed(ApiError::fromJsonError());
+        return;
+    }
+
+    QString link = dict.value("link").toString();
+    emit success(link);
 }
 
 CreateDirectoryRequest::CreateDirectoryRequest(const Account &account,
