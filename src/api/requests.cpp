@@ -1210,7 +1210,8 @@ GetSharedLinkRequest::GetSharedLinkRequest(const Account &account,
                                            const QString &path)
     : SeafileApiRequest(
           account.getAbsoluteUrl(QString(kGetFileSharedLinkUrl)),
-          SeafileApiRequest::METHOD_GET, account.token)
+          SeafileApiRequest::METHOD_GET, account.token),
+      repo_id_(repo_id), path_(path)
 {
     setUrlParam("repo_id", repo_id);
     setUrlParam("path", path);
@@ -1223,19 +1224,62 @@ void GetSharedLinkRequest::requestSuccess(QNetworkReply& reply)
     if (!root) {
         qWarning("GetSharedLinkRequest: failed to parse json:%s\n",
                  error.text);
-        emit failed(ApiError::fromJsonError());
+        emit SeafileApiRequest::failed(ApiError::fromJsonError());
         return;
     }
 
     if (json_array_size(root) == 0) {
         qWarning("GetSharedLinkRequest: failed to get json.\n");
-        emit failed(ApiError::fromJsonError());
+        emit failed(repo_id_, path_);
+        emit SeafileApiRequest::failed(ApiError::fromJsonError());
         return;
     }
 
     QScopedPointer<json_t, JsonPointerCustomDeleter> json(json_array_get(root, 0));
     QMap<QString, QVariant> dict = mapFromJSON(json.data(), &error);
     
+    if (!dict.contains("link")) {
+        emit SeafileApiRequest::failed(ApiError::fromJsonError());
+        return;
+    }
+
+    QString link = dict.value("link").toString();
+    emit success(link);
+}
+
+CreatShareLinkRequest::CreatShareLinkRequest(const Account &account,
+                                             const QString &repo_id,
+                                             const QString &path,
+                                             const QString &password,
+                                             quint64 expired_date)
+    : SeafileApiRequest(
+          account.getAbsoluteUrl(QString(kGetFileSharedLinkUrl)),
+          SeafileApiRequest::METHOD_POST, account.token)
+{
+    if (!password.isNull())
+        setFormParam("password", password);
+
+    if (expired_date != 0) 
+        setFormParam("expired_date", QString::number(expired_date));
+    
+    setFormParam("repo_id", repo_id);
+    setFormParam("path", path);
+}
+
+void CreatShareLinkRequest::requestSuccess(QNetworkReply& reply)
+{
+    json_error_t error;
+    json_t* root = parseJSON(reply, &error);
+    if (!root) {
+        qWarning("CreatShareLinkRequest: failed to parse json:%s\n",
+                 error.text);
+        emit failed(ApiError::fromJsonError());
+        return;
+    }
+
+    QScopedPointer<json_t, JsonPointerCustomDeleter> json(root);
+    QMap<QString, QVariant> dict = mapFromJSON(json.data(), &error);
+
     if (!dict.contains("link")) {
         emit failed(ApiError::fromJsonError());
         return;

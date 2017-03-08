@@ -808,12 +808,34 @@ public:
 
 signals:
     void success(const QString& url);
+    void failed(const QString& repo_id, const QString& path);
 
 protected slots:
     void requestSuccess(QNetworkReply& reply);
 
 private:
+    const QString repo_id_;
+    const QString path_;
     Q_DISABLE_COPY(GetSharedLinkRequest)
+};
+
+class CreatShareLinkRequest : public SeafileApiRequest {
+    Q_OBJECT
+public:
+    CreatShareLinkRequest(const Account &account,
+                          const QString &repo_id,
+                          const QString &path,
+                          const QString &password = QString(),
+                          quint64 expired_date = 0);
+
+signals:
+    void success(const QString& url);
+
+protected slots:
+    void requestSuccess(QNetworkReply& reply);
+
+private:
+    Q_DISABLE_COPY(CreatShareLinkRequest)
 };
 
 class GetFileUploadLinkRequest : public SeafileApiRequest {

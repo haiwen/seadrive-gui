@@ -218,7 +218,9 @@ void SeafileExtensionHandler::generateShareLink(const QString& repo_id,
             account, repo_id, path_in_repo);
 
         connect(req, SIGNAL(success(const QString&)),
-                this, SLOT(onShareLinkGenerated(const QString&)));
+                this, SLOT(getShareLinkSuccess(const QString&)));
+        connect(req, SIGNAL(failed(const QString&, const QString&)),
+                this, SLOT(getShareLinkFailed(const QString&, const QString&)));
 
         req->send();
     }
@@ -274,13 +276,26 @@ void SeafileExtensionHandler::openUrlWithAutoLogin(const QUrl& url)
     AutoLoginService::instance()->startAutoLogin(url.toString());
 }
 
-void SeafileExtensionHandler::onShareLinkGenerated(const QString& link)
+void SeafileExtensionHandler::getShareLinkSuccess(const QString& link)
 {
     SharedLinkDialog *dialog = new SharedLinkDialog(link, NULL);
     dialog->setAttribute(Qt::WA_DeleteOnClose);
     dialog->show();
     dialog->raise();
     dialog->activateWindow();
+}
+
+void SeafileExtensionHandler::getShareLinkFailed(const QString& repo_id,
+                                                 const QString& path)
+{
+    const Account account = gui->accountManager()->currentAccount();
+    CreatShareLinkRequest *req = new CreatShareLinkRequest(
+        account, repo_id, path);
+
+    connect(req, SIGNAL(success(const QString&)),
+            this, SLOT(getShareLinkSuccess(const QString&)));
+
+    req->send();
 }
 
 void SeafileExtensionHandler::onLockFileSuccess()
