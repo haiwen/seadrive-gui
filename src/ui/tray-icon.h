@@ -4,6 +4,9 @@
 #include <QSystemTrayIcon>
 #include <QHash>
 #include <QQueue>
+#include <QList>
+
+#include "rpc/sync-error.h"
 
 class QAction;
 class QMenu;
@@ -13,6 +16,7 @@ class Account;
 class ApiError;
 class LoginDialog;
 class TrayNotificationManager;
+class SyncErrorsDialog;
 
 
 class SeafileTrayIcon : public QSystemTrayIcon {
@@ -29,6 +33,7 @@ public:
         STATE_TRANSFER_1,
         STATE_TRANSFER_2,
         STATE_SERVERS_NOT_CONNECTED,
+        STATE_HAS_SYNC_ERRORS,
         STATE_HAVE_UNREAD_MESSAGE,
     };
 
@@ -52,6 +57,10 @@ public:
                             const QString& message);
 
     void setTransferRate(qint64 up_rate, qint64 down_rate);
+
+    void setSyncErrors(const QList<SyncError> errors);
+    QList<SyncError> syncErrors() const { return sync_errors_; }
+
 
 public slots:
     void showSettingsWindow();
@@ -84,12 +93,15 @@ private slots:
     // only used on windows
     void onMessageClicked();
 
+    void showSyncErrorsDialog();
+
 private:
     Q_DISABLE_COPY(SeafileTrayIcon)
 
     void createActions();
     void createContextMenu();
     void createGlobalMenuBar();
+    void setStateWithSyncErrors();
 
     QIcon stateToIcon(TrayState state);
     QIcon getIcon(const QString& name);
@@ -108,7 +120,7 @@ private:
     QAction *login_action_;
     QAction *open_seafile_folder_action_;
     QAction *open_log_directory_action_;
-    QAction *view_unread_seahub_notifications_action_;
+    QAction *show_sync_errors_action_;
 
     QAction *about_action_;
     QAction *open_help_action_;
@@ -149,6 +161,9 @@ private:
     QAction *transfer_rate_display_action_;
     qint64 up_rate_;
     qint64 down_rate_;
+
+    QList<SyncError> sync_errors_;
+    SyncErrorsDialog *sync_errors_dialog_;
 };
 
 #endif // SEAFILE_CLIENT_TRAY_ICON_H

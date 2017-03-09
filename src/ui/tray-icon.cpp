@@ -21,6 +21,7 @@
 #include "src/ui/login-dialog.h"
 #include "src/ui/init-sync-dialog.h"
 #include "src/ui/about-dialog.h"
+#include "src/ui/sync-errors-dialog.h"
 #include "api/api-error.h"
 #include "api/requests.h"
 #include "seadrive-gui.h"
@@ -92,7 +93,8 @@ SeafileTrayIcon::SeafileTrayIcon(QObject *parent)
       next_message_msec_(0),
       login_dlg_(nullptr),
       up_rate_(0),
-      down_rate_(0)
+      down_rate_(0),
+      sync_errors_dialog_(nullptr)
 {
     setState(STATE_DAEMON_UP);
     rotate_timer_ = new QTimer(this);
@@ -144,8 +146,8 @@ void SeafileTrayIcon::createActions()
     settings_action_ = new QAction(tr("Settings"), this);
     connect(settings_action_, SIGNAL(triggered()), this, SLOT(showSettingsWindow()));
 
-    // login_action_ = new QAction(tr("Add another account"), this);
-    // connect(login_action_, SIGNAL(triggered()), this, SLOT(showLoginDialog()));
+    show_sync_errors_action_ = new QAction(tr("Show file sync errors"), this);
+    connect(show_sync_errors_action_, SIGNAL(triggered()), this, SLOT(showSyncErrorsDialog()));
 
     open_seafile_folder_action_ = new QAction(tr("Open %1 &folder").arg(getBrand()), this);
     open_seafile_folder_action_->setStatusTip(tr("open %1 folder").arg(getBrand()));
@@ -172,8 +174,6 @@ void SeafileTrayIcon::createContextMenu()
     // help_menu_->addAction(open_help_action_);
 
     context_menu_ = new QMenu(NULL);
-    // context_menu_->addAction(view_unread_seahub_notifications_action_);
-
     context_menu_->addAction(transfer_rate_display_action_);
     context_menu_->addSeparator();
 
@@ -181,9 +181,8 @@ void SeafileTrayIcon::createContextMenu()
 
     context_menu_->addAction(open_seafile_folder_action_);
     context_menu_->addAction(open_log_directory_action_);
-    // context_menu_->addAction(login_action_);
     context_menu_->addAction(settings_action_);
-    // context_menu_->addMenu(help_menu_);
+    context_menu_->addAction(show_sync_errors_action_);
 
     context_menu_->addSeparator();
     account_menu_ = new QMenu(tr("Accounts"), NULL);
@@ -366,7 +365,7 @@ void SeafileTrayIcon::rotateTrayIcon()
 {
     if (rotate_counter_ >= 8) {
         rotate_timer_->stop();
-        setState (STATE_DAEMON_UP);
+        setStateWithSyncErrors();
         return;
     }
 
@@ -428,6 +427,7 @@ QIcon SeafileTrayIcon::stateToIcon(TrayState state)
         icon_name = ":/images/win/seafile_transfer_2.ico";
         break;
     case STATE_SERVERS_NOT_CONNECTED:
+    case STATE_HAS_SYNC_ERRORS:
         icon_name = ":/images/win/seafile_warning.ico";
         break;
     case STATE_HAVE_UNREAD_MESSAGE:
@@ -458,6 +458,7 @@ QIcon SeafileTrayIcon::stateToIcon(TrayState state)
         icon_name = ":/images/mac/seafile_transfer_2";
         break;
     case STATE_SERVERS_NOT_CONNECTED:
+    case STATE_HAS_SYNC_ERRORS:
         icon_name = ":/images/mac/seafile_warning";
         break;
     case STATE_HAVE_UNREAD_MESSAGE:
@@ -484,6 +485,7 @@ QIcon SeafileTrayIcon::stateToIcon(TrayState state)
         icon_name = ":/images/seafile_transfer_2.png";
         break;
     case STATE_SERVERS_NOT_CONNECTED:
+    case STATE_HAS_SYNC_ERRORS:
         icon_name = ":/images/seafile_warning.png";
         break;
     case STATE_HAVE_UNREAD_MESSAGE:
@@ -593,57 +595,11 @@ void SeafileTrayIcon::refreshTrayIcon()
         return;
     }
 
-    // int n_unread_msg = SeahubNotificationsMonitor::instance()->getUnreadNotifications();
-    // if (n_unread_msg > 0) {
-    //     setState(STATE_HAVE_UNREAD_MESSAGE,
-    //              tr("You have %n message(s)", "", n_unread_msg));
-    //     return;
-    // }
-
-    // if (!gui->settingsManager()->autoSync()) {
-    //     setState(STATE_DAEMON_AUTOSYNC_DISABLED,
-    //              tr("auto sync is disabled"));
-    //     return;
-    // }
-
-    // if (!ServerStatusService::instance()->allServersConnected()) {
-    //     setState(STATE_SERVERS_NOT_CONNECTED, tr("some servers not connected"));
-    //     return;
-    // }
-
-    setState(STATE_DAEMON_UP);
+    setStateWithSyncErrors();
 }
 
 void SeafileTrayIcon::refreshTrayIconToolTip()
 {
-    // if (!gui->settingsManager()->autoSync())
-    //     return;
-
-    // int up_rate, down_rate;
-    // if (gui->rpcClient()->getUploadRate(&up_rate) < 0 ||
-    //     gui->rpcClient()->getDownloadRate(&down_rate) < 0) {
-    //     return;
-    // }
-
-    // if (up_rate <= 0 && down_rate <= 0) {
-    //     return;
-    // }
-
-    // QString uploadStr = tr("Uploading");
-    // QString downloadStr =  tr("Downloading");
-    // if (up_rate > 0 && down_rate > 0) {
-    //     setToolTip(QString("%1 %2/s, %3 %4/s\n").
-    //                arg(uploadStr).arg(readableFileSize(up_rate)).
-    //                arg(downloadStr).arg(readableFileSize(down_rate)));
-    // } else if (up_rate > 0) {
-    //     setToolTip(QString("%1 %2/s\n").
-    //                arg(uploadStr).arg(readableFileSize(up_rate)));
-    // } else /* down_rate > 0*/ {
-    //     setToolTip(QString("%1 %2/s\n").
-    //                arg(downloadStr).arg(readableFileSize(down_rate)));
-    // }
-
-    // rotate(true);
 }
 
 
@@ -802,4 +758,32 @@ void SeafileTrayIcon::setTransferRate(qint64 up_rate, qint64 down_rate)
         tr("Up %1, Down %2")
             .arg(translateTransferRate(up_rate_),
                     translateTransferRate(down_rate_)));
+}
+
+void SeafileTrayIcon::setSyncErrors(const QList<SyncError> errors)
+{
+    sync_errors_ = errors;
+    reloadTrayIcon();
+}
+
+void SeafileTrayIcon::setStateWithSyncErrors()
+{
+    if (!sync_errors_.isEmpty()) {
+        setState(STATE_HAS_SYNC_ERRORS);
+    } else {
+        setState(STATE_DAEMON_UP);
+    }
+}
+
+void SeafileTrayIcon::showSyncErrorsDialog()
+{
+    // CloneTasksDialog dialog(this);
+    if (sync_errors_dialog_ == nullptr) {
+        sync_errors_dialog_ = new SyncErrorsDialog;
+    }
+
+    sync_errors_dialog_->updateErrors();
+    sync_errors_dialog_->show();
+    sync_errors_dialog_->raise();
+    sync_errors_dialog_->activateWindow();
 }

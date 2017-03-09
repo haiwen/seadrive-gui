@@ -53,6 +53,7 @@ private slots:
     void checkSeaDriveEvents();
     void checkNotification();
     void checkSyncStatus();
+    void checkSyncErrors();
 
 private:
     Q_DISABLE_COPY(MessagePoller)

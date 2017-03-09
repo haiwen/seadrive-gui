@@ -71,7 +71,7 @@ IF (WIN32)
     SET(platform_specific_moc_headers ${platform_specific_moc_headers} src/ext-handler.h src/ui/disk-letter-dialog.h )
     SET(platform_specific_sources ${platform_specific_sources} src/ext-handler.cpp src/ui/disk-letter-dialog.cpp)
     SET(platform_specific_ui_files ${platform_specific_ui_files} ui/disk-letter-dialog.ui)
-    
+
     IF (BUILD_SPARKLE_SUPPORT)
       IF(NOT EXISTS "${CMAKE_SOURCE_DIR}/WinSparkle.lib")
         message(FATAL_ERROR "File ${CMAKE_SOURCE_DIR}/WinSparkle.lib not found in current directory. Please setup winsparkle correctly." )
@@ -187,6 +187,7 @@ SET(moc_headers
   src/ui/seafilelink-dialog.h
   src/ui/settings-dialog.h
   src/ui/sharedlink-dialog.h
+  src/ui/sync-errors-dialog.h
   src/ui/tray-icon.h
   src/ui/about-dialog.h
 
@@ -269,6 +270,7 @@ SET(seadrive_gui_sources
   src/remote-wipe-service.cpp
 
   src/rpc/rpc-client.cpp
+  src/rpc/sync-error.cpp
 
   src/seadrive-gui.cpp
   src/settings-mgr.cpp
@@ -283,6 +285,7 @@ SET(seadrive_gui_sources
   src/ui/seafilelink-dialog.cpp
   src/ui/settings-dialog.cpp
   src/ui/sharedlink-dialog.cpp
+  src/ui/sync-errors-dialog.cpp
   src/ui/tray-icon.cpp
   src/ui/about-dialog.cpp
   ${platform_specific_sources}

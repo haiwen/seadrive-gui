@@ -8,6 +8,7 @@
 #include "seadrive-gui.h"
 #include "settings-mgr.h"
 #include "rpc/rpc-client.h"
+#include "rpc/sync-error.h"
 #include "ui/tray-icon.h"
 
 #include "message-poller.h"
@@ -33,69 +34,6 @@ struct GlobalSyncStatus {
 #define SYNC_ERROR_ID_ACCESS_DENIED 5
 #define SYNC_ERROR_ID_QUOTA_FULL 6
 
-
-QString translateNotificationError(SyncNotification notification)
-{
-    bool has_path = !notification.error_path.isEmpty();
-    QString file;
-    if (has_path) {
-        file = ::getBaseName(notification.error_path);
-    }
-    switch (notification.error_id) {
-    case SYNC_ERROR_ID_FILE_LOCKED_BY_APP: {
-        if (has_path) {
-            return QObject::tr("File %1 is locked by other programs").arg(file);
-        } else {
-            return QObject::tr("Some file is locked by other programs");
-        }
-        break;
-    }
-    case SYNC_ERROR_ID_FOLDER_LOCKED_BY_APP: {
-        if (has_path) {
-            return QObject::tr("Folder %1 is locked by other programs").arg(file);
-        } else {
-            return QObject::tr("Some folder is locked by other programs");
-        }
-        break;
-    }
-    case SYNC_ERROR_ID_FILE_LOCKED: {
-        if (has_path) {
-            return QObject::tr("File %1 is locked by another user").arg(file);
-        } else {
-            return QObject::tr("Some file is locked by another user");
-        }
-        break;
-    }
-    case SYNC_ERROR_ID_INVALID_PATH: {
-        if (has_path) {
-            return QObject::tr("Invalid path %1").arg(file);
-        } else {
-            return QObject::tr("Trying to access an invalid path");
-        }
-        break;
-    }
-    case SYNC_ERROR_ID_INDEX_ERROR: {
-        if (has_path) {
-            return QObject::tr("Error when indexing file %1").arg(file);
-        } else {
-            return QObject::tr("Error when indexing files");
-        }
-        break;
-    }
-    case SYNC_ERROR_ID_ACCESS_DENIED: {
-        return QObject::tr("You don't have enough permission for this library");
-        break;
-    }
-    case SYNC_ERROR_ID_QUOTA_FULL: {
-        return QObject::tr("The storage quota has been used up");
-        break;
-    }
-    default:
-        return QObject::tr("Unknown error");
-    }
-
-    return ""; // Unreachable, just to silent compiler warnings.
-}
 
 } // namespace
 
@@ -141,6 +79,7 @@ MessagePoller::MessagePoller(QObject *parent): QObject(parent)
     connect(check_notification_timer_, SIGNAL(timeout()), this, SLOT(checkSeaDriveEvents()));
     connect(check_notification_timer_, SIGNAL(timeout()), this, SLOT(checkNotification()));
     connect(check_notification_timer_, SIGNAL(timeout()), this, SLOT(checkSyncStatus()));
+    connect(check_notification_timer_, SIGNAL(timeout()), this, SLOT(checkSyncErrors()));
 }
 
 MessagePoller::~MessagePoller()
@@ -193,6 +132,20 @@ void MessagePoller::checkSyncStatus()
         gui->trayIcon()->rotate(false);
         gui->trayIcon()->setTransferRate(0, 0);
     }
+}
+
+void MessagePoller::checkSyncErrors()
+{
+    json_t *ret;
+    if (!rpc_client_->getSyncErrors(&ret)) {
+        gui->trayIcon()->setSyncErrors(QList<SyncError>());
+        return;
+    }
+
+    QList<SyncError> errors = SyncError::listFromJSON(ret);
+    json_decref(ret);
+
+    gui->trayIcon()->setSyncErrors(errors);
 }
 
 void MessagePoller::processNotification(const SyncNotification& notification)
@@ -292,7 +245,7 @@ SyncNotification SyncNotification::fromJson(const json_t *root)
         if (notification.isSyncError()) {
             notification.error_id = json.getLong("err_id");
             notification.error_path = json.getString("path");
-            notification.error = translateNotificationError(notification);
+            notification.error = SyncError::syncErrorIdToErrorStr(notification.error_id, notification.error_path);
         }
     }
 
