@@ -58,7 +58,7 @@ QList<SyncError> SyncError::listFromJSON(const json_t *json)
 
 QString SyncError::syncErrorIdToErrorStr(int error_id, const QString& path)
 {
-    bool has_path = path.isEmpty();
+    bool has_path = !path.isEmpty();
     QString file;
     if (has_path) {
         file = ::getBaseName(path);
