@@ -191,6 +191,8 @@ SET(moc_headers
   src/ui/tray-icon.h
   src/ui/about-dialog.h
 
+  third_party/QtAwesome/QtAwesome.h
+
   src/shib/shib-login-dialog.h
   ${SHIB_EXTRA_HEADER}
   ${platform_specific_moc_headers}
@@ -207,7 +209,11 @@ SET(ui_files
 QT5_WRAP_UI(ui_output ${ui_files})
 
 # resources files
-QT5_ADD_RESOURCES(resources_ouput seadrive-gui.qrc)
+QT5_ADD_RESOURCES(
+  resources_ouput
+  seadrive-gui.qrc
+  third_party/QtAwesome/QtAwesome.qrc
+)
 
 # MESSAGE("moc output: ${moc_output}")
 # MESSAGE("ui output: ${ui_output}")
@@ -291,12 +297,14 @@ SET(seadrive_gui_sources
   ${platform_specific_sources}
 
   src/i18n.cpp
+  third_party/QtAwesome/QtAwesome.cpp
 )
 
 INCLUDE_DIRECTORIES(
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/src
+  ${CMAKE_CURRENT_SOURCE_DIR}/third_party/QtAwesome
   )
 
 FOREACH(USE_QT_LIBRARY ${USE_QT_LIBRARIES})

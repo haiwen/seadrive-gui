@@ -7,6 +7,7 @@
 #include <QDesktopServices>
 #include <QCloseEvent>
 
+#include "QtAwesome.h"
 #include "utils/utils.h"
 #include "seadrive-gui.h"
 #include "tray-icon.h"
@@ -122,14 +123,14 @@ void SyncErrorsDialog::createTitleBar()
     minimize_button_ = new QPushButton;
     minimize_button_->setObjectName("mMinimizeBtn");
     minimize_button_->setToolTip(tr("Minimize"));
-    // minimize_button_->setIcon(awesome->icon(icon_minus, QColor("#808081")));
+    minimize_button_->setIcon(awesome->icon(icon_minus, QColor("#808081")));
     layout->addWidget(minimize_button_);
     connect(minimize_button_, SIGNAL(clicked()), this, SLOT(showMinimized()));
 
     close_button_ = new QPushButton;
     close_button_->setObjectName("mCloseBtn");
     close_button_->setToolTip(tr("Close"));
-    // close_button_->setIcon(awesome->icon(icon_remove, QColor("#808081")));
+    close_button_->setIcon(awesome->icon(icon_remove, QColor("#808081")));
     layout->addWidget(close_button_);
     connect(close_button_, SIGNAL(clicked()), this, SLOT(close()));
 

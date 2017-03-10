@@ -8,10 +8,11 @@
 #include <glib-object.h>
 #include <cstdio>
 
+#include "QtAwesome.h"
+
 #include "utils/utils.h"
 #include "utils/process.h"
 #include "seadrive-gui.h"
-
 
 #if defined(Q_OS_MAC)
 #include "application.h"
@@ -113,6 +114,9 @@ int main(int argc, char *argv[])
         return -1;
     }
 
+    // init qtawesome component
+    awesome = new QtAwesome(qApp);
+    awesome->initFontAwesome();
 
     // start applet
     SeadriveGui mGui;
