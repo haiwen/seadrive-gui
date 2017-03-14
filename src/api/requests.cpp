@@ -1237,7 +1237,7 @@ void GetSharedLinkRequest::requestSuccess(QNetworkReply& reply)
 
     QScopedPointer<json_t, JsonPointerCustomDeleter> json(json_array_get(root, 0));
     QMap<QString, QVariant> dict = mapFromJSON(json.data(), &error);
-    
+
     if (!dict.contains("link")) {
         emit SeafileApiRequest::failed(ApiError::fromJsonError());
         return;
@@ -1259,9 +1259,9 @@ CreatShareLinkRequest::CreatShareLinkRequest(const Account &account,
     if (!password.isNull())
         setFormParam("password", password);
 
-    if (expired_date != 0) 
+    if (expired_date != 0)
         setFormParam("expired_date", QString::number(expired_date));
-    
+
     setFormParam("repo_id", repo_id);
     setFormParam("path", path);
 }
