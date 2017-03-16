@@ -34,8 +34,10 @@ AdvancedSharedLinkDialog::AdvancedSharedLinkDialog(const QString &text, QWidget 
     QGridLayout *gridLayout = new QGridLayout();
     QLabel *pwdLabel = new QLabel(tr("password:"));
     QLineEdit *pwdEdit = new QLineEdit;
+    pwdEdit->setEchoMode(QLineEdit::Password);
     QLabel *pwdLabel2 = new QLabel(tr("password again:"));
     QLineEdit *pwdEdit2 = new QLineEdit;
+    pwdEdit2->setEchoMode(QLineEdit::Password);
     gridLayout->addWidget(pwdLabel, 0, 0);
     gridLayout->addWidget(pwdEdit, 0, 1);
     gridLayout->addWidget(pwdLabel2, 1, 0);
@@ -47,18 +49,15 @@ AdvancedSharedLinkDialog::AdvancedSharedLinkDialog(const QString &text, QWidget 
     expiredDateGroupBox->setCheckable(true);
     expiredDateGroupBox->setChecked(true);
     QHBoxLayout *expiredDateLayout = new QHBoxLayout(); 
+    QLabel *expiredDateLabel = new QLabel(tr("Days:"));
     QSpinBox *expiredDateSpinBox = new QSpinBox();
     expiredDateSpinBox->setMinimum(1);
+    expiredDateLayout->addWidget(expiredDateLabel);
     expiredDateLayout->addWidget(expiredDateSpinBox);
     expiredDateGroupBox->setLayout(expiredDateLayout); 
     layout->addWidget(expiredDateGroupBox);
 
     QHBoxLayout *hlayout = new QHBoxLayout;
-
-    QCheckBox *is_download_checked = new QCheckBox(tr("Direct Download"));
-    connect(is_download_checked, SIGNAL(stateChanged(int)),
-            this, SLOT(onDownloadStateChanged(int)));
-    hlayout->addWidget(is_download_checked);
 
     QWidget *spacer = new QWidget;
     spacer->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);

@@ -20,6 +20,7 @@
 #include "utils/file-utils.h"
 #include "api/requests.h"
 #include "ui/sharedlink-dialog.h"
+#include "ui/advanced-sharedlink-dialog.h"
 #include "ui/seafilelink-dialog.h"
 // #include "ui/private-share-dialog.h"
 #include "rpc/rpc-client.h"
@@ -161,8 +162,8 @@ SeafileExtensionHandler::SeafileExtensionHandler()
 {
     listener_thread_ = new ExtConnectionListenerThread;
 
-    connect(listener_thread_, SIGNAL(generateShareLink(const QString&, const QString&, bool, bool)),
-            this, SLOT(generateShareLink(const QString&, const QString&, bool, bool)));
+    connect(listener_thread_, SIGNAL(generateShareLink(const QString&, const QString&, bool, bool, bool)),
+            this, SLOT(generateShareLink(const QString&, const QString&, bool, bool, bool)));
 
     connect(listener_thread_, SIGNAL(lockFile(const QString&, const QString&, bool)),
             this, SLOT(lockFile(const QString&, const QString&, bool)));
@@ -195,7 +196,8 @@ void SeafileExtensionHandler::stop()
 void SeafileExtensionHandler::generateShareLink(const QString& repo_id,
                                                 const QString& path_in_repo,
                                                 bool is_file,
-                                                bool internal)
+                                                bool internal,
+                                                bool advanced)
 {
     // qDebug("path_in_repo: %s", path_in_repo.toUtf8().data());
     const Account account = gui->accountManager()->currentAccount();
@@ -209,6 +211,12 @@ void SeafileExtensionHandler::generateShareLink(const QString& repo_id,
             path += "/";
         }
         SeafileLinkDialog *dialog = new SeafileLinkDialog(repo_id, account, path, NULL);
+        dialog->setAttribute(Qt::WA_DeleteOnClose);
+        dialog->show();
+        dialog->raise();
+        dialog->activateWindow();
+    } else if (advanced) {
+        AdvancedSharedLinkDialog *dialog = new AdvancedSharedLinkDialog("test", NULL);
         dialog->setAttribute(Qt::WA_DeleteOnClose);
         dialog->show();
         dialog->raise();
@@ -362,8 +370,8 @@ void ExtConnectionListenerThread::servePipeInNewThread(HANDLE pipe)
 {
     ExtCommandsHandler *t = new ExtCommandsHandler(pipe);
 
-    connect(t, SIGNAL(generateShareLink(const QString&, const QString&, bool, bool)),
-            this, SIGNAL(generateShareLink(const QString&, const QString&, bool, bool)));
+    connect(t, SIGNAL(generateShareLink(const QString&, const QString&, bool, bool, bool)),
+            this, SIGNAL(generateShareLink(const QString&, const QString&, bool, bool, bool)));
     connect(t, SIGNAL(lockFile(const QString&, const QString&, bool)),
             this, SIGNAL(lockFile(const QString&, const QString&, bool)));
     connect(t, SIGNAL(privateShare(const QString&, const QString&, bool)),
@@ -395,9 +403,11 @@ void ExtCommandsHandler::run()
         if (cmd == "list-repos") {
             resp = handleListRepos(args);
         } else if (cmd == "get-share-link") {
-            handleGenShareLink(args, false);
+            handleGenShareLink(args, false, false);
+        } else if (cmd == "get-advanced-share-link") {
+            handleGenShareLink(args, false, true);
         } else if (cmd == "get-internal-link") {
-            handleGenShareLink(args, true);
+            handleGenShareLink(args, true, false);
         } else if (cmd == "get-file-status") {
             resp = handleGetFileStatus(args);
         } else if (cmd == "lock-file") {
@@ -468,7 +478,9 @@ bool ExtCommandsHandler::sendResponse(const QString& resp)
 //     return ReposInfoCache::instance()->getReposInfo(ts);
 // }
 
-void ExtCommandsHandler::handleGenShareLink(const QStringList& args, bool internal)
+void ExtCommandsHandler::handleGenShareLink(const QStringList& args,
+                                            bool internal,
+                                            bool advanced)
 {
     if (args.size() != 1) {
         return;
@@ -492,7 +504,7 @@ void ExtCommandsHandler::handleGenShareLink(const QStringList& args, bool intern
 
     bool is_file = QFileInfo(path).isDir();
 
-    emit generateShareLink(repo_id, path_in_repo, is_file, internal);
+    emit generateShareLink(repo_id, path_in_repo, is_file, internal, advanced);
 
     return;
 }
