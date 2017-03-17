@@ -250,6 +250,7 @@ void SettingsDialog::showEvent(QShowEvent *event)
         i++;
     }
 #else
+    mDiskLetterLabel->setVisible(false);
     mDiskLetter->setVisible(false);
 #endif // Q_OS_WIN32
 

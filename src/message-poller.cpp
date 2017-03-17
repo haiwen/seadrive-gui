@@ -171,6 +171,17 @@ void MessagePoller::processNotification(const SyncNotification& notification)
             "",
             "",
             QSystemTrayIcon::Warning);
+    } else if (notification.type == "sync.multipart_upload") {
+        if (!gui->settingsManager()->notify()) {
+            return;
+        }
+        QString title = tr("\"%1\" is being uploaded").arg(notification.repo_name);
+        gui->trayIcon()->showMessage(
+            title,
+            translateCommitDesc(notification.commit_desc),
+            notification.repo_id,
+            notification.commit_id,
+            notification.parent_commit_id);
     } else if (notification.type == "fs-loaded") {
         emit seadriveFSLoaded();
     } else if (notification.isCrossRepoMove()) {
@@ -227,9 +238,9 @@ SyncNotification SyncNotification::fromJson(const json_t *root)
     SyncNotification notification;
     Json json(root);
 
-    // char *s = json_dumps(root, 0);
-    // printf ("[%s] %s\n", QDateTime::currentDateTime().toString().toUtf8().data(), s);
-    // free (s);
+    char *s = json_dumps(root, 0);
+    printf ("[%s] %s\n", QDateTime::currentDateTime().toString().toUtf8().data(), s);
+    free (s);
 
     notification.type = json.getString("type");
 
