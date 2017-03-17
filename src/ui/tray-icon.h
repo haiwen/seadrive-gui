@@ -121,6 +121,7 @@ private:
     QAction *open_seafile_folder_action_;
     QAction *open_log_directory_action_;
     QAction *show_sync_errors_action_;
+    QAction *global_sync_error_action_;
 
     QAction *about_action_;
     QAction *open_help_action_;
@@ -163,6 +164,7 @@ private:
     qint64 down_rate_;
 
     QList<SyncError> sync_errors_;
+    SyncError global_sync_error_;
     SyncErrorsDialog *sync_errors_dialog_;
 };
 

@@ -149,6 +149,8 @@ void SeafileTrayIcon::createActions()
     show_sync_errors_action_ = new QAction(tr("Show file sync errors"), this);
     connect(show_sync_errors_action_, SIGNAL(triggered()), this, SLOT(showSyncErrorsDialog()));
 
+    global_sync_error_action_ = new QAction("", this);
+
     open_seafile_folder_action_ = new QAction(tr("Open %1 &folder").arg(getBrand()), this);
     open_seafile_folder_action_->setStatusTip(tr("open %1 folder").arg(getBrand()));
     connect(open_seafile_folder_action_, SIGNAL(triggered()), this, SLOT(openSeafileFolder()));
@@ -175,6 +177,8 @@ void SeafileTrayIcon::createContextMenu()
 
     context_menu_ = new QMenu(NULL);
     context_menu_->addAction(transfer_rate_display_action_);
+    context_menu_->addAction(global_sync_error_action_);
+    context_menu_->addAction(show_sync_errors_action_);
     context_menu_->addSeparator();
 
     context_menu_->addAction(open_seafile_folder_action_);
@@ -182,7 +186,6 @@ void SeafileTrayIcon::createContextMenu()
     context_menu_->addAction(open_seafile_folder_action_);
     context_menu_->addAction(open_log_directory_action_);
     context_menu_->addAction(settings_action_);
-    context_menu_->addAction(show_sync_errors_action_);
 
     context_menu_->addSeparator();
     account_menu_ = new QMenu(tr("Accounts"), NULL);
@@ -203,13 +206,16 @@ void SeafileTrayIcon::prepareContextMenu()
 {
     const std::vector<Account>& accounts = gui->accountManager()->accounts();
 
-    // if (rotate_timer_->isActive()) {
-    //     transfer_rate_display_action_->setVisible(true);
-    // } else {
-    //     transfer_rate_display_action_->setVisible(false);
-    // }
+    if (global_sync_error_.isValid()) {
+        global_sync_error_action_->setVisible(true);
+        global_sync_error_action_->setText(global_sync_error_.error_str);
+    } else {
+        global_sync_error_action_->setVisible(false);
+    }
 
-    // Remove all menu items
+    show_sync_errors_action_->setVisible(!sync_errors_.isEmpty());
+
+    // Remove all menu items and recreate them.
     account_menu_->clear();
 
     if (!accounts.empty()) {
@@ -411,6 +417,7 @@ QIcon SeafileTrayIcon::stateToIcon(TrayState state)
 #if defined(Q_OS_WIN32)
     QString icon_name;
     switch (state) {
+    case STATE_NONE:
     case STATE_DAEMON_UP:
         icon_name = utils::win::isWindows10OrHigher() ? ":/images/win/daemon_up_white.ico" : ":/images/win/daemon_up.ico";
         break;
@@ -469,6 +476,7 @@ QIcon SeafileTrayIcon::stateToIcon(TrayState state)
 #else
     QString icon_name;
     switch (state) {
+    case STATE_NONE:
     case STATE_DAEMON_UP:
         icon_name = ":/images/daemon_up.png";
         break;
@@ -762,13 +770,24 @@ void SeafileTrayIcon::setTransferRate(qint64 up_rate, qint64 down_rate)
 
 void SeafileTrayIcon::setSyncErrors(const QList<SyncError> errors)
 {
-    sync_errors_ = errors;
+    sync_errors_.clear();
+    global_sync_error_ = SyncError();
+
+    foreach (const SyncError& error, errors) {
+        if (error.isGlobalError()) {
+            if (global_sync_error_.timestamp < error.timestamp) {
+                global_sync_error_ = error;
+            }
+        } else {
+            sync_errors_.push_back(error);
+        }
+    }
     reloadTrayIcon();
 }
 
 void SeafileTrayIcon::setStateWithSyncErrors()
 {
-    if (!sync_errors_.isEmpty()) {
+    if (!sync_errors_.isEmpty() || global_sync_error_.isValid()) {
         setState(STATE_HAS_SYNC_ERRORS);
     } else {
         setState(STATE_DAEMON_UP);
@@ -777,7 +796,7 @@ void SeafileTrayIcon::setStateWithSyncErrors()
 
 void SeafileTrayIcon::showSyncErrorsDialog()
 {
-    // CloneTasksDialog dialog(this);
+    // gui->refreshQss();
     if (sync_errors_dialog_ == nullptr) {
         sync_errors_dialog_ = new SyncErrorsDialog;
     }

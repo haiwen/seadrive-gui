@@ -137,3 +137,8 @@ void SyncError::translateErrorStr()
     readable_time_stamp = translateCommitTime(timestamp);
     error_str = syncErrorIdToErrorStr(error_id, path);
 }
+
+bool SyncError::isGlobalError() const
+{
+    return repo_id.isEmpty();
+}

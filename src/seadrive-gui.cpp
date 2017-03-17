@@ -8,7 +8,6 @@
 #include <QDir>
 #include <QCoreApplication>
 #include <QMessageBox>
-#include <QTimer>
 #include <QHostInfo>
 
 #include <errno.h>

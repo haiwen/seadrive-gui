@@ -19,11 +19,20 @@ public:
     QString readable_time_stamp;
     QString error_str;
 
+    SyncError() {
+        timestamp = -1;
+        error_id = -1;
+    }
+
     static QList<SyncError> listFromJSON(const json_t *objlist);
     static SyncError fromJSON(const json_t *objlist);
 
     static QString syncErrorIdToErrorStr(int errr_id, const QString& path);
     void translateErrorStr();
+
+    bool isGlobalError() const;
+
+    bool isValid() const { return error_id >= 0; }
 
     bool operator==(const SyncError& rhs) const {
         return repo_id == rhs.repo_id

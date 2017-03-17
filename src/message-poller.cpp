@@ -25,16 +25,6 @@ struct GlobalSyncStatus {
     static GlobalSyncStatus fromJson(const json_t* json);
 };
 
-// Copied from seadrive/src/sync-mgr.c
-#define SYNC_ERROR_ID_FILE_LOCKED_BY_APP 0
-#define SYNC_ERROR_ID_FOLDER_LOCKED_BY_APP 1
-#define SYNC_ERROR_ID_FILE_LOCKED 2
-#define SYNC_ERROR_ID_INVALID_PATH 3
-#define SYNC_ERROR_ID_INDEX_ERROR 4
-#define SYNC_ERROR_ID_ACCESS_DENIED 5
-#define SYNC_ERROR_ID_QUOTA_FULL 6
-
-
 } // namespace
 
 class SeaDriveEvent {
@@ -162,7 +152,18 @@ void MessagePoller::processNotification(const SyncNotification& notification)
             notification.commit_id,
             notification.parent_commit_id);
     } else if (notification.type == "sync.error") {
-        QString title = tr("Error when syncing \"%1\"").arg(notification.repo_name);
+        QString path_in_title;
+        if (!notification.repo_name.isEmpty()) {
+            path_in_title = notification.repo_name;
+        } else if (!notification.error_path.isEmpty()) {
+            path_in_title = ::getBaseName(notification.error_path);
+        }
+        QString title;
+        if (!path_in_title.isEmpty()) {
+            title = tr("Error when syncing \"%1\"").arg(path_in_title);
+        } else {
+            title = tr("Error when syncing");
+        }
         gui->trayIcon()->showMessage(
             title,
             notification.error,
