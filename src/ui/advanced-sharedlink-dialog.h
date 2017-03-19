@@ -1,20 +1,38 @@
 #ifndef SEAFILE_CLIENT_FILE_BROWSER_ADVANCEDSHAREDLINK_DIALOG_H
 #define SEAFILE_CLIENT_FILE_BROWSER_ADVANCEDSHAREDLINK_DIALOG_H
 #include <QDialog>
+#include <QSpinBox>
+#include <QGroupBox>
 
 class QLineEdit;
 class AdvancedSharedLinkDialog : public QDialog
 {
     Q_OBJECT
 public:
-    AdvancedSharedLinkDialog(const QString &text, QWidget *parent);
+    AdvancedSharedLinkDialog(QWidget *parent);
+
+signals:
+    void generateAdvancedShareLink(const QString &password,
+                                   quint64 valid_days);
 
 private slots:
     void onCopyText();
-    void onDownloadStateChanged(int state);
+    void onOkBtnClicked();
+
+public slots:
+    void getShareLinkSuccess(const QString& link);
+
 private:
-    const QString text_;
+    QString password_;
+    QString password_again_;
+    quint64 valid_days_;
+
+    QGroupBox *pwdGroupBox_;
+    QGroupBox *expiredDateGroupBox_;
+    QLineEdit *pwdEdit_;
+    QLineEdit *pwdEdit2_;
     QLineEdit *editor_;
+    QSpinBox *expiredDateSpinBox_;
 };
 
 #endif

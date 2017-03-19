@@ -819,14 +819,16 @@ private:
     Q_DISABLE_COPY(GetSharedLinkRequest)
 };
 
-class CreatShareLinkRequest : public SeafileApiRequest {
+class CreateShareLinkRequest : public SeafileApiRequest {
     Q_OBJECT
 public:
-    CreatShareLinkRequest(const Account &account,
-                          const QString &repo_id,
-                          const QString &path,
-                          const QString &password = QString(),
-                          quint64 expired_date = 0);
+    CreateShareLinkRequest(const Account &account,
+                           const QString &repo_id,
+                           const QString &path,
+                           const QString &password = QString(),
+                           quint64 expired_date = 0);
+    void SetAdvancedShareParams(const QString &password,
+                                quint64 expired_date);
 
 signals:
     void success(const QString& url);
@@ -835,7 +837,7 @@ protected slots:
     void requestSuccess(QNetworkReply& reply);
 
 private:
-    Q_DISABLE_COPY(CreatShareLinkRequest)
+    Q_DISABLE_COPY(CreateShareLinkRequest)
 };
 
 class GetFileUploadLinkRequest : public SeafileApiRequest {

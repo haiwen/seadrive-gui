@@ -2,14 +2,14 @@
 
 #include <QtGlobal>
 #include <QtWidgets>
-#include <QGroupBox>
 #include <QHBoxLayout>
-#include <QSpinBox>
 #include <QGridLayout>
 #include "utils/utils-mac.h"
+#include "api/requests.h"
+#include "seadrive-gui.h"
 
-AdvancedSharedLinkDialog::AdvancedSharedLinkDialog(const QString &text, QWidget *parent)
-  : text_(text)
+AdvancedSharedLinkDialog::AdvancedSharedLinkDialog(QWidget *parent)
+    :valid_days_(0)
 {
     setWindowTitle(tr("Share Link"));
     setWindowIcon(QIcon(":/images/seafile.png"));
@@ -23,39 +23,37 @@ AdvancedSharedLinkDialog::AdvancedSharedLinkDialog(const QString &text, QWidget 
     layout->setContentsMargins(9, 9, 9, 9);
 
     editor_ = new QLineEdit;
-    editor_->setText(text_);
-    editor_->selectAll();
-    editor_->setReadOnly(true);
     layout->addWidget(editor_);
+    editor_->setReadOnly(true);
 
-    QGroupBox *pwdGroupBox = new QGroupBox("Add password protection");
-    pwdGroupBox->setCheckable(true);
-    pwdGroupBox->setChecked(true);
+    pwdGroupBox_ = new QGroupBox("Add password protection(at least 8 characters)");
+    pwdGroupBox_->setCheckable(true);
+    pwdGroupBox_->setChecked(true);
     QGridLayout *gridLayout = new QGridLayout();
     QLabel *pwdLabel = new QLabel(tr("password:"));
-    QLineEdit *pwdEdit = new QLineEdit;
-    pwdEdit->setEchoMode(QLineEdit::Password);
+    pwdEdit_ = new QLineEdit;
+    pwdEdit_->setEchoMode(QLineEdit::Password);
     QLabel *pwdLabel2 = new QLabel(tr("password again:"));
-    QLineEdit *pwdEdit2 = new QLineEdit;
-    pwdEdit2->setEchoMode(QLineEdit::Password);
+    pwdEdit2_ = new QLineEdit;
+    pwdEdit2_->setEchoMode(QLineEdit::Password);
     gridLayout->addWidget(pwdLabel, 0, 0);
-    gridLayout->addWidget(pwdEdit, 0, 1);
+    gridLayout->addWidget(pwdEdit_, 0, 1);
     gridLayout->addWidget(pwdLabel2, 1, 0);
-    gridLayout->addWidget(pwdEdit2, 1, 1);
-    pwdGroupBox->setLayout(gridLayout);
-    layout->addWidget(pwdGroupBox);
+    gridLayout->addWidget(pwdEdit2_, 1, 1);
+    pwdGroupBox_->setLayout(gridLayout);
+    layout->addWidget(pwdGroupBox_);
 
-    QGroupBox *expiredDateGroupBox = new QGroupBox("Add auto expiration");
-    expiredDateGroupBox->setCheckable(true);
-    expiredDateGroupBox->setChecked(true);
+    expiredDateGroupBox_ = new QGroupBox("Add auto expiration");
+    expiredDateGroupBox_->setCheckable(true);
+    expiredDateGroupBox_->setChecked(true);
     QHBoxLayout *expiredDateLayout = new QHBoxLayout(); 
     QLabel *expiredDateLabel = new QLabel(tr("Days:"));
-    QSpinBox *expiredDateSpinBox = new QSpinBox();
-    expiredDateSpinBox->setMinimum(1);
+    expiredDateSpinBox_ = new QSpinBox();
+    expiredDateSpinBox_->setMinimum(1);
     expiredDateLayout->addWidget(expiredDateLabel);
-    expiredDateLayout->addWidget(expiredDateSpinBox);
-    expiredDateGroupBox->setLayout(expiredDateLayout); 
-    layout->addWidget(expiredDateGroupBox);
+    expiredDateLayout->addWidget(expiredDateSpinBox_);
+    expiredDateGroupBox_->setLayout(expiredDateLayout);
+    layout->addWidget(expiredDateGroupBox_);
 
     QHBoxLayout *hlayout = new QHBoxLayout;
 
@@ -73,7 +71,7 @@ AdvancedSharedLinkDialog::AdvancedSharedLinkDialog(const QString &text, QWidget 
 
     QPushButton *ok = new QPushButton(tr("OK"));
     hlayout->addWidget(ok);
-    connect(ok, SIGNAL(clicked()), this, SLOT(accept()));
+    connect(ok, SIGNAL(clicked()), this, SLOT(onOkBtnClicked()));
 
     layout->addLayout(hlayout);
 
@@ -94,10 +92,36 @@ void AdvancedSharedLinkDialog::onCopyText()
 #endif
 }
 
-void AdvancedSharedLinkDialog::onDownloadStateChanged(int state)
+void AdvancedSharedLinkDialog::onOkBtnClicked()
 {
-    if (state == Qt::Checked)
-        editor_->setText(text_ + "?dl=1");
-    else
-        editor_->setText(text_);
+    if (editor_->text().isEmpty() == false) {
+        gui->warningBox(tr("Advanced share link is already generated."), this);
+        return;
+    }
+    if (expiredDateGroupBox_->isChecked()) {
+        valid_days_ = expiredDateSpinBox_->value();
+    }
+    if (pwdGroupBox_->isChecked()) {
+        password_ = pwdEdit_->text();
+        password_again_ = pwdEdit2_->text();
+        if (QString::compare(password_, password_again_) != 0) {
+            gui->warningBox(tr("passwords don't match."), this);
+            pwdEdit_->clear();
+            pwdEdit2_->clear();
+            return;
+        } else if (password_.length() < 8) {
+            gui->warningBox(tr("passwords at least 8 characters."), this);
+            pwdEdit_->clear();
+            pwdEdit2_->clear();
+            return;
+	}
+    }
+
+    emit generateAdvancedShareLink(password_, valid_days_);
+}
+
+void AdvancedSharedLinkDialog::getShareLinkSuccess(const QString& link)
+{
+    editor_->setText(link);
+    editor_->selectAll();
 }

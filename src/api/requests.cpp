@@ -1247,31 +1247,37 @@ void GetSharedLinkRequest::requestSuccess(QNetworkReply& reply)
     emit success(link);
 }
 
-CreatShareLinkRequest::CreatShareLinkRequest(const Account &account,
-                                             const QString &repo_id,
-                                             const QString &path,
-                                             const QString &password,
-                                             quint64 expired_date)
+CreateShareLinkRequest::CreateShareLinkRequest(const Account &account,
+                                               const QString &repo_id,
+                                               const QString &path,
+                                               const QString &password,
+                                               quint64 expired_date)
     : SeafileApiRequest(
           account.getAbsoluteUrl(QString(kGetFileSharedLinkUrl)),
           SeafileApiRequest::METHOD_POST, account.token)
+{
+    setFormParam("repo_id", repo_id);
+    setFormParam("path", path);
+
+    SetAdvancedShareParams(password, expired_date);
+}
+
+void CreateShareLinkRequest::SetAdvancedShareParams(const QString &password,
+                                                    quint64 expired_date)
 {
     if (!password.isNull())
         setFormParam("password", password);
 
     if (expired_date != 0)
         setFormParam("expired_date", QString::number(expired_date));
-
-    setFormParam("repo_id", repo_id);
-    setFormParam("path", path);
 }
 
-void CreatShareLinkRequest::requestSuccess(QNetworkReply& reply)
+void CreateShareLinkRequest::requestSuccess(QNetworkReply& reply)
 {
     json_error_t error;
     json_t* root = parseJSON(reply, &error);
     if (!root) {
-        qWarning("CreatShareLinkRequest: failed to parse json:%s\n",
+        qWarning("CreateShareLinkRequest: failed to parse json:%s\n",
                  error.text);
         emit failed(ApiError::fromJsonError());
         return;

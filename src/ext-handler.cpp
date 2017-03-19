@@ -216,11 +216,20 @@ void SeafileExtensionHandler::generateShareLink(const QString& repo_id,
         dialog->raise();
         dialog->activateWindow();
     } else if (advanced) {
-        AdvancedSharedLinkDialog *dialog = new AdvancedSharedLinkDialog("test", NULL);
+        AdvancedSharedLinkDialog *dialog = new AdvancedSharedLinkDialog(NULL);
         dialog->setAttribute(Qt::WA_DeleteOnClose);
         dialog->show();
         dialog->raise();
         dialog->activateWindow();
+
+        connect(dialog, SIGNAL(generateAdvancedShareLink(const QString&, quint64)),
+                this, SLOT(generateAdvancedShareLink(const QString&, quint64)));
+
+        advanced_share_req_ = new CreateShareLinkRequest(
+            account, repo_id, path_in_repo);
+
+        connect(advanced_share_req_, SIGNAL(success(const QString&)),
+                dialog, SLOT(getShareLinkSuccess(const QString&)));
     } else {
         GetSharedLinkRequest *req = new GetSharedLinkRequest(
             account, repo_id, path_in_repo);
@@ -297,13 +306,20 @@ void SeafileExtensionHandler::getShareLinkFailed(const QString& repo_id,
                                                  const QString& path)
 {
     const Account account = gui->accountManager()->currentAccount();
-    CreatShareLinkRequest *req = new CreatShareLinkRequest(
+    CreateShareLinkRequest *req = new CreateShareLinkRequest(
         account, repo_id, path);
 
     connect(req, SIGNAL(success(const QString&)),
             this, SLOT(getShareLinkSuccess(const QString&)));
 
     req->send();
+}
+
+void SeafileExtensionHandler::generateAdvancedShareLink(const QString& password,
+                                                        quint64 valid_days)
+{
+    advanced_share_req_->SetAdvancedShareParams(password, valid_days);
+    advanced_share_req_->send();
 }
 
 void SeafileExtensionHandler::onLockFileSuccess()

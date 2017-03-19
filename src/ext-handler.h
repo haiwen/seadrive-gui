@@ -14,6 +14,7 @@
 class SeafileRpcClient;
 class ExtConnectionListenerThread;
 class ApiError;
+class CreateShareLinkRequest;
 
 /**
  * Handles commands from seafile shell extension
@@ -30,6 +31,8 @@ private slots:
     void getShareLinkSuccess(const QString& link);
     void getShareLinkFailed(const QString& repo_id,
                             const QString& path);
+    void generateAdvancedShareLink(const QString& password,
+                                   quint64 valid_days);
     void onLockFileSuccess();
     void onLockFileFailed(const ApiError& error);
     void generateShareLink(const QString& repo_id,
@@ -49,6 +52,8 @@ private:
     ExtConnectionListenerThread *listener_thread_;
 
     bool started_;
+
+    CreateShareLinkRequest *advanced_share_req_;
 };
 
 /**
