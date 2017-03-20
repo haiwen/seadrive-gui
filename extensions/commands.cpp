@@ -12,24 +12,24 @@ uint64_t reposInfoTimestamp = 0;
 
 std::string toString(Status st) {
     switch (st) {
-    case InvalidStatus:
-        return "invalid status";
-    case NoStatus:
-        return "nostatus";
-    case Paused:
-        return "paused";
-    case Normal:
-        return "synced";
+    case None:
+        return "none";
     case Syncing:
         return "syncing";
     case Error:
         return "error";
-    case ReadOnly:
+    case Synced:
+        return "synced";
+    case ParitalSynced:
+        return "partial-synced";
+    case Cloud:
+        return "cloud";
+    case Readonly:
         return "readonly";
-    case LockedByMe:
-        return "locked by me";
     case LockedByOthers:
         return "locked by someone else";
+    case LockedByMe:
+        return "locked by me";
     case N_Status:
         return "";
     }
@@ -107,22 +107,22 @@ bool GetStatusCommand::parseResponse(const std::string& raw_resp,
 
     if (raw_resp == "syncing") {
         *status = Syncing;
-    } else if (raw_resp == "synced") {
-        *status = Normal;
     } else if (raw_resp == "error") {
         *status = Error;
-    } else if (raw_resp == "paused") {
-        *status = Paused;
+    } else if (raw_resp == "synced") {
+        *status = Synced;
+    } else if (raw_resp == "partial-synced") {
+        *status = PartialSynced;
+    } else if (raw_resp == "cloud") {
+        *status = Cloud;
     } else if (raw_resp == "readonly") {
         *status = ReadOnly;
     } else if (raw_resp == "locked") {
         *status = LockedByOthers;
     } else if (raw_resp == "locked_by_me") {
         *status = LockedByMe;
-    } else if (raw_resp == "ignored") {
-        *status = NoStatus;
     } else {
-        *status = NoStatus;
+        *status = None;
 
         seaf_ext_log ("[GetStatusCommand] status for %s is %s, raw_resp is %s\n",
                       path_.c_str(),

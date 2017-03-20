@@ -39,7 +39,7 @@ protected:
     seafile::Status status_;
 
 public:
-    ShellExt(seafile::Status status = seafile::InvalidStatus);
+    ShellExt(seafile::Status status = seafile::None);
     virtual ~ShellExt();
 
     // IUnknown members

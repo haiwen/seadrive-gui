@@ -22,7 +22,7 @@ Windows Registry Editor Version 5.00
 
 [-HKEY_CLASSES_ROOT\Folder\shellex\ContextMenuHandlers\SeaDrive]
 
-# Icon Overlay IconNormal
+# Icon Overlay IconSynced
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved]
 "{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE607}"=-
 
@@ -30,7 +30,7 @@ Windows Registry Editor Version 5.00
 
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE607}\InProcServer32]
 
-[-HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconNormal"]
+[-HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconSynced"]
 
 # Icon Overlay IconSyncing
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved]
@@ -52,7 +52,7 @@ Windows Registry Editor Version 5.00
 
 [-HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconError"]
 
-# Icon Overlay IconPaused
+# Icon Overlay IconReadOnly
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved]
 "{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE610}"=-
 
@@ -60,7 +60,7 @@ Windows Registry Editor Version 5.00
 
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE610}\InProcServer32]
 
-[-HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconPaused"]
+[-HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconReadOnly"]
 
 # Icon Overlay IconLockedByMe
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved]

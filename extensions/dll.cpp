@@ -64,30 +64,26 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID *ppvOut)
         return hr;
     }
 
-    seafile::Status status = seafile::InvalidStatus;
-    if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_NORMAL)) {
-        // seaf_ext_log ("DllGetClassObject called for ICON_NORMAL!");
-        status = seafile::Normal;
-    } else if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_SYNCING)) {
-        // seaf_ext_log ("DllGetClassObject called for ICON_SYNCING!");
+    seafile::Status status = seafile::None;
+    if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_SYNCING)) {
         status = seafile::Syncing;
     } else if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_ERROR)) {
-        // seaf_ext_log ("DllGetClassObject called for ICON_ERROR!");
         status = seafile::Error;
-    } else if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_PAUSED)) {
-        // seaf_ext_log ("DllGetClassObject called for ICON_PAUSED!");
-        status = seafile::Paused;
-    } else if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_LOCKED_BY_ME)) {
-        // seaf_ext_log ("DllGetClassObject called for ICON_LOCKED_BY_ME!");
-        status = seafile::LockedByMe;
+    } else if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_SYNCED)) {
+        status = seafile::Synced;
+    } else if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_PARTIAL_SYNCED)) {
+        status = seafile::PartialSynced;
+    } else if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_CLOUD)) {
+        status = seafile::Cloud;
+    } else if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_READ_ONLY)) {
+        status = seafile::ReadOnly;
     } else if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_LOCKED_BY_OTHERS)) {
-        // seaf_ext_log ("DllGetClassObject called for ICON_LOCKED_BY_OTHERS!");
         status = seafile::LockedByOthers;
-    } else if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_NOSTATUS)) {
-        status = seafile::NoStatus;
+    } else if (IsEqualIID(rclsid, CLSID_SEAFILE_ICON_LOCKED_BY_ME)) {
+        status = seafile::LockedByMe;
     }
 
-    if (status != seafile::InvalidStatus) {
+    if (status != seafile::None) {
         ShellExtClassFactory *pcf = new ShellExtClassFactory(status);
         const HRESULT hr = pcf->QueryInterface(riid, ppvOut);
         if(FAILED(hr))
