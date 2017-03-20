@@ -91,3 +91,13 @@ Windows Registry Editor Version 5.00
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE613}\InProcServer32]
 
 [-HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconNoStatus"]
+
+# Icon Overlay PartialSynced
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved]
+"{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE614}"=-
+
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE614}]
+
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE614}\InProcServer32]
+
+[-HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconPartialSynced"]

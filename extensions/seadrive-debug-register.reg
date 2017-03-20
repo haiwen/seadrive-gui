@@ -8,7 +8,7 @@ Windows Registry Editor Version 5.00
 @="SeaDrive"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE606}\InProcServer32]
-@="F:\\dev\\seadrive_shell_ext64.dll"
+@="C:\\dev\\seadrive_shell_ext64.dll"
 "ThreadingModel"="Apartment"
 
 [HKEY_CLASSES_ROOT\*\shellex\ContextMenuHandlers\SeaDrive]
@@ -34,7 +34,7 @@ Windows Registry Editor Version 5.00
 @="SeaDriveIconNormal"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE607}\InProcServer32]
-@="F:\\dev\\seadrive_shell_ext64.dll"
+@="C:\\dev\\seadrive_shell_ext64.dll"
 "ThreadingModel"="Apartment"
 
 [HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconNormal"]
@@ -49,7 +49,7 @@ Windows Registry Editor Version 5.00
 @="SeaDriveIconSyncing"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE608}\InProcServer32]
-@="F:\\dev\\seadrive_shell_ext64.dll"
+@="C:\\dev\\seadrive_shell_ext64.dll"
 "ThreadingModel"="Apartment"
 
 [HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconSyncing"]
@@ -63,7 +63,7 @@ Windows Registry Editor Version 5.00
 @="SeaDriveIconError"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE609}\InProcServer32]
-@="F:\\dev\\seadrive_shell_ext64.dll"
+@="C:\\dev\\seadrive_shell_ext64.dll"
 "ThreadingModel"="Apartment"
 
 [HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconError"]
@@ -77,7 +77,7 @@ Windows Registry Editor Version 5.00
 @="SeaDriveIconPaused"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE610}\InProcServer32]
-@="F:\\dev\\seadrive_shell_ext64.dll"
+@="C:\\dev\\seadrive_shell_ext64.dll"
 "ThreadingModel"="Apartment"
 
 [HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconPaused"]
@@ -91,7 +91,7 @@ Windows Registry Editor Version 5.00
 @="SeaDriveIconLockedByMe"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE611}\InProcServer32]
-@="F:\\dev\\seadrive_shell_ext64.dll"
+@="C:\\dev\\seadrive_shell_ext64.dll"
 "ThreadingModel"="Apartment"
 
 [HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconLockedByMe"]
@@ -105,7 +105,7 @@ Windows Registry Editor Version 5.00
 @="SeaDriveIconLockedByOthers"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE612}\InProcServer32]
-@="F:\\dev\\seadrive_shell_ext64.dll"
+@="C:\\dev\\seadrive_shell_ext64.dll"
 "ThreadingModel"="Apartment"
 
 [HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconLockedByOthers"]
@@ -119,8 +119,22 @@ Windows Registry Editor Version 5.00
 @="SeaDriveIconNoStatus"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE613}\InProcServer32]
-@="F:\\dev\\seadrive_shell_ext64.dll"
+@="C:\\dev\\seadrive_shell_ext64.dll"
 "ThreadingModel"="Apartment"
 
 [HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconNoStatus"]
 @="{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE613}"
+
+# Icon Overlay 8 (Partial Synced)
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved]
+"{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE614}"="SeaDriveIconPartialSynced"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE614}]
+@="SeaDriveIconPartialSynced"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE614}\InProcServer32]
+@="C:\\dev\\seadrive_shell_ext64.dll"
+"ThreadingModel"="Apartment"
+
+[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconPartialSynced"]
+@="{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE614}"

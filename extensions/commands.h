@@ -13,13 +13,13 @@ static std::string mount_point; // The mount_point of seadrive disk, deafult to 
 enum Status {
     InvalidStatus = 0,
     NoStatus,
-    Paused,
     Normal,
     Syncing,
     Error,
     LockedByMe,
     LockedByOthers,
     ReadOnly,
+    PartialSynced,
     N_Status,
 };
 
