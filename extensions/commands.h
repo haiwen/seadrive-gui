@@ -11,15 +11,15 @@ namespace seafile {
 static std::string mount_point; // The mount_point of seadrive disk, deafult to "S:".
 
 enum Status {
-    InvalidStatus = 0,
-    NoStatus,
-    Normal,
+    None = 0,
     Syncing,
     Error,
-    LockedByMe,
-    LockedByOthers,
-    ReadOnly,
+    Synced,
     PartialSynced,
+    Cloud,
+    ReadOnly,
+    LockedByOthers,
+    LockedByMe,
     N_Status,
 };
 

@@ -796,7 +796,7 @@ void SeafileTrayIcon::setStateWithSyncErrors()
 
 void SeafileTrayIcon::showSyncErrorsDialog()
 {
-    // gui->refreshQss();
+    gui->refreshQss();
     if (sync_errors_dialog_ == nullptr) {
         sync_errors_dialog_ = new SyncErrorsDialog;
     }

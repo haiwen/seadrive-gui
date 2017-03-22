@@ -238,9 +238,10 @@ SyncNotification SyncNotification::fromJson(const json_t *root)
     SyncNotification notification;
     Json json(root);
 
-    char *s = json_dumps(root, 0);
-    printf ("[%s] %s\n", QDateTime::currentDateTime().toString().toUtf8().data(), s);
-    free (s);
+    // char *s = json_dumps(root, 0);
+    // printf ("[%s] %s\n", QDateTime::currentDateTime().toString().toUtf8().data(), s);
+    // qWarning ("[%s] %s\n", QDateTime::currentDateTime().toString().toUtf8().data(), s);
+    // free (s);
 
     notification.type = json.getString("type");
 

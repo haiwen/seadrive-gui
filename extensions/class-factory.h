@@ -19,7 +19,7 @@ protected:
     seafile::Status status_;
 
 public:
-    ShellExtClassFactory(seafile::Status status = seafile::InvalidStatus);
+    ShellExtClassFactory(seafile::Status status = seafile::None);
     virtual ~ShellExtClassFactory();
 
     //@{

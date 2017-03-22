@@ -92,7 +92,7 @@ STDMETHODIMP ShellExt::IsMemberOf(LPCWSTR path_w, DWORD attr)
     seafile::Status status = getFileStatus(path);
 
     if (status == status_) {
-        seaf_ext_log ("[ICON] file icon %d: %s", (int)status_, path.c_str());
+        // seaf_ext_log ("[ICON] file icon %d: %s", (int)status_, path.c_str());
         return S_OK;
     }
 

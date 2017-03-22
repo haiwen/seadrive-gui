@@ -74,6 +74,7 @@ public:
     bool deleteAccount(const Account& account, bool remove_cache);
 
     bool getRepoIdByPath(const QString& repo_uname, QString *repo_id);
+    bool getRepoUnameById(const QString& repo_id, QString *repo_uname);
 
     bool getSyncNotification(json_t **ret);
 

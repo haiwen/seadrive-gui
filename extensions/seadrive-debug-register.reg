@@ -26,115 +26,114 @@ Windows Registry Editor Version 5.00
 [HKEY_CLASSES_ROOT\Folder\shellex\ContextMenuHandlers\SeaDrive]
 @="{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE606}"
 
-# Icon Overlay 1 (normal repo icon)
+# Icon Overlay IconSyncing
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved]
-"{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE607}"="SeaDriveIconNormal"
+"{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE607}"="SeaDriveIconSyncing"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE607}]
-@="SeaDriveIconNormal"
+@="SeaDriveIconSyncing"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE607}\InProcServer32]
 @="C:\\dev\\seadrive_shell_ext64.dll"
 "ThreadingModel"="Apartment"
 
-[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconNormal"]
+[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\   ".SeaDriveIconSyncing"]
 @="{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE607}"
 
-
-# Icon Overlay 2 (syncing icon)
+# Icon Overlay IconError
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved]
-"{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE608}"="SeaDriveIconSyncing"
+"{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE608}"="SeaDriveIconError"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE608}]
-@="SeaDriveIconSyncing"
+@="SeaDriveIconError"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE608}\InProcServer32]
 @="C:\\dev\\seadrive_shell_ext64.dll"
 "ThreadingModel"="Apartment"
 
-[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconSyncing"]
+[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\   ".SeaDriveIconError"]
 @="{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE608}"
 
-# Icon Overlay 3 (error icon)
+# Icon Overlay IconSynced
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved]
-"{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE609}"="SeaDriveIconError"
+"{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE609}"="SeaDriveIconSynced"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE609}]
-@="SeaDriveIconError"
+@="SeaDriveIconSynced"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE609}\InProcServer32]
 @="C:\\dev\\seadrive_shell_ext64.dll"
 "ThreadingModel"="Apartment"
 
-[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconError"]
+[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\   ".SeaDriveIconSynced"]
 @="{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE609}"
 
-# Icon Overlay 4 (paused icon)
+# Icon Overlay IconPartialSynced
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved]
-"{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE610}"="SeaDriveIconPaused"
+"{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE60A}"="SeaDriveIconPartialSynced"
 
-[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE610}]
-@="SeaDriveIconPaused"
-
-[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE610}\InProcServer32]
-@="C:\\dev\\seadrive_shell_ext64.dll"
-"ThreadingModel"="Apartment"
-
-[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconPaused"]
-@="{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE610}"
-
-# Icon Overlay 5 (locked by me)
-[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved]
-"{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE611}"="SeaDriveIconLockedByMe"
-
-[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE611}]
-@="SeaDriveIconLockedByMe"
-
-[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE611}\InProcServer32]
-@="C:\\dev\\seadrive_shell_ext64.dll"
-"ThreadingModel"="Apartment"
-
-[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconLockedByMe"]
-@="{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE611}"
-
-# Icon Overlay 6 (locked by others)
-[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved]
-"{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE612}"="SeaDriveIconLockedByOthers"
-
-[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE612}]
-@="SeaDriveIconLockedByOthers"
-
-[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE612}\InProcServer32]
-@="C:\\dev\\seadrive_shell_ext64.dll"
-"ThreadingModel"="Apartment"
-
-[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconLockedByOthers"]
-@="{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE612}"
-
-# Icon Overlay 7 (No Status)
-[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved]
-"{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE613}"="SeaDriveIconNoStatus"
-
-[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE613}]
-@="SeaDriveIconNoStatus"
-
-[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE613}\InProcServer32]
-@="C:\\dev\\seadrive_shell_ext64.dll"
-"ThreadingModel"="Apartment"
-
-[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconNoStatus"]
-@="{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE613}"
-
-# Icon Overlay 8 (Partial Synced)
-[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved]
-"{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE614}"="SeaDriveIconPartialSynced"
-
-[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE614}]
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE60A}]
 @="SeaDriveIconPartialSynced"
 
-[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE614}\InProcServer32]
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE60A}\InProcServer32]
 @="C:\\dev\\seadrive_shell_ext64.dll"
 "ThreadingModel"="Apartment"
 
-[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\".SeaDriveIconPartialSynced"]
-@="{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE614}"
+[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\   ".SeaDriveIconPartialSynced"]
+@="{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE60A}"
+
+# Icon Overlay IconCloud
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved]
+"{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE60B}"="SeaDriveIconCloud"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE60B}]
+@="SeaDriveIconCloud"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE60B}\InProcServer32]
+@="C:\\dev\\seadrive_shell_ext64.dll"
+"ThreadingModel"="Apartment"
+
+[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\   ".SeaDriveIconCloud"]
+@="{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE60B}"
+
+# Icon Overlay IconReadOnly
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved]
+"{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE60C}"="SeaDriveIconReadOnly"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE60C}]
+@="SeaDriveIconReadOnly"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE60C}\InProcServer32]
+@="C:\\dev\\seadrive_shell_ext64.dll"
+"ThreadingModel"="Apartment"
+
+[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\   ".SeaDriveIconReadOnly"]
+@="{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE60C}"
+
+# Icon Overlay IconLockedByOthers
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved]
+"{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE60D}"="SeaDriveIconLockedByOthers"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE60D}]
+@="SeaDriveIconLockedByOthers"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE60D}\InProcServer32]
+@="C:\\dev\\seadrive_shell_ext64.dll"
+"ThreadingModel"="Apartment"
+
+[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\   ".SeaDriveIconLockedByOthers"]
+@="{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE60D}"
+
+# Icon Overlay IconLockedByMe
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved]
+"{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE60E}"="SeaDriveIconLockedByMe"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE60E}]
+@="SeaDriveIconLockedByMe"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE60E}\InProcServer32]
+@="C:\\dev\\seadrive_shell_ext64.dll"
+"ThreadingModel"="Apartment"
+
+[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\   ".SeaDriveIconLockedByMe"]
+@="{D14BEDD3-4E05-4F2F-B0DE-D0381E6AE60E}"

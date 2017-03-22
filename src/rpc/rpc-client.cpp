@@ -394,6 +394,33 @@ bool SeafileRpcClient::getRepoIdByPath(const QString &repo_uname,
     return true;
 }
 
+bool SeafileRpcClient::getRepoUnameById(const QString &repo_id,
+                                        QString *repo_uname)
+{
+    GError *error = NULL;
+    char *ret = searpc_client_call__string (
+        seadrive_rpc_client_,
+        "seafile_get_repo_display_name_by_id",
+        &error, 1,
+        "string", toCStr(repo_id));
+    if (error) {
+        qWarning("failed to get repo uname of %s: %s\n",
+                 toCStr(repo_id),
+                 error->message);
+        g_error_free(error);
+        return false;
+    }
+
+    if (!ret) {
+        return false;
+    }
+
+    *repo_uname = ret;
+
+    g_free(ret);
+    return true;
+}
+
 
 bool SeafileRpcClient::getSyncNotification(json_t **ret_obj)
 {

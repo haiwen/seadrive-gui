@@ -187,7 +187,7 @@ ShellExt::getFileStatus(const std::string& path)
     seafile::GetStatusCommand cmd(utils::normalizedPath(path));
     seafile::Status status;
     if (!cmd.sendAndWait(&status)) {
-        return seafile::NoStatus;
+        return seafile::None;
     }
 
     return status;

@@ -9,6 +9,7 @@
 
 #include "QtAwesome.h"
 #include "utils/utils.h"
+#include "utils/file-utils.h"
 #include "seadrive-gui.h"
 #include "tray-icon.h"
 #include "rpc/rpc-client.h"
@@ -260,16 +261,18 @@ void SyncErrorsTableView::onItemDoubleClicked(const QModelIndex& index)
     SyncErrorsTableModel *model = (SyncErrorsTableModel *)this->model();
     SyncError error = model->errorAt(index.row());
 
-    printf("error repo id is %s\n", error.repo_id.toUtf8().data());
+    // printf("error repo id is %s\n", error.repo_id.toUtf8().data());
+    QString path_to_open;
     if (!error.repo_id.isEmpty()) {
-        QString path_to_open;
-        if (!error.path.isEmpty() && QFileInfo(error.path).exists()) {
-            path_to_open = error.path;
-        } else {
-            path_to_open = gui->mountDir();
+        QString repo_uname;
+        if (gui->rpcClient()->getRepoUnameById(error.repo_id, &repo_uname)) {
+            path_to_open = ::pathJoin(gui->mountDir(), repo_uname);
         }
-        QDesktopServices::openUrl(QUrl::fromLocalFile(path_to_open));
     }
+    if (path_to_open.isEmpty() || !QFileInfo(path_to_open).exists()) {
+        path_to_open = gui->mountDir();
+    }
+    QDesktopServices::openUrl(QUrl::fromLocalFile(path_to_open));
 }
 
 SyncErrorsTableModel::SyncErrorsTableModel(QObject *parent)
