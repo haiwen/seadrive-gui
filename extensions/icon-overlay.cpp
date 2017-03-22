@@ -82,10 +82,10 @@ STDMETHODIMP ShellExt::IsMemberOf(LPCWSTR path_w, DWORD attr)
         // seaf_ext_log ("pathInRepo returns false for %s\n", path.c_str());
         return S_FALSE;
     }
-    if (path_in_repo.size() <= 1) {
-        // A Repo Top Dir.
-        return S_FALSE;
-    }
+    // if (path_in_repo.size() <= 1) {
+    //     // A Repo Top Dir.
+    //     return S_FALSE;
+    // }
 
     // Now we know it's a file inside the repo
 
