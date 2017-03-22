@@ -900,42 +900,42 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="510"/>
+        <location filename="../src/ui/tray-icon.cpp" line="517"/>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="694"/>
+        <location filename="../src/ui/tray-icon.cpp" line="701"/>
         <source>Do you want to remove the local cache?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="723"/>
+        <location filename="../src/ui/tray-icon.cpp" line="730"/>
         <source>Failed to remove local cache of account %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="735"/>
+        <location filename="../src/ui/tray-icon.cpp" line="742"/>
         <source>Failed to remove information on server: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="747"/>
+        <location filename="../src/ui/tray-icon.cpp" line="754"/>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="754"/>
+        <location filename="../src/ui/tray-icon.cpp" line="761"/>
         <source>Failed to delete account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="766"/>
+        <location filename="../src/ui/tray-icon.cpp" line="773"/>
         <source>Up %1, Down %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="509"/>
+        <location filename="../src/ui/tray-icon.cpp" line="516"/>
         <source>About %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1188,22 +1188,22 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SyncErrorsDialog</name>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="56"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="57"/>
         <source>File Sync Errors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="125"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="126"/>
         <source>Minimize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="132"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="133"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="192"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="193"/>
         <source>No sync errors.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1211,27 +1211,27 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SyncErrorsTableModel</name>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="366"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="369"/>
         <source>Double click to open the library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="424"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="427"/>
         <source>Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="426"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="429"/>
         <source>Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="428"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="431"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="430"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="433"/>
         <source>Time</source>
         <translation type="unfinished"></translation>
     </message>

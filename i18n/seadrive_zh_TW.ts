@@ -268,110 +268,195 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>MessagePoller</name>
     <message>
-        <location filename="../src/message-poller.cpp" line="158"/>
+        <location filename="../src/message-poller.cpp" line="147"/>
         <source>&quot;%1&quot; is synchronized</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="166"/>
+        <location filename="../src/message-poller.cpp" line="163"/>
         <source>Error when syncing &quot;%1&quot;</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="183"/>
+        <location filename="../src/message-poller.cpp" line="165"/>
+        <source>Error when syncing</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/message-poller.cpp" line="178"/>
+        <source>&quot;%1&quot; is being uploaded</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/message-poller.cpp" line="194"/>
         <source>Starting to move &quot;%1&quot;</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="184"/>
+        <location filename="../src/message-poller.cpp" line="195"/>
         <source>Starting to move &quot;%1&quot; to &quot;%2&quot;</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="186"/>
+        <location filename="../src/message-poller.cpp" line="197"/>
         <source>Successfully moved &quot;%1&quot;</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="187"/>
+        <location filename="../src/message-poller.cpp" line="198"/>
         <source>Successfully moved &quot;%1&quot; to &quot;%2&quot;</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="189"/>
+        <location filename="../src/message-poller.cpp" line="200"/>
         <source>Failed to move &quot;%1&quot;</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="190"/>
+        <location filename="../src/message-poller.cpp" line="201"/>
         <source>Failed to move &quot;%1&quot; to &quot;%2&quot;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/message-poller.cpp" line="220"/>
+        <source>Failed to create file &quot;%1&quot;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/message-poller.cpp" line="222"/>
+        <source>You can&apos;t create files in the %1 drive directly</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/message-poller.cpp" line="227"/>
+        <source>Failed to delete folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/message-poller.cpp" line="228"/>
+        <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
         <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/message-poller.cpp" line="48"/>
+        <location filename="../src/rpc/sync-error.cpp" line="69"/>
         <source>File %1 is locked by other programs</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="50"/>
+        <location filename="../src/rpc/sync-error.cpp" line="71"/>
         <source>Some file is locked by other programs</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="56"/>
+        <location filename="../src/rpc/sync-error.cpp" line="76"/>
         <source>Folder %1 is locked by other programs</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="58"/>
+        <location filename="../src/rpc/sync-error.cpp" line="78"/>
         <source>Some folder is locked by other programs</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="64"/>
+        <location filename="../src/rpc/sync-error.cpp" line="83"/>
         <source>File %1 is locked by another user</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="66"/>
+        <location filename="../src/rpc/sync-error.cpp" line="85"/>
         <source>Some file is locked by another user</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="72"/>
+        <location filename="../src/rpc/sync-error.cpp" line="90"/>
         <source>Invalid path %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="74"/>
+        <location filename="../src/rpc/sync-error.cpp" line="92"/>
         <source>Trying to access an invalid path</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="80"/>
+        <location filename="../src/rpc/sync-error.cpp" line="97"/>
         <source>Error when indexing file %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="82"/>
+        <location filename="../src/rpc/sync-error.cpp" line="99"/>
         <source>Error when indexing files</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="87"/>
+        <location filename="../src/rpc/sync-error.cpp" line="103"/>
         <source>You don&apos;t have enough permission for this library</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="95"/>
+        <location filename="../src/rpc/sync-error.cpp" line="108"/>
+        <source>Network error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/rpc/sync-error.cpp" line="110"/>
+        <source>Failed to resolve network proxy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/rpc/sync-error.cpp" line="112"/>
+        <source>Failed to resolve remote server</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/rpc/sync-error.cpp" line="114"/>
+        <source>Failed to connect to server</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/rpc/sync-error.cpp" line="116"/>
+        <source>SSL error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/rpc/sync-error.cpp" line="118"/>
+        <source>Error in network transmission</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/rpc/sync-error.cpp" line="120"/>
+        <source>Timeout in network transmission</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/rpc/sync-error.cpp" line="122"/>
+        <source>Failed to handle http redirection</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/rpc/sync-error.cpp" line="124"/>
+        <source>Server internal error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/rpc/sync-error.cpp" line="126"/>
+        <source>Local data is corrupt</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/rpc/sync-error.cpp" line="128"/>
+        <source>Failed to write local data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/rpc/sync-error.cpp" line="131"/>
         <source>Unknown error</source>
         <translation>遭遇未知錯誤</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="91"/>
+        <location filename="../src/rpc/sync-error.cpp" line="106"/>
         <source>The storage quota has been used up</source>
         <translation>空間配額已用盡</translation>
     </message>
@@ -597,7 +682,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>Excel檔案</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="111"/>
+        <location filename="../src/main.cpp" line="112"/>
         <source>%1 Client is already running</source>
         <translation type="unfinished"/>
     </message>
@@ -613,84 +698,84 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SeadriveGui</name>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="266"/>
+        <location filename="../src/seadrive-gui.cpp" line="265"/>
         <source>Faild to choose a disk letter</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="298"/>
+        <location filename="../src/seadrive-gui.cpp" line="297"/>
         <source>failed to add default account</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="409"/>
+        <location filename="../src/seadrive-gui.cpp" line="408"/>
         <source>Failed to initialize: failed to create seadrive folder</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="413"/>
+        <location filename="../src/seadrive-gui.cpp" line="412"/>
         <source>Failed to initialize: failed to create seadrive logs folder</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="417"/>
+        <location filename="../src/seadrive-gui.cpp" line="416"/>
         <source>Failed to initialize: failed to create seadrive data folder</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="432"/>
+        <location filename="../src/seadrive-gui.cpp" line="431"/>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="438"/>
+        <location filename="../src/seadrive-gui.cpp" line="437"/>
         <source>Failed to initialize log: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="494"/>
-        <location filename="../src/seadrive-gui.cpp" line="506"/>
+        <location filename="../src/seadrive-gui.cpp" line="493"/>
+        <location filename="../src/seadrive-gui.cpp" line="505"/>
         <source>OK</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="517"/>
-        <location filename="../src/seadrive-gui.cpp" line="531"/>
-        <location filename="../src/seadrive-gui.cpp" line="547"/>
-        <location filename="../src/seadrive-gui.cpp" line="571"/>
+        <location filename="../src/seadrive-gui.cpp" line="516"/>
+        <location filename="../src/seadrive-gui.cpp" line="530"/>
+        <location filename="../src/seadrive-gui.cpp" line="546"/>
+        <location filename="../src/seadrive-gui.cpp" line="570"/>
         <source>Yes</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="518"/>
-        <location filename="../src/seadrive-gui.cpp" line="548"/>
-        <location filename="../src/seadrive-gui.cpp" line="572"/>
+        <location filename="../src/seadrive-gui.cpp" line="517"/>
+        <location filename="../src/seadrive-gui.cpp" line="547"/>
+        <location filename="../src/seadrive-gui.cpp" line="571"/>
         <source>No</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="532"/>
-        <location filename="../src/seadrive-gui.cpp" line="549"/>
+        <location filename="../src/seadrive-gui.cpp" line="531"/>
+        <location filename="../src/seadrive-gui.cpp" line="548"/>
         <source>Cancel</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="646"/>
+        <location filename="../src/seadrive-gui.cpp" line="645"/>
         <source>failed to save client id</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="655"/>
+        <location filename="../src/seadrive-gui.cpp" line="654"/>
         <source>failed to access %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="663"/>
+        <location filename="../src/seadrive-gui.cpp" line="662"/>
         <source>incorrect client id</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="669"/>
+        <location filename="../src/seadrive-gui.cpp" line="668"/>
         <source>failed to read %1</source>
         <translation type="unfinished"/>
     </message>
@@ -734,127 +819,132 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SeafileTrayIcon</name>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="141"/>
+        <location filename="../src/ui/tray-icon.cpp" line="143"/>
         <source>&amp;Quit</source>
         <translation>退出(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="144"/>
+        <location filename="../src/ui/tray-icon.cpp" line="146"/>
         <source>Settings</source>
         <translation>設定檔</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="150"/>
+        <location filename="../src/ui/tray-icon.cpp" line="149"/>
+        <source>Show file sync errors</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/tray-icon.cpp" line="154"/>
         <source>Open %1 &amp;folder</source>
         <translation>開啟%1 資料夾(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="151"/>
+        <location filename="../src/ui/tray-icon.cpp" line="155"/>
         <source>open %1 folder</source>
         <translation>開啟%1的資料夾</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="154"/>
+        <location filename="../src/ui/tray-icon.cpp" line="158"/>
         <source>Open &amp;logs folder</source>
         <translation>開啟日誌資料夾(&amp;l) </translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="158"/>
+        <location filename="../src/ui/tray-icon.cpp" line="162"/>
         <source>&amp;About</source>
         <translation>關於我們(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="159"/>
+        <location filename="../src/ui/tray-icon.cpp" line="163"/>
         <source>Show the application&apos;s About box</source>
         <translation>顯示應用程式的關於對話框</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="163"/>
+        <location filename="../src/ui/tray-icon.cpp" line="167"/>
         <source>&amp;Online help</source>
         <translation>在線幫助(&amp;O)</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="189"/>
+        <location filename="../src/ui/tray-icon.cpp" line="191"/>
         <source>Accounts</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="221"/>
+        <location filename="../src/ui/tray-icon.cpp" line="226"/>
         <source>not logged in</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="234"/>
+        <location filename="../src/ui/tray-icon.cpp" line="239"/>
         <source>Choose</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="256"/>
+        <location filename="../src/ui/tray-icon.cpp" line="261"/>
         <source>Logout</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="260"/>
+        <location filename="../src/ui/tray-icon.cpp" line="265"/>
         <source>Delete</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="273"/>
+        <location filename="../src/ui/tray-icon.cpp" line="278"/>
         <source>Add an account</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="286"/>
+        <location filename="../src/ui/tray-icon.cpp" line="291"/>
         <source>File</source>
         <translation>檔案</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="494"/>
+        <location filename="../src/ui/tray-icon.cpp" line="510"/>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="724"/>
+        <location filename="../src/ui/tray-icon.cpp" line="694"/>
         <source>Do you want to remove the local cache?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="753"/>
+        <location filename="../src/ui/tray-icon.cpp" line="723"/>
         <source>Failed to remove local cache of account %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="765"/>
+        <location filename="../src/ui/tray-icon.cpp" line="735"/>
         <source>Failed to remove information on server: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="777"/>
+        <location filename="../src/ui/tray-icon.cpp" line="747"/>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="784"/>
+        <location filename="../src/ui/tray-icon.cpp" line="754"/>
         <source>Failed to delete account</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="796"/>
+        <location filename="../src/ui/tray-icon.cpp" line="766"/>
         <source>Up %1, Down %2</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="493"/>
+        <location filename="../src/ui/tray-icon.cpp" line="509"/>
         <source>About %1</source>
         <translation>關於 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="155"/>
+        <location filename="../src/ui/tray-icon.cpp" line="159"/>
         <source>open %1 log folder</source>
         <translation>開啟%1的日誌資料夾</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="164"/>
+        <location filename="../src/ui/tray-icon.cpp" line="168"/>
         <source>open %1 online help</source>
         <translation>開啟%1的在線幫助</translation>
     </message>
@@ -862,198 +952,193 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SettingsDialog</name>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="29"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="50"/>
         <source>Settings</source>
         <translation>設定檔</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="36"/>
-        <location filename="../ui_settings-dialog.h" line="411"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="57"/>
+        <location filename="../ui_settings-dialog.h" line="412"/>
         <source>Auto start %1 after login</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="50"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="71"/>
         <source>None</source>
         <translation>無代理</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="51"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="72"/>
         <source>HTTP Proxy</source>
         <translation>HTTP 代理</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="52"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="73"/>
         <source>Socks5 Proxy</source>
         <translation>SOCKS5 代理</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="53"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="74"/>
         <source>System Proxy</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="110"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="131"/>
         <source>You have changed languange. Restart to apply it?</source>
         <translation>您改變了使用的語言。現在重啓生效嗎？</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="123"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="144"/>
         <source>You have changed disk letter. Restart to apply it?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="369"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="394"/>
         <source>The proxy host address can&apos;t be empty</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="376"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="401"/>
         <source>The proxy port is incorrect</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="385"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="410"/>
         <source>Proxy username can&apos;t be empty</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="388"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="413"/>
         <source>Proxy password can&apos;t be empty</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="408"/>
+        <location filename="../ui_settings-dialog.h" line="409"/>
         <source>Dialog</source>
         <translation>對話框</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="409"/>
+        <location filename="../ui_settings-dialog.h" line="410"/>
         <source>Notify when libraries are synchronized</source>
         <translation>當資料庫同步完成時提示</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="410"/>
+        <location filename="../ui_settings-dialog.h" line="411"/>
         <source>Enable sync temporary files of MSOffice/Libreoffice</source>
         <translation>同步Microsoft Office 和Libreoffice的臨時檔案</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="415"/>
+        <location filename="../ui_settings-dialog.h" line="416"/>
         <source>Download speed limit (KB/s):</source>
         <translation>下載速率 (KB/s)：</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="416"/>
+        <location filename="../ui_settings-dialog.h" line="417"/>
         <source>Upload speed limit (KB/s):</source>
         <translation>上載速率(KB/s)：</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="422"/>
+        <location filename="../ui_settings-dialog.h" line="423"/>
         <source>Basic</source>
         <translation>基礎</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="412"/>
+        <location filename="../ui_settings-dialog.h" line="413"/>
         <source>Enable FinderSync Extension</source>
         <translation>啟用 Finder的延伸功能</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="413"/>
+        <location filename="../ui_settings-dialog.h" line="414"/>
         <source>Enable Explorer Extension</source>
         <translation>啟用檔案瀏覽器的延伸功能</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="414"/>
+        <location filename="../ui_settings-dialog.h" line="415"/>
         <source>Check for updates automatically</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="417"/>
+        <location filename="../ui_settings-dialog.h" line="418"/>
         <source>Disk letter (need restart): </source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="420"/>
+        <location filename="../ui_settings-dialog.h" line="421"/>
         <source>S</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="423"/>
+        <location filename="../ui_settings-dialog.h" line="424"/>
         <source>Do not verify server certificate in HTTPS syncing</source>
         <translation>在HTTPS 同步過程中無法認證伺服器的證書</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="424"/>
+        <location filename="../ui_settings-dialog.h" line="425"/>
         <source>Cache clean interval (in minutes):</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="425"/>
+        <location filename="../ui_settings-dialog.h" line="426"/>
         <source>Cache size limit (in GB):</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="426"/>
+        <location filename="../ui_settings-dialog.h" line="427"/>
         <source>Advanced</source>
         <translation>高級</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="427"/>
+        <location filename="../ui_settings-dialog.h" line="428"/>
         <source>Language (need restart)</source>
         <translation>語言 (需要重啓)</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="428"/>
+        <location filename="../ui_settings-dialog.h" line="429"/>
         <source>Language</source>
         <translation>語言</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="429"/>
+        <location filename="../ui_settings-dialog.h" line="430"/>
         <source>Proxy Type:</source>
         <translation>代理類型：</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="430"/>
+        <location filename="../ui_settings-dialog.h" line="431"/>
         <source>Host:</source>
         <translation>主機地址：</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="431"/>
+        <location filename="../ui_settings-dialog.h" line="432"/>
         <source>Port:</source>
         <translation>端口：</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="432"/>
-        <source>0</source>
-        <translation>0</translation>
-    </message>
-    <message>
-        <location filename="../ui_settings-dialog.h" line="433"/>
+        <location filename="../ui_settings-dialog.h" line="434"/>
         <source>Username:</source>
         <translation>用戶名：</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="434"/>
+        <location filename="../ui_settings-dialog.h" line="435"/>
         <source>Password:</source>
         <translation>密碼：</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="435"/>
+        <location filename="../ui_settings-dialog.h" line="436"/>
         <source>Proxy server requires a password</source>
         <translation>代理伺服器需要密碼</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="436"/>
+        <location filename="../ui_settings-dialog.h" line="437"/>
         <source>Network</source>
         <translation>網路</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="437"/>
+        <location filename="../ui_settings-dialog.h" line="438"/>
         <source>OK</source>
         <translation>確認</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="438"/>
+        <location filename="../ui_settings-dialog.h" line="439"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -1096,6 +1181,57 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/shib/shib-login-dialog.cpp" line="102"/>
         <source>Failed to save current account</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>SyncErrorsDialog</name>
+    <message>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="56"/>
+        <source>File Sync Errors</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="125"/>
+        <source>Minimize</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="132"/>
+        <source>Close</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="192"/>
+        <source>No sync errors.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>SyncErrorsTableModel</name>
+    <message>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="366"/>
+        <source>Double click to open the library</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="424"/>
+        <source>Library</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="426"/>
+        <source>Path</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="428"/>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="430"/>
+        <source>Time</source>
         <translation type="unfinished"/>
     </message>
 </context>
