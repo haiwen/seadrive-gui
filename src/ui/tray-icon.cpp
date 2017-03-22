@@ -416,32 +416,39 @@ QIcon SeafileTrayIcon::stateToIcon(TrayState state)
     state_ = state;
 #if defined(Q_OS_WIN32)
     QString icon_name;
+    bool use_white = utils::win::isWindows10OrHigher();
     switch (state) {
     case STATE_NONE:
     case STATE_DAEMON_UP:
-        icon_name = utils::win::isWindows10OrHigher() ? ":/images/win/daemon_up_white.ico" : ":/images/win/daemon_up.ico";
+        icon_name = "daemon_up";
         break;
     case STATE_DAEMON_DOWN:
-        icon_name = ":/images/win/daemon_down.ico";
+        icon_name = "daemon_down";
         break;
     case STATE_DAEMON_AUTOSYNC_DISABLED:
-        icon_name = ":/images/win/seafile_auto_sync_disabled.ico";
+        icon_name = "seafile_auto_sync_disabled";
         break;
     case STATE_TRANSFER_1:
-        icon_name = ":/images/win/seafile_transfer_1.ico";
+        use_white = false;
+        icon_name = "seafile_transfer_1";
         break;
     case STATE_TRANSFER_2:
-        icon_name = ":/images/win/seafile_transfer_2.ico";
+        use_white = false;
+        icon_name = "seafile_transfer_2";
         break;
     case STATE_SERVERS_NOT_CONNECTED:
     case STATE_HAS_SYNC_ERRORS:
-        icon_name = ":/images/win/seafile_warning.ico";
+        icon_name = "seafile_warning";
         break;
     case STATE_HAVE_UNREAD_MESSAGE:
-        icon_name = ":/images/win/notification.ico";
+        icon_name = "notification";
         break;
     }
-    return getIcon(icon_name);
+    if (use_white) {
+        icon_name += "_white";
+    }
+    QString full_icon_name = QString(":/images/win/%1.ico").arg(icon_name);
+    return getIcon(full_icon_name);
 #elif defined(Q_OS_MAC)
     bool isDarkMode = utils::mac::is_darkmode();
     // filename = icon_name + ?white + .png
