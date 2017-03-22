@@ -32,3 +32,11 @@ BOOL ExitExplorer()
     return PostMessage(hWndTray, 0x5B4, 0, 0);
 }
 ```
+
+## Develop the DLL
+
+- Uninstall seadrive
+- Run `extensions/build.sh`
+- Copy `extensions/lib/seadrive_shell_ext64.dll` to `c:/dev/`
+- Double click `extensions/seadrive-debug-register.reg` to update the registry
+- Restart explorer (by killing it in windwos task manager)
