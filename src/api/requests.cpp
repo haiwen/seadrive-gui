@@ -1219,6 +1219,7 @@ GetSharedLinkRequest::GetSharedLinkRequest(const Account &account,
 
 void GetSharedLinkRequest::requestSuccess(QNetworkReply& reply)
 {
+    SharedLinkInfo shared_link_info;
     json_error_t error;
     json_t* root = parseJSON(reply, &error);
     if (!root) {
@@ -1244,7 +1245,7 @@ void GetSharedLinkRequest::requestSuccess(QNetworkReply& reply)
     }
 
     QString link = dict.value("link").toString();
-    emit success(link);
+    emit success(shared_link_info);
 }
 
 CreateShareLinkRequest::CreateShareLinkRequest(const Account &account,
@@ -1274,6 +1275,7 @@ void CreateShareLinkRequest::SetAdvancedShareParams(const QString &password,
 
 void CreateShareLinkRequest::requestSuccess(QNetworkReply& reply)
 {
+    SharedLinkInfo shared_link_info;
     json_error_t error;
     json_t* root = parseJSON(reply, &error);
     if (!root) {
@@ -1292,7 +1294,7 @@ void CreateShareLinkRequest::requestSuccess(QNetworkReply& reply)
     }
 
     QString link = dict.value("link").toString();
-    emit success(link);
+    emit success(shared_link_info);
 }
 
 CreateDirectoryRequest::CreateDirectoryRequest(const Account &account,

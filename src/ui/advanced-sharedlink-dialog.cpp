@@ -120,8 +120,8 @@ void AdvancedSharedLinkDialog::onOkBtnClicked()
     emit generateAdvancedShareLink(password_, valid_days_);
 }
 
-void AdvancedSharedLinkDialog::getShareLinkSuccess(const QString& link)
+void AdvancedSharedLinkDialog::generateAdvancedSharedLinkSuccess(const SharedLinkInfo& shared_link_info)
 {
-    editor_->setText(link);
+    editor_->setText(shared_link_info.link);
     editor_->selectAll();
 }

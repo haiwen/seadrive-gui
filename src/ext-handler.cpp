@@ -228,14 +228,14 @@ void SeafileExtensionHandler::generateShareLink(const QString& repo_id,
         advanced_share_req_ = new CreateShareLinkRequest(
             account, repo_id, path_in_repo);
 
-        connect(advanced_share_req_, SIGNAL(success(const QString&)),
-                dialog, SLOT(getShareLinkSuccess(const QString&)));
+        connect(advanced_share_req_, SIGNAL(success(const SharedLinkInfo&)),
+                dialog, SLOT(generateAdvancedSharedLinkSuccess(const SharedLinkInfo&)));
     } else {
         GetSharedLinkRequest *req = new GetSharedLinkRequest(
             account, repo_id, path_in_repo);
 
-        connect(req, SIGNAL(success(const QString&)),
-                this, SLOT(getShareLinkSuccess(const QString&)));
+        connect(req, SIGNAL(success(const SharedLinkInfo&)),
+                this, SLOT(getShareLinkSuccess(const SharedLinkInfo&)));
         connect(req, SIGNAL(failed(const QString&, const QString&)),
                 this, SLOT(getShareLinkFailed(const QString&, const QString&)));
 
@@ -293,9 +293,9 @@ void SeafileExtensionHandler::openUrlWithAutoLogin(const QUrl& url)
     AutoLoginService::instance()->startAutoLogin(url.toString());
 }
 
-void SeafileExtensionHandler::getShareLinkSuccess(const QString& link)
+void SeafileExtensionHandler::getShareLinkSuccess(const SharedLinkInfo& shared_link_info)
 {
-    SharedLinkDialog *dialog = new SharedLinkDialog(link, NULL);
+    SharedLinkDialog *dialog = new SharedLinkDialog(shared_link_info.link, NULL);
     dialog->setAttribute(Qt::WA_DeleteOnClose);
     dialog->show();
     dialog->raise();
@@ -309,8 +309,8 @@ void SeafileExtensionHandler::getShareLinkFailed(const QString& repo_id,
     CreateShareLinkRequest *req = new CreateShareLinkRequest(
         account, repo_id, path);
 
-    connect(req, SIGNAL(success(const QString&)),
-            this, SLOT(getShareLinkSuccess(const QString&)));
+    connect(req, SIGNAL(success(const SharedLinkInfo&)),
+            this, SLOT(getShareLinkSuccess(const SharedLinkInfo&)));
 
     req->send();
 }

@@ -4,6 +4,7 @@
 #include <QSpinBox>
 #include <QGroupBox>
 
+struct SharedLinkInfo;
 class QLineEdit;
 class AdvancedSharedLinkDialog : public QDialog
 {
@@ -20,7 +21,7 @@ private slots:
     void onOkBtnClicked();
 
 public slots:
-    void getShareLinkSuccess(const QString& link);
+    void generateAdvancedSharedLinkSuccess(const SharedLinkInfo& shared_link_info);
 
 private:
     QString password_;

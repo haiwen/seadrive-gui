@@ -784,8 +784,8 @@ private:
     const QString path_;
 };
 
-struct SharedLinkResult {
-    qint64 ctime;
+struct SharedLinkInfo {
+    QString ctime;
     QString expire_date;
     bool is_dir;
     bool is_expired;
@@ -807,7 +807,7 @@ public:
                          const QString &path);
 
 signals:
-    void success(const QString& url);
+    void success(const SharedLinkInfo& shared_link_info);
     void failed(const QString& repo_id, const QString& path);
 
 protected slots:
@@ -831,7 +831,7 @@ public:
                                 quint64 expired_date);
 
 signals:
-    void success(const QString& url);
+    void success(const SharedLinkInfo& shared_link_info);
 
 protected slots:
     void requestSuccess(QNetworkReply& reply);
