@@ -156,14 +156,15 @@ SINGLETON_IMPL(SeafileExtensionHandler)
 
 static SeafileRpcClient *rpc_client_;
 static QMutex rpc_client_mutex_;
+static SharedLinkRequestParams shared_link_req_params_;
 
 SeafileExtensionHandler::SeafileExtensionHandler()
 : started_(false)
 {
     listener_thread_ = new ExtConnectionListenerThread;
 
-    connect(listener_thread_, SIGNAL(generateShareLink(const QString&, const QString&, bool, bool, bool)),
-            this, SLOT(generateShareLink(const QString&, const QString&, bool, bool, bool)));
+    connect(listener_thread_, SIGNAL(getShareLink()),
+            this, SLOT(getShareLink()));
 
     connect(listener_thread_, SIGNAL(lockFile(const QString&, const QString&, bool)),
             this, SLOT(lockFile(const QString&, const QString&, bool)));
@@ -193,11 +194,7 @@ void SeafileExtensionHandler::stop()
     }
 }
 
-void SeafileExtensionHandler::generateShareLink(const QString& repo_id,
-                                                const QString& path_in_repo,
-                                                bool is_file,
-                                                bool internal,
-                                                bool advanced)
+void SeafileExtensionHandler::getShareLink()
 {
     // qDebug("path_in_repo: %s", path_in_repo.toUtf8().data());
     const Account account = gui->accountManager()->currentAccount();
@@ -205,17 +202,49 @@ void SeafileExtensionHandler::generateShareLink(const QString& repo_id,
         return;
     }
 
-    if (internal) {
-        QString path = path_in_repo;
-        if (!is_file && !path.endsWith("/")) {
+    if (shared_link_req_params_.internal) {
+        QString path = shared_link_req_params_.path_in_repo;
+        if (!shared_link_req_params_.is_file && !path.endsWith("/")) {
             path += "/";
         }
-        SeafileLinkDialog *dialog = new SeafileLinkDialog(repo_id, account, path, NULL);
+        SeafileLinkDialog *dialog = new SeafileLinkDialog(
+            shared_link_req_params_.repo_id, account, path, NULL);
         dialog->setAttribute(Qt::WA_DeleteOnClose);
         dialog->show();
         dialog->raise();
         dialog->activateWindow();
-    } else if (advanced) {
+    } else {
+        GetSharedLinkRequest *req = new GetSharedLinkRequest(
+            account, shared_link_req_params_.repo_id,
+            shared_link_req_params_.path_in_repo);
+
+        connect(req, SIGNAL(success(const SharedLinkInfo&)),
+                this, SLOT(getShareLinkSuccess(const SharedLinkInfo&)));
+        connect(req, SIGNAL(failed()),
+                this, SLOT(generateShareLink()));
+
+        req->send();
+    }
+}
+
+void SeafileExtensionHandler::generateShareLink()
+{
+    const Account account = gui->accountManager()->currentAccount();
+
+    if (shared_link_req_params_.advanced == false) {
+        CreateShareLinkRequest *req = new CreateShareLinkRequest(
+            account, shared_link_req_params_.repo_id,
+            shared_link_req_params_.path_in_repo);
+
+        connect(req, SIGNAL(success(const SharedLinkInfo&)),
+                this, SLOT(generateShareLinkSuccess(const SharedLinkInfo&)));
+
+        req->send();
+    } else {
+        advanced_share_req_ = new CreateShareLinkRequest(
+            account, shared_link_req_params_.repo_id,
+            shared_link_req_params_.path_in_repo);
+
         AdvancedSharedLinkDialog *dialog = new AdvancedSharedLinkDialog(NULL);
         dialog->setAttribute(Qt::WA_DeleteOnClose);
         dialog->show();
@@ -225,22 +254,47 @@ void SeafileExtensionHandler::generateShareLink(const QString& repo_id,
         connect(dialog, SIGNAL(generateAdvancedShareLink(const QString&, quint64)),
                 this, SLOT(generateAdvancedShareLink(const QString&, quint64)));
 
-        advanced_share_req_ = new CreateShareLinkRequest(
-            account, repo_id, path_in_repo);
-
         connect(advanced_share_req_, SIGNAL(success(const SharedLinkInfo&)),
                 dialog, SLOT(generateAdvancedSharedLinkSuccess(const SharedLinkInfo&)));
-    } else {
-        GetSharedLinkRequest *req = new GetSharedLinkRequest(
-            account, repo_id, path_in_repo);
+    }
+}
 
-        connect(req, SIGNAL(success(const SharedLinkInfo&)),
-                this, SLOT(getShareLinkSuccess(const SharedLinkInfo&)));
-        connect(req, SIGNAL(failed(const QString&, const QString&)),
-                this, SLOT(getShareLinkFailed(const QString&, const QString&)));
+void SeafileExtensionHandler::getShareLinkSuccess(const SharedLinkInfo& shared_link_info)
+{
+    bool proceed = false;
+    proceed = gui->detailedYesOrNoBox(tr("<b>Warning:</b> The shared link already exists, delete and create link anyway?"),
+                                      "username: " + shared_link_info.username +
+				      "\nlink: " + shared_link_info.link +
+				      "\nview_cnt: " + QString::number(shared_link_info.view_cnt),
+                                      0, true);
+    if (proceed == false) {
+        // generateShareLinkSuccess(shared_link_info);
+    } else {
+        const Account account = gui->accountManager()->currentAccount();
+        DeleteSharedLinkRequest *req = new DeleteSharedLinkRequest(
+            account, shared_link_info.token);
+
+        connect(req, SIGNAL(success()),
+                this, SLOT(generateShareLink()));
 
         req->send();
     }
+}
+
+void SeafileExtensionHandler::generateShareLinkSuccess(const SharedLinkInfo& shared_link_info)
+{
+    SharedLinkDialog *dialog = new SharedLinkDialog(shared_link_info.link, NULL);
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+    dialog->show();
+    dialog->raise();
+    dialog->activateWindow();
+}
+
+void SeafileExtensionHandler::generateAdvancedShareLink(const QString& password,
+                                                        quint64 valid_days)
+{
+    advanced_share_req_->SetAdvancedShareParams(password, valid_days);
+    advanced_share_req_->send();
 }
 
 void SeafileExtensionHandler::lockFile(const QString& repo_id,
@@ -291,35 +345,6 @@ void SeafileExtensionHandler::privateShare(const QString& repo_id,
 void SeafileExtensionHandler::openUrlWithAutoLogin(const QUrl& url)
 {
     AutoLoginService::instance()->startAutoLogin(url.toString());
-}
-
-void SeafileExtensionHandler::getShareLinkSuccess(const SharedLinkInfo& shared_link_info)
-{
-    SharedLinkDialog *dialog = new SharedLinkDialog(shared_link_info.link, NULL);
-    dialog->setAttribute(Qt::WA_DeleteOnClose);
-    dialog->show();
-    dialog->raise();
-    dialog->activateWindow();
-}
-
-void SeafileExtensionHandler::getShareLinkFailed(const QString& repo_id,
-                                                 const QString& path)
-{
-    const Account account = gui->accountManager()->currentAccount();
-    CreateShareLinkRequest *req = new CreateShareLinkRequest(
-        account, repo_id, path);
-
-    connect(req, SIGNAL(success(const SharedLinkInfo&)),
-            this, SLOT(getShareLinkSuccess(const SharedLinkInfo&)));
-
-    req->send();
-}
-
-void SeafileExtensionHandler::generateAdvancedShareLink(const QString& password,
-                                                        quint64 valid_days)
-{
-    advanced_share_req_->SetAdvancedShareParams(password, valid_days);
-    advanced_share_req_->send();
 }
 
 void SeafileExtensionHandler::onLockFileSuccess()
@@ -386,8 +411,8 @@ void ExtConnectionListenerThread::servePipeInNewThread(HANDLE pipe)
 {
     ExtCommandsHandler *t = new ExtCommandsHandler(pipe);
 
-    connect(t, SIGNAL(generateShareLink(const QString&, const QString&, bool, bool, bool)),
-            this, SIGNAL(generateShareLink(const QString&, const QString&, bool, bool, bool)));
+    connect(t, SIGNAL(getShareLink()),
+            this, SIGNAL(getShareLink()));
     connect(t, SIGNAL(lockFile(const QString&, const QString&, bool)),
             this, SIGNAL(lockFile(const QString&, const QString&, bool)));
     connect(t, SIGNAL(privateShare(const QString&, const QString&, bool)),
@@ -520,7 +545,14 @@ void ExtCommandsHandler::handleGenShareLink(const QStringList& args,
 
     bool is_file = QFileInfo(path).isDir();
 
-    emit generateShareLink(repo_id, path_in_repo, is_file, internal, advanced);
+    shared_link_req_params_.initialize();
+    shared_link_req_params_.repo_id = repo_id;
+    shared_link_req_params_.path_in_repo = path_in_repo;
+    shared_link_req_params_.is_file = is_file;
+    shared_link_req_params_.internal = internal;
+    shared_link_req_params_.advanced = advanced;
+
+    emit getShareLink();
 
     return;
 }

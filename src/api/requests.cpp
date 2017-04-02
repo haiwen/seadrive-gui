@@ -46,7 +46,7 @@ const char* kSearchUsersUrl = "api2/search-user/";
 
 const char* kGetDirentsUrl = "api2/repos/%1/dir/";
 const char* kGetFilesUrl = "api2/repos/%1/file/";
-const char* kGetFileSharedLinkUrl = "api/v2.1/share-links/";
+const char* kSharedLinkUrl = "api/v2.1/share-links/";
 const char* kGetFileUploadUrl = "api2/repos/%1/upload-link/";
 const char* kGetFileUpdateUrl = "api2/repos/%1/update-link/";
 const char* kGetStarredFilesUrl = "api2/starredfiles/";
@@ -1209,9 +1209,8 @@ GetSharedLinkRequest::GetSharedLinkRequest(const Account &account,
                                            const QString &repo_id,
                                            const QString &path)
     : SeafileApiRequest(
-          account.getAbsoluteUrl(QString(kGetFileSharedLinkUrl)),
-          SeafileApiRequest::METHOD_GET, account.token),
-      repo_id_(repo_id), path_(path)
+          account.getAbsoluteUrl(QString(kSharedLinkUrl)),
+          SeafileApiRequest::METHOD_GET, account.token)
 {
     setUrlParam("repo_id", repo_id);
     setUrlParam("path", path);
@@ -1231,7 +1230,7 @@ void GetSharedLinkRequest::requestSuccess(QNetworkReply& reply)
 
     if (json_array_size(root) == 0) {
         qWarning("GetSharedLinkRequest: failed to get json.\n");
-        emit failed(repo_id_, path_);
+        emit failed();
         emit SeafileApiRequest::failed(ApiError::fromJsonError());
         return;
     }
@@ -1244,7 +1243,19 @@ void GetSharedLinkRequest::requestSuccess(QNetworkReply& reply)
         return;
     }
 
-    QString link = dict.value("link").toString();
+    shared_link_info.link = dict.value("link").toString();
+    shared_link_info.ctime = dict.value("ctime").toString();
+    shared_link_info.expire_date = dict.value("expire_date").toString();
+    shared_link_info.is_dir = dict.value("is_dir").toBool();
+    shared_link_info.is_expired = dict.value("is_expired").toBool();
+    shared_link_info.obj_name = dict.value("obj_name").toString();
+    shared_link_info.path = dict.value("path").toString();
+    shared_link_info.repo_id = dict.value("repo_id").toString();
+    shared_link_info.repo_name = dict.value("repo_name").toString();
+    shared_link_info.token = dict.value("token").toString();
+    shared_link_info.username = dict.value("username").toString();
+    shared_link_info.view_cnt = dict.value("view_cnt").toUInt();
+
     emit success(shared_link_info);
 }
 
@@ -1254,7 +1265,7 @@ CreateShareLinkRequest::CreateShareLinkRequest(const Account &account,
                                                const QString &password,
                                                quint64 expired_date)
     : SeafileApiRequest(
-          account.getAbsoluteUrl(QString(kGetFileSharedLinkUrl)),
+          account.getAbsoluteUrl(QString(kSharedLinkUrl)),
           SeafileApiRequest::METHOD_POST, account.token)
 {
     setFormParam("repo_id", repo_id);
@@ -1293,8 +1304,33 @@ void CreateShareLinkRequest::requestSuccess(QNetworkReply& reply)
         return;
     }
 
-    QString link = dict.value("link").toString();
+    shared_link_info.link = dict.value("link").toString();
+    shared_link_info.ctime = dict.value("ctime").toString();
+    shared_link_info.expire_date = dict.value("expire_date").toString();
+    shared_link_info.is_dir = dict.value("is_dir").toBool();
+    shared_link_info.is_expired = dict.value("is_expired").toBool();
+    shared_link_info.obj_name = dict.value("obj_name").toString();
+    shared_link_info.path = dict.value("path").toString();
+    shared_link_info.repo_id = dict.value("repo_id").toString();
+    shared_link_info.repo_name = dict.value("repo_name").toString();
+    shared_link_info.token = dict.value("token").toString();
+    shared_link_info.username = dict.value("username").toString();
+    shared_link_info.view_cnt = dict.value("view_cnt").toUInt();
+
     emit success(shared_link_info);
+}
+
+DeleteSharedLinkRequest::DeleteSharedLinkRequest(const Account &account,
+                                                 const QString &token)
+    : SeafileApiRequest(
+          account.getAbsoluteUrl((QString(kSharedLinkUrl) + "%1/").arg(token)),
+          SeafileApiRequest::METHOD_DELETE, account.token)
+{
+}
+
+void DeleteSharedLinkRequest::requestSuccess(QNetworkReply& reply)
+{
+    emit success();
 }
 
 CreateDirectoryRequest::CreateDirectoryRequest(const Account &account,

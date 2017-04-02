@@ -808,14 +808,12 @@ public:
 
 signals:
     void success(const SharedLinkInfo& shared_link_info);
-    void failed(const QString& repo_id, const QString& path);
+    void failed();
 
 protected slots:
     void requestSuccess(QNetworkReply& reply);
 
 private:
-    const QString repo_id_;
-    const QString path_;
     Q_DISABLE_COPY(GetSharedLinkRequest)
 };
 
@@ -838,6 +836,22 @@ protected slots:
 
 private:
     Q_DISABLE_COPY(CreateShareLinkRequest)
+};
+
+class DeleteSharedLinkRequest : public SeafileApiRequest {
+    Q_OBJECT
+public:
+    DeleteSharedLinkRequest(const Account &account,
+                            const QString &token);
+
+signals:
+    void success();
+
+protected slots:
+    void requestSuccess(QNetworkReply& reply);
+
+private:
+    Q_DISABLE_COPY(DeleteSharedLinkRequest)
 };
 
 class GetFileUploadLinkRequest : public SeafileApiRequest {
