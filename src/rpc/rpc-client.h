@@ -41,6 +41,9 @@ public:
     int getUploadRate(int *rate);
     int getDownloadRate(int *rate);
 
+    bool getUploadProgress(json_t **ret_obj);
+    bool getDownloadProgress(json_t **ret_obj);
+
     int getRepoTransferInfo(const QString& repo_id, int *rate, int *percent);
 
     int setUploadRateLimit(int limit);

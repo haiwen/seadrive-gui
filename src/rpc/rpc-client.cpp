@@ -191,6 +191,53 @@ int SeafileRpcClient::getUploadRate(int *rate)
     return 0;
 }
 
+bool SeafileRpcClient::getUploadProgress(json_t **ret_obj)
+{
+    GError *error = NULL;
+    json_t *ret = searpc_client_call__json (
+        seadrive_rpc_client_,
+        "seafile_get_upload_progress",
+        &error, 0);
+    if (error) {
+        qWarning("failed to get upload progress: %s\n",
+                 error->message ? error->message : "");
+        g_error_free(error);
+        return false;
+    }
+
+    if (!ret) {
+        // No pending notifications.
+        return false;
+    }
+
+    *ret_obj = ret;
+
+    return true;
+}
+
+bool SeafileRpcClient::getDownloadProgress(json_t **ret_obj)
+{
+    GError *error = NULL;
+    json_t *ret = searpc_client_call__json (
+        seadrive_rpc_client_,
+        "seafile_get_download_progress",
+        &error, 0);
+    if (error) {
+        qWarning("failed to get download progress: %s\n",
+                 error->message ? error->message : "");
+        g_error_free(error);
+        return false;
+    }
+
+    if (!ret) {
+        // No pending notifications.
+        return false;
+    }
+
+    *ret_obj = ret;
+
+    return true;
+}
 
 int SeafileRpcClient::getRepoProperty(const QString &repo_id,
                                       const QString& name,
