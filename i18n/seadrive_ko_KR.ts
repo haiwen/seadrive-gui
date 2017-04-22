@@ -4,32 +4,32 @@
     <message>
         <location filename="../src/ui/about-dialog.cpp" line="20"/>
         <source>About %1</source>
-        <translation type="unfinished"/>
+        <translation>%1 정보</translation>
     </message>
     <message>
         <location filename="../src/ui/about-dialog.cpp" line="25"/>
         <source>&lt;h4&gt;Seafile Drive Client %2&lt;/h4&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;h4&gt;Seafile 드라이브 클라이언트 %2&lt;/h4&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/about-dialog.cpp" line="28"/>
         <source>&lt;h5&gt; REV %1 &lt;/h5&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;h5&gt; 리비전 %1 &lt;/h5&gt;</translation>
     </message>
     <message>
         <location filename="../ui_about-dialog.h" line="130"/>
         <source>About</source>
-        <translation type="unfinished"/>
+        <translation>정보</translation>
     </message>
     <message>
         <location filename="../ui_about-dialog.h" line="131"/>
         <source>Check For Updates</source>
-        <translation type="unfinished"/>
+        <translation>업데이트 확인</translation>
     </message>
     <message>
         <location filename="../ui_about-dialog.h" line="132"/>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>확인</translation>
     </message>
 </context>
 <context>
@@ -50,7 +50,7 @@
     <message>
         <location filename="../src/daemon-mgr.cpp" line="196"/>
         <source>%1 exited unexpectedly</source>
-        <translation type="unfinished"/>
+        <translation>갑작스럽게 %1에서 나왔습니다</translation>
     </message>
 </context>
 <context>
@@ -281,12 +281,12 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/message-poller.cpp" line="165"/>
         <source>Error when syncing</source>
-        <translation type="unfinished"/>
+        <translation>동기화 중 오류</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="178"/>
         <source>&quot;%1&quot; is being uploaded</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot;을(를) 업로드했습니다</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="194"/>
@@ -321,22 +321,22 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/message-poller.cpp" line="220"/>
         <source>Failed to create file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; 파일 만들기에 실패했습니다</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="222"/>
         <source>You can&apos;t create files in the %1 drive directly</source>
-        <translation type="unfinished"/>
+        <translation>%1 드라이브에 직접 파일을 만들 수 없습니다</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="227"/>
         <source>Failed to delete folder</source>
-        <translation type="unfinished"/>
+        <translation>폴더 삭제에 실패했습니다</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="228"/>
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; 라이브러리를 직접 삭제할 수 없습니다</translation>
     </message>
 </context>
 <context>
@@ -399,57 +399,57 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="108"/>
         <source>Network error</source>
-        <translation type="unfinished"/>
+        <translation>네트워크 오류</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="110"/>
         <source>Failed to resolve network proxy</source>
-        <translation type="unfinished"/>
+        <translation>네트워크 프록시 해석에 실패했습니다</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="112"/>
         <source>Failed to resolve remote server</source>
-        <translation type="unfinished"/>
+        <translation>원격 서버 해석에 실패했습니다</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="114"/>
         <source>Failed to connect to server</source>
-        <translation type="unfinished"/>
+        <translation>서버 연결에 실패했습니다</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="116"/>
         <source>SSL error</source>
-        <translation type="unfinished"/>
+        <translation>SSL 오류</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="118"/>
         <source>Error in network transmission</source>
-        <translation type="unfinished"/>
+        <translation>네트워크 전송 오류</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="120"/>
         <source>Timeout in network transmission</source>
-        <translation type="unfinished"/>
+        <translation>네트워크 전송 시간 초과</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="122"/>
         <source>Failed to handle http redirection</source>
-        <translation type="unfinished"/>
+        <translation>http 경로 변경 처리에 실패했습니다</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="124"/>
         <source>Server internal error</source>
-        <translation type="unfinished"/>
+        <translation>서버 내부 오류</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="126"/>
         <source>Local data is corrupt</source>
-        <translation type="unfinished"/>
+        <translation>로컬 데이터가 깨졌습니다</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="128"/>
         <source>Failed to write local data</source>
-        <translation type="unfinished"/>
+        <translation>로컬 데이터 기록에 실패했습니다</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="131"/>
@@ -693,7 +693,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/remote-wipe-service.cpp" line="103"/>
         <source>Authorization expired, please re-login</source>
-        <translation type="unfinished"/>
+        <translation>인증 기한을 초과했습니다. 다시 로그인하세요</translation>
     </message>
 </context>
 <context>
@@ -832,7 +832,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="149"/>
         <source>Show file sync errors</source>
-        <translation type="unfinished"/>
+        <translation>파일 동기화 오류 표시</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="154"/>
@@ -991,7 +991,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="144"/>
         <source>You have changed disk letter. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>디스크 문자를 바꿨습니다. 다시 시작해서 적용할까요?</translation>
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="394"/>
@@ -1056,17 +1056,17 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../ui_settings-dialog.h" line="415"/>
         <source>Check for updates automatically</source>
-        <translation type="unfinished"/>
+        <translation>업데이트 자동 확인</translation>
     </message>
     <message>
         <location filename="../ui_settings-dialog.h" line="418"/>
         <source>Disk letter (need restart): </source>
-        <translation type="unfinished"/>
+        <translation>디스크 문자(다시 시작해야 함):</translation>
     </message>
     <message>
         <location filename="../ui_settings-dialog.h" line="421"/>
         <source>S</source>
-        <translation type="unfinished"/>
+        <translation>S</translation>
     </message>
     <message>
         <location filename="../ui_settings-dialog.h" line="424"/>
@@ -1190,22 +1190,22 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="56"/>
         <source>File Sync Errors</source>
-        <translation type="unfinished"/>
+        <translation>파일 동기화 오류</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="125"/>
         <source>Minimize</source>
-        <translation type="unfinished"/>
+        <translation>최소화</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="132"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>닫기</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="192"/>
         <source>No sync errors.</source>
-        <translation type="unfinished"/>
+        <translation>오류 없이 동기화했습니다.</translation>
     </message>
 </context>
 <context>
@@ -1213,27 +1213,27 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="366"/>
         <source>Double click to open the library</source>
-        <translation type="unfinished"/>
+        <translation>라이브러리를 열려면 두 번 누르세요</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="424"/>
         <source>Library</source>
-        <translation type="unfinished"/>
+        <translation>라이브러리</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="426"/>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>경로</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="428"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>오류</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="430"/>
         <source>Time</source>
-        <translation type="unfinished"/>
+        <translation>시간</translation>
     </message>
 </context>
 </TS>

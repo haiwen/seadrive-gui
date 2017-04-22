@@ -281,12 +281,12 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
     <message>
         <location filename="../src/message-poller.cpp" line="165"/>
         <source>Error when syncing</source>
-        <translation type="unfinished"/>
+        <translation>Szinkronizációs hiba</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="178"/>
         <source>&quot;%1&quot; is being uploaded</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; feltöltés alatt</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="194"/>
@@ -321,22 +321,22 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
     <message>
         <location filename="../src/message-poller.cpp" line="220"/>
         <source>Failed to create file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; fájl elkészítése nem sikerült</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="222"/>
         <source>You can&apos;t create files in the %1 drive directly</source>
-        <translation type="unfinished"/>
+        <translation>%1 meghajtón nem lehet közvetlenül fájlt készíteni</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="227"/>
         <source>Failed to delete folder</source>
-        <translation type="unfinished"/>
+        <translation>Könyvtár törlése sikertelen</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="228"/>
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; kötet közvetlenül nem törölhető</translation>
     </message>
 </context>
 <context>
@@ -399,57 +399,57 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="108"/>
         <source>Network error</source>
-        <translation type="unfinished"/>
+        <translation>Hálózati hiba</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="110"/>
         <source>Failed to resolve network proxy</source>
-        <translation type="unfinished"/>
+        <translation>Nem található hálózati proxy</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="112"/>
         <source>Failed to resolve remote server</source>
-        <translation type="unfinished"/>
+        <translation>Szerver nem található</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="114"/>
         <source>Failed to connect to server</source>
-        <translation type="unfinished"/>
+        <translation>A szerverhez nem lehet csatlakozni</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="116"/>
         <source>SSL error</source>
-        <translation type="unfinished"/>
+        <translation>SSL hiba</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="118"/>
         <source>Error in network transmission</source>
-        <translation type="unfinished"/>
+        <translation>Hálózati átviteli hiba</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="120"/>
         <source>Timeout in network transmission</source>
-        <translation type="unfinished"/>
+        <translation>Hálózati adatátviteli Időtúllépés</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="122"/>
         <source>Failed to handle http redirection</source>
-        <translation type="unfinished"/>
+        <translation>Sikertelen http átirányítás</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="124"/>
         <source>Server internal error</source>
-        <translation type="unfinished"/>
+        <translation>Szerver belső hiba</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="126"/>
         <source>Local data is corrupt</source>
-        <translation type="unfinished"/>
+        <translation>A helyi adat hibás</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="128"/>
         <source>Failed to write local data</source>
-        <translation type="unfinished"/>
+        <translation>Helyi adat írása sikertelen</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="131"/>
@@ -832,7 +832,7 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="149"/>
         <source>Show file sync errors</source>
-        <translation type="unfinished"/>
+        <translation>Fájl szinkronizációs hibák megmutatása</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="154"/>
@@ -1190,22 +1190,22 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="56"/>
         <source>File Sync Errors</source>
-        <translation type="unfinished"/>
+        <translation>Fájl szinkronizációs hibák</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="125"/>
         <source>Minimize</source>
-        <translation type="unfinished"/>
+        <translation>Kicsinyít</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="132"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Bezár</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="192"/>
         <source>No sync errors.</source>
-        <translation type="unfinished"/>
+        <translation>Nincs szinkronizációs hiba.</translation>
     </message>
 </context>
 <context>
@@ -1213,27 +1213,27 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="366"/>
         <source>Double click to open the library</source>
-        <translation type="unfinished"/>
+        <translation>Dupla kattintással a kötet megnyitható</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="424"/>
         <source>Library</source>
-        <translation type="unfinished"/>
+        <translation>Kötet</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="426"/>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>Útvonal</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="428"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="430"/>
         <source>Time</source>
-        <translation type="unfinished"/>
+        <translation>Idő</translation>
     </message>
 </context>
 </TS>

@@ -280,12 +280,12 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     <message>
         <location filename="../src/message-poller.cpp" line="165"/>
         <source>Error when syncing</source>
-        <translation type="unfinished"/>
+        <translation>Erreur lors de la synchronisation</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="178"/>
         <source>&quot;%1&quot; is being uploaded</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; est entrain d&apos;être téléversé</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="194"/>
@@ -320,22 +320,22 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     <message>
         <location filename="../src/message-poller.cpp" line="220"/>
         <source>Failed to create file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Échec de la création du fichier &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="222"/>
         <source>You can&apos;t create files in the %1 drive directly</source>
-        <translation type="unfinished"/>
+        <translation>Vous ne pouvez créer des fichiers sur le disque %1 directement</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="227"/>
         <source>Failed to delete folder</source>
-        <translation type="unfinished"/>
+        <translation>Échec de la suppression du dossier</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="228"/>
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
-        <translation type="unfinished"/>
+        <translation>Vous ne pouvez supprimer la bibliothèque &quot;%1&quot; directement</translation>
     </message>
 </context>
 <context>
@@ -398,57 +398,57 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="108"/>
         <source>Network error</source>
-        <translation type="unfinished"/>
+        <translation>Erreur réseau</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="110"/>
         <source>Failed to resolve network proxy</source>
-        <translation type="unfinished"/>
+        <translation>Echec de la résolution du proxy réseau</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="112"/>
         <source>Failed to resolve remote server</source>
-        <translation type="unfinished"/>
+        <translation>Échec de la résolution du serveur distant</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="114"/>
         <source>Failed to connect to server</source>
-        <translation type="unfinished"/>
+        <translation>Échec de la connexion au serveur</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="116"/>
         <source>SSL error</source>
-        <translation type="unfinished"/>
+        <translation>Erreur SSL</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="118"/>
         <source>Error in network transmission</source>
-        <translation type="unfinished"/>
+        <translation>Erreur dans la transmission réseau</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="120"/>
         <source>Timeout in network transmission</source>
-        <translation type="unfinished"/>
+        <translation>Timeout dans la transmission réseau</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="122"/>
         <source>Failed to handle http redirection</source>
-        <translation type="unfinished"/>
+        <translation>Échec de la redirection http</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="124"/>
         <source>Server internal error</source>
-        <translation type="unfinished"/>
+        <translation>Erreur interne du serveur</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="126"/>
         <source>Local data is corrupt</source>
-        <translation type="unfinished"/>
+        <translation>Les données locales sont corrompues</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="128"/>
         <source>Failed to write local data</source>
-        <translation type="unfinished"/>
+        <translation>Échec de l&apos;écriture des données locales</translation>
     </message>
     <message>
         <location filename="../src/rpc/sync-error.cpp" line="131"/>
@@ -831,7 +831,7 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="149"/>
         <source>Show file sync errors</source>
-        <translation type="unfinished"/>
+        <translation>Afficher le fichier des erreurs de synchro</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="154"/>
@@ -1189,22 +1189,22 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="56"/>
         <source>File Sync Errors</source>
-        <translation type="unfinished"/>
+        <translation>Erreurs de synchro de fichier</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="125"/>
         <source>Minimize</source>
-        <translation type="unfinished"/>
+        <translation>Réduire</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="132"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Fermer</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="192"/>
         <source>No sync errors.</source>
-        <translation type="unfinished"/>
+        <translation>Pas d&apos;erreur de synchro.</translation>
     </message>
 </context>
 <context>
@@ -1212,27 +1212,27 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="366"/>
         <source>Double click to open the library</source>
-        <translation type="unfinished"/>
+        <translation>Double clic pour ouvrir la bibliothèque</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="424"/>
         <source>Library</source>
-        <translation type="unfinished"/>
+        <translation>Bibliothèque</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="426"/>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>Cheùin</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="428"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Erreur</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="430"/>
         <source>Time</source>
-        <translation type="unfinished"/>
+        <translation>Heure</translation>
     </message>
 </context>
 </TS>
