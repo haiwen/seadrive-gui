@@ -17,6 +17,7 @@ class ApiError;
 class LoginDialog;
 class TrayNotificationManager;
 class SyncErrorsDialog;
+class TransferProgressDialog;
 
 
 class SeafileTrayIcon : public QSystemTrayIcon {
@@ -94,6 +95,7 @@ private slots:
     void onMessageClicked();
 
     void showSyncErrorsDialog();
+    void showTransferProgressDialog();
 
 private:
     Q_DISABLE_COPY(SeafileTrayIcon)
@@ -160,12 +162,14 @@ private:
     TrayNotificationManager *tnm;
 
     QAction *transfer_rate_display_action_;
+    QAction *transfer_progress_action_;
     qint64 up_rate_;
     qint64 down_rate_;
 
     QList<SyncError> sync_errors_;
     SyncError global_sync_error_;
     SyncErrorsDialog *sync_errors_dialog_;
+    TransferProgressDialog * transfer_progress_dialog_;
 };
 
 #endif // SEAFILE_CLIENT_TRAY_ICON_H

@@ -205,11 +205,6 @@ bool SeafileRpcClient::getUploadProgress(json_t **ret_obj)
         return false;
     }
 
-    if (!ret) {
-        // No pending notifications.
-        return false;
-    }
-
     *ret_obj = ret;
 
     return true;
@@ -226,11 +221,6 @@ bool SeafileRpcClient::getDownloadProgress(json_t **ret_obj)
         qWarning("failed to get download progress: %s\n",
                  error->message ? error->message : "");
         g_error_free(error);
-        return false;
-    }
-
-    if (!ret) {
-        // No pending notifications.
         return false;
     }
 
