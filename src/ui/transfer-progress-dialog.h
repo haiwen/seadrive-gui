@@ -17,11 +17,16 @@ enum TransferType {
     DOWNLOAD,
 };
 
-struct TransferInfo {
+struct TransferringInfo {
     QString file_path;
     quint64 last_second_bytes;
     quint64 transferred_bytes;
     quint64 total_bytes;
+};
+
+struct TransferredInfo {
+    QString file_path;
+    quint64 total_bytes = 0;
 };
 
 class TransferItemsTableView;
@@ -47,7 +52,7 @@ class TransferItemsHeadView : public QHeaderView
     Q_OBJECT
 public:
     TransferItemsHeadView(QWidget* parent = 0);
-    // QSize sectionSizeFromContents(int index) const Q_DECL_OVERRIDE;
+    QSize sectionSizeFromContents(int index) const Q_DECL_OVERRIDE;
 };
 
 class TransferItemsTableView : public QTableView
@@ -57,6 +62,8 @@ public:
     TransferItemsTableView(QWidget* parent = 0);
     void resizeEvent(QResizeEvent* event) Q_DECL_OVERRIDE;
     void setModel(QAbstractItemModel* model) Q_DECL_OVERRIDE;
+    TransferItemsTableModel* sourceModel();
+
 
 private:
     TransferItemsTableModel* source_model_;
@@ -78,7 +85,8 @@ public:
     QVariant headerData(int section,
                         Qt::Orientation orientation,
                         int role) const Q_DECL_OVERRIDE;
-    const TransferInfo* itemAt(int row) const;
+    const TransferringInfo* itemAt(int row) const;
+    uint nameColumnWidth() const;
 
 signals:
 
@@ -86,13 +94,13 @@ public slots:
     void onResize(const QSize& size);
 
 private slots:
-    void updateDownloadInfo();
+    void updateTransferringInfo();
 
 private:
     uint name_column_width_;
     QTimer *progress_timer_;
-    QList<TransferInfo> uploading_files_, downloading_files_;
-    QList<QString> uploaded_files_, downloaded_files_;
+    QList<TransferringInfo> uploading_files_, downloading_files_;
+    QList<TransferredInfo> uploaded_files_, downloaded_files_;
 };
 
 class TransferItemDelegate : public QStyledItemDelegate {
