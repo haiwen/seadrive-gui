@@ -47,6 +47,7 @@ private:
     TransferItemsTableModel* model_;
 };
 
+
 class TransferItemsHeadView : public QHeaderView
 {
     Q_OBJECT
@@ -54,6 +55,7 @@ public:
     TransferItemsHeadView(QWidget* parent = 0);
     QSize sectionSizeFromContents(int index) const Q_DECL_OVERRIDE;
 };
+
 
 class TransferItemsTableView : public QTableView
 {
@@ -64,10 +66,10 @@ public:
     void setModel(QAbstractItemModel* model) Q_DECL_OVERRIDE;
     TransferItemsTableModel* sourceModel();
 
-
 private:
     TransferItemsTableModel* source_model_;
 };
+
 
 class TransferItemsTableModel : public QAbstractTableModel
 {
@@ -92,6 +94,7 @@ signals:
 
 public slots:
     void onResize(const QSize& size);
+    void setTransferType(const int);
 
 private slots:
     void updateTransferringInfo();
@@ -99,9 +102,12 @@ private slots:
 private:
     uint name_column_width_;
     QTimer *progress_timer_;
+    TransferType transfer_type_;
+
     QList<TransferringInfo> uploading_files_, downloading_files_;
     QList<TransferredInfo> uploaded_files_, downloaded_files_;
 };
+
 
 class TransferItemDelegate : public QStyledItemDelegate {
     Q_OBJECT
