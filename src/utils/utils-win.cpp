@@ -179,5 +179,20 @@ QStringList getAvailableDiskLetters()
 
 }
 
+char *getLocalPipeName(const char *pipeName)
+{
+    DWORD bufCharCount = 32767;
+    TCHAR userNameBuf[bufCharCount];
+    if (GetUserName(userNameBuf, &bufCharCount) == 0) {
+        qWarning ("Failed to get user name, GLE=%lu\n",
+                  GetLastError());
+    }
+
+    QString localPipeName(pipeName);
+    localPipeName.append(userNameBuf);
+
+    return localPipeName.toUtf8().data();
+}
+
 } // namespace win
 } // namespace utils

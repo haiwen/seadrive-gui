@@ -28,12 +28,13 @@
 #include "account-mgr.h"
 #include "settings-mgr.h"
 #include "utils/utils.h"
+#include "utils/utils-win.h"
 #include "auto-login-service.h"
 #include "ext-handler.h"
 
 namespace {
 
-const char *kSeafExtPipeName = "\\\\.\\pipe\\seadrive_ext_pipe";
+const char *kSeafExtPipeName = "\\\\.\\pipe\\seadrive_ext_pipe_";
 const int kPipeBufSize = 1024;
 
 const quint64 kReposInfoCacheMSecs = 2000;
@@ -310,7 +311,7 @@ void ExtConnectionListenerThread::run()
         bool connected = false;
 
         pipe = CreateNamedPipe(
-            kSeafExtPipeName,         // pipe name
+            utils::win::getLocalPipeName(kSeafExtPipeName), // pipe name
             PIPE_ACCESS_DUPLEX,       // read/write access
             PIPE_TYPE_MESSAGE |       // message type pipe
             PIPE_READMODE_MESSAGE |   // message-read mode

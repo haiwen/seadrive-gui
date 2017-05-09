@@ -502,6 +502,22 @@ bool isShellExtEnabled()
     return result != ERROR_SUCCESS;
 }
 
+char *getLocalPipeName(const char *pipeName)
+{
+    DWORD bufCharCount = 32767;
+    TCHAR userNameBuf[32767];
+    static char ret[32767];
+    strcpy(ret, pipeName);
+
+    if (GetUserName(userNameBuf, &bufCharCount) == 0) {
+        seaf_ext_log ("Failed to get user name, GLE=%lu\n",
+                      GetLastError());
+    }
+
+    strncat(ret, userNameBuf, bufCharCount);
+
+    return ret;
+}
 
 } // namespace utils
 } // namespace seafile
