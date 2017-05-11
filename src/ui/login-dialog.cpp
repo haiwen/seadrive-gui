@@ -89,6 +89,8 @@ LoginDialog::LoginDialog(QWidget *parent) : QDialog(parent)
 
     mComputerName->setText(computerName);
 
+    mAutomaticLogin->setCheckState(Qt::Unchecked);
+
     connect(mSubmitBtn, SIGNAL(clicked()), this, SLOT(doLogin()));
 
     const QRect screen = QApplication::desktop()->screenGeometry();
@@ -276,6 +278,9 @@ void LoginDialog::onFetchAccountInfoSuccess(const AccountInfo& info)
     // The user may use the username to login, but we need to store the email
     // to account database
     account.username = info.email;
+    account.isAutomaticLogin =
+        mAutomaticLogin->checkState() == Qt::Checked;
+
     if (gui->accountManager()->saveAccount(account) < 0) {
         showWarning(tr("Failed to save current account"));
     }
