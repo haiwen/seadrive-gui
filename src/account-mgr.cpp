@@ -43,7 +43,7 @@ bool getAutomaticLoginColumnInfoCallBack(sqlite3_stmt *stmt, void *data)
     bool *has_automatic_login_column = static_cast<bool*>(data);
     const char *column_name = (const char *)sqlite3_column_text (stmt, 1);
 
-    if (0 == strcmp("isAutomaticLogin", column_name))
+    if (0 == strcmp("AutomaticLogin", column_name))
         *has_automatic_login_column = true;
 
     return true;
@@ -64,9 +64,9 @@ void updateAccountDatabaseForColumnAutomaticLogin(struct sqlite3* db)
     bool has_automatic_login_column = false;
     const char* sql = "PRAGMA table_info(Accounts);";
     sqlite_foreach_selected_row (db, sql, getAutomaticLoginColumnInfoCallBack, &has_automatic_login_column);
-    sql = "ALTER TABLE Accounts ADD COLUMN isAutomaticLogin INTEGER";
+    sql = "ALTER TABLE Accounts ADD COLUMN AutomaticLogin INTEGER";
     if (!has_automatic_login_column && sqlite_query_exec (db, sql) < 0)
-        qCritical("unable to create isAutomaticLogin column\n");
+        qCritical("unable to create AutomaticLogin column\n");
 }
 
 bool compareAccount(const Account& a, const Account& b)
@@ -222,7 +222,7 @@ bool AccountManager::loadServerInfoCB(sqlite3_stmt *stmt, void *data)
 
 const std::vector<Account>& AccountManager::loadAccounts()
 {
-    const char *sql = "SELECT url, username, token, lastVisited, isShibboleth, isAutomaticLogin "
+    const char *sql = "SELECT url, username, token, lastVisited, isShibboleth, AutomaticLogin "
                       "FROM Accounts ORDER BY lastVisited DESC";
     accounts_.clear();
     UserData userdata;
@@ -255,7 +255,7 @@ int AccountManager::saveAccount(const Account& account)
     qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
 
     char *zql = sqlite3_mprintf(
-        "REPLACE INTO Accounts(url, username, token, lastVisited, isShibboleth, isAutomaticLogin)"
+        "REPLACE INTO Accounts(url, username, token, lastVisited, isShibboleth, AutomaticLogin)"
         "VALUES (%Q, %Q, %Q, %Q, %Q, %Q) ",
         // url
         new_account.serverUrl.toEncoded().data(),
@@ -398,7 +398,7 @@ int AccountManager::replaceAccount(const Account& old_account, const Account& ne
         "    token = %Q, "
         "    lastVisited = %Q, "
         "    isShibboleth = %Q "
-        "    isAutomaticLogin = %Q "
+        "    AutomaticLogin = %Q "
         "WHERE url = %Q "
         "  AND username = %Q",
         // new_url
