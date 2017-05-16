@@ -502,21 +502,22 @@ bool isShellExtEnabled()
     return result != ERROR_SUCCESS;
 }
 
-char *getLocalPipeName(const char *pipeName)
+const char *getLocalPipeName(const char *pipe_name)
 {
-    DWORD bufCharCount = 32767;
-    TCHAR userNameBuf[32767];
-    static char ret[32767];
-    strcpy(ret, pipeName);
+#define INFO_BUFFER_SIZE 32767
+    DWORD buf_char_count = INFO_BUFFER_SIZE;
+    TCHAR user_name_buf[INFO_BUFFER_SIZE];
+    std::string ret(pipe_name);
 
-    if (GetUserName(userNameBuf, &bufCharCount) == 0) {
+    if (GetUserName(user_name_buf, &buf_char_count) == 0) {
         seaf_ext_log ("Failed to get user name, GLE=%lu\n",
                       GetLastError());
+        return pipe_name;
     }
-
-    strncat(ret, userNameBuf, bufCharCount);
-
-    return ret;
+    else {
+        ret.append(user_name_buf, buf_char_count);
+        return strdup(ret.c_str());
+    }
 }
 
 } // namespace utils
