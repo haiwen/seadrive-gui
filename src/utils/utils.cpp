@@ -796,3 +796,28 @@ QByteArray buildFormData(const QHash<QString, QString>& params)
     return u.encodedQuery();
 #endif
 }
+
+QString translateTransferRate(int rate)
+{
+    QString unit;
+    QString display_rate;
+    double KBps = ((double)rate) / 1024;
+    if (KBps >= 1024) {
+        unit = "MB/s";
+        double MBps = KBps / 1024;
+        if (MBps < 10) {
+            display_rate = QString::number(MBps, 'f', 1);
+        } else {
+            display_rate = QString::number(int(MBps));
+        }
+    }
+    else {
+        display_rate = KBps;
+        unit = "kB/s";
+        display_rate = QString::number(int(KBps));
+    }
+
+    return QString("%1 %2")
+        .arg(display_rate)
+        .arg(unit);
+}

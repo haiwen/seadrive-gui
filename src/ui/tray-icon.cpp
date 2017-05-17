@@ -59,31 +59,6 @@ void darkmodeWatcher(bool /*new Value*/) {
 }
 #endif
 
-QString translateTransferRate(int rate)
-{
-    QString unit;
-    QString display_rate;
-    double kbps = ((double)rate) / 1024;
-    if (kbps >= 1024) {
-        unit = "MB/s";
-        double mbps = kbps / 1024;
-        if (mbps < 10) {
-            display_rate = QString::number(mbps, 'f', 1);
-        } else {
-            display_rate = QString::number(int(mbps));
-        }
-    }
-    else {
-        display_rate = kbps;
-        unit = "kB/s";
-        display_rate = QString::number(int(kbps));
-    }
-
-    return QString("%1 %2")
-        .arg(display_rate)
-        .arg(unit);
-}
-
 } // namespace
 
 SeafileTrayIcon::SeafileTrayIcon(QObject *parent)

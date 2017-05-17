@@ -90,4 +90,7 @@ QUrl includeQueryParams(const QUrl& url,
                         const QHash<QString, QString>& params);
 
 QByteArray buildFormData(const QHash<QString, QString>& params);
+
+QString translateTransferRate(int rate);
+
 #endif

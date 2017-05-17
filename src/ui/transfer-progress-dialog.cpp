@@ -40,31 +40,6 @@ const QString kProgressBarStyle("QProgressBar "
         "{ border: 1px solid grey; border-radius: 2px; } "
         "QProgressBar::chunk { background-color: #f0f0f0; width: 20px; }");
 
-QString translateTransferRate(int rate)
-{
-    QString unit;
-    QString display_rate;
-    double KBps = ((double)rate) / 1024;
-    if (KBps >= 1024) {
-        unit = "MB/s";
-        double MBps = KBps / 1024;
-        if (MBps < 10) {
-            display_rate = QString::number(MBps, 'f', 1);
-        } else {
-            display_rate = QString::number(int(MBps));
-        }
-    }
-    else {
-        display_rate = KBps;
-        unit = "kB/s";
-        display_rate = QString::number(int(KBps));
-    }
-
-    return QString("%1 %2")
-        .arg(display_rate)
-        .arg(unit);
-}
-
 QString normalizedPath(const QString& file_path)
 {
     QString normalized_path = file_path;
