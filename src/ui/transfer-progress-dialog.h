@@ -5,29 +5,9 @@
 #include <QTableView>
 #include <QHeaderView>
 #include <QTimer>
+
 #include "utils/json-utils.h"
-
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-// only available in qt 5.0+
-#define Q_DECL_OVERRIDE
-#endif
-
-enum TransferType {
-    UPLOAD,
-    DOWNLOAD,
-};
-
-struct TransferringInfo {
-    QString file_path;
-    quint64 last_second_bytes;
-    quint64 transferred_bytes;
-    quint64 total_bytes;
-};
-
-struct TransferredInfo {
-    QString file_path;
-    quint64 total_bytes = 0;
-};
+#include "rpc/transfer-progress.h"
 
 class TransferItemsTableView;
 class TransferItemsTableModel;
@@ -37,8 +17,6 @@ class TransferProgressDialog : public QDialog
     Q_OBJECT
 public:
     TransferProgressDialog(QWidget *parent = 0);
-
-private slots:
 
 private:
     void createTable();
@@ -89,8 +67,7 @@ public:
                         int role) const Q_DECL_OVERRIDE;
     const TransferringInfo* itemAt(int row) const;
     uint nameColumnWidth() const;
-
-signals:
+    bool isTransferringRow(const QModelIndex& index) const;
 
 public slots:
     void onResize(const QSize& size);
@@ -103,9 +80,7 @@ private:
     uint name_column_width_;
     QTimer *progress_timer_;
     TransferType transfer_type_;
-
-    QList<TransferringInfo> uploading_files_, downloading_files_;
-    QList<TransferredInfo> uploaded_files_, downloaded_files_;
+    TransferProgress transfer_progress_;
 };
 
 

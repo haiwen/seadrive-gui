@@ -46,16 +46,6 @@ QString normalizedPath(const QString& file_path)
     return normalized_path.replace('\\', '/');
 }
 
-uint getFileSize(const QString& file_path)
-{
-    QString fill_path = pathJoin(gui->mountDir(), file_path);
-    QFile file(fill_path);
-    if (file.exists()) {
-        return file.size();
-    }
-    return 0;
-}
-
 } // namespace
 
 TransferProgressDialog::TransferProgressDialog(QWidget *parent)
@@ -167,10 +157,6 @@ TransferItemsTableModel::TransferItemsTableModel(QObject* parent)
       name_column_width_(kNameColumnWidth),
       transfer_type_(UPLOAD)
 {
-    uploading_files_.clear();
-    uploaded_files_.clear();
-    downloading_files_.clear();
-    downloaded_files_.clear();
     progress_timer_ = new QTimer(this);
     connect(progress_timer_, SIGNAL(timeout()),
             this, SLOT(updateTransferringInfo()));
@@ -181,133 +167,18 @@ TransferItemsTableModel::TransferItemsTableModel(QObject* parent)
 void TransferItemsTableModel::setTransferItems()
 {
     json_t *upload_reply, *download_reply;
-    json_error_t error;
-
-    if (!gui->rpcClient()->getUploadProgress(&upload_reply)) {
+    if ((!gui->rpcClient()->getUploadProgress(&upload_reply)) ||
+        (!gui->rpcClient()->getDownloadProgress(&download_reply))) {
         return;
     }
-    if (!gui->rpcClient()->getDownloadProgress(&download_reply)) {
-        return;
-    }
-
-    json_t* uploaded_array = json_object_get(upload_reply, "uploaded_files");
-    json_t* uploading_array = json_object_get(upload_reply, "uploading_files");
-    json_t* downloaded_array = json_object_get(download_reply, "downloaded_files");
-    json_t* downloading_array = json_object_get(download_reply, "downloading_files");
 
     beginResetModel();
-    if (json_array_size(uploaded_array)) {
-        int i, n = json_array_size(uploaded_array);
-        int uploading_files_index, uploaded_files_index;
-
-        for (i = 0; i < n; i++) {
-            const char* name = json_string_value(json_array_get(uploaded_array, i));
-            if (name) {
-                TransferredInfo uploaded_info;
-                uploaded_info.file_path = QString::fromUtf8(name);
-                uploaded_info.total_bytes = getFileSize(name);
-
-                for (uploaded_files_index = 0; uploaded_files_index != uploaded_files_.size(); uploaded_files_index++) {
-                    if (uploaded_files_[uploaded_files_index].file_path == uploaded_info.file_path) {
-                        break;
-                    }
-                }
-                if (uploaded_files_index == uploaded_files_.size()) {
-                    uploaded_files_.push_back(uploaded_info);
-                }
-
-                for (uploading_files_index = 0; uploading_files_index != uploading_files_.size(); uploading_files_index++) {
-                    if (uploading_files_[uploading_files_index].file_path == name) {
-                        uploading_files_.erase(uploading_files_.begin() + uploading_files_index);
-                        break;
-                    }
-                }
-            }
-        }
-    }
-
-    if (json_array_size(uploading_array)) {
-        int i, index;
-        json_t* uploading_object;
-
-        json_array_foreach(uploading_array, i, uploading_object) {
-            QMap<QString, QVariant> dict = mapFromJSON(uploading_object, &error);
-            TransferringInfo uploading_info;
-            uploading_info.file_path = dict.value("file_path").toString();
-            uploading_info.last_second_bytes = 0;
-            uploading_info.transferred_bytes = dict.value("uploaded").toUInt();
-            uploading_info.total_bytes = dict.value("total_upload").toUInt();
-
-            for (index = 0; index != uploading_files_.size() ; index++) {
-                if (uploading_files_[index].file_path == uploading_info.file_path) {
-                    uploading_files_[index].last_second_bytes = uploading_files_[index].transferred_bytes;
-                    uploading_files_[index].transferred_bytes = uploading_info.transferred_bytes;
-                    break;
-                }
-            }
-
-            if (index == uploading_files_.size()) {
-                uploading_files_.push_back(uploading_info);
-            }
-        }
-    }
-
-    if (json_array_size(downloaded_array)) {
-        int i, n = json_array_size(downloaded_array);
-        int downloading_files_index, downloaded_files_index;
-
-        for (i = 0; i < n; i++) {
-            const char* name = json_string_value(json_array_get(downloaded_array, i));
-            if (name) {
-                TransferredInfo downloaded_info;
-                downloaded_info.file_path = QString::fromUtf8(name);
-                downloaded_info.total_bytes = getFileSize(name);
-
-                for (downloaded_files_index = 0; downloaded_files_index != downloaded_files_.size(); downloaded_files_index++) {
-                    if (downloaded_files_[downloaded_files_index].file_path == downloaded_info.file_path) {
-                        break;
-                    }
-                }
-                if (downloaded_files_index == downloaded_files_.size()) {
-                    downloaded_files_.push_back(downloaded_info);
-                }
-
-                for (downloading_files_index = 0; downloading_files_index != downloading_files_.size(); downloading_files_index++) {
-                    if (downloading_files_[downloading_files_index].file_path == name) {
-                        downloading_files_.erase(downloading_files_.begin() + downloading_files_index);
-                        break;
-                    }
-                }
-            }
-        }
-    }
-
-    if (json_array_size(downloading_array)) {
-        int i, index;
-        json_t* downloading_object;
-
-        json_array_foreach(downloading_array, i, downloading_object) {
-            QMap<QString, QVariant> dict = mapFromJSON(downloading_object, &error);
-            TransferringInfo downloading_info;
-            downloading_info.file_path = dict.value("file_path").toString();
-            downloading_info.last_second_bytes = 0;
-            downloading_info.transferred_bytes = dict.value("downloaded").toUInt();
-            downloading_info.total_bytes = dict.value("total_download").toUInt();
-
-            for (index = 0; index != downloading_files_.size() ; index++) {
-                if (downloading_files_[index].file_path == downloading_info.file_path) {
-                    downloading_files_[index].last_second_bytes = downloading_files_[index].transferred_bytes;
-                    downloading_files_[index].transferred_bytes = downloading_info.transferred_bytes;
-                    break;
-                }
-            }
-
-            if (index == downloading_files_.size()) {
-                downloading_files_.push_back(downloading_info);
-            }
-        }
-    }
+    transfer_progress_ =
+        TransferProgress::fromJSON(upload_reply, download_reply);
     endResetModel();
+
+    json_decref(upload_reply);
+    json_decref(download_reply);
 }
 
 int TransferItemsTableModel::columnCount(const QModelIndex& parent) const
@@ -318,11 +189,12 @@ int TransferItemsTableModel::columnCount(const QModelIndex& parent) const
 int TransferItemsTableModel::rowCount(const QModelIndex& parent) const
 {
     if (transfer_type_ == UPLOAD) {
-        return uploading_files_.size() +
-               uploaded_files_.size();
+        return transfer_progress_.uploading_files_.size() +
+            transfer_progress_.uploaded_files_.size();
+    } else {
+        return transfer_progress_.downloading_files_.size() +
+            transfer_progress_.downloaded_files_.size();
     }
-    return downloading_files_.size() +
-           downloaded_files_.size();
 }
 
 QVariant TransferItemsTableModel::data(const QModelIndex& index, int role) const
@@ -337,25 +209,32 @@ QVariant TransferItemsTableModel::data(const QModelIndex& index, int role) const
         return QVariant();
     }
 
-    const int row = index.row(), column = index.column();
+    const uint row = index.row(), column = index.column();
 
     if (role == Qt::SizeHintRole) {
         QSize qsize(0, kDefaultColumnHeight);
         if (column == FILE_COLUMN_PATH) {
             qsize.setWidth(name_column_width_);
-        }
-        else {
+        } else {
             qsize.setWidth(kDefaultColumnWidth);
         }
         return qsize;
     }
 
+    const uint uploading_size =
+        transfer_progress_.uploading_files_.size();
+    const uint uploaded_size =
+        transfer_progress_.uploaded_files_.size();
+    const uint downloading_size =
+        transfer_progress_.downloading_files_.size();
+    const uint downloaded_size =
+        transfer_progress_.downloaded_files_.size();
+
     if (transfer_type_ == UPLOAD) {
-        if (row >= uploading_files_.size() &&
-            uploaded_files_.size() > 0)
-        {
-            const int transferred_index = row - uploading_files_.size();
-            const TransferredInfo& transferred_info = uploaded_files_[transferred_index];
+        if ((row >= uploading_size) && (uploaded_size > 0)) {
+            const int transferred_index = row - uploading_size;
+            const TransferredInfo& transferred_info =
+                transfer_progress_.uploaded_files_[transferred_index];
 
             if (role == Qt::DisplayRole) {
                 if (column == FILE_COLUMN_PATH) {
@@ -368,59 +247,41 @@ QVariant TransferItemsTableModel::data(const QModelIndex& index, int role) const
                     return QString(tr("finished"));
                 }
                 else if (column == FILE_COLUMN_SIZE) {
-                    return readableFileSize(transferred_info.total_bytes);
+                    return QVariant();
                 }
             }
 
             if (role == Qt::ToolTipRole) {
                 return normalizedPath(transferred_info.file_path);
             }
-        }
+        } else {
+            const TransferringInfo& transferring_info =
+                transfer_progress_.uploading_files_[row];
 
-        const TransferringInfo& transferring_info = uploading_files_[row];
-
-        if (!uploading_files_.isEmpty()) {
-            if (role == Qt::DisplayRole) {
-                if (column == FILE_COLUMN_PATH) {
-                    return getBaseName(transferring_info.file_path);
-                }
-                else if (column == FILE_COLUMN_SPEED) {
-                    if (transferring_info.last_second_bytes != 0) {
-                        return translateTransferRate(transferring_info.transferred_bytes -
-                                                     transferring_info.last_second_bytes);
+            if (uploading_size > 0) {
+                if (role == Qt::DisplayRole) {
+                    if (column == FILE_COLUMN_PATH) {
+                        return getBaseName(transferring_info.file_path);
+                    }
+                    else if (column == FILE_COLUMN_PROGRESS) {
+                        return readableFileSize(transferring_info.transferred_bytes);
+                    }
+                    else if (column == FILE_COLUMN_SIZE) {
+                        return readableFileSize(transferring_info.total_bytes);
                     }
                 }
-                else if (column == FILE_COLUMN_PROGRESS) {
-                    return readableFileSize(transferring_info.transferred_bytes);
-                }
-                else if (column == FILE_COLUMN_SIZE) {
-                    return readableFileSize(transferring_info.total_bytes);
-                }
-            }
 
-            if (role == Qt::ToolTipRole) {
-                if (column == FILE_COLUMN_PROGRESS) {
-                    uint speed = transferring_info.transferred_bytes -
-                                 transferring_info.last_second_bytes + 1;
-                    uint remain_bytes = transferring_info.total_bytes -
-                                        transferring_info.transferred_bytes;
-                    QTime remain_time(0, 0, 0, 0);
-                    remain_time = remain_time.addSecs(remain_bytes / speed);
-                    return QString(tr("remain time %1"))
-                                   .arg(remain_time.toString("h:m:s"));
-                }
-                else {
-                    return normalizedPath(transferring_info.file_path);
+                if (role == Qt::ToolTipRole) {
+                   return normalizedPath(transferring_info.file_path);
                 }
             }
         }
     } // if (transfer_type_ == UPLOAD)
     else {
-        if (row >= downloading_files_.size() &&
-            downloaded_files_.size() > 0)
-        {
-            const int transferred_index = row - downloading_files_.size();
-            const TransferredInfo& transferred_info = downloaded_files_[transferred_index];
+        if ((row >= downloading_size) && (downloaded_size > 0)) {
+            const int transferred_index = row - downloading_size;
+            const TransferredInfo& transferred_info =
+                transfer_progress_.downloaded_files_[transferred_index];
 
             if (role == Qt::DisplayRole) {
                 if (column == FILE_COLUMN_PATH) {
@@ -433,48 +294,31 @@ QVariant TransferItemsTableModel::data(const QModelIndex& index, int role) const
                     return QString(tr("finished"));
                 }
                 else if (column == FILE_COLUMN_SIZE) {
-                    return readableFileSize(transferred_info.total_bytes);
+                    return QVariant();
                 }
             }
 
             if (role == Qt::ToolTipRole) {
                 return normalizedPath(transferred_info.file_path);
             }
-        }
+        } else {
+            const TransferringInfo& transferring_info =
+                transfer_progress_.downloading_files_[row];
 
-        const TransferringInfo& transferring_info = downloading_files_[row];
-
-        if (!downloading_files_.isEmpty()) {
-            if (role == Qt::DisplayRole) {
-                if (column == FILE_COLUMN_PATH) {
-                    return getBaseName(transferring_info.file_path);
-                }
-                else if (column == FILE_COLUMN_SPEED) {
-                    if (transferring_info.last_second_bytes != 0) {
-                        return translateTransferRate(transferring_info.transferred_bytes -
-                                                     transferring_info.last_second_bytes);
+            if (downloading_size > 0) {
+                if (role == Qt::DisplayRole) {
+                    if (column == FILE_COLUMN_PATH) {
+                        return getBaseName(transferring_info.file_path);
+                    }
+                    else if (column == FILE_COLUMN_PROGRESS) {
+                        return readableFileSize(transferring_info.transferred_bytes);
+                    }
+                    else if (column == FILE_COLUMN_SIZE) {
+                        return readableFileSize(transferring_info.total_bytes);
                     }
                 }
-                else if (column == FILE_COLUMN_PROGRESS) {
-                    return readableFileSize(transferring_info.transferred_bytes);
-                }
-                else if (column == FILE_COLUMN_SIZE) {
-                    return readableFileSize(transferring_info.total_bytes);
-                }
-            }
 
-            if (role == Qt::ToolTipRole) {
-                if (column == FILE_COLUMN_PROGRESS) {
-                    uint speed = transferring_info.transferred_bytes -
-                                 transferring_info.last_second_bytes + 1;
-                    uint remain_bytes = transferring_info.total_bytes -
-                                        transferring_info.transferred_bytes;
-                    QTime remain_time(0, 0, 0, 0);
-                    remain_time = remain_time.addSecs(remain_bytes / speed);
-                    return QString(tr("remain time %1"))
-                                   .arg(remain_time.toString("h:m:s"));
-                }
-                else {
+                if (role == Qt::ToolTipRole) {
                     return normalizedPath(transferring_info.file_path);
                 }
             }
@@ -500,7 +344,7 @@ QVariant TransferItemsTableModel::headerData(int section,
             return tr("Speed");
         }
         else if (section == FILE_COLUMN_PROGRESS) {
-            return tr("Transferred");
+            return tr("Progress");
         }
         else if (section == FILE_COLUMN_SIZE) {
             return tr("Size");
@@ -513,16 +357,18 @@ QVariant TransferItemsTableModel::headerData(int section,
 const TransferringInfo* TransferItemsTableModel::itemAt(int row) const
 {
     if (transfer_type_ == DOWNLOAD) {
-        if (row >= downloading_files_.size()) {
+        if (row >= transfer_progress_.downloading_files_.size()) {
             return NULL;
+        } else {
+            return &transfer_progress_.downloading_files_[row];
         }
-        return &downloading_files_[row];
     }
     else {
-        if (row >= uploading_files_.size()) {
+        if (row >= transfer_progress_.uploading_files_.size()) {
             return NULL;
+        } else {
+            return &transfer_progress_.uploading_files_[row];
         }
-        return &uploading_files_[row];
     }
 }
 
@@ -548,6 +394,19 @@ void TransferItemsTableModel::updateTransferringInfo()
 uint TransferItemsTableModel::nameColumnWidth() const
 {
     return name_column_width_;
+}
+
+bool TransferItemsTableModel::isTransferringRow(
+    const QModelIndex& index) const
+{
+    uint row = index.row();
+    uint transferring_size = 0;
+    if (transfer_type_ == UPLOAD) {
+        transferring_size = transfer_progress_.uploading_files_.size();
+    } else {
+        transferring_size = transfer_progress_.downloading_files_.size();
+    }
+    return row < transferring_size;
 }
 
 void TransferItemsTableModel::setTransferType(const int transfer_type)
@@ -626,7 +485,7 @@ void TransferItemDelegate::paint(QPainter *painter,
     }
     case FILE_COLUMN_PROGRESS:
     {
-        if (text == tr("finished")) {
+        if (!model->isTransferringRow(index)) {
             QPoint text_pos(kMarginLeft, kMarginTop);
             text_pos += option_rect.topLeft();
 
@@ -637,27 +496,26 @@ void TransferItemDelegate::paint(QPainter *painter,
                               Qt::AlignLeft | Qt::AlignVCenter | Qt::TextSingleLine,
                               text, &text_rect);
             painter->restore();
+        } else {
+            const TransferringInfo* transferring_item =
+                model->itemAt(index.row());
 
-            break;
-        }
-
-        const TransferringInfo* transferring_item = model->itemAt(index.row());
-
-        if (transferring_item != NULL) {
-            const int progress = transferring_item->transferred_bytes * 100 /
-                                 transferring_item->total_bytes;
-            // Customize style using style-sheet..
-            QProgressBar progressBar;
-            progressBar.resize(QSize(size.width() - 10, size.height() / 2 - 4));
-            progressBar.setMinimum(0);
-            progressBar.setMaximum(100);
-            progressBar.setValue(progress);
-            progressBar.setAlignment(Qt::AlignCenter);
-            progressBar.setStyleSheet(kProgressBarStyle);
-            painter->save();
-            painter->translate(option_rect.topLeft() + QPoint(kPadding, size.height() / 4 - 2));
-            progressBar.render(painter);
-            painter->restore();
+            if (transferring_item != NULL) {
+                const int progress = transferring_item->transferred_bytes * 100 /
+                                     transferring_item->total_bytes;
+                // Customize style using style-sheet..
+                QProgressBar progressBar;
+                progressBar.resize(QSize(size.width() - 10, size.height() / 2 - 4));
+                progressBar.setMinimum(0);
+                progressBar.setMaximum(100);
+                progressBar.setValue(progress);
+                progressBar.setAlignment(Qt::AlignCenter);
+                progressBar.setStyleSheet(kProgressBarStyle);
+                painter->save();
+                painter->translate(option_rect.topLeft() + QPoint(kPadding, size.height() / 4 - 2));
+                progressBar.render(painter);
+                painter->restore();
+            }
         }
         break;
     }

@@ -278,6 +278,7 @@ SET(seadrive_gui_sources
 
   src/rpc/rpc-client.cpp
   src/rpc/sync-error.cpp
+  src/rpc/transfer-progress.cpp
 
   src/seadrive-gui.cpp
   src/settings-mgr.cpp
