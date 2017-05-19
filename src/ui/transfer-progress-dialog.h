@@ -77,6 +77,11 @@ private slots:
     void updateTransferringInfo();
 
 private:
+    QVariant transferringData(const QModelIndex& index,
+                              int role = Qt::DisplayRole) const;
+    QVariant transferredData(const QModelIndex& index,
+                             int role = Qt::DisplayRole) const;
+
     uint name_column_width_;
     QTimer *progress_timer_;
     TransferType transfer_type_;
