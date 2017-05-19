@@ -5,6 +5,7 @@
 #include <QTableView>
 #include <QHeaderView>
 #include <QTimer>
+#include <QTabWidget>
 
 #include "utils/json-utils.h"
 #include "rpc/transfer-progress.h"
@@ -17,9 +18,21 @@ class TransferProgressDialog : public QDialog
     Q_OBJECT
 public:
     TransferProgressDialog(QWidget *parent = 0);
+    void resizeEvent(QResizeEvent* event) Q_DECL_OVERRIDE;
 
 private:
-    void createTable();
+    QTabWidget* tab_widget_;
+};
+
+
+class TransferTab : public QWidget
+{
+    Q_OBJECT
+public:
+    TransferTab(TransferType type, QWidget *parent = 0);
+
+private:
+    void createTable(TransferType type);
 
     TransferItemsTableView* table_;
     TransferItemsTableModel* model_;
@@ -71,7 +84,7 @@ public:
 
 public slots:
     void onResize(const QSize& size);
-    void setTransferType(const int);
+    void setTransferType(TransferType type);
 
 private slots:
     void updateTransferringInfo();

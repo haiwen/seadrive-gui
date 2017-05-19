@@ -2,7 +2,6 @@
 
 #include <QtGlobal>
 #include <QtWidgets>
-#include <QTabWidget>
 #include <QTime>
 #include <QScopedPointer>
 
@@ -56,38 +55,54 @@ struct JsonPointerCustomDeleter {
 } // namespace
 
 TransferProgressDialog::TransferProgressDialog(QWidget *parent)
+    : QDialog(parent)
 {
     setWindowTitle(tr("Transfer Progress"));
     setWindowIcon(QIcon(":/images/seafile.png"));
     setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
                    Qt::WindowStaysOnTopHint);
 
-    setMinimumSize(QSize(600, 300));
+    setMinimumSize(QSize(500, 200));
 
     QVBoxLayout* vlayout = new QVBoxLayout;
 
-    QTabBar* tab = new QTabBar(this);
-    tab->addTab(tr("upload"));
-    tab->addTab(tr("download"));
-    vlayout->addWidget(tab);
-
-    createTable();
-    model_->setTransferItems();
-    vlayout->addWidget(table_);
+    tab_widget_ = new QTabWidget;
+    tab_widget_->addTab(new TransferTab(UPLOAD), tr("upload"));
+    tab_widget_->addTab(new TransferTab(DOWNLOAD), tr("download"));
+    vlayout->addWidget(tab_widget_);
 
     setLayout(vlayout);
     adjustSize();
-
-    connect(tab, SIGNAL(currentChanged(int)),
-            model_, SLOT(setTransferType(int)));
 }
 
-void TransferProgressDialog::createTable()
+void TransferProgressDialog::resizeEvent(QResizeEvent* event)
+{
+    QDialog::resizeEvent(event);
+    uint tab_width = (rect().width() / tab_widget_->count()) - 12;
+    QString style("QTabBar::tab { width: %1px; }");
+    style = style.arg(tab_width);
+    tab_widget_->setStyleSheet(style);
+}
+
+
+TransferTab::TransferTab(TransferType type, QWidget *parent)
+    : QWidget(parent)
+{
+    QVBoxLayout* vlayout = new QVBoxLayout;
+    createTable(type);
+    vlayout->addWidget(table_);
+    vlayout->addStretch(1);
+    setLayout(vlayout);
+    adjustSize();
+}
+
+void TransferTab::createTable(TransferType type)
 {
     table_ = new TransferItemsTableView(this);
     model_ = new TransferItemsTableModel(this);
     table_->setModel(model_);
-
+    model_->setTransferItems();
+    model_->setTransferType(type);
 }
 
 
@@ -403,14 +418,9 @@ bool TransferItemsTableModel::isTransferringRow(
     return row < transferring_size;
 }
 
-void TransferItemsTableModel::setTransferType(const int transfer_type)
+void TransferItemsTableModel::setTransferType(TransferType type)
 {
-    if (transfer_type == 1) {
-        transfer_type_ = DOWNLOAD;
-    }
-    else {
-         transfer_type_ = UPLOAD;
-    }
+    transfer_type_ = type;
 }
 
 

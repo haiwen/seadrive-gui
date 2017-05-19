@@ -6,7 +6,7 @@
 #include <jansson.h>
 
 enum TransferType {
-    UPLOAD,
+    UPLOAD = 0,
     DOWNLOAD,
 };
 
