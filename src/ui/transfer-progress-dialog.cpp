@@ -17,7 +17,6 @@ namespace
 {
 enum {
     FILE_COLUMN_PATH = 0,
-    FILE_COLUMN_SPEED,
     FILE_COLUMN_PROGRESS,
     FILE_COLUMN_SIZE,
     FILE_MAX_COLUMN,
@@ -278,9 +277,6 @@ QVariant TransferItemsTableModel::transferredData(
             if (column == FILE_COLUMN_PATH) {
                 return getBaseName(transferred_info->file_path);
             }
-            else if (column == FILE_COLUMN_SPEED) {
-                return QVariant();
-            }
             else if (column == FILE_COLUMN_PROGRESS) {
                 return QString(tr("finished"));
             }
@@ -340,9 +336,6 @@ QVariant TransferItemsTableModel::headerData(int section,
     if (role == Qt::DisplayRole) {
         if (section == FILE_COLUMN_PATH) {
             return tr("Name");
-        }
-        else if (section == FILE_COLUMN_SPEED) {
-            return tr("Speed");
         }
         else if (section == FILE_COLUMN_PROGRESS) {
             return tr("Progress");
@@ -463,9 +456,6 @@ void TransferItemDelegate::paint(QPainter *painter,
         painter->restore();
 
         break;
-    }
-    case FILE_COLUMN_SPEED:
-    {
     }
     case FILE_COLUMN_SIZE:
     {
