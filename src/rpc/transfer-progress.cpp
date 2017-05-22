@@ -80,13 +80,13 @@ TransferProgress TransferProgress::fromJSON(
     TransferProgress transfer_progress;
 
     getTransferringListFromJSON(
-        upload, UPLOAD, &transfer_progress.uploading_files_);
+        upload, UPLOAD, &transfer_progress.uploading_files);
     getTransferringListFromJSON(
-        download, DOWNLOAD, &transfer_progress.downloading_files_);
+        download, DOWNLOAD, &transfer_progress.downloading_files);
     getTransferredListFromJSON(
-        upload, UPLOAD, &transfer_progress.uploaded_files_);
+        upload, UPLOAD, &transfer_progress.uploaded_files);
     getTransferredListFromJSON(
-        download, DOWNLOAD, &transfer_progress.downloaded_files_);
+        download, DOWNLOAD, &transfer_progress.downloaded_files);
 
     return transfer_progress;
 }

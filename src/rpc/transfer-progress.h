@@ -23,8 +23,8 @@ struct TransferredInfo {
 
 class TransferProgress {
 public:
-    QList<TransferringInfo> uploading_files_, downloading_files_;
-    QList<TransferredInfo> uploaded_files_, downloaded_files_;
+    QList<TransferringInfo> uploading_files, downloading_files;
+    QList<TransferredInfo> uploaded_files, downloaded_files;
 
     static TransferProgress fromJSON(const json_t *upload,
                                      const json_t *download);
