@@ -27,7 +27,7 @@ const char *kTotalStorage = "storage.total";
 const char *kUsedStorage = "storage.used";
 const char *kNickname = "name";
 
-bool getColumnInfoCallBack(sqlite3_stmt *stmt, void *data)
+bool getShibbolethColumnInfoCallBack(sqlite3_stmt *stmt, void *data)
 {
     bool *has_shibboleth_column = static_cast<bool*>(data);
     const char *column_name = (const char *)sqlite3_column_text (stmt, 1);
@@ -38,15 +38,35 @@ bool getColumnInfoCallBack(sqlite3_stmt *stmt, void *data)
     return true;
 }
 
+bool getAutomaticLoginColumnInfoCallBack(sqlite3_stmt *stmt, void *data)
+{
+    bool *has_automatic_login_column = static_cast<bool*>(data);
+    const char *column_name = (const char *)sqlite3_column_text (stmt, 1);
+
+    if (0 == strcmp("AutomaticLogin", column_name))
+        *has_automatic_login_column = true;
+
+    return true;
+}
 
 void updateAccountDatabaseForColumnShibbolethUrl(struct sqlite3* db)
 {
     bool has_shibboleth_column = false;
     const char* sql = "PRAGMA table_info(Accounts);";
-    sqlite_foreach_selected_row (db, sql, getColumnInfoCallBack, &has_shibboleth_column);
+    sqlite_foreach_selected_row (db, sql, getShibbolethColumnInfoCallBack, &has_shibboleth_column);
     sql = "ALTER TABLE Accounts ADD COLUMN isShibboleth INTEGER";
     if (!has_shibboleth_column && sqlite_query_exec (db, sql) < 0)
         qCritical("unable to create isShibboleth column\n");
+}
+
+void updateAccountDatabaseForColumnAutomaticLogin(struct sqlite3* db)
+{
+    bool has_automatic_login_column = false;
+    const char* sql = "PRAGMA table_info(Accounts);";
+    sqlite_foreach_selected_row (db, sql, getAutomaticLoginColumnInfoCallBack, &has_automatic_login_column);
+    sql = "ALTER TABLE Accounts ADD COLUMN AutomaticLogin INTEGER";
+    if (!has_automatic_login_column && sqlite_query_exec (db, sql) < 0)
+        qCritical("unable to create AutomaticLogin column\n");
 }
 
 bool compareAccount(const Account& a, const Account& b)
@@ -128,6 +148,7 @@ int AccountManager::start()
     }
 
     updateAccountDatabaseForColumnShibbolethUrl(db);
+    updateAccountDatabaseForColumnAutomaticLogin(db);
 
     // create ServerInfo table
     sql = "CREATE TABLE IF NOT EXISTS ServerInfo ("
@@ -157,12 +178,15 @@ bool AccountManager::loadAccountsCB(sqlite3_stmt *stmt, void *data)
     const char *token = (const char *)sqlite3_column_text (stmt, 2);
     qint64 atime = (qint64)sqlite3_column_int64 (stmt, 3);
     int isShibboleth = sqlite3_column_int (stmt, 4);
+    int isAutomaticLogin = sqlite3_column_int (stmt, 5);
 
     if (!token) {
         token = "";
     }
 
-    Account account = Account(QUrl(QString(url)), QString(username), QString(token), atime, isShibboleth != 0);
+    Account account = Account(QUrl(QString(url)), QString(username),
+                              QString(token), atime, isShibboleth != 0,
+                              isAutomaticLogin != 0);
     char* zql = sqlite3_mprintf("SELECT key, value FROM ServerInfo WHERE url = %Q AND username = %Q", url, username);
     sqlite_foreach_selected_row (userdata->db, zql, loadServerInfoCB, &account);
     sqlite3_free(zql);
@@ -198,7 +222,8 @@ bool AccountManager::loadServerInfoCB(sqlite3_stmt *stmt, void *data)
 
 const std::vector<Account>& AccountManager::loadAccounts()
 {
-    const char *sql = "SELECT url, username, token, lastVisited, isShibboleth FROM Accounts ORDER BY lastVisited DESC";
+    const char *sql = "SELECT url, username, token, lastVisited, isShibboleth, AutomaticLogin "
+                      "FROM Accounts ORDER BY lastVisited DESC";
     accounts_.clear();
     UserData userdata;
     userdata.accounts = &accounts_;
@@ -230,7 +255,8 @@ int AccountManager::saveAccount(const Account& account)
     qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
 
     char *zql = sqlite3_mprintf(
-        "REPLACE INTO Accounts(url, username, token, lastVisited, isShibboleth) VALUES (%Q, %Q, %Q, %Q, %Q) ",
+        "REPLACE INTO Accounts(url, username, token, lastVisited, isShibboleth, AutomaticLogin)"
+        "VALUES (%Q, %Q, %Q, %Q, %Q, %Q) ",
         // url
         new_account.serverUrl.toEncoded().data(),
         // username
@@ -240,7 +266,9 @@ int AccountManager::saveAccount(const Account& account)
         // lastVisited
         QString::number(timestamp).toUtf8().data(),
         // isShibboleth
-        QString::number(new_account.isShibboleth).toUtf8().data());
+        QString::number(new_account.isShibboleth).toUtf8().data(),
+        // isAutomaticLogin
+        QString::number(new_account.isAutomaticLogin).toUtf8().data());
     sqlite_query_exec(db, zql);
     sqlite3_free(zql);
 
@@ -318,9 +346,14 @@ bool AccountManager::accountExists(const QUrl& url, const QString& username)
 
 bool AccountManager::validateAndUseAccount(const Account& account)
 {
-    if (!account.isValid()) {
+    if (account.isAutomaticLogin == false) {
+        clearAccountToken(account);
         return reloginAccount(account);
-    } else {
+    }
+    else if (!account.isValid()) {
+        return reloginAccount(account);
+    }
+    else {
         return setCurrentAccount(account);
     }
 }
@@ -365,6 +398,7 @@ int AccountManager::replaceAccount(const Account& old_account, const Account& ne
         "    token = %Q, "
         "    lastVisited = %Q, "
         "    isShibboleth = %Q "
+        "    AutomaticLogin = %Q "
         "WHERE url = %Q "
         "  AND username = %Q",
         // new_url
@@ -377,6 +411,8 @@ int AccountManager::replaceAccount(const Account& old_account, const Account& ne
         QString::number(timestamp).toUtf8().data(),
         // isShibboleth
         QString::number(new_account.isShibboleth).toUtf8().data(),
+        // isAutomaticLogin
+        QString::number(new_account.isAutomaticLogin).toUtf8().data(),
         // old_url
         old_account.serverUrl.toEncoded().data(),
         // username

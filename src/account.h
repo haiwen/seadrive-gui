@@ -30,10 +30,17 @@ public:
     QString token;
     qint64 lastVisited;
     bool isShibboleth;
+    bool isAutomaticLogin;
 
     ~Account();
-    Account() : serverInfoRequest(NULL), serverInfo(), lastVisited(0), isShibboleth(false) {}
-    Account(QUrl serverUrl, QString username, QString token, qint64 lastVisited=0, bool isShibboleth = false)
+    Account() : serverInfoRequest(NULL),
+                serverInfo(),
+                lastVisited(0),
+                isShibboleth(false),
+                isAutomaticLogin(false) {}
+    Account(QUrl serverUrl, QString username, QString token,
+            qint64 lastVisited=0, bool isShibboleth = false,
+            bool isAutomaticLogin = false)
         : serverInfoRequest(NULL),
           serverInfo(),
           accountInfo(),
@@ -41,7 +48,8 @@ public:
           username(username),
           token(token),
           lastVisited(lastVisited),
-          isShibboleth(isShibboleth) {}
+          isShibboleth(isShibboleth),
+          isAutomaticLogin(isAutomaticLogin) {}
 
     Account(const Account &rhs)
       : serverInfoRequest(NULL),
@@ -51,7 +59,8 @@ public:
         username(rhs.username),
         token(rhs.token),
         lastVisited(rhs.lastVisited),
-        isShibboleth(rhs.isShibboleth)
+        isShibboleth(rhs.isShibboleth),
+        isAutomaticLogin(rhs.isAutomaticLogin)
     {
     }
 
@@ -64,6 +73,7 @@ public:
         token = rhs.token;
         lastVisited = rhs.lastVisited;
         isShibboleth = rhs.isShibboleth;
+        isAutomaticLogin = rhs.isAutomaticLogin;
         return *this;
     }
 
