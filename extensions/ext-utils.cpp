@@ -502,12 +502,10 @@ bool isShellExtEnabled()
     return result != ERROR_SUCCESS;
 }
 
-const char *getLocalPipeName(const char *pipe_name)
+std::string getLocalPipeName(const char *pipe_name)
 {
-#define INFO_BUFFER_SIZE 32767
-    DWORD buf_char_count = INFO_BUFFER_SIZE;
-    TCHAR user_name_buf[INFO_BUFFER_SIZE];
-    std::string ret(pipe_name);
+    DWORD buf_char_count = 32767;
+    char user_name_buf[buf_char_count];
 
     if (GetUserName(user_name_buf, &buf_char_count) == 0) {
         seaf_ext_log ("Failed to get user name, GLE=%lu\n",
@@ -515,8 +513,9 @@ const char *getLocalPipeName(const char *pipe_name)
         return pipe_name;
     }
     else {
-        ret.append(user_name_buf, buf_char_count);
-        return strdup(ret.c_str());
+        std::string ret(pipe_name);
+        ret += user_name_buf;
+        return ret;
     }
 }
 

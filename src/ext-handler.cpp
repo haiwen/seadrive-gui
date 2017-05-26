@@ -311,7 +311,7 @@ void ExtConnectionListenerThread::run()
         bool connected = false;
 
         pipe = CreateNamedPipe(
-            utils::win::getLocalPipeName(kSeafExtPipeName), // pipe name
+            utils::win::getLocalPipeName(kSeafExtPipeName).c_str(), // pipe name
             PIPE_ACCESS_DUPLEX,       // read/write access
             PIPE_TYPE_MESSAGE |       // message type pipe
             PIPE_READMODE_MESSAGE |   // message-read mode

@@ -179,10 +179,10 @@ QStringList getAvailableDiskLetters()
 
 }
 
-const char *getLocalPipeName(const char *pipe_name)
+std::string getLocalPipeName(const char *pipe_name)
 {
     DWORD buf_char_count = 32767;
-    TCHAR user_name_buf[buf_char_count];
+    char user_name_buf[buf_char_count];
 
     if (GetUserName(user_name_buf, &buf_char_count) == 0) {
         qWarning ("Failed to get user name, GLE=%lu\n",
@@ -190,9 +190,9 @@ const char *getLocalPipeName(const char *pipe_name)
         return pipe_name;
     }
     else {
-        QString localPipeName(pipe_name);
-        localPipeName.append(user_name_buf);
-        return strdup(localPipeName.toUtf8().data());
+        std::string ret(pipe_name);
+        ret += user_name_buf;
+        return ret;
     }
 }
 

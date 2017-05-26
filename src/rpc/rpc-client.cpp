@@ -53,7 +53,7 @@ void SeafileRpcClient::connectDaemon()
     while (true) {
 #if defined(Q_OS_WIN32)
         pipe_client = searpc_create_named_pipe_client(
-            utils::win::getLocalPipeName(kSeadriveSockName));
+            utils::win::getLocalPipeName(kSeadriveSockName).c_str());
 #else
         pipe_client = searpc_create_named_pipe_client(
             toCStr(QDir(gui->seadriveDataDir()).filePath(kSeadriveSockName)));

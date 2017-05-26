@@ -61,7 +61,7 @@ void DaemonManager::startSeadriveDaemon()
 
 #if defined(Q_OS_WIN32)
     searpc_pipe_client_ = searpc_create_named_pipe_client(
-        utils::win::getLocalPipeName(kSeadriveSockName));
+        utils::win::getLocalPipeName(kSeadriveSockName).c_str());
 #else
     searpc_pipe_client_ = searpc_create_named_pipe_client(
         toCStr(QDir(gui->seadriveDataDir()).filePath(kSeadriveSockName)));

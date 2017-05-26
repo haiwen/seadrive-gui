@@ -57,7 +57,7 @@ AppletConnection::connect ()
     }
 
     pipe_ = CreateFile(
-        utils::getLocalPipeName(kSeafExtPipeName), // pipe name
+        utils::getLocalPipeName(kSeafExtPipeName).c_str(), // pipe name
         GENERIC_READ |          // read and write access
         GENERIC_WRITE,
         0,                      // no sharing

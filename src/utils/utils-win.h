@@ -36,7 +36,7 @@ bool isWindows10OrHigher();
 bool diskLetterAvailable(const QString& disk_letter);
 QStringList getAvailableDiskLetters();
 
-const char *getLocalPipeName(const char *pipeName);
+std::string getLocalPipeName(const char *pipeName);
 
 } // namespace win
 } // namespace utils
