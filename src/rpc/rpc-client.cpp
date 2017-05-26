@@ -16,12 +16,13 @@ extern "C" {
 #include "api/commit-details.h"
 #include "message-poller.h"
 #include "rpc-client.h"
+#include "utils/utils-win.h"
 
 
 namespace {
 
 #if defined(Q_OS_WIN32)
-const char *kSeadriveSockName = "\\\\.\\pipe\\seadrive";
+const char *kSeadriveSockName = "\\\\.\\pipe\\seadrive_";
 #else
 const char *kSeadriveSockName = "seadrive.sock";
 #endif
@@ -51,7 +52,8 @@ void SeafileRpcClient::connectDaemon()
     SearpcNamedPipeClient *pipe_client;
     while (true) {
 #if defined(Q_OS_WIN32)
-        pipe_client = searpc_create_named_pipe_client(kSeadriveSockName);
+        pipe_client = searpc_create_named_pipe_client(
+            utils::win::getLocalPipeName(kSeadriveSockName).c_str());
 #else
         pipe_client = searpc_create_named_pipe_client(
             toCStr(QDir(gui->seadriveDataDir()).filePath(kSeadriveSockName)));

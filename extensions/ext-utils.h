@@ -67,6 +67,8 @@ std::string getThisDllPath();
 
 bool isShellExtEnabled();
 
+std::string getLocalPipeName(const char *pipeName);
+
 } // namespace utils
 } // namespace seafile
 

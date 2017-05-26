@@ -10,7 +10,7 @@
 
 namespace {
 
-const char *kSeafExtPipeName = "\\\\.\\pipe\\seadrive_ext_pipe";
+const char *kSeafExtPipeName = "\\\\.\\pipe\\seadrive_ext_pipe_";
 
 struct ThreadData {
     seafile::AppletConnection *conn;
@@ -55,8 +55,9 @@ AppletConnection::connect ()
     if (pipe_ != INVALID_HANDLE_VALUE) {
         CloseHandle (pipe_);
     }
+
     pipe_ = CreateFile(
-        kSeafExtPipeName,       // pipe name
+        utils::getLocalPipeName(kSeafExtPipeName).c_str(), // pipe name
         GENERIC_READ |          // read and write access
         GENERIC_WRITE,
         0,                      // no sharing

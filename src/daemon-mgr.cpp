@@ -19,6 +19,7 @@ extern "C" {
 #include "seadrive-gui.h"
 #include "daemon-mgr.h"
 #include "rpc/rpc-client.h"
+#include "utils/utils-win.h"
 
 namespace {
 
@@ -26,7 +27,7 @@ const int kDaemonReadyCheckIntervalMilli = 2000;
 const int kMaxDaemonReadyCheck = 15;
 
 #if defined(Q_OS_WIN32)
-const char *kSeadriveSockName = "\\\\.\\pipe\\seadrive";
+const char *kSeadriveSockName = "\\\\.\\pipe\\seadrive_";
 const char *kSeadriveExecutable = "seadrive.exe";
 #else
 const char *kSeadriveSockName = "seadrive.sock";
@@ -59,7 +60,8 @@ void DaemonManager::startSeadriveDaemon()
 {
 
 #if defined(Q_OS_WIN32)
-    searpc_pipe_client_ = searpc_create_named_pipe_client(kSeadriveSockName);
+    searpc_pipe_client_ = searpc_create_named_pipe_client(
+        utils::win::getLocalPipeName(kSeadriveSockName).c_str());
 #else
     searpc_pipe_client_ = searpc_create_named_pipe_client(
         toCStr(QDir(gui->seadriveDataDir()).filePath(kSeadriveSockName)));
