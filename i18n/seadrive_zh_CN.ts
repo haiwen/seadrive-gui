@@ -54,6 +54,49 @@
     </message>
 </context>
 <context>
+    <name>DiskLetterDialog</name>
+    <message>
+        <location filename="../src/ui/disk-letter-dialog.cpp" line="26"/>
+        <source>Choose the disk letter for SeaDrive</source>
+        <translation>为 SeaDrive 选择盘符</translation>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="193"/>
+        <source>Dialog</source>
+        <translation>对话框</translation>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="194"/>
+        <source>Choose the disk letter</source>
+        <translation>选择盘符</translation>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="195"/>
+        <source>logo</source>
+        <translation>图标</translation>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="196"/>
+        <source>Your files would appear in a dedicated disk in your computer. Please choose the letter:</source>
+        <translation>您的文件将出现在您的电脑里的一个专用磁盘中，请选择盘符：</translation>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="199"/>
+        <source>S</source>
+        <translation>S</translation>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="200"/>
+        <source>X</source>
+        <translation>X</translation>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="202"/>
+        <source>OK</source>
+        <translation>确定</translation>
+    </message>
+</context>
+<context>
     <name>InitSyncDialog</name>
     <message>
         <location filename="../src/ui/init-sync-dialog.cpp" line="25"/>
@@ -782,6 +825,19 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
 </context>
 <context>
+    <name>SeafileExtensionHandler</name>
+    <message>
+        <location filename="../src/ext-handler.cpp" line="301"/>
+        <source>Failed to lock file</source>
+        <translation>锁定文件失败</translation>
+    </message>
+    <message>
+        <location filename="../src/ext-handler.cpp" line="301"/>
+        <source>Failed to unlock file</source>
+        <translation>解锁文件失败</translation>
+    </message>
+</context>
+<context>
     <name>SeafileLinkDialog</name>
     <message>
         <location filename="../src/ui/seafilelink-dialog.cpp" line="22"/>
@@ -900,42 +956,42 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="510"/>
+        <location filename="../src/ui/tray-icon.cpp" line="517"/>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
         <translation>&lt;h2&gt;Seafile Drive 客户端 %2&lt;/h2&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="694"/>
+        <location filename="../src/ui/tray-icon.cpp" line="701"/>
         <source>Do you want to remove the local cache?</source>
         <translation>是否删除本地缓存？</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="723"/>
+        <location filename="../src/ui/tray-icon.cpp" line="730"/>
         <source>Failed to remove local cache of account %1</source>
         <translation>删除帐户 %1 的本地缓存失败</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="735"/>
+        <location filename="../src/ui/tray-icon.cpp" line="742"/>
         <source>Failed to remove information on server: %1</source>
         <translation>删除服务器上的信息时出错: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="747"/>
+        <location filename="../src/ui/tray-icon.cpp" line="754"/>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
         <translation>是否删除帐户 %1 ？</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="754"/>
+        <location filename="../src/ui/tray-icon.cpp" line="761"/>
         <source>Failed to delete account</source>
         <translation>删除帐户失败</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="766"/>
+        <location filename="../src/ui/tray-icon.cpp" line="773"/>
         <source>Up %1, Down %2</source>
         <translation>上传 %1，下载 %2</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="509"/>
+        <location filename="../src/ui/tray-icon.cpp" line="516"/>
         <source>About %1</source>
         <translation>关于 %1</translation>
     </message>
@@ -1188,22 +1244,22 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SyncErrorsDialog</name>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="56"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="57"/>
         <source>File Sync Errors</source>
         <translation>文件同步错误</translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="125"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="126"/>
         <source>Minimize</source>
         <translation>最小化</translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="132"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="133"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="192"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="193"/>
         <source>No sync errors.</source>
         <translation>没有同步错误。</translation>
     </message>
@@ -1211,27 +1267,27 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SyncErrorsTableModel</name>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="366"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="369"/>
         <source>Double click to open the library</source>
         <translation>双击来打开该资料库</translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="424"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="427"/>
         <source>Library</source>
         <translation>资料库</translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="426"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="429"/>
         <source>Path</source>
         <translation>路径</translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="428"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="431"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="430"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="433"/>
         <source>Time</source>
         <translation>时间</translation>
     </message>

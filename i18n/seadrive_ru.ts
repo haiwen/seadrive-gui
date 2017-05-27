@@ -54,6 +54,49 @@
     </message>
 </context>
 <context>
+    <name>DiskLetterDialog</name>
+    <message>
+        <location filename="../src/ui/disk-letter-dialog.cpp" line="26"/>
+        <source>Choose the disk letter for SeaDrive</source>
+        <translation>Выберите букву диска для SeaDrive</translation>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="193"/>
+        <source>Dialog</source>
+        <translation>Окно</translation>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="194"/>
+        <source>Choose the disk letter</source>
+        <translation>Выберите букву диска</translation>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="195"/>
+        <source>logo</source>
+        <translation>Логотип</translation>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="196"/>
+        <source>Your files would appear in a dedicated disk in your computer. Please choose the letter:</source>
+        <translation>Ваши файлы будут отображаться на специальном диске вашего компьютера. Выберите букву:</translation>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="199"/>
+        <source>S</source>
+        <translation>S</translation>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="200"/>
+        <source>X</source>
+        <translation>X</translation>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="202"/>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+</context>
+<context>
     <name>InitSyncDialog</name>
     <message>
         <location filename="../src/ui/init-sync-dialog.cpp" line="25"/>
@@ -782,6 +825,19 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
 </context>
 <context>
+    <name>SeafileExtensionHandler</name>
+    <message>
+        <location filename="../src/ext-handler.cpp" line="301"/>
+        <source>Failed to lock file</source>
+        <translation>Не удалось заблокировать файл</translation>
+    </message>
+    <message>
+        <location filename="../src/ext-handler.cpp" line="301"/>
+        <source>Failed to unlock file</source>
+        <translation>Не удалось разблокировать файл</translation>
+    </message>
+</context>
+<context>
     <name>SeafileLinkDialog</name>
     <message>
         <location filename="../src/ui/seafilelink-dialog.cpp" line="22"/>
@@ -900,43 +956,43 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>Файл</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="510"/>
+        <location filename="../src/ui/tray-icon.cpp" line="517"/>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
         <translation>&lt;h2&gt;Seafile Drive Client&lt;/h2&gt;
 Версия:  %2</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="694"/>
+        <location filename="../src/ui/tray-icon.cpp" line="701"/>
         <source>Do you want to remove the local cache?</source>
         <translation>Вы хотите удалить данные из кэш?</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="723"/>
+        <location filename="../src/ui/tray-icon.cpp" line="730"/>
         <source>Failed to remove local cache of account %1</source>
         <translation>Не удалось удалить кэш учетной записи %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="735"/>
+        <location filename="../src/ui/tray-icon.cpp" line="742"/>
         <source>Failed to remove information on server: %1</source>
         <translation>Не удалось удалить информацию на сервере: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="747"/>
+        <location filename="../src/ui/tray-icon.cpp" line="754"/>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
         <translation>Вы действительно хотите удалить учетную запись с &quot;%1&quot;?</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="754"/>
+        <location filename="../src/ui/tray-icon.cpp" line="761"/>
         <source>Failed to delete account</source>
         <translation>Не удалось удалить учетную запись</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="766"/>
+        <location filename="../src/ui/tray-icon.cpp" line="773"/>
         <source>Up %1, Down %2</source>
         <translation>Прием: %1, Отдача: %2</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="509"/>
+        <location filename="../src/ui/tray-icon.cpp" line="516"/>
         <source>About %1</source>
         <translation>О программе %1</translation>
     </message>
@@ -1189,22 +1245,22 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SyncErrorsDialog</name>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="56"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="57"/>
         <source>File Sync Errors</source>
         <translation>Ошибки синхронизации файлов</translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="125"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="126"/>
         <source>Minimize</source>
         <translation>Свернуть</translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="132"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="133"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="192"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="193"/>
         <source>No sync errors.</source>
         <translation>Нет ошибок синхронизации.</translation>
     </message>
@@ -1212,27 +1268,27 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SyncErrorsTableModel</name>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="366"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="369"/>
         <source>Double click to open the library</source>
         <translation>Дважды щелкните, чтобы открыть библиотеку</translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="424"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="427"/>
         <source>Library</source>
         <translation>Библиотека</translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="426"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="429"/>
         <source>Path</source>
         <translation>Путь</translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="428"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="431"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="430"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="433"/>
         <source>Time</source>
         <translation>Время</translation>
     </message>
