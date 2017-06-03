@@ -54,6 +54,49 @@
     </message>
 </context>
 <context>
+    <name>DiskLetterDialog</name>
+    <message>
+        <location filename="../src/ui/disk-letter-dialog.cpp" line="26"/>
+        <source>Choose the disk letter for SeaDrive</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="193"/>
+        <source>Dialog</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="194"/>
+        <source>Choose the disk letter</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="195"/>
+        <source>logo</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="196"/>
+        <source>Your files would appear in a dedicated disk in your computer. Please choose the letter:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="199"/>
+        <source>S</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="200"/>
+        <source>X</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="202"/>
+        <source>OK</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>InitSyncDialog</name>
     <message>
         <location filename="../src/ui/init-sync-dialog.cpp" line="25"/>
@@ -782,6 +825,19 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
 </context>
 <context>
+    <name>SeafileExtensionHandler</name>
+    <message>
+        <location filename="../src/ext-handler.cpp" line="301"/>
+        <source>Failed to lock file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ext-handler.cpp" line="301"/>
+        <source>Failed to unlock file</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>SeafileLinkDialog</name>
     <message>
         <location filename="../src/ui/seafilelink-dialog.cpp" line="22"/>
@@ -900,42 +956,42 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
         <translation>Archivo</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="510"/>
+        <location filename="../src/ui/tray-icon.cpp" line="517"/>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
         <translation>&lt;h2&gt;Cliente Seafile Drive %2&lt;/h2&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="694"/>
+        <location filename="../src/ui/tray-icon.cpp" line="701"/>
         <source>Do you want to remove the local cache?</source>
         <translation>¿Desea remover el caché local?</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="723"/>
+        <location filename="../src/ui/tray-icon.cpp" line="730"/>
         <source>Failed to remove local cache of account %1</source>
         <translation>Fallo al remover el caché local de la cuenta %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="735"/>
+        <location filename="../src/ui/tray-icon.cpp" line="742"/>
         <source>Failed to remove information on server: %1</source>
         <translation>Fallo al eliminar la información en el servidor: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="747"/>
+        <location filename="../src/ui/tray-icon.cpp" line="754"/>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
         <translation>¿Está seguro que desea eliminar la cuenta de &quot;%1&quot;?</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="754"/>
+        <location filename="../src/ui/tray-icon.cpp" line="761"/>
         <source>Failed to delete account</source>
         <translation>Fallo al eliminar la cuenta</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="766"/>
+        <location filename="../src/ui/tray-icon.cpp" line="773"/>
         <source>Up %1, Down %2</source>
         <translation>Sube %1, Baja %2</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="509"/>
+        <location filename="../src/ui/tray-icon.cpp" line="516"/>
         <source>About %1</source>
         <translation>Acerca de %1</translation>
     </message>
@@ -1188,22 +1244,22 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
 <context>
     <name>SyncErrorsDialog</name>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="56"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="57"/>
         <source>File Sync Errors</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="125"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="126"/>
         <source>Minimize</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="132"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="133"/>
         <source>Close</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="192"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="193"/>
         <source>No sync errors.</source>
         <translation type="unfinished"/>
     </message>
@@ -1211,27 +1267,27 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
 <context>
     <name>SyncErrorsTableModel</name>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="366"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="369"/>
         <source>Double click to open the library</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="424"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="427"/>
         <source>Library</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="426"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="429"/>
         <source>Path</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="428"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="431"/>
         <source>Error</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="430"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="433"/>
         <source>Time</source>
         <translation type="unfinished"/>
     </message>
