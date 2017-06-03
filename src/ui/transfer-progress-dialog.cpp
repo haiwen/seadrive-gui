@@ -496,8 +496,13 @@ void TransferItemDelegate::paint(QPainter *painter,
                 model->itemAt(index.row());
 
             if (transferring_item != NULL) {
-                const int progress = transferring_item->transferred_bytes * 100 /
-                                     transferring_item->total_bytes;
+                int progress = 0;
+                // Sometimes the total_bytes is zero so we need to check that to
+                // aovid floating point exception.
+                if (transferring_item->total_bytes > 0) {
+                    progress = transferring_item->transferred_bytes * 100 /
+                        transferring_item->total_bytes;
+                }
                 // Customize style using style-sheet..
                 QProgressBar progressBar;
                 progressBar.resize(QSize(size.width() - 10, size.height() / 2 - 4));
