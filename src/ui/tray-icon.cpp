@@ -22,6 +22,7 @@
 #include "src/ui/init-sync-dialog.h"
 #include "src/ui/about-dialog.h"
 #include "src/ui/sync-errors-dialog.h"
+#include "src/ui/transfer-progress-dialog.h"
 #include "api/api-error.h"
 #include "api/requests.h"
 #include "seadrive-gui.h"
@@ -58,31 +59,6 @@ void darkmodeWatcher(bool /*new Value*/) {
 }
 #endif
 
-QString translateTransferRate(int rate)
-{
-    QString unit;
-    QString display_rate;
-    double kbps = ((double)rate) / 1024;
-    if (kbps >= 1024) {
-        unit = "MB/s";
-        double mbps = kbps / 1024;
-        if (mbps < 10) {
-            display_rate = QString::number(mbps, 'f', 1);
-        } else {
-            display_rate = QString::number(int(mbps));
-        }
-    }
-    else {
-        display_rate = kbps;
-        unit = "kB/s";
-        display_rate = QString::number(int(kbps));
-    }
-
-    return QString("%1 %2")
-        .arg(display_rate)
-        .arg(unit);
-}
-
 } // namespace
 
 SeafileTrayIcon::SeafileTrayIcon(QObject *parent)
@@ -94,7 +70,8 @@ SeafileTrayIcon::SeafileTrayIcon(QObject *parent)
       login_dlg_(nullptr),
       up_rate_(0),
       down_rate_(0),
-      sync_errors_dialog_(nullptr)
+      sync_errors_dialog_(nullptr),
+      transfer_progress_dialog_(nullptr)
 {
     setState(STATE_DAEMON_UP);
     rotate_timer_ = new QTimer(this);
@@ -140,6 +117,9 @@ void SeafileTrayIcon::createActions()
     // The text would be set at the menu open time.
     transfer_rate_display_action_ = new QAction("", this);
 
+    transfer_progress_action_ = new QAction(tr("Transfer progress"), this);
+    connect(transfer_progress_action_, SIGNAL(triggered()), this, SLOT(showTransferProgressDialog()));
+
     quit_action_ = new QAction(tr("&Quit"), this);
     connect(quit_action_, SIGNAL(triggered()), this, SLOT(quitSeafile()));
 
@@ -177,6 +157,7 @@ void SeafileTrayIcon::createContextMenu()
 
     context_menu_ = new QMenu(NULL);
     context_menu_->addAction(transfer_rate_display_action_);
+    context_menu_->addAction(transfer_progress_action_);
     context_menu_->addAction(global_sync_error_action_);
     context_menu_->addAction(show_sync_errors_action_);
     context_menu_->addSeparator();
@@ -812,4 +793,15 @@ void SeafileTrayIcon::showSyncErrorsDialog()
     sync_errors_dialog_->show();
     sync_errors_dialog_->raise();
     sync_errors_dialog_->activateWindow();
+}
+
+void SeafileTrayIcon::showTransferProgressDialog()
+{
+    if (transfer_progress_dialog_ == nullptr) {
+        transfer_progress_dialog_ = new TransferProgressDialog();
+    }
+
+    transfer_progress_dialog_->show();
+    transfer_progress_dialog_->raise();
+    transfer_progress_dialog_->activateWindow();
 }
