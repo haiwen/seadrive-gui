@@ -171,7 +171,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/ui/login-dialog.cpp" line="196"/>
         <source>Please enter the server address</source>
-        <translation>请输入服务器地址</translation>
+        <translation>请输入云盘网址</translation>
     </message>
     <message>
         <location filename="../src/ui/login-dialog.cpp" line="200"/>
@@ -179,7 +179,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <location filename="../src/ui/login-dialog.cpp" line="348"/>
         <location filename="../src/ui/login-dialog.cpp" line="354"/>
         <source>%1 is not a valid server address</source>
-        <translation>%1 不是合法的服务器地址</translation>
+        <translation>%1 不是合法的云盘网址</translation>
     </message>
     <message>
         <location filename="../src/ui/login-dialog.cpp" line="213"/>
@@ -204,7 +204,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/ui/login-dialog.cpp" line="339"/>
         <source>%1 Server Address</source>
-        <translation>%1 服务器地址</translation>
+        <translation>%1 云盘网址</translation>
     </message>
     <message>
         <location filename="../src/ui/login-dialog.cpp" line="218"/>
@@ -254,7 +254,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../ui_login-dialog.h" line="263"/>
         <source>Server:</source>
-        <translation>服务器：</translation>
+        <translation>云盘网址：</translation>
     </message>
     <message>
         <location filename="../ui_login-dialog.h" line="264"/>
