@@ -34,7 +34,7 @@ private:
             n = json_object_iter_next(object, json_object_key_to_iter(key)))
 #endif
 
-#if !defined(json_object_foreach)
+#if !defined(json_array_foreach)
 #define json_array_foreach(array, index, value) \
 	for(index = 0; \
 		index < json_array_size(array) && (value = json_array_get(array, index)); \
