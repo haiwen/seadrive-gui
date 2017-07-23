@@ -31,7 +31,7 @@ void getTransferringListFromJSON(
 
     json_t* transferring_object;
     json_error_t error;
-    int index;
+    size_t index;
     json_array_foreach(transferring_array, index, transferring_object) {
         QMap<QString, QVariant> dict =
             mapFromJSON(transferring_object, &error);
