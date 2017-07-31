@@ -21,6 +21,11 @@ enum {
     FILE_MAX_COLUMN,
 };
 
+enum {
+    UPLOAD_TAB = 0,
+    DOWNLOAD_TAB,
+};
+
 const int kNameColumnWidth = 300;
 const int kDefaultColumnWidth = 100;
 const int kDefaultColumnHeight = 40;
@@ -37,7 +42,7 @@ const QColor kItemBottomBorderColor("#f3f3f3");
 const QColor kItemColor("black");
 const QString kProgressBarStyle("QProgressBar "
         "{ border: 1px solid grey; border-radius: 2px; } "
-        "QProgressBar::chunk { background-color: #f0f0f0; width: 20px; }");
+        "QProgressBar::chunk { background-color: #f0f0f0; width: 1px; }");
 
 QString normalizedPath(const QString& file_path)
 {
@@ -66,22 +71,41 @@ TransferProgressDialog::TransferProgressDialog(QWidget *parent)
 
     QVBoxLayout* vlayout = new QVBoxLayout;
 
+    upload_tab_ = new TransferTab(UPLOAD);
+    download_tab_ = new TransferTab(DOWNLOAD);
     tab_widget_ = new QTabWidget;
-    tab_widget_->addTab(new TransferTab(UPLOAD), tr("Upload"));
-    tab_widget_->addTab(new TransferTab(DOWNLOAD), tr("Download"));
+    tab_widget_->tabBar()->setUsesScrollButtons(false);
+    tab_widget_->addTab(upload_tab_, tr("Upload"));
+    tab_widget_->addTab(download_tab_, tr("Download"));
     vlayout->addWidget(tab_widget_);
 
     setLayout(vlayout);
     adjustSize();
 }
 
+void TransferProgressDialog::adjustTabBarWidth() const
+{
+    uint tab_width = 0;
+    if (tab_widget_->currentIndex() == UPLOAD_TAB) {
+        tab_width = upload_tab_->width() / tab_widget_->count();
+    } else {
+        tab_width = download_tab_->width() / tab_widget_->count();
+    }
+    QString style("QTabBar::tab { width: %1px; }");
+    style = style.arg(tab_width + 2);
+    tab_widget_->setStyleSheet(style);
+}
+
+void TransferProgressDialog::showEvent(QShowEvent* event)
+{
+    QDialog::showEvent(event);
+    adjustTabBarWidth();
+}
+
 void TransferProgressDialog::resizeEvent(QResizeEvent* event)
 {
     QDialog::resizeEvent(event);
-    uint tab_width = (rect().width() / tab_widget_->count()) - 12;
-    QString style("QTabBar::tab { width: %1px; }");
-    style = style.arg(tab_width);
-    tab_widget_->setStyleSheet(style);
+    adjustTabBarWidth();
 }
 
 

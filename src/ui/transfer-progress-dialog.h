@@ -12,16 +12,22 @@
 
 class TransferItemsTableView;
 class TransferItemsTableModel;
+class TransferTab;
 
 class TransferProgressDialog : public QDialog
 {
     Q_OBJECT
 public:
     TransferProgressDialog(QWidget *parent = 0);
-    void resizeEvent(QResizeEvent* event) Q_DECL_OVERRIDE;
 
 private:
+    void resizeEvent(QResizeEvent* event) Q_DECL_OVERRIDE;
+    void showEvent(QShowEvent* event) Q_DECL_OVERRIDE;
+    void adjustTabBarWidth() const;
+
     QTabWidget* tab_widget_;
+    TransferTab* upload_tab_;
+    TransferTab* download_tab_;
 };
 
 
