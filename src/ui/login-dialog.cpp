@@ -89,7 +89,7 @@ LoginDialog::LoginDialog(QWidget *parent) : QDialog(parent)
 
     mComputerName->setText(computerName);
 
-    mAutomaticLogin->setCheckState(Qt::Unchecked);
+    mAutomaticLogin->setCheckState(Qt::Checked);
 
     connect(mSubmitBtn, SIGNAL(clicked()), this, SLOT(doLogin()));
 
