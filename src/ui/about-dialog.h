@@ -4,8 +4,6 @@
 #include <QDialog>
 #include "ui_about-dialog.h"
 
-class AutoUpdateService;
-
 class AboutDialog : public QDialog,
                     public Ui::AboutDialog
 {

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string notr="true">Dialog</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QLineEdit {
@@ -75,7 +75,7 @@ min-width: 260px;
       <item>
        <widget class="QLabel" name="mLogo">
         <property name="text">
-         <string>logo</string>
+         <string notr="true">logo</string>
         </property>
        </widget>
       </item>
@@ -181,17 +181,20 @@ min-width: 260px;
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
           <widget class="QComboBox" name="mDiskLetter">
+           <property name="currentText">
+            <string notr="true">S</string>
+           </property>
            <property name="sizeAdjustPolicy">
             <enum>QComboBox::AdjustToContents</enum>
            </property>
            <item>
             <property name="text">
-             <string>S</string>
+             <string notr="true">S</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>X</string>
+             <string notr="true">X</string>
             </property>
            </item>
           </widget>

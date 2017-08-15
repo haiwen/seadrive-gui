@@ -70,7 +70,6 @@ IF (WIN32)
     ENDIF()
     SET(platform_specific_moc_headers ${platform_specific_moc_headers} src/ext-handler.h src/ui/disk-letter-dialog.h )
     SET(platform_specific_sources ${platform_specific_sources} src/ext-handler.cpp src/ui/disk-letter-dialog.cpp)
-    SET(platform_specific_ui_files ${platform_specific_ui_files} ui/disk-letter-dialog.ui)
 
     IF (BUILD_SPARKLE_SUPPORT)
       IF(NOT EXISTS "${CMAKE_SOURCE_DIR}/WinSparkle.lib")
@@ -205,7 +204,7 @@ SET(ui_files
   ui/login-dialog.ui
   ui/settings-dialog.ui
   ui/about-dialog.ui
-  ${platform_specific_ui_files}
+  ui/disk-letter-dialog.ui
 )
 QT5_WRAP_UI(ui_output ${ui_files})
 
@@ -378,6 +377,7 @@ LIST(APPEND utils_sources
     src/utils/json-utils.cpp
     src/utils/log.c
     src/utils/stl.cpp
+    src/utils/i18n-utils.cpp
     )
 IF (WIN32)
     LIST(APPEND utils_sources

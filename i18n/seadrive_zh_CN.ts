@@ -54,6 +54,24 @@
     </message>
 </context>
 <context>
+    <name>DiskLetterDialog</name>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="200"/>
+        <source>Choose the disk letter</source>
+        <translation>选择盘符</translation>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="201"/>
+        <source>Your files would appear in a dedicated disk in your computer. Please choose the letter:</source>
+        <translation>您的文件将出现在您的电脑里的一个专用磁盘中，请选择盘符：</translation>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="202"/>
+        <source>OK</source>
+        <translation>确定</translation>
+    </message>
+</context>
+<context>
     <name>InitSyncDialog</name>
     <message>
         <location filename="../src/ui/init-sync-dialog.cpp" line="25"/>
@@ -692,13 +710,18 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>%1 Client is already running</source>
         <translation>已经有一个 %1 客户端在运行中</translation>
     </message>
+    <message>
+        <location filename="../src/utils/i18n-utils.cpp" line="11"/>
+        <source>Choose the disk letter for %1</source>
+        <translation>为 %1 选择盘符</translation>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
     <message>
         <location filename="../src/remote-wipe-service.cpp" line="103"/>
         <source>Authorization expired, please re-login</source>
-        <translation>账号验证信息已过期，请重现登录</translation>
+        <translation>账号验证信息已过期，请重新登录</translation>
     </message>
 </context>
 <context>
@@ -969,7 +992,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="57"/>
-        <location filename="../ui_settings-dialog.h" line="412"/>
+        <location filename="../ui_settings-dialog.h" line="415"/>
         <source>Auto start %1 after login</source>
         <translation>开机自动启动 %1</translation>
     </message>
@@ -1024,132 +1047,127 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>代理用户密码不能为空</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="409"/>
+        <location filename="../ui_settings-dialog.h" line="412"/>
         <source>Dialog</source>
         <translation>对话框</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="410"/>
+        <location filename="../ui_settings-dialog.h" line="413"/>
         <source>Notify when libraries are synchronized</source>
         <translation>资料库同步后用气泡通知</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="411"/>
+        <location filename="../ui_settings-dialog.h" line="414"/>
         <source>Enable sync temporary files of MSOffice/Libreoffice</source>
         <translation>允许同步 office 临时文件</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="416"/>
+        <location filename="../ui_settings-dialog.h" line="419"/>
         <source>Download speed limit (KB/s):</source>
         <translation>最大下载速度 (kB/s)：</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="417"/>
+        <location filename="../ui_settings-dialog.h" line="420"/>
         <source>Upload speed limit (KB/s):</source>
         <translation>最大上传速度 (kB/s)：</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="423"/>
+        <location filename="../ui_settings-dialog.h" line="422"/>
         <source>Basic</source>
         <translation>基本</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="413"/>
+        <location filename="../ui_settings-dialog.h" line="416"/>
         <source>Enable FinderSync Extension</source>
         <translation>启用 Finder 的扩展</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="414"/>
+        <location filename="../ui_settings-dialog.h" line="417"/>
         <source>Enable Explorer Extension</source>
         <translation>启用文件浏览器的扩展</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="415"/>
+        <location filename="../ui_settings-dialog.h" line="418"/>
         <source>Check for updates automatically</source>
         <translation>自动检查更新</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="418"/>
+        <location filename="../ui_settings-dialog.h" line="421"/>
         <source>Disk letter (need restart): </source>
         <translation>盘符 (需要重启)</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="421"/>
-        <source>S</source>
-        <translation>S</translation>
-    </message>
-    <message>
-        <location filename="../ui_settings-dialog.h" line="424"/>
+        <location filename="../ui_settings-dialog.h" line="423"/>
         <source>Do not verify server certificate in HTTPS syncing</source>
         <translation>HTTPS 同步过程中不验证服务器证书</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="425"/>
+        <location filename="../ui_settings-dialog.h" line="424"/>
         <source>Cache clean interval (in minutes):</source>
         <translation>缓存定期清理间隔 (分钟)</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="426"/>
+        <location filename="../ui_settings-dialog.h" line="425"/>
         <source>Cache size limit (in GB):</source>
         <translation>最大缓存容量: (GB)</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="427"/>
+        <location filename="../ui_settings-dialog.h" line="426"/>
         <source>Advanced</source>
         <translation>高级</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="428"/>
+        <location filename="../ui_settings-dialog.h" line="427"/>
         <source>Language (need restart)</source>
         <translation>语言 (需要重启)</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="429"/>
+        <location filename="../ui_settings-dialog.h" line="428"/>
         <source>Language</source>
         <translation>语言</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="430"/>
+        <location filename="../ui_settings-dialog.h" line="429"/>
         <source>Proxy Type:</source>
         <translation>代理类型：</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="431"/>
+        <location filename="../ui_settings-dialog.h" line="430"/>
         <source>Host:</source>
         <translation>主机：</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="432"/>
+        <location filename="../ui_settings-dialog.h" line="431"/>
         <source>Port:</source>
         <translation>端口：</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="434"/>
+        <location filename="../ui_settings-dialog.h" line="433"/>
         <source>Username:</source>
         <translation>用户名：</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="435"/>
+        <location filename="../ui_settings-dialog.h" line="434"/>
         <source>Password:</source>
         <translation>密码：</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="436"/>
+        <location filename="../ui_settings-dialog.h" line="435"/>
         <source>Proxy server requires a password</source>
         <translation>代理服务器需要密码</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="437"/>
+        <location filename="../ui_settings-dialog.h" line="436"/>
         <source>Network</source>
         <translation>网络</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="438"/>
+        <location filename="../ui_settings-dialog.h" line="437"/>
         <source>OK</source>
         <translation>确定</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="439"/>
+        <location filename="../ui_settings-dialog.h" line="438"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>

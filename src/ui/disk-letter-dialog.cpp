@@ -6,6 +6,7 @@
 #include "rpc/rpc-client.h"
 #include "seadrive-gui.h"
 #include "utils/utils.h"
+#include "utils/i18n-utils.h"
 #include "utils/utils-win.h"
 #include "message-poller.h"
 
@@ -23,7 +24,7 @@ DiskLetterDialog::DiskLetterDialog(QWidget *parent)
 {
     setupUi(this);
     mLogo->setPixmap(QPixmap(":/images/seafile-32.png"));
-    setWindowTitle(tr("Choose the disk letter for SeaDrive"));
+    setWindowTitle(i18n::getDiskLetterDialogTitle());
     setWindowIcon(QIcon(":/images/seafile.png"));
     setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
                    Qt::WindowStaysOnTopHint);
