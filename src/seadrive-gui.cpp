@@ -256,7 +256,6 @@ void SeadriveGui::start()
 #if defined(Q_OS_WIN32)
     QString disk_letter;
     if (settings_mgr_->getDiskLetter(&disk_letter)) {
-        qWarning("Using disk letter %s", toCStr(disk_letter));
         disk_letter_ = disk_letter;
     } else {
         qWarning("disk letter not set, asking the user for it");
@@ -268,6 +267,7 @@ void SeadriveGui::start()
         disk_letter_ = dialog.diskLetter();
         settings_mgr_->setDiskLetter(disk_letter_);
     }
+    qWarning("Using disk letter %s", toCStr(disk_letter_));
 #endif
 
     connect(daemon_mgr_, SIGNAL(daemonStarted()),
