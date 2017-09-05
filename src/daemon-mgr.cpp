@@ -34,22 +34,29 @@ const char *kSeadriveSockName = "seadrive.sock";
 const char *kSeadriveExecutable = "seadrive";
 #endif
 
-} // namespace
+typedef enum {
+    DAEMON_INIT = 0,
+    DAEMON_STARTING,
+    DAEMON_CONNECTING,
+    DAEMON_CONNECTED,
+    DAEMON_DEAD,
+    SEADRIVE_EXITING,
+} DaemonState;
 
+} // namespace
 
 DaemonManager::DaemonManager()
     : seadrive_daemon_(nullptr),
-      daemon_exited_(false),
       searpc_pipe_client_(nullptr),
       unmounted_(false)
 {
+    current_state_ = DAEMON_INIT;
     conn_daemon_timer_ = new QTimer(this);
     connect(conn_daemon_timer_, SIGNAL(timeout()), this, SLOT(checkDaemonReady()));
     shutdown_process (kSeadriveExecutable);
 
-    system_shut_down_ = false;
     connect(qApp, SIGNAL(aboutToQuit()),
-            this, SLOT(systemShutDown()));
+            this, SLOT(seadriveExiting()));
 }
 
 DaemonManager::~DaemonManager() {
@@ -75,6 +82,8 @@ void DaemonManager::startSeadriveDaemon()
             SLOT(onDaemonFinished(int, QProcess::ExitStatus)));
 
     seadrive_daemon_->start(RESOURCE_PATH(kSeadriveExecutable), collectSeaDriveArgs());
+
+    current_state_ = DAEMON_STARTING;
 }
 
 QStringList DaemonManager::collectSeaDriveArgs()
@@ -126,21 +135,25 @@ QStringList DaemonManager::collectSeaDriveArgs()
     return args;
 }
 
-void DaemonManager::systemShutDown()
+void DaemonManager::seadriveExiting()
 {
-    system_shut_down_ = true;
+    current_state_ = SEADRIVE_EXITING;
 }
 
 void DaemonManager::onDaemonStarted()
 {
     qDebug("seadrive daemon is now running, checking if the service is ready");
     conn_daemon_timer_->start(kDaemonReadyCheckIntervalMilli);
+    current_state_ = DAEMON_CONNECTING;
 }
 
 void DaemonManager::checkDaemonReady()
 {
     QString str;
+    static int retried = 0;
     if (searpc_named_pipe_client_connect(searpc_pipe_client_) == 0) {
+        retried = 0;
+
         // TODO: Instead of only connecting to the rpc server, we should make a
         // real rpc call here so we can guarantee the daemon is ready to answer
         // rpc requests.
@@ -150,13 +163,15 @@ void DaemonManager::checkDaemonReady()
 
         qDebug("seadrive daemon is ready");
         conn_daemon_timer_->stop();
+
+        current_state_ = DAEMON_CONNECTED;
+
         g_usleep(1000000);
         emit daemonStarted();
         return;
     }
     qDebug("seadrive daemon is not ready");
-    static int retried = 0;
-    if (daemon_exited_ || ++retried > kMaxDaemonReadyCheck) {
+    if (current_state_ == DAEMON_DEAD || ++retried > kMaxDaemonReadyCheck) {
         qWarning("seadrive rpc is not ready after %d retry, abort", retried);
         gui->errorAndExit(tr("%1 failed to initialize").arg(getBrand()));
     }
@@ -166,11 +181,14 @@ void DaemonManager::stopAllDaemon()
 {
     qWarning("[Daemon Mgr] stopping seadrive daemon");
 
-    if (conn_daemon_timer_)
+    if (conn_daemon_timer_) {
         conn_daemon_timer_->stop();
+        conn_daemon_timer_ = nullptr;
+    }
     if (seadrive_daemon_) {
         seadrive_daemon_->kill();
         seadrive_daemon_->waitForFinished(50);
+        conn_daemon_timer_ = nullptr;
     }
 }
 
@@ -193,8 +211,8 @@ void DaemonManager::onDaemonFinished(int exit_code, QProcess::ExitStatus exit_st
              exit_status == QProcess::CrashExit ? "crashed" : "exited normally",
              exit_code);
 
-    daemon_exited_ = true;
-    if (!system_shut_down_) {
+    if (current_state_ != SEADRIVE_EXITING) {
         gui->errorAndExit(tr("%1 exited unexpectedly").arg(getBrand()));
+        current_state_ = DAEMON_DEAD;
     }
 }

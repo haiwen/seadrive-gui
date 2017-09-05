@@ -29,7 +29,7 @@ private slots:
     void onDaemonStarted();
     void onDaemonFinished(int exit_code, QProcess::ExitStatus exit_status);
     void checkDaemonReady();
-    void systemShutDown();
+    void seadriveExiting();
 
 private:
     Q_DISABLE_COPY(DaemonManager)
@@ -40,6 +40,8 @@ private:
 
     QTimer *conn_daemon_timer_;
     QProcess *seadrive_daemon_;
+
+    int current_state_;
 
     bool daemon_exited_;
 

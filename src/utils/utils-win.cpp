@@ -159,7 +159,8 @@ QSet<QString> getUsedLetters()
 
 bool diskLetterAvailable(const QString& disk_letter)
 {
-    return !getUsedLetters().contains(QString(disk_letter.at(0)));
+    // return !getUsedLetters().contains(QString(disk_letter.at(0)));
+    return true;
 }
 
 QStringList getAvailableDiskLetters()
