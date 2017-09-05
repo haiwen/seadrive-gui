@@ -9,12 +9,8 @@
 
 #include <string>
 #include <QMutexLocker>
-#include <QScopedPointer>
 #include <QList>
-#include <QVector>
 #include <QDir>
-#include <QTimer>
-#include <QDateTime>
 #include <QDebug>
 
 #include "utils/file-utils.h"
@@ -25,6 +21,7 @@
 #include "rpc/rpc-client.h"
 #include "api/api-error.h"
 #include "seadrive-gui.h"
+#include "daemon-mgr.h"
 #include "account-mgr.h"
 #include "settings-mgr.h"
 #include "utils/utils.h"
@@ -182,6 +179,16 @@ void SeafileExtensionHandler::start()
     rpc_client_->connectDaemon();
     listener_thread_->start();
     started_ = true;
+
+    connect(gui->daemonManager(), SIGNAL(daemonRestarted()), this, SLOT(onDaemonRestarted()));
+}
+
+void SeafileExtensionHandler::onDaemonRestarted()
+{
+    if (rpc_client_) {
+        delete rpc_client_;
+    }
+    rpc_client_->connectDaemon();
 }
 
 void SeafileExtensionHandler::stop()

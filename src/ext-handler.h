@@ -27,6 +27,7 @@ public:
     void stop();
 
 private slots:
+    void onDaemonRestarted();
     void onShareLinkGenerated(const QString& link);
     void onLockFileSuccess();
     void onLockFileFailed(const ApiError& error);
