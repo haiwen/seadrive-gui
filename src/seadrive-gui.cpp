@@ -286,6 +286,12 @@ void SeadriveGui::onDaemonRestarted()
 
     rpc_client_ = new SeafileRpcClient();
     rpc_client_->connectDaemon();
+
+    qDebug("setting account when daemon is restarted");
+    const Account &account = account_mgr_->currentAccount();
+    if (account.isValid()) {
+        rpc_client_->switchAccount(account);
+    }
 }
 
 void SeadriveGui::onDaemonStarted()

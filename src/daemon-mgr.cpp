@@ -189,10 +189,6 @@ void DaemonManager::checkDaemonReady()
     static int retried = 0;
     if (searpc_named_pipe_client_connect(searpc_pipe_client_) == 0) {
         retried = 0;
-
-        // TODO: Instead of only connecting to the rpc server, we should make a
-        // real rpc call here so we can guarantee the daemon is ready to answer
-        // rpc requests.
         SearpcClient *rpc_client = searpc_client_with_named_pipe_transport(
             searpc_pipe_client_, "seadrive-rpcserver");
         searpc_free_client_with_pipe_transport(rpc_client);
@@ -200,16 +196,19 @@ void DaemonManager::checkDaemonReady()
         qDebug("seadrive daemon is ready");
         conn_daemon_timer_->stop();
 
+        // TODO: Instead of only connecting to the rpc server, we should make a
+        // real rpc call here so we can guarantee the daemon is ready to answer
+        // rpc requests.
         g_usleep(1000000);
 
+        transitionState(DAEMON_CONNECTED);
+
+        restart_retried_ = 0;
         if (first_start_) {
             emit daemonStarted();
         } else {
             emit daemonRestarted();
         }
-        restart_retried_ = 0;
-
-        transitionState(DAEMON_CONNECTED);
         return;
     }
 
