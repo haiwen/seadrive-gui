@@ -26,6 +26,12 @@ namespace {
 const int kDaemonReadyCheckIntervalMilli = 2000;
 const int kMaxDaemonReadyCheck = 15;
 
+// When the daemon process is dead, we try to restart it every 5 seconds, at
+// most 10 times. The drive letter would be released by dokany driver about
+// after 15 seconds after the daemon is dead.
+const int kDaemonRestartInternvalMSecs = 5000;
+const int kDaemonRestartMaxRetries = 10;
+
 #if defined(Q_OS_WIN32)
 const char *kSeadriveSockName = "\\\\.\\pipe\\seadrive_";
 const char *kSeadriveExecutable = "seadrive.exe";
@@ -41,7 +47,25 @@ typedef enum {
     DAEMON_CONNECTED,
     DAEMON_DEAD,
     SEADRIVE_EXITING,
+    MAX_STATE,
 } DaemonState;
+
+const char *DaemonStateStrs[] = {
+    "init",
+    "starting",
+    "connecting",
+    "connected",
+    "dead",
+    "seadrive_exiting"
+};
+
+const char *stateToStr(int state)
+{
+    if (state < 0 || state >= MAX_STATE) {
+        return "";
+    }
+    return DaemonStateStrs[state];
+}
 
 } // namespace
 
@@ -55,6 +79,9 @@ DaemonManager::DaemonManager()
     connect(conn_daemon_timer_, SIGNAL(timeout()), this, SLOT(checkDaemonReady()));
     shutdown_process (kSeadriveExecutable);
 
+    first_start_ = true;
+    restart_retried_ = 0;
+
     connect(qApp, SIGNAL(aboutToQuit()),
             this, SLOT(seadriveExiting()));
 }
@@ -63,9 +90,19 @@ DaemonManager::~DaemonManager() {
     stopAllDaemon();
 }
 
+void DaemonManager::restartSeadriveDaemon()
+{
+    if (current_state_ == SEADRIVE_EXITING) {
+        return;
+    }
+
+    qWarning("Trying to restart seadrive daemon");
+    first_start_ = false;
+    startSeadriveDaemon();
+}
+
 void DaemonManager::startSeadriveDaemon()
 {
-
 #if defined(Q_OS_WIN32)
     searpc_pipe_client_ = searpc_create_named_pipe_client(
         utils::win::getLocalPipeName(kSeadriveSockName).c_str());
@@ -81,9 +118,8 @@ void DaemonManager::startSeadriveDaemon()
             this,
             SLOT(onDaemonFinished(int, QProcess::ExitStatus)));
 
+    transitionState(DAEMON_STARTING);
     seadrive_daemon_->start(RESOURCE_PATH(kSeadriveExecutable), collectSeaDriveArgs());
-
-    current_state_ = DAEMON_STARTING;
 }
 
 QStringList DaemonManager::collectSeaDriveArgs()
@@ -137,14 +173,14 @@ QStringList DaemonManager::collectSeaDriveArgs()
 
 void DaemonManager::seadriveExiting()
 {
-    current_state_ = SEADRIVE_EXITING;
+    transitionState(SEADRIVE_EXITING);
 }
 
 void DaemonManager::onDaemonStarted()
 {
     qDebug("seadrive daemon is now running, checking if the service is ready");
     conn_daemon_timer_->start(kDaemonReadyCheckIntervalMilli);
-    current_state_ = DAEMON_CONNECTING;
+    transitionState(DAEMON_CONNECTING);
 }
 
 void DaemonManager::checkDaemonReady()
@@ -164,14 +200,21 @@ void DaemonManager::checkDaemonReady()
         qDebug("seadrive daemon is ready");
         conn_daemon_timer_->stop();
 
-        current_state_ = DAEMON_CONNECTED;
-
         g_usleep(1000000);
-        emit daemonStarted();
+
+        if (first_start_) {
+            emit daemonStarted();
+        } else {
+            emit daemonRestarted();
+        }
+        restart_retried_ = 0;
+
+        transitionState(DAEMON_CONNECTED);
         return;
     }
+
     qDebug("seadrive daemon is not ready");
-    if (current_state_ == DAEMON_DEAD || ++retried > kMaxDaemonReadyCheck) {
+    if (++retried > kMaxDaemonReadyCheck) {
         qWarning("seadrive rpc is not ready after %d retry, abort", retried);
         gui->errorAndExit(tr("%1 failed to initialize").arg(getBrand()));
     }
@@ -211,8 +254,28 @@ void DaemonManager::onDaemonFinished(int exit_code, QProcess::ExitStatus exit_st
              exit_status == QProcess::CrashExit ? "crashed" : "exited normally",
              exit_code);
 
-    if (current_state_ != SEADRIVE_EXITING) {
-        gui->errorAndExit(tr("%1 exited unexpectedly").arg(getBrand()));
-        current_state_ = DAEMON_DEAD;
+    if (current_state_ == DAEMON_CONNECTING) {
+        conn_daemon_timer_->stop();
+        scheduleRestartDaemon();
+    } else if (current_state_ != SEADRIVE_EXITING) {
+        transitionState(DAEMON_DEAD);
+        emit daemonDead();
+        scheduleRestartDaemon();
     }
+}
+
+void DaemonManager::scheduleRestartDaemon()
+{
+    if (++restart_retried_ > kDaemonRestartMaxRetries) {
+        qWarning("reaching max tries of restarting seadrive daemon, aborting");
+        gui->errorAndExit(tr("%1 exited unexpectedly").arg(getBrand()));
+        return;
+    }
+    QTimer::singleShot(kDaemonRestartInternvalMSecs, this, SLOT(restartSeadriveDaemon()));
+}
+
+void DaemonManager::transitionState(int new_state)
+{
+    qDebug("daemon mgr: %s => %s", stateToStr(current_state_), stateToStr(new_state));
+    current_state_ = new_state;
 }

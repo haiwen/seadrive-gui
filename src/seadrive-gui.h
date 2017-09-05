@@ -91,6 +91,7 @@ public slots:
 private slots:
     void onAboutToQuit();
     void onDaemonStarted();
+    void onDaemonRestarted();
 
 private:
     Q_DISABLE_COPY(SeadriveGui)

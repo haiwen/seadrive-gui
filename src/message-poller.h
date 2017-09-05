@@ -50,6 +50,8 @@ signals:
     void seadriveFSLoaded();
 
 private slots:
+    void onDaemonDead();
+    void onDaemonRestarted();
     void checkSeaDriveEvents();
     void checkNotification();
     void checkSyncStatus();

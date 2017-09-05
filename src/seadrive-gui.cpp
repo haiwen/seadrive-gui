@@ -270,9 +270,22 @@ void SeadriveGui::start()
     }
 #endif
 
-    daemon_mgr_->startSeadriveDaemon();
     connect(daemon_mgr_, SIGNAL(daemonStarted()),
             this, SLOT(onDaemonStarted()));
+    connect(daemon_mgr_, SIGNAL(daemonRestarted()),
+            this, SLOT(onDaemonRestarted()));
+    daemon_mgr_->startSeadriveDaemon();
+}
+
+void SeadriveGui::onDaemonRestarted()
+{
+    qDebug("reviving rpc client when daemon is restarted");
+    if (rpc_client_) {
+        delete rpc_client_;
+    }
+
+    rpc_client_ = new SeafileRpcClient();
+    rpc_client_->connectDaemon();
 }
 
 void SeadriveGui::onDaemonStarted()

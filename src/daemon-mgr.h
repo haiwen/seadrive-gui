@@ -22,8 +22,14 @@ public:
     void startSeadriveDaemon();
     void doUnmount();
 
+public slots:
+    void restartSeadriveDaemon();
+
 signals:
     void daemonStarted();
+
+    void daemonDead();
+    void daemonRestarted();
 
 private slots:
     void onDaemonStarted();
@@ -37,18 +43,19 @@ private:
     QStringList collectSeaDriveArgs();
     void startSeafileDaemon();
     void stopAllDaemon();
+    void scheduleRestartDaemon();
+    void transitionState(int new_state);
 
     QTimer *conn_daemon_timer_;
     QProcess *seadrive_daemon_;
 
     int current_state_;
-
-    bool daemon_exited_;
-
+    // Used to decide whether to emit daemonStarted or daemonRestarted
+    bool first_start_;
+    int restart_retried_;
     _SearpcNamedPipeClient *searpc_pipe_client_;
-
-    bool system_shut_down_;
     bool unmounted_;
+
 };
 
 #endif // SEAFILE_CLIENT_DAEMON_MANAGER_H

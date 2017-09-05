@@ -6,6 +6,7 @@
 #include "utils/json-utils.h"
 #include "utils/file-utils.h"
 #include "seadrive-gui.h"
+#include "daemon-mgr.h"
 #include "settings-mgr.h"
 #include "rpc/rpc-client.h"
 #include "rpc/sync-error.h"
@@ -78,6 +79,25 @@ MessagePoller::~MessagePoller()
 
 void MessagePoller::start()
 {
+    rpc_client_->connectDaemon();
+    check_notification_timer_->start(kCheckNotificationIntervalMSecs);
+    connect(gui->daemonManager(), SIGNAL(daemonDead()), this, SLOT(onDaemonDead()));
+    connect(gui->daemonManager(), SIGNAL(daemonRestarted()), this, SLOT(onDaemonRestarted()));
+}
+
+void MessagePoller::onDaemonDead()
+{
+    qDebug("pausing message poller when daemon is dead");
+    check_notification_timer_->stop();
+}
+
+void MessagePoller::onDaemonRestarted()
+{
+    qDebug("reviving message poller when daemon is restarted");
+    if (rpc_client_) {
+        delete rpc_client_;
+    }
+    rpc_client_ = new SeafileRpcClient();
     rpc_client_->connectDaemon();
     check_notification_timer_->start(kCheckNotificationIntervalMSecs);
 }
