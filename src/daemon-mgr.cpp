@@ -97,7 +97,6 @@ void DaemonManager::restartSeadriveDaemon()
     }
 
     qWarning("Trying to restart seadrive daemon");
-    first_start_ = false;
     startSeadriveDaemon();
 }
 
@@ -205,6 +204,7 @@ void DaemonManager::checkDaemonReady()
 
         restart_retried_ = 0;
         if (first_start_) {
+            first_start_ = false;
             emit daemonStarted();
         } else {
             emit daemonRestarted();
