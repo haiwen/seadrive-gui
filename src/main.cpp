@@ -41,7 +41,14 @@ void setupSettingDomain()
     // see QSettings documentation
     QCoreApplication::setOrganizationName(getBrand());
     QCoreApplication::setOrganizationDomain("seafile.com");
-    QCoreApplication::setApplicationName(QString("%1 Client").arg(getBrand()));
+    QString appName = getBrand();
+
+    // Special treatment to keep consistent with old versions. Otherwise the
+    // existing settings would be lost.
+    if (appName == "SeaDrive") {
+        appName = "Seafile Drive";
+    }
+    QCoreApplication::setApplicationName(QString("%1 Client").arg(appName));
 }
 
 void handleCommandLineOption(int argc, char *argv[])
