@@ -32,25 +32,22 @@ bool isWindows7OrGreater();
 bool isWindows8OrGreater();
 bool isWindows8Point1OrGreater();
 bool isWindows10OrHigher();
+bool fixQtHDPINonIntegerScaling();
 
 bool diskLetterAvailable(const QString& disk_letter);
 QStringList getAvailableDiskLetters();
-
 std::string getLocalPipeName(const char *pipeName);
 
 } // namespace win
 } // namespace utils
-
 #else
 namespace utils {
 namespace win {
-
 inline bool isWindowsVistaOrGreater() { return false; }
-inline bool isWindows10OrHigher() { return false; }
 inline bool isWindows7OrGreater() { return false; }
 inline bool isWindows8OrGreater() { return false; }
 inline bool isWindows8Point1OrGreater() { return false; }
-
+inline bool isWindows10OrHigher() { return false; }
 } // namespace win
 } // namespace utils
 #endif

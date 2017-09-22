@@ -14,6 +14,9 @@
 #include "utils/process.h"
 #include "seadrive-gui.h"
 
+#if defined(Q_OS_WIN32)
+#include "utils/utils-win.h"
+#endif
 #if defined(Q_OS_MAC)
 #include "application.h"
 #include "utils/utils-mac.h"
@@ -33,6 +36,28 @@ void initGlib()
 #endif
 #if !GLIB_CHECK_VERSION(2, 31, 0)
     g_thread_init(NULL);
+#endif
+}
+
+void setupHDPIFix()
+{
+#if QT_VERSION >= QT_VERSION_CHECK(5, 1, 0)
+    // enable builtin retina mode
+    // http://blog.qt.digia.com/blog/2013/04/25/retina-display-support-for-mac-os-ios-and-x11/
+    // https://qt.gitorious.org/qt/qtbase/source/a3cb057c3d5c9ed2c12fb7542065c3d667be38b7:src/gui/image/qicon.cpp#L1028-1043
+    qApp->setAttribute(Qt::AA_UseHighDpiPixmaps);
+#endif
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+  #if defined(Q_OS_WIN32)
+    if (!utils::win::fixQtHDPINonIntegerScaling()) {
+        qApp->setAttribute(Qt::AA_EnableHighDpiScaling);
+    }
+  #elif !defined(Q_OS_MAC)
+    // Enable HDPI auto detection.
+    // See http://blog.qt.io/blog/2016/01/26/high-dpi-support-in-qt-5-6/
+    qApp->setAttribute(Qt::AA_EnableHighDpiScaling);
+  #endif
 #endif
 }
 
@@ -105,6 +130,8 @@ int main(int argc, char *argv[])
 
     // call glib's init functions
     initGlib();
+
+    setupHDPIFix();
 
     // set the domains of settings
     setupSettingDomain();
