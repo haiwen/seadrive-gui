@@ -86,6 +86,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 #endif
 
     connect(mOkBtn, SIGNAL(clicked()), this, SLOT(onOkBtnClicked()));
+    adjustSize();
 }
 
 void SettingsDialog::updateSettings()
