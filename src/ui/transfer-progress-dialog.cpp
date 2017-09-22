@@ -65,6 +65,7 @@ TransferProgressDialog::TransferProgressDialog(QWidget *parent)
     setMinimumSize(QSize(500, 200));
 
     QVBoxLayout* vlayout = new QVBoxLayout;
+    vlayout->setContentsMargins(0, 0, 0, 0);
 
     tab_widget_ = new QTabWidget;
     tab_widget_->addTab(new TransferTab(UPLOAD), tr("Upload"));
@@ -78,7 +79,7 @@ TransferProgressDialog::TransferProgressDialog(QWidget *parent)
 void TransferProgressDialog::resizeEvent(QResizeEvent* event)
 {
     QDialog::resizeEvent(event);
-    uint tab_width = (rect().width() / tab_widget_->count()) - 12;
+    uint tab_width = (rect().width() / tab_widget_->count()) - 1;
     QString style("QTabBar::tab { width: %1px; }");
     style = style.arg(tab_width);
     tab_widget_->setStyleSheet(style);
