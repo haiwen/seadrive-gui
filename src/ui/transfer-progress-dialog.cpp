@@ -62,7 +62,7 @@ TransferProgressDialog::TransferProgressDialog(QWidget *parent)
     setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
                    Qt::WindowStaysOnTopHint);
 
-    setMinimumSize(QSize(500, 200));
+    setMinimumSize(QSize(600, 371));
 
     QVBoxLayout* vlayout = new QVBoxLayout;
     vlayout->setContentsMargins(0, 0, 0, 0);
@@ -92,7 +92,6 @@ TransferTab::TransferTab(TransferType type, QWidget *parent)
     QVBoxLayout* vlayout = new QVBoxLayout;
     createTable(type);
     vlayout->addWidget(table_);
-    vlayout->addStretch(1);
     setLayout(vlayout);
     adjustSize();
 }
