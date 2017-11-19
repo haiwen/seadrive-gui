@@ -177,4 +177,15 @@ std::string ShowHistoryCommand::serialize()
     return path_;
 }
 
+DownloadCommand::DownloadCommand(const std::string path)
+    : AppletCommand<void>("download"),
+      path_(path)
+{
+}
+
+std::string DownloadCommand::serialize()
+{
+    return path_;
+}
+
 } // namespace seafile

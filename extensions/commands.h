@@ -196,6 +196,17 @@ private:
     std::string path_;
 };
 
+class DownloadCommand : public AppletCommand<void> {
+public:
+    DownloadCommand(const std::string path);
+
+protected:
+    std::string serialize();
+
+private:
+    std::string path_;
+};
+
 }
 
 #endif // SEAFILE_EXTENSION_APPLET_COMMANDS_H
