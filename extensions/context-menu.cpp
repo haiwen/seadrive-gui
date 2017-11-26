@@ -337,10 +337,7 @@ void ShellExt::insertSubMenuItem(const std::string& text, MenuOp op)
 void ShellExt::buildSubMenu(const seafile::RepoInfo& repo,
                             const std::string& path_in_repo)
 {
-    if (!is_dir) {
-        insertSubMenuItem(SEAFILE_TR("download"), Download);
-    }
-
+    insertSubMenuItem(SEAFILE_TR("download"), Download);
     insertSubMenuItem(SEAFILE_TR("get seafile download link"), GetShareLink);
     insertSubMenuItem(SEAFILE_TR("get seafile internal link"), GetInternalLink);
 

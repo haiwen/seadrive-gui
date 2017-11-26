@@ -632,3 +632,26 @@ bool SeafileRpcClient::getSyncErrors(json_t **ret_obj)
 
     return true;
 }
+
+bool SeafileRpcClient::cachePath(const QString& repo_id,
+                                 const QString& path_in_repo)
+{
+    GError *error = NULL;
+    int ret = searpc_client_call__int (
+        seadrive_rpc_client_,
+        "seafile_cache_path",
+        &error, 2, "string", toCStr(repo_id),
+        "string", toCStr(path_in_repo));
+
+    if (error || ret != 0) {
+        qWarning("failed to cache %s/%s, errors: %s.\n",
+                 toCStr(repo_id), toCStr(path_in_repo),
+                 error->message ? error->message : "");
+        if (error) {
+            g_error_free(error);
+        }
+        return false;
+    } else {
+        return true;
+    }
+}

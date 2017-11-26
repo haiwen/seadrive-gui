@@ -647,17 +647,10 @@ void ExtCommandsHandler::handleDownload(const QStringList& args)
         return;
     }
     QString path = normalizedPath(args[0]);
-    // if (QFileInfo(path).isDir()) {
-    //     qWarning("attempted to download %s, which is not a regular file",
-    //              path.toUtf8().data());
-    //     return;
-    // }
     QString repo_uname, repo_id, path_in_repo;
     if (!parseRepoFileInfo(path, &repo_uname, &repo_id, &path_in_repo)) {
         return;
     }
 
-    QUrl url = "/repo/file_revisions/" + repo_id + "/";
-    url = ::includeQueryParams(url, {{"p", path_in_repo}});
-    emit openUrlWithAutoLogin(url);
+    gui->rpcClient()->cachePath(repo_id, path_in_repo);
 }
