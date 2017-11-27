@@ -283,6 +283,11 @@ void SeafileExtensionHandler::openUrlWithAutoLogin(const QUrl& url)
     AutoLoginService::instance()->startAutoLogin(url.toString());
 }
 
+void SeafileExtensionHandler::download()
+{
+    gui->warningBox("download test");
+}
+
 void SeafileExtensionHandler::onShareLinkGenerated(const QString& link)
 {
     SharedLinkDialog *dialog = new SharedLinkDialog(link, NULL);
@@ -364,6 +369,8 @@ void ExtConnectionListenerThread::servePipeInNewThread(HANDLE pipe)
             this, SIGNAL(privateShare(const QString&, const QString&, bool)));
     connect(t, SIGNAL(openUrlWithAutoLogin(const QUrl&)),
             this, SIGNAL(openUrlWithAutoLogin(const QUrl&)));
+    connect(t, SIGNAL(download()),
+            this, SIGNAL(download()));
     t->start();
 }
 
@@ -404,6 +411,8 @@ void ExtCommandsHandler::run()
             handlePrivateShare(args, false);
         } else if (cmd == "show-history") {
             handleShowHistory(args);
+        } else if (cmd == "download") {
+            handleDownload(args);
         } else {
             qWarning ("[ext] unknown request command: %s", cmd.toUtf8().data());
         }
@@ -630,4 +639,18 @@ void ExtCommandsHandler::handleShowHistory(const QStringList& args)
     QUrl url = "/repo/file_revisions/" + repo_id + "/";
     url = ::includeQueryParams(url, {{"p", path_in_repo}});
     emit openUrlWithAutoLogin(url);
+}
+
+void ExtCommandsHandler::handleDownload(const QStringList& args)
+{
+    if (args.size() != 1) {
+        return;
+    }
+    QString path = normalizedPath(args[0]);
+    QString repo_uname, repo_id, path_in_repo;
+    if (!parseRepoFileInfo(path, &repo_uname, &repo_id, &path_in_repo)) {
+        return;
+    }
+
+    gui->rpcClient()->cachePath(repo_id, path_in_repo);
 }

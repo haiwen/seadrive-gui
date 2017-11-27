@@ -42,6 +42,7 @@ private slots:
                       const QString& path_in_repo,
                       bool to_group);
     void openUrlWithAutoLogin(const QUrl& url);
+    void download();
 
 private:
     ExtConnectionListenerThread *listener_thread_;
@@ -73,6 +74,7 @@ signals:
                       const QString& path_in_repo,
                       bool to_group);
     void openUrlWithAutoLogin(const QUrl& url);
+    void download();
 
 private:
     void servePipeInNewThread(HANDLE pipe);
@@ -101,6 +103,7 @@ signals:
                       const QString& path_in_repo,
                       bool to_group);
     void openUrlWithAutoLogin(const QUrl& url);
+    void download();
 
 private:
     HANDLE pipe_;
@@ -115,6 +118,7 @@ private:
     void handleLockFile(const QStringList& args, bool lock);
     void handlePrivateShare(const QStringList& args, bool to_group);
     void handleShowHistory(const QStringList& args);
+    void handleDownload(const QStringList& args);
 
     bool parseRepoFileInfo(const QString& path,
                            QString *repo_uname,

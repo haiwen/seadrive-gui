@@ -97,6 +97,9 @@ public:
 
     bool getSyncErrors(json_t **ret_obj);
 
+    bool cachePath(const QString& repo_id,
+                   const QString& path_in_repo);
+
 private:
     Q_DISABLE_COPY(SeafileRpcClient)
 

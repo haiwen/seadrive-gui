@@ -66,6 +66,7 @@ public:
 
 private:
     enum MenuOp {
+        Download,
         GetShareLink,
         GetInternalLink,
         LockFile,
