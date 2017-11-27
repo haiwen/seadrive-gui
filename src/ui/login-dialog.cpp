@@ -101,7 +101,7 @@ LoginDialog::LoginDialog(QWidget *parent) : QDialog(parent)
 
 void LoginDialog::setupShibLoginLink()
 {
-    QString txt = QString("<a style=\"color:#777\" href=\"#\">%1</a>").arg(tr("Shibboleth Login"));
+    QString txt = QString("<a style=\"color:#777\" href=\"#\">%1</a>").arg(tr("Single Sign On"));
     mShibLoginLink->setText(txt);
     connect(mShibLoginLink, SIGNAL(linkActivated(const QString&)),
             this, SLOT(loginWithShib()));
@@ -340,7 +340,7 @@ void LoginDialog::loginWithShib()
 {
     QString serverAddr = gui->settingsManager()->getLastShibUrl();
     QString brand = getBrand() == "SeaDrive" ? "Seafile" : getBrand();
-    serverAddr = QInputDialog::getText(this, tr("Shibboleth Login"),
+    serverAddr = QInputDialog::getText(this, tr("Single Sign On"),
                                        tr("%1 Server Address").arg(brand),
                                        QLineEdit::Normal,
                                        serverAddr);
