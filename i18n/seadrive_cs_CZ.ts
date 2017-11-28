@@ -35,7 +35,7 @@
 <context>
     <name>AccountManager</name>
     <message>
-        <location filename="../src/account-mgr.cpp" line="106"/>
+        <location filename="../src/account-mgr.cpp" line="126"/>
         <source>failed to open account database</source>
         <translation>Nepodařilo se otevřít databázi účtů</translation>
     </message>
@@ -43,12 +43,12 @@
 <context>
     <name>DaemonManager</name>
     <message>
-        <location filename="../src/daemon-mgr.cpp" line="159"/>
+        <location filename="../src/daemon-mgr.cpp" line="218"/>
         <source>%1 failed to initialize</source>
         <translation>%1 se nepodařilo spustit</translation>
     </message>
     <message>
-        <location filename="../src/daemon-mgr.cpp" line="196"/>
+        <location filename="../src/daemon-mgr.cpp" line="270"/>
         <source>%1 exited unexpectedly</source>
         <translation>%1 Neočekávané ukončení</translation>
     </message>
@@ -56,38 +56,13 @@
 <context>
     <name>DiskLetterDialog</name>
     <message>
-        <location filename="../src/ui/disk-letter-dialog.cpp" line="26"/>
-        <source>Choose the disk letter for SeaDrive</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../ui_disk-letter-dialog.h" line="193"/>
-        <source>Dialog</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../ui_disk-letter-dialog.h" line="194"/>
+        <location filename="../ui_disk-letter-dialog.h" line="200"/>
         <source>Choose the disk letter</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../ui_disk-letter-dialog.h" line="195"/>
-        <source>logo</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../ui_disk-letter-dialog.h" line="196"/>
+        <location filename="../ui_disk-letter-dialog.h" line="201"/>
         <source>Your files would appear in a dedicated disk in your computer. Please choose the letter:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../ui_disk-letter-dialog.h" line="199"/>
-        <source>S</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../ui_disk-letter-dialog.h" line="200"/>
-        <source>X</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -141,170 +116,175 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     <name>LoginDialog</name>
     <message>
         <location filename="../src/ui/login-dialog.cpp" line="66"/>
-        <location filename="../ui_login-dialog.h" line="261"/>
+        <location filename="../ui_login-dialog.h" line="297"/>
         <source>Add an account</source>
         <translation>Přidat účet</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="110"/>
-        <location filename="../src/ui/login-dialog.cpp" line="111"/>
+        <location filename="../src/ui/login-dialog.cpp" line="104"/>
+        <location filename="../src/ui/login-dialog.cpp" line="343"/>
+        <location filename="../ui_login-dialog.h" line="308"/>
+        <source>Single Sign On</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/login-dialog.cpp" line="112"/>
+        <location filename="../src/ui/login-dialog.cpp" line="113"/>
         <source>Re-login</source>
         <translation>Znovu přihlášit</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="128"/>
+        <location filename="../src/ui/login-dialog.cpp" line="130"/>
         <source>Logging in...</source>
         <translation>Přihlašuji se...</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="170"/>
+        <location filename="../src/ui/login-dialog.cpp" line="172"/>
         <source>Network Error:
  %1</source>
         <translation>Chyba sítě:
 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="182"/>
+        <location filename="../src/ui/login-dialog.cpp" line="184"/>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The ssl certificate of this server is not trusted, proceed anyway?</source>
         <translation>&lt;b&gt;Varování:&lt;/b&gt; SSL certifikát serveru není důvěryhodný, přesto pokračovat?</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="196"/>
+        <location filename="../src/ui/login-dialog.cpp" line="198"/>
         <source>Please enter the server address</source>
         <translation>Vložte adresu serveru</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="200"/>
-        <location filename="../src/ui/login-dialog.cpp" line="206"/>
-        <location filename="../src/ui/login-dialog.cpp" line="348"/>
-        <location filename="../src/ui/login-dialog.cpp" line="354"/>
+        <location filename="../src/ui/login-dialog.cpp" line="202"/>
+        <location filename="../src/ui/login-dialog.cpp" line="208"/>
+        <location filename="../src/ui/login-dialog.cpp" line="353"/>
+        <location filename="../src/ui/login-dialog.cpp" line="359"/>
         <source>%1 is not a valid server address</source>
         <translation>%1 není platná adresa serveru</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="213"/>
+        <location filename="../src/ui/login-dialog.cpp" line="215"/>
         <source>Please enter the username</source>
         <translation>Vaše uživatelské jméno</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="224"/>
+        <location filename="../src/ui/login-dialog.cpp" line="226"/>
         <source>Please enter the computer name</source>
         <translation>Název počítače</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="280"/>
+        <location filename="../src/ui/login-dialog.cpp" line="285"/>
         <source>Failed to save current account</source>
         <translation>Chyba při ukládání informací o účtu</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="297"/>
+        <location filename="../src/ui/login-dialog.cpp" line="302"/>
         <source>Two Factor Authentication</source>
         <translation>Dvoufaktorová autentikace</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="339"/>
+        <location filename="../src/ui/login-dialog.cpp" line="344"/>
         <source>%1 Server Address</source>
         <translation>Adresa serveru %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="218"/>
+        <location filename="../src/ui/login-dialog.cpp" line="220"/>
         <source>Please enter the password</source>
         <translation>Vložte heslo</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="298"/>
+        <location filename="../src/ui/login-dialog.cpp" line="303"/>
         <source>Enter the two factor authentication token</source>
         <translation>Zadejte dvoufaktorový autentifikační token</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="308"/>
+        <location filename="../src/ui/login-dialog.cpp" line="313"/>
         <source>Incorrect email or password</source>
         <translation>Nesprávný email nebo heslo</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="310"/>
+        <location filename="../src/ui/login-dialog.cpp" line="315"/>
         <source>Logging in too frequently, please wait a minute</source>
         <translation>Přihlašujete se příliš často, prosím počkejte chvíli</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="312"/>
+        <location filename="../src/ui/login-dialog.cpp" line="317"/>
         <source>Internal Server Error</source>
         <translation>Vnitřní chyba serveru</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="316"/>
+        <location filename="../src/ui/login-dialog.cpp" line="321"/>
         <source>Failed to login: %1</source>
         <translation>Chyba při přihlášení: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="318"/>
+        <location filename="../src/ui/login-dialog.cpp" line="323"/>
         <source>Failed to login</source>
         <translation>Chyba při přihlášení</translation>
     </message>
     <message>
-        <location filename="../ui_login-dialog.h" line="260"/>
+        <location filename="../ui_login-dialog.h" line="296"/>
         <source>Dialog</source>
         <translation>Dialog</translation>
     </message>
     <message>
-        <location filename="../ui_login-dialog.h" line="262"/>
+        <location filename="../ui_login-dialog.h" line="298"/>
         <source>logo</source>
         <translation>logo</translation>
     </message>
     <message>
-        <location filename="../ui_login-dialog.h" line="263"/>
+        <location filename="../ui_login-dialog.h" line="299"/>
         <source>Server:</source>
         <translation>Server:</translation>
     </message>
     <message>
-        <location filename="../ui_login-dialog.h" line="264"/>
+        <location filename="../ui_login-dialog.h" line="300"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://seacloud.cc&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Například: https://seacloud.cc&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../ui_login-dialog.h" line="265"/>
+        <location filename="../ui_login-dialog.h" line="301"/>
         <source>or http://192.168.1.24:8000</source>
         <translation>nebo http://192.168.1.24:8000</translation>
     </message>
     <message>
-        <location filename="../ui_login-dialog.h" line="267"/>
+        <location filename="../ui_login-dialog.h" line="303"/>
         <source>Password:</source>
         <translation>Heslo:</translation>
     </message>
     <message>
-        <location filename="../ui_login-dialog.h" line="270"/>
+        <location filename="../ui_login-dialog.h" line="304"/>
+        <source>Automatic Login</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../ui_login-dialog.h" line="307"/>
         <source>status text</source>
         <translation>stavový text</translation>
     </message>
     <message>
-        <location filename="../ui_login-dialog.h" line="268"/>
+        <location filename="../ui_login-dialog.h" line="305"/>
         <source>Computer Name:</source>
         <translation>Název počítače:</translation>
     </message>
     <message>
-        <location filename="../ui_login-dialog.h" line="266"/>
+        <location filename="../ui_login-dialog.h" line="302"/>
         <source>Email / Username:</source>
         <translation>Email / Uživ. jméno:</translation>
     </message>
     <message>
-        <location filename="../ui_login-dialog.h" line="269"/>
+        <location filename="../ui_login-dialog.h" line="306"/>
         <source>e.g. Jim&apos;s laptop</source>
         <translation>například Honzův počitač</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="102"/>
-        <location filename="../src/ui/login-dialog.cpp" line="338"/>
-        <location filename="../ui_login-dialog.h" line="271"/>
-        <source>Shibboleth Login</source>
-        <translation>Login Shibboleth</translation>
-    </message>
-    <message>
-        <location filename="../ui_login-dialog.h" line="272"/>
+        <location filename="../ui_login-dialog.h" line="309"/>
         <source>Login</source>
         <translation>Login</translation>
     </message>
     <message>
-        <location filename="../ui_login-dialog.h" line="273"/>
+        <location filename="../ui_login-dialog.h" line="310"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
@@ -312,72 +292,72 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
 <context>
     <name>MessagePoller</name>
     <message>
-        <location filename="../src/message-poller.cpp" line="147"/>
+        <location filename="../src/message-poller.cpp" line="167"/>
         <source>&quot;%1&quot; is synchronized</source>
         <translation>&quot;%1&quot; je synchronizován</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="163"/>
+        <location filename="../src/message-poller.cpp" line="183"/>
         <source>Error when syncing &quot;%1&quot;</source>
         <translation>Při synchronizaci &quot;%1&quot; nastala chyba</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="165"/>
+        <location filename="../src/message-poller.cpp" line="185"/>
         <source>Error when syncing</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="178"/>
+        <location filename="../src/message-poller.cpp" line="198"/>
         <source>&quot;%1&quot; is being uploaded</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="194"/>
+        <location filename="../src/message-poller.cpp" line="214"/>
         <source>Starting to move &quot;%1&quot;</source>
         <translation>Začínám přesun &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="195"/>
+        <location filename="../src/message-poller.cpp" line="215"/>
         <source>Starting to move &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>Začínám přesun &quot;%1&quot; do &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="197"/>
+        <location filename="../src/message-poller.cpp" line="217"/>
         <source>Successfully moved &quot;%1&quot;</source>
         <translation>&quot;%1&quot; úspěšně přesunut</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="198"/>
+        <location filename="../src/message-poller.cpp" line="218"/>
         <source>Successfully moved &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>&quot;%1&quot; úspěšně přesunut do &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="200"/>
+        <location filename="../src/message-poller.cpp" line="220"/>
         <source>Failed to move &quot;%1&quot;</source>
         <translation>Přesunutí &quot;%1&quot; se nezdařilo</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="201"/>
+        <location filename="../src/message-poller.cpp" line="221"/>
         <source>Failed to move &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>Přesunutí &quot;%1&quot; do &quot;%2&quot; se nezdařilo</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="220"/>
+        <location filename="../src/message-poller.cpp" line="240"/>
         <source>Failed to create file &quot;%1&quot;</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="222"/>
+        <location filename="../src/message-poller.cpp" line="242"/>
         <source>You can&apos;t create files in the %1 drive directly</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="227"/>
+        <location filename="../src/message-poller.cpp" line="247"/>
         <source>Failed to delete folder</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="228"/>
+        <location filename="../src/message-poller.cpp" line="248"/>
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
         <translation type="unfinished"/>
     </message>
@@ -726,9 +706,14 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
         <translation>Excel Dokument</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="112"/>
+        <location filename="../src/main.cpp" line="146"/>
         <source>%1 Client is already running</source>
         <translation>%1 klient již běží</translation>
+    </message>
+    <message>
+        <location filename="../src/utils/i18n-utils.cpp" line="11"/>
+        <source>Choose the disk letter for %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -742,99 +727,86 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
 <context>
     <name>SeadriveGui</name>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="265"/>
+        <location filename="../src/seadrive-gui.cpp" line="264"/>
         <source>Faild to choose a disk letter</source>
         <translation>Při volbě písmene disku nastala chyba</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="297"/>
+        <location filename="../src/seadrive-gui.cpp" line="316"/>
         <source>failed to add default account</source>
         <translation>Při přidání základního účtu nastala chyba</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="408"/>
+        <location filename="../src/seadrive-gui.cpp" line="427"/>
         <source>Failed to initialize: failed to create seadrive folder</source>
         <translation>Spuštění neproběhlo: nepodařilo se vytvořit adresář seadrive</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="412"/>
+        <location filename="../src/seadrive-gui.cpp" line="431"/>
         <source>Failed to initialize: failed to create seadrive logs folder</source>
         <translation>Spuštění neproběhlo: nepodařilo se vytvořit adresář pro seadrive logy</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="416"/>
+        <location filename="../src/seadrive-gui.cpp" line="435"/>
         <source>Failed to initialize: failed to create seadrive data folder</source>
         <translation>Spuštění neproběhlo: nepodařilo se vytvořit adresář pro seadrive data</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="431"/>
+        <location filename="../src/seadrive-gui.cpp" line="450"/>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
         <translation>Spuštění neproběhlo: nepodařilo se vytvořit adresář pro seadrive mount</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="437"/>
+        <location filename="../src/seadrive-gui.cpp" line="456"/>
         <source>Failed to initialize log: %1</source>
         <translation>Log se nepodařilo spustit: %1</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="493"/>
-        <location filename="../src/seadrive-gui.cpp" line="505"/>
+        <location filename="../src/seadrive-gui.cpp" line="512"/>
+        <location filename="../src/seadrive-gui.cpp" line="524"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="516"/>
-        <location filename="../src/seadrive-gui.cpp" line="530"/>
-        <location filename="../src/seadrive-gui.cpp" line="546"/>
-        <location filename="../src/seadrive-gui.cpp" line="570"/>
+        <location filename="../src/seadrive-gui.cpp" line="535"/>
+        <location filename="../src/seadrive-gui.cpp" line="549"/>
+        <location filename="../src/seadrive-gui.cpp" line="565"/>
+        <location filename="../src/seadrive-gui.cpp" line="589"/>
         <source>Yes</source>
         <translation>Ano</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="517"/>
-        <location filename="../src/seadrive-gui.cpp" line="547"/>
-        <location filename="../src/seadrive-gui.cpp" line="571"/>
+        <location filename="../src/seadrive-gui.cpp" line="536"/>
+        <location filename="../src/seadrive-gui.cpp" line="566"/>
+        <location filename="../src/seadrive-gui.cpp" line="590"/>
         <source>No</source>
         <translation>Ne</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="531"/>
-        <location filename="../src/seadrive-gui.cpp" line="548"/>
+        <location filename="../src/seadrive-gui.cpp" line="550"/>
+        <location filename="../src/seadrive-gui.cpp" line="567"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="645"/>
+        <location filename="../src/seadrive-gui.cpp" line="664"/>
         <source>failed to save client id</source>
         <translation>klientské id se nepodařilo uložit</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="654"/>
+        <location filename="../src/seadrive-gui.cpp" line="673"/>
         <source>failed to access %1</source>
         <translation>přístup k %1 se nezdařil</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="662"/>
+        <location filename="../src/seadrive-gui.cpp" line="681"/>
         <source>incorrect client id</source>
         <translation>nesprávné klientské id</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="668"/>
+        <location filename="../src/seadrive-gui.cpp" line="687"/>
         <source>failed to read %1</source>
         <translation>problém při čtení %1</translation>
-    </message>
-</context>
-<context>
-    <name>SeafileExtensionHandler</name>
-    <message>
-        <location filename="../src/ext-handler.cpp" line="301"/>
-        <source>Failed to lock file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../src/ext-handler.cpp" line="301"/>
-        <source>Failed to unlock file</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -868,7 +840,7 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
 <context>
     <name>SeafileRpcClient</name>
     <message>
-        <location filename="../src/rpc/rpc-client.cpp" line="61"/>
+        <location filename="../src/rpc/rpc-client.cpp" line="63"/>
         <source>internal error: failed to connect to seadrive daemon</source>
         <translation>Interní chyba: seadrive daemon se nepodařilo připojit</translation>
     </message>
@@ -876,132 +848,137 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
 <context>
     <name>SeafileTrayIcon</name>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="143"/>
+        <location filename="../src/ui/tray-icon.cpp" line="123"/>
         <source>&amp;Quit</source>
         <translation>&amp;Ukončit</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="146"/>
+        <location filename="../src/ui/tray-icon.cpp" line="126"/>
         <source>Settings</source>
         <translation>Nastavení</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="149"/>
+        <location filename="../src/ui/tray-icon.cpp" line="129"/>
         <source>Show file sync errors</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="154"/>
+        <location filename="../src/ui/tray-icon.cpp" line="134"/>
         <source>Open %1 &amp;folder</source>
         <translation>Otevřít adresář %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="155"/>
+        <location filename="../src/ui/tray-icon.cpp" line="135"/>
         <source>open %1 folder</source>
         <translation>otevřít adresář %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="158"/>
+        <location filename="../src/ui/tray-icon.cpp" line="138"/>
         <source>Open &amp;logs folder</source>
         <translation>Otevřít adresář log souborů</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="162"/>
+        <location filename="../src/ui/tray-icon.cpp" line="142"/>
         <source>&amp;About</source>
         <translation>&amp;O aplikaci</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="163"/>
+        <location filename="../src/ui/tray-icon.cpp" line="143"/>
         <source>Show the application&apos;s About box</source>
         <translation>Zobrazit informace O aplikaci</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="167"/>
+        <location filename="../src/ui/tray-icon.cpp" line="147"/>
         <source>&amp;Online help</source>
         <translation>&amp;Online nápověda</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="191"/>
+        <location filename="../src/ui/tray-icon.cpp" line="172"/>
         <source>Accounts</source>
         <translation>Účty</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="226"/>
+        <location filename="../src/ui/tray-icon.cpp" line="207"/>
         <source>not logged in</source>
         <translation>nepřihlášen</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="239"/>
+        <location filename="../src/ui/tray-icon.cpp" line="220"/>
         <source>Choose</source>
         <translation>Vybrat</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="261"/>
+        <location filename="../src/ui/tray-icon.cpp" line="242"/>
         <source>Logout</source>
         <translation>Odhlásit</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="265"/>
+        <location filename="../src/ui/tray-icon.cpp" line="246"/>
         <source>Delete</source>
         <translation>Smazat</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="278"/>
+        <location filename="../src/ui/tray-icon.cpp" line="259"/>
         <source>Add an account</source>
         <translation>Přidat účet</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="291"/>
+        <location filename="../src/ui/tray-icon.cpp" line="272"/>
         <source>File</source>
         <translation>Soubor</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="517"/>
+        <location filename="../src/ui/tray-icon.cpp" line="498"/>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
         <translation>&lt;h2&gt;Seafile Drive Klient %2&lt;/h2&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="701"/>
+        <location filename="../src/ui/tray-icon.cpp" line="682"/>
         <source>Do you want to remove the local cache?</source>
         <translation>Chcete odstranit místní mezipaměť?</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="730"/>
+        <location filename="../src/ui/tray-icon.cpp" line="711"/>
         <source>Failed to remove local cache of account %1</source>
         <translation>Místní paměť účtu %1 se nepodařilo odstranít</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="742"/>
+        <location filename="../src/ui/tray-icon.cpp" line="723"/>
         <source>Failed to remove information on server: %1</source>
         <translation>Nepodařilo se odstranit informace na serveru: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="754"/>
+        <location filename="../src/ui/tray-icon.cpp" line="735"/>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
         <translation>Skutečně si přejete odstranit účet z &quot;%1&quot;?</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="761"/>
+        <location filename="../src/ui/tray-icon.cpp" line="742"/>
         <source>Failed to delete account</source>
         <translation>Účet se nepodařilo odstranit</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="773"/>
+        <location filename="../src/ui/tray-icon.cpp" line="754"/>
         <source>Up %1, Down %2</source>
         <translation>Nahoru %1, Dolů %2</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="516"/>
+        <location filename="../src/ui/tray-icon.cpp" line="497"/>
         <source>About %1</source>
         <translation>O %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="159"/>
+        <location filename="../src/ui/tray-icon.cpp" line="120"/>
+        <source>Transfer progress</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/tray-icon.cpp" line="139"/>
         <source>open %1 log folder</source>
         <translation>otevřít adresář s log soubory %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="168"/>
+        <location filename="../src/ui/tray-icon.cpp" line="148"/>
         <source>open %1 online help</source>
         <translation>otevřít %1 online nápovědu</translation>
     </message>
@@ -1015,7 +992,7 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="57"/>
-        <location filename="../ui_settings-dialog.h" line="412"/>
+        <location filename="../ui_settings-dialog.h" line="415"/>
         <source>Auto start %1 after login</source>
         <translation>Automaticky spustit %1 po přihlášení</translation>
     </message>
@@ -1040,162 +1017,157 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
         <translation>Systémová proxy</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="131"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="132"/>
         <source>You have changed languange. Restart to apply it?</source>
         <translation>Byla provedena změna jazyka. Restartovat pro použití?</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="144"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="145"/>
         <source>You have changed disk letter. Restart to apply it?</source>
         <translation>Byla provedena změna písmena disku. Restartovat pro použití?</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="394"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="395"/>
         <source>The proxy host address can&apos;t be empty</source>
         <translation>Proxy adresa hostitele nesmí být prázdná</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="401"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="402"/>
         <source>The proxy port is incorrect</source>
         <translation>Port Proxy je nesprávný</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="410"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="411"/>
         <source>Proxy username can&apos;t be empty</source>
         <translation>Uživatelské jméno proxy nesmí být prázdné</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="413"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="414"/>
         <source>Proxy password can&apos;t be empty</source>
         <translation>Uživatelské heslo proxy nesmí být prázdné</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="409"/>
+        <location filename="../ui_settings-dialog.h" line="412"/>
         <source>Dialog</source>
         <translation>Dialog</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="410"/>
+        <location filename="../ui_settings-dialog.h" line="413"/>
         <source>Notify when libraries are synchronized</source>
         <translation>Informovat, že knihovny byly synchromizovány</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="411"/>
+        <location filename="../ui_settings-dialog.h" line="414"/>
         <source>Enable sync temporary files of MSOffice/Libreoffice</source>
         <translation>Povolit synchronizaci pro dočasné soubory MSOffice/Libreoffice</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="416"/>
+        <location filename="../ui_settings-dialog.h" line="419"/>
         <source>Download speed limit (KB/s):</source>
         <translation>Download limit (KB/s):</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="417"/>
+        <location filename="../ui_settings-dialog.h" line="420"/>
         <source>Upload speed limit (KB/s):</source>
         <translation>Upload limit (KB/s):</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="423"/>
+        <location filename="../ui_settings-dialog.h" line="422"/>
         <source>Basic</source>
         <translation>Základní</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="413"/>
+        <location filename="../ui_settings-dialog.h" line="416"/>
         <source>Enable FinderSync Extension</source>
         <translation>Povolit rozšíření FinderSync</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="414"/>
+        <location filename="../ui_settings-dialog.h" line="417"/>
         <source>Enable Explorer Extension</source>
         <translation>Povolit rozšíření Průzkumníku Windows</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="415"/>
+        <location filename="../ui_settings-dialog.h" line="418"/>
         <source>Check for updates automatically</source>
         <translation>Kontrolovat aktualizace automaticky</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="418"/>
+        <location filename="../ui_settings-dialog.h" line="421"/>
         <source>Disk letter (need restart): </source>
         <translation>Písmeno disku (potřebuje restart)</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="421"/>
-        <source>S</source>
-        <translation>S</translation>
-    </message>
-    <message>
-        <location filename="../ui_settings-dialog.h" line="424"/>
+        <location filename="../ui_settings-dialog.h" line="423"/>
         <source>Do not verify server certificate in HTTPS syncing</source>
         <translation>Neověřovat certifikát při HTTPS synchronizaci</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="425"/>
+        <location filename="../ui_settings-dialog.h" line="424"/>
         <source>Cache clean interval (in minutes):</source>
         <translation>Interval vyčištění cache (v minutách):</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="426"/>
+        <location filename="../ui_settings-dialog.h" line="425"/>
         <source>Cache size limit (in GB):</source>
         <translation>Limit velikosti mezipaměti (v GB):</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="427"/>
+        <location filename="../ui_settings-dialog.h" line="426"/>
         <source>Advanced</source>
         <translation>Rozšířené</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="428"/>
+        <location filename="../ui_settings-dialog.h" line="427"/>
         <source>Language (need restart)</source>
         <translation>Jazyk (vyžaduje restart)</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="429"/>
+        <location filename="../ui_settings-dialog.h" line="428"/>
         <source>Language</source>
         <translation>Jazyk</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="430"/>
+        <location filename="../ui_settings-dialog.h" line="429"/>
         <source>Proxy Type:</source>
         <translation>Typ proxy:</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="431"/>
+        <location filename="../ui_settings-dialog.h" line="430"/>
         <source>Host:</source>
         <translation>Host:</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="432"/>
+        <location filename="../ui_settings-dialog.h" line="431"/>
         <source>Port:</source>
         <translation>Port:</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="434"/>
+        <location filename="../ui_settings-dialog.h" line="433"/>
         <source>Username:</source>
         <translation>Uživatelské jméno</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="435"/>
+        <location filename="../ui_settings-dialog.h" line="434"/>
         <source>Password:</source>
         <translation>Heslo:</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="436"/>
+        <location filename="../ui_settings-dialog.h" line="435"/>
         <source>Proxy server requires a password</source>
         <translation>Proxy server vyžaduje heslo</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="437"/>
+        <location filename="../ui_settings-dialog.h" line="436"/>
         <source>Network</source>
         <translation>Síť</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="438"/>
+        <location filename="../ui_settings-dialog.h" line="437"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="439"/>
+        <location filename="../ui_settings-dialog.h" line="438"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
@@ -1244,22 +1216,12 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
 <context>
     <name>SyncErrorsDialog</name>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="57"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="56"/>
         <source>File Sync Errors</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="126"/>
-        <source>Minimize</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="133"/>
-        <source>Close</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="193"/>
         <source>No sync errors.</source>
         <translation type="unfinished"/>
     </message>
@@ -1267,28 +1229,69 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
 <context>
     <name>SyncErrorsTableModel</name>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="369"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="302"/>
         <source>Double click to open the library</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="427"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="360"/>
         <source>Library</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="429"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="362"/>
         <source>Path</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="431"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="364"/>
         <source>Error</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="433"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="366"/>
         <source>Time</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>TransferItemsTableModel</name>
+    <message>
+        <location filename="../src/ui/transfer-progress-dialog.cpp" line="290"/>
+        <source>finished</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/transfer-progress-dialog.cpp" line="347"/>
+        <source>Name</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/transfer-progress-dialog.cpp" line="350"/>
+        <source>Progress</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/transfer-progress-dialog.cpp" line="353"/>
+        <source>Size</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>TransferProgressDialog</name>
+    <message>
+        <location filename="../src/ui/transfer-progress-dialog.cpp" line="60"/>
+        <source>Transfer Progress</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/transfer-progress-dialog.cpp" line="71"/>
+        <source>Upload</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/transfer-progress-dialog.cpp" line="72"/>
+        <source>Download</source>
         <translation type="unfinished"/>
     </message>
 </context>

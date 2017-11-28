@@ -45,12 +45,12 @@
 <context>
     <name>DaemonManager</name>
     <message>
-        <location filename="../src/daemon-mgr.cpp" line="161"/>
+        <location filename="../src/daemon-mgr.cpp" line="218"/>
         <source>%1 failed to initialize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/daemon-mgr.cpp" line="198"/>
+        <location filename="../src/daemon-mgr.cpp" line="270"/>
         <source>%1 exited unexpectedly</source>
         <translation type="unfinished"></translation>
     </message>
@@ -119,6 +119,13 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <location filename="../src/ui/login-dialog.cpp" line="66"/>
         <location filename="../ui_login-dialog.h" line="297"/>
         <source>Add an account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/login-dialog.cpp" line="104"/>
+        <location filename="../src/ui/login-dialog.cpp" line="343"/>
+        <location filename="../ui_login-dialog.h" line="308"/>
+        <source>Single Sign On</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -272,13 +279,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="104"/>
-        <location filename="../src/ui/login-dialog.cpp" line="343"/>
-        <location filename="../ui_login-dialog.h" line="308"/>
-        <source>Shibboleth Login</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../ui_login-dialog.h" line="309"/>
         <source>Login</source>
         <translation type="unfinished"></translation>
@@ -292,72 +292,72 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>MessagePoller</name>
     <message>
-        <location filename="../src/message-poller.cpp" line="147"/>
+        <location filename="../src/message-poller.cpp" line="167"/>
         <source>&quot;%1&quot; is synchronized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="163"/>
+        <location filename="../src/message-poller.cpp" line="183"/>
         <source>Error when syncing &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="165"/>
+        <location filename="../src/message-poller.cpp" line="185"/>
         <source>Error when syncing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="178"/>
+        <location filename="../src/message-poller.cpp" line="198"/>
         <source>&quot;%1&quot; is being uploaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="194"/>
+        <location filename="../src/message-poller.cpp" line="214"/>
         <source>Starting to move &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="195"/>
+        <location filename="../src/message-poller.cpp" line="215"/>
         <source>Starting to move &quot;%1&quot; to &quot;%2&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="197"/>
+        <location filename="../src/message-poller.cpp" line="217"/>
         <source>Successfully moved &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="198"/>
+        <location filename="../src/message-poller.cpp" line="218"/>
         <source>Successfully moved &quot;%1&quot; to &quot;%2&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="200"/>
+        <location filename="../src/message-poller.cpp" line="220"/>
         <source>Failed to move &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="201"/>
+        <location filename="../src/message-poller.cpp" line="221"/>
         <source>Failed to move &quot;%1&quot; to &quot;%2&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="220"/>
+        <location filename="../src/message-poller.cpp" line="240"/>
         <source>Failed to create file &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="222"/>
+        <location filename="../src/message-poller.cpp" line="242"/>
         <source>You can&apos;t create files in the %1 drive directly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="227"/>
+        <location filename="../src/message-poller.cpp" line="247"/>
         <source>Failed to delete folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="228"/>
+        <location filename="../src/message-poller.cpp" line="248"/>
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
         <translation type="unfinished"></translation>
     </message>
@@ -706,7 +706,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="112"/>
+        <location filename="../src/main.cpp" line="146"/>
         <source>%1 Client is already running</source>
         <translation type="unfinished"></translation>
     </message>
@@ -727,84 +727,84 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SeadriveGui</name>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="265"/>
+        <location filename="../src/seadrive-gui.cpp" line="264"/>
         <source>Faild to choose a disk letter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="297"/>
+        <location filename="../src/seadrive-gui.cpp" line="316"/>
         <source>failed to add default account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="408"/>
+        <location filename="../src/seadrive-gui.cpp" line="427"/>
         <source>Failed to initialize: failed to create seadrive folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="412"/>
+        <location filename="../src/seadrive-gui.cpp" line="431"/>
         <source>Failed to initialize: failed to create seadrive logs folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="416"/>
+        <location filename="../src/seadrive-gui.cpp" line="435"/>
         <source>Failed to initialize: failed to create seadrive data folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="431"/>
+        <location filename="../src/seadrive-gui.cpp" line="450"/>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="437"/>
+        <location filename="../src/seadrive-gui.cpp" line="456"/>
         <source>Failed to initialize log: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="493"/>
-        <location filename="../src/seadrive-gui.cpp" line="505"/>
+        <location filename="../src/seadrive-gui.cpp" line="512"/>
+        <location filename="../src/seadrive-gui.cpp" line="524"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="516"/>
-        <location filename="../src/seadrive-gui.cpp" line="530"/>
-        <location filename="../src/seadrive-gui.cpp" line="546"/>
-        <location filename="../src/seadrive-gui.cpp" line="570"/>
+        <location filename="../src/seadrive-gui.cpp" line="535"/>
+        <location filename="../src/seadrive-gui.cpp" line="549"/>
+        <location filename="../src/seadrive-gui.cpp" line="565"/>
+        <location filename="../src/seadrive-gui.cpp" line="589"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="517"/>
-        <location filename="../src/seadrive-gui.cpp" line="547"/>
-        <location filename="../src/seadrive-gui.cpp" line="571"/>
+        <location filename="../src/seadrive-gui.cpp" line="536"/>
+        <location filename="../src/seadrive-gui.cpp" line="566"/>
+        <location filename="../src/seadrive-gui.cpp" line="590"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="531"/>
-        <location filename="../src/seadrive-gui.cpp" line="548"/>
+        <location filename="../src/seadrive-gui.cpp" line="550"/>
+        <location filename="../src/seadrive-gui.cpp" line="567"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="645"/>
+        <location filename="../src/seadrive-gui.cpp" line="664"/>
         <source>failed to save client id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="654"/>
+        <location filename="../src/seadrive-gui.cpp" line="673"/>
         <source>failed to access %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="662"/>
+        <location filename="../src/seadrive-gui.cpp" line="681"/>
         <source>incorrect client id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="668"/>
+        <location filename="../src/seadrive-gui.cpp" line="687"/>
         <source>failed to read %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1017,32 +1017,32 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="131"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="132"/>
         <source>You have changed languange. Restart to apply it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="144"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="145"/>
         <source>You have changed disk letter. Restart to apply it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="394"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="395"/>
         <source>The proxy host address can&apos;t be empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="401"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="402"/>
         <source>The proxy port is incorrect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="410"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="411"/>
         <source>Proxy username can&apos;t be empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="413"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="414"/>
         <source>Proxy password can&apos;t be empty</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1216,22 +1216,12 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SyncErrorsDialog</name>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="57"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="56"/>
         <source>File Sync Errors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="126"/>
-        <source>Minimize</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="133"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="193"/>
         <source>No sync errors.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1239,27 +1229,27 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SyncErrorsTableModel</name>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="369"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="302"/>
         <source>Double click to open the library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="427"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="360"/>
         <source>Library</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="429"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="362"/>
         <source>Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="431"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="364"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="433"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="366"/>
         <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1295,12 +1285,12 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/transfer-progress-dialog.cpp" line="70"/>
+        <location filename="../src/ui/transfer-progress-dialog.cpp" line="71"/>
         <source>Upload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/transfer-progress-dialog.cpp" line="71"/>
+        <location filename="../src/ui/transfer-progress-dialog.cpp" line="72"/>
         <source>Download</source>
         <translation type="unfinished"></translation>
     </message>

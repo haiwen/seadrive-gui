@@ -43,12 +43,12 @@
 <context>
     <name>DaemonManager</name>
     <message>
-        <location filename="../src/daemon-mgr.cpp" line="161"/>
+        <location filename="../src/daemon-mgr.cpp" line="218"/>
         <source>%1 failed to initialize</source>
         <translation>%1 初始化时出错</translation>
     </message>
     <message>
-        <location filename="../src/daemon-mgr.cpp" line="198"/>
+        <location filename="../src/daemon-mgr.cpp" line="270"/>
         <source>%1 exited unexpectedly</source>
         <translation>%1 意外退出</translation>
     </message>
@@ -119,6 +119,13 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <location filename="../ui_login-dialog.h" line="297"/>
         <source>Add an account</source>
         <translation>添加帐号</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/login-dialog.cpp" line="104"/>
+        <location filename="../src/ui/login-dialog.cpp" line="343"/>
+        <location filename="../ui_login-dialog.h" line="308"/>
+        <source>Single Sign On</source>
+        <translation>单点登录</translation>
     </message>
     <message>
         <location filename="../src/ui/login-dialog.cpp" line="112"/>
@@ -272,13 +279,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>例如：小王的工作笔记本</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="104"/>
-        <location filename="../src/ui/login-dialog.cpp" line="343"/>
-        <location filename="../ui_login-dialog.h" line="308"/>
-        <source>Shibboleth Login</source>
-        <translation>Shibboleth 登陆</translation>
-    </message>
-    <message>
         <location filename="../ui_login-dialog.h" line="309"/>
         <source>Login</source>
         <translation>登录</translation>
@@ -292,72 +292,72 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>MessagePoller</name>
     <message>
-        <location filename="../src/message-poller.cpp" line="147"/>
+        <location filename="../src/message-poller.cpp" line="167"/>
         <source>&quot;%1&quot; is synchronized</source>
         <translation>&quot;%1&quot; 已同步</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="163"/>
+        <location filename="../src/message-poller.cpp" line="183"/>
         <source>Error when syncing &quot;%1&quot;</source>
         <translation>同步 “%1” 时出错</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="165"/>
+        <location filename="../src/message-poller.cpp" line="185"/>
         <source>Error when syncing</source>
         <translation>同步文件时出错</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="178"/>
+        <location filename="../src/message-poller.cpp" line="198"/>
         <source>&quot;%1&quot; is being uploaded</source>
         <translation>正在上传 “%1”</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="194"/>
+        <location filename="../src/message-poller.cpp" line="214"/>
         <source>Starting to move &quot;%1&quot;</source>
         <translation>开始移动 “%1”</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="195"/>
+        <location filename="../src/message-poller.cpp" line="215"/>
         <source>Starting to move &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>开始移动“%1”到“%2”</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="197"/>
+        <location filename="../src/message-poller.cpp" line="217"/>
         <source>Successfully moved &quot;%1&quot;</source>
         <translation>成功移动 “%1”</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="198"/>
+        <location filename="../src/message-poller.cpp" line="218"/>
         <source>Successfully moved &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>成功移动“%1”到“%2”</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="200"/>
+        <location filename="../src/message-poller.cpp" line="220"/>
         <source>Failed to move &quot;%1&quot;</source>
         <translation>移动 “%1” 时出错</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="201"/>
+        <location filename="../src/message-poller.cpp" line="221"/>
         <source>Failed to move &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>移动“%1”到“%2”时出错</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="220"/>
+        <location filename="../src/message-poller.cpp" line="240"/>
         <source>Failed to create file &quot;%1&quot;</source>
         <translation>创建文件 “%1” 时失败</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="222"/>
+        <location filename="../src/message-poller.cpp" line="242"/>
         <source>You can&apos;t create files in the %1 drive directly</source>
         <translation>你不能直接在 %1 盘创建文件</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="227"/>
+        <location filename="../src/message-poller.cpp" line="247"/>
         <source>Failed to delete folder</source>
         <translation>删除目录时出错</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="228"/>
+        <location filename="../src/message-poller.cpp" line="248"/>
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
         <translation>不能直接删除资料库 “%1”</translation>
     </message>
@@ -706,7 +706,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>Excel文档</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="112"/>
+        <location filename="../src/main.cpp" line="146"/>
         <source>%1 Client is already running</source>
         <translation>已经有一个 %1 客户端在运行中</translation>
     </message>
@@ -727,84 +727,84 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SeadriveGui</name>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="265"/>
+        <location filename="../src/seadrive-gui.cpp" line="264"/>
         <source>Faild to choose a disk letter</source>
         <translation>选择盘符失败</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="297"/>
+        <location filename="../src/seadrive-gui.cpp" line="316"/>
         <source>failed to add default account</source>
         <translation>添加默认帐户时出错</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="408"/>
+        <location filename="../src/seadrive-gui.cpp" line="427"/>
         <source>Failed to initialize: failed to create seadrive folder</source>
         <translation>初始化失败: 创建 seadrive 文件夹时出错</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="412"/>
+        <location filename="../src/seadrive-gui.cpp" line="431"/>
         <source>Failed to initialize: failed to create seadrive logs folder</source>
         <translation>初始化失败: 创建 seadrive 日志文件夹时出错</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="416"/>
+        <location filename="../src/seadrive-gui.cpp" line="435"/>
         <source>Failed to initialize: failed to create seadrive data folder</source>
         <translation>初始化失败: 创建 seadrive 数据文件夹时出错</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="431"/>
+        <location filename="../src/seadrive-gui.cpp" line="450"/>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
         <translation>初始化失败: 创建 seadrive 挂载文件夹时出错</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="437"/>
+        <location filename="../src/seadrive-gui.cpp" line="456"/>
         <source>Failed to initialize log: %1</source>
         <translation>初始化日志时出错: %1</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="493"/>
-        <location filename="../src/seadrive-gui.cpp" line="505"/>
+        <location filename="../src/seadrive-gui.cpp" line="512"/>
+        <location filename="../src/seadrive-gui.cpp" line="524"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="516"/>
-        <location filename="../src/seadrive-gui.cpp" line="530"/>
-        <location filename="../src/seadrive-gui.cpp" line="546"/>
-        <location filename="../src/seadrive-gui.cpp" line="570"/>
+        <location filename="../src/seadrive-gui.cpp" line="535"/>
+        <location filename="../src/seadrive-gui.cpp" line="549"/>
+        <location filename="../src/seadrive-gui.cpp" line="565"/>
+        <location filename="../src/seadrive-gui.cpp" line="589"/>
         <source>Yes</source>
         <translation>是</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="517"/>
-        <location filename="../src/seadrive-gui.cpp" line="547"/>
-        <location filename="../src/seadrive-gui.cpp" line="571"/>
+        <location filename="../src/seadrive-gui.cpp" line="536"/>
+        <location filename="../src/seadrive-gui.cpp" line="566"/>
+        <location filename="../src/seadrive-gui.cpp" line="590"/>
         <source>No</source>
         <translation>否</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="531"/>
-        <location filename="../src/seadrive-gui.cpp" line="548"/>
+        <location filename="../src/seadrive-gui.cpp" line="550"/>
+        <location filename="../src/seadrive-gui.cpp" line="567"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="645"/>
+        <location filename="../src/seadrive-gui.cpp" line="664"/>
         <source>failed to save client id</source>
         <translation>保存客户端 ID 时出错</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="654"/>
+        <location filename="../src/seadrive-gui.cpp" line="673"/>
         <source>failed to access %1</source>
         <translation>访问 %1 时出错</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="662"/>
+        <location filename="../src/seadrive-gui.cpp" line="681"/>
         <source>incorrect client id</source>
         <translation>错误的客户端 ID</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="668"/>
+        <location filename="../src/seadrive-gui.cpp" line="687"/>
         <source>failed to read %1</source>
         <translation>读取 %1 时出错</translation>
     </message>
@@ -1017,32 +1017,32 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>系统代理</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="131"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="132"/>
         <source>You have changed languange. Restart to apply it?</source>
         <translation>您已经更改了语言。现在重启来生效吗？</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="144"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="145"/>
         <source>You have changed disk letter. Restart to apply it?</source>
         <translation>您已经更改了盘符。现在重启来生效吗？</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="394"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="395"/>
         <source>The proxy host address can&apos;t be empty</source>
         <translation>代理服务器名不能为空</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="401"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="402"/>
         <source>The proxy port is incorrect</source>
         <translation>代理端口不正确</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="410"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="411"/>
         <source>Proxy username can&apos;t be empty</source>
         <translation>代理用户名不能为空</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="413"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="414"/>
         <source>Proxy password can&apos;t be empty</source>
         <translation>代理用户密码不能为空</translation>
     </message>
@@ -1216,22 +1216,12 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SyncErrorsDialog</name>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="57"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="56"/>
         <source>File Sync Errors</source>
         <translation>文件同步错误</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="126"/>
-        <source>Minimize</source>
-        <translation>最小化</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="133"/>
-        <source>Close</source>
-        <translation>关闭</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="193"/>
         <source>No sync errors.</source>
         <translation>没有同步错误。</translation>
     </message>
@@ -1239,27 +1229,27 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SyncErrorsTableModel</name>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="369"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="302"/>
         <source>Double click to open the library</source>
         <translation>双击来打开该资料库</translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="427"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="360"/>
         <source>Library</source>
         <translation>资料库</translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="429"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="362"/>
         <source>Path</source>
         <translation>路径</translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="431"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="364"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="433"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="366"/>
         <source>Time</source>
         <translation>时间</translation>
     </message>
@@ -1295,12 +1285,12 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>传输进度</translation>
     </message>
     <message>
-        <location filename="../src/ui/transfer-progress-dialog.cpp" line="70"/>
+        <location filename="../src/ui/transfer-progress-dialog.cpp" line="71"/>
         <source>Upload</source>
         <translation>上传</translation>
     </message>
     <message>
-        <location filename="../src/ui/transfer-progress-dialog.cpp" line="71"/>
+        <location filename="../src/ui/transfer-progress-dialog.cpp" line="72"/>
         <source>Download</source>
         <translation>下载</translation>
     </message>

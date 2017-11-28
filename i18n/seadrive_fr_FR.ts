@@ -35,7 +35,7 @@
 <context>
     <name>AccountManager</name>
     <message>
-        <location filename="../src/account-mgr.cpp" line="106"/>
+        <location filename="../src/account-mgr.cpp" line="126"/>
         <source>failed to open account database</source>
         <translation>L&apos;ouverture de la basse de données du compte a échoué</translation>
     </message>
@@ -43,12 +43,12 @@
 <context>
     <name>DaemonManager</name>
     <message>
-        <location filename="../src/daemon-mgr.cpp" line="159"/>
+        <location filename="../src/daemon-mgr.cpp" line="218"/>
         <source>%1 failed to initialize</source>
         <translation>%1 n&apos;a pu être initialisé</translation>
     </message>
     <message>
-        <location filename="../src/daemon-mgr.cpp" line="196"/>
+        <location filename="../src/daemon-mgr.cpp" line="270"/>
         <source>%1 exited unexpectedly</source>
         <translation>%1 s&apos;est fermé de manière inattendue</translation>
     </message>
@@ -56,44 +56,19 @@
 <context>
     <name>DiskLetterDialog</name>
     <message>
-        <location filename="../src/ui/disk-letter-dialog.cpp" line="26"/>
-        <source>Choose the disk letter for SeaDrive</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../ui_disk-letter-dialog.h" line="193"/>
-        <source>Dialog</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../ui_disk-letter-dialog.h" line="194"/>
-        <source>Choose the disk letter</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../ui_disk-letter-dialog.h" line="195"/>
-        <source>logo</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../ui_disk-letter-dialog.h" line="196"/>
-        <source>Your files would appear in a dedicated disk in your computer. Please choose the letter:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../ui_disk-letter-dialog.h" line="199"/>
-        <source>S</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../ui_disk-letter-dialog.h" line="200"/>
-        <source>X</source>
-        <translation type="unfinished"/>
+        <source>Choose the disk letter</source>
+        <translation>Choisissez une lettre pour le disque</translation>
+    </message>
+    <message>
+        <location filename="../ui_disk-letter-dialog.h" line="201"/>
+        <source>Your files would appear in a dedicated disk in your computer. Please choose the letter:</source>
+        <translation>Vos fichiers apparaitront dans un disque dédié sur votre ordinateur. Veuillez choisir une lettre :</translation>
     </message>
     <message>
         <location filename="../ui_disk-letter-dialog.h" line="202"/>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>Ok</translation>
     </message>
 </context>
 <context>
@@ -141,169 +116,174 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     <name>LoginDialog</name>
     <message>
         <location filename="../src/ui/login-dialog.cpp" line="66"/>
-        <location filename="../ui_login-dialog.h" line="261"/>
+        <location filename="../ui_login-dialog.h" line="297"/>
         <source>Add an account</source>
         <translation>Ajouter un compte</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="110"/>
-        <location filename="../src/ui/login-dialog.cpp" line="111"/>
+        <location filename="../src/ui/login-dialog.cpp" line="104"/>
+        <location filename="../src/ui/login-dialog.cpp" line="343"/>
+        <location filename="../ui_login-dialog.h" line="308"/>
+        <source>Single Sign On</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/login-dialog.cpp" line="112"/>
+        <location filename="../src/ui/login-dialog.cpp" line="113"/>
         <source>Re-login</source>
         <translation>Reconnexion</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="128"/>
+        <location filename="../src/ui/login-dialog.cpp" line="130"/>
         <source>Logging in...</source>
         <translation>Connexion...</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="170"/>
+        <location filename="../src/ui/login-dialog.cpp" line="172"/>
         <source>Network Error:
  %1</source>
         <translation>Erreur réseau : %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="182"/>
+        <location filename="../src/ui/login-dialog.cpp" line="184"/>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The ssl certificate of this server is not trusted, proceed anyway?</source>
         <translation>&lt;b&gt;Attention :&lt;/b&gt; Le certificat de sécurité de ce serveur n&apos;est pas approuvé, continuer malgré tout ?</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="196"/>
+        <location filename="../src/ui/login-dialog.cpp" line="198"/>
         <source>Please enter the server address</source>
         <translation>Veuillez entrer l&apos;adresse du serveur</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="200"/>
-        <location filename="../src/ui/login-dialog.cpp" line="206"/>
-        <location filename="../src/ui/login-dialog.cpp" line="348"/>
-        <location filename="../src/ui/login-dialog.cpp" line="354"/>
+        <location filename="../src/ui/login-dialog.cpp" line="202"/>
+        <location filename="../src/ui/login-dialog.cpp" line="208"/>
+        <location filename="../src/ui/login-dialog.cpp" line="353"/>
+        <location filename="../src/ui/login-dialog.cpp" line="359"/>
         <source>%1 is not a valid server address</source>
         <translation>%1 n&apos;est pas une adresse de serveur valide</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="213"/>
+        <location filename="../src/ui/login-dialog.cpp" line="215"/>
         <source>Please enter the username</source>
         <translation>Veuillez entrer le nom d&apos;utilisateur</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="224"/>
+        <location filename="../src/ui/login-dialog.cpp" line="226"/>
         <source>Please enter the computer name</source>
         <translation>Veuillez entrer le nom de l&apos;ordinateur</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="280"/>
+        <location filename="../src/ui/login-dialog.cpp" line="285"/>
         <source>Failed to save current account</source>
         <translation>Impossible d&apos;enregistrer le compte actuel</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="297"/>
+        <location filename="../src/ui/login-dialog.cpp" line="302"/>
         <source>Two Factor Authentication</source>
         <translation>Deux facteurs d&apos;authentification</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="339"/>
+        <location filename="../src/ui/login-dialog.cpp" line="344"/>
         <source>%1 Server Address</source>
         <translation>%1  adresse serveur</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="218"/>
+        <location filename="../src/ui/login-dialog.cpp" line="220"/>
         <source>Please enter the password</source>
         <translation>Veuillez entrer le mot de passe</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="298"/>
+        <location filename="../src/ui/login-dialog.cpp" line="303"/>
         <source>Enter the two factor authentication token</source>
         <translation>Introduisez les deux éléments des facteurs d&apos;authentification</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="308"/>
+        <location filename="../src/ui/login-dialog.cpp" line="313"/>
         <source>Incorrect email or password</source>
         <translation>E-mail ou mot de passe incorrect</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="310"/>
+        <location filename="../src/ui/login-dialog.cpp" line="315"/>
         <source>Logging in too frequently, please wait a minute</source>
         <translation>Connexions trop fréquentes, veuillez attendre une minute</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="312"/>
+        <location filename="../src/ui/login-dialog.cpp" line="317"/>
         <source>Internal Server Error</source>
         <translation>Erreur interne du serveur</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="316"/>
+        <location filename="../src/ui/login-dialog.cpp" line="321"/>
         <source>Failed to login: %1</source>
         <translation>Impossible de se connecter ：%1</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="318"/>
+        <location filename="../src/ui/login-dialog.cpp" line="323"/>
         <source>Failed to login</source>
         <translation>Impossible de se connecter</translation>
     </message>
     <message>
-        <location filename="../ui_login-dialog.h" line="260"/>
+        <location filename="../ui_login-dialog.h" line="296"/>
         <source>Dialog</source>
         <translation>Dialogue</translation>
     </message>
     <message>
-        <location filename="../ui_login-dialog.h" line="262"/>
+        <location filename="../ui_login-dialog.h" line="298"/>
         <source>logo</source>
         <translation>logo</translation>
     </message>
     <message>
-        <location filename="../ui_login-dialog.h" line="263"/>
+        <location filename="../ui_login-dialog.h" line="299"/>
         <source>Server:</source>
         <translation>Serveur :</translation>
     </message>
     <message>
-        <location filename="../ui_login-dialog.h" line="264"/>
+        <location filename="../ui_login-dialog.h" line="300"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://seacloud.cc&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Par exemple : https://seacloud.cc&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../ui_login-dialog.h" line="265"/>
+        <location filename="../ui_login-dialog.h" line="301"/>
         <source>or http://192.168.1.24:8000</source>
         <translation>ou http://192.168.1.24:8000</translation>
     </message>
     <message>
-        <location filename="../ui_login-dialog.h" line="267"/>
+        <location filename="../ui_login-dialog.h" line="303"/>
         <source>Password:</source>
         <translation>Mot de passe :</translation>
     </message>
     <message>
-        <location filename="../ui_login-dialog.h" line="270"/>
+        <location filename="../ui_login-dialog.h" line="304"/>
+        <source>Automatic Login</source>
+        <translation>Connexion automatique</translation>
+    </message>
+    <message>
+        <location filename="../ui_login-dialog.h" line="307"/>
         <source>status text</source>
         <translation>Texte d&apos;état</translation>
     </message>
     <message>
-        <location filename="../ui_login-dialog.h" line="268"/>
+        <location filename="../ui_login-dialog.h" line="305"/>
         <source>Computer Name:</source>
         <translation>Nom de l&apos;ordinateur :</translation>
     </message>
     <message>
-        <location filename="../ui_login-dialog.h" line="266"/>
+        <location filename="../ui_login-dialog.h" line="302"/>
         <source>Email / Username:</source>
         <translation>E-mail / Nom d&apos;utilisateur :</translation>
     </message>
     <message>
-        <location filename="../ui_login-dialog.h" line="269"/>
+        <location filename="../ui_login-dialog.h" line="306"/>
         <source>e.g. Jim&apos;s laptop</source>
         <translation>Par exemple : portable de Julien</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="102"/>
-        <location filename="../src/ui/login-dialog.cpp" line="338"/>
-        <location filename="../ui_login-dialog.h" line="271"/>
-        <source>Shibboleth Login</source>
-        <translation>Connexion Shibboleth</translation>
-    </message>
-    <message>
-        <location filename="../ui_login-dialog.h" line="272"/>
+        <location filename="../ui_login-dialog.h" line="309"/>
         <source>Login</source>
         <translation>Connexion</translation>
     </message>
     <message>
-        <location filename="../ui_login-dialog.h" line="273"/>
+        <location filename="../ui_login-dialog.h" line="310"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
@@ -311,72 +291,72 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
 <context>
     <name>MessagePoller</name>
     <message>
-        <location filename="../src/message-poller.cpp" line="147"/>
+        <location filename="../src/message-poller.cpp" line="167"/>
         <source>&quot;%1&quot; is synchronized</source>
         <translation>&quot;%1&quot; est synchronisé</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="163"/>
+        <location filename="../src/message-poller.cpp" line="183"/>
         <source>Error when syncing &quot;%1&quot;</source>
         <translation>Erreur lors de la synchronisation &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="165"/>
+        <location filename="../src/message-poller.cpp" line="185"/>
         <source>Error when syncing</source>
         <translation>Erreur lors de la synchronisation</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="178"/>
+        <location filename="../src/message-poller.cpp" line="198"/>
         <source>&quot;%1&quot; is being uploaded</source>
         <translation>&quot;%1&quot; est entrain d&apos;être téléversé</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="194"/>
+        <location filename="../src/message-poller.cpp" line="214"/>
         <source>Starting to move &quot;%1&quot;</source>
         <translation>Début du déplacement de &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="195"/>
+        <location filename="../src/message-poller.cpp" line="215"/>
         <source>Starting to move &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>Début du déplacement de &quot;%1&quot; vers &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="197"/>
+        <location filename="../src/message-poller.cpp" line="217"/>
         <source>Successfully moved &quot;%1&quot;</source>
         <translation>Déplacement de &quot;%1&quot; réussi</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="198"/>
+        <location filename="../src/message-poller.cpp" line="218"/>
         <source>Successfully moved &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>Déplacement de &quot;%1&quot; vers &quot;%2&quot; réussi</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="200"/>
+        <location filename="../src/message-poller.cpp" line="220"/>
         <source>Failed to move &quot;%1&quot;</source>
         <translation>Déplacement de &quot;%1&quot; a échoué</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="201"/>
+        <location filename="../src/message-poller.cpp" line="221"/>
         <source>Failed to move &quot;%1&quot; to &quot;%2&quot;</source>
         <translation>Déplacement de &quot;%1&quot; vers &quot;%2&quot; a échoué</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="220"/>
+        <location filename="../src/message-poller.cpp" line="240"/>
         <source>Failed to create file &quot;%1&quot;</source>
         <translation>Échec de la création du fichier &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="222"/>
+        <location filename="../src/message-poller.cpp" line="242"/>
         <source>You can&apos;t create files in the %1 drive directly</source>
         <translation>Vous ne pouvez créer des fichiers sur le disque %1 directement</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="227"/>
+        <location filename="../src/message-poller.cpp" line="247"/>
         <source>Failed to delete folder</source>
         <translation>Échec de la suppression du dossier</translation>
     </message>
     <message>
-        <location filename="../src/message-poller.cpp" line="228"/>
+        <location filename="../src/message-poller.cpp" line="248"/>
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
         <translation>Vous ne pouvez supprimer la bibliothèque &quot;%1&quot; directement</translation>
     </message>
@@ -725,9 +705,14 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
         <translation>Document Excel</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="112"/>
+        <location filename="../src/main.cpp" line="146"/>
         <source>%1 Client is already running</source>
         <translation>Le client %1 est déjà en cours d&apos;exécution</translation>
+    </message>
+    <message>
+        <location filename="../src/utils/i18n-utils.cpp" line="11"/>
+        <source>Choose the disk letter for %1</source>
+        <translation>Choisissez une lettre pour le disque %1</translation>
     </message>
 </context>
 <context>
@@ -741,99 +726,86 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
 <context>
     <name>SeadriveGui</name>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="265"/>
+        <location filename="../src/seadrive-gui.cpp" line="264"/>
         <source>Faild to choose a disk letter</source>
         <translation>Échec du choix de la lettre du disque</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="297"/>
+        <location filename="../src/seadrive-gui.cpp" line="316"/>
         <source>failed to add default account</source>
         <translation>Échec de l&apos;ajout du compte par défaut</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="408"/>
+        <location filename="../src/seadrive-gui.cpp" line="427"/>
         <source>Failed to initialize: failed to create seadrive folder</source>
         <translation>Impossible d&apos;initialiser : échec lors de la création du dossier Seadrive</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="412"/>
+        <location filename="../src/seadrive-gui.cpp" line="431"/>
         <source>Failed to initialize: failed to create seadrive logs folder</source>
         <translation>Impossible d&apos;initialiser : échec lors de la création du dossier log Seadrive</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="416"/>
+        <location filename="../src/seadrive-gui.cpp" line="435"/>
         <source>Failed to initialize: failed to create seadrive data folder</source>
         <translation>Impossible d&apos;initialiser : échec lors de la création du dossier de données Seadrive</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="431"/>
+        <location filename="../src/seadrive-gui.cpp" line="450"/>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
         <translation>Impossible d&apos;initialiser : échec lors de la création du dossier de montage Seadrive</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="437"/>
+        <location filename="../src/seadrive-gui.cpp" line="456"/>
         <source>Failed to initialize log: %1</source>
         <translation>Impossible d&apos;initialiser log : %1</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="493"/>
-        <location filename="../src/seadrive-gui.cpp" line="505"/>
+        <location filename="../src/seadrive-gui.cpp" line="512"/>
+        <location filename="../src/seadrive-gui.cpp" line="524"/>
         <source>OK</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="516"/>
-        <location filename="../src/seadrive-gui.cpp" line="530"/>
-        <location filename="../src/seadrive-gui.cpp" line="546"/>
-        <location filename="../src/seadrive-gui.cpp" line="570"/>
+        <location filename="../src/seadrive-gui.cpp" line="535"/>
+        <location filename="../src/seadrive-gui.cpp" line="549"/>
+        <location filename="../src/seadrive-gui.cpp" line="565"/>
+        <location filename="../src/seadrive-gui.cpp" line="589"/>
         <source>Yes</source>
         <translation>Oui</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="517"/>
-        <location filename="../src/seadrive-gui.cpp" line="547"/>
-        <location filename="../src/seadrive-gui.cpp" line="571"/>
+        <location filename="../src/seadrive-gui.cpp" line="536"/>
+        <location filename="../src/seadrive-gui.cpp" line="566"/>
+        <location filename="../src/seadrive-gui.cpp" line="590"/>
         <source>No</source>
         <translation>Non</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="531"/>
-        <location filename="../src/seadrive-gui.cpp" line="548"/>
+        <location filename="../src/seadrive-gui.cpp" line="550"/>
+        <location filename="../src/seadrive-gui.cpp" line="567"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="645"/>
+        <location filename="../src/seadrive-gui.cpp" line="664"/>
         <source>failed to save client id</source>
         <translation>Impossible de sauvegarder l&apos;ID du client</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="654"/>
+        <location filename="../src/seadrive-gui.cpp" line="673"/>
         <source>failed to access %1</source>
         <translation>Impossible d&apos;accéder à %1</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="662"/>
+        <location filename="../src/seadrive-gui.cpp" line="681"/>
         <source>incorrect client id</source>
         <translation>L&apos;ID du client est incorrecte</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="668"/>
+        <location filename="../src/seadrive-gui.cpp" line="687"/>
         <source>failed to read %1</source>
         <translation>Impossible de lire %1</translation>
-    </message>
-</context>
-<context>
-    <name>SeafileExtensionHandler</name>
-    <message>
-        <location filename="../src/ext-handler.cpp" line="301"/>
-        <source>Failed to lock file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../src/ext-handler.cpp" line="301"/>
-        <source>Failed to unlock file</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -867,7 +839,7 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
 <context>
     <name>SeafileRpcClient</name>
     <message>
-        <location filename="../src/rpc/rpc-client.cpp" line="61"/>
+        <location filename="../src/rpc/rpc-client.cpp" line="63"/>
         <source>internal error: failed to connect to seadrive daemon</source>
         <translation>Erreur interne : impossible de se connecter au daemon de Seadrive</translation>
     </message>
@@ -875,132 +847,137 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
 <context>
     <name>SeafileTrayIcon</name>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="143"/>
+        <location filename="../src/ui/tray-icon.cpp" line="123"/>
         <source>&amp;Quit</source>
         <translation>&amp;Quitter</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="146"/>
+        <location filename="../src/ui/tray-icon.cpp" line="126"/>
         <source>Settings</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="149"/>
+        <location filename="../src/ui/tray-icon.cpp" line="129"/>
         <source>Show file sync errors</source>
         <translation>Afficher le fichier des erreurs de synchro</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="154"/>
+        <location filename="../src/ui/tray-icon.cpp" line="134"/>
         <source>Open %1 &amp;folder</source>
         <translation>Ouvrir le &amp;dossier %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="155"/>
+        <location filename="../src/ui/tray-icon.cpp" line="135"/>
         <source>open %1 folder</source>
         <translation>Ouvrir le dossier %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="158"/>
+        <location filename="../src/ui/tray-icon.cpp" line="138"/>
         <source>Open &amp;logs folder</source>
         <translation>Ouvrir le dossier &amp;logs</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="162"/>
+        <location filename="../src/ui/tray-icon.cpp" line="142"/>
         <source>&amp;About</source>
         <translation>&amp;À propos</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="163"/>
+        <location filename="../src/ui/tray-icon.cpp" line="143"/>
         <source>Show the application&apos;s About box</source>
         <translation>Voir la boite de dialogue À propos</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="167"/>
+        <location filename="../src/ui/tray-icon.cpp" line="147"/>
         <source>&amp;Online help</source>
         <translation>Aide en &amp;Ligne</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="191"/>
+        <location filename="../src/ui/tray-icon.cpp" line="172"/>
         <source>Accounts</source>
         <translation>Comptes</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="226"/>
+        <location filename="../src/ui/tray-icon.cpp" line="207"/>
         <source>not logged in</source>
         <translation>Non connecté</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="239"/>
+        <location filename="../src/ui/tray-icon.cpp" line="220"/>
         <source>Choose</source>
         <translation>Choisir</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="261"/>
+        <location filename="../src/ui/tray-icon.cpp" line="242"/>
         <source>Logout</source>
         <translation>Déconnecter</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="265"/>
+        <location filename="../src/ui/tray-icon.cpp" line="246"/>
         <source>Delete</source>
         <translation>Supprimer</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="278"/>
+        <location filename="../src/ui/tray-icon.cpp" line="259"/>
         <source>Add an account</source>
         <translation>Ajouter un compte</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="291"/>
+        <location filename="../src/ui/tray-icon.cpp" line="272"/>
         <source>File</source>
         <translation>Fichier</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="517"/>
+        <location filename="../src/ui/tray-icon.cpp" line="498"/>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
         <translation>&lt;h2&gt;Client Seafile Drive %2&lt;/h2&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="701"/>
+        <location filename="../src/ui/tray-icon.cpp" line="682"/>
         <source>Do you want to remove the local cache?</source>
         <translation>Voulez-vous supprimer la cache locale ?</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="730"/>
+        <location filename="../src/ui/tray-icon.cpp" line="711"/>
         <source>Failed to remove local cache of account %1</source>
         <translation>Échec lors de la surpression de la cache du compte %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="742"/>
+        <location filename="../src/ui/tray-icon.cpp" line="723"/>
         <source>Failed to remove information on server: %1</source>
         <translation>Échec lors de la suppression des informations du serveur : %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="754"/>
+        <location filename="../src/ui/tray-icon.cpp" line="735"/>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
         <translation>Êtes-vous certain de vouloir supprimer le compte &quot;%1&quot; ?</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="761"/>
+        <location filename="../src/ui/tray-icon.cpp" line="742"/>
         <source>Failed to delete account</source>
         <translation>Échec de la suppression du compte</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="773"/>
+        <location filename="../src/ui/tray-icon.cpp" line="754"/>
         <source>Up %1, Down %2</source>
         <translation>Haut %1, Bas %2</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="516"/>
+        <location filename="../src/ui/tray-icon.cpp" line="497"/>
         <source>About %1</source>
         <translation>À propos de %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="159"/>
+        <location filename="../src/ui/tray-icon.cpp" line="120"/>
+        <source>Transfer progress</source>
+        <translation>Progression du transfert</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/tray-icon.cpp" line="139"/>
         <source>open %1 log folder</source>
         <translation>Ouvrir le dossier de log %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="168"/>
+        <location filename="../src/ui/tray-icon.cpp" line="148"/>
         <source>open %1 online help</source>
         <translation>Ouvrir l&apos;aide en ligne de %1</translation>
     </message>
@@ -1014,7 +991,7 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="57"/>
-        <location filename="../ui_settings-dialog.h" line="412"/>
+        <location filename="../ui_settings-dialog.h" line="415"/>
         <source>Auto start %1 after login</source>
         <translation>Démarrage automatique %1 après connexion</translation>
     </message>
@@ -1039,162 +1016,157 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
         <translation>Système proxy</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="131"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="132"/>
         <source>You have changed languange. Restart to apply it?</source>
         <translation>Vous avez changé de langue, redémarrer pour appliquer ?</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="144"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="145"/>
         <source>You have changed disk letter. Restart to apply it?</source>
         <translation>Vous avez modifié la lettre du disque. Redémarrer pour appliquer ?</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="394"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="395"/>
         <source>The proxy host address can&apos;t be empty</source>
         <translation>L&apos;adresse du serveur proxy ne peut être vide</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="401"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="402"/>
         <source>The proxy port is incorrect</source>
         <translation>Le port proxy est erroné</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="410"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="411"/>
         <source>Proxy username can&apos;t be empty</source>
         <translation>Le nom d&apos;utilisateur du proxy ne peut être vide</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="413"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="414"/>
         <source>Proxy password can&apos;t be empty</source>
         <translation>Le mot de passe du proxy ne peut être vide</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="409"/>
+        <location filename="../ui_settings-dialog.h" line="412"/>
         <source>Dialog</source>
         <translation>Dialogue</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="410"/>
+        <location filename="../ui_settings-dialog.h" line="413"/>
         <source>Notify when libraries are synchronized</source>
         <translation>Signaler lorsque les bibliothèques sont synchronisées</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="411"/>
+        <location filename="../ui_settings-dialog.h" line="414"/>
         <source>Enable sync temporary files of MSOffice/Libreoffice</source>
         <translation>Activer la synchronisation des fichiers temporaires MSOffice/LibreOffice</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="416"/>
+        <location filename="../ui_settings-dialog.h" line="419"/>
         <source>Download speed limit (KB/s):</source>
         <translation>Vitesse de téléchargement maximum (Ko/s) :</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="417"/>
+        <location filename="../ui_settings-dialog.h" line="420"/>
         <source>Upload speed limit (KB/s):</source>
         <translation>Vitesse d&apos;envoi maximum (Ko/s) :</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="423"/>
+        <location filename="../ui_settings-dialog.h" line="422"/>
         <source>Basic</source>
         <translation>Basique</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="413"/>
+        <location filename="../ui_settings-dialog.h" line="416"/>
         <source>Enable FinderSync Extension</source>
         <translation>Activer l&apos;extension FinderSync</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="414"/>
+        <location filename="../ui_settings-dialog.h" line="417"/>
         <source>Enable Explorer Extension</source>
         <translation>Activer l&apos;extension Explorer</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="415"/>
+        <location filename="../ui_settings-dialog.h" line="418"/>
         <source>Check for updates automatically</source>
         <translation>Vérifier les mises à jour automatiquement</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="418"/>
+        <location filename="../ui_settings-dialog.h" line="421"/>
         <source>Disk letter (need restart): </source>
         <translation>Lettre du disque (redémarrage requis) :</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="421"/>
-        <source>S</source>
-        <translation>S</translation>
-    </message>
-    <message>
-        <location filename="../ui_settings-dialog.h" line="424"/>
+        <location filename="../ui_settings-dialog.h" line="423"/>
         <source>Do not verify server certificate in HTTPS syncing</source>
         <translation>Ne pas vérifier le certificat serveur lors de la synchronisation en HTTPS</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="425"/>
+        <location filename="../ui_settings-dialog.h" line="424"/>
         <source>Cache clean interval (in minutes):</source>
         <translation>Intervalle du nettoyage de la cache (en minutes) :</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="426"/>
+        <location filename="../ui_settings-dialog.h" line="425"/>
         <source>Cache size limit (in GB):</source>
         <translation>Limite de la taille du cache (en Go) :</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="427"/>
+        <location filename="../ui_settings-dialog.h" line="426"/>
         <source>Advanced</source>
         <translation>Avancé</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="428"/>
+        <location filename="../ui_settings-dialog.h" line="427"/>
         <source>Language (need restart)</source>
         <translation>Langue (redémarrage nécessaire)</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="429"/>
+        <location filename="../ui_settings-dialog.h" line="428"/>
         <source>Language</source>
         <translation>Langue</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="430"/>
+        <location filename="../ui_settings-dialog.h" line="429"/>
         <source>Proxy Type:</source>
         <translation>Type de proxy :</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="431"/>
+        <location filename="../ui_settings-dialog.h" line="430"/>
         <source>Host:</source>
         <translation>Serveur :</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="432"/>
+        <location filename="../ui_settings-dialog.h" line="431"/>
         <source>Port:</source>
         <translation>Port :</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="434"/>
+        <location filename="../ui_settings-dialog.h" line="433"/>
         <source>Username:</source>
         <translation>Identifiant :</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="435"/>
+        <location filename="../ui_settings-dialog.h" line="434"/>
         <source>Password:</source>
         <translation>Mot de passe :</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="436"/>
+        <location filename="../ui_settings-dialog.h" line="435"/>
         <source>Proxy server requires a password</source>
         <translation>Le serveur proxy requiert un mot de passe</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="437"/>
+        <location filename="../ui_settings-dialog.h" line="436"/>
         <source>Network</source>
         <translation>Réseau</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="438"/>
+        <location filename="../ui_settings-dialog.h" line="437"/>
         <source>OK</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="439"/>
+        <location filename="../ui_settings-dialog.h" line="438"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
@@ -1243,22 +1215,12 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
 <context>
     <name>SyncErrorsDialog</name>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="57"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="56"/>
         <source>File Sync Errors</source>
         <translation>Erreurs de synchro de fichier</translation>
     </message>
     <message>
         <location filename="../src/ui/sync-errors-dialog.cpp" line="126"/>
-        <source>Minimize</source>
-        <translation>Réduire</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="133"/>
-        <source>Close</source>
-        <translation>Fermer</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="193"/>
         <source>No sync errors.</source>
         <translation>Pas d&apos;erreur de synchro.</translation>
     </message>
@@ -1266,29 +1228,70 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
 <context>
     <name>SyncErrorsTableModel</name>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="369"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="302"/>
         <source>Double click to open the library</source>
         <translation>Double clic pour ouvrir la bibliothèque</translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="427"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="360"/>
         <source>Library</source>
         <translation>Bibliothèque</translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="429"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="362"/>
         <source>Path</source>
         <translation>Cheùin</translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="431"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="364"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../src/ui/sync-errors-dialog.cpp" line="433"/>
+        <location filename="../src/ui/sync-errors-dialog.cpp" line="366"/>
         <source>Time</source>
         <translation>Heure</translation>
+    </message>
+</context>
+<context>
+    <name>TransferItemsTableModel</name>
+    <message>
+        <location filename="../src/ui/transfer-progress-dialog.cpp" line="290"/>
+        <source>finished</source>
+        <translation>Terminé</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/transfer-progress-dialog.cpp" line="347"/>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/transfer-progress-dialog.cpp" line="350"/>
+        <source>Progress</source>
+        <translation>Progression</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/transfer-progress-dialog.cpp" line="353"/>
+        <source>Size</source>
+        <translation>Taille</translation>
+    </message>
+</context>
+<context>
+    <name>TransferProgressDialog</name>
+    <message>
+        <location filename="../src/ui/transfer-progress-dialog.cpp" line="60"/>
+        <source>Transfer Progress</source>
+        <translation>Progression du transfert</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/transfer-progress-dialog.cpp" line="71"/>
+        <source>Upload</source>
+        <translation>Envoi</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/transfer-progress-dialog.cpp" line="72"/>
+        <source>Download</source>
+        <translation>Téléchargement</translation>
     </message>
 </context>
 </TS>
