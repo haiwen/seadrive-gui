@@ -7,6 +7,7 @@ extern "C" {
 #include <glib-object.h>
 #include <cstdio>
 #include <cstdlib>
+#include <QLibrary>
 #include <QTimer>
 #include <QStringList>
 #include <QString>
@@ -35,6 +36,7 @@ const int kDaemonRestartMaxRetries = 10;
 #if defined(Q_OS_WIN32)
 const char *kSeadriveSockName = "\\\\.\\pipe\\seadrive_";
 const char *kSeadriveExecutable = "seadrive.exe";
+const int kDLLMissingErrorCode = -1073741515;
 #else
 const char *kSeadriveSockName = "seadrive.sock";
 const char *kSeadriveExecutable = "seadrive";
@@ -103,6 +105,14 @@ void DaemonManager::restartSeadriveDaemon()
 void DaemonManager::startSeadriveDaemon()
 {
 #if defined(Q_OS_WIN32)
+    QLibrary dokanlib("dokan1.dll");
+    if (!dokanlib.load()) {
+        qWarning("dokan1.dll could not be loaded");
+        gui->errorAndExit(tr("%1 failed to initialize").arg(getBrand()));
+        return;
+    } else {
+        dokanlib.unload();
+    }
     searpc_pipe_client_ = searpc_create_named_pipe_client(
         utils::win::getLocalPipeName(kSeadriveSockName).c_str());
 #else
@@ -249,9 +259,19 @@ void DaemonManager::doUnmount() {
 
 void DaemonManager::onDaemonFinished(int exit_code, QProcess::ExitStatus exit_status)
 {
+#if defined(Q_OS_WIN32)
+    if (exit_code == kDLLMissingErrorCode) {
+        qWarning("seadrive exited because DLL is missing, aborting");
+        conn_daemon_timer_->stop();
+        gui->errorAndExit(tr("%1 failed to initialize").arg(getBrand()));
+        return;
+    }
+#endif
+
     qWarning("Seadrive daemon process %s with code %d ",
              exit_status == QProcess::CrashExit ? "crashed" : "exited normally",
              exit_code);
+
 
     if (current_state_ == DAEMON_CONNECTING) {
         conn_daemon_timer_->stop();
@@ -265,7 +285,11 @@ void DaemonManager::onDaemonFinished(int exit_code, QProcess::ExitStatus exit_st
 
 void DaemonManager::scheduleRestartDaemon()
 {
-    if (++restart_retried_ > kDaemonRestartMaxRetries) {
+    int max_retry = 2;
+    if (gui->rpcClient() && gui->rpcClient()->isConnected()) {
+        max_retry = kDaemonRestartMaxRetries;
+    }
+    if (++restart_retried_ >= max_retry) {
         qWarning("reaching max tries of restarting seadrive daemon, aborting");
         gui->errorAndExit(tr("%1 exited unexpectedly").arg(getBrand()));
         return;
