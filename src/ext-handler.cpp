@@ -283,11 +283,6 @@ void SeafileExtensionHandler::openUrlWithAutoLogin(const QUrl& url)
     AutoLoginService::instance()->startAutoLogin(url.toString());
 }
 
-void SeafileExtensionHandler::download()
-{
-    gui->warningBox("download test");
-}
-
 void SeafileExtensionHandler::onShareLinkGenerated(const QString& link)
 {
     SharedLinkDialog *dialog = new SharedLinkDialog(link, NULL);
@@ -369,8 +364,6 @@ void ExtConnectionListenerThread::servePipeInNewThread(HANDLE pipe)
             this, SIGNAL(privateShare(const QString&, const QString&, bool)));
     connect(t, SIGNAL(openUrlWithAutoLogin(const QUrl&)),
             this, SIGNAL(openUrlWithAutoLogin(const QUrl&)));
-    connect(t, SIGNAL(download()),
-            this, SIGNAL(download()));
     t->start();
 }
 
@@ -652,5 +645,5 @@ void ExtCommandsHandler::handleDownload(const QStringList& args)
         return;
     }
 
-    gui->rpcClient()->cachePath(repo_id, path_in_repo);
+    rpc_client_->cachePath(repo_id, path_in_repo);
 }

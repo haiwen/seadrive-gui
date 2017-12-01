@@ -42,7 +42,6 @@ private slots:
                       const QString& path_in_repo,
                       bool to_group);
     void openUrlWithAutoLogin(const QUrl& url);
-    void download();
 
 private:
     ExtConnectionListenerThread *listener_thread_;
@@ -74,7 +73,6 @@ signals:
                       const QString& path_in_repo,
                       bool to_group);
     void openUrlWithAutoLogin(const QUrl& url);
-    void download();
 
 private:
     void servePipeInNewThread(HANDLE pipe);
@@ -103,7 +101,6 @@ signals:
                       const QString& path_in_repo,
                       bool to_group);
     void openUrlWithAutoLogin(const QUrl& url);
-    void download();
 
 private:
     HANDLE pipe_;
