@@ -81,7 +81,7 @@ bool ListReposCommand::parseResponse(const std::string& raw_resp,
     for (size_t i = 0; i < lines.size(); i++) {
         std::string line = lines[i];
         std::string repo_dir = utils::normalizedPath(line);
-        seaf_ext_log ("repo dir: %s\n", repo_dir.c_str());
+        // seaf_ext_log ("repo dir: %s\n", repo_dir.c_str());
         infos->push_back(RepoInfo(repo_dir));
     }
 
@@ -124,9 +124,9 @@ bool GetStatusCommand::parseResponse(const std::string& raw_resp,
     } else {
         *status = None;
 
-        seaf_ext_log ("[GetStatusCommand] status for %s is %s, raw_resp is %s\n",
-                      path_.c_str(),
-                      seafile::toString(*status).c_str(), raw_resp.c_str());
+        // seaf_ext_log ("[GetStatusCommand] status for %s is %s, raw_resp is %s\n",
+        //               path_.c_str(),
+        //               seafile::toString(*status).c_str(), raw_resp.c_str());
     }
 
     return true;

@@ -121,7 +121,7 @@ bool ShellExt::pathInRepo(const std::string& path,
 {
     seafile::RepoInfoList repos;
     if (!getReposList(&repos)) {
-        seaf_ext_log ("getReposList returns false");
+        // seaf_ext_log ("getReposList returns false");
         return false;
     }
     std::string p = utils::normalizedPath(path);
