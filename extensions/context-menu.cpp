@@ -18,10 +18,13 @@ bool shouldIgnorePath(const std::string& path)
         return TRUE;
     }
 
-    /* Ignore flash disk, network mounted drive, etc. */
-    if (GetDriveType(path.substr(0, 3).c_str()) != DRIVE_FIXED) {
-        return TRUE;
-    }
+    // XX: This block is copied from seafile-client, but seadrive itself is not
+    // mounted as a fixed volume, so we need to comment it out.
+    //
+    // /* Ignore flash disk, network mounted drive, etc. */
+    // if (GetDriveType(path.substr(0, 3).c_str()) != DRIVE_FIXED) {
+    //     return TRUE;
+    // }
 
     return FALSE;
 }
