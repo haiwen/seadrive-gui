@@ -643,7 +643,7 @@ QString SeadriveGui::mountDir() const
 #if defined(Q_OS_WIN32)
     return disk_letter_;
 #else
-    return QDir::home().absoluteFilePath("SeaDrive");
+    return QDir::home().absoluteFilePath(getBrand());
 #endif
 }
 

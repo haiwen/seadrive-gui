@@ -161,7 +161,7 @@ QStringList DaemonManager::collectSeaDriveArgs()
 #if defined(Q_OS_MAC)
         QProcess::execute("umount", QStringList(gui->mountDir()));
         fuse_opts = gui->mountDir();
-        fuse_opts += " -o volname=SeaDrive,noappledouble";
+        fuse_opts += QString(" -o volname=%1,noappledouble").arg(getBrand());
 #elif defined(Q_OS_LINUX)
         QStringList umount_arguments;
         umount_arguments << "-u" << gui->mountDir();
