@@ -498,6 +498,7 @@ bool isShellExtEnabled()
                                (LPBYTE)buf,      /* output data */
                                &len);            /* output length */
     free(shell_ext_disabled);
+    RegCloseKey(parent_key);
 
     return result != ERROR_SUCCESS;
 }
