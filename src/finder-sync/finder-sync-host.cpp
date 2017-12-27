@@ -23,10 +23,10 @@ enum PathStatus {
     SYNC_STATUS_NONE = 0,
     SYNC_STATUS_SYNCING,
     SYNC_STATUS_ERROR,
-    SYNC_STATUS_IGNORED,
     SYNC_STATUS_SYNCED,
+    SYNC_STATUS_PARTIAL_SYNCED,
+    SYNC_STATUS_CLOUD,
     SYNC_STATUS_READONLY,
-    SYNC_STATUS_PAUSED,
     SYNC_STATUS_LOCKED,
     SYNC_STATUS_LOCKED_BY_ME,
     MAX_SYNC_STATUS,
@@ -73,7 +73,7 @@ bool getRepoAndRelativePath(const QString &path,
 } // anonymous namespace
 
 static const char *const kPathStatus[] = {
-    "none", "syncing", "error", "ignored", "synced", "readonly", "paused", "locked", "locked_by_me", NULL,
+    "none", "syncing", "error", "synced", "partial_synced", "cloud", "readonly", "locked", "locked_by_me", NULL,
 };
 
 static inline PathStatus getPathStatusFromString(const QString &status) {

@@ -94,10 +94,10 @@ ADD_CUSTOM_TARGET(create_resource_dir
 ADD_CUSTOM_TARGET(copy_resources_icns
   COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/../seadrive.icns ${TARGET_DIR}/Contents/Resources/
   COMMAND ${CMAKE_COMMAND} -E copy status-cloud.icns ${TARGET_DIR}/Contents/Resources/
-  COMMAND ${CMAKE_COMMAND} -E copy status-done.icns ${TARGET_DIR}/Contents/Resources/
+  COMMAND ${CMAKE_COMMAND} -E copy status-synced.icns ${TARGET_DIR}/Contents/Resources/
+  COMMAND ${CMAKE_COMMAND} -E copy status-partial-synced.icns ${TARGET_DIR}/Contents/Resources/
   COMMAND ${CMAKE_COMMAND} -E copy status-error.icns ${TARGET_DIR}/Contents/Resources/
   COMMAND ${CMAKE_COMMAND} -E copy status-syncing.icns ${TARGET_DIR}/Contents/Resources/
-  COMMAND ${CMAKE_COMMAND} -E copy status-ignored.icns ${TARGET_DIR}/Contents/Resources/
   COMMAND ${CMAKE_COMMAND} -E copy status-locked.icns ${TARGET_DIR}/Contents/Resources/
   COMMAND ${CMAKE_COMMAND} -E copy status-locked-by-me.icns ${TARGET_DIR}/Contents/Resources/
   COMMAND ${CMAKE_COMMAND} -E copy status-readonly.icns ${TARGET_DIR}/Contents/Resources/

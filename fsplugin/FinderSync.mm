@@ -40,25 +40,20 @@ static const NSArray *const kBadgetIdentifiers = @[
     // According to the document
     // https://developer.apple.com/library/mac/documentation/FinderSync/Reference/FIFinderSyncController_Class/#//apple_ref/occ/instm/FIFinderSyncController/setBadgeIdentifier:forURL:
     // Setting the identifier to an empty string (@"") removes the badge.
-    @"cloud",            // none
-    @"syncing",      // syncing
-    @"error",        // error
-    @"",            // ignored
-    @"synced",       // synced
-    @"paused",       // readonly
-    @"paused",       // paused
-    @"locked",       // locked
-    @"locked_by_me", // locked by me
+    @"",                        // none
+    @"syncing",                 // syncing
+    @"error",                   // error
+    @"synced",                  // synced
+    @"partial_synced",          // partial synced
+    @"cloud",                   // cloud
+    @"readonly",                // read-only
+    @"locked",                  // locked
+    @"locked_by_me",            // locked by me
 ];
 
 // Set up images for our badge identifiers. For demonstration purposes,
 static void initializeBadgeImages() {
     // Set up images for our badge identifiers.
-    [[FIFinderSyncController defaultController]
-             setBadgeImage:[NSImage imageNamed:@"status-cloud.icns"]
-                     label:NSLocalizedString(@"Cloud", @"Status Cloud")
-        forBadgeIdentifier:kBadgetIdentifiers[PathStatus::SYNC_STATUS_NONE]];
-
     // SYNCING,
     [[FIFinderSyncController defaultController]
              setBadgeImage:[NSImage imageNamed:@"status-syncing.icns"]
@@ -71,9 +66,21 @@ static void initializeBadgeImages() {
         forBadgeIdentifier:kBadgetIdentifiers[PathStatus::SYNC_STATUS_ERROR]];
     // SYNCED,
     [[FIFinderSyncController defaultController]
-             setBadgeImage:[NSImage imageNamed:@"status-done.icns"]
+             setBadgeImage:[NSImage imageNamed:@"status-synced.icns"]
                      label:NSLocalizedString(@"Finished", @"Status Finished")
         forBadgeIdentifier:kBadgetIdentifiers[PathStatus::SYNC_STATUS_SYNCED]];
+
+    // Partial SYNCED,
+    [[FIFinderSyncController defaultController]
+             setBadgeImage:[NSImage imageNamed:@"status-partial-synced.icns"]
+                     label:NSLocalizedString(@"Partial Synced", @"Status Partial Finished")
+        forBadgeIdentifier:kBadgetIdentifiers[PathStatus::SYNC_STATUS_PARTIAL_SYNCED]];
+
+    // Cloud,
+    [[FIFinderSyncController defaultController]
+             setBadgeImage:[NSImage imageNamed:@"status-cloud.icns"]
+                     label:NSLocalizedString(@"Cloud", @"Status Cloud")
+        forBadgeIdentifier:kBadgetIdentifiers[PathStatus::SYNC_STATUS_CLOUD]];
 
     // READONLY
     [[FIFinderSyncController defaultController]
@@ -81,11 +88,6 @@ static void initializeBadgeImages() {
                      label:NSLocalizedString(@"ReadOnly", @"Status ReadOnly")
         forBadgeIdentifier:kBadgetIdentifiers[PathStatus::SYNC_STATUS_READONLY]];
 
-    // PAUSED,
-    [[FIFinderSyncController defaultController]
-             setBadgeImage:[NSImage imageNamed:@"status-ignored.icns"]
-                     label:NSLocalizedString(@"Paused", @"Status Paused")
-        forBadgeIdentifier:kBadgetIdentifiers[PathStatus::SYNC_STATUS_PAUSED]];
     // LOCKED,
     [[FIFinderSyncController defaultController]
              setBadgeImage:[NSImage imageNamed:@"status-locked.icns"]
