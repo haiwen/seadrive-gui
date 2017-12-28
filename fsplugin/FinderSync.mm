@@ -120,10 +120,10 @@ findRepo(const std::vector<std::string> &repos, const std::string &subdir) {
 
 inline static void setBadgeIdentifierFor(const std::string &path,
                                          PathStatus status) {
-    if (findRepo(watched_repos_, path) != watched_repos_.end()) {
-        // No icon for repo top dir.
-        return;
-    }
+    // if (findRepo(watched_repos_, path) != watched_repos_.end()) {
+    //     // No icon for repo top dir.
+    //     return;
+    // }
     bool isDirectory = path.back() == '/';
     std::string file = path;
     if (isDirectory)
@@ -287,8 +287,10 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
 
     // find where we have it
     auto repo = findRepoContainPath(watched_repos_, absolute_path);
-    if (repo == watched_repos_.end())
+    if (repo == watched_repos_.end()) {
         return;
+    }
+
 
     file_status_.emplace(absolute_path, PathStatus::SYNC_STATUS_NONE);
 }
@@ -324,14 +326,15 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
 
     DLOG (@"FinderSync: requestBadgeIdentifierForURL called for %s", file_path.c_str());
 
-    if (findRepo(watched_repos_, file_path) != watched_repos_.end()) {
-        // No icon for repo top dir.
-        return;
-    }
+    // if (findRepo(watched_repos_, file_path) != watched_repos_.end()) {
+    //     // No icon for repo top dir.
+    //     return;
+    // }
 
     auto repo = findRepoContainPath(watched_repos_, file_path);
-    if (repo == watched_repos_.end())
+    if (repo == watched_repos_.end()) {
         return;
+    }
 
     file_status_.emplace(file_path, PathStatus::SYNC_STATUS_NONE);
     setBadgeIdentifierFor(file_path, PathStatus::SYNC_STATUS_NONE);
