@@ -40,25 +40,20 @@ static const NSArray *const kBadgetIdentifiers = @[
     // According to the document
     // https://developer.apple.com/library/mac/documentation/FinderSync/Reference/FIFinderSyncController_Class/#//apple_ref/occ/instm/FIFinderSyncController/setBadgeIdentifier:forURL:
     // Setting the identifier to an empty string (@"") removes the badge.
-    @"cloud",            // none
-    @"syncing",      // syncing
-    @"error",        // error
-    @"",            // ignored
-    @"synced",       // synced
-    @"paused",       // readonly
-    @"paused",       // paused
-    @"locked",       // locked
-    @"locked_by_me", // locked by me
+    @"",                        // none
+    @"syncing",                 // syncing
+    @"error",                   // error
+    @"synced",                  // synced
+    @"partial_synced",          // partial synced
+    @"cloud",                   // cloud
+    @"readonly",                // read-only
+    @"locked",                  // locked
+    @"locked_by_me",            // locked by me
 ];
 
 // Set up images for our badge identifiers. For demonstration purposes,
 static void initializeBadgeImages() {
     // Set up images for our badge identifiers.
-    [[FIFinderSyncController defaultController]
-             setBadgeImage:[NSImage imageNamed:@"status-cloud.icns"]
-                     label:NSLocalizedString(@"Cloud", @"Status Cloud")
-        forBadgeIdentifier:kBadgetIdentifiers[PathStatus::SYNC_STATUS_NONE]];
-
     // SYNCING,
     [[FIFinderSyncController defaultController]
              setBadgeImage:[NSImage imageNamed:@"status-syncing.icns"]
@@ -71,9 +66,21 @@ static void initializeBadgeImages() {
         forBadgeIdentifier:kBadgetIdentifiers[PathStatus::SYNC_STATUS_ERROR]];
     // SYNCED,
     [[FIFinderSyncController defaultController]
-             setBadgeImage:[NSImage imageNamed:@"status-done.icns"]
+             setBadgeImage:[NSImage imageNamed:@"status-synced.icns"]
                      label:NSLocalizedString(@"Finished", @"Status Finished")
         forBadgeIdentifier:kBadgetIdentifiers[PathStatus::SYNC_STATUS_SYNCED]];
+
+    // Partial SYNCED,
+    [[FIFinderSyncController defaultController]
+             setBadgeImage:[NSImage imageNamed:@"status-partial-synced.icns"]
+                     label:NSLocalizedString(@"Partial Synced", @"Status Partial Finished")
+        forBadgeIdentifier:kBadgetIdentifiers[PathStatus::SYNC_STATUS_PARTIAL_SYNCED]];
+
+    // Cloud,
+    [[FIFinderSyncController defaultController]
+             setBadgeImage:[NSImage imageNamed:@"status-cloud.icns"]
+                     label:NSLocalizedString(@"Cloud", @"Status Cloud")
+        forBadgeIdentifier:kBadgetIdentifiers[PathStatus::SYNC_STATUS_CLOUD]];
 
     // READONLY
     [[FIFinderSyncController defaultController]
@@ -81,11 +88,6 @@ static void initializeBadgeImages() {
                      label:NSLocalizedString(@"ReadOnly", @"Status ReadOnly")
         forBadgeIdentifier:kBadgetIdentifiers[PathStatus::SYNC_STATUS_READONLY]];
 
-    // PAUSED,
-    [[FIFinderSyncController defaultController]
-             setBadgeImage:[NSImage imageNamed:@"status-ignored.icns"]
-                     label:NSLocalizedString(@"Paused", @"Status Paused")
-        forBadgeIdentifier:kBadgetIdentifiers[PathStatus::SYNC_STATUS_PAUSED]];
     // LOCKED,
     [[FIFinderSyncController defaultController]
              setBadgeImage:[NSImage imageNamed:@"status-locked.icns"]
@@ -118,10 +120,10 @@ findRepo(const std::vector<std::string> &repos, const std::string &subdir) {
 
 inline static void setBadgeIdentifierFor(const std::string &path,
                                          PathStatus status) {
-    if (findRepo(watched_repos_, path) != watched_repos_.end()) {
-        // No icon for repo top dir.
-        return;
-    }
+    // if (findRepo(watched_repos_, path) != watched_repos_.end()) {
+    //     // No icon for repo top dir.
+    //     return;
+    // }
     bool isDirectory = path.back() == '/';
     std::string file = path;
     if (isDirectory)
@@ -285,8 +287,10 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
 
     // find where we have it
     auto repo = findRepoContainPath(watched_repos_, absolute_path);
-    if (repo == watched_repos_.end())
+    if (repo == watched_repos_.end()) {
         return;
+    }
+
 
     file_status_.emplace(absolute_path, PathStatus::SYNC_STATUS_NONE);
 }
@@ -322,14 +326,15 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
 
     DLOG (@"FinderSync: requestBadgeIdentifierForURL called for %s", file_path.c_str());
 
-    if (findRepo(watched_repos_, file_path) != watched_repos_.end()) {
-        // No icon for repo top dir.
-        return;
-    }
+    // if (findRepo(watched_repos_, file_path) != watched_repos_.end()) {
+    //     // No icon for repo top dir.
+    //     return;
+    // }
 
     auto repo = findRepoContainPath(watched_repos_, file_path);
-    if (repo == watched_repos_.end())
+    if (repo == watched_repos_.end()) {
         return;
+    }
 
     file_status_.emplace(file_path, PathStatus::SYNC_STATUS_NONE);
     setBadgeIdentifierFor(file_path, PathStatus::SYNC_STATUS_NONE);
