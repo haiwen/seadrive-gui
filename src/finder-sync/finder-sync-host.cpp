@@ -152,6 +152,8 @@ uint32_t FinderSyncHost::getFileStatus(const QString &path)
         return PathStatus::SYNC_STATUS_NONE;
     }
 
+    // printf("path = %s, status = %s\n", toCStr(path), toCStr(status));
+
     return getPathStatusFromString(status);
 }
 

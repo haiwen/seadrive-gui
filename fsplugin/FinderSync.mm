@@ -18,7 +18,12 @@
 #error this file must be built with ARC support
 #endif
 
-#define DLOG NSLog
+#if defined(NDEBUG)
+// Make the debug log a no-op in non-debug mode
+#define SEAFILE_DEBUG_LOG(args, ...)
+#else
+#define SEAFILE_DEBUG_LOG NSLog
+#endif
 
 static std::vector<std::string> watched_repos_;
 static std::string mount_point_;
@@ -283,7 +288,7 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
     std::string absolute_path =
         url.path.precomposedStringWithCanonicalMapping.UTF8String;
 
-    DLOG (@"FinderSync: beginObservingDirectoryAtURL called for %s", absolute_path.c_str());
+    SEAFILE_DEBUG_LOG (@"FinderSync: beginObservingDirectoryAtURL called for %s", absolute_path.c_str());
 
     // find where we have it
     auto repo = findRepoContainPath(watched_repos_, absolute_path);
@@ -308,7 +313,7 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
     std::string absolute_path =
         url.path.precomposedStringWithCanonicalMapping.UTF8String;
 
-    DLOG (@"FinderSync: endObservingDirectoryAtURL called for %s", absolute_path.c_str());
+    SEAFILE_DEBUG_LOG (@"FinderSync: endObservingDirectoryAtURL called for %s", absolute_path.c_str());
 
     // if (absolute_path.back() != '/')
     //     absolute_path += "/";
@@ -324,7 +329,7 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
     std::string file_path =
         url.path.precomposedStringWithCanonicalMapping.UTF8String;
 
-    DLOG (@"FinderSync: requestBadgeIdentifierForURL called for %s", file_path.c_str());
+    SEAFILE_DEBUG_LOG (@"FinderSync: requestBadgeIdentifierForURL called for %s", file_path.c_str());
 
     // if (findRepo(watched_repos_, file_path) != watched_repos_.end()) {
     //     // No icon for repo top dir.
@@ -365,7 +370,7 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
         whichMenu != FIMenuKindContextualMenuForContainer)
         return nil;
 
-    DLOG (@"FinderSync: menuForMenuKind called for");
+    SEAFILE_DEBUG_LOG (@"FinderSync: menuForMenuKind called for");
 
     // Produce a menu for the extension.
     NSMenu *menu = [[NSMenu alloc] initWithTitle:@""];
@@ -551,7 +556,7 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
         new_watched_repos = std::move(
             *static_cast<std::vector<std::string> *>(ptr_to_new_watched_repos));
 
-    DLOG (@"FinderSync: get %lu repos to watch", new_watched_repos.size());
+    SEAFILE_DEBUG_LOG (@"FinderSync: get %lu repos to watch, file status map size %lu", new_watched_repos.size(), file_status_.size());
     cleanFileStatus(&file_status_, watched_repos_, new_watched_repos);
 
     // overwrite the old watch set
@@ -563,6 +568,14 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
     for (const std::string &repo : watched_repos_) {
         NSString *path = [NSString stringWithUTF8String:repo.c_str()];
         [array addObject:[NSURL fileURLWithPath:path isDirectory:YES]];
+    }
+
+    // Add the SeaDrive mount dir to the watched directory, otherwise the icons
+    // for a repo's top-level folder won't be refreshed in-time.
+    if (watched_repos_.size()) {
+        NSString *repo = [NSString stringWithUTF8String:watched_repos_[0].c_str()];
+        NSString *mount_dir = [repo stringByDeletingLastPathComponent];
+        [array addObject:[NSURL fileURLWithPath:mount_dir isDirectory:YES]];
     }
 
     [FIFinderSyncController defaultController].directoryURLs =
