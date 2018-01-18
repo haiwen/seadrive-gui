@@ -19,7 +19,7 @@ class TransferProgressDialog : public QDialog
 public:
     TransferProgressDialog(QWidget *parent = 0);
     void resizeEvent(QResizeEvent* event) Q_DECL_OVERRIDE;
-    void setDownloadUi() { tab_widget_->setCurrentIndex(DOWNLOAD); };
+    void showDownloadTab() { tab_widget_->setCurrentIndex(DOWNLOAD); };
 
 private:
     QTabWidget* tab_widget_;

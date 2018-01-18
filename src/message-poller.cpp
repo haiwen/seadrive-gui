@@ -236,17 +236,20 @@ void MessagePoller::processNotification(const SyncNotification& notification)
 
 void MessagePoller::processSeaDriveEvent(const SeaDriveEvent &event)
 {
+    last_event_path_ = event.path;
     if(event.type == "file-download.start") {
         QString title = tr("Download file");
         QString msg = tr("Start to download file \"%1\" ").arg(::getBaseName(event.path));
-        gui->trayIcon()->showMessage(title, msg, "NULL");
+        gui->trayIcon()->showMessage(title, msg);
+        last_event_type_ = event.type;
+        return;
     } else if (event.type == "file-download.done") {
         QString title = tr("Download file");
         QString msg = tr("file \"%1\" has been downloaded ").arg(::getBaseName(event.path));
-        gui->trayIcon()->showMessage(title, msg, "NULL");
+        gui->trayIcon()->showMessage(title, msg);
+        last_event_type_ = event.type;
+        return;
     }
-    type_ = event.type;
-    path_ = event.path;
 
     switch (event.fs_op_error) {
         case SeaDriveEvent::CREATE_ROOT_FILE: {

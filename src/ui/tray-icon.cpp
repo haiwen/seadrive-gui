@@ -636,8 +636,8 @@ void SeafileTrayIcon::checkTrayIconMessageQueue()
 
 void SeafileTrayIcon::onMessageClicked()
 {
-    if (repo_id_.isEmpty())
-        return;
+    //if (repo_id_.isEmpty())
+    //    return;
     // LocalRepo repo;
     // if (seafApplet->rpcClient()->getLocalRepo(repo_id_, &repo) != 0 ||
     //     !repo.isValid() || repo.worktree_invalid)
@@ -645,11 +645,11 @@ void SeafileTrayIcon::onMessageClicked()
 
     // DiffReader *reader = new DiffReader(repo, previous_commit_id_, commit_id_);
     // QThreadPool::globalInstance()->start(reader);
-    if (gui->messagePoller()->eventType() == "file-download.start") {
+    if (gui->messagePoller()->lastEventType() == "file-download.start") {
         showTransferProgressDialog();
-        transfer_progress_dialog_->setDownloadUi();
-    } else if (gui->messagePoller()->eventType() == "file-download.done") {
-        QString path = ::pathJoin(gui->mountDir(), ::getParentPath(gui->messagePoller()->eventPath()));
+        transfer_progress_dialog_->showDownloadTab();
+    } else if (gui->messagePoller()->lastEventType() == "file-download.done") {
+        QString path = ::pathJoin(gui->mountDir(), ::getParentPath(gui->messagePoller()->lastEventPath()));
         QDesktopServices::openUrl(QUrl::fromLocalFile(path));
     }
 }

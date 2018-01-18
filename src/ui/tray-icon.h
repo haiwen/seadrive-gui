@@ -18,7 +18,6 @@ class LoginDialog;
 class TrayNotificationManager;
 class SyncErrorsDialog;
 class TransferProgressDialog;
-class MessagePoller;
 
 
 class SeafileTrayIcon : public QSystemTrayIcon {
