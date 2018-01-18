@@ -14,6 +14,7 @@
 #include <QMenuBar>
 #include <QRunnable>
 
+#include "message-poller.h"
 #include "utils/utils.h"
 #include "utils/utils-mac.h"
 #include "utils/file-utils.h"
@@ -644,6 +645,13 @@ void SeafileTrayIcon::onMessageClicked()
 
     // DiffReader *reader = new DiffReader(repo, previous_commit_id_, commit_id_);
     // QThreadPool::globalInstance()->start(reader);
+    if (gui->messagePoller()->eventType() == "file-download.start") {
+        showTransferProgressDialog();
+        transfer_progress_dialog_->setDownloadUi();
+    } else if (gui->messagePoller()->eventType() == "file-download.done") {
+        QString path = ::pathJoin(gui->mountDir(), ::getParentPath(gui->messagePoller()->eventPath()));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(path));
+    }
 }
 
 void SeafileTrayIcon::onLoginDialogClosed()

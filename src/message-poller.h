@@ -45,6 +45,8 @@ public:
     ~MessagePoller();
 
     void start();
+    QString eventType() const { return type_; }
+    QString eventPath() const { return path_; }
 
 signals:
     void seadriveFSLoaded();
@@ -66,6 +68,8 @@ private:
     SeafileRpcClient *rpc_client_;
 
     QTimer *check_notification_timer_;
+    QString type_;
+    QString path_;
 };
 
 #endif // SEADRIVE_GUI_MESSAGE_POLLER_H
