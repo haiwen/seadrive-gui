@@ -44,7 +44,7 @@ ShibLoginDialog::ShibLoginDialog(const QUrl& url,
     QVBoxLayout *vlayout = new QVBoxLayout();
     setLayout(vlayout);
 
-    QLineEdit *address_text_ = new QLineEdit;
+    address_text_ = new QLineEdit;
     address_text_->setObjectName("addressText");
     address_text_->setText(url.toString());
     address_text_->setReadOnly(true);
@@ -78,6 +78,9 @@ ShibLoginDialog::ShibLoginDialog(const QUrl& url,
     }
     path += "shib-login";
     shib_login_url.setPath(path);
+
+    connect(webview_, SIGNAL(urlChanged(const QUrl&)),
+           this, SLOT(updateAddressBar(const QUrl&)));
 
     vlayout->addWidget(webview_);
     webview_->load(::includeQueryParams(
@@ -116,6 +119,13 @@ void ShibLoginDialog::onNewCookieCreated(const QUrl& url, const QNetworkCookie& 
             dlg->ensureVisible();
         }
     }
+}
+
+void ShibLoginDialog::updateAddressBar(const QUrl& url)
+{
+    address_text_->setText(url.toString());
+    // Scroll to the left most.
+    address_text_->home(false);
 }
 
 
