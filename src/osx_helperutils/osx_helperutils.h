@@ -1,0 +1,6 @@
+#ifndef SEAFILE_HELPERUTIL_UTILS_H
+#define SEAFILE_HELPERUTIL_UTILS_H
+
+bool installHelperTool();
+
+#endif // SEAFILE_HELPERUTIL_UTILS_H

@@ -96,7 +96,9 @@ ELSEIF (APPLE)
     MARK_AS_ADVANCED (COCOA_LIBRARY)
     FIND_LIBRARY(Sec_LIBRARY Security)
     MARK_AS_ADVANCED (Sec_LIBRARY)
-    SET(EXTRA_LIBS ${EXTRA_LIBS} ${COCOA_LIBRARY} ${Sec_LIBRARY})
+    FIND_LIBRARY(SM_LIBRARY ServiceManagement)
+    MARK_AS_ADVANCED (SM_LIBRARY)
+    SET(EXTRA_LIBS ${EXTRA_LIBS} ${COCOA_LIBRARY} ${Sec_LIBRARY} ${SM_LIBRARY})
 ENDIF()
 
 IF(APPLE)
@@ -104,8 +106,12 @@ IF(APPLE)
     SET(platform_specific_moc_headers ${platform_specific_moc_headers} src/finder-sync/finder-sync-host.h)
     SET(platform_specific_sources ${platform_specific_sources}
         src/finder-sync/finder-sync.cpp src/finder-sync/finder-sync-listener.mm
-        src/finder-sync/finder-sync-host.cpp)
+        src/finder-sync/finder-sync-host.cpp
+        src/osx_helperutils/osx_helperutils.mm
+        )
     SET_SOURCE_FILES_PROPERTIES(src/finder-sync/finder-sync-listener.mm
+        PROPERTIES COMPILE_FLAGS -fobjc-arc)
+    SET_SOURCE_FILES_PROPERTIES(src/osx_helperutils/osx_helperutils.mm
         PROPERTIES COMPILE_FLAGS -fobjc-arc)
 ENDIF()
 
