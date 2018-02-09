@@ -40,14 +40,14 @@ public:
   }
 };
 
-bool getRepoAndRelativePath(const QString &path,
-                            QString *repo,
-                            QString *path_in_repo,
-                            QString *category_out)
+bool parseFilePath(const QString &path,
+                   QString *repo,
+                   QString *path_in_repo,
+                   QString *category_out)
 {
     // The path of the file in relative to the mount point.
+    // It is like "My Libraries/Documents"
     QString relative_path = path.mid(gui->mountDir().length() + 1);
-    // relative_path is like "My Libraries/LibA"
 
     if (relative_path.isEmpty()) {
         return false;
@@ -57,9 +57,9 @@ bool getRepoAndRelativePath(const QString &path,
         relative_path = relative_path.left(relative_path.length() - 1);
     }
 
-    printf("relative_path is %s\n", toCStr(relative_path));
+    // printf("relative_path is %s\n", toCStr(relative_path));
 
-    if (!relative_path.contains('/')) {
+    if (!category_out && !relative_path.contains('/')) {
         return false;
     }
 
@@ -67,23 +67,50 @@ bool getRepoAndRelativePath(const QString &path,
     QString category = relative_path.left(pos);
     if (category_out) {
         *category_out = category;
+    }
+
+    if (!relative_path.contains('/')) {
         return true;
     }
+
     QString remaining = relative_path.mid(pos + 1);
-    printf("category = %s, remaining = %s\n", category.toUtf8().data(), remaining.toUtf8().data());
+    // printf("category = %s, remaining = %s\n", category.toUtf8().data(), remaining.toUtf8().data());
 
     if (remaining.contains('/')) {
         int pos = remaining.indexOf('/');
         *repo = remaining.left(pos);
         *path_in_repo = remaining.mid(pos);
-        printf("repo = %s, path_in_repo = %s\n", repo->toUtf8().data(),
-               path_in_repo->toUtf8().data());
+        // printf("repo = %s, path_in_repo = %s\n", repo->toUtf8().data(),
+        //        path_in_repo->toUtf8().data());
     } else {
         *repo = remaining;
         *path_in_repo = "";
     }
     return true;
 }
+
+// If `category_out` is non-null, repo and path_in_repo would not be used.
+bool getRepoAndRelativePath(const QString &path,
+                            QString *repo,
+                            QString *path_in_repo,
+                            QString *category=nullptr)
+{
+    if (!parseFilePath(path, repo, path_in_repo, category)) {
+        return false;
+    }
+    return !repo->isEmpty();
+}
+
+bool getCategoryFromPath(const QString& path, QString *category)
+{
+    QString repo;
+    QString path_in_repo;
+    if (!parseFilePath(path, &repo, &path_in_repo, category)) {
+        return false;
+    }
+    return !category->isEmpty() && repo.isEmpty();
+}
+
 
 } // anonymous namespace
 
@@ -152,11 +179,9 @@ void FinderSyncHost::updateWatchSet()
     lock.unlock();
 }
 
-bool getCategoryFromPath(const QString& path, QString *category)
+inline QString path_concat(const QString& s1, const QString& s2)
 {
-    QString repo;
-    QString path_in_repo;
-    return getRepoAndRelativePath(path, &repo, &path_in_repo, category);
+    return QString("%1/%2").arg(s1).arg(s2);
 }
 
 uint32_t FinderSyncHost::getFileStatus(const QString &path)
@@ -174,11 +199,11 @@ uint32_t FinderSyncHost::getFileStatus(const QString &path)
 
     QString repo;
     QString path_in_repo = "";
-    if (!getRepoAndRelativePath(path, &repo, &path_in_repo, nullptr)) {
+    if (!getRepoAndRelativePath(path, &repo, &path_in_repo, &category)) {
         return SYNC_STATUS_NONE;
     }
 
-    if (rpc_client_->getRepoFileStatus(repo, path_in_repo, &status) != 0) {
+    if (rpc_client_->getRepoFileStatus(path_concat(category, repo), path_in_repo, &status) != 0) {
         return PathStatus::SYNC_STATUS_NONE;
     }
 
@@ -272,11 +297,12 @@ bool FinderSyncHost::lookUpFileInformation(const QString &path,
                                            QString *ptr_path_in_repo)
 {
     QString repo;
-    if (!getRepoAndRelativePath(path, &repo, ptr_path_in_repo, nullptr)) {
+    QString category;
+    if (!getRepoAndRelativePath(path, &repo, ptr_path_in_repo, &category)) {
         return false;
     }
 
-    return rpc_client_->getRepoIdByPath(repo, ptr_repo_id);
+    return rpc_client_->getRepoIdByPath(path_concat(category, repo), ptr_repo_id);
 }
 
 void FinderSyncHost::doShowFileHistory(const QString &path)

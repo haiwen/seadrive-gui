@@ -191,6 +191,11 @@ findRepoContainPath(const std::vector<std::string> &repos,
     return repos.end();
 }
 
+static bool isCategoryDir(const std::string path)
+{
+    return findRepo(watched_repos_, path) != watched_repos_.end();
+}
+
 inline static void cleanEntireDirectoryStatus(
     std::unordered_map<std::string, PathStatus> *file_status,
     const std::string &dir) {
@@ -397,9 +402,9 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
     std::string file_path =
         item.path.precomposedStringWithCanonicalMapping.UTF8String;
 
-    // if (isCategoryDir(file_path)) {
-    //     return nil;
-    // }
+    if (isCategoryDir(file_path)) {
+        return nil;
+    }
 
     NSNumber *isDirectory;
     bool is_dir = [item getResourceValue:&isDirectory
