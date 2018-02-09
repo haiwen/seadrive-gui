@@ -42,10 +42,12 @@ public:
 
 bool getRepoAndRelativePath(const QString &path,
                             QString *repo,
-                            QString *path_in_repo)
+                            QString *path_in_repo,
+                            QString *category_out)
 {
     // The path of the file in relative to the mount point.
     QString relative_path = path.mid(gui->mountDir().length() + 1);
+    // relative_path is like "My Libraries/LibA"
 
     if (relative_path.isEmpty()) {
         return false;
@@ -55,16 +57,29 @@ bool getRepoAndRelativePath(const QString &path,
         relative_path = relative_path.left(relative_path.length() - 1);
     }
 
-    // printf("relative_path is %s\n", toCStr(relative_path));
+    printf("relative_path is %s\n", toCStr(relative_path));
 
-    if (relative_path.contains('/')) {
-        int pos = relative_path.indexOf('/');
-        *repo = relative_path.left(pos);
-        *path_in_repo = relative_path.mid(pos);
-        // printf("repo = %s, path_in_repo = %s\n", repo.toUtf8().data(),
-        // path_in_repo.toUtf8().data());
+    if (!relative_path.contains('/')) {
+        return false;
+    }
+
+    int pos = relative_path.indexOf('/');
+    QString category = relative_path.left(pos);
+    if (category_out) {
+        *category_out = category;
+        return true;
+    }
+    QString remaining = relative_path.mid(pos + 1);
+    printf("category = %s, remaining = %s\n", category.toUtf8().data(), remaining.toUtf8().data());
+
+    if (remaining.contains('/')) {
+        int pos = remaining.indexOf('/');
+        *repo = remaining.left(pos);
+        *path_in_repo = remaining.mid(pos);
+        printf("repo = %s, path_in_repo = %s\n", repo->toUtf8().data(),
+               path_in_repo->toUtf8().data());
     } else {
-        *repo = relative_path;
+        *repo = remaining;
         *path_in_repo = "";
     }
     return true;
@@ -137,17 +152,32 @@ void FinderSyncHost::updateWatchSet()
     lock.unlock();
 }
 
+bool getCategoryFromPath(const QString& path, QString *category)
+{
+    QString repo;
+    QString path_in_repo;
+    return getRepoAndRelativePath(path, &repo, &path_in_repo, category);
+}
+
 uint32_t FinderSyncHost::getFileStatus(const QString &path)
 {
     std::unique_lock<std::mutex> lock(update_mutex_);
 
+    QString status;
+    QString category;
+    if (getCategoryFromPath(path, &category)) {
+        if (rpc_client_->getCategorySyncStatus(category, &status) != 0) {
+            return PathStatus::SYNC_STATUS_NONE;
+        }
+        return getPathStatusFromString(status);
+    }
+
     QString repo;
     QString path_in_repo = "";
-    if (!getRepoAndRelativePath(path, &repo, &path_in_repo)) {
+    if (!getRepoAndRelativePath(path, &repo, &path_in_repo, nullptr)) {
         return SYNC_STATUS_NONE;
     }
 
-    QString status;
     if (rpc_client_->getRepoFileStatus(repo, path_in_repo, &status) != 0) {
         return PathStatus::SYNC_STATUS_NONE;
     }
@@ -242,7 +272,7 @@ bool FinderSyncHost::lookUpFileInformation(const QString &path,
                                            QString *ptr_path_in_repo)
 {
     QString repo;
-    if (!getRepoAndRelativePath(path, &repo, ptr_path_in_repo)) {
+    if (!getRepoAndRelativePath(path, &repo, ptr_path_in_repo, nullptr)) {
         return false;
     }
 

@@ -320,6 +320,30 @@ int SeafileRpcClient::getRepoFileStatus(const QString& repo_uname,
     return 0;
 }
 
+int SeafileRpcClient::getCategorySyncStatus(const QString& category, QString *status)
+{
+    GError *error = NULL;
+    char *ret = searpc_client_call__string (
+        seadrive_rpc_client_,
+        "seafile_get_category_sync_status",
+        &error, 1,
+        "string", toCStr(category));
+    if (error) {
+        qWarning("failed to get category status for %s: %s\n",
+                 toCStr(category),
+                 error->message);
+        g_error_free(error);
+        return -1;
+    }
+
+    *status = ret;
+
+    printf ("status for %s = %s\n", toCStr(category), ret);
+
+    g_free (ret);
+    return 0;
+}
+
 int SeafileRpcClient::markFileLockState(const QString &repo_id,
                                         const QString &path_in_repo,
                                         bool lock)

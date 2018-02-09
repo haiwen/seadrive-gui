@@ -394,6 +394,12 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
     if (![items count])
         return nil;
     NSURL *item = items.firstObject;
+    std::string file_path =
+        item.path.precomposedStringWithCanonicalMapping.UTF8String;
+
+    // if (isCategoryDir(file_path)) {
+    //     return nil;
+    // }
 
     NSNumber *isDirectory;
     bool is_dir = [item getResourceValue:&isDirectory
@@ -406,8 +412,6 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
     if (is_dir)
         return menu;
 
-    std::string file_path =
-        item.path.precomposedStringWithCanonicalMapping.UTF8String;
     // find where we have it
     auto file = file_status_.find(is_dir ? file_path + "/" : file_path);
     if (file != file_status_.end()) {
