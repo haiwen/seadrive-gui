@@ -338,7 +338,7 @@ int SeafileRpcClient::getCategorySyncStatus(const QString& category, QString *st
 
     *status = ret;
 
-    printf ("status for %s = %s\n", toCStr(category), ret);
+    // printf ("status for %s = %s\n", toCStr(category), ret);
 
     g_free (ret);
     return 0;
