@@ -87,7 +87,6 @@ private slots:
 
     void logoutAccount();
     void onLogoutDeviceRequestSuccess();
-    void onLogoutDeviceRequestFailed(const ApiError& error);
 
     void deleteAccount();
 

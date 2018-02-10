@@ -697,7 +697,7 @@ void SeafileTrayIcon::logoutAccount()
     connect(req, SIGNAL(success()),
             this, SLOT(onLogoutDeviceRequestSuccess()));
     connect(req, SIGNAL(failed(const ApiError&)),
-            this, SLOT(onLogoutDeviceRequestFailed(const ApiError&)));
+            this, SLOT(onLogoutDeviceRequestSuccess()));
     req->send();
 }
 
@@ -713,16 +713,6 @@ void SeafileTrayIcon::onLogoutDeviceRequestSuccess()
 
     gui->accountManager()->clearAccountToken(account);
     req->deleteLater();
-}
-
-void SeafileTrayIcon::onLogoutDeviceRequestFailed(const ApiError& error)
-{
-    LogoutDeviceRequest *req = (LogoutDeviceRequest *)QObject::sender();
-    req->deleteLater();
-    QString msg;
-    msg = tr("Failed to remove information on server: %1").arg(error.toString());
-    qWarning() << "Failed to log out account" << req->account() << msg;
-    gui->warningBox(msg);
 }
 
 void SeafileTrayIcon::deleteAccount()
