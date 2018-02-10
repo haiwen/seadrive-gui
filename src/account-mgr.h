@@ -37,7 +37,7 @@ public:
 
     bool hasAccount() const { return !accounts_.empty(); }
 
-    Account currentAccount() const { return current_account_; }
+    Account currentAccount() const { return hasAccount() ? accounts_[0] : Account(); }
 
     bool setCurrentAccount(const Account& account);
 
@@ -93,8 +93,6 @@ private:
 
     QMutex accounts_mutex_;
     QMutex accounts_cache_mutex_;
-
-    Account current_account_;
 };
 
 #endif  // _SEAF_ACCOUNT_MGR_H

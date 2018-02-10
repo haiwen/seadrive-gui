@@ -272,8 +272,6 @@ int AccountManager::saveAccount(const Account& account)
     sqlite_query_exec(db, zql);
     sqlite3_free(zql);
 
-    current_account_ = new_account;
-
     gui->rpcClient()->switchAccount(new_account);
     gui->rpcClient()->seafileSetConfig(
         "client_name", gui->settingsManager()->getComputerName());
@@ -294,7 +292,7 @@ int AccountManager::removeAccount(const Account& account)
     sqlite_query_exec(db, zql);
     sqlite3_free(zql);
 
-    bool need_switch_account = current_account_ == account;
+    bool need_switch_account = currentAccount() == account;
 
     {
         QMutexLocker lock(&accounts_mutex_);
@@ -304,7 +302,6 @@ int AccountManager::removeAccount(const Account& account)
     }
 
     if (need_switch_account) {
-        current_account_ = Account();
         if (!accounts_.empty()) {
             validateAndUseAccount(accounts_[0]);
         } else {
@@ -362,7 +359,7 @@ bool AccountManager::setCurrentAccount(const Account& account)
 {
     Q_ASSERT(account.isValid());
 
-    if (account == current_account_) {
+    if (account == currentAccount()) {
         return false;
     }
 
@@ -509,7 +506,7 @@ void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo 
     for (size_t i = 0; i < accounts_.size(); i++) {
         if (accounts_[i] == account) {
             accounts_[i].serverInfo = info;
-            if (account == current_account_)
+            if (i == 0)
                 emit accountsChanged();
             break;
         }
@@ -544,9 +541,8 @@ bool AccountManager::clearAccountToken(const Account& account)
     sqlite3_free(zql);
 
     // TODO: notify daemon the account is logged out
-    if (account == current_account_) {
-        current_account_.token = "";
-        reloginAccount(current_account_);
+    if (account == currentAccount()) {
+        reloginAccount(account);
     } else {
         emit accountsChanged();
     }
