@@ -16,7 +16,7 @@
 #include "ui/login-dialog.h"
 #include "shib/shib-login-dialog.h"
 #include "settings-mgr.h"
-// #include "account-info-service.h"
+#include "account-info-service.h"
 
 namespace {
 const char *kVersionKeyName = "version";
@@ -363,7 +363,7 @@ bool AccountManager::setCurrentAccount(const Account& account)
         return false;
     }
 
-    // AccountInfoService::instance()->refresh();
+    AccountInfoService::instance()->refresh();
 
     return true;
 }

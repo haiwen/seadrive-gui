@@ -26,6 +26,7 @@
 #include "settings-mgr.h"
 #include "message-poller.h"
 #include "remote-wipe-service.h"
+#include "account-info-service.h"
 #ifdef HAVE_FINDER_SYNC_SUPPORT
 #include "finder-sync/finder-sync-listener.h"
 #endif
@@ -347,6 +348,7 @@ void SeadriveGui::onDaemonStarted()
     }
 
     RemoteWipeService::instance()->start();
+    AccountInfoService::instance()->start();
 
 #if defined(Q_OS_WIN32)
     SeafileExtensionHandler::instance()->start();
