@@ -84,6 +84,7 @@ public:
 
     bool started() { return started_; }
     bool inExit() { return in_exit_; }
+    qint64 startupTime() const { return startup_time_; }
 
 public slots:
     void start();
@@ -129,6 +130,8 @@ private:
     bool first_use_;
 
     QString disk_letter_;
+
+    qint64 startup_time_;
 };
 
 /**

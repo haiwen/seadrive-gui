@@ -239,7 +239,9 @@ const std::vector<Account>& AccountManager::loadAccounts()
 
 int AccountManager::saveAccount(const Account& account)
 {
+    qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
     Account new_account = account;
+    new_account.lastVisited = timestamp;
     {
         QMutexLocker lock(&accounts_mutex_);
         for (size_t i = 0; i < accounts_.size(); i++) {
@@ -251,8 +253,6 @@ int AccountManager::saveAccount(const Account& account)
         accounts_.insert(accounts_.begin(), new_account);
     }
     updateServerInfo(0);
-
-    qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
 
     char *zql = sqlite3_mprintf(
         "REPLACE INTO Accounts(url, username, token, lastVisited, isShibboleth, AutomaticLogin)"
@@ -343,14 +343,11 @@ bool AccountManager::accountExists(const QUrl& url, const QString& username)
 
 bool AccountManager::validateAndUseAccount(const Account& account)
 {
-    if (account.isAutomaticLogin == false) {
-        clearAccountToken(account);
+    if (!account.isAutomaticLogin && account.lastVisited < gui->startupTime()) {
+        return clearAccountToken(account, true);
+    } else if (!account.isValid()) {
         return reloginAccount(account);
-    }
-    else if (!account.isValid()) {
-        return reloginAccount(account);
-    }
-    else {
+    } else {
         return setCurrentAccount(account);
     }
 }
@@ -518,7 +515,8 @@ void AccountManager::serverInfoFailed(const ApiError &error)
     qWarning("update server info failed %s\n", error.toString().toUtf8().data());
 }
 
-bool AccountManager::clearAccountToken(const Account& account)
+bool AccountManager::clearAccountToken(const Account& account,
+                                       bool force_relogin)
 {
     for (size_t i = 0; i < accounts_.size(); i++) {
         if (accounts_[i] == account) {
@@ -540,8 +538,7 @@ bool AccountManager::clearAccountToken(const Account& account)
     sqlite_query_exec(db, zql);
     sqlite3_free(zql);
 
-    // TODO: notify daemon the account is logged out
-    if (account == currentAccount()) {
+    if (force_relogin || account == currentAccount()) {
         reloginAccount(account);
     } else {
         emit accountsChanged();

@@ -30,7 +30,8 @@ public:
     int saveAccount(const Account& account);
     int removeAccount(const Account& account);
 
-    bool clearAccountToken(const Account& account);
+    bool clearAccountToken(const Account& account,
+                           bool force_relogin=false);
 
     const std::vector<Account>& loadAccounts();
     bool accountExists(const QUrl& url, const QString& username);

@@ -201,6 +201,7 @@ SeadriveGui::SeadriveGui()
       in_exit_(false),
       first_use_(false)
 {
+    startup_time_ = QDateTime::currentMSecsSinceEpoch();
     tray_icon_ = new SeafileTrayIcon(this);
     daemon_mgr_ = new DaemonManager();
     rpc_client_ = new SeafileRpcClient();
