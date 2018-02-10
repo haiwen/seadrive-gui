@@ -356,12 +356,12 @@ bool AccountManager::setCurrentAccount(const Account& account)
 {
     Q_ASSERT(account.isValid());
 
+    // Update the account timestamp and emit "accountsChanged" signal
+    saveAccount(account);
+
     if (account == currentAccount()) {
         return false;
     }
-
-    // Would emit "accountsChanged" signal
-    saveAccount(account);
 
     // AccountInfoService::instance()->refresh();
 
