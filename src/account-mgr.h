@@ -25,7 +25,6 @@ public:
     ~AccountManager();
 
     int start();
-    void updateServerInfo();
 
     int saveAccount(const Account& account);
     int removeAccount(const Account& account);
@@ -41,9 +40,6 @@ public:
     Account currentAccount() const { return hasAccount() ? accounts_[0] : Account(); }
 
     bool setCurrentAccount(const Account& account);
-
-    int replaceAccount(const Account& old_account,
-                       const Account& new_account);
 
     Account getAccountByHostAndUsername(const QString& host,
                                         const QString& username) const;

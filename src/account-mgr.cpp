@@ -368,59 +368,6 @@ bool AccountManager::setCurrentAccount(const Account& account)
     return true;
 }
 
-int AccountManager::replaceAccount(const Account& old_account, const Account& new_account)
-{
-    {
-        QMutexLocker lock(&accounts_mutex_);
-        for (size_t i = 0; i < accounts_.size(); i++) {
-            if (accounts_[i] == old_account) {
-                // TODO copy new_account and old_account before this operation
-                // we might have invalid old_account or new_account after it
-                accounts_[i] = new_account;
-                updateServerInfo(i);
-                break;
-            }
-        }
-    }
-
-    qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
-
-    char *zql = sqlite3_mprintf(
-        "UPDATE Accounts "
-        "SET url = %Q, "
-        "    username = %Q, "
-        "    token = %Q, "
-        "    lastVisited = %Q, "
-        "    isShibboleth = %Q "
-        "    AutomaticLogin = %Q "
-        "WHERE url = %Q "
-        "  AND username = %Q",
-        // new_url
-        new_account.serverUrl.toEncoded().data(),
-        // username
-        new_account.username.toUtf8().data(),
-        // token
-        new_account.token.toUtf8().data(),
-        // lastvisited
-        QString::number(timestamp).toUtf8().data(),
-        // isShibboleth
-        QString::number(new_account.isShibboleth).toUtf8().data(),
-        // isAutomaticLogin
-        QString::number(new_account.isAutomaticLogin).toUtf8().data(),
-        // old_url
-        old_account.serverUrl.toEncoded().data(),
-        // username
-        new_account.username.toUtf8().data()
-        );
-
-    sqlite_query_exec(db, zql);
-    sqlite3_free(zql);
-
-    emit accountsChanged();
-
-    return 0;
-}
-
 Account AccountManager::getAccountByHostAndUsername(const QString& host,
                                                     const QString& username) const
 {
@@ -443,12 +390,6 @@ Account AccountManager::getAccountBySignature(const QString& account_sig) const
     }
 
     return Account();
-}
-
-void AccountManager::updateServerInfo()
-{
-    for (size_t i = 0; i < accounts_.size(); i++)
-        updateServerInfo(i);
 }
 
 void AccountManager::updateServerInfo(unsigned index)
