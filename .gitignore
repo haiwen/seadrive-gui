@@ -101,4 +101,4 @@ seadrive-gui.rc
 *.gz
 
 WinSparkle.lib
-seadrive-helper
+com.seafile.seadrive.helper

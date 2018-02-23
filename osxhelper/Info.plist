@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleIdentifier</key>
-	<string>com.seafile.seadrive.Helper</string>
+	<string>com.seafile.seadrive.helper</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>seadrive-helper</string>
+	<string>com.seafile.seadrive.helper</string>
 	<key>CFBundleVersion</key>
 	<string>0.1</string>
     <key>CFBundleShortVersionString</key>

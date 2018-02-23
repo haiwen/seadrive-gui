@@ -39,7 +39,7 @@
         return false;
     }
 
-    if (![self blessHelperWithLabel:@"com.seafile.seadrive.Helper"
+    if (![self blessHelperWithLabel:@"com.seafile.seadrive.helper"
                               error:&error]) {
         NSLog(@"Something went wrong! %@ / %d",
               [error domain],

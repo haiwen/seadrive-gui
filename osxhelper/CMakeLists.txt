@@ -37,7 +37,7 @@ SET(HELPER_SRC
 ADD_EXECUTABLE(seadrive-helper ${HELPER_SRC})
 
 SET_TARGET_PROPERTIES(seadrive-helper PROPERTIES
-  OUTPUT_NAME "seadrive-helper"
+  OUTPUT_NAME "com.seafile.seadrive.helper"
   XCODE_ATTRIBUTE_MACOSX_DEPLOYMENT_TARGET "10.7"
   XCODE_ATTRIBUTE_LD_RUNPATH_SEARCH_PATHS "@executable_path/../Frameworks @executable_path/../../../../Frameworks"
   XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC "YES"
