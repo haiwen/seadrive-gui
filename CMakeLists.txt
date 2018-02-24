@@ -185,6 +185,7 @@ SET(moc_headers
   src/ui/init-sync-dialog.h
   src/ui/login-dialog.h
   src/ui/seafilelink-dialog.h
+  src/ui/search-bar.h
   src/ui/settings-dialog.h
   src/ui/sharedlink-dialog.h
   src/ui/sync-errors-dialog.h
@@ -292,6 +293,7 @@ SET(seadrive_gui_sources
   src/ui/init-sync-dialog.cpp
   src/ui/login-dialog.cpp
   src/ui/seafilelink-dialog.cpp
+  src/ui/search-bar.cpp
   src/ui/settings-dialog.cpp
   src/ui/sharedlink-dialog.cpp
   src/ui/sync-errors-dialog.cpp

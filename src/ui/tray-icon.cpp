@@ -61,6 +61,30 @@ void darkmodeWatcher(bool /*new Value*/) {
 
 } // namespace
 
+SearchAction::SearchAction(QWidget *parent)
+    : QWidgetAction(parent)
+{
+    my_widget_ = new QWidget();
+//    my_widget_->setWindowFlags(Qt::FramelessWindowHint);
+//    my_widget_->setStyleSheet("background-color: rgb(37, 48, 255);");
+    search_bar_ = new SearchBar;
+    search_bar_->setPlaceholderText(tr("Search files"));
+
+    QVBoxLayout *layout = new QVBoxLayout();
+    layout->addWidget(search_bar_);
+//    layout->setSpacing(5);
+//    layout->setContentsMargins(0, 0, 0, 5);
+    my_widget_->setLayout(layout);
+}
+SearchAction::~SearchAction()
+{}
+
+QWidget * SearchAction::createWidget(QWidget *parent)
+{
+    my_widget_->setParent(parent);
+    return my_widget_;
+}
+
 SeafileTrayIcon::SeafileTrayIcon(QObject *parent)
     : QSystemTrayIcon(parent),
       nth_trayicon_(0),
@@ -156,6 +180,9 @@ void SeafileTrayIcon::createContextMenu()
     // help_menu_->addAction(open_help_action_);
 
     context_menu_ = new QMenu(NULL);
+    search_action_ = new SearchAction(context_menu_);
+    context_menu_->addAction(search_action_);
+    context_menu_->addSeparator();
     context_menu_->addAction(transfer_rate_display_action_);
     context_menu_->addAction(transfer_progress_action_);
     context_menu_->addAction(global_sync_error_action_);
