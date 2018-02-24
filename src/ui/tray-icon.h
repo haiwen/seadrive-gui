@@ -2,11 +2,26 @@
 #define SEAFILE_CLIENT_TRAY_ICON_H
 
 #include <QSystemTrayIcon>
+#include <QWidgetAction>
 #include <QHash>
 #include <QQueue>
 #include <QList>
 
 #include "rpc/sync-error.h"
+#include "search-bar.h"
+
+class SearchBar;
+class SearchAction : public QWidgetAction
+{
+public :
+    explicit SearchAction(QWidget *parent = 0);
+    ~SearchAction();
+protected:
+    QWidget * createWidget(QWidget *parent);
+private:
+    QWidget *my_widget_;
+    SearchBar *search_bar_;
+};
 
 class QAction;
 class QMenu;
@@ -169,6 +184,8 @@ private:
     SyncError global_sync_error_;
     SyncErrorsDialog *sync_errors_dialog_;
     TransferProgressDialog * transfer_progress_dialog_;
+    SearchBar *search_bar_;
+    SearchAction *search_action_;
 };
 
 #endif // SEAFILE_CLIENT_TRAY_ICON_H
