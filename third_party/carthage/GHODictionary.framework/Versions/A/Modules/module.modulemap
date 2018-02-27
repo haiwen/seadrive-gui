@@ -1,0 +1,6 @@
+framework module GHODictionary {
+  umbrella header "GHODictionary.h"
+
+  export *
+  module * { export * }
+}
