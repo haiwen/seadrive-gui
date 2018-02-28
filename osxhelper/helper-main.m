@@ -54,15 +54,13 @@ Copyright (C) 2013 Apple Inc. All Rights Reserved.
 #include <stdio.h>
 #include <stdlib.h>
 
+#import "helper.h"
+
 int main(int argc, const char * argv[])
 {
     #pragma unused(argc)
     #pragma unused(argv)
 
-	syslog(LOG_NOTICE, "Hello world! uid = %d, euid = %d, pid = %d\n", (int) getuid(), (int) geteuid(), (int) getpid());
-	
-	(void) sleep(10);
-	
-	return EXIT_SUCCESS;
+	return [HelperService run];
 }
 

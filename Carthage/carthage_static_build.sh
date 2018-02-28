@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# For the helper tool, we need to embed all dep frameworks because it would be
+# installed to a system-dependent location.
+#
+# Code borrowed from https://github.com/Carthage/Carthage/blob/9259756d/Documentation/StaticFrameworks.md
+#
+
 set -e
 
 CURRENT_PWD="$(dirname "${BASH_SOURCE[0]}")"

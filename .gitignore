@@ -103,4 +103,5 @@ seadrive-gui.rc
 WinSparkle.lib
 com.seafile.seadrive.helper
 Cartfile.resolved
-Carthage/
+Carthage/Checkouts/
+Carthage/Build/
