@@ -739,13 +739,22 @@ void GetLoginTokenRequest::requestSuccess(QNetworkReply& reply)
 
 FileSearchRequest::FileSearchRequest(const Account& account,
                                      const QString& keyword,
-                                     int per_page)
+                                     int page,
+                                     int per_page,
+                                     const QString& repo_id)
     : SeafileApiRequest(account.getAbsoluteUrl(kFileSearchUrl),
                         SeafileApiRequest::METHOD_GET,
                         account.token),
-      keyword_(keyword)
+      keyword_(keyword),
+      page_(page)
 {
     setUrlParam("q", keyword_);
+    if (page > 0) {
+        setUrlParam("page", QString::number(page));
+    }
+    // per_page = 2;
+    setUrlParam("per_page", QString::number(per_page));
+    setUrlParam("search_repo", repo_id);
 }
 
 void FileSearchRequest::requestSuccess(QNetworkReply& reply)
@@ -753,7 +762,7 @@ void FileSearchRequest::requestSuccess(QNetworkReply& reply)
     json_error_t error;
     json_t* root = parseJSON(reply, &error);
     if (!root) {
-        qWarning("FileSearchResult: failed to parse jsn:%s\n", error.text);
+        qWarning("FileSearchResult: failed to parse json:%s\n", error.text);
         emit failed(ApiError::fromJsonError());
         return;
     }
@@ -772,7 +781,7 @@ void FileSearchRequest::requestSuccess(QNetworkReply& reply)
         if (map.empty())
             continue;
         tmp.repo_id = map["repo_id"].toString();
-        // tmp.repo_name = RepoService::instance()->getRepo(tmp.repo_id).name;
+        //tmp.repo_name = RepoService::instance()->getRepo(tmp.repo_id).name;
         tmp.name = map["name"].toString();
         tmp.oid = map["oid"].toString();
         tmp.last_modified = map["last_modified"].toLongLong();
@@ -780,7 +789,10 @@ void FileSearchRequest::requestSuccess(QNetworkReply& reply)
         tmp.size = map["size"].toLongLong();
         retval.push_back(tmp);
     }
-    emit success(retval);
+    bool has_more = dict["has_more"].toBool();
+    bool is_loading_more = page_ > 1;
+
+    emit success(retval, is_loading_more, has_more);
 }
 
 FetchCustomLogoRequest::FetchCustomLogoRequest(const QUrl& url)

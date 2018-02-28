@@ -300,6 +300,27 @@ ActivitiesTab, EventsListView
     qproperty-focusPolicy: NoFocus;
 }
 
+QLineEdit#mSearchBar {
+    min-height: 30px;
+    max-height: 30px;
+    margin-left: 16px;
+    margin-right: 16px;
+    margin-top: 0;
+    margin-bottom: 0px;
+    padding: 0 0px;
+    border: 1px solid #E0E0E0;
+    border-radius: 3px;
+}
+
+QLineEdit#mSearchBar QLabel {
+    min-width: 80px;
+    max-width: 80px;
+}
+
+QLineEdit#mSearchBar:focus {
+    color: #525252;
+}
+
 FileBrowserDialog {
     margin: 0;
     min-width: 640px;
@@ -374,6 +395,7 @@ FileBrowserDialog QToolBar QPushButton:hover {
     color: #FF9A2A;
 }
 
+SearchItemsTableView,
 FileTableView {
     border: 0;
     margin: 0;
@@ -383,6 +405,7 @@ FileTableView {
     qproperty-focusPolicy: NoFocus;
 }
 
+SearchItemsTableView QHeaderView::section,
 FileTableView QHeaderView::section {
     border: 0;
     padding: 8px;
@@ -393,10 +416,12 @@ FileTableView QHeaderView::section {
     padding-top: 20px;
 }
 
+#SearchItemsTableView QHeaderView::section,
 FileTableView QHeaderView::section:first {
     padding-left: 40px;
 }
 
+#SearchItemsTableView QHeaderView::section,
 FileTableView QHeaderView::down-arrow {
     width: 15px;
     height: 5px;
@@ -404,23 +429,28 @@ FileTableView QHeaderView::down-arrow {
     subcontrol-position: center right;
 }
 
+#SearchItemsTableView QHeaderView::section,
 FileTableView QHeaderView::up-arrow {
     padding-top: 15px;
     subcontrol-position: center right;
 }
 
+#SearchItemsTableView QHeaderView::section,
 FileTableView QHeaderView::down-arrow {
   image: url(:/images/filebrowser/down-arrow.png);
 }
 
+#SearchItemsTableView QHeaderView::section,
 FileTableView QHeaderView::up-arrow {
   image: url(:/images/filebrowser/up-arrow.png);
 }
 
+SearchItemsTableView,
 FileTableView::item {
     border-top: 1px solid #e0e0e0;
 }
 
+SearchItemsTableView,
 FileTableView::item :last {
     padding-right: 13px;
 }

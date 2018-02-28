@@ -18,6 +18,7 @@ class LoginDialog;
 class TrayNotificationManager;
 class SyncErrorsDialog;
 class TransferProgressDialog;
+class SearchDialog;
 
 
 class SeafileTrayIcon : public QSystemTrayIcon {
@@ -65,6 +66,7 @@ public:
 
 public slots:
     void showSettingsWindow();
+    void showSearchDialog();
     void showLoginDialog();
     void showLoginDialog(const Account& account);
     void showAboutDialog();
@@ -117,6 +119,7 @@ private:
 
     // Actions for tray icon menu
     QAction *quit_action_;
+    QAction *search_action_;
     QAction *settings_action_;
     QAction *login_action_;
     QAction *open_seafile_folder_action_;
@@ -169,6 +172,8 @@ private:
     SyncError global_sync_error_;
     SyncErrorsDialog *sync_errors_dialog_;
     TransferProgressDialog * transfer_progress_dialog_;
+    SearchDialog *search_dialog_;
+
 };
 
 #endif // SEAFILE_CLIENT_TRAY_ICON_H
