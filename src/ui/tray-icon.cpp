@@ -561,7 +561,8 @@ void SeafileTrayIcon::clearDialog()
 
 void SeafileTrayIcon::onAccountChanged()
 {
-    search_dialog_->close();
+    if (search_dialog_ != nullptr)
+        search_dialog_->close();
 }
 
 void SeafileTrayIcon::showLoginDialog()

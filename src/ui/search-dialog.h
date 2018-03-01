@@ -3,7 +3,6 @@
 #include <QDialog>
 #include <QStyledItemDelegate>
 #include <QTableView>
-#include <QSortFilterProxyModel>
 #include <QTimer>
 #include <vector>
 
@@ -13,7 +12,6 @@
 
 class ApiError;
 class QToolBar;
-class QToolButton;
 class QStackedWidget;
 class QLabel;
 class SearchBar;
@@ -67,11 +65,6 @@ private:
     SearchItemsDelegate* search_delegate_;
 };
 
-
-class SearchDialog;
-class SearchItemsTableModel;
-struct FileSearchResult;
-class FileSearchRequest;
 class SearchItemsTableView : public QTableView
 {
     Q_OBJECT
@@ -79,9 +72,8 @@ public:
     SearchItemsTableView(QWidget* parent = 0);
     void resizeEvent(QResizeEvent* event) Q_DECL_OVERRIDE;
     void setModel(QAbstractItemModel* model) Q_DECL_OVERRIDE;
-    void setupContextMenu();
-signals:
-    void clearSearchBar();
+//signals:
+//    void clearSearchBar();
 private slots:
     void onAboutToReset();
     void onItemDoubleClick(const QModelIndex& index);
@@ -92,8 +84,6 @@ private:
     SearchItemsTableModel* search_model_;
 
     QScopedPointer<const FileSearchResult> search_item_;
-
-    QMenu *context_menu_;
 };
 
 

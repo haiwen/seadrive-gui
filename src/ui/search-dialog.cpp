@@ -311,13 +311,13 @@ void SearchItemsTableView::onItemDoubleClick(const QModelIndex& index)
     if (result->name.isEmpty() || result->fullpath.isEmpty())
         return;
 
-    if (result->fullpath.endsWith("/"))
-        emit clearSearchBar();
+//    if (result->fullpath.endsWith("/"))
+//        emit clearSearchBar();
 
     QString repo_name;
     if (gui->rpcClient()->getRepoUnameById(result->repo_id, &repo_name)) {
-        QString path_to_open = ::pathJoin(gui->mountDir(), repo_name, ::getParentPath(result->fullpath));
-        QDesktopServices::openUrl(QUrl::fromLocalFile(path_to_open));
+        QString path_to_open = ::pathJoin(gui->mountDir(), repo_name, result->fullpath);
+        ::showInGraphicalShell(path_to_open);
     }
 }
 
