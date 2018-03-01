@@ -73,6 +73,8 @@ public slots:
     void onLoginDialogClosed();
 
 private slots:
+    void onAccountChanged();
+    void clearDialog();
     void quitSeafile();
     void onActivated(QSystemTrayIcon::ActivationReason);
     void prepareContextMenu();

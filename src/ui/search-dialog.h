@@ -29,8 +29,10 @@ class SearchDialog : public QDialog
 public:
     SearchDialog(const Account &account, QWidget *parent = 0);
     ~SearchDialog();
-
+signals:
+    void aboutClose();
 private slots:
+    void onRefresh();
     void doSearch(const QString& keyword);
     void doRealSearch();
     void onSearchSuccess(const std::vector<FileSearchResult>& results,
@@ -39,6 +41,7 @@ private slots:
     void onSearchFailed(const ApiError& error);
 
 private:
+    void closeEvent(QCloseEvent *ev);
     void createToolBar();
     void createLoadingFailedView();
     void createEmptyView();
@@ -49,14 +52,14 @@ private:
     const Account account_;
 
     QTimer *search_timer_;
-    qint64 search_text_last_modified_;
     FileSearchRequest *search_request_;
+    qint64 search_text_last_modified_;
 
     QToolBar *toolbar_;
-    QToolButton *refresh_button_;
+//    QToolButton *refresh_button_;
     QStackedWidget *stack_;
     QLabel *loading_failed_view_;
-    QLabel *empty_view_;
+    QWidget *waiting_view_;
 
     SearchBar *search_bar_;
     SearchItemsTableView* search_view_;
@@ -84,11 +87,9 @@ private slots:
     void onItemDoubleClick(const QModelIndex& index);
 
 private:
-    void contextMenuEvent(QContextMenuEvent *event);
 
-    SearchItemsTableModel* search_model_;
     SearchDialog *parent_;
-    QSortFilterProxyModel *proxy_model_;
+    SearchItemsTableModel* search_model_;
 
     QScopedPointer<const FileSearchResult> search_item_;
 
@@ -131,18 +132,5 @@ public:
     void paint(QPainter *painter,
                const QStyleOptionViewItem &option,
                const QModelIndex &index) const;
-};
-
-class SearchSortFilterProxyModel : public QSortFilterProxyModel {
-    Q_OBJECT
-public:
-    SearchSortFilterProxyModel(SearchItemsTableModel *parent)
-        : QSortFilterProxyModel(parent), search_model_(parent) {
-        setSortCaseSensitivity(Qt::CaseInsensitive);
-    }
-    bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
-
-private:
-    SearchItemsTableModel* search_model_;
 };
 #endif //SEAFILE_CLIENT_SEARCH_DIALOG_H

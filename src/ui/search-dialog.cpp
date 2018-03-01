@@ -23,42 +23,32 @@ enum {
 };
 
 enum {
-    INDEX_LOADING_FAILED_VIEW = 5,
-    INDEX_EMPTY_VIEW,
+    INDEX_WAITING_VIEW,
+    INDEX_LOADING_FAILED_VIEW,
     INDEX_SEARCH_VIEW
 };
 
 
-const int kNameColumnWidth = 300;
-const int kDefaultColumnWidth = 100;
+const int kDefaultColumnWidth = 120;
 const int kDefaultColumnHeight = 40;
 const char *kLoadingFailedLabelName = "LoadingFailedText";
 const int kToolBarIconSize = 24;
-const int kStatusBarIconSize = 20;
+//const int kStatusBarIconSize = 20;
 
 const int kAllPage = 1;
 const int kPerPageCount = 10000;
-//zhe.................
+
 const int kColumnIconSize = 28;
 const int kFileNameColumnWidth = 200;
-const int kExtraPadding = 30;
-const int kDefaultColumnSum = kFileNameColumnWidth + kDefaultColumnWidth * 3 + kExtraPadding;
 const int kFileStatusIconSize = 16;
 const int kMarginBetweenFileNameAndStatusIcon = 5;
+const int kMarginLeft = 5;
 
 const QColor kFileNameFontColor("black");
 const QColor kFontColor("#757575");
-//zhe..............
-const int kMarginLeft = 5;
-const int kMarginTop = -5;
-const int kPadding = 5;
-
-const int kRefreshProgressInterval = 1000;
-
 const QColor kSelectedItemBackgroundcColor("#F9E0C7");
 const QColor kItemBackgroundColor("white");
 const QColor kItemBottomBorderColor("#f3f3f3");
-const QColor kItemColor("black");
 
 } // namespace
 
@@ -68,10 +58,9 @@ SearchDialog::SearchDialog(const Account &account, QWidget *parent)
       search_request_(NULL),
       search_text_last_modified_(0)
 {
-    setWindowTitle(tr("Search Progress"));
+    setWindowTitle(tr("Search Dialog"));
     setWindowIcon(QIcon(":/images/seafile.png"));
-    setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
-                   Qt::WindowStaysOnTopHint);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     setMinimumSize(QSize(600, 371));
     createToolBar();
@@ -98,8 +87,8 @@ SearchDialog::SearchDialog(const Account &account, QWidget *parent)
     hlayout->addWidget(toolbar_);
 
     stack_ = new QStackedWidget;
+    stack_->insertWidget(INDEX_WAITING_VIEW, waiting_view_);
     stack_->insertWidget(INDEX_SEARCH_VIEW, search_view_);
-    stack_->insertWidget(INDEX_EMPTY_VIEW, empty_view_);
     stack_->insertWidget(INDEX_LOADING_FAILED_VIEW, loading_failed_view_);
     stack_->setContentsMargins(0, 0, 0, 0);
     stack_->installEventFilter(this);
@@ -112,8 +101,8 @@ SearchDialog::SearchDialog(const Account &account, QWidget *parent)
     connect(search_timer_, SIGNAL(timeout()), this, SLOT(doRealSearch()));
     search_timer_->start(300);
 
-    connect(search_view_, SIGNAL(clearSearchBar()),
-            search_bar_, SLOT(clear()));
+//    connect(search_view_, SIGNAL(clearSearchBar()),
+//            search_bar_, SLOT(clear()));
 }
 
 SearchDialog::~SearchDialog()
@@ -122,11 +111,16 @@ SearchDialog::~SearchDialog()
         search_request_->deleteLater();
 }
 
+void SearchDialog::closeEvent(QCloseEvent *ev)
+{
+    emit aboutClose();
+    ev->accept();
+}
 
 void SearchDialog::createToolBar()
 {
     toolbar_ = new QToolBar;
-    toolbar_->setObjectName("toolBar");
+    toolbar_->setObjectName("topBar");
     toolbar_->setIconSize(QSize(kToolBarIconSize, kToolBarIconSize));
     toolbar_->setStyleSheet("QToolbar { spacing: 0px; }");
 
@@ -137,14 +131,14 @@ void SearchDialog::createToolBar()
     connect(search_bar_, SIGNAL(textChanged(const QString&)),
             this, SLOT(doSearch(const QString&)));
 
-    refresh_button_ = new QToolButton;
-    refresh_button_->setObjectName("refreshButton");
-    refresh_button_->setToolTip(tr("Refresh"));
-    refresh_button_->setIcon(QIcon(":/images/filebrowser/refresh-gray.png"));
-    refresh_button_->setIconSize(QSize(kStatusBarIconSize, kStatusBarIconSize));
-    refresh_button_->installEventFilter(this);
-    connect(refresh_button_, SIGNAL(clicked()), this, SLOT(onRefresh()));
-    toolbar_->addWidget(refresh_button_);
+//    refresh_button_ = new QToolButton;
+//    refresh_button_->setObjectName("refreshButton");
+//    refresh_button_->setToolTip(tr("Refresh"));
+//    refresh_button_->setIcon(QIcon(":/images/filebrowser/refresh-gray.png"));
+//    refresh_button_->setIconSize(QSize(kStatusBarIconSize, kStatusBarIconSize));
+//    refresh_button_->installEventFilter(this);
+//    connect(refresh_button_, SIGNAL(clicked()), this, SLOT(onRefresh()));
+//    toolbar_->addWidget(refresh_button_);
 }
 
 void SearchDialog::createLoadingFailedView()
@@ -161,12 +155,18 @@ void SearchDialog::createLoadingFailedView()
             this, SLOT(onRefresh()));
 }
 
+void SearchDialog::onRefresh()
+{
+    if (!search_bar_->text().isEmpty()) {
+        search_text_last_modified_ = 1;
+        doRealSearch();
+    }
+}
+
 void SearchDialog::createEmptyView()
 {
-    empty_view_ = new QLabel(this);
-    empty_view_->setText(tr("This folder is empty."));
-    empty_view_->setAlignment(Qt::AlignCenter);
-    empty_view_->setStyleSheet("background-color: white;");
+    waiting_view_ = new QWidget;
+    waiting_view_->installEventFilter(this);
 }
 
 void SearchDialog::createTable()
@@ -186,25 +186,26 @@ void SearchDialog::createTable()
 
 bool SearchDialog::eventFilter(QObject *obj, QEvent *event)
 {
-    if (obj == refresh_button_) {
-        if (event->type() == QEvent::Enter) {
-            refresh_button_->setStyleSheet("FileBrowserDialog QToolButton#refreshButton {"
-                                          "background: #DFDFDF; padding: 3px;"
-                                          "margin-right: 12px; border-radius: 2px;}");
-            return true;
-        } else if (event->type() == QEvent::Leave) {
-            refresh_button_->setStyleSheet("FileBrowserDialog QToolButton#refreshButton {"
-                                          "background: #F5F5F7; padding: 0px;"
-                                          "margin-right: 15px;}");
-            return true;
-        }
-    } else if (obj == stack_) {
-        if (stack_->currentIndex() == INDEX_EMPTY_VIEW ||
-            stack_->currentIndex() == INDEX_SEARCH_VIEW) {
-            return true;
-        }
-    }
+    if (obj == waiting_view_ && event->type() == QEvent::Paint) {
+        QPainter painter(waiting_view_);
 
+        QPaintEvent *ev = (QPaintEvent*)event;
+        const QSize size(72, 72);
+        const int x = ev->rect().width() / 2 - size.width() / 2;
+        const int y = ev->rect().height() / 2 - size.height() / 2;
+        QRect rect(QPoint(x, y), size);
+
+        // get the device pixel radio from current painter device
+        int scale_factor = 1;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+        scale_factor = globalDevicePixelRatio();
+#endif // QT5
+
+        QPixmap image = QIcon(":/images/main-panel/search-background.png").pixmap(size);
+        painter.drawPixmap(rect, image);
+
+        return true;
+    };
     return QObject::eventFilter(obj, event);
 }
 
@@ -213,6 +214,7 @@ void SearchDialog::doSearch(const QString &keyword)
 {
     // make it search utf-8 charcters
     if (keyword.toUtf8().size() < 3) {
+        stack_->setCurrentIndex(INDEX_WAITING_VIEW);
         return;
     }
 
@@ -238,7 +240,7 @@ void SearchDialog::doRealSearch()
         search_request_ = NULL;
     }
 
-//    stack_->setCurrentIndex(INDEX_LOADING_VIEW);
+    stack_->setCurrentIndex(INDEX_SEARCH_VIEW);
 
     search_request_ = new FileSearchRequest(account_, search_bar_->text(), kAllPage, kPerPageCount);
     connect(search_request_, SIGNAL(success(const std::vector<FileSearchResult>&, bool, bool)),
@@ -270,39 +272,26 @@ void SearchDialog::onSearchFailed(const ApiError& error)
 SearchItemsTableView::SearchItemsTableView(QWidget* parent)
     : QTableView(parent),
       parent_(qobject_cast<SearchDialog*>(parent)),
-      search_model_(NULL),
-      proxy_model_(NULL)
+      search_model_(NULL)
 {
     verticalHeader()->hide();
-    setSelectionBehavior(QAbstractItemView::SelectRows);
-    // setSelectionMode(QAbstractItemView::ExtendedSelection);
-    setSelectionMode(QAbstractItemView::NoSelection);
-    setMouseTracking(true);
+//    verticalHeader()->setDefaultSectionSize(kDefaultColumnHeight);
+    horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    horizontalHeader()->setStretchLastSection(true);
+    horizontalHeader()->setCascadingSectionResizes(true);
+    horizontalHeader()->setHighlightSections(false);
+//    horizontalHeader()->setSortIndicatorShown(true);
+    horizontalHeader()->setDefaultAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+
+    setGridStyle(Qt::NoPen);
     setShowGrid(false);
     setContentsMargins(0, 5, 0, 5);
-    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    horizontalScrollBar()->close();
-    setItemDelegate(new SearchItemsDelegate(this));
+    setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
 
-//    verticalHeader()->hide();
-//    verticalHeader()->setDefaultSectionSize(kDefaultColumnHeight);
-//    horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-//    horizontalHeader()->setStretchLastSection(true);
-//    horizontalHeader()->setCascadingSectionResizes(true);
-//    horizontalHeader()->setHighlightSections(false);
-//    horizontalHeader()->setSortIndicatorShown(true);
-//    horizontalHeader()->setDefaultAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    setSelectionBehavior(QAbstractItemView::SelectRows);
+    setSelectionMode(QAbstractItemView::SingleSelection);
 
-//    setGridStyle(Qt::NoPen);
-//    setShowGrid(false);
-//    setContentsMargins(0, 0, 0, 0);
-//    setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-
-//    setSelectionBehavior(QAbstractItemView::SelectRows);
-//    setSelectionMode(QAbstractItemView::ExtendedSelection);
-
-//    setMouseTracking(true);
-//    setDragDropMode(QAbstractItemView::DropOnly);
+    setMouseTracking(true);
 
     connect(this, SIGNAL(doubleClicked(const QModelIndex&)),
                 this, SLOT(onItemDoubleClick(const QModelIndex&)));
@@ -315,37 +304,10 @@ void SearchItemsTableView::resizeEvent(QResizeEvent* event)
         search_model_->onResize(event->size());
 }
 
-void SearchItemsTableView::contextMenuEvent(QContextMenuEvent *event)
-{
-    QPoint position = event->pos();
-    const QModelIndex proxy_index = indexAt(position);
-    position = viewport()->mapToGlobal(position);
-    if (!proxy_index.isValid()) {
-        return;
-    }
-
-    const QModelIndex index = proxy_model_->mapToSource(proxy_index);
-    const int row = index.row();
-    const FileSearchResult *result = search_model_->resultAt(row);
-    if (!result)
-        return;
-
-    QItemSelectionModel *selections = this->selectionModel();
-    QModelIndexList selected = selections->selectedRows();
-    if (selected.size() == 1) {
-        search_item_.reset(new FileSearchResult(*result));
-    } else {
-        return;
-    }
-
-    context_menu_->exec(position); // synchronously
-    search_item_.reset(NULL);
-}
-
 void SearchItemsTableView::onItemDoubleClick(const QModelIndex& index)
 {
     const FileSearchResult *result =
-            search_model_->resultAt(proxy_model_->mapToSource(index).row());
+            search_model_->resultAt(index.row());
     if (result->name.isEmpty() || result->fullpath.isEmpty())
         return;
 
@@ -364,12 +326,10 @@ void SearchItemsTableView::setModel(QAbstractItemModel* model)
     search_model_ = qobject_cast<SearchItemsTableModel*>(model);
     if (!search_model_)
         return;
-    proxy_model_ = new SearchSortFilterProxyModel(search_model_);
-    proxy_model_->setSourceModel(search_model_);
-    QTableView::setModel(proxy_model_);
+    QTableView::setModel(search_model_);
 
     connect(model, SIGNAL(modelAboutToBeReset()), this, SLOT(onAboutToReset()));
-    setSortingEnabled(true);
+//    setSortingEnabled(false);
 
     // set default sort by folder
     sortByColumn(FILE_COLUMN_NAME, Qt::AscendingOrder);
@@ -383,7 +343,7 @@ void SearchItemsTableView::onAboutToReset()
 
 SearchItemsTableModel::SearchItemsTableModel(QObject* parent)
     : QAbstractTableModel(parent),
-      name_column_width_(kNameColumnWidth)
+      name_column_width_(kFileNameColumnWidth)
 {
 
 }
@@ -512,7 +472,8 @@ QVariant SearchItemsTableModel::headerData(int section,
 
 const FileSearchResult* SearchItemsTableModel::resultAt(int row) const
 {
-    if (row >= results_.size())
+    int nSize = static_cast<int>(results_.size());
+    if (row >= nSize)
         return NULL;
 
     return &results_[row];
@@ -525,25 +486,6 @@ void SearchItemsTableModel::onResize(const QSize& size)
         return;
     emit dataChanged(index(0, FILE_COLUMN_NAME),
                      index(rowCount()-1 , FILE_COLUMN_NAME));
-}
-
-bool SearchSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
-{
-    bool is_dir_left = search_model_->resultAt(left.row())->fullpath.endsWith("/");
-    bool is_dir_right = search_model_->resultAt(right.row())->fullpath.endsWith("/");
-    if (is_dir_left != is_dir_right) {
-        return sortOrder() != Qt::AscendingOrder ? is_dir_right
-                                                 : !is_dir_right;
-    }
-//    else if ((left.column() == FILE_COLUMN_NAME) &&
-//             (right.column() == FILE_COLUMN_NAME)) {
-//        const QString left_name = search_model_->resultAt(left.row())->name;
-//        const QString right_name = search_model_->resultAt(right.row())->name;
-//        return digitalCompare(left_name, right_name) < 0;
-//    }
-//    else {
-//        return QSortFilterProxyModel::lessThan(left, right);
-//    }
 }
 
 SearchItemsDelegate::SearchItemsDelegate(QObject *parent)

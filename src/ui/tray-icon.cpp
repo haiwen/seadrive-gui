@@ -111,6 +111,9 @@ void SeafileTrayIcon::start()
 #if defined(Q_OS_MAC)
     utils::mac::set_darkmode_watcher(&darkmodeWatcher);
 #endif
+    AccountManager* account_mgr = gui->accountManager();
+    connect(account_mgr, SIGNAL(accountsChanged()), this,
+            SLOT(onAccountChanged()));
 }
 
 void SeafileTrayIcon::createActions()
@@ -548,6 +551,17 @@ void SeafileTrayIcon::showSearchDialog()
     search_dialog_->show();
     search_dialog_->raise();
     search_dialog_->activateWindow();
+    connect(search_dialog_, SIGNAL(aboutClose()), this, SLOT(clearDialog()));
+}
+
+void SeafileTrayIcon::clearDialog()
+{
+    search_dialog_ = nullptr;
+}
+
+void SeafileTrayIcon::onAccountChanged()
+{
+    search_dialog_->close();
 }
 
 void SeafileTrayIcon::showLoginDialog()
