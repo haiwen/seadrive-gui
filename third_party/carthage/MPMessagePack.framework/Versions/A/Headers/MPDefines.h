@@ -29,3 +29,25 @@ typedef void (^MPCompletion)(NSError *error);
 
 #define MPWeakObject(o) __typeof__(o) __weak
 #define MPWeakSelf MPWeakObject(self)
+
+// #ifndef NS_ENUM
+// #define NS_ENUM(_type, _name) enum _name : _type _name; enum _name : _type
+// #endif
+
+// #ifndef NS_ENUM
+// #define NS_OPTIONS(_type, _name) enum _name : _type _name; enum _name : _type
+// #endif
+
+// In CFAvailability.h
+// Enums and Options
+#if (__cplusplus && __cplusplus >= 201103L && (__has_extension(cxx_strong_enums) || __has_feature(objc_fixed_enum))) || (!__cplusplus && __has_feature(objc_fixed_enum))
+  #define NS_ENUM(_type, _name) enum _name : _type _name; enum _name : _type
+  #if (__cplusplus)
+    #define NS_OPTIONS(_type, _name) _type _name; enum : _type
+  #else
+    #define NS_OPTIONS(_type, _name) enum _name : _type _name; enum _name : _type
+  #endif
+#else
+  #define NS_ENUM(_type, _name) _type _name; enum
+  #define NS_OPTIONS(_type, _name) _type _name; enum
+#endif

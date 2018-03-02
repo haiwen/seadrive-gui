@@ -25,31 +25,31 @@ typedef NS_OPTIONS (NSInteger, MPMessagePackOptions) {
 };
 
 @protocol MPMessagePackCoder
-- (nonnull id)encodeObject:(nonnull id)obj;
+- (id)encodeObject:(id)obj;
 @end
 
 @class MPMessagePackClient;
 
 @protocol MPMessagePackClientDelegate <NSObject>
-- (void)client:(nonnull MPMessagePackClient *)client didError:(nonnull NSError *)error fatal:(BOOL)fatal;
-- (void)client:(nonnull MPMessagePackClient *)client didChangeStatus:(MPMessagePackClientStatus)status;
-- (void)client:(nonnull MPMessagePackClient *)client didReceiveNotificationWithMethod:(nonnull NSString *)method params:(nonnull NSArray *)params;
+- (void)client:(MPMessagePackClient *)client didError:(NSError *)error fatal:(BOOL)fatal;
+- (void)client:(MPMessagePackClient *)client didChangeStatus:(MPMessagePackClientStatus)status;
+- (void)client:(MPMessagePackClient *)client didReceiveNotificationWithMethod:(NSString *)method params:(NSArray *)params;
 @end
 
 @interface MPMessagePackClient : NSObject
 
-@property (nullable, weak) id<MPMessagePackClientDelegate> delegate;
-@property (nullable, copy) MPRequestHandler requestHandler;
+@property ( weak) id<MPMessagePackClientDelegate> delegate;
+@property ( copy) MPRequestHandler requestHandler;
 @property (readonly, nonatomic) MPMessagePackClientStatus status;
-@property (nullable) id<MPMessagePackCoder> coder;
+@property  id<MPMessagePackCoder> coder;
 
-- (nonnull instancetype)initWithName:(nonnull NSString *)name options:(MPMessagePackOptions)options;
+- (instancetype)initWithName:(NSString *)name options:(MPMessagePackOptions)options;
 
-- (void)openWithHost:(nonnull NSString *)host port:(UInt32)port completion:(nonnull MPCompletion)completion;
+- (void)openWithHost:(NSString *)host port:(UInt32)port completion:(MPCompletion)completion;
 
-- (BOOL)openWithSocket:(nonnull NSString *)unixSocket completion:(nonnull MPCompletion)completion;
+- (BOOL)openWithSocket:(NSString *)unixSocket completion:(MPCompletion)completion;
 
-- (void)setInputStream:(nonnull NSInputStream *)inputStream outputStream:(nonnull NSOutputStream *)outputStream;
+- (void)setInputStream:(NSInputStream *)inputStream outputStream:(NSOutputStream *)outputStream;
 
 - (void)close;
 
@@ -61,7 +61,7 @@ typedef NS_OPTIONS (NSInteger, MPMessagePackOptions) {
  @param messageId Unique message identifier. Responses will use this message ID.
  @param completion Response
  */
-- (void)sendRequestWithMethod:(nonnull NSString *)method params:(nonnull NSArray *)params messageId:(NSInteger)messageId completion:(nonnull MPRequestCompletion)completion;
+- (void)sendRequestWithMethod:(NSString *)method params:(NSArray *)params messageId:(NSInteger)messageId completion:(MPRequestCompletion)completion;
 
 /*!
  Send a response.
@@ -70,7 +70,7 @@ typedef NS_OPTIONS (NSInteger, MPMessagePackOptions) {
  @param error Error
  @param messageId Message ID (will match request message ID)
  */
-- (void)sendResponseWithResult:(nullable id)result error:(nullable id)error messageId:(NSInteger)messageId;
+- (void)sendResponseWithResult:(id)result error:(id)error messageId:(NSInteger)messageId;
 
 /*!
  Send request synchronously.
@@ -82,7 +82,7 @@ typedef NS_OPTIONS (NSInteger, MPMessagePackOptions) {
  @param error Out error
  @result Result of method invocation
  */
-- (nullable id)sendRequestWithMethod:(nonnull NSString *)method params:(nonnull NSArray *)params messageId:(NSInteger)messageId timeout:(NSTimeInterval)timeout error:(NSError * _Nonnull * _Nonnull)error;
+- (id)sendRequestWithMethod:(NSString *)method params:(NSArray *)params messageId:(NSInteger)messageId timeout:(NSTimeInterval)timeout error:(NSError *)error;
 
 /*!
  Cancel request.
