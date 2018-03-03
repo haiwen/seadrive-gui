@@ -127,7 +127,7 @@ void SeafileTrayIcon::createActions()
     quit_action_ = new QAction(tr("&Quit"), this);
     connect(quit_action_, SIGNAL(triggered()), this, SLOT(quitSeafile()));
 
-    search_action_ = new QAction(tr("Search file"), this);
+    search_action_ = new QAction(tr("Search files"), this);
     connect(search_action_, SIGNAL(triggered()), this, SLOT(showSearchDialog()));
 
     settings_action_ = new QAction(tr("Settings"), this);

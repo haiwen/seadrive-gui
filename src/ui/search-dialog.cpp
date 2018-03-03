@@ -58,7 +58,7 @@ SearchDialog::SearchDialog(const Account &account, QWidget *parent)
       search_request_(NULL),
       search_text_last_modified_(0)
 {
-    setWindowTitle(tr("Search Dialog"));
+    setWindowTitle(tr("Search files"));
     setWindowIcon(QIcon(":/images/seafile.png"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
@@ -224,9 +224,6 @@ bool SearchDialog::eventFilter(QObject *obj, QEvent *event)
 
         // get the device pixel radio from current painter device
         int scale_factor = 1;
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-        scale_factor = globalDevicePixelRatio();
-#endif // QT5
 
         QPixmap image = QIcon(":/images/main-panel/search-background.png").pixmap(size);
         painter.drawPixmap(rect, image);
