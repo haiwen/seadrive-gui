@@ -51,7 +51,7 @@ private:
     void closeEvent(QCloseEvent *ev);
     void createToolBar();
     void createFilterMenu();
-    void createLoadingFailedView();
+    void createLoadingView();
     void createEmptyView();
     void createTable();
 
@@ -76,6 +76,8 @@ private:
     QStackedWidget *stack_;
     QLabel *loading_failed_view_;
     QWidget *waiting_view_;
+    QWidget *loading_view_;
+    QLabel *empty_view_;
 
     SearchBar *search_bar_;
     SearchItemsTableView* search_view_;

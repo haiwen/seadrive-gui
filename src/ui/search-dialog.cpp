@@ -11,6 +11,7 @@
 #include "utils/utils.h"
 #include "utils/paint-utils.h"
 #include "utils/file-utils.h"
+#include "ui/loading-view.h"
 
 namespace
 {
@@ -24,7 +25,9 @@ enum {
 
 enum {
     INDEX_WAITING_VIEW,
+    INDEX_LOADING_VIEW,
     INDEX_LOADING_FAILED_VIEW,
+    INDEX_EMPTY_VIEW,
     INDEX_SEARCH_VIEW
 };
 
@@ -65,7 +68,7 @@ SearchDialog::SearchDialog(const Account &account, QWidget *parent)
     setMinimumSize(QSize(600, 371));
     createToolBar();
     createFilterMenu();
-    createLoadingFailedView();
+    createLoadingView();
     createEmptyView();
     createTable();
 
@@ -89,8 +92,10 @@ SearchDialog::SearchDialog(const Account &account, QWidget *parent)
 
     stack_ = new QStackedWidget;
     stack_->insertWidget(INDEX_WAITING_VIEW, waiting_view_);
-    stack_->insertWidget(INDEX_SEARCH_VIEW, search_view_);
+    stack_->insertWidget(INDEX_LOADING_VIEW, loading_view_);
     stack_->insertWidget(INDEX_LOADING_FAILED_VIEW, loading_failed_view_);
+    stack_->insertWidget(INDEX_EMPTY_VIEW, empty_view_);
+    stack_->insertWidget(INDEX_SEARCH_VIEW, search_view_);
     stack_->setContentsMargins(0, 0, 0, 0);
     stack_->installEventFilter(this);
     stack_->setAcceptDrops(true);
@@ -162,8 +167,11 @@ void SearchDialog::createFilterMenu()
             this, SLOT(onRefresh()));
 }
 
-void SearchDialog::createLoadingFailedView()
+void SearchDialog::createLoadingView()
 {
+    loading_view_ = new LoadingView;
+    static_cast<LoadingView*>(loading_view_)->setQssStyleForTab();
+
     loading_failed_view_ = new QLabel;
     loading_failed_view_->setObjectName(kLoadingFailedLabelName);
     QString link = QString("<a style=\"color:#777\" href=\"#\">%1</a>").arg(tr("retry"));
@@ -194,6 +202,11 @@ void SearchDialog::createEmptyView()
 {
     waiting_view_ = new QWidget;
     waiting_view_->installEventFilter(this);
+
+    empty_view_ = new QLabel(this);
+    empty_view_->setText(tr("This folder is empty."));
+    empty_view_->setAlignment(Qt::AlignCenter);
+    empty_view_->setStyleSheet("background-color: white");
 }
 
 void SearchDialog::createTable()
@@ -221,9 +234,6 @@ bool SearchDialog::eventFilter(QObject *obj, QEvent *event)
         const int x = ev->rect().width() / 2 - size.width() / 2;
         const int y = ev->rect().height() / 2 - size.height() / 2;
         QRect rect(QPoint(x, y), size);
-
-        // get the device pixel radio from current painter device
-        int scale_factor = 1;
 
         QPixmap image = QIcon(":/images/main-panel/search-background.png").pixmap(size);
         painter.drawPixmap(rect, image);
@@ -282,7 +292,7 @@ void SearchDialog::doRealSearch(bool isAll,
         allOrCustom = QString("custom");
     }
 
-    stack_->setCurrentIndex(INDEX_SEARCH_VIEW);
+    stack_->setCurrentIndex(INDEX_LOADING_VIEW);
 
     search_request_ = new FileSearchRequest(account_, search_bar_->text(), filter_list, input_fexts, allOrCustom,
                                             kAllPage, kPerPageCount);
@@ -302,7 +312,11 @@ void SearchDialog::onSearchSuccess(const std::vector<FileSearchResult>& results,
                                 bool has_more)
 {
     search_model_->setSearchResult(results);
-    stack_->setCurrentIndex(INDEX_SEARCH_VIEW);
+    if (results.size() == 0) {
+        stack_->setCurrentIndex(INDEX_EMPTY_VIEW);
+    } else {
+        stack_->setCurrentIndex(INDEX_SEARCH_VIEW);
+    }
 //    updateFileCount();
 }
 
