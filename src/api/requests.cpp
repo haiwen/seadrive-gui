@@ -8,8 +8,7 @@
 #include "api-error.h"
 #include "commit-details.h"
 #include "event.h"
-// #include "repo-service.h"
-// #include "rpc/rpc-client.h"
+#include "rpc/rpc-client.h"
 #include "seadrive-gui.h"
 #include "server-repo.h"
 #include "utils/api-utils.h"
@@ -789,7 +788,9 @@ void FileSearchRequest::requestSuccess(QNetworkReply& reply)
         if (map.empty())
             continue;
         tmp.repo_id = map["repo_id"].toString();
-        //tmp.repo_name = RepoService::instance()->getRepo(tmp.repo_id).name;
+        QString repo_name;
+        gui->rpcClient()->getRepoUnameById(tmp.repo_id, &repo_name);
+        tmp.repo_name = repo_name;
         tmp.name = map["name"].toString();
         tmp.oid = map["oid"].toString();
         tmp.last_modified = map["last_modified"].toLongLong();

@@ -46,12 +46,17 @@ const int kFileNameColumnWidth = 200;
 const int kFileStatusIconSize = 16;
 const int kMarginBetweenFileNameAndStatusIcon = 5;
 const int kMarginLeft = 5;
+const int kFileNameHeight = 12;
+const int kSubtitleHeight = 5;
 
 const QColor kFileNameFontColor("black");
 const QColor kFontColor("#757575");
 const QColor kSelectedItemBackgroundcColor("#F9E0C7");
 const QColor kItemBackgroundColor("white");
 const QColor kItemBottomBorderColor("#f3f3f3");
+const QColor kSubtitleColor("#959595");
+
+const int SubtitleRole = Qt::UserRole + 1;
 
 } // namespace
 
@@ -332,7 +337,7 @@ SearchItemsTableView::SearchItemsTableView(QWidget* parent)
       search_model_(NULL)
 {
     verticalHeader()->hide();
-//    verticalHeader()->setDefaultSectionSize(kDefaultColumnHeight);
+    verticalHeader()->setDefaultSectionSize(kDefaultColumnHeight);
     horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     horizontalHeader()->setStretchLastSection(true);
     horizontalHeader()->setCascadingSectionResizes(true);
@@ -371,11 +376,8 @@ void SearchItemsTableView::onItemDoubleClick(const QModelIndex& index)
 //    if (result->fullpath.endsWith("/"))
 //        emit clearSearchBar();
 
-    QString repo_name;
-    if (gui->rpcClient()->getRepoUnameById(result->repo_id, &repo_name)) {
-        QString path_to_open = ::pathJoin(gui->mountDir(), repo_name, result->fullpath);
-        ::showInGraphicalShell(path_to_open);
-    }
+    QString path_to_open = ::pathJoin(gui->mountDir(), result->repo_name, result->fullpath);
+    ::showInGraphicalShell(path_to_open);
 }
 
 void SearchItemsTableView::setModel(QAbstractItemModel* model)
@@ -443,6 +445,16 @@ QVariant SearchItemsTableModel::data(
         }
 
         return icon.pixmap(kColumnIconSize, kColumnIconSize);
+    }
+
+    if (role == SubtitleRole && column == FILE_COLUMN_NAME) {
+        int count_of_splash = result.fullpath.endsWith("/") ? 2 : 1;
+        QString subtitle = result.fullpath.mid(1, result.fullpath.size() - count_of_splash - result.name.size());
+        if (!subtitle.isEmpty())
+            subtitle = result.repo_name + "/" + subtitle.left(subtitle.size() - 1);
+        else
+            subtitle = result.repo_name;
+        return subtitle;
     }
 
     if (role == Qt::SizeHintRole) {
@@ -619,7 +631,7 @@ void SearchItemsDelegate::paint(QPainter *painter,
         // draw text
         QFont font = model->data(index, Qt::FontRole).value<QFont>();
         QRect rect(option_rect.topLeft() + QPoint(kMarginLeft + 2 * 2 + kColumnIconSize, -2),
-                   size - QSize(kColumnIconSize + kMarginLeft, 0));
+                   size - QSize(kColumnIconSize + kMarginLeft, kFileNameHeight));
         painter->setPen(kFileNameFontColor);
         painter->setFont(font);
         painter->drawText(
@@ -629,6 +641,23 @@ void SearchItemsDelegate::paint(QPainter *painter,
                 text,
                 option.font,
                 rect.width() - kMarginBetweenFileNameAndStatusIcon - kFileStatusIconSize - 5));
+
+        //
+        // Paint repo_name
+        //
+        QString subtitle = model->data(index, SubtitleRole).value<QString>();
+        QFont subtitle_font;
+        subtitle_font.setPixelSize(10);
+        QRect subtitle_rect(option_rect.topLeft() + QPoint(kMarginLeft + 2 * 2 + kColumnIconSize, -2),
+                   size - QSize(kColumnIconSize + kMarginLeft, kSubtitleHeight));
+        painter->save();
+        painter->setPen(kSubtitleColor);
+        painter->setFont(subtitle_font);
+        painter->drawText(subtitle_rect,
+                          Qt::AlignLeft | Qt::AlignBottom,
+                          fitTextToWidth(subtitle, option.font, subtitle_rect.width() - kMarginBetweenFileNameAndStatusIcon - kFileStatusIconSize - 5),
+                          &subtitle_rect);
+        painter->restore();
     }
         break;
     case FILE_COLUMN_SIZE:
