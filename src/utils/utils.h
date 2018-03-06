@@ -6,6 +6,7 @@
 #include <QDir>
 #include <QMap>
 #include <QHash>
+#include <QMultiHash>
 #include <QUrl>
 #include <QSslError>
 
@@ -87,7 +88,7 @@ void msleep(int mseconds);
 
 
 QUrl includeQueryParams(const QUrl& url,
-                        const QHash<QString, QString>& params);
+                        const QMultiHash<QString, QString>& params);
 
 QByteArray buildFormData(const QHash<QString, QString>& params);
 

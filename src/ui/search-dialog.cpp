@@ -82,6 +82,7 @@ SearchDialog::SearchDialog(const Account &account, QWidget *parent)
 
     setMinimumSize(QSize(600, 371));
     createToolBar();
+    createFilterMenu();
     createLoadingFailedView();
     createEmptyView();
     createTable();
@@ -99,10 +100,10 @@ SearchDialog::SearchDialog(const Account &account, QWidget *parent)
     vlayout->setSpacing(0);
     widget->setLayout(vlayout);
 
-    QHBoxLayout *hlayout = new QHBoxLayout;
-    hlayout->setContentsMargins(1, 0, 1, 0);
-    hlayout->setSpacing(0);
-    hlayout->addWidget(toolbar_);
+//    QHBoxLayout *hlayout = new QHBoxLayout;
+//    hlayout->setContentsMargins(1, 0, 1, 0);
+//    hlayout->setSpacing(0);
+//    hlayout->addWidget(toolbar_);
 
     stack_ = new QStackedWidget;
     stack_->insertWidget(INDEX_WAITING_VIEW, waiting_view_);
@@ -112,7 +113,9 @@ SearchDialog::SearchDialog(const Account &account, QWidget *parent)
     stack_->installEventFilter(this);
     stack_->setAcceptDrops(true);
 
-    vlayout->addLayout(hlayout);
+    //vlayout->addLayout(hlayout);
+    vlayout->addWidget(toolbar_);
+    vlayout->addWidget(filter_menu_);
     vlayout->addWidget(stack_);
 
     search_timer_ = new QTimer(this);
@@ -149,6 +152,16 @@ void SearchDialog::createToolBar()
     connect(search_bar_, SIGNAL(textChanged(const QString&)),
             this, SLOT(doSearch(const QString&)));
 
+    search_all_file_ = new QRadioButton;
+    search_all_file_->setText(tr("All file types"));
+    search_all_file_->setChecked(true);
+    connect(search_all_file_, SIGNAL(clicked()), this, SLOT(closeFilterMenu()));
+
+    search_custom_file_ = new QRadioButton;
+    search_custom_file_->setText(tr("Custom file type"));
+    connect(search_custom_file_, SIGNAL(clicked()), this, SLOT(openFilterMenu()));
+    toolbar_->addWidget(search_all_file_);
+    toolbar_->addWidget(search_custom_file_);
 //    refresh_button_ = new QToolButton;
 //    refresh_button_->setObjectName("refreshButton");
 //    refresh_button_->setToolTip(tr("Refresh"));
@@ -157,6 +170,14 @@ void SearchDialog::createToolBar()
 //    refresh_button_->installEventFilter(this);
 //    connect(refresh_button_, SIGNAL(clicked()), this, SLOT(onRefresh()));
 //    toolbar_->addWidget(refresh_button_);
+}
+
+void SearchDialog::createFilterMenu()
+{
+    filter_menu_ = new FilterMenu;
+    filter_menu_->setVisible(false);
+    connect(filter_menu_, SIGNAL(filterChanged()),
+            this, SLOT(onRefresh()));
 }
 
 void SearchDialog::createLoadingFailedView()
@@ -175,9 +196,15 @@ void SearchDialog::createLoadingFailedView()
 
 void SearchDialog::onRefresh()
 {
+    QStringList filter_list = filter_menu_->filterList();
+    QString input_fexts = filter_menu_->inputFexts();
     if (!search_bar_->text().isEmpty()) {
         search_text_last_modified_ = 1;
-        doRealSearch();
+        if (!filter_list.isEmpty() || !input_fexts.isEmpty()) {
+            doRealSearch(false, filter_list, input_fexts);
+        } else {
+            doRealSearch();
+        }
     }
 }
 
@@ -224,6 +251,15 @@ bool SearchDialog::eventFilter(QObject *obj, QEvent *event)
     return QObject::eventFilter(obj, event);
 }
 
+void SearchDialog::openFilterMenu()
+{
+    filter_menu_->setVisible(true);
+}
+
+void SearchDialog::closeFilterMenu()
+{
+    filter_menu_->setVisible(false);
+}
 
 void SearchDialog::doSearch(const QString &keyword)
 {
@@ -237,7 +273,10 @@ void SearchDialog::doSearch(const QString &keyword)
     search_text_last_modified_ = QDateTime::currentMSecsSinceEpoch();
 }
 
-void SearchDialog::doRealSearch(bool load_more)
+void SearchDialog::doRealSearch(bool load_more,
+                                bool isAll,
+                                const QStringList& filter_list,
+                                const QString& input_fexts)
 {
     if (!load_more) {
         // not modified
@@ -268,7 +307,16 @@ void SearchDialog::doRealSearch(bool load_more)
         nth_page_++;
     }
 
-    search_request_ = new FileSearchRequest(account_, search_bar_->text(), nth_page_);
+    QString allOrCustom;
+    if (isAll) {
+        allOrCustom = QString("all");
+    } else {
+        allOrCustom = QString("custom");
+    }
+
+    stack_->setCurrentIndex(INDEX_SEARCH_VIEW);
+
+    search_request_ = new FileSearchRequest(account_, search_bar_->text(), filter_list, input_fexts, allOrCustom, nth_page_);
     connect(search_request_, SIGNAL(success(const std::vector<FileSearchResult>&, bool, bool)),
             this, SLOT(onSearchSuccess(const std::vector<FileSearchResult>&, bool, bool)));
     connect(search_request_, SIGNAL(failed(const ApiError&)),

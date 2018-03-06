@@ -15,6 +15,7 @@
 #include "utils/api-utils.h"
 #include "utils/json-utils.h"
 #include "utils/utils.h"
+#include "utils/file-utils.h"
 #include "seaf-dirent.h"
 
 #include "requests.h"
@@ -739,9 +740,11 @@ void GetLoginTokenRequest::requestSuccess(QNetworkReply& reply)
 
 FileSearchRequest::FileSearchRequest(const Account& account,
                                      const QString& keyword,
+                                     const QStringList& ftype,
+                                     const QString& input_fexts,
+                                     const QString& search_ftypes,
                                      int page,
-                                     int per_page,
-                                     const QString& repo_id)
+                                     int per_page)
     : SeafileApiRequest(account.getAbsoluteUrl(kFileSearchUrl),
                         SeafileApiRequest::METHOD_GET,
                         account.token),
@@ -754,7 +757,12 @@ FileSearchRequest::FileSearchRequest(const Account& account,
     }
     // per_page = 2;
     setUrlParam("per_page", QString::number(per_page));
-    setUrlParam("search_repo", repo_id);
+    setUrlParam("search_ftypes", search_ftypes);
+    for (int i = 0; i < ftype.size(); i++) {
+        setUrlParam("ftype", ftype.at(i));
+    }
+
+    setUrlParam("input_fexts", input_fexts);
 }
 
 void FileSearchRequest::requestSuccess(QNetworkReply& reply)
