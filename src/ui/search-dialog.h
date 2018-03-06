@@ -3,18 +3,23 @@
 #include <QDialog>
 #include <QStyledItemDelegate>
 #include <QTableView>
+#include <QSortFilterProxyModel>
 #include <QTimer>
 #include <vector>
 
 #include "search-bar.h"
 #include "api/requests.h"
 #include "account.h"
+#include "ui/filter-menu.h"
 
 class ApiError;
 class QToolBar;
 class QStackedWidget;
 class QLabel;
+class QRadioButton;
+class QCheckBox;
 class SearchBar;
+class FilterMenu;
 class SearchItemsTableView;
 class SearchItemsTableModel;
 class SearchItemsDelegate;
@@ -30,9 +35,13 @@ public:
 signals:
     void aboutClose();
 private slots:
+    void openFilterMenu();
+    void closeFilterMenu();
     void onRefresh();
     void doSearch(const QString& keyword);
-    void doRealSearch();
+    void doRealSearch(bool isAll = true,
+                      const QStringList& filter_list = QStringList(),
+                      const QString& input_fexts = QString());
     void onSearchSuccess(const std::vector<FileSearchResult>& results,
                          bool is_loading_more,
                          bool has_more);
@@ -41,6 +50,7 @@ private slots:
 private:
     void closeEvent(QCloseEvent *ev);
     void createToolBar();
+    void createFilterMenu();
     void createLoadingFailedView();
     void createEmptyView();
     void createTable();
@@ -53,8 +63,16 @@ private:
     FileSearchRequest *search_request_;
     qint64 search_text_last_modified_;
 
+    //toolbar
     QToolBar *toolbar_;
 //    QToolButton *refresh_button_;
+    QRadioButton *search_all_file_;
+    QRadioButton *search_custom_file_;
+
+    //menu
+    FilterMenu *filter_menu_;
+
+    //stack
     QStackedWidget *stack_;
     QLabel *loading_failed_view_;
     QWidget *waiting_view_;
@@ -80,10 +98,10 @@ private slots:
 
 private:
 
-    SearchDialog *parent_;
-    SearchItemsTableModel* search_model_;
-
     QScopedPointer<const FileSearchResult> search_item_;
+    SearchDialog *parent_;
+    // source model
+    SearchItemsTableModel *search_model_;
 };
 
 
