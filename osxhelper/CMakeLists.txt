@@ -58,5 +58,9 @@ SET_TARGET_PROPERTIES(seadrive-helper PROPERTIES
 
 TARGET_LINK_LIBRARIES(seadrive-helper
   ${OSX_LIBS}
+  # Embed the Info.plist and Launchd.plist into the helper tool executable
   "-sectcreate __TEXT __info_plist ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist -sectcreate __TEXT __launchd_plist ${CMAKE_CURRENT_SOURCE_DIR}/launchd.plist"
+  # load all members from static objc libs like MPMessagePack because it has
+  # objc class category
+  "-ObjC"
 )

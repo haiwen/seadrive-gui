@@ -34,20 +34,23 @@ typedef void (^MPCompletion)(NSError *error);
 // #define NS_ENUM(_type, _name) enum _name : _type _name; enum _name : _type
 // #endif
 
-// #ifndef NS_ENUM
+// #ifndef NS_OPTIONS
 // #define NS_OPTIONS(_type, _name) enum _name : _type _name; enum _name : _type
 // #endif
 
-// In CFAvailability.h
-// Enums and Options
-#if (__cplusplus && __cplusplus >= 201103L && (__has_extension(cxx_strong_enums) || __has_feature(objc_fixed_enum))) || (!__cplusplus && __has_feature(objc_fixed_enum))
-  #define NS_ENUM(_type, _name) enum _name : _type _name; enum _name : _type
-  #if (__cplusplus)
-    #define NS_OPTIONS(_type, _name) _type _name; enum : _type
-  #else
-    #define NS_OPTIONS(_type, _name) enum _name : _type _name; enum _name : _type
-  #endif
-#else
-  #define NS_ENUM(_type, _name) _type _name; enum
-  #define NS_OPTIONS(_type, _name) _type _name; enum
+// NS_ENUM and NS_OPTIONS are not available on 10.7
+#ifndef NS_ENUM
+    // In CFAvailability.h
+    // Enums and Options
+    #if (__cplusplus && __cplusplus >= 201103L && (__has_extension(cxx_strong_enums) || __has_feature(objc_fixed_enum))) || (!__cplusplus && __has_feature(objc_fixed_enum))
+    #define NS_ENUM(_type, _name) enum _name : _type _name; enum _name : _type
+    #if (__cplusplus)
+        #define NS_OPTIONS(_type, _name) _type _name; enum : _type
+    #else
+        #define NS_OPTIONS(_type, _name) enum _name : _type _name; enum _name : _type
+    #endif
+    #else
+    #define NS_ENUM(_type, _name) _type _name; enum
+    #define NS_OPTIONS(_type, _name) _type _name; enum
+    #endif
 #endif
