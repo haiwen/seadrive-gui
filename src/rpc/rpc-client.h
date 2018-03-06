@@ -64,8 +64,6 @@ public:
                           const QString& path_in_repo,
                           QString *status);
 
-    int getCategorySyncStatus(const QString& category, QString *status);
-
     int markFileLockState(const QString& repo_id,
                           const QString& path_in_repo,
                           bool lock);
