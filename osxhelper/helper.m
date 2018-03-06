@@ -56,7 +56,7 @@
                        messageId:(NSNumber *)messageId
                       completion:(void (^)(NSError *error, id value))completion
 {
-    NSDictionary *args = [params count] == 1 ? params[0] : @{};
+    NSDictionary *args = [params count] == 1 ? [params objectAtIndex:0] : @{};
     NSLog(@"Request: %@(%@)", method, args);
     if ([method isEqualToString:@"version"]) {
         [self version:completion];
