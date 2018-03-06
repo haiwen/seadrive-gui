@@ -1,18 +1,17 @@
-# How to install Cocoa dependencies
+# How to build the MPMessagePack framework
 
-* Install carthage
+We use the MPMessagePack library for the xpc between the main seadrive-gui program and the com.seafile.seadrive.helper helper tool.
+
+The helper tool is a standalone executable, so we need to compile MPMessagePack as a static framework. Here is how to do that.
+
+* Build the framework as a static lib
 ```sh
-wget https://github.com/Carthage/Carthage/releases/download/0.28.0/Carthage.pkg
-open Carthage.pkg
+git clone git@github.com:haiwen/MPMessagePack.git
+cd MPMessagePack
+./build_static.sh
 ```
 
-* Install deps:
-```sh
-Carthage/carthage_static_build.sh
+* Copy to "seadrive-gui/third_party" folder
 ```
-
-* Copy to thirdparty folder
-```
-mkdir -p third_party/carthage
-rsync -a --delete Carthage/Build/Mac/ third_party/carthage
+rsync -a --delete build/Release/MPMessagePack.framework /path/to/seadrive-gui/third_party/
 ```
