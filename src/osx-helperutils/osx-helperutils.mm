@@ -2,7 +2,8 @@
 #import <Security/Authorization.h>
 #import <ServiceManagement/ServiceManagement.h>
 
-#import "src/osx_helperutils/osx_helperutils.h"
+#import "src/osx-helperutils/osx-helperutils.h"
+#import "src/osx-helperutils/helper-client.h"
 
 #if !__has_feature(objc_arc)
 #error this file must be built with ARC support
@@ -111,4 +112,10 @@ bool installHelperTool()
 {
     SMJobBlessHelper *helper = [[SMJobBlessHelper alloc] init];
     return [helper install];
+}
+
+void getHelperToolVersion()
+{
+    HelperClient *c = new HelperClient();
+    c->getVersion();
 }

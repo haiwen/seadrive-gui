@@ -3,4 +3,6 @@
 
 bool installHelperTool();
 
+void getHelperToolVersion();
+
 #endif // SEAFILE_HELPERUTIL_UTILS_H

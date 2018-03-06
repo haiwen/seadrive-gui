@@ -43,7 +43,7 @@
 
 #if defined(Q_OS_MAC)
 #include "utils/utils-mac.h"
-#include "osx_helperutils/osx_helperutils.h"
+#include "osx-helperutils/osx-helperutils.h"
 #endif
 
 #include "seadrive-gui.h"
@@ -205,6 +205,7 @@ SeadriveGui::SeadriveGui()
 {
     startup_time_ = QDateTime::currentMSecsSinceEpoch();
     installHelperTool();
+    getHelperToolVersion();
     tray_icon_ = new SeafileTrayIcon(this);
     daemon_mgr_ = new DaemonManager();
     rpc_client_ = new SeafileRpcClient();
