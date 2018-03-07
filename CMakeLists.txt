@@ -183,6 +183,7 @@ SET(moc_headers
   src/traynotificationmanager.h
 
   src/ui/init-sync-dialog.h
+  src/ui/loading-view.h
   src/ui/login-dialog.h
   src/ui/seafilelink-dialog.h
   src/ui/search-bar.h
@@ -292,6 +293,7 @@ SET(seadrive_gui_sources
   src/traynotificationmanager.cpp
 
   src/ui/init-sync-dialog.cpp
+  src/ui/loading-view.cpp
   src/ui/login-dialog.cpp
   src/ui/seafilelink-dialog.cpp
   src/ui/search-bar.cpp

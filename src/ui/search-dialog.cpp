@@ -11,6 +11,7 @@
 #include "utils/utils.h"
 #include "utils/paint-utils.h"
 #include "utils/file-utils.h"
+#include "ui/loading-view.h"
 
 namespace
 {
@@ -33,10 +34,8 @@ const int kDefaultColumnWidth = 120;
 const int kDefaultColumnHeight = 40;
 const char *kLoadingFailedLabelName = "LoadingFailedText";
 const int kToolBarIconSize = 24;
+const int kInputDelayInterval = 300;
 //const int kStatusBarIconSize = 20;
-
-const int kAllPage = 1;
-const int kPerPageCount = 10000;
 
 const int kColumnIconSize = 28;
 const int kFileNameColumnWidth = 200;
@@ -50,14 +49,33 @@ const QColor kSelectedItemBackgroundcColor("#F9E0C7");
 const QColor kItemBackgroundColor("white");
 const QColor kItemBottomBorderColor("#f3f3f3");
 
+const int PLACE_HOLDER_TYPE = 999;
+
+const int ResultAtRole = Qt::UserRole + 1;
+
+static inline const QTableWidgetItem *getItem(const QModelIndex &index)
+{
+    const SearchItemsTableModel *model = static_cast<const SearchItemsTableModel*>(index.model());
+    return model->item(index);
+}
+static inline FileSearchResult getSearchResult(const QModelIndex &index)
+{
+    const QTableWidgetItem *item = getItem(index);
+    if (!item)
+        return FileSearchResult();
+    return item->data(ResultAtRole).value<FileSearchResult>();
+}
+
 } // namespace
 
 SearchDialog::SearchDialog(const Account &account, QWidget *parent)
     : QDialog(parent),
       account_(account),
       search_request_(NULL),
-      search_text_last_modified_(0)
+      search_text_last_modified_(0),
+      nth_page_(1)
 {
+    loading_row_ = 0;
     setWindowTitle(tr("Search files"));
     setWindowIcon(QIcon(":/images/seafile.png"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -99,7 +117,7 @@ SearchDialog::SearchDialog(const Account &account, QWidget *parent)
 
     search_timer_ = new QTimer(this);
     connect(search_timer_, SIGNAL(timeout()), this, SLOT(doRealSearch()));
-    search_timer_->start(300);
+    search_timer_->start(kInputDelayInterval);
 
 //    connect(search_view_, SIGNAL(clearSearchBar()),
 //            search_bar_, SLOT(clear()));
@@ -219,11 +237,17 @@ void SearchDialog::doSearch(const QString &keyword)
     search_text_last_modified_ = QDateTime::currentMSecsSinceEpoch();
 }
 
-void SearchDialog::doRealSearch()
+void SearchDialog::doRealSearch(bool load_more)
 {
-    // not modified
-    if (search_text_last_modified_ == 0)
-        return;
+    if (!load_more) {
+        // not modified
+        if (search_text_last_modified_ == 0)
+            return;
+        // modified too fast
+        if (QDateTime::currentMSecsSinceEpoch() - search_text_last_modified_ <= kInputDelayInterval)
+            return;
+    }
+
     // modified too fast
     if (QDateTime::currentMSecsSinceEpoch() - search_text_last_modified_ <= 300)
         return;
@@ -237,9 +261,14 @@ void SearchDialog::doRealSearch()
         search_request_ = NULL;
     }
 
-    stack_->setCurrentIndex(INDEX_SEARCH_VIEW);
+    if (!load_more) {
+        nth_page_ = 1;
+        stack_->setCurrentIndex(INDEX_SEARCH_VIEW);
+    } else {
+        nth_page_++;
+    }
 
-    search_request_ = new FileSearchRequest(account_, search_bar_->text(), kAllPage, kPerPageCount);
+    search_request_ = new FileSearchRequest(account_, search_bar_->text(), nth_page_);
     connect(search_request_, SIGNAL(success(const std::vector<FileSearchResult>&, bool, bool)),
             this, SLOT(onSearchSuccess(const std::vector<FileSearchResult>&, bool, bool)));
     connect(search_request_, SIGNAL(failed(const ApiError&)),
@@ -255,9 +284,33 @@ void SearchDialog::onSearchSuccess(const std::vector<FileSearchResult>& results,
                                 bool is_loading_more,
                                 bool has_more)
 {
-    search_model_->setSearchResult(results);
+    std::vector<QTableWidgetItem*> items;
+
+    for (unsigned i = 0; i < results.size(); ++i) {
+        QTableWidgetItem *item = new QTableWidgetItem(results[i].name);
+        item->setData(ResultAtRole, QVariant::fromValue(results[i]));
+        items.push_back(item);
+    }
+
     stack_->setCurrentIndex(INDEX_SEARCH_VIEW);
-//    updateFileCount();
+
+    const QModelIndex first_new_item = search_model_->updateSearchResults(items, is_loading_more, has_more);
+    if (first_new_item.isValid()) {
+        search_view_->scrollTo(first_new_item);
+    }
+
+    int old_loading_row = loading_row_;
+    search_view_->setRowHeight(old_loading_row, 40);
+    if (has_more) {
+        loading_row_ += items.size();
+        load_more_btn_ = new LoadMoreButton;
+        connect(load_more_btn_, SIGNAL(clicked()),
+                this, SLOT(loadMoreSearchResults()));
+
+        search_view_->setRowHeight(loading_row_, 80);
+        search_view_->setIndexWidget(
+            search_model_->loadMoreIndex(), load_more_btn_);
+    }
 }
 
 void SearchDialog::onSearchFailed(const ApiError& error)
@@ -265,6 +318,10 @@ void SearchDialog::onSearchFailed(const ApiError& error)
     stack_->setCurrentIndex(INDEX_LOADING_FAILED_VIEW);
 }
 
+void SearchDialog::loadMoreSearchResults()
+{
+    doRealSearch(true);
+}
 
 SearchItemsTableView::SearchItemsTableView(QWidget* parent)
     : QTableView(parent),
@@ -272,7 +329,7 @@ SearchItemsTableView::SearchItemsTableView(QWidget* parent)
       search_model_(NULL)
 {
     verticalHeader()->hide();
-//    verticalHeader()->setDefaultSectionSize(kDefaultColumnHeight);
+    verticalHeader()->setDefaultSectionSize(kDefaultColumnHeight);
     horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     horizontalHeader()->setStretchLastSection(true);
     horizontalHeader()->setCascadingSectionResizes(true);
@@ -303,17 +360,16 @@ void SearchItemsTableView::resizeEvent(QResizeEvent* event)
 
 void SearchItemsTableView::onItemDoubleClick(const QModelIndex& index)
 {
-    const FileSearchResult *result =
-            search_model_->resultAt(index.row());
-    if (result->name.isEmpty() || result->fullpath.isEmpty())
+    FileSearchResult result = search_model_->data(index, ResultAtRole).value<FileSearchResult>();
+    if (result.name.isEmpty() || result.fullpath.isEmpty())
         return;
 
-//    if (result->fullpath.endsWith("/"))
+//    if (result.fullpath.endsWith("/"))
 //        emit clearSearchBar();
 
     QString repo_name;
-    if (gui->rpcClient()->getRepoUnameById(result->repo_id, &repo_name)) {
-        QString path_to_open = ::pathJoin(gui->mountDir(), repo_name, result->fullpath);
+    if (gui->rpcClient()->getRepoUnameById(result.repo_id, &repo_name)) {
+        QString path_to_open = ::pathJoin(gui->mountDir(), repo_name, result.fullpath);
         ::showInGraphicalShell(path_to_open);
     }
 }
@@ -326,10 +382,9 @@ void SearchItemsTableView::setModel(QAbstractItemModel* model)
     QTableView::setModel(search_model_);
 
     connect(model, SIGNAL(modelAboutToBeReset()), this, SLOT(onAboutToReset()));
-//    setSortingEnabled(false);
 
     // set default sort by folder
-    sortByColumn(FILE_COLUMN_NAME, Qt::AscendingOrder);
+    //sortByColumn(FILE_COLUMN_NAME, Qt::AscendingOrder);
 }
 
 void SearchItemsTableView::onAboutToReset()
@@ -352,26 +407,59 @@ int SearchItemsTableModel::columnCount(const QModelIndex& parent) const
 
 int SearchItemsTableModel::rowCount(const QModelIndex& parent) const
 {
-    return results_.size();
+    return items_.size();
 }
 
-void SearchItemsTableModel::setSearchResult(const std::vector<FileSearchResult> &results)
+const QModelIndex SearchItemsTableModel::updateSearchResults(
+    const std::vector<QTableWidgetItem *> &items,
+    bool is_loading_more,
+    bool has_more)
 {
+    int first_new_item = 0;
+
     beginResetModel();
-    results_ = results;
+    if (!is_loading_more) {
+        first_new_item = 0;
+        clear();
+    } else {
+        if (items_.size() > 0 && items_[items_.size() - 1]->type() == PLACE_HOLDER_TYPE) {
+            QTableWidgetItem *old_place_holder = items_[items_.size() - 1];
+            items_.pop_back();
+            first_new_item = items_.size();
+
+            delete old_place_holder;
+        }
+    }
+
+    items_.insert(items_.end(), items.begin(), items.end());
+
+    // place holder for the "load more" button
+    QTableWidgetItem *load_more_place_holder = new QTableWidgetItem(nullptr, PLACE_HOLDER_TYPE);
+    items_.push_back(load_more_place_holder);
+
+    load_more_index_ = QModelIndex();
+    if (has_more) {
+        load_more_index_ = index(items_.size() - 1, 1);
+    }
+
     endResetModel();
+
+    if (first_new_item) {
+        return index(first_new_item, 0);
+    }
+    return QModelIndex();
 }
 
 QVariant SearchItemsTableModel::data(
     const QModelIndex& index, int role) const
 {
-    if (!index.isValid() || index.row() >= (int)results_.size()) {
+    if (!index.isValid() || index.row() >= (int)items_.size()) {
         return QVariant();
     }
 
     const int column = index.column();
     const int row = index.row();
-    const FileSearchResult& result = results_[row];
+    FileSearchResult result = getSearchResult(index);
 
     if (role == Qt::DecorationRole && column == FILE_COLUMN_NAME) {
         QIcon icon;
@@ -459,7 +547,7 @@ QVariant SearchItemsTableModel::headerData(int section,
     }
 
     if (role == Qt::SizeHintRole && section == FILE_COLUMN_NAME) {
-        if (results_.empty()) {
+        if (items_.empty()) {
             return QSize(name_column_width_, 0);
         }
     }
@@ -467,19 +555,10 @@ QVariant SearchItemsTableModel::headerData(int section,
     return QVariant();
 }
 
-const FileSearchResult* SearchItemsTableModel::resultAt(int row) const
-{
-    int nSize = static_cast<int>(results_.size());
-    if (row >= nSize)
-        return NULL;
-
-    return &results_[row];
-}
-
 void SearchItemsTableModel::onResize(const QSize& size)
 {
     name_column_width_ = size.width() - kDefaultColumnWidth * (FILE_MAX_COLUMN - 1);
-    if (results_.empty())
+    if (items_.empty())
         return;
     emit dataChanged(index(0, FILE_COLUMN_NAME),
                      index(rowCount()-1 , FILE_COLUMN_NAME));
@@ -496,6 +575,12 @@ void SearchItemsDelegate::paint(QPainter *painter,
 {
     const SearchItemsTableModel* model =
         static_cast<const SearchItemsTableModel*>(index.model());
+
+    const QTableWidgetItem* item = model->item(index);
+    if (item && item->type() == PLACE_HOLDER_TYPE) {
+        // This is the place holder item for the "load more" button
+        return;
+    }
 
     QRect option_rect = option.rect;
 

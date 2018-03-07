@@ -3,6 +3,7 @@
 #include <QDialog>
 #include <QStyledItemDelegate>
 #include <QTableView>
+#include <QTableWidgetItem>
 #include <QTimer>
 #include <vector>
 
@@ -14,6 +15,7 @@ class ApiError;
 class QToolBar;
 class QStackedWidget;
 class QLabel;
+class LoadMoreButton;
 class SearchBar;
 class SearchItemsTableView;
 class SearchItemsTableModel;
@@ -32,11 +34,12 @@ signals:
 private slots:
     void onRefresh();
     void doSearch(const QString& keyword);
-    void doRealSearch();
+    void doRealSearch(bool load_more = false);
     void onSearchSuccess(const std::vector<FileSearchResult>& results,
                          bool is_loading_more,
                          bool has_more);
     void onSearchFailed(const ApiError& error);
+    void loadMoreSearchResults();
 
 private:
     void closeEvent(QCloseEvent *ev);
@@ -59,10 +62,14 @@ private:
     QLabel *loading_failed_view_;
     QWidget *waiting_view_;
 
+    LoadMoreButton *load_more_btn_;
     SearchBar *search_bar_;
     SearchItemsTableView* search_view_;
     SearchItemsTableModel* search_model_;
     SearchItemsDelegate* search_delegate_;
+
+    int nth_page_;
+    int loading_row_;
 };
 
 class SearchItemsTableView : public QTableView
@@ -97,20 +104,38 @@ public:
         Q_DECL_OVERRIDE;
     int columnCount(const QModelIndex& parent = QModelIndex()) const
         Q_DECL_OVERRIDE;
+
+    const QTableWidgetItem* item(const QModelIndex& index) const
+    {
+        if (!index.isValid() || index.row() >= (int)items_.size())
+            return NULL;
+        return items_[index.row()];
+    }
+
     QVariant data(const QModelIndex& index,
                   int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
     QVariant headerData(int section,
                         Qt::Orientation orientation,
                         int role) const Q_DECL_OVERRIDE;
-    void setSearchResult(const std::vector<FileSearchResult>& results);
+    const QModelIndex updateSearchResults(const std::vector<QTableWidgetItem *> &items, bool is_loading_more, bool has_more);
+    const QModelIndex loadMoreIndex() const { return load_more_index_; }
 
     void onResize(const QSize &size);
     const FileSearchResult* resultAt(int row) const;
 
+    void clear()
+    {
+        for (unsigned i = 0 ; i < items_.size(); ++i) {
+            delete items_[i];
+        }
+        items_.clear();
+    }
+
 private:
-    std::vector<FileSearchResult> results_;
+    std::vector<QTableWidgetItem*> items_;
 
     int name_column_width_;
+    QModelIndex load_more_index_;
 };
 
 class DataManager;
