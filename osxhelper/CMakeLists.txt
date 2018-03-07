@@ -19,7 +19,6 @@ ENDIF()
 
 ## Build with warnings
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wsign-compare -Wno-long-long -Wno-unused-parameter")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wsign-compare -Wno-long-long -Wno-unused-parameter -Woverloaded-virtual")
 
 ## Find the dependencies
 FIND_LIBRARY(COCOA_LIBRARY Cocoa)
@@ -44,17 +43,10 @@ SET(HELPER_SRC
 
 ADD_EXECUTABLE(seadrive-helper ${HELPER_SRC})
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
-SET(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++11")
-SET(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
-
 SET_TARGET_PROPERTIES(seadrive-helper PROPERTIES
   OUTPUT_NAME "com.seafile.seadrive.helper"
   # XCODE_ATTRIBUTE_MACOSX_DEPLOYMENT_TARGET "10.7"
   # XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC "YES"
-  # XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++11"
-  # XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++"
   # XCODE_ATTRIBUTE_DEVELOPMENT_LANGUAGE "English"
   )
 

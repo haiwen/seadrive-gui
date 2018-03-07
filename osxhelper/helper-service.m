@@ -68,16 +68,16 @@
                              kextPath:args[@"kextPath"]
                            completion:completion];
     } else {
-        completion(
-            HelperMakeError(MPXPCErrorCodeUnknownRequest, @"Unknown request method"),
-            nil);
+        completion(HelperMakeError(MPXPCErrorCodeUnknownRequest,
+                                   @"Unknown request method"),
+                   nil);
     }
 }
 
 - (void)version:(void (^)(NSError *error, id value))completion
 {
-    NSString *version = [NSBundle.mainBundle.infoDictionary
-        valueForKey:@"CFBundleShortVersionString"];
+    NSString *version =
+        NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"];
     NSDictionary *response = @{
         @"version" : version,
     };
