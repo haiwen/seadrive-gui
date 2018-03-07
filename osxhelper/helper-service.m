@@ -1,14 +1,15 @@
 #import <MPMessagePack/MPXPCProtocol.h>
 
 #import "helper-defines.h"
-#import "helper.h"
+#import "helper-kext.h"
+#import "helper-service.h"
 
 @implementation HelperService
 
 + (int)run
 {
-    NSString *version = [[[NSBundle mainBundle] infoDictionary]
-        valueForKey:@"CFBundleShortVersionString"];
+    NSString *version =
+        NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"];
 
     NSLog(@"Starting seadrive helper: %@", version);
 
@@ -46,7 +47,7 @@
     } @catch (NSException *e) {
         NSLog(@"Exception: %@", e);
         completion(
-            MakeError(MPXPCErrorCodeInvalidRequest, @"Exception: %@", e),
+            HelperMakeError(MPXPCErrorCodeInvalidRequest, @"Exception: %@", e),
             nil);
     }
 }
@@ -56,21 +57,31 @@
                        messageId:(NSNumber *)messageId
                       completion:(void (^)(NSError *error, id value))completion
 {
-    NSDictionary *args = [params count] == 1 ? [params objectAtIndex:0] : @{};
+    NSDictionary *args = [params count] == 1 ? params[0] : @{};
     NSLog(@"Request: %@(%@)", method, args);
     if ([method isEqualToString:@"version"]) {
         [self version:completion];
+    } else if ([method isEqualToString:@"kextInstall"]) {
+        [HelperKext installWithSource:args[@"source"]
+                          destination:args[@"destination"]
+                               kextID:args[@"kextID"]
+                             kextPath:args[@"kextPath"]
+                           completion:completion];
     } else {
-        completion(MakeError(MPXPCErrorCodeUnknownRequest, @"Unknown request method"), nil);
+        completion(
+            HelperMakeError(MPXPCErrorCodeUnknownRequest, @"Unknown request method"),
+            nil);
     }
 }
 
-- (void)version:(void (^)(NSError *error, id value))completion {
-  NSString *version = [NSBundle.mainBundle.infoDictionary valueForKey:@"CFBundleShortVersionString"];
-  NSDictionary *response = @{
-                             @"version": version,
-                             };
-  completion(nil, response);
+- (void)version:(void (^)(NSError *error, id value))completion
+{
+    NSString *version = [NSBundle.mainBundle.infoDictionary
+        valueForKey:@"CFBundleShortVersionString"];
+    NSDictionary *response = @{
+        @"version" : version,
+    };
+    completion(nil, response);
 }
 
 @end

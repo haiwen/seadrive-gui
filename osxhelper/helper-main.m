@@ -54,7 +54,7 @@ Copyright (C) 2013 Apple Inc. All Rights Reserved.
 #include <stdio.h>
 #include <stdlib.h>
 
-#import "helper.h"
+#import "helper-service.h"
 
 int main(int argc, const char * argv[])
 {
