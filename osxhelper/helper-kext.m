@@ -71,7 +71,7 @@
 }
 
 + (BOOL)updateLoaderFileAttributes:(NSString *)destination error:(NSError **)error {
-  NSString *path = [NSString stringWithFormat:@"%@/Contents/Resources/load_kbfuse", destination];
+  NSString *path = [NSString stringWithFormat:@"%@/Contents/Resources/load_osxfuse", destination];
   return [self setUID:path error:error];
 }
 

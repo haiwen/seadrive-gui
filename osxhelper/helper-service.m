@@ -2,6 +2,7 @@
 
 #import "helper-defines.h"
 #import "helper-kext.h"
+#import "helper-log.h"
 #import "helper-service.h"
 
 @implementation HelperService
@@ -11,14 +12,14 @@
     NSString *version =
         NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"];
 
-    NSLog(@"Starting seadrive helper: %@", version);
+    HelperLog(@"Starting seadrive helper: %@", version);
 
     xpc_connection_t service = xpc_connection_create_mach_service(
         "com.seafile.seadrive.helper",
         dispatch_get_main_queue(),
         XPC_CONNECTION_MACH_SERVICE_LISTENER);
     if (!service) {
-        NSLog(@"Failed to create service.");
+        HelperLog(@"Failed to create service.");
         return EXIT_FAILURE;
     }
 
@@ -28,7 +29,7 @@
 
         dispatch_main();
     } @catch (NSException *e) {
-        NSLog(@"Exception: %@", e);
+        HelperLog(@"Exception: %@", e);
     }
 
     return 0;
@@ -45,7 +46,7 @@
                              messageId:messageId
                             completion:completion];
     } @catch (NSException *e) {
-        NSLog(@"Exception: %@", e);
+        HelperLog(@"Exception: %@", e);
         completion(
             HelperMakeError(MPXPCErrorCodeInvalidRequest, @"Exception: %@", e),
             nil);
@@ -58,7 +59,7 @@
                       completion:(void (^)(NSError *error, id value))completion
 {
     NSDictionary *args = [params count] == 1 ? params[0] : @{};
-    NSLog(@"Request: %@(%@)", method, args);
+    HelperLog(@"Request: %@(%@)", method, args);
     if ([method isEqualToString:@"version"]) {
         [self version:completion];
     } else if ([method isEqualToString:@"kextInstall"]) {

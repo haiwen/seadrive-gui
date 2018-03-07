@@ -35,7 +35,7 @@ void HelperLog(NSString *msg, ...) {
 - (id)init {
   if ((self = [super init])) {
     // Ensure log file exists
-    NSString * const logPath = @"/Library/Logs/seadrive.system.log";
+    NSString * const logPath = @"/Library/Logs/seadrive-helper.log";
     if (![[NSFileManager defaultManager] fileExistsAtPath:logPath]) {
       if (![[NSFileManager defaultManager] createFileAtPath:logPath contents:nil attributes:nil]) {
         NSLog(@"Unable to create log file: %@", logPath);
