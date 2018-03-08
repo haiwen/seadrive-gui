@@ -4,9 +4,12 @@ class HelperClient
 {
 public:
     HelperClient();
-    void connect();
     void getVersion();
+    bool installKext(bool *finished, bool *ok);
 
 private:
+    void ensureConnected();
+    void connect();
+
     MPXPCClient *xpc_client_;
 };

@@ -108,12 +108,16 @@ ENDIF()
 
 IF(APPLE)
     ADD_DEFINITIONS(-DHAVE_FINDER_SYNC_SUPPORT)
-    SET(platform_specific_moc_headers ${platform_specific_moc_headers} src/finder-sync/finder-sync-host.h)
+    SET(platform_specific_moc_headers ${platform_specific_moc_headers}
+      src/finder-sync/finder-sync-host.h
+      src/osx-helperutils/kext-installer.h
+      )
     SET(platform_specific_sources ${platform_specific_sources}
         src/finder-sync/finder-sync.cpp src/finder-sync/finder-sync-listener.mm
         src/finder-sync/finder-sync-host.cpp
         src/osx-helperutils/osx-helperutils.mm
         src/osx-helperutils/helper-client.mm
+      src/osx-helperutils/kext-installer.cpp
         )
     SET_SOURCE_FILES_PROPERTIES(src/finder-sync/finder-sync-listener.mm
         PROPERTIES COMPILE_FLAGS -fobjc-arc)

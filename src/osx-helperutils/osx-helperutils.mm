@@ -1,9 +1,11 @@
 #import <Cocoa/Cocoa.h>
 #import <Security/Authorization.h>
 #import <ServiceManagement/ServiceManagement.h>
+#include <QtGlobal>
 
-#import "src/osx-helperutils/osx-helperutils.h"
 #import "src/osx-helperutils/helper-client.h"
+#import "src/osx-helperutils/osx-helperutils.h"
+#import "utils/objc-defines.h"
 
 #if !__has_feature(objc_arc)
 #error this file must be built with ARC support
@@ -36,15 +38,18 @@
     if (status != errAuthorizationSuccess) {
         /* AuthorizationCreate really shouldn't fail. */
         self->_authRef = NULL;
-        NSLog(@"Something went wrong");
+        NSError *error = [NSError errorWithDomain:NSOSStatusErrorDomain
+                                             code:status
+                                         userInfo:nil];
+        qWarning("failed to initialize helper tool: %s",
+                 NSERROR_TO_CSTR(error));
         return false;
     }
 
     if (![self blessHelperWithLabel:@"com.seafile.seadrive.helper"
                               error:&error]) {
-        NSLog(@"Something went wrong! %@ / %d",
-              [error domain],
-              (int)[error code]);
+        qWarning("Failed to install seadrive helper: %s",
+                 NSERROR_TO_CSTR(error));
         return false;
     } else {
         /* At this point, the job is available. However, this is a very
@@ -110,12 +115,13 @@
 
 bool installHelperTool()
 {
+    // TODO: do not reinstall the helper tool each time seadrive-gui is launched
     SMJobBlessHelper *helper = [[SMJobBlessHelper alloc] init];
     return [helper install];
 }
 
-void getHelperToolVersion()
+bool installKext(bool *finished, bool *ok)
 {
     HelperClient *c = new HelperClient();
-    c->getVersion();
+    return c->installKext(finished, ok);
 }

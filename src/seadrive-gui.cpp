@@ -43,7 +43,7 @@
 
 #if defined(Q_OS_MAC)
 #include "utils/utils-mac.h"
-#include "osx-helperutils/osx-helperutils.h"
+#include "osx-helperutils/kext-installer.h"
 #endif
 
 #include "seadrive-gui.h"
@@ -204,8 +204,6 @@ SeadriveGui::SeadriveGui()
       first_use_(false)
 {
     startup_time_ = QDateTime::currentMSecsSinceEpoch();
-    installHelperTool();
-    getHelperToolVersion();
     tray_icon_ = new SeafileTrayIcon(this);
     daemon_mgr_ = new DaemonManager();
     rpc_client_ = new SeafileRpcClient();
@@ -239,6 +237,12 @@ void SeadriveGui::start()
     if (!initLog()) {
         return;
     }
+
+#if defined(Q_OS_MAC)
+    if (!KextInstaller::instance()->install()) {
+        return;
+    }
+#endif
 
     qDebug("client id is %s", toCStr(getUniqueClientId()));
 
