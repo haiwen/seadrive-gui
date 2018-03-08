@@ -52,10 +52,19 @@ bool HelperClient::installKext(bool *finished, bool *ok)
 {
     ensureConnected();
 
-    NSString *source =
-        @"/Applications/SeaDrive.app/Contents/Resources/osxfuse.fs";
+    NSString *source = [NSBundle.mainBundle.resourcePath stringByAppendingPathComponent:@"osxfuse.fs"];
     NSString *destination = @"/Library/Filesystems/osxfuse.fs";
     NSString *kextID = @"com.github.osxfuse.filesystems.osxfuse";
+    // TODO: Use proper path by checking current system version, using this table:
+    // /Library/Filesystems/osxfuse.fs/Contents/Extensions/10.10: symbolic link to 10.9
+    // /Library/Filesystems/osxfuse.fs/Contents/Extensions/10.11: directory
+    // /Library/Filesystems/osxfuse.fs/Contents/Extensions/10.12: symbolic link to 10.11
+    // /Library/Filesystems/osxfuse.fs/Contents/Extensions/10.13: symbolic link to 10.11
+    // /Library/Filesystems/osxfuse.fs/Contents/Extensions/10.5:  directory
+    // /Library/Filesystems/osxfuse.fs/Contents/Extensions/10.6:  directory
+    // /Library/Filesystems/osxfuse.fs/Contents/Extensions/10.7:  symbolic link to 10.6
+    // /Library/Filesystems/osxfuse.fs/Contents/Extensions/10.8:  symbolic link to 10.6
+    // /Library/Filesystems/osxfuse.fs/Contents/Extensions/10.9:  directory
     NSString *kextPath = @"/Library/Filesystems/osxfuse.fs/Contents/Extensions/"
                          @"10.11/osxfuse.kext";
     NSDictionary *params = @{
