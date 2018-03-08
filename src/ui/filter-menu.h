@@ -12,6 +12,7 @@ public:
     FilterMenu(QWidget *parent = 0);
     QStringList filterList() const { return filter_list_; }
     QString inputFexts() const { return input_fexts_; }
+    void clearCheckBox();
 signals:
     void filterChanged();
 private slots:

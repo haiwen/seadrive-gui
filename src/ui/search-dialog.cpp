@@ -46,6 +46,7 @@ const int kMarginBetweenFileNameAndStatusIcon = 5;
 const int kMarginLeft = 5;
 const int kFileNameHeight = 12;
 const int kSubtitleHeight = 5;
+const int kExtraPadding = 30;
 
 const QColor kFileNameFontColor("black");
 const QColor kFontColor("#757575");
@@ -164,11 +165,11 @@ void SearchDialog::createToolBar()
     search_all_file_ = new QRadioButton;
     search_all_file_->setText(tr("All file types"));
     search_all_file_->setChecked(true);
-    connect(search_all_file_, SIGNAL(clicked()), this, SLOT(closeFilterMenu()));
+    connect(search_all_file_, SIGNAL(toggled(bool)), this, SLOT(closeFilterMenu(bool)));
 
     search_custom_file_ = new QRadioButton;
     search_custom_file_->setText(tr("Custom file type"));
-    connect(search_custom_file_, SIGNAL(clicked()), this, SLOT(openFilterMenu()));
+    connect(search_custom_file_, SIGNAL(toggled(bool)), this, SLOT(openFilterMenu()));
     toolbar_->addWidget(search_all_file_);
     toolbar_->addWidget(search_custom_file_);
 //    refresh_button_ = new QToolButton;
@@ -206,16 +207,16 @@ void SearchDialog::createLoadingView()
             this, SLOT(onRefresh()));
 }
 
-void SearchDialog::onRefresh()
+void SearchDialog::onRefresh(bool loading_more)
 {
     QStringList filter_list = filter_menu_->filterList();
     QString input_fexts = filter_menu_->inputFexts();
     if (!search_bar_->text().isEmpty()) {
         search_text_last_modified_ = 1;
         if (!filter_list.isEmpty() || !input_fexts.isEmpty()) {
-            doRealSearch(false, filter_list, input_fexts);
+            doRealSearch(loading_more, false, filter_list, input_fexts);
         } else {
-            doRealSearch();
+            doRealSearch(loading_more);
         }
     }
 }
@@ -270,9 +271,13 @@ void SearchDialog::openFilterMenu()
     filter_menu_->setVisible(true);
 }
 
-void SearchDialog::closeFilterMenu()
+void SearchDialog::closeFilterMenu(bool checked)
 {
-    filter_menu_->setVisible(false);
+    if (checked) {
+        filter_menu_->setVisible(false);
+        filter_menu_->clearCheckBox();
+        onRefresh();
+    }
 }
 
 void SearchDialog::doSearch(const QString &keyword)
@@ -299,11 +304,9 @@ void SearchDialog::doRealSearch(bool load_more,
         // modified too fast
         if (QDateTime::currentMSecsSinceEpoch() - search_text_last_modified_ <= kInputDelayInterval)
             return;
+        //search again, the ‘loading more’ is reindexed
+        loading_row_ = 0;
     }
-
-    // modified too fast
-    if (QDateTime::currentMSecsSinceEpoch() - search_text_last_modified_ <= 300)
-        return;
 
     if (!account_.isValid())
         return;
@@ -316,7 +319,7 @@ void SearchDialog::doRealSearch(bool load_more,
 
     if (!load_more) {
         nth_page_ = 1;
-        stack_->setCurrentIndex(INDEX_SEARCH_VIEW);
+        stack_->setCurrentIndex(INDEX_LOADING_VIEW);
     } else {
         nth_page_++;
     }
@@ -327,8 +330,6 @@ void SearchDialog::doRealSearch(bool load_more,
     } else {
         allOrCustom = QString("custom");
     }
-
-    stack_->setCurrentIndex(INDEX_LOADING_VIEW);
 
     search_request_ = new FileSearchRequest(account_, search_bar_->text(), filter_list, input_fexts, allOrCustom, nth_page_);
     connect(search_request_, SIGNAL(success(const std::vector<FileSearchResult>&, bool, bool)),
@@ -346,11 +347,10 @@ void SearchDialog::onSearchSuccess(const std::vector<FileSearchResult>& results,
                                 bool is_loading_more,
                                 bool has_more)
 {
-    search_model_->setSearchResult(results);
     if (results.size() == 0) {
         stack_->setCurrentIndex(INDEX_EMPTY_VIEW);
     } else {
-       stack_->setCurrentIndex(INDEX_SEARCH_VIEW);
+        stack_->setCurrentIndex(INDEX_SEARCH_VIEW);
     }
 
     std::vector<QTableWidgetItem*> items;
@@ -360,8 +360,6 @@ void SearchDialog::onSearchSuccess(const std::vector<FileSearchResult>& results,
         item->setData(ResultAtRole, QVariant::fromValue(results[i]));
         items.push_back(item);
     }
-
-    stack_->setCurrentIndex(INDEX_SEARCH_VIEW);
 
     const QModelIndex first_new_item = search_model_->updateSearchResults(items, is_loading_more, has_more);
     if (first_new_item.isValid()) {
@@ -389,7 +387,7 @@ void SearchDialog::onSearchFailed(const ApiError& error)
 
 void SearchDialog::loadMoreSearchResults()
 {
-    doRealSearch(true);
+    onRefresh(true);
 }
 
 SearchItemsTableView::SearchItemsTableView(QWidget* parent)
@@ -429,7 +427,7 @@ void SearchItemsTableView::resizeEvent(QResizeEvent* event)
 
 void SearchItemsTableView::onItemDoubleClick(const QModelIndex& index)
 {
-    FileSearchResult result = search_model_->data(index, ResultAtRole).value<FileSearchResult>();
+    FileSearchResult result = getSearchResult(index);
     if (result.name.isEmpty() || result.fullpath.isEmpty())
         return;
 
@@ -505,7 +503,7 @@ const QModelIndex SearchItemsTableModel::updateSearchResults(
 
     load_more_index_ = QModelIndex();
     if (has_more) {
-        load_more_index_ = index(items_.size() - 1, 1);
+        load_more_index_ = index(items_.size() - 1, 0);
     }
 
     endResetModel();
@@ -633,7 +631,7 @@ QVariant SearchItemsTableModel::headerData(int section,
 
 void SearchItemsTableModel::onResize(const QSize& size)
 {
-    name_column_width_ = size.width() - kDefaultColumnWidth * (FILE_MAX_COLUMN - 1);
+    name_column_width_ = size.width() - kDefaultColumnWidth * (FILE_MAX_COLUMN - 1) - kExtraPadding;
     if (items_.empty())
         return;
     emit dataChanged(index(0, FILE_COLUMN_NAME),

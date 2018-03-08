@@ -37,8 +37,8 @@ signals:
     void aboutClose();
 private slots:
     void openFilterMenu();
-    void closeFilterMenu();
-    void onRefresh();
+    void closeFilterMenu(bool checked);
+    void onRefresh(bool loading_more = false);
     void doSearch(const QString& keyword);
     void doRealSearch(bool load_more = false,
                       bool isAll = true,

@@ -53,11 +53,18 @@ void FilterMenu::boxChanged(bool checked, const QString& text )
 void FilterMenu::sendFilterSignal()
 {
     input_fexts_ = mFilterLine->text();
-    if (filter_list_.isEmpty() && input_fexts_.isEmpty()) {
-        return;
-    } else {
-        emit filterChanged();
-    }
+    emit filterChanged();
+}
+
+void FilterMenu::clearCheckBox()
+{
+    mTextFile->setChecked(false);
+    mDocument->setChecked(false);
+    mImage->setChecked(false);
+    mVideo->setChecked(false);
+    mAudio->setChecked(false);
+    mPdf->setChecked(false);
+    mFilterLine->clear();
 }
 
 void FilterMenu::onTextFile(bool checked)
