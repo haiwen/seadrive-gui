@@ -105,5 +105,7 @@ bool HelperClient::installKext()
            emit kextInstallDone();
          }];
 
+    q.exec();
+
     return ok;
 }
