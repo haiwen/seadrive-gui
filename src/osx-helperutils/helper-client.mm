@@ -61,7 +61,7 @@ void HelperClient::ensureConnected()
     }
 }
 
-bool HelperClient::installKext(bool *finished, bool *ok)
+bool HelperClient::installKext()
 {
     ensureConnected();
 
@@ -87,19 +87,23 @@ bool HelperClient::installKext(bool *finished, bool *ok)
         @"kextPath" : kextPath
     };
 
+    QEventLoop q;
+    connect(this, &HelperClient::kextInstallDone, &q, &QEventLoop::quit);
+    __block bool ok = false;
+
     [xpc_client_
         sendRequest:@"kextInstall"
              params:@[ params ]
          completion:^(NSError *error, id value) {
-           *finished = true;
            if (error) {
                qWarning("error when kextInstall: %s", NSERROR_TO_CSTR(error));
-               *ok = false;
+               ok = false;
            } else {
                qWarning("kextInstall success!");
-               *ok = true;
+               ok = true;
            }
+           emit kextInstallDone();
          }];
 
-    return true;
+    return ok;
 }

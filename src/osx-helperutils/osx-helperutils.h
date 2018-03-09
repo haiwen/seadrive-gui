@@ -3,6 +3,8 @@
 
 bool installHelperTool();
 
-bool installKext(bool *finished, bool *ok);
+bool installKext();
+
+bool installHelperAndKext();
 
 #endif // SEAFILE_HELPERUTIL_UTILS_H

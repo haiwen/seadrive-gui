@@ -43,7 +43,7 @@
 
 #if defined(Q_OS_MAC)
 #include "utils/utils-mac.h"
-#include "osx-helperutils/kext-installer.h"
+#include "osx-helperutils/osx-helperutils.h"
 #endif
 
 #include "seadrive-gui.h"
@@ -239,7 +239,7 @@ void SeadriveGui::start()
     }
 
 #if defined(Q_OS_MAC)
-    if (!KextInstaller::instance()->install()) {
+    if (!installHelperAndKext()) {
         errorAndExit(tr("Failed to initialize: failed to install kernel driver"));
         return;
     }

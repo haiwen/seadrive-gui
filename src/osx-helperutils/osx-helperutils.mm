@@ -156,7 +156,23 @@ bool installHelperTool()
     return [helper install];
 }
 
-bool installKext(bool *finished, bool *ok)
+bool installKext()
 {
-    return getHelperClient()->installKext(finished, ok);
+    return getHelperClient()->installKext();
+}
+
+bool installHelperAndKext()
+{
+    qWarning("start to install the helper tool");
+    if (!installHelperTool()) {
+        qWarning("failed to install helper tool");
+        return false;
+    }
+
+    qWarning("start to install/load the kernel driver");
+    if (!installKext()) {
+        qWarning("failed to install the kernel driverkext");
+        return false;
+    }
+    return true;
 }
