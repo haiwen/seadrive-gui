@@ -240,6 +240,7 @@ void SeadriveGui::start()
 
 #if defined(Q_OS_MAC)
     if (!KextInstaller::instance()->install()) {
+        errorAndExit(tr("Failed to initialize: failed to install kernel driver"));
         return;
     }
 #endif

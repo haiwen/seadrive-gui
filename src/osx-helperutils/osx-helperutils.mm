@@ -57,7 +57,7 @@
          * make it launch-on-demand. You would normally achieve this by
          * using XPC (via a MachServices dictionary in your launchd.plist).
          */
-        NSLog(@"Job is available!");
+        qWarning("The helper tool is installed successfully.");
         return true;
     }
 }

@@ -15,18 +15,23 @@ class KextInstaller : public QObject
 public:
     // This function wraps the logic of installing the helper tool and loading
     // the kernel driver (both implemented in ObjC), and use a timer to check
-    // the state of the kext before returning.
+    // the state of the kext. It won't return before the kext install finishes
+    // (or fails).
     bool install();
 
 private slots:
     void checkKextReady();
 
+signals:
+    void checkDone();
+
 private:
     Q_DISABLE_COPY(KextInstaller)
-    KextInstaller(QObject *parent=0);
+    KextInstaller(QObject *parent = 0);
     QTimer *check_timer_;
     bool install_finished_;
     bool kext_ready_;
+    int retried_;
 };
 
 #endif // SEAFILE_KEXT_INSTALLER_H
