@@ -32,15 +32,9 @@ static HelperClient *getHelperClient()
 - (BOOL)install;
 - (BOOL)needInstall;
 - (BOOL)blessHelperWithLabel:(NSString *)label error:(NSError **)errorPtr;
-- (void)dealloc;
 @end
 
 @implementation SMJobBlessHelper
-
-- (void)dealloc
-{
-    printf("dealloc is called!\n");
-}
 
 - (BOOL)needInstall
 {

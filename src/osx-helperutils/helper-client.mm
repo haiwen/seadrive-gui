@@ -98,6 +98,9 @@ bool HelperClient::needInstallKext()
         return true;
     }
 
+    // TODO: compare version of current installed kext with latest kext, and
+    // upgrade if current one is outdated.
+
     return false;
 }
 
@@ -113,7 +116,6 @@ bool HelperClient::installKext()
     NSString *source = [NSBundle.mainBundle.resourcePath
         stringByAppendingPathComponent:@"osxfuse.fs"];
     NSString *destination = @"/Library/Filesystems/osxfuse.fs";
-    NSString *kextID = @"com.github.osxfuse.filesystems.osxfuse";
     // TODO: Use proper path by checking current system version, using this
     // table:
     // /Library/Filesystems/osxfuse.fs/Contents/Extensions/10.10: symbolic link
@@ -135,7 +137,7 @@ bool HelperClient::installKext()
     NSDictionary *params = @{
         @"source" : source,
         @"destination" : destination,
-        @"kextID" : kextID,
+        @"kextID" : KEXT_ID,
         @"kextPath" : kextPath
     };
 
