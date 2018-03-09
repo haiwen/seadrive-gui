@@ -8,10 +8,11 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>com.seafile.seadrive.helper</string>
+    <!-- Always update these two with top level Info.plist's DriveHelperVersion together-->
 	<key>CFBundleVersion</key>
-	<string>0.1</string>
+	<string>0.0.1</string>
     <key>CFBundleShortVersionString</key>
-    <string>0.1</string>
+    <string>0.0.1</string>
 	<key>SMAuthorizedClients</key>
     <array>
       <string>identifier "com.seafile.seadrive" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "55LCTZ5354"</string>

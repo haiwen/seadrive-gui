@@ -1,15 +1,22 @@
-#import <MPMessagePack/MPXPCClient.h>
+#ifndef SEAFILE_HELPER_CLIENT_H
+#define SEAFILE_HELPER_CLIENT_H
 
-class HelperClient
+#include <QObject>
+
+class HelperClient : public QObject
 {
+    Q_OBJECT
 public:
     HelperClient();
-    void getVersion();
+    bool getVersion(QString *version);
     bool installKext(bool *finished, bool *ok);
+
+signals:
+    void versionDone();
 
 private:
     void ensureConnected();
-    void connect();
-
-    MPXPCClient *xpc_client_;
+    void xpcConnect();
 };
+
+#endif // SEAFILE_HELPER_CLIENT_H

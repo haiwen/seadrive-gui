@@ -1,6 +1,9 @@
 #include <AvailabilityMacros.h>
+#import <MPMessagePack/MPXPCClient.h>
 #import <Cocoa/Cocoa.h>
 #include <QtGlobal>
+#include <QString>
+#include <QEventLoop>
 
 #import "helper-client.h"
 #import "utils/objc-defines.h"
@@ -9,12 +12,13 @@
 #error this file must be built with ARC support
 #endif
 
-HelperClient::HelperClient()
+static MPXPCClient *xpc_client_ = nullptr;
+
+HelperClient::HelperClient() : QObject()
 {
-    xpc_client_ = nullptr;
 }
 
-void HelperClient::connect()
+void HelperClient::xpcConnect()
 {
     xpc_client_ = [[MPXPCClient alloc]
         initWithServiceName:@"com.seafile.seadrive.helper"
@@ -25,26 +29,35 @@ void HelperClient::connect()
     xpc_client_.timeout = 10.0;
 }
 
-void HelperClient::getVersion()
+bool HelperClient::getVersion(QString *version)
 {
     ensureConnected();
+    QEventLoop q;
+    connect(this, &HelperClient::versionDone, &q, &QEventLoop::quit);
+    __block bool ok = false;
+
     [xpc_client_ sendRequest:@"version"
                       params:nil
                   completion:^(NSError *error, NSDictionary *versions) {
                     if (error) {
-                        printf("get version error!\n");
-                        NSLog(@"error: %@", [error userInfo]);
+                        ok = false;
+                        qWarning("error when asking for helper version: %s", NSERROR_TO_CSTR(error));
                     } else {
-                        printf("get version success!\n");
-                        NSLog(@"Helper version: %@", versions);
+                        ok = true;
+                        *version = QString::fromNSString(versions[@"version"]);
+                        qWarning("got helper version: %s", version->toUtf8().data());
                     }
+                    emit versionDone();
                   }];
+
+    q.exec();
+    return ok;
 }
 
 void HelperClient::ensureConnected()
 {
     if (!xpc_client_) {
-        connect();
+        xpcConnect();
     }
 }
 

@@ -28,11 +28,11 @@ bool KextInstaller::install()
         return false;
     }
 
-    qWarning("start to install/load the kernel driver");
-    if (!installKext(&install_finished_, &kext_ready_)) {
-        qWarning("failed to install the kernel driverkext");
-        return false;
-    }
+    // qWarning("start to install/load the kernel driver");
+    // if (!installKext(&install_finished_, &kext_ready_)) {
+    //     qWarning("failed to install the kernel driverkext");
+    //     return false;
+    // }
 
     check_timer_->start(kCheckInterval);
 

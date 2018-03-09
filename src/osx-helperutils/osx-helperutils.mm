@@ -2,6 +2,7 @@
 #import <Security/Authorization.h>
 #import <ServiceManagement/ServiceManagement.h>
 #include <QtGlobal>
+#include <QString>
 
 #import "src/osx-helperutils/helper-client.h"
 #import "src/osx-helperutils/osx-helperutils.h"
@@ -11,11 +12,24 @@
 #error this file must be built with ARC support
 #endif
 
+#define HELPER_LOCATION (@"/Library/PrivilegedHelperTools/com.seafile.seadrive.helper")
+
+static HelperClient * getHelperClient()
+{
+    static HelperClient *helper_client;
+    if (!helper_client) {
+        helper_client = new HelperClient();
+    }
+    return helper_client;
+}
+
+
 @interface SMJobBlessHelper : NSObject {
     AuthorizationRef _authRef;
 }
 
 - (BOOL)install;
+- (BOOL)needInstall;
 - (BOOL)blessHelperWithLabel:(NSString *)label error:(NSError **)errorPtr;
 - (void)dealloc;
 @end
@@ -27,8 +41,30 @@
     printf("dealloc is called!\n");
 }
 
+- (BOOL)needInstall
+{
+  if (![NSFileManager.defaultManager fileExistsAtPath:HELPER_LOCATION isDirectory:nil]) {
+    return true;
+  }
+
+  QString installed_version;
+  if (!getHelperClient()->getVersion(&installed_version)) {
+      return true;
+  }
+
+  QString latest_version = QString::fromNSString(NSBundle.mainBundle.infoDictionary[@"DriveHelperVersion"]);
+  qWarning("latest helper version is %s", latest_version.toUtf8().data());
+
+  // TODO: use sematic version comparsion (so 0.0.10 > 0.0.2)
+  return installed_version < latest_version;
+}
+
 - (BOOL)install
 {
+    if (![self needInstall]) {
+        qWarning("No need to reinstall the helper tool");
+        return true;
+    }
     NSError *error = nil;
 
     OSStatus status = AuthorizationCreate(NULL,
@@ -122,6 +158,5 @@ bool installHelperTool()
 
 bool installKext(bool *finished, bool *ok)
 {
-    HelperClient *c = new HelperClient();
-    return c->installKext(finished, ok);
+    return getHelperClient()->installKext(finished, ok);
 }
