@@ -18,6 +18,7 @@ signals:
 private:
     void ensureConnected();
     void xpcConnect();
+    bool needInstallKext();
 };
 
 #endif // SEAFILE_HELPER_CLIENT_H

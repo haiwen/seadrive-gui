@@ -1,8 +1,8 @@
 #import <Cocoa/Cocoa.h>
 #import <Security/Authorization.h>
 #import <ServiceManagement/ServiceManagement.h>
-#include <QtGlobal>
 #include <QString>
+#include <QtGlobal>
 
 #import "src/osx-helperutils/helper-client.h"
 #import "src/osx-helperutils/osx-helperutils.h"
@@ -12,9 +12,10 @@
 #error this file must be built with ARC support
 #endif
 
-#define HELPER_LOCATION (@"/Library/PrivilegedHelperTools/com.seafile.seadrive.helper")
+#define HELPER_LOCATION \
+    (@"/Library/PrivilegedHelperTools/com.seafile.seadrive.helper")
 
-static HelperClient * getHelperClient()
+static HelperClient *getHelperClient()
 {
     static HelperClient *helper_client;
     if (!helper_client) {
@@ -43,20 +44,22 @@ static HelperClient * getHelperClient()
 
 - (BOOL)needInstall
 {
-  if (![NSFileManager.defaultManager fileExistsAtPath:HELPER_LOCATION isDirectory:nil]) {
-    return true;
-  }
+    if (![NSFileManager.defaultManager fileExistsAtPath:HELPER_LOCATION
+                                            isDirectory:nil]) {
+        return true;
+    }
 
-  QString installed_version;
-  if (!getHelperClient()->getVersion(&installed_version)) {
-      return true;
-  }
+    QString installed_version;
+    if (!getHelperClient()->getVersion(&installed_version)) {
+        return true;
+    }
 
-  QString latest_version = QString::fromNSString(NSBundle.mainBundle.infoDictionary[@"DriveHelperVersion"]);
-  qWarning("latest helper version is %s", latest_version.toUtf8().data());
+    QString latest_version = QString::fromNSString(
+        NSBundle.mainBundle.infoDictionary[@"DriveHelperVersion"]);
+    qWarning("latest helper version is %s", latest_version.toUtf8().data());
 
-  // TODO: use sematic version comparsion (so 0.0.10 > 0.0.2)
-  return installed_version < latest_version;
+    // TODO: use sematic version comparsion (so 0.0.10 > 0.0.2)
+    return installed_version < latest_version;
 }
 
 - (BOOL)install

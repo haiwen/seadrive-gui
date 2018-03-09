@@ -98,8 +98,9 @@ ELSEIF (APPLE)
     MARK_AS_ADVANCED (Sec_LIBRARY)
     FIND_LIBRARY(SM_LIBRARY ServiceManagement)
     MARK_AS_ADVANCED (SM_LIBRARY)
+    FIND_LIBRARY(IOKit_LIBRARY IOKit)
     FIND_LIBRARY(MPMessagePack_LIBRARY MPMessagePack PATHS ${CMAKE_SOURCE_DIR}/third_party)
-    SET(EXTRA_LIBS ${EXTRA_LIBS} ${COCOA_LIBRARY} ${Sec_LIBRARY} ${SM_LIBRARY} ${MPMessagePack_LIBRARY}
+    SET(EXTRA_LIBS ${EXTRA_LIBS} ${COCOA_LIBRARY} ${Sec_LIBRARY} ${SM_LIBRARY} ${IOKit_LIBRARY} ${MPMessagePack_LIBRARY}
       # load all members from static objc libs like MPMessagePack because it has
       # objc class category
       "-ObjC"
