@@ -42,8 +42,7 @@ private slots:
     void doSearch(const QString& keyword);
     void doRealSearch(bool load_more = false,
                       bool isAll = true,
-                      const QStringList& filter_list = QStringList(),
-                      const QString& input_fexts = QString());
+                      const QStringList& filter_list = QStringList());
     void onSearchSuccess(const std::vector<FileSearchResult>& results,
                          bool is_loading_more,
                          bool has_more);
