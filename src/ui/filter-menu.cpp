@@ -4,10 +4,11 @@
 namespace
 {
 const QString kTextFile = "Text";
-const QString kDocument = "Document,PDF";
+const QString kDocument = "Document";
 const QString kImage = "Image";
 const QString kVideo = "Video";
 const QString kAudio = "Audio";
+const QString kPdf = "PDF";
 const QString kMarkdown = "Markdown";
 
 } // namespace
@@ -62,6 +63,7 @@ void FilterMenu::onTextFile(bool checked)
 void FilterMenu::onDocument(bool checked)
 {
     boxChanged(checked, kDocument);
+    boxChanged(checked, kPdf);
 }
 
 void FilterMenu::onImage(bool checked)
