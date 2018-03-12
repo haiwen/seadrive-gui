@@ -192,11 +192,10 @@ void SearchDialog::createLoadingView()
 void SearchDialog::onRefresh()
 {
     QStringList filter_list = filter_menu_->filterList();
-    QString input_fexts = filter_menu_->inputFexts();
     if (!search_bar_->text().isEmpty()) {
         search_text_last_modified_ = 1;
-        if (!filter_list.isEmpty() || !input_fexts.isEmpty()) {
-            doRealSearch(false, filter_list, input_fexts);
+        if (!filter_list.isEmpty()) {
+            doRealSearch(false, filter_list);
         } else {
             doRealSearch();
         }
@@ -271,8 +270,7 @@ void SearchDialog::doSearch(const QString &keyword)
 }
 
 void SearchDialog::doRealSearch(bool isAll,
-                                const QStringList& filter_list,
-                                const QString& input_fexts)
+                                const QStringList& filter_list)
 {
     // not modified
     if (search_text_last_modified_ == 0)
@@ -299,7 +297,7 @@ void SearchDialog::doRealSearch(bool isAll,
 
     stack_->setCurrentIndex(INDEX_LOADING_VIEW);
 
-    search_request_ = new FileSearchRequest(account_, search_bar_->text(), filter_list, input_fexts, allOrCustom,
+    search_request_ = new FileSearchRequest(account_, search_bar_->text(), filter_list, allOrCustom,
                                             kAllPage, kPerPageCount);
     connect(search_request_, SIGNAL(success(const std::vector<FileSearchResult>&, bool, bool)),
             this, SLOT(onSearchSuccess(const std::vector<FileSearchResult>&, bool, bool)));

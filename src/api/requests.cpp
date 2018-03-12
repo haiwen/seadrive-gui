@@ -740,7 +740,6 @@ void GetLoginTokenRequest::requestSuccess(QNetworkReply& reply)
 FileSearchRequest::FileSearchRequest(const Account& account,
                                      const QString& keyword,
                                      const QStringList& ftype,
-                                     const QString& input_fexts,
                                      const QString& search_ftypes,
                                      int page,
                                      int per_page)
@@ -760,8 +759,6 @@ FileSearchRequest::FileSearchRequest(const Account& account,
     for (int i = 0; i < ftype.size(); i++) {
         setUrlParam("ftype", ftype.at(i));
     }
-
-    setUrlParam("input_fexts", input_fexts);
 }
 
 void FileSearchRequest::requestSuccess(QNetworkReply& reply)

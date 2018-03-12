@@ -4,22 +4,21 @@
 namespace
 {
 const QString kTextFile = "Text";
-const QString kDocument = "Document";
+const QString kDocument = "Document,PDF";
 const QString kImage = "Image";
 const QString kVideo = "Video";
 const QString kAudio = "Audio";
-const QString kPdf = "PDF";
 const QString kMarkdown = "Markdown";
 
 } // namespace
 
 FilterMenu::FilterMenu(QWidget *parent)
     : QWidget(parent),
-      filter_list_(QStringList()),
-      input_fexts_(QString())
+      filter_list_(QStringList())
 {
     setupUi(this);
-    mFilterLine->setPlaceholderText(tr("Enter the file suffix to ',' at intervals"));
+    setStyleSheet("QWidget#mFilter {"
+                      "border-bottom : 1px solid #d0d0d0;}");
     connect(mTextFile, SIGNAL(clicked(bool)),
             this, SLOT(onTextFile(bool)));
     connect(mDocument, SIGNAL(clicked(bool)),
@@ -30,12 +29,8 @@ FilterMenu::FilterMenu(QWidget *parent)
             this, SLOT(onVideo(bool)));
     connect(mAudio, SIGNAL(clicked(bool)),
             this, SLOT(onAudio(bool)));
-    connect(mPdf, SIGNAL(clicked(bool)),
-            this, SLOT(onPdf(bool)));
     connect(mMarkdown, SIGNAL(clicked(bool)),
             this, SLOT(onMarkdown(bool)));
-    connect(mFilterLine, SIGNAL(textChanged(const QString &)),
-            this, SLOT(sendFilterSignal()));
 }
 
 void FilterMenu::boxChanged(bool checked, const QString& text )
@@ -52,8 +47,7 @@ void FilterMenu::boxChanged(bool checked, const QString& text )
 
 void FilterMenu::sendFilterSignal()
 {
-    input_fexts_ = mFilterLine->text();
-    if (filter_list_.isEmpty() && input_fexts_.isEmpty()) {
+    if (filter_list_.isEmpty()) {
         return;
     } else {
         emit filterChanged();
@@ -83,11 +77,6 @@ void FilterMenu::onVideo(bool checked)
 void FilterMenu::onAudio(bool checked)
 {
     boxChanged(checked, kAudio);
-}
-
-void FilterMenu::onPdf(bool checked)
-{
-    boxChanged(checked, kPdf);
 }
 
 void FilterMenu::onMarkdown(bool checked)

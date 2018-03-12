@@ -6,69 +6,108 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>509</width>
-    <height>75</height>
+    <width>600</width>
+    <height>40</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>FilterMenu</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
-      <widget class="QCheckBox" name="mTextFile">
-       <property name="text">
-        <string>Text file</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QCheckBox" name="mDocument">
-       <property name="text">
-        <string>Document</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QCheckBox" name="mImage">
-       <property name="text">
-        <string>Image</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="3">
-      <widget class="QCheckBox" name="mVideo">
-       <property name="text">
-        <string>Video</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="4">
-      <widget class="QCheckBox" name="mAudio">
-       <property name="text">
-        <string>Audio</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="5">
-      <widget class="QCheckBox" name="mPdf">
-       <property name="text">
-        <string>pdf</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="6">
-      <widget class="QCheckBox" name="mMarkdown">
-       <property name="text">
-        <string>Markdown</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="QLineEdit" name="mFilterLine"/>
+    <widget class="QWidget" name="mFilter" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="leftMargin">
+       <number>6</number>
+      </property>
+      <property name="topMargin">
+       <number>6</number>
+      </property>
+      <property name="rightMargin">
+       <number>6</number>
+      </property>
+      <property name="bottomMargin">
+       <number>6</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="mhorizontalLayout">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QCheckBox" name="mTextFile">
+          <property name="text">
+           <string>Text file    </string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="mDocument">
+          <property name="text">
+           <string>Document    </string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="mImage">
+          <property name="text">
+           <string>Image    </string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="mVideo">
+          <property name="text">
+           <string>Video    </string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="mAudio">
+          <property name="text">
+           <string>Audio    </string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="mMarkdown">
+          <property name="text">
+           <string>Markdown</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
    </item>
   </layout>
  </widget>
