@@ -20,8 +20,8 @@ IF (NOT CMAKE_GENERATOR STREQUAL Xcode)
 ENDIF()
 
 ## Build with warnings
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wsign-compare -Wno-long-long -Wno-unused-parameter")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wsign-compare -Wno-long-long -Wno-unused-parameter -Woverloaded-virtual")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wsign-compare -Wno-long-long -Wno-unused-parameter -fobjc-arc")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wsign-compare -Wno-long-long -Wno-unused-parameter -Woverloaded-virtual -fobjc-arc")
 
 ## Find the dependencies
 
@@ -35,7 +35,7 @@ if (NOT PlugInKit_LIBRARY)
 endif()
 
 ADD_DEFINITIONS(-fapplication-extension -fmodules)
-SET(CMAKE_EXE_LINKER_FLAGS "-fapplication-extension -e _NSExtensionMain -fobjc-arc -fobjc-link-runtime ${CMAKE_EXE_LINKER_FLAGS}")
+SET(CMAKE_EXE_LINKER_FLAGS "-fapplication-extension -e _NSExtensionMain -fobjc-link-runtime ${CMAKE_EXE_LINKER_FLAGS}")
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 SET(FSPLUGIN_SRC

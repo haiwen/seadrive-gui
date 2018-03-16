@@ -18,7 +18,7 @@ IF (NOT CMAKE_OSX_DEPLOYMENT_TARGET)
 ENDIF()
 
 ## Build with warnings
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wsign-compare -Wno-long-long -Wno-unused-parameter")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wsign-compare -Wno-long-long -Wno-unused-parameter -fobjc-arc")
 
 ## Find the dependencies
 FIND_LIBRARY(COCOA_LIBRARY Cocoa)
@@ -31,7 +31,7 @@ FIND_LIBRARY(IOKit_LIBRARY IOKit)
 FIND_LIBRARY(MPMessagePack_LIBRARY MPMessagePack PATHS ${CMAKE_SOURCE_DIR}/../third_party)
 SET(OSX_LIBS ${EXTRA_LIBS} ${COCOA_LIBRARY} ${Sec_LIBRARY} ${SM_LIBRARY} ${IOKit_LIBRARY} ${MPMessagePack_LIBRARY})
 
-SET(CMAKE_EXE_LINKER_FLAGS "-fobjc-arc -fobjc-link-runtime ${CMAKE_EXE_LINKER_FLAGS}")
+SET(CMAKE_EXE_LINKER_FLAGS "-fobjc-link-runtime ${CMAKE_EXE_LINKER_FLAGS}")
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 SET(HELPER_SRC
