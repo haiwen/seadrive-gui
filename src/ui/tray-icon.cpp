@@ -14,6 +14,7 @@
 #include <QMenuBar>
 #include <QRunnable>
 
+#include "message-poller.h"
 #include "utils/utils.h"
 #include "utils/utils-mac.h"
 #include "utils/file-utils.h"
@@ -635,8 +636,8 @@ void SeafileTrayIcon::checkTrayIconMessageQueue()
 
 void SeafileTrayIcon::onMessageClicked()
 {
-    if (repo_id_.isEmpty())
-        return;
+    //if (repo_id_.isEmpty())
+    //    return;
     // LocalRepo repo;
     // if (seafApplet->rpcClient()->getLocalRepo(repo_id_, &repo) != 0 ||
     //     !repo.isValid() || repo.worktree_invalid)
@@ -644,6 +645,13 @@ void SeafileTrayIcon::onMessageClicked()
 
     // DiffReader *reader = new DiffReader(repo, previous_commit_id_, commit_id_);
     // QThreadPool::globalInstance()->start(reader);
+    if (gui->messagePoller()->lastEventType() == "file-download.start") {
+        showTransferProgressDialog();
+        transfer_progress_dialog_->showDownloadTab();
+    } else if (gui->messagePoller()->lastEventType() == "file-download.done") {
+        QString path = ::pathJoin(gui->mountDir(), ::getParentPath(gui->messagePoller()->lastEventPath()));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(path));
+    }
 }
 
 void SeafileTrayIcon::onLoginDialogClosed()
