@@ -754,23 +754,27 @@ void msleep(int mseconds)
 }
 
 QUrl includeQueryParams(const QUrl& url,
-                        const QHash<QString, QString>& params)
+                        const QMultiHash<QString, QString>& params)
 {
     QUrl u(url);
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     QUrlQuery query;
     Q_FOREACH (const QString& key, params.keys()) {
-        QString value = params[key];
-        query.addQueryItem(QUrl::toPercentEncoding(key),
-                           QUrl::toPercentEncoding(value));
+        QList<QString> values = params.values(key);
+        for (int i = 0; i < values.size(); ++i) {
+            query.addQueryItem(QUrl::toPercentEncoding(key),
+                               QUrl::toPercentEncoding(values.at(i)));
+        }
+
     }
     u.setQuery(query);
 #else
     Q_FOREACH (const QString& key, params.keys()) {
-        QString value = params[key];
-        u.addEncodedQueryItem(QUrl::toPercentEncoding(key),
-                              QUrl::toPercentEncoding(value));
-    }
+        QList<QString> values = params.values(key);
+        for (int i = 0; i < values.size(); ++i) {
+            query.addQueryItem(QUrl::toPercentEncoding(key),
+                               QUrl::toPercentEncoding(values.at(i)));
+        }
 #endif
     return u;
 }
