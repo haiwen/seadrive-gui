@@ -759,13 +759,11 @@ QUrl includeQueryParams(const QUrl& url,
     QUrl u(url);
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     QUrlQuery query;
-    Q_FOREACH (const QString& key, params.keys()) {
-        QList<QString> values = params.values(key);
-        for (int i = 0; i < values.size(); ++i) {
-            query.addQueryItem(QUrl::toPercentEncoding(key),
-                               QUrl::toPercentEncoding(values.at(i)));
-        }
-
+    QHashIterator<QString, QString > i(params);
+    while (i.hasNext()) {
+        i.next();
+        query.addQueryItem(QUrl::toPercentEncoding(i.key()),
+                           QUrl::toPercentEncoding(i.value()));
     }
     u.setQuery(query);
 #else

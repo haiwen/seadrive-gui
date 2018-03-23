@@ -785,9 +785,7 @@ void FileSearchRequest::requestSuccess(QNetworkReply& reply)
         if (map.empty())
             continue;
         tmp.repo_id = map["repo_id"].toString();
-        QString repo_name;
-        gui->rpcClient()->getRepoUnameById(tmp.repo_id, &repo_name);
-        tmp.repo_name = repo_name;
+        tmp.repo_name = map["repo_name"].toString();
         tmp.name = map["name"].toString();
         tmp.oid = map["oid"].toString();
         tmp.last_modified = map["last_modified"].toLongLong();

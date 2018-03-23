@@ -10,6 +10,11 @@ QLabel {
     font-family: Arial;
 }
 
+QLabel#LoadingFailedText {
+    font-family: Arial;
+    font-size:15px;
+}
+
 QToolButton#mAccountBtn
 {
     margin: 0;

@@ -198,7 +198,7 @@ void SearchDialog::createLoadingView()
     loading_failed_view_ = new QLabel;
     loading_failed_view_->setObjectName(kLoadingFailedLabelName);
     QString link = QString("<a style=\"color:#777\" href=\"#\">%1</a>").arg(tr("retry"));
-    QString label_text = tr("Failed to get files information<br/>"
+    QString label_text = tr("Failed to search<br/>"
                             "Please %1").arg(link);
     loading_failed_view_->setText(label_text);
     loading_failed_view_->setAlignment(Qt::AlignCenter);
@@ -226,7 +226,7 @@ void SearchDialog::createEmptyView()
     waiting_view_->installEventFilter(this);
 
     empty_view_ = new QLabel(this);
-    empty_view_->setText(tr("This folder is empty."));
+    empty_view_->setText(tr("No result found"));
     empty_view_->setAlignment(Qt::AlignCenter);
     empty_view_->setStyleSheet("background-color: white");
 }

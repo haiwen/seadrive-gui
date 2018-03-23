@@ -10,20 +10,16 @@ class FilterMenu : public QWidget,
     Q_OBJECT
 public:
     FilterMenu(QWidget *parent = 0);
-    QStringList filterList() const { return filter_list_; }
+    QStringList filterList();
     void clearCheckBox();
 signals:
     void filterChanged();
 private slots:
-    void onTextFile(bool checked);
-    void onDocument(bool checked);
-    void onImage(bool checked);
-    void onVideo(bool checked);
-    void onAudio(bool checked);
-    void onMarkdown(bool checked);
+
+    void onBoxChanged();
 
 private:
-    void boxChanged(bool checked, const QString& text);
+    void boxChanged();
     Q_DISABLE_COPY(FilterMenu)
     QStringList filter_list_;
 };

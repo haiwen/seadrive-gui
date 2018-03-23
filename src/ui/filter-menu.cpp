@@ -3,13 +3,13 @@
 
 namespace
 {
-const QString kTextFile = "Text";
-const QString kDocument = "Document";
-const QString kImage = "Image";
-const QString kVideo = "Video";
-const QString kAudio = "Audio";
-const QString kPdf = "PDF";
-const QString kMarkdown = "Markdown";
+const QString kFileTypeTextFile = "Text";
+const QString kFileTypeDocument = "Document";
+const QString kFileTypeImage = "Image";
+const QString kFileTypeVideo = "Video";
+const QString kFileTypeAudio = "Audio";
+const QString kFileTypePdf = "PDF";
+const QString kFileTypeMarkdown = "Markdown";
 
 } // namespace
 
@@ -21,29 +21,24 @@ FilterMenu::FilterMenu(QWidget *parent)
     setStyleSheet("QWidget#mFilter {"
                       "border-bottom : 1px solid #d0d0d0;}");
     connect(mTextFile, SIGNAL(clicked(bool)),
-            this, SLOT(onTextFile(bool)));
+            this, SLOT(onBoxChanged()));
     connect(mDocument, SIGNAL(clicked(bool)),
-            this, SLOT(onDocument(bool)));
+            this, SLOT(onBoxChanged()));
     connect(mImage, SIGNAL(clicked(bool)),
-            this, SLOT(onImage(bool)));
+            this, SLOT(onBoxChanged()));
     connect(mVideo, SIGNAL(clicked(bool)),
-            this, SLOT(onVideo(bool)));
+            this, SLOT(onBoxChanged()));
     connect(mAudio, SIGNAL(clicked(bool)),
-            this, SLOT(onAudio(bool)));
+            this, SLOT(onBoxChanged()));
     connect(mMarkdown, SIGNAL(clicked(bool)),
-            this, SLOT(onMarkdown(bool)));
+            this, SLOT(onBoxChanged()));
 }
 
-void FilterMenu::boxChanged(bool checked, const QString& text )
+void FilterMenu::onBoxChanged()
 {
-    if (checked) {
-        filter_list_.append(text);
-    } else {
-        QString filter_list_member = filter_list_.join(",");
-        filter_list_member.remove(text);
-        filter_list_ = filter_list_member.split(",", QString::SkipEmptyParts);
+    if (!filterList().isEmpty()) {
+        emit filterChanged();
     }
-    emit filterChanged();
 }
 
 void FilterMenu::clearCheckBox()
@@ -53,35 +48,29 @@ void FilterMenu::clearCheckBox()
     mImage->setChecked(false);
     mVideo->setChecked(false);
     mAudio->setChecked(false);
+    mMarkdown->setChecked(false);
 }
 
-void FilterMenu::onTextFile(bool checked)
-{
-    boxChanged(checked, kTextFile);
-}
-
-void FilterMenu::onDocument(bool checked)
-{
-    boxChanged(checked, kDocument);
-    boxChanged(checked, kPdf);
-}
-
-void FilterMenu::onImage(bool checked)
-{
-    boxChanged(checked, kImage);
-}
-
-void FilterMenu::onVideo(bool checked)
-{
-    boxChanged(checked, kVideo);
-}
-
-void FilterMenu::onAudio(bool checked)
-{
-    boxChanged(checked, kAudio);
-}
-
-void FilterMenu::onMarkdown(bool checked)
-{
-    boxChanged(checked, kMarkdown);
+QStringList FilterMenu::filterList() {
+    QStringList types;
+    if (mTextFile->isChecked()) {
+        types.append(kFileTypeTextFile);
+    }
+    if (mDocument->isChecked()) {
+        types.append(kFileTypeDocument);
+        types.append(kFileTypePdf);
+    }
+    if (mImage->isChecked()) {
+        types.append(kFileTypeImage);
+    }
+    if (mVideo->isChecked()) {
+        types.append(kFileTypeVideo);
+    }
+    if (mAudio->isChecked()) {
+        types.append(kFileTypeAudio);
+    }
+    if (mMarkdown->isChecked()) {
+        types.append(kFileTypeMarkdown);
+    }
+    return types;
 }
