@@ -195,9 +195,7 @@ void SeafileTrayIcon::prepareContextMenu()
 {
     const std::vector<Account>& accounts = gui->accountManager()->accounts();
     Account current_account = gui->accountManager()->currentAccount();
-    if (!current_account.isPro()) {
-        search_action_->setVisible(false);
-    }
+    search_action_->setVisible(current_account.isPro());
 
     if (global_sync_error_.isValid()) {
         global_sync_error_action_->setVisible(true);

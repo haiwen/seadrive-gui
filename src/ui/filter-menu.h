@@ -21,7 +21,7 @@ private slots:
 private:
     void boxChanged();
     Q_DISABLE_COPY(FilterMenu)
-    QStringList filter_list_;
+    QStringList last_filters_;
 };
 
 #endif // FILTERMENU_H

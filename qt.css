@@ -247,12 +247,6 @@ StarredFilesListView {
     border-top: 1px solid #DCDCDE;
 }
 
-QWidget#EmptyPlaceHolder,
-LoadingView
-{
-    border-top: 1px solid #DCDCDE;
-}
-
 QWidget#EventsContainerView {
     margin: 0;
     border: 0;

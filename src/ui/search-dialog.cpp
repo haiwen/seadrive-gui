@@ -86,7 +86,7 @@ SearchDialog::SearchDialog(const Account &account, QWidget *parent)
     loading_row_ = 0;
     setWindowTitle(tr("Search files"));
     setWindowIcon(QIcon(":/images/seafile.png"));
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) | Qt::WindowStaysOnTopHint);
 
     setMinimumSize(QSize(600, 371));
     createToolBar();
@@ -366,6 +366,7 @@ void SearchDialog::onSearchSuccess(const std::vector<FileSearchResult>& results,
 
     int old_loading_row = loading_row_;
     search_view_->setRowHeight(old_loading_row, 40);
+    search_view_->clearSpans();
     if (has_more) {
         loading_row_ += items.size();
         load_more_btn_ = new LoadMoreButton;
@@ -373,6 +374,7 @@ void SearchDialog::onSearchSuccess(const std::vector<FileSearchResult>& results,
                 this, SLOT(loadMoreSearchResults()));
 
         search_view_->setRowHeight(loading_row_, 80);
+        search_view_->setSpan(loading_row_, 0, loading_row_, 4);
         search_view_->setIndexWidget(
             search_model_->loadMoreIndex(), load_more_btn_);
     }
@@ -432,7 +434,9 @@ void SearchItemsTableView::onItemDoubleClick(const QModelIndex& index)
 //    if (result.fullpath.endsWith("/"))
 //        emit clearSearchBar();
 
-    QString path_to_open = ::pathJoin(gui->mountDir(), result.repo_name, result.fullpath);
+    QString repo_name;
+    gui->rpcClient()->getRepoUnameById(result.repo_id, &repo_name);
+    QString path_to_open = ::pathJoin(gui->mountDir(), repo_name, result.fullpath);
     ::showInGraphicalShell(path_to_open);
 }
 
@@ -501,7 +505,7 @@ const QModelIndex SearchItemsTableModel::updateSearchResults(
 
     load_more_index_ = QModelIndex();
     if (has_more) {
-        load_more_index_ = index(items_.size() - 1, 0);
+        load_more_index_ = index(items_.size() - 1, 3);
     }
 
     endResetModel();
