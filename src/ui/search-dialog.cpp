@@ -83,10 +83,9 @@ SearchDialog::SearchDialog(const Account &account, QWidget *parent)
       search_text_last_modified_(0),
       nth_page_(1)
 {
-    loading_row_ = 0;
     setWindowTitle(tr("Search files"));
     setWindowIcon(QIcon(":/images/seafile.png"));
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) | Qt::WindowStaysOnTopHint);
 
     setMinimumSize(QSize(600, 371));
     createToolBar();
@@ -118,7 +117,9 @@ SearchDialog::SearchDialog(const Account &account, QWidget *parent)
     stack_->insertWidget(INDEX_LOADING_VIEW, loading_view_);
     stack_->insertWidget(INDEX_LOADING_FAILED_VIEW, loading_failed_view_);
     stack_->insertWidget(INDEX_EMPTY_VIEW, empty_view_);
-    stack_->insertWidget(INDEX_SEARCH_VIEW, search_view_);
+    createSearchStack();
+    stack_->insertWidget(INDEX_SEARCH_VIEW, table_wrapper_view_);
+
     stack_->setContentsMargins(0, 0, 0, 0);
     stack_->installEventFilter(this);
     stack_->setAcceptDrops(true);
@@ -246,6 +247,32 @@ void SearchDialog::createTable()
 //    QDialog::resizeEvent(QResizeEvent *event);
 }
 
+void SearchDialog::createSearchStack()
+{
+    table_wrapper_view_ = new QWidget;
+    QVBoxLayout *wrapper_layout = new QVBoxLayout;
+    wrapper_layout->setContentsMargins(0, 0, 0, 0);
+    wrapper_layout->setSpacing(0);
+
+    button_view_ = new QWidget;
+    button_view_->setFixedHeight(60);
+    button_view_->setStyleSheet("background-color:#FFFFFF;");
+    QHBoxLayout *button_layout = new QHBoxLayout;
+    button_layout->setContentsMargins(0, 0, 0, 0);
+    button_layout->setSpacing(0);
+    button_view_->setLayout(button_layout);
+    load_more_btn_ = new LoadMoreButton;
+    load_more_btn_->setStyleSheet("background-color:#EFEEEE;");
+    button_layout->addWidget(load_more_btn_);
+
+
+    wrapper_layout->addWidget(search_view_);
+    wrapper_layout->addWidget(button_view_);
+    table_wrapper_view_->setLayout(wrapper_layout);
+    connect(load_more_btn_, SIGNAL(clicked()),
+            this, SLOT(loadMoreSearchResults()));
+}
+
 bool SearchDialog::eventFilter(QObject *obj, QEvent *event)
 {
     if (obj == waiting_view_ && event->type() == QEvent::Paint) {
@@ -302,8 +329,6 @@ void SearchDialog::doRealSearch(bool load_more,
         // modified too fast
         if (QDateTime::currentMSecsSinceEpoch() - search_text_last_modified_ <= kInputDelayInterval)
             return;
-        //search again, the ‘loading more’ is reindexed
-        loading_row_ = 0;
     }
 
     if (!account_.isValid())
@@ -364,18 +389,9 @@ void SearchDialog::onSearchSuccess(const std::vector<FileSearchResult>& results,
         search_view_->scrollTo(first_new_item);
     }
 
-    int old_loading_row = loading_row_;
-    search_view_->setRowHeight(old_loading_row, 40);
-    if (has_more) {
-        loading_row_ += items.size();
-        load_more_btn_ = new LoadMoreButton;
-        connect(load_more_btn_, SIGNAL(clicked()),
-                this, SLOT(loadMoreSearchResults()));
+    load_more_btn_->reset();
+    button_view_->setVisible(has_more);
 
-        search_view_->setRowHeight(loading_row_, 80);
-        search_view_->setIndexWidget(
-            search_model_->loadMoreIndex(), load_more_btn_);
-    }
 }
 
 void SearchDialog::onSearchFailed(const ApiError& error)
@@ -405,7 +421,7 @@ SearchItemsTableView::SearchItemsTableView(QWidget* parent)
     setGridStyle(Qt::NoPen);
     setShowGrid(false);
     setContentsMargins(0, 5, 0, 5);
-    setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+//    setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
 
     setSelectionBehavior(QAbstractItemView::SelectRows);
     setSelectionMode(QAbstractItemView::SingleSelection);
@@ -431,8 +447,9 @@ void SearchItemsTableView::onItemDoubleClick(const QModelIndex& index)
 
 //    if (result.fullpath.endsWith("/"))
 //        emit clearSearchBar();
-
-    QString path_to_open = ::pathJoin(gui->mountDir(), result.repo_name, result.fullpath);
+    QString repo_name;
+    gui->rpcClient()->getRepoUnameById(result.repo_id, &repo_name);
+    QString path_to_open = ::pathJoin(gui->mountDir(), repo_name, result.fullpath);
     ::showInGraphicalShell(path_to_open);
 }
 
@@ -498,11 +515,6 @@ const QModelIndex SearchItemsTableModel::updateSearchResults(
     // place holder for the "load more" button
     QTableWidgetItem *load_more_place_holder = new QTableWidgetItem(nullptr, PLACE_HOLDER_TYPE);
     items_.push_back(load_more_place_holder);
-
-    load_more_index_ = QModelIndex();
-    if (has_more) {
-        load_more_index_ = index(items_.size() - 1, 0);
-    }
 
     endResetModel();
 

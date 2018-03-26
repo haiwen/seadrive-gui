@@ -49,7 +49,9 @@ LoadMoreButton::LoadMoreButton(QWidget *parent)
     btn_layout_->addWidget(load_more_btn_, Qt::AlignCenter);
 
     loading_label_ = new LoadingView;
-
+    btn_layout_->addWidget(loading_label_, Qt::AlignCenter);
+    loading_label_->setStyleSheet("background-color:#FFFFFF");
+    loading_label_->hide();
     // Must set fill backgound because this button is used as an "index widget".
     // See the doc of QAbstractItemView::setIndexWidget for details.
     setAutoFillBackground(true);
@@ -61,8 +63,14 @@ LoadMoreButton::LoadMoreButton(QWidget *parent)
 void LoadMoreButton::onBtnClicked()
 {
     load_more_btn_->hide();
-
-    btn_layout_->addWidget(loading_label_, Qt::AlignCenter);
+    loading_label_->setVisible(true);
+    //btn_layout_->addWidget(loading_label_, Qt::AlignCenter);
 
     emit clicked();
+}
+
+void LoadMoreButton::reset()
+{
+    load_more_btn_->setVisible(true);
+    loading_label_->hide();
 }

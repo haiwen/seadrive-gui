@@ -30,6 +30,7 @@ class LoadMoreButton : public QWidget {
     Q_OBJECT
 public:
     explicit LoadMoreButton(QWidget *parent=0);
+    void reset();
 
 signals:
     void clicked();

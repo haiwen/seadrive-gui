@@ -195,9 +195,7 @@ void SeafileTrayIcon::prepareContextMenu()
 {
     const std::vector<Account>& accounts = gui->accountManager()->accounts();
     Account current_account = gui->accountManager()->currentAccount();
-    if (!current_account.isPro()) {
-        search_action_->setVisible(false);
-    }
+    search_action_->setVisible(current_account.isPro());
 
     if (global_sync_error_.isValid()) {
         global_sync_error_action_->setVisible(true);
@@ -548,6 +546,7 @@ void SeafileTrayIcon::showSettingsWindow()
 
 void SeafileTrayIcon::showSearchDialog()
 {
+    gui->refreshQss();
     if (search_dialog_ == nullptr) {
         search_dialog_ = new SearchDialog(gui->accountManager()->currentAccount());
     }

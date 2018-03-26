@@ -15,7 +15,7 @@ const QString kFileTypeMarkdown = "Markdown";
 
 FilterMenu::FilterMenu(QWidget *parent)
     : QWidget(parent),
-      filter_list_(QStringList())
+      last_filters_(QStringList())
 {
     setupUi(this);
     setStyleSheet("QWidget#mFilter {"
@@ -36,8 +36,12 @@ FilterMenu::FilterMenu(QWidget *parent)
 
 void FilterMenu::onBoxChanged()
 {
-    if (!filterList().isEmpty()) {
-        emit filterChanged();
+    QStringList new_filters = filterList();
+    if (!new_filters.isEmpty()) {
+        if (new_filters != last_filters_) {
+            last_filters_ = new_filters;
+            emit filterChanged();
+        }
     }
 }
 

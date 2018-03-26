@@ -56,6 +56,7 @@ private:
     void createLoadingView();
     void createEmptyView();
     void createTable();
+    void createSearchStack();
 
     bool eventFilter(QObject *obj, QEvent *event);
 
@@ -79,6 +80,8 @@ private:
     QLabel *loading_failed_view_;
     QWidget *waiting_view_;
     QWidget *loading_view_;
+    QWidget *table_wrapper_view_;
+    QWidget *button_view_;
     QLabel *empty_view_;
 
     LoadMoreButton *load_more_btn_;
@@ -88,7 +91,6 @@ private:
     SearchItemsDelegate* search_delegate_;
 
     int nth_page_;
-    int loading_row_;
 };
 
 class SearchItemsTableView : public QTableView
@@ -137,7 +139,6 @@ public:
                         Qt::Orientation orientation,
                         int role) const Q_DECL_OVERRIDE;
     const QModelIndex updateSearchResults(const std::vector<QTableWidgetItem *> &items, bool is_loading_more, bool has_more);
-    const QModelIndex loadMoreIndex() const { return load_more_index_; }
 
     void onResize(const QSize &size);
     const FileSearchResult* resultAt(int row) const;
@@ -154,7 +155,6 @@ private:
     std::vector<QTableWidgetItem*> items_;
 
     int name_column_width_;
-    QModelIndex load_more_index_;
 };
 
 class DataManager;

@@ -247,12 +247,6 @@ StarredFilesListView {
     border-top: 1px solid #DCDCDE;
 }
 
-QWidget#EmptyPlaceHolder,
-LoadingView
-{
-    border-top: 1px solid #DCDCDE;
-}
-
 QWidget#EventsContainerView {
     margin: 0;
     border: 0;
@@ -407,7 +401,7 @@ SearchItemsTableView,
 FileTableView {
     border: 0;
     margin: 0;
-    border-bottom: 1px solid #e0e0e0;
+    /*border-bottom: 1px solid #e0e0e0;*/
     background-color: white;
     qproperty-focusPolicy: NoFocus;
 }
