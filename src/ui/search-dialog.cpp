@@ -435,7 +435,11 @@ void SearchItemsTableView::onItemDoubleClick(const QModelIndex& index)
 //        emit clearSearchBar();
 
     QString repo_name;
-    gui->rpcClient()->getRepoUnameById(result.repo_id, &repo_name);
+    if (!gui->rpcClient()->getRepoUnameById(result.repo_id, &repo_name)) {
+        gui->warningBox(tr("File does not exist:\n"
+                           "file \"%1\" may not be synchronized to local").arg(result.name));
+        return;
+    }
     QString path_to_open = ::pathJoin(gui->mountDir(), repo_name, result.fullpath);
     ::showInGraphicalShell(path_to_open);
 }
