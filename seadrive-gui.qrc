@@ -239,5 +239,7 @@
     <file>i18n/seadrive_cs_CZ.qm</file>
     <file>i18n/seadrive_el_GR.qm</file>
     <file>i18n/seadrive_nb_NO.qm</file>
+    <file>images/cancel.png</file>
+    <file>images/cancel@2x.png</file>
 </qresource>
 </RCC>
