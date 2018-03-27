@@ -10,6 +10,7 @@ RepoTreeView {
     font-family: Microsoft YaHei;
 }
 
+SearchItemsTableView QHeaderView::section,
 FileTableView QHeaderView::section:first {
     padding-left: 36px;
 }

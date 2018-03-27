@@ -24,6 +24,7 @@
 #include "src/ui/about-dialog.h"
 #include "src/ui/sync-errors-dialog.h"
 #include "src/ui/transfer-progress-dialog.h"
+#include "src/ui/search-dialog.h"
 #include "api/api-error.h"
 #include "api/requests.h"
 #include "seadrive-gui.h"
@@ -111,6 +112,9 @@ void SeafileTrayIcon::start()
 #if defined(Q_OS_MAC)
     utils::mac::set_darkmode_watcher(&darkmodeWatcher);
 #endif
+    AccountManager* account_mgr = gui->accountManager();
+    connect(account_mgr, SIGNAL(accountsChanged()), this,
+            SLOT(onAccountChanged()));
 }
 
 void SeafileTrayIcon::createActions()
@@ -123,6 +127,9 @@ void SeafileTrayIcon::createActions()
 
     quit_action_ = new QAction(tr("&Quit"), this);
     connect(quit_action_, SIGNAL(triggered()), this, SLOT(quitSeafile()));
+
+    search_action_ = new QAction(tr("Search files"), this);
+    connect(search_action_, SIGNAL(triggered()), this, SLOT(showSearchDialog()));
 
     settings_action_ = new QAction(tr("Settings"), this);
     connect(settings_action_, SIGNAL(triggered()), this, SLOT(showSettingsWindow()));
@@ -167,6 +174,7 @@ void SeafileTrayIcon::createContextMenu()
 
     context_menu_->addAction(open_seafile_folder_action_);
     context_menu_->addAction(open_log_directory_action_);
+    context_menu_->addAction(search_action_);
     context_menu_->addAction(settings_action_);
 
     context_menu_->addSeparator();
@@ -187,6 +195,8 @@ void SeafileTrayIcon::createContextMenu()
 void SeafileTrayIcon::prepareContextMenu()
 {
     const std::vector<Account>& accounts = gui->accountManager()->accounts();
+    Account current_account = gui->accountManager()->currentAccount();
+    search_action_->setVisible(current_account.isPro());
 
     if (global_sync_error_.isValid()) {
         global_sync_error_action_->setVisible(true);
@@ -533,6 +543,30 @@ void SeafileTrayIcon::showSettingsWindow()
     gui->settingsDialog()->show();
     gui->settingsDialog()->raise();
     gui->settingsDialog()->activateWindow();
+}
+
+void SeafileTrayIcon::showSearchDialog()
+{
+    gui->refreshQss();
+    if (search_dialog_ == nullptr) {
+        search_dialog_ = new SearchDialog(gui->accountManager()->currentAccount());
+    }
+
+    search_dialog_->show();
+    search_dialog_->raise();
+    search_dialog_->activateWindow();
+    connect(search_dialog_, SIGNAL(aboutClose()), this, SLOT(clearDialog()));
+}
+
+void SeafileTrayIcon::clearDialog()
+{
+    search_dialog_ = nullptr;
+}
+
+void SeafileTrayIcon::onAccountChanged()
+{
+    if (search_dialog_ != nullptr)
+        search_dialog_->close();
 }
 
 void SeafileTrayIcon::showLoginDialog()

@@ -10,6 +10,11 @@ QLabel {
     font-family: Arial;
 }
 
+QLabel#LoadingFailedText {
+    font-family: Arial;
+    font-size:15px;
+}
+
 QToolButton#mAccountBtn
 {
     margin: 0;
@@ -242,12 +247,6 @@ StarredFilesListView {
     border-top: 1px solid #DCDCDE;
 }
 
-QWidget#EmptyPlaceHolder,
-LoadingView
-{
-    border-top: 1px solid #DCDCDE;
-}
-
 QWidget#EventsContainerView {
     margin: 0;
     border: 0;
@@ -300,6 +299,27 @@ ActivitiesTab, EventsListView
     qproperty-focusPolicy: NoFocus;
 }
 
+QLineEdit#mSearchBar {
+    min-height: 30px;
+    max-height: 30px;
+    margin-left: 16px;
+    margin-right: 16px;
+    margin-top: 0;
+    margin-bottom: 0px;
+    padding: 0 0px;
+    border: 1px solid #E0E0E0;
+    border-radius: 3px;
+}
+
+QLineEdit#mSearchBar QLabel {
+    min-width: 80px;
+    max-width: 80px;
+}
+
+QLineEdit#mSearchBar:focus {
+    color: #525252;
+}
+
 FileBrowserDialog {
     margin: 0;
     min-width: 640px;
@@ -333,11 +353,14 @@ FileBrowserDialog QWidget#mHeader QPushButton {
     margin-left: 4px;
 }
 
+SearchDialog QToolBar#topBar,
 FileBrowserDialog QToolBar#topBar {
     border: 0;
     border-bottom: 1px solid #d0d0d0;
     padding: 0;
     min-height: 42px;
+    background: #F5F5F7;
+    spacing: 0;
 }
 
 FileBrowserDialog QToolBar QPushButton {
@@ -374,15 +397,16 @@ FileBrowserDialog QToolBar QPushButton:hover {
     color: #FF9A2A;
 }
 
+SearchItemsTableView,
 FileTableView {
     border: 0;
     margin: 0;
-    padding-left: 14px;
-    border-bottom: 1px solid #e0e0e0;
+    /*border-bottom: 1px solid #e0e0e0;*/
     background-color: white;
     qproperty-focusPolicy: NoFocus;
 }
 
+SearchItemsTableView QHeaderView::section,
 FileTableView QHeaderView::section {
     border: 0;
     padding: 8px;
@@ -393,10 +417,12 @@ FileTableView QHeaderView::section {
     padding-top: 20px;
 }
 
+SearchItemsTableView QHeaderView::section:first,
 FileTableView QHeaderView::section:first {
     padding-left: 40px;
 }
 
+SearchItemsTableView QHeaderView::down-arrow,
 FileTableView QHeaderView::down-arrow {
     width: 15px;
     height: 5px;
@@ -404,23 +430,28 @@ FileTableView QHeaderView::down-arrow {
     subcontrol-position: center right;
 }
 
+SearchItemsTableView QHeaderView::up-arrow,
 FileTableView QHeaderView::up-arrow {
     padding-top: 15px;
     subcontrol-position: center right;
 }
 
+SearchItemsTableView QHeaderView::down-arrow,
 FileTableView QHeaderView::down-arrow {
   image: url(:/images/filebrowser/down-arrow.png);
 }
 
+SearchItemsTableView QHeaderView::up-arrow,
 FileTableView QHeaderView::up-arrow {
   image: url(:/images/filebrowser/up-arrow.png);
 }
 
+SearchItemsTableView::item,
 FileTableView::item {
     border-top: 1px solid #e0e0e0;
 }
 
+SearchItemsTableView::item :last,
 FileTableView::item :last {
     padding-right: 13px;
 }
@@ -560,4 +591,19 @@ SyncErrorsTableView::item :last {
 
 SyncErrorsTableView::item:selected {
     background-color: #F9E0C7;
+}
+
+LoadMoreButton QToolButton#loadMoreBtn {
+    padding: 0;
+    font-family: Arial;
+    font-size: 14px;
+    qproperty-focusPolicy: NoFocus;
+    /* text-decoration: underline; */
+    color: #626262;
+    border: 0;
+    border-radius: 18px;
+    /* border-top: 1px solid #eee; */
+    background-color: #EFEEEE;
+    width: 120px;
+    height: 34px;
 }

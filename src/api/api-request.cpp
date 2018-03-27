@@ -24,7 +24,8 @@ SeafileApiRequest::~SeafileApiRequest()
 
 void SeafileApiRequest::setUrlParam(const QString& name, const QString& value)
 {
-    params_[name] = value;
+//    params_[name] = value;
+    params_.insert(name, value);
 }
 
 void SeafileApiRequest::setFormParam(const QString& name, const QString& value)

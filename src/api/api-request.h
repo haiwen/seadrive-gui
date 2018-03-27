@@ -10,6 +10,7 @@
 #include <QList>
 #include <QNetworkReply>
 #include <QHash>
+#include <QMultiHash>
 
 class SeafileApiClient;
 class QSslError;
@@ -76,7 +77,7 @@ private:
     Q_DISABLE_COPY(SeafileApiRequest)
 
     QUrl url_;
-    QHash<QString, QString> params_;
+    QMultiHash<QString, QString> params_;
     QHash<QString, QString> form_params_;
     Method method_;
     QString token_;
