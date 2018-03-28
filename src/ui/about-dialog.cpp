@@ -45,7 +45,6 @@ AboutDialog::AboutDialog(QWidget *parent)
 #ifdef HAVE_SPARKLE_SUPPORT
 void AboutDialog::checkUpdate()
 {
-    AutoUpdateService::instance()->setRequestParams();
     AutoUpdateService::instance()->checkUpdate();
     close();
 }

@@ -6,9 +6,9 @@
 
 #include "utils/singleton.h"
 
-class GetLatestVersionRequest;
+class AutoUpdateAdapter;
 
-// Auto update seadrive client program. Only used on windows.
+// Auto update seafile client program. Only used on windows/mac.
 class AutoUpdateService : public QObject
 {
     SINGLETON_DEFINE(AutoUpdateService)
@@ -19,21 +19,18 @@ public:
 
     bool shouldSupportAutoUpdate() const;
 
-    void setRequestParams();
     bool autoUpdateEnabled() const;
     void setAutoUpdateEnabled(bool enabled);
-    uint updateCheckInterval() const;
-    void setUpdateCheckInterval(uint interval);
 
     void start();
     void stop();
 
     void checkUpdate();
-    void checkAndInstallUpdate();
-    void checkUpdateWithoutUI();
 
 private:
+    void enableUpdateByDefault();
     QString getAppcastURI();
+    AutoUpdateAdapter *adapter_;
 };
 
 #endif // SEADRIVE_GUI_AUTO_UPDATE_SERVICE_H

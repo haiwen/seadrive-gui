@@ -1,7 +1,12 @@
-#include <QTimer>
+#include <QSettings>
 
-#include <winsparkle.h>
+#ifdef Q_OS_WIN32
+    #include <winsparkle.h>
+#else
+    #include "mac-sparkle-support.h"
+#endif
 
+#include "i18n.h"
 #include "api/requests.h"
 #include "seadrive-gui.h"
 #include "utils/utils.h"
@@ -12,82 +17,158 @@ SINGLETON_IMPL(AutoUpdateService)
 
 namespace
 {
-    const char *kSparkleAppcastURI = "https://seafile.com/api/seadrive/appcast.xml";
+#ifdef Q_OS_WIN32
+    const char *kSparkleAppcastURI = "https://www.seafile.com/api/client-updates/seadrive-client-windows/appcast.xml";
+    const char *kSparkleAppcastURIForCN = "https://www.seafile.com/api/client-updates/seadrive-client-windows-cn/appcast.xml";
     const char *kWinSparkleRegistryPath = "SOFTWARE\\Seafile\\Seafile Drive Client\\WinSparkle";
+#else
+    const char *kSparkleAppcastURI = "https://www.seafile.com/api/client-updates/seadrive-client-mac/appcast.xml";
+    const char *kSparkleAppcastURIForCN = "https://www.seafile.com/api/client-updates/seadrive-client-mac-cn/appcast.xml";
+#endif
+    const char *kSparkleAlreadyEnableUpdateByDefault = "SparkleAlreadyEnableUpdateByDefault";
+
+QString getAppcastURI() {
+    QString url_from_env = qgetenv("SEADRIVE_CLIENT_APPCAST_URI");
+    if (!url_from_env.isEmpty()) {
+        qWarning(
+            "sparkle: using app cast url from SEADRIVE_CLIENT_APPCAST_URI: "
+            "%s",
+            url_from_env.toUtf8().data());
+        return url_from_env;
+    }
+    return I18NHelper::getInstance()->isChinese() ? kSparkleAppcastURIForCN : kSparkleAppcastURI;
+}
+
 } // namespace
+
+// Virtual base class for windows/mac
+class AutoUpdateAdapter {
+public:
+    virtual void prepare() = 0;
+    virtual void start() = 0;
+    virtual void stop() = 0;
+    virtual void checkNow() = 0;
+    virtual bool autoUpdateEnabled() = 0;
+    virtual void setAutoUpdateEnabled(bool enabled) = 0;
+};
+
+#ifdef Q_OS_WIN32
+class WindowsAutoUpdateAdapter: public AutoUpdateAdapter {
+public:
+    void prepare() {
+        // Note that @param path is relative to HKCU/HKLM root
+        // and the root is not part of it. For example:
+        // @code
+        //     win_sparkle_set_registry_path("Software\\My App\\Updates");
+        // @endcode
+        win_sparkle_set_registry_path(kWinSparkleRegistryPath);
+        win_sparkle_set_appcast_url(getAppcastURI().toUtf8().data());
+        win_sparkle_set_app_details(
+            L"Seafile",
+            L"Seafile Drive Client",
+            QString(STRINGIZE(SEADRIVE_GUI_VERSION)).toStdWString().c_str());
+    }
+
+    void start() {
+        win_sparkle_init();
+    }
+
+    void stop() {
+        win_sparkle_cleanup();
+    }
+
+    void checkNow() {
+        win_sparkle_check_update_with_ui();
+    }
+
+    bool autoUpdateEnabled() {
+        // qWarning() << "autoUpdateEnabled =" << win_sparkle_get_automatic_check_for_updates();
+        return win_sparkle_get_automatic_check_for_updates();
+    }
+
+    void setAutoUpdateEnabled(bool enabled) {
+        win_sparkle_set_automatic_check_for_updates(enabled ? 1 : 0);
+    }
+};
+#elif defined(Q_OS_MAC)
+class MacAutoUpdateAdapter: public AutoUpdateAdapter {
+public:
+    void prepare() {
+        SparkleHelper::setFeedURL(getAppcastURI().toUtf8().data());
+    }
+
+    void start() {
+    }
+
+    void stop() {
+    }
+
+    void checkNow() {
+        SparkleHelper::checkForUpdate();
+    }
+
+    bool autoUpdateEnabled() {
+        return SparkleHelper::autoUpdateEnabled();
+    }
+
+    void setAutoUpdateEnabled(bool enabled) {
+        SparkleHelper::setAutoUpdateEnabled(enabled);
+    }
+};
+#endif
+
 
 AutoUpdateService::AutoUpdateService(QObject *parent) : QObject(parent)
 {
+#ifdef Q_OS_WIN32
+    adapter_ = new WindowsAutoUpdateAdapter;
+#else
+    adapter_ = new MacAutoUpdateAdapter;
+#endif
 }
 
 void AutoUpdateService::start()
 {
-    // Initialize the updater and possibly show some UI
-    win_sparkle_init();
+    adapter_->prepare();
+    enableUpdateByDefault();
+    adapter_->start();
+}
+
+void AutoUpdateService::enableUpdateByDefault() {
+    // Enable auto update check by default.
+    QSettings settings;
+    settings.beginGroup("Misc");
+    bool already_enable_update_by_default = settings.value(kSparkleAlreadyEnableUpdateByDefault, false).toBool();
+
+    if (!already_enable_update_by_default) {
+        settings.setValue(kSparkleAlreadyEnableUpdateByDefault, true);
+        setAutoUpdateEnabled(true);
+    }
+
+    settings.endGroup();
 }
 
 void AutoUpdateService::stop()
 {
-    win_sparkle_cleanup();
+    adapter_->stop();
 }
 
 
 void AutoUpdateService::checkUpdate()
 {
-    win_sparkle_check_update_with_ui();
+    adapter_->checkNow();
 }
 
-void AutoUpdateService::checkAndInstallUpdate() {
-    win_sparkle_check_update_with_ui_and_install();
-}
-
-void AutoUpdateService::checkUpdateWithoutUI() {
-    win_sparkle_check_update_without_ui();
-}
-
-
-void AutoUpdateService::setRequestParams() {
-    // Note that @param path is relative to HKCU/HKLM root 
-    // and the root is not part of it. For example:
-    // @code
-    //     win_sparkle_set_registry_path("Software\\My App\\Updates");
-    // @endcode
-    win_sparkle_set_registry_path(kWinSparkleRegistryPath);
-    win_sparkle_set_appcast_url(getAppcastURI().toUtf8().data());
-    win_sparkle_set_app_details(
-        L"Seafile",
-        L"Seafile Drive Client",
-        QString(STRINGIZE(SEADRIVE_GUI_VERSION)).toStdWString().c_str());
-}
 
 bool AutoUpdateService::shouldSupportAutoUpdate() const {
-    // qWarning() << "shouldSupportAutoUpdate =" << (QString(getBrand()) == "SeaDrive");
     return QString(getBrand()) == "SeaDrive";
 }
 
 bool AutoUpdateService::autoUpdateEnabled() const {
-    // qWarning() << "autoUpdateEnabled =" << win_sparkle_get_automatic_check_for_updates();
-    return win_sparkle_get_automatic_check_for_updates();
+    return adapter_->autoUpdateEnabled();
 }
 
 void AutoUpdateService::setAutoUpdateEnabled(bool enabled) {
     // qWarning() << "setAutoUpdateEnabled:" << enabled;
-    win_sparkle_set_automatic_check_for_updates(enabled ? 1 : 0);
-}
-
-uint AutoUpdateService::updateCheckInterval() const {
-    return win_sparkle_get_update_check_interval();
-}
-
-void AutoUpdateService::setUpdateCheckInterval(uint interval) {
-    win_sparkle_set_update_check_interval(interval);
-}
-
-QString AutoUpdateService::getAppcastURI() {
-#if defined(SEADRIVE_GUI_DEBUG)
-    QString url_from_env = qgetenv("SEADRIVE_APPCAST_URI");
-    return url_from_env.isEmpty() ? kSparkleAppcastURI : url_from_env;
-#else
-    return kSparkleAppcastURI;
-#endif
+    adapter_->setAutoUpdateEnabled(enabled);
 }

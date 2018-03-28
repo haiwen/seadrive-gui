@@ -1,9 +1,11 @@
-#include "i18n.h"
+#include <glib.h>
 #include <QTranslator>
 #include <QLibraryInfo>
 #include <QApplication>
 #include <QSettings>
 #include <QDebug>
+
+#include "i18n.h"
 
 namespace {
 const char* langs[] = {
@@ -150,4 +152,20 @@ const QList<QLocale> &I18NHelper::getInstalledLocales() {
             locales.push_back(QLocale(*next));
     }
     return locales;
+}
+
+bool I18NHelper::isChinese()
+{
+    int lang_index = preferredLanguage();
+    if (lang_index < 0 || lang_index >= (int)G_N_ELEMENTS(langs))
+        return false;
+
+    if (lang_index == 0) {
+        // An index of 0 means seafile client is configured to use the system locale.
+        QLocale sys_locale = QLocale::system();
+        return sys_locale.country() == QLocale::China;
+    } else {
+        QString lang = QString(langs[lang_index]);
+        return lang == "zh_CN";
+    }
 }

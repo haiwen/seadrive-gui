@@ -36,9 +36,10 @@
 #include "utils/utils-win.h"
 #include "ext-handler.h"
 #include "ui/disk-letter-dialog.h"
+#endif
+
 #ifdef HAVE_SPARKLE_SUPPORT
 #include "auto-update-service.h"
-#endif
 #endif
 
 #if defined(Q_OS_MAC)
@@ -360,15 +361,15 @@ void SeadriveGui::onDaemonStarted()
 
 #if defined(Q_OS_WIN32)
     SeafileExtensionHandler::instance()->start();
+#endif
 
 #ifdef HAVE_SPARKLE_SUPPORT
     if (AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
-	AutoUpdateService::instance()->setRequestParams();
         AutoUpdateService::instance()->start();
     }
 #endif // HAVE_SPARKLE_SUPPORT
 
-#endif
+
 #ifdef HAVE_FINDER_SYNC_SUPPORT
     finderSyncListenerStart();
 #endif
