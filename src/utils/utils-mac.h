@@ -39,6 +39,9 @@ QString mainBundlePath();
 // load the missing part of ca certificates
 std::vector<QByteArray> getSystemCaCertificates();
 
+// Add a directory to Finder's favorites list (i.e. shortcuts on the left sidebar of it)
+bool addFinderFavoriteDir(const QString& path);
+
 } // namespace mac
 } // namespace utils
 #else

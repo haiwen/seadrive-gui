@@ -21,6 +21,9 @@ extern "C" {
 #include "daemon-mgr.h"
 #include "rpc/rpc-client.h"
 #include "utils/utils-win.h"
+#if defined(Q_OS_MAC)
+#include "utils/utils-mac.h"
+#endif
 
 namespace {
 
@@ -219,6 +222,11 @@ void DaemonManager::checkDaemonReady()
         } else {
             emit daemonRestarted();
         }
+#if defined(Q_OS_MAC)
+        if (!utils::mac::addFinderFavoriteDir(gui->mountDir())) {
+            qWarning("failed to add mount dir to Finder favorites");
+        }
+#endif
         return;
     }
 

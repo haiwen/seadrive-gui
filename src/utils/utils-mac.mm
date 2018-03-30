@@ -473,5 +473,62 @@ std::vector<QByteArray> getSystemCaCertificates() {
     return retval;
 }
 
+bool addFinderFavoriteDir(const QString &_path)
+{
+    NSString *path = [NSString stringWithUTF8String:_path.toUtf8().data()];
+    LSSharedFileListRef favList =
+        LSSharedFileListCreate(NULL, kLSSharedFileListFavoriteItems, NULL);
+    if (!favList) {
+        return false;
+    }
+
+    CFArrayRef favListArray = LSSharedFileListCopySnapshot(favList, NULL);
+    bool exists = false;
+    for (id item in (__bridge NSArray *)favListArray) {
+        LSSharedFileListItemRef itemRef =
+            (__bridge LSSharedFileListItemRef)item;
+        CFURLRef itemURL = LSSharedFileListItemCopyResolvedURL(
+            itemRef,
+            kLSSharedFileListNoUserInteraction |
+                kLSSharedFileListDoNotMountVolumes,
+            NULL);
+
+        if (itemURL != NULL) {
+            if ([[(__bridge NSURL *)itemURL path] isEqualToString:path]) {
+                exists = true;
+            }
+            CFRelease(itemURL);
+            if (exists) {
+                break;
+            }
+        }
+    }
+    if (favListArray != NULL) {
+        CFRelease(favListArray);
+    }
+
+    if (exists) {
+        CFRelease(favList);
+        return true;
+    } else {
+        NSURL *url = [NSURL fileURLWithPath:path];
+        LSSharedFileListItemRef item =
+            LSSharedFileListInsertItemURL(favList,
+                                          kLSSharedFileListItemLast,
+                                          NULL,
+                                          NULL,
+                                          (__bridge CFURLRef)url,
+                                          NULL,
+                                          NULL);
+        CFRelease(favList);
+        if (item) {
+            CFRelease(item);
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
 } // namespace mac
 } // namespace utils

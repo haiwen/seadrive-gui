@@ -524,7 +524,6 @@ QVariant SearchItemsTableModel::data(
     }
 
     const int column = index.column();
-    const int row = index.row();
     FileSearchResult result = getSearchResult(index);
 
     if (role == Qt::DecorationRole && column == FILE_COLUMN_NAME) {
