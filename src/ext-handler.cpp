@@ -116,11 +116,13 @@ std::string formatErrorMessage()
     return buf;
 }
 
-bool getRepoAndRelativePath(const QString &path,
-                            QString *repo,
-                            QString *path_in_repo)
+bool parseFilePath(const QString &path,
+                   QString *repo,
+                   QString *path_in_repo,
+                   QString *category_out)
 {
     // The path of the file in relative to the mount point.
+    // It is like "My Libraries/Documents"
     QString relative_path = path.mid(gui->mountDir().length() + 1);
 
     if (relative_path.isEmpty()) {
@@ -133,17 +135,61 @@ bool getRepoAndRelativePath(const QString &path,
 
     // printf("relative_path is %s\n", toCStr(relative_path));
 
-    if (relative_path.contains('/')) {
-        int pos = relative_path.indexOf('/');
-        *repo = relative_path.left(pos);
-        *path_in_repo = relative_path.mid(pos);
-        // printf("repo = %s, path_in_repo = %s\n", repo.toUtf8().data(),
-        // path_in_repo.toUtf8().data());
+    if (!category_out && !relative_path.contains('/')) {
+        return false;
+    }
+
+    int pos = relative_path.indexOf('/');
+    QString category = relative_path.left(pos);
+    if (category_out) {
+        *category_out = category;
+    }
+
+    if (!relative_path.contains('/')) {
+        return true;
+    }
+
+    QString remaining = relative_path.mid(pos + 1);
+    // printf("category = %s, remaining = %s\n", category.toUtf8().data(), remaining.toUtf8().data());
+
+    if (remaining.contains('/')) {
+        int pos = remaining.indexOf('/');
+        *repo = remaining.left(pos);
+        *path_in_repo = remaining.mid(pos);
+        // printf("repo = %s, path_in_repo = %s\n", repo->toUtf8().data(),
+        //        path_in_repo->toUtf8().data());
     } else {
-        *repo = relative_path;
+        *repo = remaining;
         *path_in_repo = "";
     }
     return true;
+}
+
+// If `category_out` is non-null, repo and path_in_repo would not be used.
+bool getRepoAndRelativePath(const QString &path,
+                            QString *repo,
+                            QString *path_in_repo,
+                            QString *category=nullptr)
+{
+    if (!parseFilePath(path, repo, path_in_repo, category)) {
+        return false;
+    }
+    return !repo->isEmpty();
+}
+
+bool getCategoryFromPath(const QString& path, QString *category)
+{
+    QString repo;
+    QString path_in_repo;
+    if (!parseFilePath(path, &repo, &path_in_repo, category)) {
+        return false;
+    }
+    return !category->isEmpty() && repo.isEmpty();
+}
+
+inline QString path_concat(const QString& s1, const QString& s2)
+{
+    return QString("%1/%2").arg(s1).arg(s2);
 }
 
 } // namespace
@@ -471,23 +517,11 @@ void ExtCommandsHandler::handleGenShareLink(const QStringList& args, bool intern
     }
 
     QString path = args[0];
-    QString repo;
-    QString path_in_repo = "";
-    if (!getRepoAndRelativePath(path, &repo, &path_in_repo)) {
-        qWarning() << "failed to getRepoAndRelativePath for " << path;
+    QString repo_id, path_in_repo;
+    if (!parseRepoFileInfo(path, &repo_id, &path_in_repo)) {
         return;
     }
-
-    QString repo_id;
-
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!rpc_client_->getRepoIdByPath(repo, &repo_id)) {
-        qWarning() << "failed to get the repo id for " << path;
-        return;
-    }
-
     bool is_file = QFileInfo(path).isDir();
-
     emit generateShareLink(repo_id, path_in_repo, is_file, internal);
 
     return;
@@ -512,8 +546,14 @@ QString ExtCommandsHandler::handleListRepos(const QStringList& args)
         QStringList(), QDir::Dirs | QDir::NoDot | QDir::NoDotDot);
 
     QStringList fullpaths;
-    foreach (const QString& subdir, subdirs) {
-        fullpaths << pathJoin(gui->mountDir(), subdir);
+    foreach (const QString &subdir, subdirs) {
+        QStringList repos =
+            QDir(pathJoin(gui->mountDir(), subdir))
+                .entryList(QStringList(),
+                           QDir::Dirs | QDir::NoDot | QDir::NoDotDot);
+        foreach (const QString &r, repos) {
+            fullpaths << pathJoin(gui->mountDir(), subdir, r);
+        }
     }
 
     return fullpaths.join("\n");
@@ -524,22 +564,27 @@ QString ExtCommandsHandler::handleGetFileStatus(const QStringList& args)
     if (args.size() != 1) {
         return "";
     }
-
     QString path = args[0];
+
+    QString status;
+    QString category;
+    if (getCategoryFromPath(path, &category)) {
+        QMutexLocker locker(&rpc_client_mutex_);
+        if (rpc_client_->getCategorySyncStatus(category, &status) != 0) {
+            return "";
+        }
+        return status;
+    }
+
     QString repo;
-    QString path_in_repo = "";
-    if (!getRepoAndRelativePath(path, &repo, &path_in_repo)) {
+    QString path_in_repo;
+    if (!getRepoAndRelativePath(path, &repo, &path_in_repo, &category)) {
         qWarning() << "failed to getRepoAndRelativePath for " << path;
         return "";
     }
 
-    // qWarning() << "handleGetFileStatus: repo = " << repo << " , path_in_repo = " << path_in_repo;
-
-    QString status;
-
     QMutexLocker locker(&rpc_client_mutex_);
-    if (rpc_client_->getRepoFileStatus(repo, path_in_repo, &status) != 0) {
-        qWarning("failed to get file status for %s", path_in_repo.toUtf8().data());
+    if (rpc_client_->getRepoFileStatus(path_concat(category, repo), path_in_repo, &status) != 0) {
         return "";
     }
 
@@ -553,18 +598,8 @@ void ExtCommandsHandler::handleLockFile(const QStringList& args, bool lock)
     }
 
     QString path = args[0];
-    QString repo;
-    QString path_in_repo = "";
-    if (!getRepoAndRelativePath(path, &repo, &path_in_repo)) {
-        qWarning() << "failed to getRepoAndRelativePath for " << path;
-        return;
-    }
-
-    QString repo_id;
-
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!rpc_client_->getRepoIdByPath(repo, &repo_id)) {
-        qWarning() << "failed to get the repo id for " << path;
+    QString repo_id, path_in_repo;
+    if (!parseRepoFileInfo(path, &repo_id, &path_in_repo)) {
         return;
     }
 
@@ -575,17 +610,18 @@ void ExtCommandsHandler::handleLockFile(const QStringList& args, bool lock)
 }
 
 bool ExtCommandsHandler::parseRepoFileInfo(const QString& path,
-                                           QString *p_repo_uname,
-                                           QString *p_repo_id,
-                                           QString *p_path_in_repo)
+                                               QString *p_repo_id,
+                                               QString *p_path_in_repo)
 {
-    if (!getRepoAndRelativePath(path, p_repo_uname, p_path_in_repo)) {
+    QString category;
+    QString repo;
+    if (!getRepoAndRelativePath(path, &repo, p_path_in_repo, &category)) {
         qWarning() << "failed to getRepoAndRelativePath for " << path;
         return false;
     }
 
     QMutexLocker locker(&rpc_client_mutex_);
-    if (!rpc_client_->getRepoIdByPath(*p_repo_uname, p_repo_id)) {
+    if (!rpc_client_->getRepoIdByPath(path_concat(category, repo), p_repo_id)) {
         qWarning() << "failed to get the repo id for " << path;
         return false;
     }
@@ -606,8 +642,8 @@ void ExtCommandsHandler::handlePrivateShare(const QStringList& args,
         return;
     }
 
-    QString repo_uname, repo_id, path_in_repo;
-    if (!parseRepoFileInfo(path, &repo_uname, &repo_id, &path_in_repo)) {
+    QString repo_id, path_in_repo;
+    if (!parseRepoFileInfo(path, &repo_id, &path_in_repo)) {
         return;
     }
     emit privateShare(repo_id, path_in_repo, to_group);
@@ -624,8 +660,8 @@ void ExtCommandsHandler::handleShowHistory(const QStringList& args)
                  path.toUtf8().data());
         return;
     }
-    QString repo_uname, repo_id, path_in_repo;
-    if (!parseRepoFileInfo(path, &repo_uname, &repo_id, &path_in_repo)) {
+    QString repo_id, path_in_repo;
+    if (!parseRepoFileInfo(path, &repo_id, &path_in_repo)) {
         return;
     }
 
@@ -640,8 +676,8 @@ void ExtCommandsHandler::handleDownload(const QStringList& args)
         return;
     }
     QString path = normalizedPath(args[0]);
-    QString repo_uname, repo_id, path_in_repo;
-    if (!parseRepoFileInfo(path, &repo_uname, &repo_id, &path_in_repo)) {
+    QString repo_id, path_in_repo;
+    if (!parseRepoFileInfo(path, &repo_id, &path_in_repo)) {
         return;
     }
 

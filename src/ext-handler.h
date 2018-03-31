@@ -118,7 +118,6 @@ private:
     void handleDownload(const QStringList& args);
 
     bool parseRepoFileInfo(const QString& path,
-                           QString *repo_uname,
                            QString *repo_id,
                            QString *path_in_repo);
 };
