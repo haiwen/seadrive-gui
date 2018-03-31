@@ -43,7 +43,13 @@ const int kColumnIconSize = 28;
 const int kFileNameColumnWidth = 200;
 const int kFileStatusIconSize = 16;
 const int kMarginBetweenFileNameAndStatusIcon = 5;
+
+#ifdef Q_OS_WIN32
+const int kMarginLeft = 4;
+#else
 const int kMarginLeft = 5;
+#endif
+
 const int kFileNameHeight = 12;
 const int kSubtitleHeight = 5;
 const int kExtraPadding = 30;
@@ -710,10 +716,6 @@ void SearchItemsDelegate::paint(QPainter *painter,
                                int((double)pixmap.height() / (double)scale_factor));
         int alignX = (kColumnIconSize - icon_width) / 2;
         int alignY = (size.height() - icon_height) / 2;
-
-#ifdef Q_OS_WIN32
-    kMarginLeft = 4;
-#endif
 
         QRect icon_bound_rect(
             option_rect.topLeft() + QPoint(kMarginLeft + alignX, alignY - 2),
