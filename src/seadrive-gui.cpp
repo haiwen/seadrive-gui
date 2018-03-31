@@ -240,10 +240,12 @@ void SeadriveGui::start()
     }
 
 #if defined(Q_OS_MAC)
+#ifdef XCODE_APP
     if (!installHelperAndKext()) {
         errorAndExit(tr("Failed to initialize: failed to install kernel driver"));
         return;
     }
+#endif
 #endif
 
     qDebug("client id is %s", toCStr(getUniqueClientId()));
