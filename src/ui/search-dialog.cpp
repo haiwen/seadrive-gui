@@ -435,13 +435,16 @@ void SearchItemsTableView::onItemDoubleClick(const QModelIndex& index)
 //        emit clearSearchBar();
 
     QString repo_name;
-    if (!gui->rpcClient()->getRepoUnameById(result.repo_id, &repo_name)) {
-        gui->warningBox(tr("File does not exist:\n"
-                           "file \"%1\" may not be synchronized to local").arg(result.name));
-        return;
+    if (gui->rpcClient()->getRepoUnameById(result.repo_id, &repo_name)) {
+        QString path_to_open = ::pathJoin(gui->mountDir(), repo_name, result.fullpath);
+        QFileInfo fi(path_to_open);
+        if (fi.exists()) {
+            ::showInGraphicalShell(path_to_open);
+            return;
+        }
     }
-    QString path_to_open = ::pathJoin(gui->mountDir(), repo_name, result.fullpath);
-    ::showInGraphicalShell(path_to_open);
+
+    gui->warningBox(tr("File not found, maybe not synchorized yet"));
 }
 
 void SearchItemsTableView::setModel(QAbstractItemModel* model)
