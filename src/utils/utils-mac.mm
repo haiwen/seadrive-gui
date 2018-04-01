@@ -484,15 +484,23 @@ bool addFinderFavoriteDir(const QString &_path)
 
     CFArrayRef favListArray = LSSharedFileListCopySnapshot(favList, NULL);
     bool exists = false;
+    const UInt32 resolutionFlags = kLSSharedFileListNoUserInteraction | kLSSharedFileListDoNotMountVolumes;
     for (id item in (__bridge NSArray *)favListArray) {
-        LSSharedFileListItemRef itemRef =
-            (__bridge LSSharedFileListItemRef)item;
-        CFURLRef itemURL = LSSharedFileListItemCopyResolvedURL(
-            itemRef,
-            kLSSharedFileListNoUserInteraction |
-                kLSSharedFileListDoNotMountVolumes,
-            NULL);
+        LSSharedFileListItemRef itemRef = (__bridge LSSharedFileListItemRef)item;
 
+        CFURLRef itemURL = NULL;
+
+#if (__MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_10)
+        itemURL = LSSharedFileListItemCopyResolvedURL(itemRef, resolutionFlags, NULL);
+#else
+        OSStatus err = LSSharedFileListItemResolve(itemRef, resolutionFlags, &itemURL, NULL);
+        if (err != noErr) {
+            if (itemURL) {
+                CFRelease(itemURL);
+            }
+            continue;
+        }
+#endif
         if (itemURL != NULL) {
             if ([[(__bridge NSURL *)itemURL path] isEqualToString:path]) {
                 exists = true;
