@@ -64,7 +64,7 @@ void updateAccountDatabaseForColumnAutomaticLogin(struct sqlite3* db)
     bool has_automatic_login_column = false;
     const char* sql = "PRAGMA table_info(Accounts);";
     sqlite_foreach_selected_row (db, sql, getAutomaticLoginColumnInfoCallBack, &has_automatic_login_column);
-    sql = "ALTER TABLE Accounts ADD COLUMN AutomaticLogin INTEGER";
+    sql = "ALTER TABLE Accounts ADD COLUMN AutomaticLogin INTEGER default 1";
     if (!has_automatic_login_column && sqlite_query_exec (db, sql) < 0)
         qCritical("unable to create AutomaticLogin column\n");
 }
