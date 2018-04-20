@@ -1,3 +1,9 @@
+seadrive-gui (0.9.0) unstable; urgency=low
+
+  * new upstream release
+
+ -- Jonathan Xu <jonathan.xu@seafile.com>  TFri, 20 Apr 2018 15:29:16 +0800
+
 seadrive-gui (0.8.6) unstable; urgency=low
 
   * new upstream release
@@ -8,7 +14,7 @@ seadrive-gui (0.8.5) unstable; urgency=low
 
   * new upstream release
 
- -- Jonathan Xu <jonathan.xu@seafile.com>  Tue, 2 Jan 2017 14:55:16 +0800
+ -- Jonathan Xu <jonathan.xu@seafile.com>  Tue, 2 Jan 2018 14:55:16 +0800
 
 seadrive-gui (0.8.4) unstable; urgency=low
 
