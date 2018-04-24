@@ -73,7 +73,8 @@ SeafileTrayIcon::SeafileTrayIcon(QObject *parent)
       up_rate_(0),
       down_rate_(0),
       sync_errors_dialog_(nullptr),
-      transfer_progress_dialog_(nullptr)
+      transfer_progress_dialog_(nullptr),
+      search_dialog_(nullptr)
 {
     setState(STATE_DAEMON_UP);
     rotate_timer_ = new QTimer(this);
