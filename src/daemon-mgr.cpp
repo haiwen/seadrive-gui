@@ -21,6 +21,7 @@ extern "C" {
 #include "daemon-mgr.h"
 #include "rpc/rpc-client.h"
 #include "utils/utils-win.h"
+#include "i18n.h"
 #if defined(Q_OS_MAC)
 #include "utils/utils-mac.h"
 #endif
@@ -140,6 +141,9 @@ QStringList DaemonManager::collectSeaDriveArgs()
 
     args << "-d" << QDir(gui->seadriveDataDir()).absolutePath();
     args << "-l" << QDir(gui->logsDir()).absoluteFilePath("seadrive.log");
+    if (I18NHelper::getInstance()->isChinese()) {
+        args << "-L" << "zh_cn";
+    }
 
 #if defined(Q_OS_WIN32)
     QString drive_letter = QString(qgetenv("SEADRIVE_LETTER")).trimmed().toUpper().remove(":").remove("/");
