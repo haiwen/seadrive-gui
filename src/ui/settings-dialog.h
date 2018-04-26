@@ -18,6 +18,7 @@ private slots:
     void showEvent(QShowEvent *event);
     void updateSettings();
     void onOkBtnClicked();
+    void selectDirAction();
 
     void proxyRequirePasswordChanged(int state);
     void showHideControlsBasedOnCurrentProxyType(int state);
@@ -27,6 +28,7 @@ private:
     bool validateProxyInputs();
 
     QString preferred_disk_letter_;
+    QString current_cache_dir_;
 
     Q_DISABLE_COPY(SettingsDialog);
 };

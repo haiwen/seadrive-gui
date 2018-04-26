@@ -17,6 +17,7 @@ extern "C" {
 #include "message-poller.h"
 #include "rpc-client.h"
 #include "utils/utils-win.h"
+#include "daemon-mgr.h"
 
 
 namespace {
@@ -56,7 +57,7 @@ void SeafileRpcClient::connectDaemon()
             utils::win::getLocalPipeName(kSeadriveSockName).c_str());
 #else
         pipe_client = searpc_create_named_pipe_client(
-            toCStr(QDir(gui->seadriveDataDir()).filePath(kSeadriveSockName)));
+            toCStr(QDir(gui->daemonManager()->currentCaheDir()).filePath(kSeadriveSockName)));
 #endif
         if (searpc_named_pipe_client_connect(pipe_client) < 0) {
             if (retry++ > 5) {
