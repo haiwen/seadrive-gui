@@ -392,6 +392,7 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
     NSImage *seafileImage = [NSImage imageNamed:@"seadrive.icns"];
     [shareLinkItem setImage:seafileImage];
     [internalLinkItem setImage:seafileImage];
+    [menu removeItem:internalLinkItem];
 
     // add a menu item for lockFile
     NSArray *items =
