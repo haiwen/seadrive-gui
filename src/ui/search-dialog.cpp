@@ -422,6 +422,81 @@ SearchItemsTableView::SearchItemsTableView(QWidget* parent)
 
     connect(this, SIGNAL(doubleClicked(const QModelIndex&)),
                 this, SLOT(onItemDoubleClick(const QModelIndex&)));
+    setupContextMenu();
+}
+
+void SearchItemsTableView::setupContextMenu()
+{
+    context_menu_ = new QMenu(this);
+    connect(parent_, SIGNAL(aboutToClose()),
+            context_menu_, SLOT(close()));
+    open_file_action_ = new QAction(tr("&Open the file"), this);
+    connect(open_file_action_, SIGNAL(triggered()),
+            this, SLOT(openFile()));
+    open_directory_action_ = new QAction(tr("&Show in folder"), this);
+    connect(open_directory_action_, SIGNAL(triggered()),
+            this, SLOT(openDirectory()));
+
+    context_menu_->addAction(open_file_action_);
+    context_menu_->addAction(open_directory_action_);
+
+    this->addAction(open_file_action_);
+    this->addAction(open_directory_action_);
+}
+
+void SearchItemsTableView::contextMenuEvent(QContextMenuEvent *event)
+{
+    QPoint pos = event->pos();
+    QModelIndex index = indexAt(pos);
+    pos = viewport()->mapToGlobal(pos);
+    if (!index.isValid()) {
+        return;
+    }
+
+    const QTableWidgetItem* item = getItem(index);
+    if (!item) {
+        return;
+    }
+
+    QModelIndexList indexes = selectionModel()->selection().indexes();
+    if (indexes.size() != 0) {
+        FileSearchResult file = getSearchResult(indexes.at(0));
+        open_directory_action_->setData(QVariant::fromValue(file));
+        open_directory_action_->setEnabled(true);
+        open_file_action_->setEnabled(true);
+    } else {
+        open_directory_action_->setEnabled(false);
+        open_file_action_->setEnabled(false);
+    }
+    context_menu_->exec(pos);
+}
+
+void SearchItemsTableView::openFile()
+{
+    openDirectory(true);
+}
+
+void SearchItemsTableView::openDirectory()
+{
+    openDirectory(false);
+}
+
+void SearchItemsTableView::openDirectory(bool open_file)
+{
+    FileSearchResult result =
+        qvariant_cast<FileSearchResult>(open_directory_action_->data());
+    QString repo_name;
+    if (gui->rpcClient()->getRepoUnameById(result.repo_id, &repo_name)) {
+        QString path_to_open = ::pathJoin(gui->mountDir(), repo_name, result.fullpath);
+        QFileInfo fi(path_to_open);
+        if (fi.exists()) {
+            open_file ? QDesktopServices::openUrl(QUrl::fromLocalFile(path_to_open)) :
+            ::showInGraphicalShell(path_to_open);
+            return;
+        }
+    }
+
+    gui->warningBox(tr("File not found, maybe not synchorized yet"));
 }
 
 void SearchItemsTableView::resizeEvent(QResizeEvent* event)

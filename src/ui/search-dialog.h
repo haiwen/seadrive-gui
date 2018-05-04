@@ -98,18 +98,25 @@ public:
     SearchItemsTableView(QWidget* parent = 0);
     void resizeEvent(QResizeEvent* event) Q_DECL_OVERRIDE;
     void setModel(QAbstractItemModel* model) Q_DECL_OVERRIDE;
+    void setupContextMenu();
 //signals:
 //    void clearSearchBar();
 private slots:
     void onAboutToReset();
     void onItemDoubleClick(const QModelIndex& index);
+    void openFile();
+    void openDirectory();
 
 private:
-
+    void contextMenuEvent(QContextMenuEvent *event);
+    void openDirectory(bool open_file);
     QScopedPointer<const FileSearchResult> search_item_;
     SearchDialog *parent_;
     // source model
     SearchItemsTableModel *search_model_;
+    QMenu *context_menu_;
+    QAction *open_file_action_;
+    QAction *open_directory_action_;
 };
 
 
