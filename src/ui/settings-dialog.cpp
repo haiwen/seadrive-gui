@@ -66,11 +66,8 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
 #endif
 
     mLanguageComboBox->addItems(I18NHelper::getInstance()->getLanguages());
-    QSettings settings;
-    settings.beginGroup("cache");
-    current_cache_dir_ = settings.value("current").toString();
-    settings.endGroup();
-    if (current_cache_dir_.isEmpty())
+    SettingsManager mgr;
+    if (!mgr.getCacheDir(&current_cache_dir_))
         current_cache_dir_ = QDir(gui->seadriveDataDir()).absolutePath();
     mShowCacheDir->setText(current_cache_dir_);
     mShowCacheDir->setReadOnly(true);
@@ -145,10 +142,7 @@ void SettingsDialog::updateSettings()
     bool cache_dir_changed = false;
     if (mShowCacheDir->text() != current_cache_dir_) {
         cache_dir_changed = true;
-        QSettings settings;
-        settings.beginGroup("cache");
-        settings.setValue("current", mShowCacheDir->text());
-        settings.endGroup();
+        mgr->setCacheDir(mShowCacheDir->text());
         msg = language_changed ?  tr("languange and cache directory") : tr("cache directory");
     }
 
@@ -458,9 +452,8 @@ bool SettingsDialog::validateProxyInputs()
 
 void SettingsDialog::selectDirAction()
 {
-    const QString &wt = current_cache_dir_;
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Please choose a folder"),
-                                                    wt.toUtf8().data(),
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Please choose the cache folder"),
+                                                    current_cache_dir_.toUtf8().data(),
                                                     QFileDialog::ShowDirsOnly
                                                     | QFileDialog::DontResolveSymlinks);
     if (dir.isEmpty())

@@ -102,7 +102,8 @@ public:
     bool getDiskLetter(QString *disk_letter);
     void setDiskLetter(const QString& disk_letter);
 #endif // Q_OS_WIN32
-
+    bool getCacheDir(QString *current_cache_dir);
+    void setCacheDir(const QString& current_cache_dir);
 public:
 
     // Remove all settings from system when uninstall

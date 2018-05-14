@@ -20,6 +20,7 @@ extern "C" {
 #include "utils/process.h"
 #include "seadrive-gui.h"
 #include "daemon-mgr.h"
+#include "settings-mgr.h"
 #include "rpc/rpc-client.h"
 #include "utils/utils-win.h"
 #include "i18n.h"
@@ -110,12 +111,10 @@ void DaemonManager::restartSeadriveDaemon()
 
 void DaemonManager::startSeadriveDaemon()
 {
-    QSettings settings;
-    settings.beginGroup("cache");
-    current_cache_dir_ = settings.value("current").toString();
-    settings.endGroup();
-    if (current_cache_dir_.isEmpty())
+    SettingsManager *mgr = gui->settingsManager();
+    if (!mgr->getCacheDir(&current_cache_dir_))
         current_cache_dir_ = QDir(gui->seadriveDataDir()).absolutePath();
+
 #if defined(Q_OS_WIN32)
     QLibrary dokanlib("dokan1.dll");
     if (!dokanlib.load()) {

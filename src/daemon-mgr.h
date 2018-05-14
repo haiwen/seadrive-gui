@@ -21,7 +21,7 @@ public:
     ~DaemonManager();
     void startSeadriveDaemon();
     void doUnmount();
-    QString currentCaheDir() const { return current_cache_dir_; }
+    QString currentCacheDir() const { return current_cache_dir_; }
 
 public slots:
     void restartSeadriveDaemon();
