@@ -40,7 +40,7 @@ public:
                 isAutomaticLogin(false) {}
     Account(QUrl serverUrl, QString username, QString token,
             qint64 lastVisited=0, bool isShibboleth = false,
-            bool isAutomaticLogin = false)
+            bool isAutomaticLogin = true)
         : serverInfoRequest(NULL),
           serverInfo(),
           accountInfo(),
