@@ -413,7 +413,6 @@ ENDFUNCTION(ADD_SC_LIBRARY)
 # library utils
 LIST(APPEND utils_sources
     src/utils/utils.cpp
-    src/utils/rsa.cpp
     src/utils/api-utils.cpp
     src/utils/paint-utils.cpp
     src/utils/file-utils.cpp
