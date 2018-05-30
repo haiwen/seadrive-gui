@@ -34,6 +34,7 @@ signals:
 private slots:
     void onDaemonStarted();
     void onDaemonFinished(int exit_code, QProcess::ExitStatus exit_status);
+    void onDaemonErrorOccurred(QProcess::ProcessError error);
     void checkDaemonReady();
     void seadriveExiting();
 
