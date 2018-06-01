@@ -78,10 +78,10 @@ STDMETHODIMP ShellExt::IsMemberOf(LPCWSTR path_w, DWORD attr)
     // }
 
     std::string path_in_repo;
-    if (!pathInRepo(path, &path_in_repo)) {
-        // seaf_ext_log ("pathInRepo returns false for %s\n", path.c_str());
-        return S_FALSE;
-    }
+    // if (!pathInRepo(path, &path_in_repo)) {
+    //     // seaf_ext_log ("pathInRepo returns false for %s\n", path.c_str());
+    //     return S_FALSE;
+    // }
     // if (path_in_repo.size() <= 1) {
     //     // A Repo Top Dir.
     //     return S_FALSE;
@@ -91,7 +91,8 @@ STDMETHODIMP ShellExt::IsMemberOf(LPCWSTR path_w, DWORD attr)
 
     seafile::Status status = getFileStatus(path);
 
-    if (status == status_) {
+    if (status == status_ &&
+      (pathInRepo(path, &path_in_repo) || path_in_repo.size() <= 1)) {
         // seaf_ext_log ("[ICON] file icon %d: %s", (int)status_, path.c_str());
         return S_OK;
     }
