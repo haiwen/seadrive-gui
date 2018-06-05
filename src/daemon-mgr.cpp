@@ -80,8 +80,7 @@ const char *stateToStr(int state)
 DaemonManager::DaemonManager()
     : seadrive_daemon_(nullptr),
       searpc_pipe_client_(nullptr),
-      unmounted_(false),
-      current_cache_dir_(QString())
+      unmounted_(false)
 {
     current_state_ = DAEMON_INIT;
     conn_daemon_timer_ = new QTimer(this);
@@ -111,8 +110,7 @@ void DaemonManager::restartSeadriveDaemon()
 
 void DaemonManager::startSeadriveDaemon()
 {
-    SettingsManager *mgr = gui->settingsManager();
-    if (!mgr->getCacheDir(&current_cache_dir_))
+    if (!gui->settingsManager()->getCacheDir(&current_cache_dir_))
         current_cache_dir_ = QDir(gui->seadriveDataDir()).absolutePath();
 
 #if defined(Q_OS_WIN32)
