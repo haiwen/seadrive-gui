@@ -384,15 +384,14 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
                                                  @"Get Seafile Download Link")
                         action:@selector(shareLinkAction:)
                  keyEquivalent:@""];
-    NSMenuItem *internalLinkItem =
-        [menu addItemWithTitle:NSLocalizedString(@"Get Seafile Internal Link",
-                                                 @"Get Seafile Internal Link")
-                        action:@selector(internalLinkAction:)
-                 keyEquivalent:@""];
+    //NSMenuItem *internalLinkItem =
+    //    [menu addItemWithTitle:NSLocalizedString(@"Get Seafile Internal Link",
+    //                                             @"Get Seafile Internal Link")
+    //                    action:@selector(internalLinkAction:)
+    //             keyEquivalent:@""];
     NSImage *seafileImage = [NSImage imageNamed:@"seadrive.icns"];
     [shareLinkItem setImage:seafileImage];
-    [internalLinkItem setImage:seafileImage];
-    [menu removeItem:internalLinkItem];
+    //[internalLinkItem setImage:seafileImage];
 
     // add a menu item for lockFile
     NSArray *items =
