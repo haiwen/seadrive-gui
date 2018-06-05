@@ -14,11 +14,13 @@ extern "C" {
 #include <QDebug>
 #include <QDir>
 #include <QCoreApplication>
+#include <QSettings>
 
 #include "utils/utils.h"
 #include "utils/process.h"
 #include "seadrive-gui.h"
 #include "daemon-mgr.h"
+#include "settings-mgr.h"
 #include "rpc/rpc-client.h"
 #include "utils/utils-win.h"
 #include "i18n.h"
@@ -108,6 +110,9 @@ void DaemonManager::restartSeadriveDaemon()
 
 void DaemonManager::startSeadriveDaemon()
 {
+    if (!gui->settingsManager()->getCacheDir(&current_cache_dir_))
+        current_cache_dir_ = QDir(gui->seadriveDataDir()).absolutePath();
+
 #if defined(Q_OS_WIN32)
     QLibrary dokanlib("dokan1.dll");
     if (!dokanlib.load()) {
@@ -121,7 +126,7 @@ void DaemonManager::startSeadriveDaemon()
         utils::win::getLocalPipeName(kSeadriveSockName).c_str());
 #else
     searpc_pipe_client_ = searpc_create_named_pipe_client(
-        toCStr(QDir(gui->seadriveDataDir()).filePath(kSeadriveSockName)));
+        toCStr(QDir(current_cache_dir_).filePath(kSeadriveSockName)));
 #endif
 
     seadrive_daemon_ = new QProcess(this);
@@ -139,7 +144,7 @@ QStringList DaemonManager::collectSeaDriveArgs()
 {
     QStringList args;
 
-    args << "-d" << QDir(gui->seadriveDataDir()).absolutePath();
+    args << "-d" << current_cache_dir_;
     args << "-l" << QDir(gui->logsDir()).absoluteFilePath("seadrive.log");
     if (I18NHelper::getInstance()->isChinese()) {
         args << "-L" << "zh_cn";

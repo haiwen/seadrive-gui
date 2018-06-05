@@ -35,6 +35,7 @@ const char *kDiskLetter = "diskLetter";
 
 const char *kSettingsGroup = "Settings";
 const char *kComputerName = "computerName";
+const char *kCacheDir = "cacheDir";
 #ifdef HAVE_FINDER_SYNC_SUPPORT
 const char *kFinderSync = "finderSync";
 #endif // HAVE_FINDER_SYNC_SUPPORT
@@ -590,6 +591,30 @@ void SettingsManager::setDiskLetter(const QString& disk_letter)
 
 
 #endif // Q_OS_WIN32
+
+bool SettingsManager::getCacheDir(QString *current_cache_dir)
+{
+    QSettings settings;
+
+    settings.beginGroup(kSettingsGroup);
+    if (!settings.contains(kCacheDir)) {
+        return false;
+    }
+
+    *current_cache_dir = settings.value(kCacheDir).toString();
+    settings.endGroup();
+
+    return true;
+}
+
+void SettingsManager::setCacheDir(const QString& current_cache_dir)
+{
+    QSettings settings;
+
+    settings.beginGroup(kSettingsGroup);
+    settings.setValue(kCacheDir, current_cache_dir);
+    settings.endGroup();
+}
 
 void SettingsManager::writeSystemProxyInfo(const QUrl &url,
                                            const QString &file_path)

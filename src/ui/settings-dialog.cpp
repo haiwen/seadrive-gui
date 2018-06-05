@@ -44,7 +44,8 @@ void insertDiskLetter(QStringList* letters, QString letter_to_insert)
 
 } // namespace
 
-SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
+SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
+    current_cache_dir_(QString())
 {
     setupUi(this);
     setWindowTitle(tr("Settings"));
@@ -65,6 +66,12 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 #endif
 
     mLanguageComboBox->addItems(I18NHelper::getInstance()->getLanguages());
+    SettingsManager mgr;
+    if (!mgr.getCacheDir(&current_cache_dir_))
+        current_cache_dir_ = QDir(gui->seadriveDataDir()).absolutePath();
+    mShowCacheDir->setText(current_cache_dir_);
+    mShowCacheDir->setReadOnly(true);
+    mCacheLabel->setText(tr("Cache directory:"));
 
     // The range of mProxyPort is set to (0, 65535) in the ui file, so we
     // don't bother with that here.
@@ -85,6 +92,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
     mUploadSpinBox->setAttribute(Qt::WA_MacShowFocusRect, 0);
 #endif
 
+    connect(mSelectBtn, SIGNAL(clicked()), this, SLOT(selectDirAction()));
     connect(mOkBtn, SIGNAL(clicked()), this, SLOT(onOkBtnClicked()));
     adjustSize();
 }
@@ -124,13 +132,24 @@ void SettingsDialog::updateSettings()
 #endif
 
     bool language_changed = false;
+    QString msg;
     if (mLanguageComboBox->currentIndex() != I18NHelper::getInstance()->preferredLanguage()) {
         language_changed = true;
         I18NHelper::getInstance()->setPreferredLanguage(mLanguageComboBox->currentIndex());
+        msg = tr("languange");
     }
 
-    if (language_changed && gui->yesOrNoBox(tr("You have changed languange. Restart to apply it?"), this, true))
+    bool cache_dir_changed = false;
+    if (mShowCacheDir->text() != current_cache_dir_) {
+        cache_dir_changed = true;
+        mgr->setCacheDir(mShowCacheDir->text());
+        msg = language_changed ?  tr("languange and cache directory") : tr("cache directory");
+    }
+
+    if ((language_changed || cache_dir_changed) && gui->yesOrNoBox
+            (tr("You have changed %1. Restart to apply it?").arg(msg), this, true)) {
         gui->restartApp();
+    }
 
 //     // if (proxy_changed && gui->yesOrNoBox(tr("You have changed proxy settings. Restart to apply it?"), this, true))
 //     //     gui->restartApp();
@@ -429,6 +448,23 @@ bool SettingsDialog::validateProxyInputs()
     settings.endGroup();
 
     return true;
+}
+
+void SettingsDialog::selectDirAction()
+{
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Please choose the cache folder"),
+                                                    current_cache_dir_.toUtf8().data(),
+                                                    QFileDialog::ShowDirsOnly
+                                                    | QFileDialog::DontResolveSymlinks);
+    if (dir.isEmpty())
+        return;
+    //setDirectoryText(dir);
+    QString text = dir;
+    if (text.endsWith("/")) {
+        text.resize(text.size() - 1);
+    }
+    mShowCacheDir->setText(text);
+
 }
 
 void SettingsDialog::onOkBtnClicked()
