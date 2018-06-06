@@ -302,6 +302,9 @@ void DaemonManager::onDaemonFinished(int exit_code, QProcess::ExitStatus exit_st
 
 void DaemonManager::scheduleRestartDaemon()
 {
+    // When the daemon crashes when we first start seadrive, we should
+    // not retry too many times, because during the retry nothing
+    // would be shown to the user and would confuse him.
     int max_retry = 2;
     if (gui->rpcClient() && gui->rpcClient()->isConnected()) {
         max_retry = kDaemonRestartMaxRetries;
