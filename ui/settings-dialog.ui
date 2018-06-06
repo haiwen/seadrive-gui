@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="mTabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="mBasicTab">
       <attribute name="title">
@@ -150,44 +150,6 @@
          </item>
         </layout>
        </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <widget class="QLabel" name="mCacheLabel">
-           <property name="text">
-            <string>Cache directory:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
-           <item>
-            <widget class="QPushButton" name="mSelectBtn">
-             <property name="text">
-              <string>select...</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="mShowCacheDir"/>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="mAdvancedTab">
@@ -263,6 +225,54 @@
           </widget>
          </item>
         </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="mCacheLabel">
+           <property name="text">
+            <string>Cache directory:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QLineEdit" name="mShowCacheDir"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="mSelectBtn">
+             <property name="text">
+              <string>select...</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>295</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
