@@ -203,6 +203,10 @@ bool LoginDialog::validateInputs()
             return false;
         }
 
+        if (serverAddr.endsWith("/")) {
+            serverAddr = serverAddr.left(serverAddr.size() - 1);
+        }
+        
         url = QUrl(serverAddr, QUrl::StrictMode);
         if (!url.isValid()) {
             showWarning(tr("%1 is not a valid server address").arg(serverAddr));
