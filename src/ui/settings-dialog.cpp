@@ -136,14 +136,14 @@ void SettingsDialog::updateSettings()
     if (mLanguageComboBox->currentIndex() != I18NHelper::getInstance()->preferredLanguage()) {
         language_changed = true;
         I18NHelper::getInstance()->setPreferredLanguage(mLanguageComboBox->currentIndex());
-        msg = tr("languange");
+        msg = tr("language");
     }
 
     bool cache_dir_changed = false;
     if (mShowCacheDir->text() != current_cache_dir_) {
         cache_dir_changed = true;
         mgr->setCacheDir(mShowCacheDir->text());
-        msg = language_changed ?  tr("languange and cache directory") : tr("cache directory");
+        msg = language_changed ?  tr("language and cache directory") : tr("cache directory");
     }
 
     if ((language_changed || cache_dir_changed) && gui->yesOrNoBox
