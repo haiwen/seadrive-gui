@@ -70,6 +70,7 @@ class FinderSyncClient {
         DoLockFile = 4,
         DoUnlockFile = 5,
         DoShowFileHistory = 6,
+        DoDownloadFile = 7,
     };
 
     FinderSyncClient(FinderSync *parent);

@@ -317,3 +317,19 @@ void FinderSyncHost::doShowFileHistory(const QString &path)
     url = ::includeQueryParams(url, {{"p", path_in_repo}});
     AutoLoginService::instance()->startAutoLogin(url.toString());
 }
+
+void FinderSyncHost::doDownloadFile(const QString &path)
+{
+    const Account& account = gui->accountManager()->currentAccount();
+    if (!account.isValid()) {
+        return;
+    }
+
+    QString repo_id;
+    QString path_in_repo;
+    if (!lookUpFileInformation(path, &repo_id, &path_in_repo)) {
+        qWarning("[FinderSync] invalid path %s", path.toUtf8().data());
+        return;
+    }
+    rpc_client_->cachePath(repo_id, path_in_repo);
+}

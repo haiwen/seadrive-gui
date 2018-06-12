@@ -379,19 +379,19 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
 
     // Produce a menu for the extension.
     NSMenu *menu = [[NSMenu alloc] initWithTitle:@""];
-    NSMenuItem *shareLinkItem =
-        [menu addItemWithTitle:NSLocalizedString(@"Get Seafile Download Link",
-                                                 @"Get Seafile Download Link")
-                        action:@selector(shareLinkAction:)
-                 keyEquivalent:@""];
-    //NSMenuItem *internalLinkItem =
-    //    [menu addItemWithTitle:NSLocalizedString(@"Get Seafile Internal Link",
-    //                                             @"Get Seafile Internal Link")
-    //                    action:@selector(internalLinkAction:)
-    //             keyEquivalent:@""];
+    // NSMenuItem *shareLinkItem =
+    //     [menu addItemWithTitle:NSLocalizedString(@"Get Seafile Download Link",
+    //                                              @"Get Seafile Download Link")
+    //                     action:@selector(shareLinkAction:)
+    //              keyEquivalent:@""];
+    NSMenuItem *downloadFileItem =
+       [menu addItemWithTitle:NSLocalizedString(@"Download",
+                                                @"Download")
+                       action:@selector(downloadFileAction:)
+                keyEquivalent:@""];
     NSImage *seafileImage = [NSImage imageNamed:@"seadrive.icns"];
-    [shareLinkItem setImage:seafileImage];
-    //[internalLinkItem setImage:seafileImage];
+    // [shareLinkItem setImage:seafileImage];
+    [downloadFileItem setImage:seafileImage];
 
     // add a menu item for lockFile
     NSArray *items =
@@ -472,6 +472,29 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
 
     dispatch_async(self.client_command_queue_, ^{
       client_->doSendCommandWithPath(FinderSyncClient::DoShareLink,
+                                     path.c_str());
+    });
+}
+
+- (IBAction)downloadFileAction:(id)sender {
+    NSArray *items =
+        [[FIFinderSyncController defaultController] selectedItemURLs];
+    if (![items count])
+        return;
+    NSURL *item = items.firstObject;
+
+    // do it in another thread
+    std::string path =
+        item.path.precomposedStringWithCanonicalMapping.UTF8String;
+    NSNumber *isDirectory;
+    if ([item getResourceValue:&isDirectory
+                        forKey:NSURLIsDirectoryKey
+                         error:nil] &&
+        [isDirectory boolValue])
+        path += "/";
+
+    dispatch_async(self.client_command_queue_, ^{
+      client_->doSendCommandWithPath(FinderSyncClient::DoDownloadFile,
                                      path.c_str());
     });
 }
