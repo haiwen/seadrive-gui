@@ -92,7 +92,7 @@ SearchDialog::SearchDialog(const Account &account, QWidget *parent)
     loading_row_ = 0;
     setWindowTitle(tr("Search files"));
     setWindowIcon(QIcon(":/images/seafile.png"));
-    setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) | Qt::WindowStaysOnTopHint);
+    setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint));
 
     setMinimumSize(QSize(600, 371));
     createToolBar();
