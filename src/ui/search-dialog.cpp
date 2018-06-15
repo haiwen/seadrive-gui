@@ -496,7 +496,7 @@ void SearchItemsTableView::openDirectory(bool open_file)
         }
     }
 
-    gui->warningBox(tr("File not found, maybe not synchorized yet"));
+    gui->warningBox(tr("File not found, maybe not synchorized yet"), this);
 }
 
 void SearchItemsTableView::resizeEvent(QResizeEvent* event)
@@ -525,7 +525,7 @@ void SearchItemsTableView::onItemDoubleClick(const QModelIndex& index)
         }
     }
 
-    gui->warningBox(tr("File not found, maybe not synchorized yet"));
+    gui->warningBox(tr("File not found, maybe not synchorized yet"), this);
 }
 
 void SearchItemsTableView::setModel(QAbstractItemModel* model)
