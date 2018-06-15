@@ -92,6 +92,9 @@ SearchDialog::SearchDialog(const Account &account, QWidget *parent)
     loading_row_ = 0;
     setWindowTitle(tr("Search files"));
     setWindowIcon(QIcon(":/images/seafile.png"));
+    // Note: do not add the Qt::WindowStaysOnTopHint flag because it
+    // would make the menu shown below the dialog when right-click for
+    // the second time.
     setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint));
 
     setMinimumSize(QSize(600, 371));
