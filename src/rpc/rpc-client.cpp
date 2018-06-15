@@ -390,12 +390,16 @@ bool SeafileRpcClient::setServerProperty(const QString &url,
 bool SeafileRpcClient::switchAccount(const Account& account)
 {
     GError *error = NULL;
+    QString serverAddr = account.serverUrl.toString();
+    if (serverAddr.endsWith("/")) {
+        serverAddr = serverAddr.left(serverAddr.size() - 1);
+    }
     searpc_client_call__int(seadrive_rpc_client_,
                             "seafile_switch_account",
                             &error,
                             4,
                             "string",
-                            toCStr(account.serverUrl.toString()),
+                            toCStr(serverAddr),
                             "string",
                             toCStr(account.username),
                             "string",
