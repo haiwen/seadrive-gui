@@ -379,18 +379,18 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
 
     // Produce a menu for the extension.
     NSMenu *menu = [[NSMenu alloc] initWithTitle:@""];
-    // NSMenuItem *shareLinkItem =
-    //     [menu addItemWithTitle:NSLocalizedString(@"Get Seafile Download Link",
-    //                                              @"Get Seafile Download Link")
-    //                     action:@selector(shareLinkAction:)
-    //              keyEquivalent:@""];
+    NSMenuItem *shareLinkItem =
+        [menu addItemWithTitle:NSLocalizedString(@"Get Seafile Download Link",
+                                                 @"Get Seafile Download Link")
+                        action:@selector(shareLinkAction:)
+                 keyEquivalent:@""];
     NSMenuItem *downloadFileItem =
        [menu addItemWithTitle:NSLocalizedString(@"Download",
                                                 @"Download")
                        action:@selector(downloadFileAction:)
                 keyEquivalent:@""];
     NSImage *seafileImage = [NSImage imageNamed:@"seadrive.icns"];
-    // [shareLinkItem setImage:seafileImage];
+    [shareLinkItem setImage:seafileImage];
     [downloadFileItem setImage:seafileImage];
 
     // add a menu item for lockFile
