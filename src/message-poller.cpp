@@ -249,6 +249,12 @@ void MessagePoller::processSeaDriveEvent(const SeaDriveEvent &event)
         gui->trayIcon()->showMessage(title, msg);
         last_event_type_ = event.type;
         return;
+    } else if (event.type == "file-download.stop") {
+        QString title = tr("Download file");
+        QString msg = tr("Cancel to download file \"%1\" ").arg(::getBaseName(event.path));
+        gui->trayIcon()->showMessage(title, msg);
+        last_event_type_ = event.type;
+        return;
     }
 
     switch (event.fs_op_error) {
