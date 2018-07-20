@@ -4,6 +4,9 @@
 #import <Cocoa/Cocoa.h>
 #import <Security/Security.h>
 
+#import <QtDebug>
+#import "utils.h"
+
 #if !__has_feature(objc_arc)
 #error this file must be built with ARC support
 #endif
@@ -536,6 +539,31 @@ bool addFinderFavoriteDir(const QString &_path)
             return false;
         }
     }
+}
+
+bool enableSpotlightOnVolume(const QString& volume)
+{
+    const QString kMDUtilBinary = "mdutil";
+    QStringList arguments {"-s", volume};
+    QString output;
+    int status = runAsCommand(kMDUtilBinary, arguments, &output);
+    qDebug() << "output of \"mdutil -s\":" << output;
+
+    // Typical output:
+    // $ mdutil -s /Users/lin/SeaDrive
+    // /Users/foo/SeaDrive:
+    //         Indexing enabled.
+    if (status == 0 && output.contains("enabled")) {
+        qWarning("spotlight already enabled");
+        return true;
+    } else {
+        QStringList arguments = {"-i", "on", volume};
+        int ret = runAsCommand(kMDUtilBinary, arguments, &output);
+        qWarning("enabled spotlight: %s", ret == 0 ? "successfully" : "failure");
+        qDebug() << "output of \"mdutil -i on \":" << output;
+        return ret == 0;
+    }
+    return true;
 }
 
 } // namespace mac

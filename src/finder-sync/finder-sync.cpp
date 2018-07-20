@@ -10,20 +10,6 @@
 static const char* kApplePluginkitBinary = "/usr/bin/pluginkit";
 static const char* kFinderSyncBundleIdentifier = "com.seafile.seadrive.findersync";
 
-// run command and arugments,
-// and return the termination status
-// if we have non-null output, we will write stdout (not stderr) output to it
-static int runAsCommand(const QString &binary, const QStringList &arguments, QString
-                 *output = nullptr) {
-    QProcess process;
-    process.start(binary, arguments);
-    if (!process.waitForFinished(500))
-        return false;
-    if (output)
-        *output = process.readAllStandardOutput().trimmed();
-    return process.exitCode();
-}
-
 static inline QString pluginPath() {
 #ifdef XCODE_APP
     return QDir(utils::mac::mainBundlePath()).filePath("Contents/PlugIns/SeaDrive FinderSync.appex");

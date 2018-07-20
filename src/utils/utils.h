@@ -3,6 +3,7 @@
 
 #include <jansson.h>
 #include <QString>
+#include <QStringList>
 #include <QDir>
 #include <QMap>
 #include <QHash>
@@ -93,5 +94,7 @@ QUrl includeQueryParams(const QUrl& url,
 QByteArray buildFormData(const QHash<QString, QString>& params);
 
 QString translateTransferRate(int rate);
+
+int runAsCommand(const QString &binary, const QStringList &arguments, QString *output = nullptr);
 
 #endif

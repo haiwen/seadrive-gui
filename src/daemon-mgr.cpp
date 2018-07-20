@@ -173,7 +173,7 @@ QStringList DaemonManager::collectSeaDriveArgs()
 #if defined(Q_OS_MAC)
         QProcess::execute("umount", QStringList(gui->mountDir()));
         fuse_opts = gui->mountDir();
-        fuse_opts += QString(" -o volname=%1,noappledouble").arg(getBrand());
+        fuse_opts += QString(" -o volname=%1,noappledouble,allow_other,local").arg(getBrand());
 #elif defined(Q_OS_LINUX)
         QStringList umount_arguments;
         umount_arguments << "-u" << gui->mountDir();
@@ -235,6 +235,10 @@ void DaemonManager::checkDaemonReady()
         if (!utils::mac::addFinderFavoriteDir(gui->mountDir())) {
             qWarning("failed to add mount dir to Finder favorites");
         }
+        // We must wait seadrive volume is mounted, i.e. when seadrive
+        // daemon becomes ready, before we turn on spotlight on the
+        // seadrive volume.
+        utils::mac::enableSpotlightOnVolume(gui->mountDir());
 #endif
         return;
     }
@@ -272,6 +276,15 @@ void DaemonManager::doUnmount() {
     } else {
         qWarning("Not unmounting because rpc client not ready.");
     }
+#if defined(Q_OS_MAC)
+    QStringList diskutil_args;
+    diskutil_args << "unmount" << gui->mountDir();
+    if (QProcess::execute("diskutil", diskutil_args) != 0) {
+        qWarning("failed to run \"diskutil umount %s\"", toCStr(gui->mountDir()));
+    } else {
+        qWarning("diskutil umounted successfully");
+    }
+#endif
 }
 
 void DaemonManager::onDaemonFinished(int exit_code, QProcess::ExitStatus exit_status)

@@ -42,6 +42,8 @@ std::vector<QByteArray> getSystemCaCertificates();
 // Add a directory to Finder's favorites list (i.e. shortcuts on the left sidebar of it)
 bool addFinderFavoriteDir(const QString& path);
 
+bool enableSpotlightOnVolume(const QString& volume);
+
 } // namespace mac
 } // namespace utils
 #else

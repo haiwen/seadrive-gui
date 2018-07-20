@@ -823,3 +823,16 @@ QString translateTransferRate(int rate)
         .arg(display_rate)
         .arg(unit);
 }
+
+// run command and arugments,
+// and return the termination status
+// if we have non-null output, we will write stdout (not stderr) output to it
+int runAsCommand(const QString &binary, const QStringList &arguments, QString *output) {
+    QProcess process;
+    process.start(binary, arguments);
+    if (!process.waitForFinished(500))
+        return false;
+    if (output)
+        *output = process.readAllStandardOutput().trimmed();
+    return process.exitCode();
+}
