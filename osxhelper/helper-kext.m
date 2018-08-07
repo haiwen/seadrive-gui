@@ -1,8 +1,15 @@
 #import "helper-kext.h"
 
 #import <IOKit/kext/KextManager.h>
-#include <sys/stat.h>
+#import <grp.h>
+#import <sys/stat.h>
+#import <sys/sysctl.h>
+#import <sys/types.h>
+#import <uuid/uuid.h>
 #import "helper-log.h"
+
+#define MACOSX_ADMIN_GROUP_NAME "admin"
+#define OSXFUSE_SYSCTL_TUNABLES_ADMIN "vfs.generic.osxfuse.tunables.admin_group"
 
 @implementation HelperKext
 
@@ -33,6 +40,20 @@
       return;
     }
     [self loadKextID:kextID path:kextPath completion:completion];
+
+    // Make any user in the admin group also admins of the osxfuse
+    // admin group. Otherwise we can not use "allow_other" flag when
+    // mounting.
+    // See https://github.com/osxfuse/osxfuse/wiki/Mount-options#allow_other
+    struct group *admin_group = getgrnam(MACOSX_ADMIN_GROUP_NAME);
+    if (admin_group) {
+        int admin_gid = admin_group->gr_gid;
+        HelperLog(@"setting osxfuse admin group to osx admin group (group id = %d)", admin_group);
+        (void)sysctlbyname(OSXFUSE_SYSCTL_TUNABLES_ADMIN, NULL, NULL,
+                           &admin_gid, sizeof(admin_gid));
+    } else {
+        HelperLog(@"osxfuse admin group not set because reading admin group failed");
+    }
   }];
 }
 

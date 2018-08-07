@@ -107,7 +107,7 @@ bool HelperClient::needInstallKext()
 bool HelperClient::installKext()
 {
     if (!needInstallKext()) {
-        qWarning("No need to reinstall the helper tool");
+        qWarning("No need to reinstall the kext");
         return true;
     }
 
