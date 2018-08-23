@@ -101,6 +101,7 @@ public:
 
     bool cachePath(const QString& repo_id,
                    const QString& path_in_repo);
+    int setAutoSync(bool autoSync);
 
 private:
     Q_DISABLE_COPY(SeafileRpcClient)
