@@ -67,6 +67,7 @@ SeafileTrayIcon::SeafileTrayIcon(QObject *parent)
     : QSystemTrayIcon(parent),
       nth_trayicon_(0),
       rotate_counter_(0),
+      auto_sync_(true),
       state_(STATE_NONE),
       next_message_msec_(0),
       login_dlg_(nullptr),
@@ -132,6 +133,12 @@ void SeafileTrayIcon::createActions()
     search_action_ = new QAction(tr("Search files"), this);
     connect(search_action_, SIGNAL(triggered()), this, SLOT(showSearchDialog()));
 
+    pause_sync_action_ = new QAction(tr("Pause sync"), this);
+    connect(pause_sync_action_, SIGNAL(triggered()), this, SLOT(pauseAutoSync()));
+
+    start_sync_action_ = new QAction(tr("Start sync"), this);
+    connect(start_sync_action_, SIGNAL(triggered()), this, SLOT(startAutoSync()));
+
     settings_action_ = new QAction(tr("Settings"), this);
     connect(settings_action_, SIGNAL(triggered()), this, SLOT(showSettingsWindow()));
 
@@ -176,6 +183,8 @@ void SeafileTrayIcon::createContextMenu()
     context_menu_->addAction(open_seafile_folder_action_);
     context_menu_->addAction(open_log_directory_action_);
     context_menu_->addAction(search_action_);
+    context_menu_->addAction(pause_sync_action_);
+    context_menu_->addAction(start_sync_action_);
     context_menu_->addAction(settings_action_);
 
     context_menu_->addSeparator();
@@ -204,6 +213,14 @@ void SeafileTrayIcon::prepareContextMenu()
         global_sync_error_action_->setText(global_sync_error_.error_str);
     } else {
         global_sync_error_action_->setVisible(false);
+    }
+
+    if (auto_sync_) {
+        start_sync_action_->setVisible(false);
+        pause_sync_action_->setVisible(true);
+    } else {
+        start_sync_action_->setVisible(true);
+        pause_sync_action_->setVisible(false);
     }
 
     show_sync_errors_action_->setVisible(!sync_errors_.isEmpty());
@@ -558,6 +575,26 @@ void SeafileTrayIcon::showSearchDialog()
     connect(search_dialog_, SIGNAL(aboutClose()), this, SLOT(clearDialog()));
 }
 
+void SeafileTrayIcon::pauseAutoSync()
+{
+    if (gui->rpcClient()->setAutoSync(false) < 0) {
+        // Error
+        return;
+    }
+    auto_sync_ = false;
+    setState(STATE_DAEMON_AUTOSYNC_DISABLED);
+}
+
+void SeafileTrayIcon::startAutoSync()
+{
+    if (gui->rpcClient()->setAutoSync(true) < 0) {
+        // Error
+        return;
+    }
+    auto_sync_ = true;
+    setState(STATE_DAEMON_UP);
+}
+
 void SeafileTrayIcon::clearDialog()
 {
     search_dialog_ = nullptr;
@@ -623,6 +660,12 @@ void SeafileTrayIcon::quitSeafile()
 void SeafileTrayIcon::refreshTrayIcon()
 {
     if (rotate_timer_->isActive()) {
+        return;
+    }
+
+    if (!auto_sync_) {
+        setState(STATE_DAEMON_AUTOSYNC_DISABLED,
+                 tr("auto sync is disabled"));
         return;
     }
 
