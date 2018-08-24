@@ -685,20 +685,13 @@ bool SeafileRpcClient::cachePath(const QString& repo_id,
     }
 }
 
-int SeafileRpcClient::setAutoSync(bool autoSync)
+int SeafileRpcClient::setAutoSync(bool auto_sync)
 {
     GError *error = NULL;
     int ret;
-    if (autoSync) {
-        ret = searpc_client_call__int (seadrive_rpc_client_,
-                                       "seafile_enable_auto_sync",
-                                       &error, 0);
-    } else {
-        ret = searpc_client_call__int (seadrive_rpc_client_,
-                                       "seafile_disable_auto_sync",
-                                       &error, 0);
-    }
-
+    ret = searpc_client_call__int (seadrive_rpc_client_,
+                                           auto_sync ? "seafile_enable_auto_sync": "seafile_disable_auto_sync",
+                                           &error, 0);
     if (error) {
         qWarning("failed to set auto_sync: %s\n", error->message);
         g_error_free(error);
