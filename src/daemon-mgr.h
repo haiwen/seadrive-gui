@@ -46,6 +46,7 @@ private:
     void stopAllDaemon();
     void scheduleRestartDaemon();
     void transitionState(int new_state);
+    void diskUtilUnmount();
 
     QTimer *conn_daemon_timer_;
     QProcess *seadrive_daemon_;

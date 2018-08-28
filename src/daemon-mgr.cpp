@@ -171,7 +171,7 @@ QStringList DaemonManager::collectSeaDriveArgs()
     QString fuse_opts = qgetenv("SEADRIVE_FUSE_OPTS");
     if (fuse_opts.isEmpty()) {
 #if defined(Q_OS_MAC)
-        QProcess::execute("umount", QStringList(gui->mountDir()));
+        diskUtilUnmount();
         fuse_opts = gui->mountDir();
         fuse_opts += QString(" -o volname=%1,noappledouble,allow_other,local").arg(getBrand());
 #elif defined(Q_OS_LINUX)
@@ -276,9 +276,16 @@ void DaemonManager::doUnmount() {
     } else {
         qWarning("Not unmounting because rpc client not ready.");
     }
+
+    diskUtilUnmount();
+}
+
+void DaemonManager::diskUtilUnmount() {
 #if defined(Q_OS_MAC)
     QStringList diskutil_args;
-    diskutil_args << "unmount" << gui->mountDir();
+    // Programs like MS word would prevent the disk from unmounting,
+    // so we have to use "force" here
+    diskutil_args << "unmount" << "force" << gui->mountDir();
     if (QProcess::execute("diskutil", diskutil_args) != 0) {
         qWarning("failed to run \"diskutil umount %s\"", toCStr(gui->mountDir()));
     } else {
