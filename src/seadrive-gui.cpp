@@ -241,8 +241,24 @@ void SeadriveGui::start()
 
 #if defined(Q_OS_MAC)
 #ifdef XCODE_APP
-    if (!installHelperAndKext()) {
-        errorAndExit(tr("Failed to initialize: failed to install kernel driver"));
+    bool require_user_approval = false;
+    if (!installHelperAndKext(&require_user_approval)) {
+        if (require_user_approval) {
+            qWarning("the kext requires user approval");
+
+            messageBox(
+                tr("You need to approve %1 kernel extension manually in the "
+                   "system preferences. Click OK to open the system "
+                   "preferences dialog. Please re-launch %1 after that.").arg(getBrand()));
+
+            // Open the system preferences for the user and exit.
+            QStringList args;
+            args << "x-apple.systempreferences:com.apple.preference.security?General";
+            QProcess::execute("open", args);
+            QCoreApplication::exit(1);
+        } else {
+            errorAndExit(tr("Failed to initialize: failed to install kernel driver"));
+        }
         return;
     }
 #endif

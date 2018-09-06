@@ -9,7 +9,7 @@ class HelperClient : public QObject
 public:
     HelperClient();
     bool getVersion(QString *version);
-    bool installKext();
+    bool installKext(bool *require_user_approval);
 
 signals:
     void versionDone();

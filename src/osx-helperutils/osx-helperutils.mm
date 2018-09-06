@@ -153,12 +153,12 @@ bool installHelperTool()
     return [helper install];
 }
 
-bool installKext()
+bool installKext(bool *require_user_approval)
 {
-    return getHelperClient()->installKext();
+    return getHelperClient()->installKext(require_user_approval);
 }
 
-bool installHelperAndKext()
+bool installHelperAndKext(bool *require_user_approval)
 {
     qWarning("start to install the helper tool");
     if (!installHelperTool()) {
@@ -167,7 +167,7 @@ bool installHelperAndKext()
     }
 
     qWarning("start to install/load the kernel driver");
-    if (!installKext()) {
+    if (!installKext(require_user_approval)) {
         qWarning("failed to install the kernel driverkext");
         return false;
     }
