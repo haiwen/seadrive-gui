@@ -29,6 +29,7 @@ const char *const kPreconfigureServerAddr = "PreconfigureServerAddr";
 const char *const kPreconfigureServerAddrOnly = "PreconfigureServerAddrOnly";
 
 const char *const kSeafileOTPHeader = "X-Seafile-OTP";
+const char *const kSchemeHTTPS = "https";
 
 QStringList getUsedServerAddresses()
 {
@@ -242,6 +243,14 @@ bool LoginDialog::validateInputs()
 
 void LoginDialog::loginSuccess(const QString& token)
 {
+    // Some server configures mandatory http -> https redirect. In
+    // such cases, we must update the server url to use https,
+    // otherwise libcurl (used by the daemon) would be have trouble
+    // dealing with it.
+    if (url_.scheme() != kSchemeHTTPS && request_->reply()->url().scheme() == kSchemeHTTPS) {
+        qWarning("Detected server %s redirects to https", toCStr(url_.toString()));
+        url_.setScheme(kSchemeHTTPS);
+    }
     if (account_info_req_) {
         account_info_req_->deleteLater();
     }
