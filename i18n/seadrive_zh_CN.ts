@@ -44,13 +44,13 @@
     <name>DaemonManager</name>
     <message>
         <location filename="../src/daemon-mgr.cpp" line="120"/>
-        <location filename="../src/daemon-mgr.cpp" line="245"/>
-        <location filename="../src/daemon-mgr.cpp" line="283"/>
+        <location filename="../src/daemon-mgr.cpp" line="249"/>
+        <location filename="../src/daemon-mgr.cpp" line="303"/>
         <source>%1 failed to initialize</source>
         <translation>%1 初始化时出错</translation>
     </message>
     <message>
-        <location filename="../src/daemon-mgr.cpp" line="314"/>
+        <location filename="../src/daemon-mgr.cpp" line="334"/>
         <source>%1 exited unexpectedly</source>
         <translation>%1 意外退出</translation>
     </message>
@@ -163,111 +163,111 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>LoginDialog</name>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="66"/>
+        <location filename="../src/ui/login-dialog.cpp" line="67"/>
         <location filename="../ui_login-dialog.h" line="297"/>
         <source>Add an account</source>
         <translation>添加帐号</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="104"/>
-        <location filename="../src/ui/login-dialog.cpp" line="347"/>
+        <location filename="../src/ui/login-dialog.cpp" line="105"/>
+        <location filename="../src/ui/login-dialog.cpp" line="356"/>
         <location filename="../ui_login-dialog.h" line="308"/>
         <source>Single Sign On</source>
         <translation>单点登录</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="112"/>
         <location filename="../src/ui/login-dialog.cpp" line="113"/>
+        <location filename="../src/ui/login-dialog.cpp" line="114"/>
         <source>Re-login</source>
         <translation>重新登录</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="130"/>
+        <location filename="../src/ui/login-dialog.cpp" line="131"/>
         <source>Logging in...</source>
         <translation>登录中...</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="172"/>
+        <location filename="../src/ui/login-dialog.cpp" line="173"/>
         <source>Network Error:
  %1</source>
         <translation>网络错误：
 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="184"/>
+        <location filename="../src/ui/login-dialog.cpp" line="185"/>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The ssl certificate of this server is not trusted, proceed anyway?</source>
         <translation>&lt;b&gt;警告:&lt;/b&gt; 该服务器的SSL 证书不可信，是否继续？</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="198"/>
+        <location filename="../src/ui/login-dialog.cpp" line="199"/>
         <source>Please enter the server address</source>
         <translation>请输入云盘网址</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="202"/>
-        <location filename="../src/ui/login-dialog.cpp" line="212"/>
-        <location filename="../src/ui/login-dialog.cpp" line="357"/>
-        <location filename="../src/ui/login-dialog.cpp" line="363"/>
+        <location filename="../src/ui/login-dialog.cpp" line="203"/>
+        <location filename="../src/ui/login-dialog.cpp" line="213"/>
+        <location filename="../src/ui/login-dialog.cpp" line="366"/>
+        <location filename="../src/ui/login-dialog.cpp" line="372"/>
         <source>%1 is not a valid server address</source>
         <translation>%1 不是合法的云盘网址</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="219"/>
+        <location filename="../src/ui/login-dialog.cpp" line="220"/>
         <source>Please enter the username</source>
         <translation>请输入邮箱</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="230"/>
+        <location filename="../src/ui/login-dialog.cpp" line="231"/>
         <source>Please enter the computer name</source>
         <translation>请填写计算机名</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="289"/>
+        <location filename="../src/ui/login-dialog.cpp" line="298"/>
         <source>Failed to save current account</source>
         <translation>保存帐户失败</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="306"/>
+        <location filename="../src/ui/login-dialog.cpp" line="315"/>
         <source>Two Factor Authentication</source>
         <translation>两步验证</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="348"/>
+        <location filename="../src/ui/login-dialog.cpp" line="357"/>
         <source>%1 Server Address</source>
         <translation>%1 云盘网址</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="224"/>
+        <location filename="../src/ui/login-dialog.cpp" line="225"/>
         <source>Please enter the password</source>
         <translation>请输入密码</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="307"/>
+        <location filename="../src/ui/login-dialog.cpp" line="316"/>
         <source>Enter the two factor authentication token</source>
         <translation>请输入两步验证的动态口令</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="317"/>
+        <location filename="../src/ui/login-dialog.cpp" line="326"/>
         <source>Incorrect email or password</source>
         <translation>错误的邮箱或密码</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="319"/>
+        <location filename="../src/ui/login-dialog.cpp" line="328"/>
         <source>Logging in too frequently, please wait a minute</source>
         <translation>登录过于频繁，请稍后再试</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="321"/>
+        <location filename="../src/ui/login-dialog.cpp" line="330"/>
         <source>Internal Server Error</source>
         <translation>服务器内部错误</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="325"/>
+        <location filename="../src/ui/login-dialog.cpp" line="334"/>
         <source>Failed to login: %1</source>
         <translation>登录失败：%1</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="327"/>
+        <location filename="../src/ui/login-dialog.cpp" line="336"/>
         <source>Failed to login</source>
         <translation>登录失败</translation>
     </message>
@@ -791,89 +791,94 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SeadriveGui</name>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="245"/>
+        <location filename="../src/seadrive-gui.cpp" line="250"/>
+        <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
+        <translation>您需要在系统偏好设置中手动批准 %1 内核扩展。 点击“确定”以打开系统偏好设置对话框。 请在此之后重新启动 %1。</translation>
+    </message>
+    <message>
+        <location filename="../src/seadrive-gui.cpp" line="260"/>
         <source>Failed to initialize: failed to install kernel driver</source>
         <translation>初始化失败：安装内核驱动失败</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="277"/>
+        <location filename="../src/seadrive-gui.cpp" line="293"/>
         <source>Faild to choose a disk letter</source>
         <translation>选择盘符失败</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="329"/>
+        <location filename="../src/seadrive-gui.cpp" line="345"/>
         <source>failed to add default account</source>
         <translation>添加默认帐户时出错</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="441"/>
+        <location filename="../src/seadrive-gui.cpp" line="457"/>
         <source>Failed to initialize: failed to create seadrive folder</source>
         <translation>初始化失败: 创建 seadrive 文件夹时出错</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="445"/>
+        <location filename="../src/seadrive-gui.cpp" line="461"/>
         <source>Failed to initialize: failed to create seadrive logs folder</source>
         <translation>初始化失败: 创建 seadrive 日志文件夹时出错</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="449"/>
+        <location filename="../src/seadrive-gui.cpp" line="465"/>
         <source>Failed to initialize: failed to create seadrive data folder</source>
         <translation>初始化失败: 创建 seadrive 数据文件夹时出错</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="464"/>
+        <location filename="../src/seadrive-gui.cpp" line="480"/>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
         <translation>初始化失败: 创建 seadrive 挂载文件夹时出错</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="470"/>
+        <location filename="../src/seadrive-gui.cpp" line="486"/>
         <source>Failed to initialize log: %1</source>
         <translation>初始化日志时出错: %1</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="526"/>
-        <location filename="../src/seadrive-gui.cpp" line="538"/>
+        <location filename="../src/seadrive-gui.cpp" line="542"/>
+        <location filename="../src/seadrive-gui.cpp" line="554"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="549"/>
-        <location filename="../src/seadrive-gui.cpp" line="563"/>
+        <location filename="../src/seadrive-gui.cpp" line="565"/>
         <location filename="../src/seadrive-gui.cpp" line="579"/>
-        <location filename="../src/seadrive-gui.cpp" line="603"/>
+        <location filename="../src/seadrive-gui.cpp" line="595"/>
+        <location filename="../src/seadrive-gui.cpp" line="619"/>
         <source>Yes</source>
         <translation>是</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="550"/>
-        <location filename="../src/seadrive-gui.cpp" line="580"/>
-        <location filename="../src/seadrive-gui.cpp" line="604"/>
+        <location filename="../src/seadrive-gui.cpp" line="566"/>
+        <location filename="../src/seadrive-gui.cpp" line="596"/>
+        <location filename="../src/seadrive-gui.cpp" line="620"/>
         <source>No</source>
         <translation>否</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="564"/>
-        <location filename="../src/seadrive-gui.cpp" line="581"/>
+        <location filename="../src/seadrive-gui.cpp" line="580"/>
+        <location filename="../src/seadrive-gui.cpp" line="597"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="678"/>
+        <location filename="../src/seadrive-gui.cpp" line="694"/>
         <source>failed to save client id</source>
         <translation>保存客户端 ID 时出错</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="687"/>
+        <location filename="../src/seadrive-gui.cpp" line="703"/>
         <source>failed to access %1</source>
         <translation>访问 %1 时出错</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="695"/>
+        <location filename="../src/seadrive-gui.cpp" line="711"/>
         <source>incorrect client id</source>
         <translation>错误的客户端 ID</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="701"/>
+        <location filename="../src/seadrive-gui.cpp" line="717"/>
         <source>failed to read %1</source>
         <translation>读取 %1 时出错</translation>
     </message>
@@ -917,137 +922,152 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SeafileTrayIcon</name>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="129"/>
+        <location filename="../src/ui/tray-icon.cpp" line="130"/>
         <source>&amp;Quit</source>
         <translation>退出(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="132"/>
+        <location filename="../src/ui/tray-icon.cpp" line="133"/>
         <source>Search files</source>
         <translation>搜索文件</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="135"/>
+        <location filename="../src/ui/tray-icon.cpp" line="136"/>
+        <source>Pause sync</source>
+        <translation>暂停同步</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/tray-icon.cpp" line="139"/>
+        <source>Start sync</source>
+        <translation>开始同步</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/tray-icon.cpp" line="142"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="138"/>
+        <location filename="../src/ui/tray-icon.cpp" line="145"/>
         <source>Show file sync errors</source>
         <translation>查看文件同步错误</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="143"/>
+        <location filename="../src/ui/tray-icon.cpp" line="150"/>
         <source>Open %1 &amp;folder</source>
         <translation>打开 %1 文件夹(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="144"/>
+        <location filename="../src/ui/tray-icon.cpp" line="151"/>
         <source>open %1 folder</source>
         <translation>打开 %1 文件夹</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="147"/>
+        <location filename="../src/ui/tray-icon.cpp" line="154"/>
         <source>Open &amp;logs folder</source>
         <translation>打开日志文件夹(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="151"/>
+        <location filename="../src/ui/tray-icon.cpp" line="158"/>
         <source>&amp;About</source>
         <translation>关于(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="152"/>
+        <location filename="../src/ui/tray-icon.cpp" line="159"/>
         <source>Show the application&apos;s About box</source>
         <translation>显示关于对话框</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="156"/>
+        <location filename="../src/ui/tray-icon.cpp" line="163"/>
         <source>&amp;Online help</source>
         <translation>在线帮助(&amp;O)</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="182"/>
+        <location filename="../src/ui/tray-icon.cpp" line="191"/>
         <source>Accounts</source>
         <translation>帐号</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="219"/>
+        <location filename="../src/ui/tray-icon.cpp" line="236"/>
         <source>not logged in</source>
         <translation>未登录</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="232"/>
+        <location filename="../src/ui/tray-icon.cpp" line="249"/>
         <source>Choose</source>
         <translation>选择</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="254"/>
+        <location filename="../src/ui/tray-icon.cpp" line="271"/>
         <source>Logout</source>
         <translation>登出</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="258"/>
+        <location filename="../src/ui/tray-icon.cpp" line="275"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="271"/>
+        <location filename="../src/ui/tray-icon.cpp" line="288"/>
         <source>Add an account</source>
         <translation>添加新帐户</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="284"/>
+        <location filename="../src/ui/tray-icon.cpp" line="301"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="510"/>
+        <location filename="../src/ui/tray-icon.cpp" line="527"/>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
         <translation>&lt;h2&gt;Seafile Drive 客户端 %2&lt;/h2&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="724"/>
+        <location filename="../src/ui/tray-icon.cpp" line="668"/>
+        <source>auto sync is disabled</source>
+        <translation>自动同步已禁用</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/tray-icon.cpp" line="767"/>
         <source>Do you want to remove the local cache?</source>
         <translation>是否删除本地缓存？</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="753"/>
+        <location filename="../src/ui/tray-icon.cpp" line="796"/>
         <source>Failed to remove local cache of account %1</source>
         <translation>删除帐户 %1 的本地缓存失败</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="767"/>
+        <location filename="../src/ui/tray-icon.cpp" line="810"/>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
         <translation>是否删除帐户 %1 ？</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="774"/>
+        <location filename="../src/ui/tray-icon.cpp" line="817"/>
         <source>Failed to delete account</source>
         <translation>删除帐户失败</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="786"/>
+        <location filename="../src/ui/tray-icon.cpp" line="829"/>
         <source>Up %1, Down %2</source>
         <translation>上传 %1，下载 %2</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="509"/>
+        <location filename="../src/ui/tray-icon.cpp" line="526"/>
         <source>About %1</source>
         <translation>关于 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="126"/>
+        <location filename="../src/ui/tray-icon.cpp" line="127"/>
         <source>Transfer progress</source>
         <translation>传输进度</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="148"/>
+        <location filename="../src/ui/tray-icon.cpp" line="155"/>
         <source>open %1 log folder</source>
         <translation>打开 %1 日志文件夹</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="157"/>
+        <location filename="../src/ui/tray-icon.cpp" line="164"/>
         <source>open %1 online help</source>
         <translation>打开 %1 在线帮助文档</translation>
     </message>
@@ -1056,32 +1076,32 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <name>SearchDialog</name>
     <message>
         <location filename="../src/ui/search-dialog.cpp" line="93"/>
-        <location filename="../src/ui/search-dialog.cpp" line="165"/>
+        <location filename="../src/ui/search-dialog.cpp" line="168"/>
         <source>Search files</source>
         <translation>搜索文件</translation>
     </message>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="172"/>
+        <location filename="../src/ui/search-dialog.cpp" line="175"/>
         <source>All file types</source>
         <translation>所有文件类型</translation>
     </message>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="177"/>
+        <location filename="../src/ui/search-dialog.cpp" line="180"/>
         <source>Custom file type</source>
         <translation>自定义文件类型</translation>
     </message>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="206"/>
+        <location filename="../src/ui/search-dialog.cpp" line="209"/>
         <source>retry</source>
         <translation>重试</translation>
     </message>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="207"/>
+        <location filename="../src/ui/search-dialog.cpp" line="210"/>
         <source>Failed to search&lt;br/&gt;Please %1</source>
         <translation>搜索失败&lt;br/&gt;请 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="235"/>
+        <location filename="../src/ui/search-dialog.cpp" line="238"/>
         <source>No result found</source>
         <translation>没有搜索结果</translation>
     </message>
@@ -1089,22 +1109,22 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SearchItemsTableModel</name>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="690"/>
+        <location filename="../src/ui/search-dialog.cpp" line="693"/>
         <source>Name</source>
         <translation>文件名</translation>
     </message>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="692"/>
+        <location filename="../src/ui/search-dialog.cpp" line="695"/>
         <source>Size</source>
         <translation>大小</translation>
     </message>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="694"/>
+        <location filename="../src/ui/search-dialog.cpp" line="697"/>
         <source>Last Modified</source>
         <translation>修改时间</translation>
     </message>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="696"/>
+        <location filename="../src/ui/search-dialog.cpp" line="699"/>
         <source>Kind</source>
         <translation>类型</translation>
     </message>
@@ -1112,18 +1132,18 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SearchItemsTableView</name>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="433"/>
+        <location filename="../src/ui/search-dialog.cpp" line="436"/>
         <source>&amp;Open the file</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="436"/>
+        <location filename="../src/ui/search-dialog.cpp" line="439"/>
         <source>&amp;Show in folder</source>
         <translation>打开目录</translation>
     </message>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="499"/>
-        <location filename="../src/ui/search-dialog.cpp" line="528"/>
+        <location filename="../src/ui/search-dialog.cpp" line="502"/>
+        <location filename="../src/ui/search-dialog.cpp" line="531"/>
         <source>File not found, maybe not synchorized yet</source>
         <translation>文件没有发现，可能还未同步</translation>
     </message>
