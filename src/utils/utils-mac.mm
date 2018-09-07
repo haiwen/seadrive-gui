@@ -5,7 +5,6 @@
 #import <Security/Security.h>
 
 #include <openssl/asn1.h>
-#include <openssl/bio.h>
 #include <openssl/conf.h>
 #include <openssl/err.h>
 #include <openssl/pem.h>
@@ -430,15 +429,10 @@ static bool isCertificateDistrustedByUser(SecCertificateRef cert,
     return distrusted;
 }
 
-bool isCertExpired(QByteArray bytes) {
-    using BIO_ptr = std::unique_ptr<BIO, decltype(&BIO_free)>;
+bool isCertExpired(const unsigned char **bytes, size_t len) {
     using X509_ptr = std::unique_ptr<X509, decltype(&X509_free)>;
-
-    BIO_ptr input(BIO_new(BIO_s_mem()), BIO_free);
-    BIO_write(input.get(), bytes.data(), bytes.size());
-    X509_ptr cert(PEM_read_bio_X509_AUX(input.get(), NULL, NULL, NULL), X509_free);
-    BIO_ptr output_bio(BIO_new(BIO_s_mem()), BIO_free);
-    return X509_cmp_current_time (X509_get_notAfter(cert)) < 0;
+    X509_ptr cert(d2i_X509(NULL, bytes, len), X509_free);
+    return X509_cmp_current_time (X509_get_notAfter(cert.get())) < 0;
 }
 
 
@@ -480,7 +474,8 @@ appendCaCertificateFromSecurityStore(std::vector<QByteArray> *retval,
             qWarning("error retrieving a CA certificate from the system store");
         } else {
             QByteArray raw_data((const char *)CFDataGetBytePtr(data), CFDataGetLength(data));
-            if (!isCertExpired(raw_data)) {
+            const unsigned char *pdata = (const unsigned char *)CFDataGetBytePtr(data);
+            if (!isCertExpired(&pdata, raw_data.size())) {
                 retval->push_back(raw_data);
             }
             CFRelease(data);
