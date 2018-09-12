@@ -44,13 +44,13 @@
     <name>DaemonManager</name>
     <message>
         <location filename="../src/daemon-mgr.cpp" line="120"/>
-        <location filename="../src/daemon-mgr.cpp" line="245"/>
-        <location filename="../src/daemon-mgr.cpp" line="283"/>
+        <location filename="../src/daemon-mgr.cpp" line="249"/>
+        <location filename="../src/daemon-mgr.cpp" line="303"/>
         <source>%1 failed to initialize</source>
         <translation>%1 inicializálása sikertelen</translation>
     </message>
     <message>
-        <location filename="../src/daemon-mgr.cpp" line="314"/>
+        <location filename="../src/daemon-mgr.cpp" line="334"/>
         <source>%1 exited unexpectedly</source>
         <translation>%1 váratlanul megszakadt</translation>
     </message>
@@ -79,37 +79,37 @@ Kérem válassza ki a betűt:</translation>
     <message>
         <location filename="../ui_filter-menu.h" line="110"/>
         <source>FilterMenu</source>
-        <translation type="unfinished"/>
+        <translation>Szűrés menü</translation>
     </message>
     <message>
         <location filename="../ui_filter-menu.h" line="111"/>
         <source>Text file    </source>
-        <translation type="unfinished"/>
+        <translation>Szöveges fájl</translation>
     </message>
     <message>
         <location filename="../ui_filter-menu.h" line="112"/>
         <source>Document    </source>
-        <translation type="unfinished"/>
+        <translation>Dokumentum</translation>
     </message>
     <message>
         <location filename="../ui_filter-menu.h" line="113"/>
         <source>Image    </source>
-        <translation type="unfinished"/>
+        <translation>Kép</translation>
     </message>
     <message>
         <location filename="../ui_filter-menu.h" line="114"/>
         <source>Video    </source>
-        <translation type="unfinished"/>
+        <translation>Videó</translation>
     </message>
     <message>
         <location filename="../ui_filter-menu.h" line="115"/>
         <source>Audio    </source>
-        <translation type="unfinished"/>
+        <translation>Hangfájl</translation>
     </message>
     <message>
         <location filename="../ui_filter-menu.h" line="116"/>
         <source>Markdown</source>
-        <translation type="unfinished"/>
+        <translation>Markdown-fájl</translation>
     </message>
 </context>
 <context>
@@ -158,117 +158,117 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
     <message>
         <location filename="../src/ui/loading-view.cpp" line="47"/>
         <source>load more</source>
-        <translation type="unfinished"/>
+        <translation>továbbiak betöltése</translation>
     </message>
 </context>
 <context>
     <name>LoginDialog</name>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="66"/>
+        <location filename="../src/ui/login-dialog.cpp" line="67"/>
         <location filename="../ui_login-dialog.h" line="297"/>
         <source>Add an account</source>
         <translation>Fiók hozzáadása</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="104"/>
-        <location filename="../src/ui/login-dialog.cpp" line="343"/>
+        <location filename="../src/ui/login-dialog.cpp" line="105"/>
+        <location filename="../src/ui/login-dialog.cpp" line="356"/>
         <location filename="../ui_login-dialog.h" line="308"/>
         <source>Single Sign On</source>
-        <translation type="unfinished"/>
+        <translation>Egyszeri bejelentkezés</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="112"/>
         <location filename="../src/ui/login-dialog.cpp" line="113"/>
+        <location filename="../src/ui/login-dialog.cpp" line="114"/>
         <source>Re-login</source>
         <translation>Ismételt bejelentkezés</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="130"/>
+        <location filename="../src/ui/login-dialog.cpp" line="131"/>
         <source>Logging in...</source>
         <translation>Bejelentkezés...</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="172"/>
+        <location filename="../src/ui/login-dialog.cpp" line="173"/>
         <source>Network Error:
  %1</source>
         <translation>Hálózati hiba:
 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="184"/>
+        <location filename="../src/ui/login-dialog.cpp" line="185"/>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The ssl certificate of this server is not trusted, proceed anyway?</source>
         <translation>&lt;b&gt;Figyelem:&lt;/b&gt; A szerver SSL tanúsítványa nem megbízható. Elfogadja a tanúsítványt?</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="198"/>
+        <location filename="../src/ui/login-dialog.cpp" line="199"/>
         <source>Please enter the server address</source>
         <translation>Kérem, adja meg a szerver címét</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="202"/>
-        <location filename="../src/ui/login-dialog.cpp" line="208"/>
-        <location filename="../src/ui/login-dialog.cpp" line="353"/>
-        <location filename="../src/ui/login-dialog.cpp" line="359"/>
+        <location filename="../src/ui/login-dialog.cpp" line="203"/>
+        <location filename="../src/ui/login-dialog.cpp" line="213"/>
+        <location filename="../src/ui/login-dialog.cpp" line="366"/>
+        <location filename="../src/ui/login-dialog.cpp" line="372"/>
         <source>%1 is not a valid server address</source>
         <translation>Érvénytelen elérés: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="215"/>
+        <location filename="../src/ui/login-dialog.cpp" line="220"/>
         <source>Please enter the username</source>
         <translation>Kérem, adja meg a felhasználónevet</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="226"/>
+        <location filename="../src/ui/login-dialog.cpp" line="231"/>
         <source>Please enter the computer name</source>
         <translation>Kérem adja meg a számítógép nevét</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="285"/>
+        <location filename="../src/ui/login-dialog.cpp" line="298"/>
         <source>Failed to save current account</source>
         <translation>A fiók mentése nem sikerült.</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="302"/>
+        <location filename="../src/ui/login-dialog.cpp" line="315"/>
         <source>Two Factor Authentication</source>
         <translation>Kétlépcsős azonosítás</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="344"/>
+        <location filename="../src/ui/login-dialog.cpp" line="357"/>
         <source>%1 Server Address</source>
         <translation>%1 szerver cím</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="220"/>
+        <location filename="../src/ui/login-dialog.cpp" line="225"/>
         <source>Please enter the password</source>
         <translation>Kérem, adja meg a jelszavát</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="303"/>
+        <location filename="../src/ui/login-dialog.cpp" line="316"/>
         <source>Enter the two factor authentication token</source>
         <translation>A kétlépcsős azonosítási kulcs megadása</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="313"/>
+        <location filename="../src/ui/login-dialog.cpp" line="326"/>
         <source>Incorrect email or password</source>
         <translation>Érvénytelen e-mail cím vagy jelszó</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="315"/>
+        <location filename="../src/ui/login-dialog.cpp" line="328"/>
         <source>Logging in too frequently, please wait a minute</source>
         <translation>Túl sok bejelentkezési kísérlet. Kérem, próbálja meg később.</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="317"/>
+        <location filename="../src/ui/login-dialog.cpp" line="330"/>
         <source>Internal Server Error</source>
         <translation>Belső szerverhiba</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="321"/>
+        <location filename="../src/ui/login-dialog.cpp" line="334"/>
         <source>Failed to login: %1</source>
         <translation>Sikertelen bejelentkezés: %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/login-dialog.cpp" line="323"/>
+        <location filename="../src/ui/login-dialog.cpp" line="336"/>
         <source>Failed to login</source>
         <translation>Sikertelen bejelentkezés</translation>
     </message>
@@ -394,17 +394,17 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
         <location filename="../src/message-poller.cpp" line="241"/>
         <location filename="../src/message-poller.cpp" line="247"/>
         <source>Download file</source>
-        <translation type="unfinished"/>
+        <translation>Fájl letöltése</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="242"/>
         <source>Start to download file &quot;%1&quot; </source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; letöltése elkezdődött</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="248"/>
         <source>file &quot;%1&quot; has been downloaded </source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; letöltése befejeződött</translation>
     </message>
     <message>
         <location filename="../src/message-poller.cpp" line="256"/>
@@ -792,89 +792,94 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
 <context>
     <name>SeadriveGui</name>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="245"/>
-        <source>Failed to initialize: failed to install kernel driver</source>
+        <location filename="../src/seadrive-gui.cpp" line="250"/>
+        <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="277"/>
+        <location filename="../src/seadrive-gui.cpp" line="260"/>
+        <source>Failed to initialize: failed to install kernel driver</source>
+        <translation>Inicializálási hiba: nem sikerült a kernel meghajtóprogram telepítése</translation>
+    </message>
+    <message>
+        <location filename="../src/seadrive-gui.cpp" line="293"/>
         <source>Faild to choose a disk letter</source>
         <translation>Meghajtó betűjel kiválasztási hiba</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="329"/>
+        <location filename="../src/seadrive-gui.cpp" line="345"/>
         <source>failed to add default account</source>
         <translation>nem sikerült hozzáadni az alapértelmezett fiókot </translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="441"/>
+        <location filename="../src/seadrive-gui.cpp" line="457"/>
         <source>Failed to initialize: failed to create seadrive folder</source>
         <translation>Inicializálás sikertelen: nem sikerült létrehozni a seadrive könyvtárat</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="445"/>
+        <location filename="../src/seadrive-gui.cpp" line="461"/>
         <source>Failed to initialize: failed to create seadrive logs folder</source>
         <translation>Inicializálás sikertelen: nem sikerült létrehozni a seadrive napló könyvtárat</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="449"/>
+        <location filename="../src/seadrive-gui.cpp" line="465"/>
         <source>Failed to initialize: failed to create seadrive data folder</source>
         <translation>Inicializálás sikertelen: nem sikerült létrehozni a seadrive adat könyvtárat</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="464"/>
+        <location filename="../src/seadrive-gui.cpp" line="480"/>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
         <translation>Inicializálás nem sikerült: nem sikerült létrehozni a seadrive csatolási könyvtárat</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="470"/>
+        <location filename="../src/seadrive-gui.cpp" line="486"/>
         <source>Failed to initialize log: %1</source>
         <translation>Napló inicializálása sikertelen: %1</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="526"/>
-        <location filename="../src/seadrive-gui.cpp" line="538"/>
+        <location filename="../src/seadrive-gui.cpp" line="542"/>
+        <location filename="../src/seadrive-gui.cpp" line="554"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="549"/>
-        <location filename="../src/seadrive-gui.cpp" line="563"/>
+        <location filename="../src/seadrive-gui.cpp" line="565"/>
         <location filename="../src/seadrive-gui.cpp" line="579"/>
-        <location filename="../src/seadrive-gui.cpp" line="603"/>
+        <location filename="../src/seadrive-gui.cpp" line="595"/>
+        <location filename="../src/seadrive-gui.cpp" line="619"/>
         <source>Yes</source>
         <translation>Igen</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="550"/>
-        <location filename="../src/seadrive-gui.cpp" line="580"/>
-        <location filename="../src/seadrive-gui.cpp" line="604"/>
+        <location filename="../src/seadrive-gui.cpp" line="566"/>
+        <location filename="../src/seadrive-gui.cpp" line="596"/>
+        <location filename="../src/seadrive-gui.cpp" line="620"/>
         <source>No</source>
         <translation>Nem</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="564"/>
-        <location filename="../src/seadrive-gui.cpp" line="581"/>
+        <location filename="../src/seadrive-gui.cpp" line="580"/>
+        <location filename="../src/seadrive-gui.cpp" line="597"/>
         <source>Cancel</source>
         <translation>Mégse</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="678"/>
+        <location filename="../src/seadrive-gui.cpp" line="694"/>
         <source>failed to save client id</source>
         <translation>Kliens ID mentése sikertelen</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="687"/>
+        <location filename="../src/seadrive-gui.cpp" line="703"/>
         <source>failed to access %1</source>
         <translation>%1 elérés hiba</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="695"/>
+        <location filename="../src/seadrive-gui.cpp" line="711"/>
         <source>incorrect client id</source>
         <translation>érvénytelen kliens ID</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="701"/>
+        <location filename="../src/seadrive-gui.cpp" line="717"/>
         <source>failed to read %1</source>
         <translation>%1 olvasás hiba</translation>
     </message>
@@ -918,137 +923,152 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
 <context>
     <name>SeafileTrayIcon</name>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="129"/>
+        <location filename="../src/ui/tray-icon.cpp" line="130"/>
         <source>&amp;Quit</source>
         <translation>&amp;Kilépés</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="132"/>
+        <location filename="../src/ui/tray-icon.cpp" line="133"/>
         <source>Search files</source>
+        <translation>Fájlok keresése</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/tray-icon.cpp" line="136"/>
+        <source>Pause sync</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="135"/>
+        <location filename="../src/ui/tray-icon.cpp" line="139"/>
+        <source>Start sync</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/tray-icon.cpp" line="142"/>
         <source>Settings</source>
         <translation>Beállítások</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="138"/>
+        <location filename="../src/ui/tray-icon.cpp" line="145"/>
         <source>Show file sync errors</source>
         <translation>Fájl szinkronizációs hibák megmutatása</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="143"/>
+        <location filename="../src/ui/tray-icon.cpp" line="150"/>
         <source>Open %1 &amp;folder</source>
         <translation>%1 könyvtár &amp;megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="144"/>
+        <location filename="../src/ui/tray-icon.cpp" line="151"/>
         <source>open %1 folder</source>
         <translation>%1 mappa megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="147"/>
+        <location filename="../src/ui/tray-icon.cpp" line="154"/>
         <source>Open &amp;logs folder</source>
         <translation>Nap&amp;lózási mappa megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="151"/>
+        <location filename="../src/ui/tray-icon.cpp" line="158"/>
         <source>&amp;About</source>
         <translation>&amp;Névjegy</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="152"/>
+        <location filename="../src/ui/tray-icon.cpp" line="159"/>
         <source>Show the application&apos;s About box</source>
         <translation>Megjeleníti az alkalmazás névjegyét</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="156"/>
+        <location filename="../src/ui/tray-icon.cpp" line="163"/>
         <source>&amp;Online help</source>
         <translation>&amp;Online segítség</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="182"/>
+        <location filename="../src/ui/tray-icon.cpp" line="191"/>
         <source>Accounts</source>
         <translation>Fiókok</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="219"/>
+        <location filename="../src/ui/tray-icon.cpp" line="236"/>
         <source>not logged in</source>
         <translation>nincs bejelentkezve</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="232"/>
+        <location filename="../src/ui/tray-icon.cpp" line="249"/>
         <source>Choose</source>
         <translation>Válasszon</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="254"/>
+        <location filename="../src/ui/tray-icon.cpp" line="271"/>
         <source>Logout</source>
         <translation>Kijelentkezés</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="258"/>
+        <location filename="../src/ui/tray-icon.cpp" line="275"/>
         <source>Delete</source>
         <translation>Töröl</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="271"/>
+        <location filename="../src/ui/tray-icon.cpp" line="288"/>
         <source>Add an account</source>
         <translation>Fiók hozzáadása</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="284"/>
+        <location filename="../src/ui/tray-icon.cpp" line="301"/>
         <source>File</source>
         <translation>Fájl</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="510"/>
+        <location filename="../src/ui/tray-icon.cpp" line="527"/>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
         <translation>&lt;h2&gt;Seafile Meghajtó Kliens %2&lt;/h2&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="724"/>
+        <location filename="../src/ui/tray-icon.cpp" line="668"/>
+        <source>auto sync is disabled</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/tray-icon.cpp" line="767"/>
         <source>Do you want to remove the local cache?</source>
         <translation>Törli a helyi gyorsítótárat?</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="753"/>
+        <location filename="../src/ui/tray-icon.cpp" line="796"/>
         <source>Failed to remove local cache of account %1</source>
         <translation>Hiba a(z) %1 fiók gyorsítótár törlésénél</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="767"/>
+        <location filename="../src/ui/tray-icon.cpp" line="810"/>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
         <translation>Biztos törli a fiókot innen: &quot;%1&quot;?</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="774"/>
+        <location filename="../src/ui/tray-icon.cpp" line="817"/>
         <source>Failed to delete account</source>
         <translation>Hiba a fiók törlésénél</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="786"/>
+        <location filename="../src/ui/tray-icon.cpp" line="829"/>
         <source>Up %1, Down %2</source>
         <translation>Le: %1, fel: %2</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="509"/>
+        <location filename="../src/ui/tray-icon.cpp" line="526"/>
         <source>About %1</source>
         <translation>Információk a %1-ról</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="126"/>
+        <location filename="../src/ui/tray-icon.cpp" line="127"/>
         <source>Transfer progress</source>
         <translation>Adatátvitel folyamatban</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="148"/>
+        <location filename="../src/ui/tray-icon.cpp" line="155"/>
         <source>open %1 log folder</source>
         <translation>%1 naplóállományok könyvtárának megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="157"/>
+        <location filename="../src/ui/tray-icon.cpp" line="164"/>
         <source>open %1 online help</source>
         <translation>%1 online súgó megnyitása</translation>
     </message>
@@ -1057,76 +1077,76 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
     <name>SearchDialog</name>
     <message>
         <location filename="../src/ui/search-dialog.cpp" line="93"/>
-        <location filename="../src/ui/search-dialog.cpp" line="165"/>
+        <location filename="../src/ui/search-dialog.cpp" line="168"/>
         <source>Search files</source>
-        <translation type="unfinished"/>
+        <translation>Fájlok keresése</translation>
     </message>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="172"/>
+        <location filename="../src/ui/search-dialog.cpp" line="175"/>
         <source>All file types</source>
-        <translation type="unfinished"/>
+        <translation>Minden fájltípus</translation>
     </message>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="177"/>
+        <location filename="../src/ui/search-dialog.cpp" line="180"/>
         <source>Custom file type</source>
-        <translation type="unfinished"/>
+        <translation>Egyedi fájltípus</translation>
     </message>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="206"/>
+        <location filename="../src/ui/search-dialog.cpp" line="209"/>
         <source>retry</source>
-        <translation type="unfinished"/>
+        <translation>próbálja újra</translation>
     </message>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="207"/>
+        <location filename="../src/ui/search-dialog.cpp" line="210"/>
         <source>Failed to search&lt;br/&gt;Please %1</source>
-        <translation type="unfinished"/>
+        <translation>Sikertelen keresés&lt;br/&gt;Kérem, %1!</translation>
     </message>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="235"/>
+        <location filename="../src/ui/search-dialog.cpp" line="238"/>
         <source>No result found</source>
-        <translation type="unfinished"/>
+        <translation>Nincs találat</translation>
     </message>
 </context>
 <context>
     <name>SearchItemsTableModel</name>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="690"/>
+        <location filename="../src/ui/search-dialog.cpp" line="693"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Név</translation>
     </message>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="692"/>
+        <location filename="../src/ui/search-dialog.cpp" line="695"/>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>Méret</translation>
     </message>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="694"/>
+        <location filename="../src/ui/search-dialog.cpp" line="697"/>
         <source>Last Modified</source>
-        <translation type="unfinished"/>
+        <translation>Utoljára módosítva</translation>
     </message>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="696"/>
+        <location filename="../src/ui/search-dialog.cpp" line="699"/>
         <source>Kind</source>
-        <translation type="unfinished"/>
+        <translation>Típus</translation>
     </message>
 </context>
 <context>
     <name>SearchItemsTableView</name>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="433"/>
-        <source>&amp;Open the file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../src/ui/search-dialog.cpp" line="436"/>
-        <source>&amp;Show in folder</source>
-        <translation type="unfinished"/>
+        <source>&amp;Open the file</source>
+        <translation>Fájl megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/ui/search-dialog.cpp" line="499"/>
-        <location filename="../src/ui/search-dialog.cpp" line="528"/>
+        <location filename="../src/ui/search-dialog.cpp" line="439"/>
+        <source>&amp;Show in folder</source>
+        <translation>A fájlt tartalmazó mappa megnyitása</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/search-dialog.cpp" line="502"/>
+        <location filename="../src/ui/search-dialog.cpp" line="531"/>
         <source>File not found, maybe not synchorized yet</source>
-        <translation type="unfinished"/>
+        <translation>A fájl nem található, mivel valószínűleg még nem került szinkronizálásra</translation>
     </message>
 </context>
 <context>
@@ -1146,7 +1166,7 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
         <location filename="../src/ui/settings-dialog.cpp" line="74"/>
         <location filename="../ui_settings-dialog.h" line="468"/>
         <source>Cache directory:</source>
-        <translation type="unfinished"/>
+        <translation>Gyorsítótár könyvtára:</translation>
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="78"/>
@@ -1169,34 +1189,34 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
         <translation>Rendszer Proxy</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="139"/>
-        <source>languange</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="146"/>
-        <source>languange and cache directory</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../src/ui/settings-dialog.cpp" line="146"/>
         <source>cache directory</source>
-        <translation type="unfinished"/>
+        <translation>gyorsítótár könyvtárát</translation>
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="150"/>
         <source>You have changed %1. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>Megváltoztatta a %1. Újraindítja most az alkalmazást a változások érvényesítéséhez?</translation>
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="455"/>
         <source>Please choose the cache folder</source>
-        <translation type="unfinished"/>
+        <translation>Kérem, adja meg a gyorsítótár könyvtárát!</translation>
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="164"/>
         <source>You have changed disk letter. Restart to apply it?</source>
         <translation>Megváltoztatta a meghajtó betűjelét. Újraindítja az alkalmazást a beállítás érvényesítéséhez?</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settings-dialog.cpp" line="139"/>
+        <source>language</source>
+        <translation>nyelvet</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settings-dialog.cpp" line="146"/>
+        <source>language and cache directory</source>
+        <translation>nyelvet és a gyorsítótár könyvtárát</translation>
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="414"/>
@@ -1286,7 +1306,7 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
     <message>
         <location filename="../ui_settings-dialog.h" line="470"/>
         <source>select...</source>
-        <translation type="unfinished"/>
+        <translation>kiválasztás...</translation>
     </message>
     <message>
         <location filename="../ui_settings-dialog.h" line="471"/>
@@ -1321,7 +1341,7 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
     <message>
         <location filename="../ui_settings-dialog.h" line="477"/>
         <source>0</source>
-        <translation type="unfinished"/>
+        <translation>0</translation>
     </message>
     <message>
         <location filename="../ui_settings-dialog.h" line="478"/>

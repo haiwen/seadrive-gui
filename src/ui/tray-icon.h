@@ -67,8 +67,6 @@ public:
 public slots:
     void showSettingsWindow();
     void showSearchDialog();
-    void pauseAutoSync();
-    void startAutoSync();
     void showLoginDialog();
     void showLoginDialog(const Account& account);
     void showAboutDialog();
@@ -124,8 +122,6 @@ private:
     // Actions for tray icon menu
     QAction *quit_action_;
     QAction *search_action_;
-    QAction *pause_sync_action_;
-    QAction *start_sync_action_;
     QAction *settings_action_;
     QAction *login_action_;
     QAction *open_seafile_folder_action_;
