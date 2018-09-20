@@ -75,7 +75,10 @@ public:
     bool isCheckLatestVersionEnabled();
 
     void setHttpSyncCertVerifyDisabled(bool disabled);
-    bool httpSyncCertVerifyDisabled() const { return verify_http_sync_cert_disabled_; };
+    bool httpSyncCertVerifyDisabled() const { return verify_http_sync_cert_disabled_; }
+
+    void setOnlyCurrentUserAccess(bool disabled);
+    bool onlyCurrentUserAccess() const { return only_current_user_access; }
 
     QString getComputerName();
     void setComputerName(const QString& computerName);
@@ -130,6 +133,7 @@ private:
     unsigned int maxDownloadRatio_;
     unsigned int maxUploadRatio_;
     bool verify_http_sync_cert_disabled_;
+    bool only_current_user_access;
     bool shell_ext_enabled_;
 
     // proxy settings

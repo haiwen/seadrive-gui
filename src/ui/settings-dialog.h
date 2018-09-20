@@ -29,6 +29,7 @@ private:
 
     QString preferred_disk_letter_;
     QString current_cache_dir_;
+    bool currnet_user_access_;
 
     Q_DISABLE_COPY(SettingsDialog);
 };

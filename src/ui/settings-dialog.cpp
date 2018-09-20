@@ -45,7 +45,8 @@ void insertDiskLetter(QStringList* letters, QString letter_to_insert)
 } // namespace
 
 SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
-    current_cache_dir_(QString())
+    current_cache_dir_(QString()),
+    currnet_user_access_(false)
 {
     setupUi(this);
     setWindowTitle(tr("Settings"));
@@ -163,6 +164,15 @@ void SettingsDialog::updateSettings()
 
     if (diskLetter_changed && gui->yesOrNoBox(tr("You have changed disk letter. Restart to apply it?"), this, true))
         gui->restartApp();
+
+    bool current_access = false;
+    if (mCurrentAccess->checkState() != (currnet_user_access_ ? Qt::Checked : Qt::Unchecked)) {
+        current_access = true;
+        mgr->setOnlyCurrentUserAccess(mCurrentAccess->checkState() == Qt::Checked);
+    }
+
+    if (current_access && gui->yesOrNoBox(tr("You have changed current user access. Restart to apply it?"), this, true))
+        gui->restartApp();
 #endif // Q_OS_WIN32
 }
 
@@ -269,9 +279,14 @@ void SettingsDialog::showEvent(QShowEvent *event)
         }
         i++;
     }
+
+    state = mgr->onlyCurrentUserAccess() ? Qt::Checked : Qt::Unchecked;
+    currnet_user_access_ = state == Qt::Checked ? true : false;
+    mCurrentAccess->setCheckState(state);
 #else
     mDiskLetterLabel->setVisible(false);
     mDiskLetter->setVisible(false);
+    mCurrentAccess->setVisible(false);
 #endif // Q_OS_WIN32
 
     QDialog::showEvent(event);
