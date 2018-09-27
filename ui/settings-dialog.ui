@@ -167,7 +167,7 @@
        <item>
         <widget class="QCheckBox" name="mCurrentAccess">
          <property name="text">
-          <string>Only allow current user to access</string>
+          <string>Only allow current user to access the drive</string>
          </property>
         </widget>
        </item>

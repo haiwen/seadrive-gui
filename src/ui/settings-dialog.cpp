@@ -165,14 +165,14 @@ void SettingsDialog::updateSettings()
     if (diskLetter_changed && gui->yesOrNoBox(tr("You have changed disk letter. Restart to apply it?"), this, true))
         gui->restartApp();
 
-    bool current_access = false;
-    if (mCurrentAccess->checkState() != (currnet_user_access_ ? Qt::Checked : Qt::Unchecked)) {
-        current_access = true;
-        mgr->setOnlyCurrentUserAccess(mCurrentAccess->checkState() == Qt::Checked);
+    bool current_access = mCurrentAccess->checkState() == Qt::Checked;
+    if (current_user_access_ != current_access) {
+        mgr->setOnlyCurrentUserAccess(current_access);
+        currnet_user_access_ = current_access;
+        if  (gui->yesOrNoBox(tr("You have changed drive access limit. Restart to apply it?"), this, true))
+            gui->restartApp();
+        }
     }
-
-    if (current_access && gui->yesOrNoBox(tr("You have changed current user access. Restart to apply it?"), this, true))
-        gui->restartApp();
 #endif // Q_OS_WIN32
 }
 
@@ -280,8 +280,8 @@ void SettingsDialog::showEvent(QShowEvent *event)
         i++;
     }
 
-    state = mgr->onlyCurrentUserAccess() ? Qt::Checked : Qt::Unchecked;
-    currnet_user_access_ = state == Qt::Checked ? true : false;
+    currnet_user_access_  = mgr->onlyCurrentUserAccess();
+    state = currnet_user_access_ ? Qt::Checked : Qt::Unchecked;
     mCurrentAccess->setCheckState(state);
 #else
     mDiskLetterLabel->setVisible(false);
