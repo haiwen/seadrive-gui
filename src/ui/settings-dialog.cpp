@@ -169,7 +169,7 @@ void SettingsDialog::updateSettings()
     if (current_session_access_ != current_access) {
         mgr->setCurrentUserAccess(current_access);
         current_session_access_ = current_access;
-        if  (gui->yesOrNoBox(tr("You have changed drive access limit. Restart to apply it?"), this, true))
+        if  (gui->yesOrNoBox(tr("You have changed drive access option. Restart to apply it?"), this, true))
             gui->restartApp();
         }
     }
