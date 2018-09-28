@@ -165,6 +165,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="mCurrentAccess">
+         <property name="text">
+          <string>Only allow current user to access the drive</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <layout class="QFormLayout" name="formLayout_3">
          <property name="labelAlignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

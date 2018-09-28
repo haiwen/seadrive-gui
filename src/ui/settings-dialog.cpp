@@ -45,7 +45,8 @@ void insertDiskLetter(QStringList* letters, QString letter_to_insert)
 } // namespace
 
 SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
-    current_cache_dir_(QString())
+    current_cache_dir_(QString()),
+    current_session_access_(false)
 {
     setupUi(this);
     setWindowTitle(tr("Settings"));
@@ -163,6 +164,15 @@ void SettingsDialog::updateSettings()
 
     if (diskLetter_changed && gui->yesOrNoBox(tr("You have changed disk letter. Restart to apply it?"), this, true))
         gui->restartApp();
+
+    bool current_access = mCurrentAccess->checkState() == Qt::Checked;
+    if (current_session_access_ != current_access) {
+        mgr->setCurrentUserAccess(current_access);
+        current_session_access_ = current_access;
+        if  (gui->yesOrNoBox(tr("You have changed drive access limit. Restart to apply it?"), this, true))
+            gui->restartApp();
+        }
+    }
 #endif // Q_OS_WIN32
 }
 
@@ -269,9 +279,14 @@ void SettingsDialog::showEvent(QShowEvent *event)
         }
         i++;
     }
+
+    current_session_access_  = mgr->currentUserAccess();
+    state = current_session_access_ ? Qt::Checked : Qt::Unchecked;
+    mCurrentAccess->setCheckState(state);
 #else
     mDiskLetterLabel->setVisible(false);
     mDiskLetter->setVisible(false);
+    mCurrentAccess->setVisible(false);
 #endif // Q_OS_WIN32
 
     QDialog::showEvent(event);

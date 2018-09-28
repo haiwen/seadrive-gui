@@ -103,6 +103,7 @@ SettingsManager::SettingsManager()
       maxDownloadRatio_(0),
       maxUploadRatio_(0),
       verify_http_sync_cert_disabled_(false),
+      current_session_access_(false),
       current_proxy_(SeafileProxy()),
       cache_clean_limit_minutes_(10),
       cache_size_limit_gb_(10)
@@ -132,6 +133,10 @@ void SettingsManager::loadSettings()
     if (gui->rpcClient()->seafileGetConfig("disable_verify_certificate",
                                                   &str) >= 0)
         verify_http_sync_cert_disabled_ = (str == "true") ? true : false;
+
+    if (gui->rpcClient()->seafileGetConfig("current_session_access",
+                                                  &str) >= 0)
+        current_session_access_ = (str == "true") ? true : false;
 
     if (gui->rpcClient()->getCacheSizeLimitGB(&value)) {
         cache_size_limit_gb_ = qMax(1, value);
@@ -470,6 +475,17 @@ void SettingsManager::setHttpSyncCertVerifyDisabled(bool disabled)
             return;
         }
         verify_http_sync_cert_disabled_ = disabled;
+    }
+}
+
+void SettingsManager::setCurrentUserAccess(bool disabled)
+{
+    if (current_session_access_ != disabled) {
+        if (gui->rpcClient()->seafileSetConfig(
+                "current_session_access", disabled ? "true" : "false") < 0) {
+            return;
+        }
+        current_session_access_ = disabled;
     }
 }
 
