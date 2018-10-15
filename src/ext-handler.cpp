@@ -546,6 +546,10 @@ QString ExtCommandsHandler::handleListRepos(const QStringList& args)
         QStringList(), QDir::Dirs | QDir::NoDot | QDir::NoDotDot);
 
     QStringList fullpaths;
+    QString internal_link_supported = account.isAtLeastVersion(6, 3, 0)
+            ? "internal-link-supported"
+            : "internal-link-unsupported";
+    fullpaths << internal_link_supported;
     foreach (const QString &subdir, subdirs) {
         QStringList repos =
             QDir(pathJoin(gui->mountDir(), subdir))
