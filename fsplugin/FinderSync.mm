@@ -438,7 +438,7 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
 
         [lockFileItem setImage:seafileImage];
 
-        if (file->second == PathStatus::SYNC_STATUS_LOCKED)
+        if (file->second == PathStatus::SYNC_STATUS_LOCKED || file->second == PathStatus::SYNC_STATUS_READONLY)
             [lockFileItem setEnabled:FALSE];
     }
 
