@@ -161,7 +161,11 @@ std::string FinderSyncHost::getWatchSet()
         repos << toCStr(pathJoin(gui->mountDir(), QString::fromUtf8(repo.c_str())));
     }
 
-    return repos.join("\n").toUtf8().data();
+    auto content = repos.join("\n");
+    const Account& account = gui->accountManager()->currentAccount();
+    content += "\t";
+    content += account.isAtLeastVersion(6, 3, 0) ? "internal-link-supported" : "internal-link-unsupported";
+    return content.toUtf8().data();
 }
 
 void FinderSyncHost::updateWatchSet()

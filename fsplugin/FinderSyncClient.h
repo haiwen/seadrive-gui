@@ -86,3 +86,5 @@ class FinderSyncClient {
     mach_port_t local_port_;
     mach_port_t remote_port_;
 };
+
+extern bool internal_link_supported;

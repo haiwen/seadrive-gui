@@ -384,16 +384,9 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
                                                  @"Get Seafile Download Link")
                         action:@selector(shareLinkAction:)
                  keyEquivalent:@""];
-    NSMenuItem *downloadFileItem =
-       [menu addItemWithTitle:NSLocalizedString(@"Download",
-                                                @"Download")
-                       action:@selector(downloadFileAction:)
-                keyEquivalent:@""];
     NSImage *seafileImage = [NSImage imageNamed:@"seadrive.icns"];
     [shareLinkItem setImage:seafileImage];
-    [downloadFileItem setImage:seafileImage];
 
-    // add a menu item for lockFile
     NSArray *items =
         [[FIFinderSyncController defaultController] selectedItemURLs];
     if (![items count])
@@ -402,6 +395,25 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
     std::string file_path =
         item.path.precomposedStringWithCanonicalMapping.UTF8String;
 
+    if (internal_link_supported &&
+        findRepoContainPath(watched_repos_, file_path) !=
+            watched_repos_.end()) {
+        NSMenuItem *internalLinkItem = [menu
+            addItemWithTitle:NSLocalizedString(@"Get Seafile Internal Link",
+                                               @"Get Seafile Internal Link")
+                      action:@selector(internalLinkAction:)
+               keyEquivalent:@""];
+        [internalLinkItem setImage:seafileImage];
+    }
+
+    NSMenuItem *downloadFileItem =
+       [menu addItemWithTitle:NSLocalizedString(@"Download",
+                                                @"Download")
+                       action:@selector(downloadFileAction:)
+                keyEquivalent:@""];
+    [downloadFileItem setImage:seafileImage];
+
+    // add a menu item for lockFile
     if (isCategoryDir(file_path)) {
         return nil;
     }
@@ -442,7 +454,6 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
             [lockFileItem setEnabled:FALSE];
     }
 
-    NSString *showHistoryTitle;
     NSMenuItem *showHistoryItem =
         [menu addItemWithTitle:NSLocalizedString(@"View File History",
                                                  @"View File History")

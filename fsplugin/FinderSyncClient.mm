@@ -26,6 +26,7 @@ static constexpr int kPathMaxSize = 1024;
 static constexpr uint32_t kFinderSyncProtocolVersion = 0x00000004;
 static volatile int32_t message_id_ =
     100; // we start from 100, the number below than 100 is reserved
+bool internal_link_supported = false;
 
 //
 // MachPort Message
@@ -82,8 +83,13 @@ static std::vector<std::string>
     //                         static_cast<LocalRepo::SyncState>(status));
     //     buffer = ++pos;
     // }
+    std::vector<std::string> parts = split(raw_resp, '\t');
+    auto repos_resp = parts[0];
+    if (parts.size() > 1) {
+        internal_link_supported = parts[1] == "internal-link-supported";
+    }
 
-    std::vector<std::string> lines = split(raw_resp, '\n');
+    std::vector<std::string> lines = split(repos_resp, '\n');
     for (size_t i = 0; i < lines.size(); i++) {
         std::string line = lines[i];
         repos->emplace_back(line);
