@@ -55,7 +55,7 @@ const char* kFileOperationMove = "api2/repos/%1/fileops/move/";
 const char* kAuthPingURL = "api2/auth/ping/";
 
 const char* kLatestVersionUrl = "https://seafile.com/api/seadrive-latest/";
-
+const char* kGetSmartLink = "api/v2.1/smart-link/";
 // #if defined(Q_OS_WIN32)
 // const char* kOsName = "windows";
 // #elif defined(Q_OS_LINUX)
@@ -1465,4 +1465,37 @@ AuthPingRequest::AuthPingRequest(const Account &account)
 void AuthPingRequest::requestSuccess(QNetworkReply &reply)
 {
     emit success();
+}
+
+GetSmartLinkRequest::GetSmartLinkRequest(const Account& account,
+                                         const QString &repo_id,
+                                         const QString &path,
+                                         bool is_dir)
+    : SeafileApiRequest(
+          account.getAbsoluteUrl(QString(kGetSmartLink)),
+          SeafileApiRequest::METHOD_GET, account.token),
+      repo_id_(repo_id),
+      path_(path),
+      is_dir_(is_dir)
+{
+    setUrlParam("repo_id", repo_id);
+    setUrlParam("path", path);
+    setUrlParam("is_dir", is_dir ? "true" : "false");
+}
+
+void GetSmartLinkRequest::requestSuccess(QNetworkReply& reply)
+{
+    json_error_t error;
+    json_t* root = parseJSON(reply, &error);
+    if (!root) {
+        qWarning("failed to parse json:%s\n", error.text);
+        emit failed(ApiError::fromJsonError());
+        return;
+    }
+
+    QScopedPointer<json_t, JsonPointerCustomDeleter> json(root);
+    const char* smart_link =
+        json_string_value(json_object_get(json.data(), "smart_link"));
+
+    emit success(smart_link);
 }
