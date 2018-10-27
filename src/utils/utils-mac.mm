@@ -60,8 +60,9 @@ inline void initializeSystemVersion() {
         osver_patch = 0;
         return;
     }
+
     NSArray *versionArray = [[array objectAtIndex:1] componentsSeparatedByString:@"."];
-    if (versionArray.count < 3) {
+    if (versionArray.count < 2) {
         osver_major = 10;
         osver_minor = 7;
         osver_patch = 0;
@@ -69,7 +70,9 @@ inline void initializeSystemVersion() {
     }
     osver_major = [[versionArray objectAtIndex:0] intValue];
     osver_minor = [[versionArray objectAtIndex:1] intValue];
-    osver_patch = [[versionArray objectAtIndex:2] intValue];
+    if (versionArray.count > 2) {
+        osver_patch = [[versionArray objectAtIndex:2] intValue];
+    }
 #endif
 }
 
