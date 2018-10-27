@@ -11,7 +11,9 @@
 #include <openssl/x509.h>
 
 #import <QtDebug>
+#import <QStandardPaths>
 #import "utils.h"
+#import "file-utils.h"
 
 #if !__has_feature(objc_arc)
 #error this file must be built with ARC support
@@ -495,9 +497,38 @@ std::vector<QByteArray> getSystemCaCertificates() {
     return retval;
 }
 
+// Create a symlink, and adding the link to the finder favorite list
+// instead of the real drive folder, which is a volume and sometimes
+// finder can't handle it properly.
+bool createLocalSymLink(const QString &path, QString* link_name)
+{
+    QString directory = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).first();
+    if (directory.isEmpty()) {
+        qWarning() << "failed to locate app local data directory" << directory;
+        return false;
+    }
+    if (!createDirIfNotExists(directory)) {
+        qWarning() << "failed to create directory" << directory;
+        return false;
+    }
+    *link_name = pathJoin(directory, getBaseName(path));
+    if (!QFileInfo(*link_name).isSymLink()) {
+        if (!QFile::link(path, *link_name)) {
+            qWarning() << "failed to create link from" << *link_name << "to" << path;
+            return false;
+        }
+    }
+    return true;
+}
+
 bool addFinderFavoriteDir(const QString &_path)
 {
-    NSString *path = [NSString stringWithUTF8String:_path.toUtf8().data()];
+    QString link_name;
+    if (!createLocalSymLink(_path, &link_name)) {
+        return false;
+    }
+
+    NSString *path = [NSString stringWithUTF8String:link_name.toUtf8().data()];
     LSSharedFileListRef favList =
         LSSharedFileListCreate(NULL, kLSSharedFileListFavoriteItems, NULL);
     if (!favList) {
@@ -538,6 +569,7 @@ bool addFinderFavoriteDir(const QString &_path)
     }
 
     if (exists) {
+        qWarning() << "finder favorite list item for" << _path << "already exists";
         CFRelease(favList);
         return true;
     } else {
@@ -550,6 +582,7 @@ bool addFinderFavoriteDir(const QString &_path)
                                           (__bridge CFURLRef)url,
                                           NULL,
                                           NULL);
+        qWarning() << "Added finder favorite list item for" << _path;
         CFRelease(favList);
         if (item) {
             CFRelease(item);
