@@ -14,40 +14,38 @@ const char *kSeafileProtocolHostOpenFile = "openfile";
 
 } // namespace
 
-SeafileLinkDialog::SeafileLinkDialog(const QString &repo_id,
-                                     const Account &account,
-                                     const QString &path,
-                                     QWidget *parent)
+SeafileLinkDialog::SeafileLinkDialog(const QString& smart_link, QWidget *parent)
+    :web_link_(smart_link)
 {
     setWindowTitle(tr("%1 Internal Link").arg(getBrand()));
     setWindowIcon(QIcon(":/images/seafile.png"));
     setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
                    Qt::WindowStaysOnTopHint);
 
-    {
-        QString fixed_path = path.startsWith("/") ? path : "/" + path;
-        if (fixed_path.endsWith("/"))
-            web_link_ = account.getAbsoluteUrl(
-                                "/#common/lib/" + repo_id +
-                                (fixed_path == "/" ? "/" : fixed_path.left(fixed_path.size() - 1)))
-                            .toEncoded();
-        else
-            web_link_ =
-                account.getAbsoluteUrl("/lib/" + repo_id + "/file" + fixed_path).toEncoded();
-    }
+//    {
+//        QString fixed_path = path.startsWith("/") ? path : "/" + path;
+//        if (fixed_path.endsWith("/"))
+//            web_link_ = account.getAbsoluteUrl(
+//                                "/#common/lib/" + repo_id +
+//                                (fixed_path == "/" ? "/" : fixed_path.left(fixed_path.size() - 1)))
+//                            .toEncoded();
+//        else
+//            web_link_ =
+//                account.getAbsoluteUrl("/lib/" + repo_id + "/file" + fixed_path).toEncoded();
+//    }
 
-    {
-        QUrl url;
-        url.setScheme(kSeafileProtocolScheme);
-        url.setHost(kSeafileProtocolHostOpenFile);
+//    {
+//        QUrl url;
+//        url.setScheme(kSeafileProtocolScheme);
+//        url.setHost(kSeafileProtocolHostOpenFile);
 
-        QUrlQuery url_query;
-        url_query.addQueryItem("repo_id",  repo_id);
-        url_query.addQueryItem("path",  path);
-        url.setQuery(url_query);
+//        QUrlQuery url_query;
+//        url_query.addQueryItem("repo_id",  repo_id);
+//        url_query.addQueryItem("path",  path);
+//        url.setQuery(url_query);
 
-        protocol_link_ = url.toEncoded();
-    }
+//        protocol_link_ = url.toEncoded();
+//    }
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->setSpacing(5);
@@ -59,7 +57,7 @@ SeafileLinkDialog::SeafileLinkDialog(const QString &repo_id,
     //
     // create web link related
     //
-    QLabel *web_label = new QLabel(tr("%1 Web Link:").arg(getBrand()));
+    QLabel *web_label = new QLabel(tr("%1 Internal Link:").arg(getBrand()));
     layout->addWidget(web_label);
     QHBoxLayout *web_layout = new QHBoxLayout;
 
@@ -82,25 +80,25 @@ SeafileLinkDialog::SeafileLinkDialog(const QString &repo_id,
     //
     // create seafile-protocol link related
     //
-    QLabel *protocol_label = new QLabel(tr("%1 Protocol Link:").arg(getBrand()));
-    layout->addWidget(protocol_label);
-    QHBoxLayout *protocol_layout = new QHBoxLayout;
+//    QLabel *protocol_label = new QLabel(tr("%1 Protocol Link:").arg(getBrand()));
+//    layout->addWidget(protocol_label);
+//    QHBoxLayout *protocol_layout = new QHBoxLayout;
 
-    protocol_editor_ = new QLineEdit;
-    protocol_editor_->setText(protocol_link_);
-    protocol_editor_->selectAll();
-    protocol_editor_->setReadOnly(true);
-    protocol_editor_->setCursorPosition(0);
+//    protocol_editor_ = new QLineEdit;
+//    protocol_editor_->setText(protocol_link_);
+//    protocol_editor_->selectAll();
+//    protocol_editor_->setReadOnly(true);
+//    protocol_editor_->setCursorPosition(0);
 
-    protocol_layout->addWidget(protocol_editor_);
+//    protocol_layout->addWidget(protocol_editor_);
 
-    QPushButton *protocol_copy_to = new QPushButton;
-    protocol_copy_to->setIcon(copy_to_icon);
-    protocol_copy_to->setIconSize(QSize(16, 16));
-    protocol_copy_to->setToolTip(copy_to_str);
-    protocol_layout->addWidget(protocol_copy_to);
-    connect(protocol_copy_to, SIGNAL(clicked()), this, SLOT(onCopyProtocolText()));
-    layout->addLayout(protocol_layout);
+//    QPushButton *protocol_copy_to = new QPushButton;
+//    protocol_copy_to->setIcon(copy_to_icon);
+//    protocol_copy_to->setIconSize(QSize(16, 16));
+//    protocol_copy_to->setToolTip(copy_to_str);
+//    protocol_layout->addWidget(protocol_copy_to);
+//    connect(protocol_copy_to, SIGNAL(clicked()), this, SLOT(onCopyProtocolText()));
+//    layout->addLayout(protocol_layout);
 
     QHBoxLayout *hlayout = new QHBoxLayout;
 
