@@ -14,6 +14,7 @@
 
 #import "helper-client.h"
 #import "utils/objc-defines.h"
+#import "utils/file-utils.h"
 
 #if !__has_feature(objc_arc)
 #error this file must be built with ARC support
@@ -88,6 +89,81 @@ static bool hasFuseMounts() {
     return info.contains("@osxufse");
 };
 
+
+// ret is
+//  1  if s1 > s2
+//  0  if s1 = s2
+//  -1 if s1 < s2
+static int compareVersions(const QString &s1, const QString &s2, int *ret)
+{
+    QStringList v1 = s1.split(".");
+    QStringList v2 = s2.split(".");
+
+    int i = 0;
+    while (i < v1.size() && i < v2.size()) {
+        bool ok;
+        int a = v1[i].toInt(&ok);
+        if (!ok) {
+            return -1;
+        }
+        int b = v2[i].toInt(&ok);
+        if (!ok) {
+            return -1;
+        }
+
+        if (a > b) {
+            *ret = 1;
+            return 0;
+        } else if (a < b) {
+            *ret = -1;
+            return 0;
+        }
+
+        i++;
+    }
+
+    *ret = v1.size() - v2.size();
+
+    return 0;
+}
+
+class VersionString
+{
+public:
+    VersionString(const QString &_v) : v(_v)
+    {
+    }
+    bool operator<(const VersionString &rhs) const
+    {
+        int ret;
+        if (compareVersions(v, rhs.v, &ret) < 0) {
+            return false;
+        }
+
+        return ret < 0;
+    }
+    const QString v;
+};
+
+static QString readValueFromVersionFile(const QString &plist_path, NSString *key)
+{
+    NSDictionary *infos =
+        [NSDictionary dictionaryWithContentsOfFile:plist_path.toNSString()];
+    return QString::fromNSString(infos[key]);
+}
+
+static QString getBundledExtVersion()
+{
+    QString bundled_ext_dir =
+        QString::fromNSString([NSBundle.mainBundle.resourcePath
+            stringByAppendingPathComponent:@"osxfuse.fs"]);
+
+    QString versions_plist =
+        ::pathJoin(bundled_ext_dir, "Contents", "version.plist");
+
+    return readValueFromVersionFile(versions_plist, @"CFBundleVersion");
+}
+
 bool HelperClient::needInstallKext()
 {
     if (![NSFileManager.defaultManager fileExistsAtPath:KEXT_LOCATION
@@ -106,6 +182,15 @@ bool HelperClient::needInstallKext()
         return true;
     }
 
+    QString installed_kext_version = QString::fromNSString(infos[KEXT_ID][@"CFBundleVersion"]);
+    qWarning("installed kernel extension version is %s", installed_kext_version.toUtf8().data());
+    QString latest_kext_version = getBundledExtVersion();
+    qWarning("latest extension version is %s", latest_kext_version.toUtf8().data());
+    if (VersionString(installed_kext_version) < VersionString(latest_kext_version)) {
+        qWarning("installed kernel extension is out-dated");
+        return true;
+    }
+
     struct group *admin_group = getgrnam(MACOSX_ADMIN_GROUP_NAME);
     if (admin_group) {
         int current_set_gid;
@@ -116,9 +201,6 @@ bool HelperClient::needInstallKext()
             return true;
         }
     }
-
-    // TODO: compare version of current installed kext with latest kext, and
-    // upgrade if current one is outdated.
 
     return false;
 }
