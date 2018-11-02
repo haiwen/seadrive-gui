@@ -380,8 +380,8 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
     // Produce a menu for the extension.
     NSMenu *menu = [[NSMenu alloc] initWithTitle:@""];
     NSMenuItem *shareLinkItem =
-        [menu addItemWithTitle:NSLocalizedString(@"Get Seafile Download Link",
-                                                 @"Get Seafile Download Link")
+        [menu addItemWithTitle:NSLocalizedString(@"Get Seafile Share Link",
+                                                 @"Get Seafile Share Link")
                         action:@selector(shareLinkAction:)
                  keyEquivalent:@""];
     NSImage *seafileImage = [NSImage imageNamed:@"seadrive.icns"];
