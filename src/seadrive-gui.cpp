@@ -202,7 +202,8 @@ SeadriveGui *gui;
 SeadriveGui::SeadriveGui()
     : started_(false),
       in_exit_(false),
-      first_use_(false)
+      first_use_(false),
+      csmcmd_(nullptr)
 {
     startup_time_ = QDateTime::currentMSecsSinceEpoch();
     tray_icon_ = new SeafileTrayIcon(this);
@@ -304,6 +305,17 @@ void SeadriveGui::start()
     connect(daemon_mgr_, SIGNAL(daemonRestarted()),
             this, SLOT(onDaemonRestarted()));
     daemon_mgr_->startSeadriveDaemon();
+
+#if defined(Q_OS_WIN32)
+    csmcmd_ = new QProcess(this);
+    QString program = "csmcmd.exe";
+    QStringList arguments;
+    QString arg = seadriveDataDir() + "/file-cache/*" ;
+    arg.replace("/", "\\");
+    arguments << "/add_rule" << "file:///" + arg;
+
+    csmcmd_->start(program, arguments);
+#endif
 }
 
 void SeadriveGui::onDaemonRestarted()

@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QVariant>
 #include <QMessageBox>
+#include <QProcess>
 
 class DaemonManager;
 class SeafileRpcClient;
@@ -132,6 +133,8 @@ private:
     QString disk_letter_;
 
     qint64 startup_time_;
+
+    QProcess *csmcmd_;
 };
 
 /**
