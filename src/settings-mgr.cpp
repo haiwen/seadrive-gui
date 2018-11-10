@@ -25,6 +25,7 @@
 namespace
 {
 const char *kCheckLatestVersion = "checkLatestVersion";
+const char *kCheckSpotlight = "checkSpotlight";
 const char *kBehaviorGroup = "Behavior";
 #ifdef Q_OS_WIN32
 const char *kDiskLetter = "diskLetter";
@@ -335,6 +336,26 @@ void SettingsManager::setSyncExtraTempFile(bool sync)
         }
         sync_extra_temp_file_ = sync;
     }
+}
+
+void SettingsManager::setSpotlight(bool enabled)
+{
+    QSettings settings;
+    settings.beginGroup(kSettingsGroup);
+    settings.setValue(kCheckSpotlight, enabled);
+    settings.endGroup();
+}
+
+bool SettingsManager::getSpotlight()
+{
+    QSettings settings;
+    bool enabled;
+
+    settings.beginGroup(kSettingsGroup);
+    enabled = settings.value(kCheckSpotlight, false).toBool();
+    settings.endGroup();
+
+    return enabled;
 }
 
 void SettingsManager::getProxy(QNetworkProxy *proxy) const

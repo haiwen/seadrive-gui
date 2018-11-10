@@ -73,6 +73,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
     mShowCacheDir->setText(current_cache_dir_);
     mShowCacheDir->setReadOnly(true);
     mCacheLabel->setText(tr("Cache directory:"));
+    mSpotlightCheckBox->setText(tr("Enable search"));
 
     // The range of mProxyPort is set to (0, 65535) in the ui file, so we
     // don't bother with that here.
@@ -152,6 +153,18 @@ void SettingsDialog::updateSettings()
         gui->restartApp();
     }
 
+    bool enable_spotlight = false;
+    if ((mSpotlightCheckBox->checkState() == Qt::Checked) != mgr->getSpotlight()) {
+        enable_spotlight = true;
+        mgr->setSpotlight(mSpotlightCheckBox->checkState() == Qt::Checked);
+        msg = mSpotlightCheckBox->checkState() == Qt::Checked ? tr("enabled index") : tr("disabled index");
+    }
+
+    if ((enable_spotlight) && gui->yesOrNoBox
+            (tr("You have %1. Restart to apply it?").arg(msg), this, true)) {
+        gui->restartApp();
+    }
+
 //     // if (proxy_changed && gui->yesOrNoBox(tr("You have changed proxy settings. Restart to apply it?"), this, true))
 //     //     gui->restartApp();
 
@@ -200,6 +213,9 @@ void SettingsDialog::showEvent(QShowEvent *event)
     state = mgr->httpSyncCertVerifyDisabled() ? Qt::Checked : Qt::Unchecked;
     mDisableVerifyHttpSyncCert->setCheckState(state);
 
+    state = mgr->getSpotlight() ? Qt::Checked : Qt::Unchecked;;
+    mSpotlightCheckBox->setCheckState(state);
+
     // currently supports windows only
     state = mgr->autoStart() ? Qt::Checked : Qt::Unchecked;
     mAutoStartCheckBox->setCheckState(state);
@@ -227,7 +243,6 @@ void SettingsDialog::showEvent(QShowEvent *event)
 #else
     mShellExtCheckBox->hide();
 #endif
-
     state = mgr->notify() ? Qt::Checked : Qt::Unchecked;
     mNotifyCheckBox->setCheckState(state);
 
