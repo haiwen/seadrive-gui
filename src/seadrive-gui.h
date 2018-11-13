@@ -133,8 +133,6 @@ private:
     QString disk_letter_;
 
     qint64 startup_time_;
-
-    QProcess *csmcmd_;
 };
 
 /**
