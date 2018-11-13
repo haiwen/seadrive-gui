@@ -25,7 +25,7 @@
 namespace
 {
 const char *kCheckLatestVersion = "checkLatestVersion";
-const char *kCheckSpotlight = "checkSpotlight";
+const char *kEnableSearch = "enableSearch";
 const char *kBehaviorGroup = "Behavior";
 #ifdef Q_OS_WIN32
 const char *kDiskLetter = "diskLetter";
@@ -338,21 +338,21 @@ void SettingsManager::setSyncExtraTempFile(bool sync)
     }
 }
 
-void SettingsManager::setSpotlight(bool enabled)
+void SettingsManager::setSearchEnabled(bool enabled)
 {
     QSettings settings;
     settings.beginGroup(kSettingsGroup);
-    settings.setValue(kCheckSpotlight, enabled);
+    settings.setValue(kEnableSearch, enabled);
     settings.endGroup();
 }
 
-bool SettingsManager::getSpotlight()
+bool SettingsManager::getSearchEnabled()
 {
     QSettings settings;
     bool enabled;
 
     settings.beginGroup(kSettingsGroup);
-    enabled = settings.value(kCheckSpotlight, false).toBool();
+    enabled = settings.value(kEnableSearch, false).toBool();
     settings.endGroup();
 
     return enabled;

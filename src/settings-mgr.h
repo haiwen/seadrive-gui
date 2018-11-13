@@ -70,8 +70,8 @@ public:
     void setMaxDownloadRatio(unsigned int ratio);
     void setMaxUploadRatio(unsigned int ratio);
     void setSyncExtraTempFile(bool sync);
-    void setSpotlight(bool enabled);
-    bool getSpotlight();
+    void setSearchEnabled(bool enabled);
+    bool getSearchEnabled();
 
     void setCheckLatestVersionEnabled(bool enabled);
     bool isCheckLatestVersionEnabled();

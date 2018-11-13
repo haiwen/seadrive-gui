@@ -174,7 +174,7 @@ QStringList DaemonManager::collectSeaDriveArgs()
         diskUtilUnmount();
         SettingsManager *mgr = gui->settingsManager();
         fuse_opts = gui->mountDir();
-        if (mgr->getSpotlight())
+        if (mgr->getSearchEnabled())
             fuse_opts += QString(" -o volname=%1,allow_other,local").arg(getBrand());
         else
             fuse_opts += QString(" -o volname=%1").arg(getBrand());

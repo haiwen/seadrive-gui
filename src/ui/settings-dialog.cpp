@@ -154,10 +154,10 @@ void SettingsDialog::updateSettings()
     }
 
     bool enable_spotlight = false;
-    if ((mSpotlightCheckBox->checkState() == Qt::Checked) != mgr->getSpotlight()) {
+    if ((mSpotlightCheckBox->checkState() == Qt::Checked) != mgr->getSearchEnabled()) {
         enable_spotlight = true;
-        mgr->setSpotlight(mSpotlightCheckBox->checkState() == Qt::Checked);
-        msg = mSpotlightCheckBox->checkState() == Qt::Checked ? tr("enabled index") : tr("disabled index");
+        mgr->setSearchEnabled(mSpotlightCheckBox->checkState() == Qt::Checked);
+        msg = mSpotlightCheckBox->checkState() == Qt::Checked ? tr("enabled search") : tr("disabled search");
     }
 
     if ((enable_spotlight) && gui->yesOrNoBox
@@ -213,8 +213,12 @@ void SettingsDialog::showEvent(QShowEvent *event)
     state = mgr->httpSyncCertVerifyDisabled() ? Qt::Checked : Qt::Unchecked;
     mDisableVerifyHttpSyncCert->setCheckState(state);
 
-    state = mgr->getSpotlight() ? Qt::Checked : Qt::Unchecked;;
+#if defined(Q_OS_MAC)
+    state = mgr->getSearchEnabled() ? Qt::Checked : Qt::Unchecked;;
     mSpotlightCheckBox->setCheckState(state);
+#else
+    mSpotlightCheckBox->hide();
+#endif
 
     // currently supports windows only
     state = mgr->autoStart() ? Qt::Checked : Qt::Unchecked;
