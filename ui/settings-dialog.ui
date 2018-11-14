@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="mTabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="mBasicTab">
       <attribute name="title">
@@ -67,6 +67,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="mSpotlightCheckBox">
+         <property name="text">
+          <string>Enable search</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <layout class="QFormLayout" name="formLayout">
          <property name="labelAlignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -74,14 +81,14 @@
          <property name="formAlignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
          </property>
-         <item row="0" column="0">
+         <item row="1" column="0">
           <widget class="QLabel" name="label_5">
            <property name="text">
             <string>Download speed limit (KB/s):</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
+         <item row="1" column="1">
           <widget class="QSpinBox" name="mDownloadSpinBox">
            <property name="maximumSize">
             <size>
@@ -97,14 +104,14 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="0">
+         <item row="2" column="0">
           <widget class="QLabel" name="label_4">
            <property name="text">
             <string>Upload speed limit (KB/s):</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
+         <item row="2" column="1">
           <widget class="QSpinBox" name="mUploadSpinBox">
            <property name="maximumSize">
             <size>
@@ -120,14 +127,14 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="0">
+         <item row="3" column="0">
           <widget class="QLabel" name="mDiskLetterLabel">
            <property name="text">
             <string>Disk letter (need restart): </string>
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
+         <item row="3" column="1">
           <widget class="QComboBox" name="mDiskLetter">
            <property name="maximumSize">
             <size>

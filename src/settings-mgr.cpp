@@ -25,6 +25,7 @@
 namespace
 {
 const char *kCheckLatestVersion = "checkLatestVersion";
+const char *kEnableSearch = "enableSearch";
 const char *kBehaviorGroup = "Behavior";
 #ifdef Q_OS_WIN32
 const char *kDiskLetter = "diskLetter";
@@ -335,6 +336,26 @@ void SettingsManager::setSyncExtraTempFile(bool sync)
         }
         sync_extra_temp_file_ = sync;
     }
+}
+
+void SettingsManager::setSearchEnabled(bool enabled)
+{
+    QSettings settings;
+    settings.beginGroup(kSettingsGroup);
+    settings.setValue(kEnableSearch, enabled);
+    settings.endGroup();
+}
+
+bool SettingsManager::getSearchEnabled()
+{
+    QSettings settings;
+    bool enabled;
+
+    settings.beginGroup(kSettingsGroup);
+    enabled = settings.value(kEnableSearch, false).toBool();
+    settings.endGroup();
+
+    return enabled;
 }
 
 void SettingsManager::getProxy(QNetworkProxy *proxy) const
