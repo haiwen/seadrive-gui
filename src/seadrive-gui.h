@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QVariant>
 #include <QMessageBox>
+#include <QProcess>
 
 class DaemonManager;
 class SeafileRpcClient;

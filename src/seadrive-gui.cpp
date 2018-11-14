@@ -304,6 +304,15 @@ void SeadriveGui::start()
     connect(daemon_mgr_, SIGNAL(daemonRestarted()),
             this, SLOT(onDaemonRestarted()));
     daemon_mgr_->startSeadriveDaemon();
+
+#if defined(Q_OS_WIN32)
+    QString program = "csmcmd.exe";
+    QStringList arguments;
+    QString arg = QDir::toNativeSeparators(seadriveDataDir() + "/file-cache/*");
+    arguments << "/add_rule" << arg;
+
+    QProcess::execute(program, arguments);
+#endif
 }
 
 void SeadriveGui::onDaemonRestarted()
