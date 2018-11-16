@@ -308,8 +308,9 @@ void SeadriveGui::start()
 #if defined(Q_OS_WIN32)
     QString program = "csmcmd.exe";
     QStringList arguments;
-    QString arg = QDir::toNativeSeparators(seadriveDataDir() + "/file-cache/*");
-    arguments << "/add_rule" << arg << "/default";
+    // Exclude the file-cache folder from being indexed by windows search.
+    QString cache_path = QDir::toNativeSeparators(seadriveDataDir() + "/file-cache/*");
+    arguments << "/add_rule" << cache_path << "/default";
 
     QProcess::execute(program, arguments);
 #endif
