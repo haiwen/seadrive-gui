@@ -309,7 +309,7 @@ void SeadriveGui::start()
     QString program = "csmcmd.exe";
     QStringList arguments;
     QString arg = QDir::toNativeSeparators(seadriveDataDir() + "/file-cache/*");
-    arguments << "/add_rule" << arg;
+    arguments << "/add_rule" << arg << "/default";
 
     QProcess::execute(program, arguments);
 #endif
