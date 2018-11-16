@@ -46,13 +46,13 @@
     <name>DaemonManager</name>
     <message>
         <location filename="../src/daemon-mgr.cpp" line="120"/>
-        <location filename="../src/daemon-mgr.cpp" line="249"/>
-        <location filename="../src/daemon-mgr.cpp" line="303"/>
+        <location filename="../src/daemon-mgr.cpp" line="253"/>
+        <location filename="../src/daemon-mgr.cpp" line="307"/>
         <source>%1 failed to initialize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/daemon-mgr.cpp" line="334"/>
+        <location filename="../src/daemon-mgr.cpp" line="338"/>
         <source>%1 exited unexpectedly</source>
         <translation type="unfinished"></translation>
     </message>
@@ -806,79 +806,79 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="345"/>
+        <location filename="../src/seadrive-gui.cpp" line="355"/>
         <source>failed to add default account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="457"/>
+        <location filename="../src/seadrive-gui.cpp" line="467"/>
         <source>Failed to initialize: failed to create seadrive folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="461"/>
+        <location filename="../src/seadrive-gui.cpp" line="471"/>
         <source>Failed to initialize: failed to create seadrive logs folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="465"/>
+        <location filename="../src/seadrive-gui.cpp" line="475"/>
         <source>Failed to initialize: failed to create seadrive data folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="480"/>
+        <location filename="../src/seadrive-gui.cpp" line="490"/>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="486"/>
+        <location filename="../src/seadrive-gui.cpp" line="496"/>
         <source>Failed to initialize log: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="542"/>
-        <location filename="../src/seadrive-gui.cpp" line="554"/>
+        <location filename="../src/seadrive-gui.cpp" line="552"/>
+        <location filename="../src/seadrive-gui.cpp" line="564"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="565"/>
-        <location filename="../src/seadrive-gui.cpp" line="579"/>
-        <location filename="../src/seadrive-gui.cpp" line="595"/>
-        <location filename="../src/seadrive-gui.cpp" line="619"/>
+        <location filename="../src/seadrive-gui.cpp" line="575"/>
+        <location filename="../src/seadrive-gui.cpp" line="589"/>
+        <location filename="../src/seadrive-gui.cpp" line="605"/>
+        <location filename="../src/seadrive-gui.cpp" line="629"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="566"/>
-        <location filename="../src/seadrive-gui.cpp" line="596"/>
-        <location filename="../src/seadrive-gui.cpp" line="620"/>
+        <location filename="../src/seadrive-gui.cpp" line="576"/>
+        <location filename="../src/seadrive-gui.cpp" line="606"/>
+        <location filename="../src/seadrive-gui.cpp" line="630"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="580"/>
-        <location filename="../src/seadrive-gui.cpp" line="597"/>
+        <location filename="../src/seadrive-gui.cpp" line="590"/>
+        <location filename="../src/seadrive-gui.cpp" line="607"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="694"/>
+        <location filename="../src/seadrive-gui.cpp" line="704"/>
         <source>failed to save client id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="703"/>
+        <location filename="../src/seadrive-gui.cpp" line="713"/>
         <source>failed to access %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="711"/>
+        <location filename="../src/seadrive-gui.cpp" line="721"/>
         <source>incorrect client id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="717"/>
+        <location filename="../src/seadrive-gui.cpp" line="727"/>
         <source>failed to read %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -886,27 +886,22 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SeafileLinkDialog</name>
     <message>
-        <location filename="../src/ui/seafilelink-dialog.cpp" line="22"/>
+        <location filename="../src/ui/seafilelink-dialog.cpp" line="20"/>
         <source>%1 Internal Link</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/seafilelink-dialog.cpp" line="56"/>
+        <location filename="../src/ui/seafilelink-dialog.cpp" line="54"/>
         <source>Copy to clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/seafilelink-dialog.cpp" line="62"/>
-        <source>%1 Web Link:</source>
+        <location filename="../src/ui/seafilelink-dialog.cpp" line="60"/>
+        <source>%1 Internal Link:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/seafilelink-dialog.cpp" line="85"/>
-        <source>%1 Protocol Link:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/seafilelink-dialog.cpp" line="119"/>
+        <location filename="../src/ui/seafilelink-dialog.cpp" line="117"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
@@ -977,67 +972,67 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="219"/>
+        <location filename="../src/ui/tray-icon.cpp" line="221"/>
         <source>not logged in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="232"/>
+        <location filename="../src/ui/tray-icon.cpp" line="234"/>
         <source>Choose</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="254"/>
+        <location filename="../src/ui/tray-icon.cpp" line="256"/>
         <source>Logout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="258"/>
+        <location filename="../src/ui/tray-icon.cpp" line="260"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="271"/>
+        <location filename="../src/ui/tray-icon.cpp" line="273"/>
         <source>Add an account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="284"/>
+        <location filename="../src/ui/tray-icon.cpp" line="286"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="510"/>
+        <location filename="../src/ui/tray-icon.cpp" line="512"/>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="724"/>
+        <location filename="../src/ui/tray-icon.cpp" line="726"/>
         <source>Do you want to remove the local cache?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="753"/>
+        <location filename="../src/ui/tray-icon.cpp" line="755"/>
         <source>Failed to remove local cache of account %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="767"/>
+        <location filename="../src/ui/tray-icon.cpp" line="769"/>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="774"/>
+        <location filename="../src/ui/tray-icon.cpp" line="776"/>
         <source>Failed to delete account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="786"/>
+        <location filename="../src/ui/tray-icon.cpp" line="788"/>
         <source>Up %1, Down %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="509"/>
+        <location filename="../src/ui/tray-icon.cpp" line="511"/>
         <source>About %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1142,228 +1137,249 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="59"/>
-        <location filename="../ui_settings-dialog.h" line="463"/>
+        <location filename="../ui_settings-dialog.h" line="469"/>
         <source>Auto start %1 after login</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="75"/>
-        <location filename="../ui_settings-dialog.h" line="475"/>
+        <location filename="../ui_settings-dialog.h" line="482"/>
         <source>Cache directory:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="79"/>
-        <source>None</source>
+        <location filename="../src/ui/settings-dialog.cpp" line="76"/>
+        <location filename="../ui_settings-dialog.h" line="473"/>
+        <source>Enable search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="80"/>
-        <source>HTTP Proxy</source>
+        <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="81"/>
-        <source>Socks5 Proxy</source>
+        <source>HTTP Proxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="82"/>
+        <source>Socks5 Proxy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settings-dialog.cpp" line="83"/>
         <source>System Proxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="147"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="148"/>
         <source>cache directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="151"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="152"/>
         <source>You have changed %1. Restart to apply it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="172"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="160"/>
+        <source>enabled search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settings-dialog.cpp" line="160"/>
+        <source>disabled search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settings-dialog.cpp" line="164"/>
+        <source>You have %1. Restart to apply it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/settings-dialog.cpp" line="185"/>
         <source>You have changed drive access option. Restart to apply it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="470"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="489"/>
         <source>Please choose the cache folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="165"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="178"/>
         <source>You have changed disk letter. Restart to apply it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="140"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="141"/>
         <source>language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="147"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="148"/>
         <source>language and cache directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="429"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="448"/>
         <source>The proxy host address can&apos;t be empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="436"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="455"/>
         <source>The proxy port is incorrect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="445"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="464"/>
         <source>Proxy username can&apos;t be empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="448"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="467"/>
         <source>Proxy password can&apos;t be empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="460"/>
+        <location filename="../ui_settings-dialog.h" line="466"/>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="461"/>
+        <location filename="../ui_settings-dialog.h" line="467"/>
         <source>Notify when libraries are synchronized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="462"/>
+        <location filename="../ui_settings-dialog.h" line="468"/>
         <source>Enable sync temporary files of MSOffice/Libreoffice</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="467"/>
+        <location filename="../ui_settings-dialog.h" line="474"/>
         <source>Download speed limit (KB/s):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="468"/>
+        <location filename="../ui_settings-dialog.h" line="475"/>
         <source>Upload speed limit (KB/s):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="470"/>
+        <location filename="../ui_settings-dialog.h" line="477"/>
         <source>Basic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="464"/>
+        <location filename="../ui_settings-dialog.h" line="470"/>
         <source>Enable FinderSync Extension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="465"/>
+        <location filename="../ui_settings-dialog.h" line="471"/>
         <source>Enable Explorer Extension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="466"/>
+        <location filename="../ui_settings-dialog.h" line="472"/>
         <source>Check for updates automatically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="469"/>
+        <location filename="../ui_settings-dialog.h" line="476"/>
         <source>Disk letter (need restart): </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="471"/>
+        <location filename="../ui_settings-dialog.h" line="478"/>
         <source>Do not verify server certificate in HTTPS syncing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="472"/>
+        <location filename="../ui_settings-dialog.h" line="479"/>
         <source>Only allow current user to access the drive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="473"/>
+        <location filename="../ui_settings-dialog.h" line="480"/>
         <source>Cache clean interval (in minutes):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="474"/>
+        <location filename="../ui_settings-dialog.h" line="481"/>
         <source>Cache size limit (in GB):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="477"/>
+        <location filename="../ui_settings-dialog.h" line="484"/>
         <source>select...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="478"/>
+        <location filename="../ui_settings-dialog.h" line="485"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="479"/>
+        <location filename="../ui_settings-dialog.h" line="486"/>
         <source>Language (need restart)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="480"/>
+        <location filename="../ui_settings-dialog.h" line="487"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="481"/>
+        <location filename="../ui_settings-dialog.h" line="488"/>
         <source>Proxy Type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="482"/>
+        <location filename="../ui_settings-dialog.h" line="489"/>
         <source>Host:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="483"/>
+        <location filename="../ui_settings-dialog.h" line="490"/>
         <source>Port:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="484"/>
+        <location filename="../ui_settings-dialog.h" line="491"/>
         <source>0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="485"/>
+        <location filename="../ui_settings-dialog.h" line="492"/>
         <source>Username:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="486"/>
+        <location filename="../ui_settings-dialog.h" line="493"/>
         <source>Password:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="487"/>
+        <location filename="../ui_settings-dialog.h" line="494"/>
         <source>Proxy server requires a password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="488"/>
+        <location filename="../ui_settings-dialog.h" line="495"/>
         <source>Network</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="489"/>
+        <location filename="../ui_settings-dialog.h" line="496"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="490"/>
+        <location filename="../ui_settings-dialog.h" line="497"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>

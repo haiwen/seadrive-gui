@@ -44,13 +44,13 @@
     <name>DaemonManager</name>
     <message>
         <location filename="../src/daemon-mgr.cpp" line="120"/>
-        <location filename="../src/daemon-mgr.cpp" line="249"/>
-        <location filename="../src/daemon-mgr.cpp" line="303"/>
+        <location filename="../src/daemon-mgr.cpp" line="253"/>
+        <location filename="../src/daemon-mgr.cpp" line="307"/>
         <source>%1 failed to initialize</source>
         <translation>%1 inicializálása sikertelen</translation>
     </message>
     <message>
-        <location filename="../src/daemon-mgr.cpp" line="334"/>
+        <location filename="../src/daemon-mgr.cpp" line="338"/>
         <source>%1 exited unexpectedly</source>
         <translation>%1 váratlanul megszakadt</translation>
     </message>
@@ -807,79 +807,79 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
         <translation>Meghajtó betűjel kiválasztási hiba</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="345"/>
+        <location filename="../src/seadrive-gui.cpp" line="355"/>
         <source>failed to add default account</source>
         <translation>nem sikerült hozzáadni az alapértelmezett fiókot </translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="457"/>
+        <location filename="../src/seadrive-gui.cpp" line="467"/>
         <source>Failed to initialize: failed to create seadrive folder</source>
         <translation>Inicializálás sikertelen: nem sikerült létrehozni a seadrive könyvtárat</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="461"/>
+        <location filename="../src/seadrive-gui.cpp" line="471"/>
         <source>Failed to initialize: failed to create seadrive logs folder</source>
         <translation>Inicializálás sikertelen: nem sikerült létrehozni a seadrive napló könyvtárat</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="465"/>
+        <location filename="../src/seadrive-gui.cpp" line="475"/>
         <source>Failed to initialize: failed to create seadrive data folder</source>
         <translation>Inicializálás sikertelen: nem sikerült létrehozni a seadrive adat könyvtárat</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="480"/>
+        <location filename="../src/seadrive-gui.cpp" line="490"/>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
         <translation>Inicializálás nem sikerült: nem sikerült létrehozni a seadrive csatolási könyvtárat</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="486"/>
+        <location filename="../src/seadrive-gui.cpp" line="496"/>
         <source>Failed to initialize log: %1</source>
         <translation>Napló inicializálása sikertelen: %1</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="542"/>
-        <location filename="../src/seadrive-gui.cpp" line="554"/>
+        <location filename="../src/seadrive-gui.cpp" line="552"/>
+        <location filename="../src/seadrive-gui.cpp" line="564"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="565"/>
-        <location filename="../src/seadrive-gui.cpp" line="579"/>
-        <location filename="../src/seadrive-gui.cpp" line="595"/>
-        <location filename="../src/seadrive-gui.cpp" line="619"/>
+        <location filename="../src/seadrive-gui.cpp" line="575"/>
+        <location filename="../src/seadrive-gui.cpp" line="589"/>
+        <location filename="../src/seadrive-gui.cpp" line="605"/>
+        <location filename="../src/seadrive-gui.cpp" line="629"/>
         <source>Yes</source>
         <translation>Igen</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="566"/>
-        <location filename="../src/seadrive-gui.cpp" line="596"/>
-        <location filename="../src/seadrive-gui.cpp" line="620"/>
+        <location filename="../src/seadrive-gui.cpp" line="576"/>
+        <location filename="../src/seadrive-gui.cpp" line="606"/>
+        <location filename="../src/seadrive-gui.cpp" line="630"/>
         <source>No</source>
         <translation>Nem</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="580"/>
-        <location filename="../src/seadrive-gui.cpp" line="597"/>
+        <location filename="../src/seadrive-gui.cpp" line="590"/>
+        <location filename="../src/seadrive-gui.cpp" line="607"/>
         <source>Cancel</source>
         <translation>Mégse</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="694"/>
+        <location filename="../src/seadrive-gui.cpp" line="704"/>
         <source>failed to save client id</source>
         <translation>Kliens ID mentése sikertelen</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="703"/>
+        <location filename="../src/seadrive-gui.cpp" line="713"/>
         <source>failed to access %1</source>
         <translation>%1 elérés hiba</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="711"/>
+        <location filename="../src/seadrive-gui.cpp" line="721"/>
         <source>incorrect client id</source>
         <translation>érvénytelen kliens ID</translation>
     </message>
     <message>
-        <location filename="../src/seadrive-gui.cpp" line="717"/>
+        <location filename="../src/seadrive-gui.cpp" line="727"/>
         <source>failed to read %1</source>
         <translation>%1 olvasás hiba</translation>
     </message>
@@ -887,27 +887,22 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
 <context>
     <name>SeafileLinkDialog</name>
     <message>
-        <location filename="../src/ui/seafilelink-dialog.cpp" line="22"/>
+        <location filename="../src/ui/seafilelink-dialog.cpp" line="20"/>
         <source>%1 Internal Link</source>
         <translation>%1 belső link</translation>
     </message>
     <message>
-        <location filename="../src/ui/seafilelink-dialog.cpp" line="56"/>
+        <location filename="../src/ui/seafilelink-dialog.cpp" line="54"/>
         <source>Copy to clipboard</source>
         <translation>Vágólapra másol</translation>
     </message>
     <message>
-        <location filename="../src/ui/seafilelink-dialog.cpp" line="62"/>
-        <source>%1 Web Link:</source>
-        <translation>%1 Web link:</translation>
+        <location filename="../src/ui/seafilelink-dialog.cpp" line="60"/>
+        <source>%1 Internal Link:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/ui/seafilelink-dialog.cpp" line="85"/>
-        <source>%1 Protocol Link:</source>
-        <translation>%1 protokoll link:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/seafilelink-dialog.cpp" line="119"/>
+        <location filename="../src/ui/seafilelink-dialog.cpp" line="117"/>
         <source>OK</source>
         <translation>Rendben</translation>
     </message>
@@ -923,152 +918,137 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
 <context>
     <name>SeafileTrayIcon</name>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="130"/>
+        <location filename="../src/ui/tray-icon.cpp" line="129"/>
         <source>&amp;Quit</source>
         <translation>&amp;Kilépés</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="133"/>
+        <location filename="../src/ui/tray-icon.cpp" line="132"/>
         <source>Search files</source>
         <translation>Fájlok keresése</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="136"/>
-        <source>Pause sync</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../src/ui/tray-icon.cpp" line="139"/>
-        <source>Start sync</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../src/ui/tray-icon.cpp" line="142"/>
+        <location filename="../src/ui/tray-icon.cpp" line="135"/>
         <source>Settings</source>
         <translation>Beállítások</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="145"/>
+        <location filename="../src/ui/tray-icon.cpp" line="138"/>
         <source>Show file sync errors</source>
         <translation>Fájl szinkronizációs hibák megmutatása</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="150"/>
+        <location filename="../src/ui/tray-icon.cpp" line="143"/>
         <source>Open %1 &amp;folder</source>
         <translation>%1 könyvtár &amp;megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="151"/>
+        <location filename="../src/ui/tray-icon.cpp" line="144"/>
         <source>open %1 folder</source>
         <translation>%1 mappa megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="154"/>
+        <location filename="../src/ui/tray-icon.cpp" line="147"/>
         <source>Open &amp;logs folder</source>
         <translation>Nap&amp;lózási mappa megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="158"/>
+        <location filename="../src/ui/tray-icon.cpp" line="151"/>
         <source>&amp;About</source>
         <translation>&amp;Névjegy</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="159"/>
+        <location filename="../src/ui/tray-icon.cpp" line="152"/>
         <source>Show the application&apos;s About box</source>
         <translation>Megjeleníti az alkalmazás névjegyét</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="163"/>
+        <location filename="../src/ui/tray-icon.cpp" line="156"/>
         <source>&amp;Online help</source>
         <translation>&amp;Online segítség</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="191"/>
+        <location filename="../src/ui/tray-icon.cpp" line="182"/>
         <source>Accounts</source>
         <translation>Fiókok</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="236"/>
+        <location filename="../src/ui/tray-icon.cpp" line="221"/>
         <source>not logged in</source>
         <translation>nincs bejelentkezve</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="249"/>
+        <location filename="../src/ui/tray-icon.cpp" line="234"/>
         <source>Choose</source>
         <translation>Válasszon</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="271"/>
+        <location filename="../src/ui/tray-icon.cpp" line="256"/>
         <source>Logout</source>
         <translation>Kijelentkezés</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="275"/>
+        <location filename="../src/ui/tray-icon.cpp" line="260"/>
         <source>Delete</source>
         <translation>Töröl</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="288"/>
+        <location filename="../src/ui/tray-icon.cpp" line="273"/>
         <source>Add an account</source>
         <translation>Fiók hozzáadása</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="301"/>
+        <location filename="../src/ui/tray-icon.cpp" line="286"/>
         <source>File</source>
         <translation>Fájl</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="527"/>
+        <location filename="../src/ui/tray-icon.cpp" line="512"/>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
         <translation>&lt;h2&gt;Seafile Meghajtó Kliens %2&lt;/h2&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="668"/>
-        <source>auto sync is disabled</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../src/ui/tray-icon.cpp" line="767"/>
+        <location filename="../src/ui/tray-icon.cpp" line="726"/>
         <source>Do you want to remove the local cache?</source>
         <translation>Törli a helyi gyorsítótárat?</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="796"/>
+        <location filename="../src/ui/tray-icon.cpp" line="755"/>
         <source>Failed to remove local cache of account %1</source>
         <translation>Hiba a(z) %1 fiók gyorsítótár törlésénél</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="810"/>
+        <location filename="../src/ui/tray-icon.cpp" line="769"/>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
         <translation>Biztos törli a fiókot innen: &quot;%1&quot;?</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="817"/>
+        <location filename="../src/ui/tray-icon.cpp" line="776"/>
         <source>Failed to delete account</source>
         <translation>Hiba a fiók törlésénél</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="829"/>
+        <location filename="../src/ui/tray-icon.cpp" line="788"/>
         <source>Up %1, Down %2</source>
         <translation>Le: %1, fel: %2</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="526"/>
+        <location filename="../src/ui/tray-icon.cpp" line="511"/>
         <source>About %1</source>
         <translation>Információk a %1-ról</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="127"/>
+        <location filename="../src/ui/tray-icon.cpp" line="126"/>
         <source>Transfer progress</source>
         <translation>Adatátvitel folyamatban</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="155"/>
+        <location filename="../src/ui/tray-icon.cpp" line="148"/>
         <source>open %1 log folder</source>
         <translation>%1 naplóállományok könyvtárának megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="164"/>
+        <location filename="../src/ui/tray-icon.cpp" line="157"/>
         <source>open %1 online help</source>
         <translation>%1 online súgó megnyitása</translation>
     </message>
@@ -1152,224 +1132,255 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
 <context>
     <name>SettingsDialog</name>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="51"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="52"/>
         <source>Settings</source>
         <translation>Beállítások</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="58"/>
-        <location filename="../ui_settings-dialog.h" line="457"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="59"/>
+        <location filename="../ui_settings-dialog.h" line="469"/>
         <source>Auto start %1 after login</source>
         <translation>%1 automatikus elindítása bejelentkezéskor</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="74"/>
-        <location filename="../ui_settings-dialog.h" line="468"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="75"/>
+        <location filename="../ui_settings-dialog.h" line="482"/>
         <source>Cache directory:</source>
         <translation>Gyorsítótár könyvtára:</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="78"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="76"/>
+        <location filename="../ui_settings-dialog.h" line="473"/>
+        <source>Enable search</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/settings-dialog.cpp" line="80"/>
         <source>None</source>
         <translation>Nincs</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="79"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="81"/>
         <source>HTTP Proxy</source>
         <translation>HTTP proxy</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="80"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="82"/>
         <source>Socks5 Proxy</source>
         <translation>Socks5 proxy</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="81"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="83"/>
         <source>System Proxy</source>
         <translation>Rendszer Proxy</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="146"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="148"/>
         <source>cache directory</source>
         <translation>gyorsítótár könyvtárát</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="150"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="152"/>
         <source>You have changed %1. Restart to apply it?</source>
         <translation>Megváltoztatta a %1. Újraindítja most az alkalmazást a változások érvényesítéséhez?</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="455"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="160"/>
+        <source>enabled search</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/settings-dialog.cpp" line="160"/>
+        <source>disabled search</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/settings-dialog.cpp" line="164"/>
+        <source>You have %1. Restart to apply it?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/settings-dialog.cpp" line="185"/>
+        <source>You have changed drive access option. Restart to apply it?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/ui/settings-dialog.cpp" line="489"/>
         <source>Please choose the cache folder</source>
         <translation>Kérem, adja meg a gyorsítótár könyvtárát!</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="164"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="178"/>
         <source>You have changed disk letter. Restart to apply it?</source>
         <translation>Megváltoztatta a meghajtó betűjelét. Újraindítja az alkalmazást a beállítás érvényesítéséhez?</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="139"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="141"/>
         <source>language</source>
         <translation>nyelvet</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="146"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="148"/>
         <source>language and cache directory</source>
         <translation>nyelvet és a gyorsítótár könyvtárát</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="414"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="448"/>
         <source>The proxy host address can&apos;t be empty</source>
         <translation>A proxy kiszolgáló címe nem lehet üres</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="421"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="455"/>
         <source>The proxy port is incorrect</source>
         <translation>Érvénytelen proxy portszám</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="430"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="464"/>
         <source>Proxy username can&apos;t be empty</source>
         <translation>Proxy felhasználónév nem lehet üres</translation>
     </message>
     <message>
-        <location filename="../src/ui/settings-dialog.cpp" line="433"/>
+        <location filename="../src/ui/settings-dialog.cpp" line="467"/>
         <source>Proxy password can&apos;t be empty</source>
         <translation>Proxy jelszó nem lehet üres</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="454"/>
+        <location filename="../ui_settings-dialog.h" line="466"/>
         <source>Dialog</source>
         <translation>Párbeszédablak</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="455"/>
+        <location filename="../ui_settings-dialog.h" line="467"/>
         <source>Notify when libraries are synchronized</source>
         <translation>Értesítést kérek, ha a kötetek szinkronizálva vannak</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="456"/>
+        <location filename="../ui_settings-dialog.h" line="468"/>
         <source>Enable sync temporary files of MSOffice/Libreoffice</source>
         <translation>MS Office/Libreoffice ideiglenes fájlok szinkronizálása</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="461"/>
+        <location filename="../ui_settings-dialog.h" line="474"/>
         <source>Download speed limit (KB/s):</source>
         <translation>Letöltési sebesség korlátozása (KB/s):</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="462"/>
+        <location filename="../ui_settings-dialog.h" line="475"/>
         <source>Upload speed limit (KB/s):</source>
         <translation>Feltöltési sebesség korlátozása (KB/s):</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="464"/>
+        <location filename="../ui_settings-dialog.h" line="477"/>
         <source>Basic</source>
         <translation>Alap</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="458"/>
+        <location filename="../ui_settings-dialog.h" line="470"/>
         <source>Enable FinderSync Extension</source>
         <translation>„FinderSync” kiterjesztés engedélyezése</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="459"/>
+        <location filename="../ui_settings-dialog.h" line="471"/>
         <source>Enable Explorer Extension</source>
         <translation>„Explorer” kiterjesztés engedélyezése</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="460"/>
+        <location filename="../ui_settings-dialog.h" line="472"/>
         <source>Check for updates automatically</source>
         <translation>Frissítések automatikus keresése</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="463"/>
+        <location filename="../ui_settings-dialog.h" line="476"/>
         <source>Disk letter (need restart): </source>
         <translation>Meghajtó betűjele (újraindítást igényel):</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="465"/>
+        <location filename="../ui_settings-dialog.h" line="478"/>
         <source>Do not verify server certificate in HTTPS syncing</source>
         <translation>Tanúsítványellenőrzés kikapcsolása HTTPS-alapú szinkronizálásnál</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="466"/>
+        <location filename="../ui_settings-dialog.h" line="479"/>
+        <source>Only allow current user to access the drive</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../ui_settings-dialog.h" line="480"/>
         <source>Cache clean interval (in minutes):</source>
         <translation>Gyorsítótár törlési időköz (perc):</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="467"/>
+        <location filename="../ui_settings-dialog.h" line="481"/>
         <source>Cache size limit (in GB):</source>
         <translation>Gyorsítótár méret (GB):</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="470"/>
+        <location filename="../ui_settings-dialog.h" line="484"/>
         <source>select...</source>
         <translation>kiválasztás...</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="471"/>
+        <location filename="../ui_settings-dialog.h" line="485"/>
         <source>Advanced</source>
         <translation>Haladó</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="472"/>
+        <location filename="../ui_settings-dialog.h" line="486"/>
         <source>Language (need restart)</source>
         <translation>Nyelv (újraindítást igényel)</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="473"/>
+        <location filename="../ui_settings-dialog.h" line="487"/>
         <source>Language</source>
         <translation>Nyelv</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="474"/>
+        <location filename="../ui_settings-dialog.h" line="488"/>
         <source>Proxy Type:</source>
         <translation>Proxy típusa:</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="475"/>
+        <location filename="../ui_settings-dialog.h" line="489"/>
         <source>Host:</source>
         <translation>Szerver:</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="476"/>
+        <location filename="../ui_settings-dialog.h" line="490"/>
         <source>Port:</source>
         <translation>Port:</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="477"/>
+        <location filename="../ui_settings-dialog.h" line="491"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="478"/>
+        <location filename="../ui_settings-dialog.h" line="492"/>
         <source>Username:</source>
         <translation>Felhasználónév:</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="479"/>
+        <location filename="../ui_settings-dialog.h" line="493"/>
         <source>Password:</source>
         <translation>Jelszó:</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="480"/>
+        <location filename="../ui_settings-dialog.h" line="494"/>
         <source>Proxy server requires a password</source>
         <translation>A proxy szerver jelszót igényel</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="481"/>
+        <location filename="../ui_settings-dialog.h" line="495"/>
         <source>Network</source>
         <translation>Hálózat</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="482"/>
+        <location filename="../ui_settings-dialog.h" line="496"/>
         <source>OK</source>
         <translation>Rendben</translation>
     </message>
     <message>
-        <location filename="../ui_settings-dialog.h" line="483"/>
+        <location filename="../ui_settings-dialog.h" line="497"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
