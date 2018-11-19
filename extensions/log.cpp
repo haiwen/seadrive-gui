@@ -15,7 +15,7 @@ std::string getLogPath()
     if (home.empty())
         return "";
 
-    return home + "/seadrive_ext.log";
+    return home + "/seadrive/logs/seadrive_ext.log";
 }
 
 
