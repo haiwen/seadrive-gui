@@ -1150,8 +1150,8 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="76"/>
         <location filename="../ui_settings-dialog.h" line="473"/>
-        <source>Enable search</source>
-        <translation>启用搜索</translation>
+        <source>Enable search in finder</source>
+        <translation>Finder中启用搜索</translation>
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="80"/>

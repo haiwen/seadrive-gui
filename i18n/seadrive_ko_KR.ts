@@ -1150,7 +1150,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="76"/>
         <location filename="../ui_settings-dialog.h" line="473"/>
-        <source>Enable search</source>
+        <source>Enable search in finder</source>
         <translation type="unfinished"/>
     </message>
     <message>

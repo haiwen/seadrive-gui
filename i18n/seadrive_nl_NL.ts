@@ -1150,7 +1150,7 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="76"/>
         <location filename="../ui_settings-dialog.h" line="473"/>
-        <source>Enable search</source>
+        <source>Enable search in finder</source>
         <translation type="unfinished"/>
     </message>
     <message>

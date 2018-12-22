@@ -1150,7 +1150,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="76"/>
         <location filename="../ui_settings-dialog.h" line="473"/>
-        <source>Enable search</source>
+        <source>Enable search in finder</source>
         <translation type="unfinished"/>
     </message>
     <message>

@@ -69,7 +69,7 @@
        <item>
         <widget class="QCheckBox" name="mSpotlightCheckBox">
          <property name="text">
-          <string>Enable search</string>
+          <string>Enable search in finder</string>
          </property>
         </widget>
        </item>
