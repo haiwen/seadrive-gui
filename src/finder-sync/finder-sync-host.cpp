@@ -53,10 +53,6 @@ bool parseFilePath(const QString &path,
         return false;
     }
 
-    if (relative_path.endsWith("/")) {
-        relative_path = relative_path.left(relative_path.length() - 1);
-    }
-
     // printf("relative_path is %s\n", toCStr(relative_path));
 
     if (!category_out && !relative_path.contains('/')) {
