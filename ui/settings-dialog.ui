@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="mTabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="mBasicTab">
       <attribute name="title">
@@ -226,6 +226,9 @@
              <width>100</width>
              <height>16777215</height>
             </size>
+           </property>
+           <property name="minimum">
+            <number>1</number>
            </property>
            <property name="maximum">
             <number>10000</number>
@@ -471,7 +474,7 @@
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
             <property name="text" stdset="0">
-             <string>0</string>
+             <string/>
             </property>
             <property name="maximum">
              <number>65535</number>
