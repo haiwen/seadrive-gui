@@ -166,9 +166,10 @@ void writeCABundleForCurl()
     QString current_cache_dir;
     if (!gui->settingsManager()->getCacheDir(&current_cache_dir)){
         current_cache_dir = QDir(gui->seadriveDataDir()).absolutePath();
+
     }
     
-    QString ca_bundle_path = QString("%1%2%3").arg(current_cache_dir).arg(QDir::separator()).arg("ca-bundle.pem");
+    QString ca_bundle_path = pathJoin(current_cache_dir, "ca-bundle.pem");
     QFile bundle(ca_bundle_path);
     if (bundle.exists()) {
         bundle.remove();
