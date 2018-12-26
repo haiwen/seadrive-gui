@@ -263,7 +263,7 @@ void SeafileExtensionHandler::generateShareLink(const QString& repo_id,
         if (!is_file && !path.endsWith("/")) {
             path += "/";
         }
-        GetSmartLinkRequest *req = new GetSmartLinkRequest(account, repo_id, path, is_file);
+        GetSmartLinkRequest *req = new GetSmartLinkRequest(account, repo_id, path, !is_file);
         connect(req, SIGNAL(success(const QString&)),
                 this, SLOT(onGetSmartLinkSuccess(const QString&)));
         connect(req, SIGNAL(failed(const ApiError&)),
@@ -539,7 +539,7 @@ void ExtCommandsHandler::handleGenShareLink(const QStringList& args, bool intern
     if (!parseRepoFileInfo(path, &repo_id, &path_in_repo)) {
         return;
     }
-    bool is_file = QFileInfo(path).isDir();
+    bool is_file = QFileInfo(path).isFile();
     emit generateShareLink(repo_id, path_in_repo, is_file, internal);
 
     return;
