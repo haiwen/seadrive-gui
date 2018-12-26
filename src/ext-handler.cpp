@@ -539,7 +539,7 @@ void ExtCommandsHandler::handleGenShareLink(const QStringList& args, bool intern
     if (!parseRepoFileInfo(path, &repo_id, &path_in_repo)) {
         return;
     }
-    bool is_file = QFileInfo(path).isDir();
+    bool is_file = QFileInfo(path).isFile();
     emit generateShareLink(repo_id, path_in_repo, is_file, internal);
 
     return;

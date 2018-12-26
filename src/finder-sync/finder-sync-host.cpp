@@ -252,7 +252,7 @@ void FinderSyncHost::doInternalLink(const QString &path)
         qWarning("[FinderSync] invalid path %s", path.toUtf8().data());
         return;
     }
-    GetSmartLinkRequest *req = new GetSmartLinkRequest(account, repo_id, path_in_repo, path_in_repo.endsWith('/'));
+    GetSmartLinkRequest *req = new GetSmartLinkRequest(account, repo_id, path_in_repo, QFileInfo(path).isDir());
     connect(req, SIGNAL(success(const QString&)),
             this, SLOT(onGetSmartLinkSuccess(const QString&)));
     connect(req, SIGNAL(failed(const ApiError&)),
