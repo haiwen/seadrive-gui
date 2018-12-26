@@ -163,7 +163,12 @@ void myLogHandler(QtMsgType type, const QMessageLogContext &context, const QStri
 #ifdef Q_OS_MAC
 void writeCABundleForCurl()
 {
-    QString ca_bundle_path = QDir(gui->seadriveDataDir()).filePath("ca-bundle.pem");
+    QString current_cache_dir;
+    if (!gui->settingsManager()->getCacheDir(&current_cache_dir)){
+        current_cache_dir = QDir(gui->seadriveDataDir()).absolutePath();
+
+    }
+    QString ca_bundle_path = pathJoin(current_cache_dir, "ca-bundle.pem");
     QFile bundle(ca_bundle_path);
     if (bundle.exists()) {
         bundle.remove();
