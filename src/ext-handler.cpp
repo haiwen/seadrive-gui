@@ -378,12 +378,14 @@ void SeafileExtensionHandler::onLockFileFailed(const ApiError& error)
 
 void ExtConnectionListenerThread::run()
 {
+    std::string local_pipe_name = utils::win::getLocalPipeName(kSeafExtPipeName);
+    qWarning("[ext listener] listening on %s", local_pipe_name.c_str());
     while (1) {
         HANDLE pipe = INVALID_HANDLE_VALUE;
         bool connected = false;
 
         pipe = CreateNamedPipe(
-            utils::win::getLocalPipeName(kSeafExtPipeName).c_str(), // pipe name
+            local_pipe_name.c_str(),  // pipe name
             PIPE_ACCESS_DUPLEX,       // read/write access
             PIPE_TYPE_MESSAGE |       // message type pipe
             PIPE_READMODE_MESSAGE |   // message-read mode
