@@ -3,10 +3,10 @@
 <plist version="1.0">
   <dict>
 	<key>Label</key>
-	<string>com.seafile.seadrive.helper</string>
+	<string>com.alphabox.alphadrive.helper</string>
     <key>MachServices</key>
     <dict>
-      <key>com.seafile.seadrive.helper</key>
+      <key>com.alphabox.alphadrive.helper</key>
       <true/>
     </dict>
   </dict>

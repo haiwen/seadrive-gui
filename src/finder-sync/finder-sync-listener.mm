@@ -65,7 +65,7 @@ public:
 };
 } // anonymous namespace
 
-static NSString *const kFinderSyncMachPort = @"com.seafile.seadrive.findersync.machport";
+static NSString *const kFinderSyncMachPort = @"com.alphabox.alphadrive.findersync.machport";
 // listener related
 static NSThread *finder_sync_listener_thread_ = nil;
 // atomic value

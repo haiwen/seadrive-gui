@@ -10,12 +10,7 @@
     </message>
     <message>
         <location filename="../src/ui/about-dialog.cpp" line="25"/>
-        <source>&lt;h4&gt;Seafile Drive Client %2&lt;/h4&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/about-dialog.cpp" line="28"/>
-        <source>&lt;h5&gt; REV %1 &lt;/h5&gt;</source>
+        <source>&lt;h4&gt;AlphaDrive %2&lt;/h4&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -110,6 +105,24 @@
     <message>
         <location filename="../ui_filter-menu.h" line="116"/>
         <source>Markdown</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FinderSyncHost</name>
+    <message>
+        <location filename="../src/finder-sync/finder-sync-host.cpp" line="248"/>
+        <source>The current database does not support generating Shared links</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/finder-sync/finder-sync-host.cpp" line="272"/>
+        <source>Get repo fail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/finder-sync/finder-sync-host.cpp" line="308"/>
+        <source>share fail</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -932,37 +945,42 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="138"/>
+        <location filename="../src/ui/tray-icon.cpp" line="142"/>
+        <source>Login</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/tray-icon.cpp" line="149"/>
         <source>Show file sync errors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="143"/>
+        <location filename="../src/ui/tray-icon.cpp" line="154"/>
         <source>Open %1 &amp;folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="144"/>
+        <location filename="../src/ui/tray-icon.cpp" line="155"/>
         <source>open %1 folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="147"/>
+        <location filename="../src/ui/tray-icon.cpp" line="158"/>
         <source>Open &amp;logs folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="151"/>
+        <location filename="../src/ui/tray-icon.cpp" line="162"/>
         <source>&amp;About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="152"/>
+        <location filename="../src/ui/tray-icon.cpp" line="163"/>
         <source>Show the application&apos;s About box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="156"/>
+        <location filename="../src/ui/tray-icon.cpp" line="167"/>
         <source>&amp;Online help</source>
         <translation type="unfinished"></translation>
     </message>
@@ -982,7 +1000,12 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="256"/>
+        <location filename="../src/ui/tray-icon.cpp" line="474"/>
+        <source>&lt;h2&gt;AlphaDrive %2&lt;/h2&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/tray-icon.cpp" line="146"/>
         <source>Logout</source>
         <translation type="unfinished"></translation>
     </message>
@@ -999,11 +1022,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="286"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/tray-icon.cpp" line="512"/>
-        <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1042,12 +1060,12 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="148"/>
+        <location filename="../src/ui/tray-icon.cpp" line="159"/>
         <source>open %1 log folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="157"/>
+        <location filename="../src/ui/tray-icon.cpp" line="168"/>
         <source>open %1 online help</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1387,40 +1405,118 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SharedLinkDialog</name>
     <message>
-        <location filename="../src/ui/sharedlink-dialog.cpp" line="10"/>
-        <source>Share Link</source>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="19"/>
+        <source>Upload link</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/sharedlink-dialog.cpp" line="16"/>
-        <source>Share link:</source>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="21"/>
+        <source>DownLoad link</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/sharedlink-dialog.cpp" line="29"/>
-        <source>Direct Download</source>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="31"/>
+        <source>Upload link:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/sharedlink-dialog.cpp" line="42"/>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="33"/>
+        <source>DownLoad link:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="44"/>
+        <source>Link validity:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="51"/>
+        <source>1day validity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="52"/>
+        <source>7day validity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="53"/>
+        <source>14day validity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="54"/>
+        <source>permanent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="65"/>
+        <source>Tip: changing your password or expiration date will result in a new link and the old link will fail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="75"/>
+        <source>Set the password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="104"/>
         <source>Copy to clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/sharedlink-dialog.cpp" line="46"/>
-        <source>OK</source>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="106"/>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="266"/>
+        <source>Copy link password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="108"/>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="271"/>
+        <source>Copy link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="113"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="147"/>
+        <source>Link valid until:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="170"/>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="172"/>
+        <source>links:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="170"/>
+        <source>password:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="180"/>
+        <source>copy link success</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="297"/>
+        <source>Share failed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ShibLoginDialog</name>
     <message>
-        <location filename="../src/shib/shib-login-dialog.cpp" line="40"/>
-        <source>Login with Shibboleth</source>
+        <location filename="../src/shib/shib-login-dialog.cpp" line="53"/>
+        <source>Login with WeChat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/shib/shib-login-dialog.cpp" line="112"/>
+        <location filename="../src/shib/shib-login-dialog.cpp" line="149"/>
         <source>Failed to save current account</source>
         <translation type="unfinished"></translation>
     </message>

@@ -10,10 +10,12 @@
 
 #include "utils/singleton.h"
 #include "account.h"
+#include "api/server-repo.h"
 
 class SeafileRpcClient;
 class ExtConnectionListenerThread;
 class ApiError;
+struct ShareLinkInfo;
 
 /**
  * Handles commands from seafile shell extension
@@ -28,6 +30,8 @@ public:
 
 private slots:
     void onDaemonRestarted();
+    void shareFileDirentSuccess(const ShareLinkInfo& link, const QString& repo_id);
+    void shareFileLinkDirentFailed(const ApiError& error);
     void onShareLinkGenerated(const QString& link);
     void onLockFileSuccess();
     void onLockFileFailed(const ApiError& error);
@@ -44,11 +48,16 @@ private slots:
     void openUrlWithAutoLogin(const QUrl& url);
     void onGetSmartLinkSuccess(const QString& smart_link);
     void onGetSmartLinkFailed(const ApiError& error);
-
+    void onGetRepoSuccess(const ServerRepo& repo);
+    void onGetRepoFailed(const ApiError& error);
 private:
     ExtConnectionListenerThread *listener_thread_;
 
     bool started_;
+    QString repo_id_;
+    QString path_in_repo_;
+    bool is_file_;
+    bool internal_;
 };
 
 /**

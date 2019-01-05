@@ -13,20 +13,21 @@ namespace {
 
 bool shouldIgnorePath(const std::string& path)
 {
-    /* Show no menu for drive root, such as C: D: */
-    if (path.size() <= 3) {
-        return TRUE;
-    }
-
-    // XX: This block is copied from seafile-client, but seadrive itself is not
-    // mounted as a fixed volume, so we need to comment it out.
-    //
-    // /* Ignore flash disk, network mounted drive, etc. */
-    // if (GetDriveType(path.substr(0, 3).c_str()) != DRIVE_FIXED) {
+    return TRUE;
+    // /* Show no menu for drive root, such as C: D: */
+    // if (path.size() <= 3) {
     //     return TRUE;
     // }
 
-    return FALSE;
+    // // XX: This block is copied from seafile-client, but seadrive itself is not
+    // // mounted as a fixed volume, so we need to comment it out.
+    // //
+    // // /* Ignore flash disk, network mounted drive, etc. */
+    // // if (GetDriveType(path.substr(0, 3).c_str()) != DRIVE_FIXED) {
+    // //     return TRUE;
+    // // }
+
+    // return FALSE;
 }
 
 const char *kMainMenuName = "Seafile";
@@ -341,8 +342,8 @@ void ShellExt::buildSubMenu(const seafile::RepoInfo& repo,
                             const std::string& path_in_repo)
 {
     insertSubMenuItem(SEAFILE_TR("download"), Download);
-    insertSubMenuItem(SEAFILE_TR("get seafile download link"), GetShareLink);
-    //insertSubMenuItem(SEAFILE_TR("get seafile internal link"), GetInternalLink);
+    insertSubMenuItem(SEAFILE_TR("get alphabox download link"), GetShareLink);
+    insertSubMenuItem(SEAFILE_TR("get alphabox internal link"), GetInternalLink);
 
     std::unique_ptr<wchar_t[]> path_w(utils::utf8ToWString(path_));
     bool is_dir = GetFileAttributesW(path_w.get()) & FILE_ATTRIBUTE_DIRECTORY;

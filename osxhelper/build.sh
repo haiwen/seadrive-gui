@@ -13,5 +13,5 @@ if [[ $# -gt 0 ]]; then
     appdir=$1
     servicedir=${appdir}/Contents/Library/LaunchServices
     mkdir -p $servicedir
-    cp -v com.seafile.seadrive.helper $servicedir
+    cp -v com.alphabox.alphadrive.helper $servicedir
 fi

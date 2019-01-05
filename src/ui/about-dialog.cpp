@@ -22,13 +22,9 @@ AboutDialog::AboutDialog(QWidget *parent)
     setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
                    Qt::WindowStaysOnTopHint);
 
-    version_text_ = tr("<h4>Seafile Drive Client %2</h4>")
-	               .arg(STRINGIZE(SEADRIVE_GUI_VERSION))
-#ifdef SEAFILE_CLIENT_REVISION
-                       .append(tr("<h5> REV %1 </h5>"))
-                       .arg(STRINGIZE(SEAFILE_CLIENT_REVISION))
-#endif
-		       ;
+    version_text_ = tr("<h4>AlphaDrive %2</h4>")
+	               .arg(STRINGIZE(SEADRIVE_GUI_VERSION));
+
     mVersionText->setText(version_text_);
 
     connect(mOKBtn, SIGNAL(clicked()), this, SLOT(close()));

@@ -40,7 +40,7 @@ static constexpr double kGetFileStatusInterval = 2.0; // seconds
 @end
 
 static const char *const kClientCommandQueueName =
-    "com.seafile.seadrive.findersync.ClientCommandQueue";
+    "com.alphabox.alphadrive.findersync.ClientCommandQueue";
 static const NSArray *const kBadgetIdentifiers = @[
     // According to the document
     // https://developer.apple.com/library/mac/documentation/FinderSync/Reference/FIFinderSyncController_Class/#//apple_ref/occ/instm/FIFinderSyncController/setBadgeIdentifier:forURL:
@@ -380,8 +380,8 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
     // Produce a menu for the extension.
     NSMenu *menu = [[NSMenu alloc] initWithTitle:@""];
     NSMenuItem *shareLinkItem =
-        [menu addItemWithTitle:NSLocalizedString(@"Get Seafile Share Link",
-                                                 @"Get Seafile Share Link")
+        [menu addItemWithTitle:NSLocalizedString(@"Get Alpha Download Link",
+                                                 @"Get Alpha Download Link")
                         action:@selector(shareLinkAction:)
                  keyEquivalent:@""];
     NSImage *seafileImage = [NSImage imageNamed:@"seadrive.icns"];
@@ -398,12 +398,12 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
     if (internal_link_supported &&
         findRepoContainPath(watched_repos_, file_path) !=
             watched_repos_.end()) {
-        NSMenuItem *internalLinkItem = [menu
-            addItemWithTitle:NSLocalizedString(@"Get Seafile Internal Link",
-                                               @"Get Seafile Internal Link")
-                      action:@selector(internalLinkAction:)
-               keyEquivalent:@""];
-        [internalLinkItem setImage:seafileImage];
+        // NSMenuItem *internalLinkItem = [menu
+        //     addItemWithTitle:NSLocalizedString(@"Get Seafile Internal Link",
+        //                                        @"Get Seafile Internal Link")
+        //               action:@selector(internalLinkAction:)
+        //        keyEquivalent:@""];
+        // [internalLinkItem setImage:seafileImage];
     }
 
     NSMenuItem *downloadFileItem =
@@ -426,8 +426,14 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
 
     // we don't have a lock-file menuitem for folders
     // early return
-    if (is_dir)
-        return menu;
+    if (is_dir) {
+      NSMenuItem *internalLinkItem =
+        [menu addItemWithTitle:NSLocalizedString(@"Get Alpha Upload Link",
+                                                 @"Get Alpha Upload Link")
+                        action:@selector(internalLinkAction:)
+                 keyEquivalent:@""];
+        [internalLinkItem setImage:seafileImage];
+    }
 
     // find where we have it
     auto file = file_status_.find(is_dir ? file_path + "/" : file_path);
@@ -454,12 +460,13 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
             [lockFileItem setEnabled:FALSE];
     }
 
-    NSMenuItem *showHistoryItem =
-        [menu addItemWithTitle:NSLocalizedString(@"View File History",
-                                                 @"View File History")
-                        action:@selector(showHistoryAction:)
-                 keyEquivalent:@""];
-    [showHistoryItem setImage:seafileImage];
+    // NSString *showHistoryTitle;
+    // NSMenuItem *showHistoryItem =
+    //     [menu addItemWithTitle:NSLocalizedString(@"View File History",
+    //                                              @"View File History")
+    //                     action:@selector(showHistoryAction:)
+    //              keyEquivalent:@""];
+    // [showHistoryItem setImage:seafileImage];
 
     return menu;
 }
@@ -569,21 +576,21 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
     });
 }
 
-- (IBAction)showHistoryAction:(id)sender {
-    NSArray *items =
-        [[FIFinderSyncController defaultController] selectedItemURLs];
-    if (![items count])
-        return;
-    NSURL *item = items.firstObject;
-
-    // do it in another thread
-    std::string path =
-        item.path.precomposedStringWithCanonicalMapping.UTF8String;
-    dispatch_async(self.client_command_queue_, ^{
-      client_->doSendCommandWithPath(FinderSyncClient::DoShowFileHistory,
-                                     path.c_str());
-    });
-}
+// - (IBAction)showHistoryAction:(id)sender {
+//     NSArray *items =
+//         [[FIFinderSyncController defaultController] selectedItemURLs];
+//     if (![items count])
+//         return;
+//     NSURL *item = items.firstObject;
+//
+//     // do it in another thread
+//     std::string path =
+//         item.path.precomposedStringWithCanonicalMapping.UTF8String;
+//     dispatch_async(self.client_command_queue_, ^{
+//       client_->doSendCommandWithPath(FinderSyncClient::DoShowFileHistory,
+//                                      path.c_str());
+//     });
+// }
 
 
 - (void)requestUpdateWatchSet {

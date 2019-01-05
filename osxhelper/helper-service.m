@@ -12,10 +12,10 @@
     NSString *version =
         NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"];
 
-    HelperLog(@"Starting seadrive helper: %@", version);
+    HelperLog(@"Starting alphadrive helper: %@", version);
 
     xpc_connection_t service = xpc_connection_create_mach_service(
-        "com.seafile.seadrive.helper",
+        "com.alphabox.alphadrive.helper",
         dispatch_get_main_queue(),
         XPC_CONNECTION_MACH_SERVICE_LISTENER);
     if (!service) {

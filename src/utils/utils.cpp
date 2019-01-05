@@ -42,7 +42,7 @@
 
 namespace {
 
-const char *kSeafileClientBrand = "SeaDrive";
+const char *kSeafileClientBrand = "AlphaDrive";
 #if defined(Q_OS_WIN32)
 const char *kCcnetConfDir = "ccnet";
 #else

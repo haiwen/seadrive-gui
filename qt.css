@@ -176,6 +176,10 @@ LoginDialog QLabel#hint_3
     color: #555;
 }
 
+ShibLoginDialog {
+    min-height: 600px;
+}
+
 ShibLoginDialog QLineEdit#addressText {
     min-height: 25px;
     margin: 0px;

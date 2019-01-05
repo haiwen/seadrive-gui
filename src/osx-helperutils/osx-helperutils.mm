@@ -13,7 +13,7 @@
 #endif
 
 #define HELPER_LOCATION \
-    (@"/Library/PrivilegedHelperTools/com.seafile.seadrive.helper")
+    (@"/Library/PrivilegedHelperTools/com.alphabox.alphadrive.helper")
 
 static HelperClient *getHelperClient()
 {
@@ -79,9 +79,9 @@ static HelperClient *getHelperClient()
         return false;
     }
 
-    if (![self blessHelperWithLabel:@"com.seafile.seadrive.helper"
+    if (![self blessHelperWithLabel:@"com.alphabox.alphadrive.helper"
                               error:&error]) {
-        qWarning("Failed to install seadrive helper: %s",
+        qWarning("Failed to install alphadrive helper: %s",
                  NSERROR_TO_CSTR(error));
         return false;
     } else {
@@ -148,7 +148,7 @@ static HelperClient *getHelperClient()
 
 bool installHelperTool()
 {
-    // TODO: do not reinstall the helper tool each time seadrive-gui is launched
+    // TODO: do not reinstall the helper tool each time alphadrive-gui is launched
     SMJobBlessHelper *helper = [[SMJobBlessHelper alloc] init];
     return [helper install];
 }

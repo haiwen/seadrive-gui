@@ -82,6 +82,7 @@ private:
     static bool loadServerInfoCB(struct sqlite3_stmt *stmt, void *data);
 
     void updateAccountLastVisited(const Account& account);
+    void getRepoTokenWhenRelogin(const Account& account);
 
     QHash<QString, Account> accounts_cache_;
 

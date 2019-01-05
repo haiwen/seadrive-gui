@@ -23,12 +23,12 @@ BEGIN
     BLOCK "040904b0"
     BEGIN
       VALUE "CompanyName",         "Seafile Ltd.\0"
-      VALUE "FileDescription",     "SeaDrive"
+      VALUE "FileDescription",     "AlphaDrive"
       VALUE "FileVersion",         RC_VERSION_STR
       VALUE "InternalName",        "seadrive-gui\0"
       VALUE "OriginalFilename",    "seadrive-gui.exe\0"
       VALUE "LegalCopyright",      "2016 Seafile Ltd.\0"
-      VALUE "ProductName",         "SeaDrive Client\0"
+      VALUE "ProductName",         "AlphaDrive\0"
       VALUE "ProductVersion",      RC_VERSION_STR
     END
   END

@@ -5,19 +5,19 @@
 	<key>CFBundleExecutable</key>
 	<string>seadrive-gui</string>
 	<key>CFBundleGetInfoString</key>
-	<string>SeaDrive Application</string>
+	<string>AlphaDrive Application</string>
 	<key>CFBundleIconFile</key>
 	<string>seadrive-icon</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.seafile.seadrive</string>
+	<string>com.alphabox.alphadrive</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleName</key>
-	<string>SeaDrive</string>
+	<string>AlphaDrive</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.0</string>
+	<string>1.0.4</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.0</string>
+	<string>1.0.4</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>LSApplicationCategoryType</key>
@@ -41,15 +41,15 @@
 	<string>True</string>
     <key>SMPrivilegedExecutables</key>
     <dict>
-      <key>com.seafile.seadrive.helper</key>
-      <string>identifier "com.seafile.seadrive.helper" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "55LCTZ5354"</string>
+      <key>com.alphabox.alphadrive.helper</key>
+      <string>identifier "com.alphabox.alphadrive.helper" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = JJ93J6U3PS</string>
     </dict>
     <!-- Always update this and CFBundleVersion in osxhelper/Info.plist together-->
 	<key>DriveHelperVersion</key>
 	<string>0.1.0</string>
     <!-- For Sparkle Framework -->
 	<key>SUFeedURL</key>
-	<string>https://www.seafile.com/api/client-updates/seadrive-client-mac/appcast.xml</string>
+	<string>https://client-update.alphalawyer.cn/api/client-updates/seadrive-client-mac/appcast.xml</string>
 	<key>CFBundleLocalizations</key>
     <!-- The CFBundleLocalizations would determinte the display language used by sparkle AutoUpdate.app -->
     <!-- We must list all languages supported by Sparkle here -->

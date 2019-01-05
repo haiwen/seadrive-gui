@@ -37,7 +37,7 @@ public:
                 serverInfo(),
                 lastVisited(0),
                 isShibboleth(false),
-                isAutomaticLogin(false) {}
+                isAutomaticLogin(true) {}
     Account(QUrl serverUrl, QString username, QString token,
             qint64 lastVisited=0, bool isShibboleth = false,
             bool isAutomaticLogin = true)

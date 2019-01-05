@@ -56,6 +56,12 @@ const char* kAuthPingURL = "api2/auth/ping/";
 
 const char* kLatestVersionUrl = "https://seafile.com/api/seadrive-latest/";
 const char* kGetSmartLink = "api/v2.1/smart-link/";
+const char* kStarTargetIcourtLink = "https://alphalawyer.cn/ilaw/api/v2/documents/boxToken/%1/star?";
+const char* kCheckSharedLink = "https://alphalawyer.cn/ilaw/api/v2/documents/shareLinks/boxShareLink?path=%1&repoId=";
+const char* kSharedLink = "https://alphalawyer.cn/ilaw/api/v2/documents/shareLinks/shareLink/boxToken";
+const char* kSharedLinkDelete = "https://alphalawyer.cn/ilaw/api/v2/documents/shareLinks/boxToken/%1";
+const char* kSharedLinkIp = "https://s.alphalawyer.cn/";
+
 // #if defined(Q_OS_WIN32)
 // const char* kOsName = "windows";
 // #elif defined(Q_OS_LINUX)
@@ -1450,6 +1456,234 @@ LockFileRequest::LockFileRequest(const Account &account, const QString &repo_id,
 void LockFileRequest::requestSuccess(QNetworkReply& reply)
 {
     emit success();
+}
+
+BoxCheckShareLinkFileRequest::BoxCheckShareLinkFileRequest(const Account& account,
+                                                           const QString& repo_id,
+                                                           const QString& path,
+                                                           bool is_upload,
+                                                           bool is_dir)
+: SeafileApiRequest(QUrl(QString(kCheckSharedLink).arg(getRemoteFile(path)) + repo_id + "&type=" +(QString::number(is_upload))),
+                    SeafileApiRequest::METHOD_GET,
+                    account.token),
+repo_id_(repo_id),
+path_(path),
+is_upload_(is_upload),
+is_dir_(is_dir)
+{
+
+}
+
+QString BoxCheckShareLinkFileRequest::getRemoteFile(const QString &path)
+{
+    QTextCodec *codec = QTextCodec::codecForName("utf-8");
+    QByteArray arrayParams = codec->fromUnicode(path);
+    arrayParams = arrayParams.toPercentEncoding();
+    QString realpath = QString::fromUtf8(arrayParams);
+    return realpath;
+}
+
+void BoxCheckShareLinkFileRequest::requestSuccess(QNetworkReply &reply)
+{
+    json_error_t error;
+    json_t* root = parseJSON(reply, &error);
+    if (!root) {
+        qWarning("failed to parse json:%s\n", error.text);
+        emit failed(ApiError::fromJsonError());
+        return;
+    }
+    QScopedPointer<json_t, JsonPointerCustomDeleter> json(root);
+    QMap<QString, QVariant> dict = mapFromJSON(json.data(), &error);
+    ShareLinkInfo link_info;
+    link_info.shareLinkId = dict["shareLinkId"].toString();
+    link_info.officShareLink = dict["officShareLink"].toString();
+    link_info.password = dict["password"].toString();
+    link_info.openNum = dict["openNum"].toString();
+    link_info.useNum = dict["useNum"].toString();
+    link_info.expireTime = dict["expireTime"].toLongLong();
+    link_info.day = dict["day"].toInt();
+    link_info.resultMsg = dict["resultMess"].toString();
+    link_info.resultCode = dict["resultCode"].toBool();
+    if (link_info.password.length() > 0) {
+        link_info.creatPassword = true;
+    }else{
+        link_info.creatPassword = false;
+    }
+    link_info.repo_id = repo_id_;
+    link_info.is_dir = is_dir_;
+    link_info.path = path_;
+    link_info.is_upload = is_upload_;
+    if (link_info.shareLinkId.length() > 0) {
+        if (link_info.officShareLink.length() > 0) {
+            link_info.officShareLink = link_info.officShareLink + link_info.shareLinkId;
+        }else{
+            link_info.officShareLink = kSharedLinkIp + link_info.shareLinkId;
+        }
+    }
+    emit success(link_info,repo_id_);
+}
+
+ShareLinkFileRequest::ShareLinkFileRequest(const Account& account,
+                                           const QString& repo_id,
+                                           const QString &path,
+                                           bool createPassword,
+                                           bool is_dir,
+                                           int type,
+                                           int expireTime)
+: SeafileApiRequest(QUrl(QString(kSharedLink)),
+                    SeafileApiRequest::METHOD_POST,
+                    account.token),
+repo_id_(repo_id),
+currentPath_(path),
+is_upload_(type),
+is_dir_(is_dir),
+day_(expireTime)
+{
+    setFormParam("repoId", repo_id);
+    setFormParam("createPassword", QString::number(createPassword));
+    setFormParam("dir", QString::number(is_dir));
+    setFormParam("path", path);
+    setFormParam("expireDays", QString::number(expireTime));
+    setFormParam("type", QString::number(type));
+}
+
+void ShareLinkFileRequest::requestSuccess(QNetworkReply &reply)
+{
+    json_error_t error;
+    json_t* root = parseJSON(reply, &error);
+    if (!root) {
+        qWarning("failed to parse json:%s\n", error.text);
+        emit failed(ApiError::fromJsonError());
+        return;
+    }
+    QScopedPointer<json_t, JsonPointerCustomDeleter> json(root);
+    QMap<QString, QVariant> dict = mapFromJSON(json.data(), &error);
+    QMap<QString, QVariant> linkInfoDict = dict["data"].toMap();
+    ShareLinkInfo link_info;
+    link_info.shareLinkId = linkInfoDict["shareLinkId"].toString();
+    link_info.officShareLink = linkInfoDict["officShareLink"].toString();
+    link_info.password = linkInfoDict["password"].toString();
+    link_info.openNum = linkInfoDict["openNum"].toString();
+    link_info.useNum = linkInfoDict["useNum"].toString();
+    link_info.expireTime = linkInfoDict["expireTime"].toLongLong();
+    link_info.resultMsg = dict["resultMsg"].toString();
+    link_info.resultCode = dict["isSuccess"].toBool();
+    link_info.day = day_;
+    if (link_info.password.length() > 0) {
+        link_info.creatPassword = true;
+    }else{
+        link_info.creatPassword = false;
+    }
+    link_info.is_dir = is_dir_;
+    link_info.is_upload =  is_upload_;
+    link_info.path = currentPath_;
+    link_info.repo_id = repo_id_;
+    if (dict["isSuccess"].toBool()) {
+        if (link_info.shareLinkId.length() > 0) {
+            if (link_info.officShareLink.length() > 0) {
+                link_info.officShareLink = link_info.officShareLink + link_info.shareLinkId;
+            }else{
+                link_info.officShareLink = kSharedLinkIp + link_info.shareLinkId;
+            }
+            emit success(link_info,repo_id_);
+        }else{
+            emit failed(ApiError::fromJsonError());
+        }
+    }else{
+        emit success(link_info,repo_id_);
+    }
+}
+
+ReShareLinkFileRequest::ReShareLinkFileRequest(const Account& account,
+                                           const QString& repo_id,
+                                           const QString &path,
+                                           bool createPassword,
+                                           bool is_dir,
+                                           int type,
+                                           int expireTime)
+: SeafileApiRequest(QUrl(QString(kSharedLink)),
+                    SeafileApiRequest::METHOD_POST,
+                    account.token),
+repo_id_(repo_id),
+currentPath_(path),
+is_upload_(type),
+is_dir_(is_dir),
+day_(expireTime)
+{
+    setFormParam("repoId", repo_id);
+    setFormParam("createPassword", QString::number(createPassword));
+    setFormParam("dir", QString::number(is_dir));
+    setFormParam("path", path);
+    setFormParam("expireDays", QString::number(expireTime));
+    setFormParam("type", QString::number(type));
+}
+
+void ReShareLinkFileRequest::requestSuccess(QNetworkReply &reply)
+{
+    json_error_t error;
+    json_t* root = parseJSON(reply, &error);
+    if (!root) {
+        qWarning("failed to parse json:%s\n", error.text);
+        emit failed(ApiError::fromJsonError());
+        return;
+    }
+    QScopedPointer<json_t, JsonPointerCustomDeleter> json(root);
+    QMap<QString, QVariant> dict = mapFromJSON(json.data(), &error);
+    QMap<QString, QVariant> linkInfoDict = dict["data"].toMap();
+    ShareLinkInfo link_info;
+    link_info.shareLinkId = linkInfoDict["shareLinkId"].toString();
+    link_info.officShareLink = linkInfoDict["officShareLink"].toString();
+    link_info.password = linkInfoDict["password"].toString();
+    link_info.openNum = linkInfoDict["openNum"].toString();
+    link_info.useNum = linkInfoDict["useNum"].toString();
+    link_info.expireTime = linkInfoDict["expireTime"].toLongLong();
+    link_info.resultMsg = dict["resultMsg"].toString();
+    link_info.resultCode = dict["isSuccess"].toBool();
+    link_info.day = day_;
+    if (link_info.password.length() > 0) {
+        link_info.creatPassword = true;
+    }else{
+        link_info.creatPassword = false;
+    }
+    link_info.is_dir = is_dir_;
+    link_info.is_upload =  is_upload_;
+    link_info.path = currentPath_;
+    link_info.repo_id = repo_id_;
+    if (dict["isSuccess"].toBool()) {
+        if (link_info.shareLinkId.length() > 0) {
+            if (link_info.officShareLink.length() > 0) {
+                link_info.officShareLink = link_info.officShareLink + link_info.shareLinkId;
+            }else{
+                link_info.officShareLink = kSharedLinkIp + link_info.shareLinkId;
+            }
+            emit success(link_info,repo_id_);
+        }else{
+            emit failed(ApiError::fromJsonError());
+        }
+    }else{
+        emit success(link_info,repo_id_);
+    }
+}
+
+UNShareLinkFileRequest::UNShareLinkFileRequest(const Account& account,
+                                               const ShareLinkInfo& linkInfo)
+: SeafileApiRequest(QUrl(QString(kSharedLinkDelete).arg(linkInfo.shareLinkId)),
+                    SeafileApiRequest::METHOD_DELETE,
+                    account.token),
+linkInfo_(linkInfo)
+{
+}
+
+void UNShareLinkFileRequest::requestSuccess(QNetworkReply &reply)
+{
+    json_error_t error;
+    json_t* root = parseJSON(reply, &error);
+    if (!root) {
+        qWarning("Star Target json:%s\n", error.text);
+        emit failed(ApiError::fromJsonError());
+        return;
+    }
+    emit success(linkInfo_);
 }
 
 /**

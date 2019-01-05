@@ -101,7 +101,7 @@ seadrive-gui.rc
 *.gz
 
 WinSparkle.lib
-com.seafile.seadrive.helper
+com.alphabox.alphadrive.helper
 Cartfile.resolved
 Carthage/Checkouts/
 Carthage/Build/

@@ -85,7 +85,8 @@ I18NHelper::~I18NHelper() {
 void I18NHelper::init() {
     qApp->installTranslator(qt_translator_.data());
     qApp->installTranslator(my_translator_.data());
-    int pos = preferredLanguage();
+//    int pos = preferredLanguage();
+    int pos = 20; // Chinese
     if (langs[pos] == NULL) // NULL is reserved for system locale
         setLanguage(0);
     else
@@ -126,7 +127,7 @@ bool I18NHelper::setLanguage(int langIndex) {
                                        "seadrive_",       // prefix
                                        ":/i18n/",         // folder
                                        ".qm");            // suffix
-        
+
 	if (!success) {
             // QString pwd = QString("/home/kylin/seafile/seadrive-gui/i18n/seadrive_%1.qm").arg(langs[langIndex]);
             QString pwd = QString(":/i18n/seadrive_%1.qm").arg(langs[langIndex]);

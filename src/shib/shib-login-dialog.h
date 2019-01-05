@@ -5,6 +5,10 @@
 #include <QUrl>
 #include <QNetworkCookieJar>
 
+#if defined(SEAFILE_USE_WEBKIT)
+  #include <QWebPage>
+#endif
+
 #include "account.h"
 
 template<typename T> class QList;
@@ -19,6 +23,9 @@ class QSslError;
 class QNetworkReply;
 class QLineEdit;
 
+class ApiError;
+class FetchAccountInfoRequest;
+
 /**
  * Login with Shibboleth SSO.
  *
@@ -29,9 +36,7 @@ class QLineEdit;
 class ShibLoginDialog : public QDialog {
     Q_OBJECT
 public:
-    ShibLoginDialog(const QUrl& url,
-                    const QString& computer_name,
-                    QWidget *parent=0);
+    ShibLoginDialog(QWidget *parent=0);
 
     Account account() const { return account_; }
 
@@ -40,9 +45,12 @@ private slots:
     void onNewCookieCreated(const QUrl& url, const QNetworkCookie& cookie);
     void onWebEngineCookieAdded(const QNetworkCookie& cookie);
     void updateAddressBar(const QUrl& url);
+    void onFetchAccountInfoSuccess(const AccountInfo& info);
+    void onFetchAccountInfoFailed(const ApiError&);
 
 private:
     Account parseAccount(const QString& txt);
+    void getAccountInfo(const Account& account);
 
 #if defined(SEAFILE_USE_WEBKIT)
     QWebView *webview_;
@@ -52,10 +60,22 @@ private:
     QUrl url_;
     QLineEdit *address_text_;
     bool cookie_seen_;
-
+    FetchAccountInfoRequest *account_info_req_;
     Account account_;
 };
 
+#if defined(SEAFILE_USE_WEBKIT)
+class SeafileWebPage : public QWebPage {
+    Q_OBJECT
+public:
+    SeafileWebPage(QObject *parent = 0);
+
+protected:
+    virtual void javaScriptConsoleMessage(const QString &message,
+                                          int lineNumber,
+                                          const QString &sourceID);
+};
+#endif
 
 /**
  * Wraps the standard Qt cookie jar to emit a signal when new cookies created.

@@ -7,6 +7,7 @@
 #include <QList>
 
 #include "rpc/sync-error.h"
+#include "shib/shib-login-dialog.h"
 
 class QAction;
 class QMenu;
@@ -123,7 +124,9 @@ private:
     QAction *quit_action_;
     QAction *search_action_;
     QAction *settings_action_;
+    QAction *username_action_;
     QAction *login_action_;
+    QAction *logout_action_;
     QAction *open_seafile_folder_action_;
     QAction *open_log_directory_action_;
     QAction *show_sync_errors_action_;
@@ -161,7 +164,7 @@ private:
     QQueue<TrayMessage> pending_messages_;
     qint64 next_message_msec_;
 
-    LoginDialog *login_dlg_;
+    ShibLoginDialog *login_dlg_;
 
     TrayNotificationManager *tnm;
 

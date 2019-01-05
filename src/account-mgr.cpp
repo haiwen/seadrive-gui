@@ -510,16 +510,7 @@ void AccountManager::invalidateCurrentLogin()
 
 bool AccountManager::reloginAccount(const Account &account)
 {
-    bool accepted;
-    do {
-        if (account.isShibboleth) {
-            ShibLoginDialog shib_dialog(account.serverUrl, gui->settingsManager()->getComputerName());
-            accepted = shib_dialog.exec() == QDialog::Accepted;
-            break;
-        }
-        LoginDialog dialog;
-        dialog.initFromAccount(account);
-        accepted = dialog.exec() == QDialog::Accepted;
-    } while (0);
+    ShibLoginDialog shib_dialog;
+    bool accepted = shib_dialog.exec() == QDialog::Accepted;
     return accepted;
 }

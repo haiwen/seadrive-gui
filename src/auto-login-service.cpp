@@ -26,27 +26,28 @@ void AutoLoginService::startAutoLogin(const QString& next_url)
     QUrl absolute_url = QUrl(next_url).isRelative()
                             ? account.getAbsoluteUrl(next_url)
                             : next_url;
-    if (!account.isValid() || !account.isAtLeastVersion(4, 2, 0)) {
-        QDesktopServices::openUrl(absolute_url);
-        return;
-    }
+    QDesktopServices::openUrl(absolute_url);
+//    if (!account.isValid() || !account.isAtLeastVersion(4, 2, 0)) {
+//        QDesktopServices::openUrl(absolute_url);
+//        return;
+//    }
 
-    QString next = absolute_url.path();
-    if (absolute_url.hasQuery()) {
-        next += "?" + absolute_url.query();
-    }
-    if (!absolute_url.fragment().isEmpty()) {
-        next += "#" + absolute_url.fragment();
-    }
-    GetLoginTokenRequest *req = new GetLoginTokenRequest(account, next);
+//    QString next = absolute_url.path();
+//    if (absolute_url.hasQuery()) {
+//        next += "?" + absolute_url.query();
+//    }
+//    if (!absolute_url.fragment().isEmpty()) {
+//        next += "#" + absolute_url.fragment();
+//    }
+//    GetLoginTokenRequest *req = new GetLoginTokenRequest(account, next);
 
-    connect(req, SIGNAL(success(const QString&)),
-            this, SLOT(onGetLoginTokenSuccess(const QString&)));
+//    connect(req, SIGNAL(success(const QString&)),
+//            this, SLOT(onGetLoginTokenSuccess(const QString&)));
 
-    connect(req, SIGNAL(failed(const ApiError&)),
-            this, SLOT(onGetLoginTokenFailed(const ApiError&)));
+//    connect(req, SIGNAL(failed(const ApiError&)),
+//            this, SLOT(onGetLoginTokenFailed(const ApiError&)));
 
-    req->send();
+//    req->send();
 }
 
 void AutoLoginService::onGetLoginTokenSuccess(const QString& token)

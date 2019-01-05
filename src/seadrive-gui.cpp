@@ -361,7 +361,7 @@ void SeadriveGui::onDaemonStarted()
             if (readPreconfigureEntry(kHideConfigurationWizard).toInt())
                 break;
 
-            LoginDialog login_dialog;
+            ShibLoginDialog login_dialog;
             login_dialog.exec();
         } while (0);
     } else {

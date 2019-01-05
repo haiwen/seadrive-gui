@@ -6,6 +6,15 @@
 
 namespace {
 
+const QString getAlphaAdminEmailSuffix()
+{
+ QString suffix = qgetenv("SEAFILE_ALPHA_ADMIN_SUFFIX");
+    if (suffix.isEmpty()) {
+        suffix = "@admin.com";
+    }
+    return suffix;
+}
+
 QString getStringFromJson(const json_t *json, const char* key)
 {
     return QString::fromUtf8(json_string_value(json_object_get(json, key)));
@@ -81,4 +90,9 @@ QPixmap ServerRepo::getPixmap() const
     } else {
         return QPixmap(":/images/main-panel/library.png");
     }
+}
+
+bool ServerRepo::isIcourtProjectRepo() const
+{
+    return type == "srepo" && owner.endsWith(getAlphaAdminEmailSuffix());
 }

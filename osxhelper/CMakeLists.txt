@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.11)
 
-PROJECT(seadrive-helper)
+PROJECT(alphadrive-helper)
 SET(PROJECT_VERSION "1.0.0")
 
 IF (NOT (${CMAKE_BUILD_TYPE} MATCHES Release))
@@ -41,17 +41,17 @@ SET(HELPER_SRC
   helper-log.m
   )
 
-ADD_EXECUTABLE(seadrive-helper ${HELPER_SRC})
+ADD_EXECUTABLE(alphadrive-helper ${HELPER_SRC})
 
-SET_TARGET_PROPERTIES(seadrive-helper PROPERTIES
-  OUTPUT_NAME "com.seafile.seadrive.helper"
+SET_TARGET_PROPERTIES(alphadrive-helper PROPERTIES
+  OUTPUT_NAME "com.alphabox.alphadrive.helper"
   # XCODE_ATTRIBUTE_MACOSX_DEPLOYMENT_TARGET "10.7"
   # XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC "YES"
   # XCODE_ATTRIBUTE_DEVELOPMENT_LANGUAGE "English"
   )
 
 
-TARGET_LINK_LIBRARIES(seadrive-helper
+TARGET_LINK_LIBRARIES(alphadrive-helper
   ${OSX_LIBS}
   # Embed the Info.plist and Launchd.plist into the helper tool executable
   "-sectcreate __TEXT __info_plist ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist -sectcreate __TEXT __launchd_plist ${CMAKE_CURRENT_SOURCE_DIR}/launchd.plist"

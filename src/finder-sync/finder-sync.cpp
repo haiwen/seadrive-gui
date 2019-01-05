@@ -8,7 +8,7 @@
 #include "utils/utils-mac.h"
 
 static const char* kApplePluginkitBinary = "/usr/bin/pluginkit";
-static const char* kFinderSyncBundleIdentifier = "com.seafile.seadrive.findersync";
+static const char* kFinderSyncBundleIdentifier = "com.alphabox.alphadrive.findersync";
 
 static inline QString pluginPath() {
 #ifdef XCODE_APP

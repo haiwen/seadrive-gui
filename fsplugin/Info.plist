@@ -5,13 +5,13 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>SeaDrive FinderSync</string>
+	<string>AlphaDrive FinderSync</string>
 	<key>CFBundleExecutable</key>
 	<string>SeaDrive FinderSync</string>
 	<key>CFBundleIconFile</key>
 	<string>seadrive</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.seafile.seadrive.findersync</string>
+	<string>com.alphabox.alphadrive.findersync</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

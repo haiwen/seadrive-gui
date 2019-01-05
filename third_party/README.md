@@ -1,6 +1,6 @@
 # How to build the MPMessagePack framework
 
-We use the MPMessagePack library for the xpc between the main seadrive-gui program and the com.seafile.seadrive.helper helper tool.
+We use the MPMessagePack library for the xpc between the main seadrive-gui program and the com.alphabox.alphadrive.helper helper tool.
 
 The helper tool is a standalone executable, so we need to compile MPMessagePack as a static framework. Here is how to do that.
 

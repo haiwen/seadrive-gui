@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleIdentifier</key>
-	<string>com.seafile.seadrive.helper</string>
+	<string>com.alphabox.alphadrive.helper</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>com.seafile.seadrive.helper</string>
+	<string>com.alphabox.alphadrive.helper</string>
     <!-- Always update these two with top level Info.plist's DriveHelperVersion together-->
 	<key>CFBundleVersion</key>
 	<string>0.1.0</string>
@@ -15,7 +15,7 @@
     <string>0.1.0</string>
 	<key>SMAuthorizedClients</key>
     <array>
-      <string>identifier "com.seafile.seadrive" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "55LCTZ5354"</string>
+      <string>identifier "com.alphabox.alphadrive" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = JJ93J6U3PS</string>
     </array>
 </dict>
 </plist>

@@ -990,4 +990,138 @@ private:
     bool is_dir_;
 };
 
+struct UploadLinkInfo {
+    QString username;
+    QString repo_id;
+    QString ctime;
+    QString token;
+    QString link;
+    QString path;
+};
+
+struct ShareLinkInfo {
+    QString repo_id;
+    QString path;
+    QString shareLinkId;
+    QString password;
+    QString openNum;
+    QString useNum;
+    QString officShareLink;
+    QString resultMsg;
+    bool is_dir;
+    bool is_upload;
+    bool resultCode;
+    bool creatPassword;
+    qint64 expireTime;
+    int day;
+
+};
+
+class BoxCheckShareLinkFileRequest : public SeafileApiRequest
+{
+    Q_OBJECT
+public:
+    BoxCheckShareLinkFileRequest(const Account& account,
+                                 const QString& repo_id,
+                                 const QString& path,
+                                 bool is_upload,
+                                 bool is_dir);
+    const QString& repoId() const
+    {
+        return repo_id_;
+    }
+
+signals:
+    void success(const ShareLinkInfo& shareLink_info,const QString);
+
+    protected slots:
+    void requestSuccess(QNetworkReply& reply);
+
+private:
+    Q_DISABLE_COPY(BoxCheckShareLinkFileRequest);
+    QString getRemoteFile(const QString &path);
+    QString repo_id_;
+    QString path_;
+    bool is_upload_;
+    bool is_dir_;
+};
+
+class ShareLinkFileRequest : public SeafileApiRequest
+{
+    Q_OBJECT
+public:
+    ShareLinkFileRequest(const Account& account,
+                         const QString& repo_id,
+                         const QString &path,
+                         bool createPassword,
+                         bool is_dir,
+                         int type,
+                         int expireTime);
+    const QString& repoId() { return repo_id_; }
+signals:
+    void success(const ShareLinkInfo& shareLink_info,const QString);
+
+    protected slots:
+    void requestSuccess(QNetworkReply& reply);
+
+private:
+    Q_DISABLE_COPY(ShareLinkFileRequest);
+
+    QString repo_id_;
+    QString currentPath_;
+    bool is_upload_;
+    bool is_dir_;
+    int day_;
+
+};
+
+class ReShareLinkFileRequest : public SeafileApiRequest
+{
+    Q_OBJECT
+public:
+    ReShareLinkFileRequest(const Account& account,
+                         const QString& repo_id,
+                         const QString &path,
+                         bool createPassword,
+                         bool is_dir,
+                         int type,
+                         int expireTime);
+    const QString& repoId() { return repo_id_; }
+signals:
+    void success(const ShareLinkInfo& shareLink_info,const QString);
+
+    protected slots:
+    void requestSuccess(QNetworkReply& reply);
+
+private:
+    Q_DISABLE_COPY(ReShareLinkFileRequest);
+
+    QString repo_id_;
+    QString currentPath_;
+    bool is_upload_;
+    bool is_dir_;
+    int day_;
+
+};
+
+class UNShareLinkFileRequest : public SeafileApiRequest
+{
+    Q_OBJECT
+public:
+    UNShareLinkFileRequest(const Account& account,
+                           const ShareLinkInfo& linkInfo);
+    const QString& repoId() { return repo_id_; }
+signals:
+    void success(const ShareLinkInfo& linkInfo);
+
+    protected slots:
+    void requestSuccess(QNetworkReply& reply);
+
+private:
+    Q_DISABLE_COPY(UNShareLinkFileRequest);
+
+    QString repo_id_;
+    const ShareLinkInfo linkInfo_;
+};
+
 #endif // SEAFILE_CLIENT_API_REQUESTS_H

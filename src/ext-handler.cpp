@@ -31,7 +31,7 @@
 
 namespace {
 
-const char *kSeafExtPipeName = "\\\\.\\pipe\\seadrive_ext_pipe_";
+const char *kSeafExtPipeName = "\\\\.\\pipe\\alphadrive_ext_pipe_";
 const int kPipeBufSize = 1024;
 
 const quint64 kReposInfoCacheMSecs = 2000;
@@ -252,33 +252,99 @@ void SeafileExtensionHandler::generateShareLink(const QString& repo_id,
                                                 bool is_file,
                                                 bool internal)
 {
+    repo_id_ = repo_id;
+    path_in_repo_ = path_in_repo;
+    is_file_ = is_file;
+    internal_ = internal;
     // qDebug("path_in_repo: %s", path_in_repo.toUtf8().data());
     const Account account = gui->accountManager()->currentAccount();
     if (!account.isValid()) {
         return;
     }
 
-    if (internal) {
-        QString path = path_in_repo;
-        if (!is_file && !path.endsWith("/")) {
-            path += "/";
-        }
-        GetSmartLinkRequest *req = new GetSmartLinkRequest(account, repo_id, path, !is_file);
-        connect(req, SIGNAL(success(const QString&)),
-                this, SLOT(onGetSmartLinkSuccess(const QString&)));
-        connect(req, SIGNAL(failed(const ApiError&)),
-                this, SLOT(onGetSmartLinkFailed(const ApiError&)));
+    GetRepoRequest *get_repo_req_ = new GetRepoRequest(account, repo_id_);
 
-        req->send();
-    } else {
-        GetSharedLinkRequest *req = new GetSharedLinkRequest(
-            account, repo_id, path_in_repo, is_file);
+    connect(get_repo_req_, SIGNAL(success(const ServerRepo&)),
+            this, SLOT(onGetRepoSuccess(const ServerRepo&)));
 
-        connect(req, SIGNAL(success(const QString&)),
-                this, SLOT(onShareLinkGenerated(const QString&)));
+    connect(get_repo_req_, SIGNAL(failed(const ApiError&)),
+            this, SLOT(onGetRepoFailed(const ApiError&)));
+    get_repo_req_->send();
+}
 
-        req->send();
+void SeafileExtensionHandler::onGetRepoSuccess(const ServerRepo &repo)
+{
+    if ((repo.isSharedRepo() && !repo.isIcourtProjectRepo()) ||repo.isOrgRepo()) {
+        QString str = tr("The current database does not support generating Shared links");
+        gui->warningBox(QString("%1").arg(str),NULL);
+        return;
     }
+
+    QString path = path_in_repo_;
+    if (!is_file_ && !path.endsWith("/")) {
+        path += "/";
+    }
+    bool isUpload;
+    if (internal_) {
+        isUpload = true;
+    } else {
+        isUpload = false;
+    }
+    const Account account = gui->accountManager()->currentAccount();
+    BoxCheckShareLinkFileRequest *req = new BoxCheckShareLinkFileRequest(account,
+                                                                         repo_id_,
+                                                                         path,
+                                                                         isUpload,
+                                                                         !is_file_);
+    connect(req, SIGNAL(success(const ShareLinkInfo&, const QString&)),
+            SLOT(shareFileDirentSuccess(const ShareLinkInfo&, const QString&)));
+
+    connect(req, SIGNAL(failed(const ApiError&)),
+            SLOT(shareFileLinkDirentFailed(const ApiError&)));
+    req->send();
+}
+
+void SeafileExtensionHandler::onGetRepoFailed(const ApiError &error)
+{
+    QString str = tr("Get repo failed");
+    gui->warningBox(QString("%1").arg(str));
+}
+
+void SeafileExtensionHandler::shareFileDirentSuccess(const ShareLinkInfo& link,
+                                                     const QString& repo_id)
+{
+    if (link.shareLinkId.length() > 0) {
+        SharedLinkDialog *dialog = new SharedLinkDialog(link, NULL);
+        dialog->setAttribute(Qt::WA_DeleteOnClose);
+        dialog->show();
+        dialog->raise();
+        dialog->activateWindow();
+    }else{
+        if (link.resultCode) {
+            const Account account = gui->accountManager()->currentAccount();
+            ShareLinkFileRequest *req = new ShareLinkFileRequest(account,
+                                                                 link.repo_id,
+                                                                 link.path,
+                                                                 false,
+                                                                 link.is_dir,
+                                                                 link.is_upload,
+                                                                 7);
+            connect(req, SIGNAL(success(const ShareLinkInfo&, const QString&)),
+                    SLOT(shareFileDirentSuccess(const ShareLinkInfo&, const QString&)));
+
+            connect(req, SIGNAL(failed(const ApiError&)),
+                    SLOT(shareFileLinkDirentFailed(const ApiError&)));
+            req->send();
+        }else{
+            gui->warningBox(QString("%1").arg(link.resultMsg),NULL);
+        }
+    }
+}
+
+void SeafileExtensionHandler::shareFileLinkDirentFailed(const ApiError& error)
+{
+    QString str = tr("Share failed");
+    gui->warningBox(QString("%1").arg(str));
 }
 
 void SeafileExtensionHandler::onGetSmartLinkSuccess(const QString& smart_link)
@@ -349,23 +415,19 @@ void SeafileExtensionHandler::openUrlWithAutoLogin(const QUrl& url)
 
 void SeafileExtensionHandler::onShareLinkGenerated(const QString& link)
 {
-    SharedLinkDialog *dialog = new SharedLinkDialog(link, NULL);
-    dialog->setAttribute(Qt::WA_DeleteOnClose);
-    dialog->show();
-    dialog->raise();
-    dialog->activateWindow();
+//    SharedLinkDialog *dialog = new SharedLinkDialog(link, NULL);
+//    dialog->setAttribute(Qt::WA_DeleteOnClose);
+//    dialog->show();
+//    dialog->raise();
+//    dialog->activateWindow();
 }
 
 void SeafileExtensionHandler::onLockFileSuccess()
 {
-    LockFileRequest *req = qobject_cast<LockFileRequest *>(sender());
-    // LocalRepo repo;
-    // gui->rpcClient()->getLocalRepo(req->repoId(), &repo);
-    // if (repo.isValid()) {
-    //     gui->rpcClient()->markFileLockState(req->repoId(), req->path(), req->lock());
-    //     QString path = QDir::toNativeSeparators(QDir(repo.worktree).absoluteFilePath(req->path().mid(1)));
-    //     SHChangeNotify(SHCNE_ATTRIBUTES, SHCNF_PATH, path.toUtf8().data(), NULL);
-    // }
+    LockFileRequest* req = qobject_cast<LockFileRequest*>(sender());
+    if (!req)
+        return;
+    rpc_client_->markFileLockState(req->repoId(), req->path(), req->lock());
 }
 
 void SeafileExtensionHandler::onLockFileFailed(const ApiError& error)

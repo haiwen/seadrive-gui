@@ -7,7 +7,7 @@ typedef NS_ENUM(NSInteger, HelperError) {
 typedef void (^HelperCompletion)(NSError *error);
 typedef void (^HelperOnCompletion)(NSError *error, id value);
 
-#define HelperMakeError(CODE, MSG, ...) [NSError errorWithDomain:@"seadrive" code:CODE userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:MSG, ##__VA_ARGS__], NSLocalizedRecoveryOptionsErrorKey: @[@"OK"]}]
+#define HelperMakeError(CODE, MSG, ...) [NSError errorWithDomain:@"alphadrive" code:CODE userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:MSG, ##__VA_ARGS__], NSLocalizedRecoveryOptionsErrorKey: @[@"OK"]}]
 
 #define HelperOr(obj, dv) (obj ? obj : dv)
 #define HelperIfNull(obj, val) ([obj isEqual:NSNull.null] ? val : obj)

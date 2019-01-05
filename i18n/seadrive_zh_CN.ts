@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_CN">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -8,13 +10,16 @@
     </message>
     <message>
         <location filename="../src/ui/about-dialog.cpp" line="25"/>
-        <source>&lt;h4&gt;Seafile Drive Client %2&lt;/h4&gt;</source>
-        <translation>&lt;h4&gt;Seafile 挂载盘客户端 %2&lt;/h4&gt;</translation>
+        <source>&lt;h4&gt;AlphaDrive %2&lt;/h4&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/about-dialog.cpp" line="28"/>
+        <source>&lt;h4&gt;Seafile Drive Client %2&lt;/h4&gt;</source>
+        <translation type="vanished">&lt;h4&gt;Seafile 挂载盘客户端 %2&lt;/h4&gt;</translation>
+    </message>
+    <message>
         <source>&lt;h5&gt; REV %1 &lt;/h5&gt;</source>
-        <translation>&lt;h5&gt; 版本 %1 &lt;/h5&gt;</translation>
+        <translation type="vanished">&lt;h5&gt; 版本 %1 &lt;/h5&gt;</translation>
     </message>
     <message>
         <location filename="../ui_about-dialog.h" line="130"/>
@@ -109,6 +114,24 @@
         <location filename="../ui_filter-menu.h" line="116"/>
         <source>Markdown</source>
         <translation>Markdown</translation>
+    </message>
+</context>
+<context>
+    <name>FinderSyncHost</name>
+    <message>
+        <location filename="../src/finder-sync/finder-sync-host.cpp" line="248"/>
+        <source>The current database does not support generating Shared links</source>
+        <translation>当前资料库不支持生成分享链接</translation>
+    </message>
+    <message>
+        <location filename="../src/finder-sync/finder-sync-host.cpp" line="272"/>
+        <source>Get repo fail</source>
+        <translation>获取资料库失败</translation>
+    </message>
+    <message>
+        <location filename="../src/finder-sync/finder-sync-host.cpp" line="308"/>
+        <source>share fail</source>
+        <translation>分享失败</translation>
     </message>
 </context>
 <context>
@@ -927,59 +950,81 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>搜索文件</translation>
     </message>
     <message>
+        <source>Pause sync</source>
+        <translation type="vanished">暂停同步</translation>
+    </message>
+    <message>
+        <source>Start sync</source>
+        <translation type="vanished">开始同步</translation>
+    </message>
+    <message>
         <location filename="../src/ui/tray-icon.cpp" line="135"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="138"/>
+        <location filename="../src/ui/tray-icon.cpp" line="149"/>
         <source>Show file sync errors</source>
         <translation>查看文件同步错误</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="143"/>
+        <location filename="../src/ui/tray-icon.cpp" line="142"/>
+        <source>Login</source>
+        <translation>登录</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/tray-icon.cpp" line="146"/>
+        <source>Logout</source>
+        <translation>登出</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/tray-icon.cpp" line="154"/>
         <source>Open %1 &amp;folder</source>
         <translation>打开 %1 文件夹(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="144"/>
+        <location filename="../src/ui/tray-icon.cpp" line="155"/>
         <source>open %1 folder</source>
         <translation>打开 %1 文件夹</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="147"/>
+        <location filename="../src/ui/tray-icon.cpp" line="158"/>
         <source>Open &amp;logs folder</source>
         <translation>打开日志文件夹(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="151"/>
+        <location filename="../src/ui/tray-icon.cpp" line="162"/>
         <source>&amp;About</source>
         <translation>关于(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="152"/>
+        <location filename="../src/ui/tray-icon.cpp" line="163"/>
         <source>Show the application&apos;s About box</source>
         <translation>显示关于对话框</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="156"/>
+        <location filename="../src/ui/tray-icon.cpp" line="167"/>
         <source>&amp;Online help</source>
         <translation>在线帮助(&amp;O)</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="182"/>
+        <location filename="../src/ui/tray-icon.cpp" line="474"/>
+        <source>&lt;h2&gt;AlphaDrive %2&lt;/h2&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Accounts</source>
-        <translation>帐号</translation>
+        <translation type="vanished">帐号</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="221"/>
         <source>not logged in</source>
-        <translation>未登录</translation>
+        <translation type="vanished">未登录</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="234"/>
         <source>Choose</source>
-        <translation>选择</translation>
+        <translation type="vanished">选择</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="256"/>
@@ -989,12 +1034,12 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="260"/>
         <source>Delete</source>
-        <translation>删除</translation>
+        <translation type="vanished">删除</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="273"/>
         <source>Add an account</source>
-        <translation>添加新帐户</translation>
+        <translation type="vanished">添加新帐户</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="286"/>
@@ -1004,7 +1049,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="512"/>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
-        <translation>&lt;h2&gt;Seafile Drive 客户端 %2&lt;/h2&gt;</translation>
+        <translation type="vanished">&lt;h2&gt;Seafile Drive 客户端 %2&lt;/h2&gt;</translation>
+    </message>
+    <message>
+        <source>auto sync is disabled</source>
+        <translation type="vanished">自动同步已禁用</translation>
     </message>
     <message>
         <location filename="../src/ui/tray-icon.cpp" line="726"/>
@@ -1042,12 +1091,12 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>传输进度</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="148"/>
+        <location filename="../src/ui/tray-icon.cpp" line="159"/>
         <source>open %1 log folder</source>
         <translation>打开 %1 日志文件夹</translation>
     </message>
     <message>
-        <location filename="../src/ui/tray-icon.cpp" line="157"/>
+        <location filename="../src/ui/tray-icon.cpp" line="168"/>
         <source>open %1 online help</source>
         <translation>打开 %1 在线帮助文档</translation>
     </message>
@@ -1387,40 +1436,134 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SharedLinkDialog</name>
     <message>
-        <location filename="../src/ui/sharedlink-dialog.cpp" line="10"/>
         <source>Share Link</source>
-        <translation>共享链接</translation>
+        <translation type="vanished">共享链接</translation>
     </message>
     <message>
-        <location filename="../src/ui/sharedlink-dialog.cpp" line="16"/>
         <source>Share link:</source>
-        <translation>共享链接:</translation>
+        <translation type="vanished">共享链接:</translation>
     </message>
     <message>
-        <location filename="../src/ui/sharedlink-dialog.cpp" line="29"/>
         <source>Direct Download</source>
-        <translation>直接下载</translation>
+        <translation type="vanished">直接下载</translation>
     </message>
     <message>
-        <location filename="../src/ui/sharedlink-dialog.cpp" line="42"/>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="19"/>
+        <source>Upload link</source>
+        <translation>上传链接</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="21"/>
+        <source>DownLoad link</source>
+        <translation>下载链接</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="31"/>
+        <source>Upload link:</source>
+        <translation>上传链接：</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="33"/>
+        <source>DownLoad link:</source>
+        <translation>下载链接：</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="44"/>
+        <source>Link validity:</source>
+        <translation>链接有效期：</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="51"/>
+        <source>1day validity</source>
+        <translation>1天有效</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="52"/>
+        <source>7day validity</source>
+        <translation>7天有效</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="53"/>
+        <source>14day validity</source>
+        <translation>14天有效</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="54"/>
+        <source>permanent</source>
+        <translation>永久有效</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="65"/>
+        <source>Tip: changing your password or expiration date will result in a new link and the old link will fail</source>
+        <translation>提示：改变密码或过有效期将生成新链接，旧链接将失败</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="75"/>
+        <source>Set the password</source>
+        <translation>设置密码</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="104"/>
         <source>Copy to clipboard</source>
         <translation>复制至剪贴板</translation>
     </message>
     <message>
-        <location filename="../src/ui/sharedlink-dialog.cpp" line="46"/>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="106"/>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="266"/>
+        <source>Copy link password</source>
+        <translation>复制链接密码</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="108"/>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="271"/>
+        <source>Copy link</source>
+        <translation>复制链接</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="113"/>
+        <source>Close</source>
+        <translation>关闭</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="147"/>
+        <source>Link valid until:</source>
+        <translation>链接有效到：</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="170"/>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="172"/>
+        <source>links:</source>
+        <translation>链接</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="170"/>
+        <source>password:</source>
+        <translation>密码</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="180"/>
+        <source>copy link success</source>
+        <translation>复制链接成功</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/sharedlink-dialog.cpp" line="297"/>
+        <source>Share failed</source>
+        <translation>分享失败</translation>
+    </message>
+    <message>
         <source>OK</source>
-        <translation>确认</translation>
+        <translation type="vanished">确认</translation>
     </message>
 </context>
 <context>
     <name>ShibLoginDialog</name>
     <message>
-        <location filename="../src/shib/shib-login-dialog.cpp" line="40"/>
-        <source>Login with Shibboleth</source>
-        <translation>Shibboleth 登录</translation>
+        <location filename="../src/shib/shib-login-dialog.cpp" line="53"/>
+        <source>Login with WeChat</source>
+        <translation>AlphaDrive 微信登录</translation>
     </message>
     <message>
-        <location filename="../src/shib/shib-login-dialog.cpp" line="112"/>
+        <location filename="../src/shib/shib-login-dialog.cpp" line="149"/>
         <source>Failed to save current account</source>
         <translation>保存当前帐户信息时出错</translation>
     </message>

@@ -142,7 +142,7 @@ static std::vector<std::string> watch_set_;
 static std::unique_ptr<GetSharedLinkRequest, QtLaterDeleter> get_shared_link_req_;
 static std::unique_ptr<LockFileRequest, QtLaterDeleter> lock_file_req_;
 
-FinderSyncHost::FinderSyncHost() : rpc_client_(new SeafileRpcClient) {
+FinderSyncHost::FinderSyncHost() : rpc_client_(new SeafileRpcClient),isUpload_(false) {
     rpc_client_->connectDaemon();
 }
 
@@ -217,49 +217,105 @@ uint32_t FinderSyncHost::getFileStatus(const QString &path)
 }
 
 void FinderSyncHost::doShareLink(const QString &path) {
-    QString repo_id;
-    QString path_in_repo;
-    if (!lookUpFileInformation(path, &repo_id, &path_in_repo)) {
-        qWarning("[FinderSync] invalid path %s", path.toUtf8().data());
-        return;
-    }
+    isUpload_ = false;
+    GetRepo(path);
+}
 
-    const Account& account = gui->accountManager()->currentAccount();
+void FinderSyncHost::GetRepo(const QString &path)
+{
+    path_ = path;
+
+    const Account account = gui->accountManager()->currentAccount();
     if (!account.isValid()) {
         return;
     }
 
-    get_shared_link_req_.reset(new GetSharedLinkRequest(
-        account, repo_id, QString("/").append(path_in_repo),
-        QFileInfo(path).isFile()));
+    if (!lookUpFileInformation(path_, &repo_id_, &path_in_repo_)) {
+        qWarning("[FinderSync] invalid path %s", path.toUtf8().data());
+        return;
+    }
 
-    connect(get_shared_link_req_.get(), SIGNAL(success(const QString &)), this,
-            SLOT(onShareLinkGenerated(const QString &)));
 
-    get_shared_link_req_->send();
+    GetRepoRequest *get_repo_req_ = new GetRepoRequest(account, repo_id_);
+
+    connect(get_repo_req_, SIGNAL(success(const ServerRepo&)),
+            this, SLOT(onGetRepoSuccess(const ServerRepo&)));
+
+    connect(get_repo_req_, SIGNAL(failed(const ApiError&)),
+            this, SLOT(onGetRepoFailed(const ApiError&)));
+    get_repo_req_->send();
+}
+
+void FinderSyncHost::onGetRepoSuccess(const ServerRepo& repo)
+{
+    if ((repo.isSharedRepo() && !repo.isIcourtProjectRepo()) ||repo.isOrgRepo()) {
+        gui->warningBox(tr("The current database does not support generating Shared links"),NULL);
+        return;
+    }
+    if (!path_in_repo_.startsWith("/")) {
+        path_in_repo_ = "/" + path_in_repo_;
+    }
+    if (!path_in_repo_.endsWith("/") && !QFileInfo(path_).isFile()) {
+        path_in_repo_ = path_in_repo_ + "/";
+    }
+    if (path_in_repo_ == "/./") {
+        path_in_repo_ = "/";
+    }
+    const Account account = gui->accountManager()->currentAccount();
+    BoxCheckShareLinkFileRequest *req = new BoxCheckShareLinkFileRequest(account, repo_id_, path_in_repo_, isUpload_, !QFileInfo(path_).isFile());
+    connect(req, SIGNAL(success(const ShareLinkInfo&, const QString&)),
+            SLOT(shareFinderFileDirentSuccess(const ShareLinkInfo&, const QString&)));
+
+    connect(req, SIGNAL(failed(const ApiError&)),
+            SLOT(shareFinderFileDirentFailed(const ApiError&)));
+    req->send();
+}
+
+void FinderSyncHost::onGetRepoFailed(const ApiError &error)
+{
+    gui->warningBox(tr("Get repo fail"),NULL);
+}
+
+void FinderSyncHost::shareFinderFileDirentSuccess(const ShareLinkInfo &linkInfo, const QString &repo_id)
+{
+    if (linkInfo.shareLinkId.length() > 0) {
+        SharedLinkDialog *dialog = new SharedLinkDialog(linkInfo,NULL);
+        dialog->setAttribute(Qt::WA_DeleteOnClose);
+        dialog->show();
+        dialog->raise();
+        dialog->activateWindow();
+    }else{
+        if (linkInfo.resultCode) {
+            const Account account = gui->accountManager()->currentAccount();
+            ShareLinkFileRequest *req = new ShareLinkFileRequest(account,
+                                                                 linkInfo.repo_id,
+                                                                 linkInfo.path,
+                                                                 false,
+                                                                 linkInfo.is_dir,
+                                                                 linkInfo.is_upload,
+                                                                 7);
+            connect(req, SIGNAL(success(const ShareLinkInfo&, const QString&)),
+                    SLOT(shareFinderFileDirentSuccess(const ShareLinkInfo&, const QString&)));
+
+            connect(req, SIGNAL(failed(const ApiError&)),
+                    SLOT(shareFinderFileDirentFailed(const ApiError&)));
+            req->send();
+        }else{
+            gui->warningBox(QString("%1").arg(linkInfo.resultMsg),NULL);
+        }
+
+    }
+}
+
+void FinderSyncHost::shareFinderFileDirentFailed(const ApiError &error)
+{
+    gui->warningBox(tr("share fail"),NULL);
 }
 
 void FinderSyncHost::doInternalLink(const QString &path)
 {
-    const Account& account = gui->accountManager()->currentAccount();
-    if (!account.isValid()) {
-        return;
-    }
-
-    QString repo_id;
-    QString path_in_repo;
-    if (!lookUpFileInformation(path, &repo_id, &path_in_repo)) {
-        qWarning("[FinderSync] invalid path %s", path.toUtf8().data());
-        return;
-    }
-    GetSmartLinkRequest *req = new GetSmartLinkRequest(account, repo_id, path_in_repo, path_in_repo.endsWith('/'));
-    connect(req, SIGNAL(success(const QString&)),
-            this, SLOT(onGetSmartLinkSuccess(const QString&)));
-    connect(req, SIGNAL(failed(const ApiError&)),
-            this, SLOT(onGetSmartLinkFailed(const ApiError&)));
-
-    req->send();
-    //SeafileLinkDialog(repo_id, account, path_in_repo, smart_link).exec();
+    isUpload_ = true;
+    GetRepo(path);
 }
 
 void FinderSyncHost::onGetSmartLinkSuccess(const QString& smart_link)
@@ -298,11 +354,11 @@ void FinderSyncHost::doLockFile(const QString &path, bool lock)
 
 void FinderSyncHost::onShareLinkGenerated(const QString &link)
 {
-    SharedLinkDialog *dialog = new SharedLinkDialog(link, NULL);
-    dialog->setAttribute(Qt::WA_DeleteOnClose);
-    dialog->show();
-    dialog->raise();
-    dialog->activateWindow();
+//    SharedLinkDialog *dialog = new SharedLinkDialog(link, NULL);
+//    dialog->setAttribute(Qt::WA_DeleteOnClose);
+//    dialog->show();
+//    dialog->raise();
+//    dialog->activateWindow();
 }
 
 void FinderSyncHost::onLockFileSuccess()

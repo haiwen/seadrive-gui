@@ -42,7 +42,7 @@ QStringList getUsedServerAddresses()
         retval.push_back(preconfigure_addr);
     }
     if (!retval.contains(kDefaultServerAddr1)) {
-        retval.push_back(kDefaultServerAddr1);
+        //retval.push_back(kDefaultServerAddr1);
     }
     return retval;
 }
@@ -375,7 +375,7 @@ void LoginDialog::loginWithShib()
 
     gui->settingsManager()->setLastShibUrl(serverAddr);
 
-    ShibLoginDialog shib_dialog(url, mComputerName->text(), this);
+    ShibLoginDialog shib_dialog(this);
     if (shib_dialog.exec() == QDialog::Accepted) {
         accept();
     }

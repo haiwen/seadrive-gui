@@ -16,10 +16,13 @@
 #include <QNetworkCookie>
 
 #include "seadrive-gui.h"
+#include "settings-mgr.h"
 #include "utils/utils.h"
 #include "utils/api-utils.h"
 #include "account-mgr.h"
 #include "network-mgr.h"
+#include "api/api-error.h"
+#include "api/requests.h"
 #include "ui/init-sync-dialog.h"
 
 #include "shib-login-dialog.h"
@@ -30,14 +33,24 @@ const char *kSeahubShibCookieName = "seahub_auth";
 
 } // namespace
 
-ShibLoginDialog::ShibLoginDialog(const QUrl& url,
-                                 const QString& computer_name,
-                                 QWidget *parent)
+ShibLoginDialog::ShibLoginDialog(QWidget *parent)
     : QDialog(parent),
-      url_(url),
-      cookie_seen_(false)
+    cookie_seen_(false),
+    account_info_req_(nullptr)
 {
-    setWindowTitle(tr("Login with Shibboleth"));
+    QUrl url = QUrl("https://box.alphalawyer.cn");
+    // const QUrl url = QUrl("https://dev.seafile.com/seahub");
+
+    QString urlstr = qgetenv("SEAFILE_ALPHA_LOGIN_URL");
+    if (!urlstr.isEmpty()) {
+         url = QUrl(urlstr);
+    }
+
+    const QString computer_name = gui->settingsManager()->getComputerName();
+
+    url_ = url;
+
+    setWindowTitle(tr("Login with WeChat"));
     setWindowIcon(QIcon(":/images/seafile.png"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
@@ -52,6 +65,7 @@ ShibLoginDialog::ShibLoginDialog(const QUrl& url,
 
 #if defined(SEAFILE_USE_WEBKIT)
     webview_ = new QWebView;
+    webview_->setPage(new SeafileWebPage(this));
     CustomCookieJar *jar = new CustomCookieJar(this);
     QNetworkAccessManager *mgr = webview_->page()->networkAccessManager();
     NetworkManager::instance()->addWatch(mgr);
@@ -76,11 +90,11 @@ ShibLoginDialog::ShibLoginDialog(const QUrl& url,
     if (!path.endsWith("/")) {
         path += "/";
     }
-    path += "shib-login";
+    path += "accounts/weixin-login/";
     shib_login_url.setPath(path);
 
     connect(webview_, SIGNAL(urlChanged(const QUrl&)),
-           this, SLOT(updateAddressBar(const QUrl&)));
+            this, SLOT(updateAddressBar(const QUrl&)));
 
     vlayout->addWidget(webview_);
     webview_->load(::includeQueryParams(
@@ -108,17 +122,42 @@ void ShibLoginDialog::onNewCookieCreated(const QUrl& url, const QNetworkCookie& 
             return;
         }
         cookie_seen_ = true;
-        if (gui->accountManager()->saveAccount(account) < 0) {
-            gui->warningBox(tr("Failed to save current account"), this);
-            reject();
-        } else {
-            account_ = account;
-            accept();
-
-            InitSyncDialog *dlg = new InitSyncDialog(account);
-            dlg->ensureVisible();
-        }
+        getAccountInfo(account);
     }
+}
+
+void ShibLoginDialog::getAccountInfo(const Account& account)
+{
+    if (account_info_req_) {
+       account_info_req_->deleteLater();
+    }
+    account_info_req_ = new FetchAccountInfoRequest(account);
+    connect(account_info_req_, SIGNAL(success(const AccountInfo&)), this,
+           SLOT(onFetchAccountInfoSuccess(const AccountInfo&)));
+    connect(account_info_req_, SIGNAL(failed(const ApiError&)), this,
+           SLOT(onFetchAccountInfoFailed(const ApiError&)));
+    account_info_req_->send();
+}
+
+void ShibLoginDialog::onFetchAccountInfoSuccess(const AccountInfo& info)
+{
+    Account account = account_info_req_->account();
+    // The user may use the username to login, but we need to store the email
+    // to account database
+    account.username = info.email;
+    if (gui->accountManager()->saveAccount(account) < 0) {
+        gui->warningBox(tr("Failed to save current account"), this);
+        reject();
+    }
+    else {
+        gui->accountManager()->updateAccountInfo(account, info);
+        accept();
+    }
+}
+
+void ShibLoginDialog::onFetchAccountInfoFailed(const ApiError& error)
+{
+    gui->warningBox(error.toString(), this);
 }
 
 void ShibLoginDialog::updateAddressBar(const QUrl& url)
@@ -190,4 +229,18 @@ bool SeafileQWebEnginePage::certificateError(
 }
 
 
+#endif
+
+#if defined(SEAFILE_USE_WEBKIT)
+SeafileWebPage::SeafileWebPage(QObject *parent)
+    : QWebPage(parent)
+{
+}
+
+void SeafileWebPage::javaScriptConsoleMessage(const QString &message,
+                                              int lineNumber,
+                                              const QString &sourceID)
+{
+     // printf ("console.log: %s\n", message.toUtf8().data());
+}
 #endif
