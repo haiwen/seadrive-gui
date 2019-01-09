@@ -8,6 +8,13 @@
  */
 void do_stop();
 
+
+/**
+ * stop running seaDrive-gui by rpc
+ */
+ void do_stop_app();
+
+ 
 /**
  * Remove ccnet and seafile-data
  */

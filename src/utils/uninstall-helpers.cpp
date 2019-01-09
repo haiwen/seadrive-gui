@@ -208,6 +208,20 @@ void do_stop()
     g_object_unref (sync_client);
 }
 
+void do_stop_app()
+{
+    SeafileAppletRpcServer::Client *client = SeafileAppletRpcServer::getClient();
+    if (!client->connect()) {
+        printf ("failed to connect to applet rpc server\n");
+        return;
+    }
+    if (client->sendExitCommand()) {
+        printf ("exit command: success\n");
+    } else {
+        printf ("exit command: failed\n");
+    }
+
+}
 #if defined(Q_OS_WIN32)
 int hasPreconfigureKeepConfigWhenUninstall()
 {

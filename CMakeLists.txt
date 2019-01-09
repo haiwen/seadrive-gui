@@ -209,6 +209,7 @@ SET(moc_headers
   src/remote-wipe-service.h
   src/account-info-service.h
   src/rpc/rpc-client.h
+  src/rpc/rpc-server.h
   src/seadrive-gui.h
   src/settings-mgr.h
 
@@ -316,6 +317,7 @@ SET(seadrive_gui_sources
   src/account-info-service.cpp
 
   src/rpc/rpc-client.cpp
+  src/rpc/rpc-server.cpp
   src/rpc/sync-error.cpp
   src/rpc/transfer-progress.cpp
 
