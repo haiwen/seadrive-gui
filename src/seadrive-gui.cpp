@@ -272,6 +272,9 @@ void SeadriveGui::start()
     qDebug("client id is %s", toCStr(getUniqueClientId()));
 
     account_mgr_->start();
+    
+    // auto update rpc server start
+    SeaDriveRpcServer::instance()->start();
 
     refreshQss();
 
