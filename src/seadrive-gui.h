@@ -6,6 +6,8 @@
 #include <QMessageBox>
 #include <QProcess>
 
+#include "rpc/rpc-server.h"
+
 class DaemonManager;
 class SeafileRpcClient;
 class AccountManager;

@@ -24,6 +24,7 @@
 
 #include "i18n.h"
 #include "utils/utils.h"
+#include "utils/uninstall-helpers.h"
 
 namespace {
 
@@ -82,6 +83,7 @@ void handleCommandLineOption(int argc, char *argv[])
     static const char *short_options = "o:L:";
     static const struct option long_options[] = {
         { "fuse-opts", required_argument, NULL, 'o' },
+	{ "stop", no_argument, NULL, 'K'},
 #if defined(Q_OS_WIN32)
         { "drive-letter", required_argument, NULL, 'L' },
 #endif
@@ -108,6 +110,9 @@ void handleCommandLineOption(int argc, char *argv[])
         case 'D':
             msleep(1000);
             break;
+	case 'K':
+	    do_stop_app();
+	    exit(0);	
         default:
             exit(1);
         }
@@ -139,6 +144,10 @@ int main(int argc, char *argv[])
     // initialize i18n settings
     I18NHelper::getInstance()->init();
 
+    // start applet
+    SeadriveGui mGui;
+    gui = &mGui;
+
     handleCommandLineOption(argc, argv);
 
     if (count_process(appName) > 1) {
@@ -152,9 +161,6 @@ int main(int argc, char *argv[])
     awesome = new QtAwesome(qApp);
     awesome->initFontAwesome();
 
-    // start applet
-    SeadriveGui mGui;
-    gui = &mGui;
     QTimer::singleShot(0, gui, SLOT(start()));
 
     // start qt eventloop
