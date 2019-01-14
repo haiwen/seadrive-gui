@@ -115,30 +115,19 @@ bool I18NHelper::setLanguage(int langIndex) {
     qt_translator_->load("qt_" + locale.name(),
                       QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 #endif
-
-#if QT_VERSION >= QT_VERSION_CHECK(4, 8, 0) && !defined(Q_OS_MAC)
-    QString lang = QLocale::languageToString(locale.language());
-
-    if (lang != "en") {
-        bool success;
-        success = my_translator_->load(locale,            // locale
-                                       "",                // file name
-                                       "seadrive_",       // prefix
-                                       ":/i18n/",         // folder
-                                       ".qm");            // suffix
-        
-	if (!success) {
-            // QString pwd = QString("/home/kylin/seafile/seadrive-gui/i18n/seadrive_%1.qm").arg(langs[langIndex]);
-            QString pwd = QString(":/i18n/seadrive_%1.qm").arg(langs[langIndex]);
-            success = my_translator_->load(pwd);
+QString lang = QLocale::languageToString(locale.language());
+    printf("lang = %s, translation = %s, locale.name() = %s\n",
+           lang.toUtf8().data(),
+           langs[langIndex],
+           locale.name().toUtf8().data()
+        );
+    if (lang != "English") {
+        if (!my_translator_->load(locale, ":/i18n/seadrive_")) {
+            printf ("failed to load in the first way\n");
+            my_translator_->load(
+                QString(":/i18n/seadrive_%1.qm").arg(locale.name()));
         }
     }
-#else
-    // note:
-    //      locales[pos].name() != langs[pos]
-    //      e.g. "tr_TR" != "tr"
-    my_translator_->load(QString(":/i18n/seadrive_%1.qm").arg(langs[langIndex]));
-#endif
 
     return true;
 }
