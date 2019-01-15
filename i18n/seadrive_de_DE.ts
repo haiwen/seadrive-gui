@@ -898,7 +898,7 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     <message>
         <location filename="../src/ui/seafilelink-dialog.cpp" line="60"/>
         <source>%1 Internal Link:</source>
-        <translation type="unfinished"/>
+        <translation>%1 interner Link:</translation>
     </message>
     <message>
         <location filename="../src/ui/seafilelink-dialog.cpp" line="117"/>
@@ -1151,7 +1151,7 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
         <location filename="../src/ui/settings-dialog.cpp" line="76"/>
         <location filename="../ui_settings-dialog.h" line="473"/>
         <source>Enable search</source>
-        <translation type="unfinished"/>
+        <translation>Suche aktivieren</translation>
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="80"/>
@@ -1186,17 +1186,17 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="160"/>
         <source>enabled search</source>
-        <translation type="unfinished"/>
+        <translation>Suche aktiviert</translation>
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="160"/>
         <source>disabled search</source>
-        <translation type="unfinished"/>
+        <translation>Suche deaktiviert</translation>
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="164"/>
         <source>You have %1. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>%1 eingestellt. Jetzt Neustart zum Ausführen?</translation>
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="185"/>

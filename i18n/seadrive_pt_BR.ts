@@ -19,17 +19,17 @@
     <message>
         <location filename="../ui_about-dialog.h" line="130"/>
         <source>About</source>
-        <translation type="unfinished"/>
+        <translation>Sobre</translation>
     </message>
     <message>
         <location filename="../ui_about-dialog.h" line="131"/>
         <source>Check For Updates</source>
-        <translation type="unfinished"/>
+        <translation>Verificar atualizações</translation>
     </message>
     <message>
         <location filename="../ui_about-dialog.h" line="132"/>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -70,7 +70,7 @@
     <message>
         <location filename="../ui_disk-letter-dialog.h" line="202"/>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -83,27 +83,27 @@
     <message>
         <location filename="../ui_filter-menu.h" line="111"/>
         <source>Text file    </source>
-        <translation type="unfinished"/>
+        <translation>Arquivo Texto</translation>
     </message>
     <message>
         <location filename="../ui_filter-menu.h" line="112"/>
         <source>Document    </source>
-        <translation type="unfinished"/>
+        <translation>Documento</translation>
     </message>
     <message>
         <location filename="../ui_filter-menu.h" line="113"/>
         <source>Image    </source>
-        <translation type="unfinished"/>
+        <translation>Imagem</translation>
     </message>
     <message>
         <location filename="../ui_filter-menu.h" line="114"/>
         <source>Video    </source>
-        <translation type="unfinished"/>
+        <translation>Vídeo</translation>
     </message>
     <message>
         <location filename="../ui_filter-menu.h" line="115"/>
         <source>Audio    </source>
-        <translation type="unfinished"/>
+        <translation>Audio</translation>
     </message>
     <message>
         <location filename="../ui_filter-menu.h" line="116"/>

@@ -898,7 +898,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/ui/seafilelink-dialog.cpp" line="60"/>
         <source>%1 Internal Link:</source>
-        <translation type="unfinished"/>
+        <translation>%1 Внутренняя ссылка:</translation>
     </message>
     <message>
         <location filename="../src/ui/seafilelink-dialog.cpp" line="117"/>
@@ -1152,7 +1152,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <location filename="../src/ui/settings-dialog.cpp" line="76"/>
         <location filename="../ui_settings-dialog.h" line="473"/>
         <source>Enable search</source>
-        <translation type="unfinished"/>
+        <translation>Включить поиск</translation>
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="80"/>
@@ -1187,17 +1187,17 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="160"/>
         <source>enabled search</source>
-        <translation type="unfinished"/>
+        <translation>поиск включен</translation>
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="160"/>
         <source>disabled search</source>
-        <translation type="unfinished"/>
+        <translation>поиск отключен</translation>
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="164"/>
         <source>You have %1. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>Вы %1. Перезапустить приложение сейчас?</translation>
     </message>
     <message>
         <location filename="../src/ui/settings-dialog.cpp" line="185"/>
