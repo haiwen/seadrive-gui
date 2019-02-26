@@ -54,6 +54,9 @@ namespace {
 const int kRefreshInterval = 1000;
 const int kRotateTrayIconIntervalMilli = 250;
 const int kMessageDisplayTimeMSecs = 5000;
+#if defined (Q_OS_WIN32)
+const char* const kPreconfigureUseKerberosLogin = "PreconfigureUseKerberosLogin";
+#endif
 
 #ifdef Q_OS_MAC
 void darkmodeWatcher(bool /*new Value*/) {
@@ -275,6 +278,13 @@ void SeafileTrayIcon::prepareContextMenu()
     login_action_->setIconVisibleInMenu(true);
     connect(login_action_, SIGNAL(triggered()), this, SLOT(showLoginDialog()));
     account_menu_->addAction(login_action_);
+#if defined(Q_OS_WIN32)
+    QVariant use_kerberos_login = gui->readPreconfigureExpandedString(kPreconfigureUseKerberosLogin, "0");
+    bool is_use_kerberos_login = use_kerberos_login.toBool();
+    if (is_use_kerberos_login) {
+        account_menu_->removeAction(login_action_);
+    }
+#endif
 }
 
 void SeafileTrayIcon::createGlobalMenuBar()

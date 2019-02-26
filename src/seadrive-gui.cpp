@@ -18,6 +18,7 @@
 #include "utils/log.h"
 #include "ui/tray-icon.h"
 #include "ui/login-dialog.h"
+#include "win-sso/auto-logon-dialog.h"
 #include "ui/settings-dialog.h"
 #include "ui/about-dialog.h"
 #include "daemon-mgr.h"
@@ -189,6 +190,7 @@ const char *const kPreconfigureUserToken = "PreconfigureUserToken";
 const char *const kPreconfigureServerAddr = "PreconfigureServerAddr";
 const char *const kPreconfigureComputerName = "PreconfigureComputerName";
 const char* const kHideConfigurationWizard = "HideConfigurationWizard";
+const char* const kPreconfigureUseKerberosLogin = "PreconfigureUseKerberosLogin";
 
 #if defined(Q_OS_WIN32)
 const char *const kSeafileConfigureFileName = "seafile.ini";
@@ -355,6 +357,12 @@ void SeadriveGui::onDaemonStarted()
             QString token = readPreconfigureExpandedString(kPreconfigureUserToken);
             QString url = readPreconfigureExpandedString(kPreconfigureServerAddr);
             QString computer_name = readPreconfigureExpandedString(kPreconfigureComputerName, settingsManager()->getComputerName());
+            bool is_use_kerberos_login = false;
+#if defined(Q_OS_WIN32)
+            QVariant use_kerberos_login = readPreconfigureExpandedString(kPreconfigureUseKerberosLogin, "0");
+            is_use_kerberos_login = use_kerberos_login.toBool();
+#endif
+
             if (!computer_name.isEmpty())
                 settingsManager()->setComputerName(computer_name);
             if (!username.isEmpty() && !token.isEmpty() && !url.isEmpty()) {
@@ -369,8 +377,18 @@ void SeadriveGui::onDaemonStarted()
             if (readPreconfigureEntry(kHideConfigurationWizard).toInt())
                 break;
 
-            LoginDialog login_dialog;
-            login_dialog.exec();
+            if (!is_use_kerberos_login) {
+                LoginDialog login_dialog;
+                login_dialog.exec();
+            } else {
+#if defined(Q_OS_WIN32)
+                AutoLogonDialog dialog;
+                if (dialog.exec() != QDialog::Accepted) {
+                    qWarning("auto logon failed, fall back to manual login");
+                    warningBox(tr("Auto logon failed, fall back to manual login"));
+                }
+#endif
+            }
         } while (0);
     } else {
         if (!account_mgr_->accounts().empty()) {

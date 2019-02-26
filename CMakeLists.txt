@@ -194,6 +194,22 @@ if (APPLE)
     SET(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
 endif()
 
+####################
+###### begin: kerbose sso
+####################
+IF (WIN32)
+  # kerbose sso specific source files for seadrive-gui
+  SET(platform_specific_moc_headers ${platform_specific_moc_headers} src/win-sso/auto-logon-dialog.h)
+  SET(platform_specific_sources ${platform_specific_sources}
+    src/win-sso/auto-logon-dialog.cpp
+    src/win-sso/win-http-request.cpp
+  )
+  SET(EXTRA_LIBS ${EXTRA_LIBS} -lwininet -lurlmon)
+ENDIF(WIN32)
+####################
+###### end: kerbose sso
+####################
+
 # MOC FILES
 SET(moc_headers
   src/account-mgr.h
@@ -498,6 +514,7 @@ FOREACH(LANGUAGE ${LANGUAGES})
     COMMAND ${QT_LUPDATE_EXECUTABLE} ${SEAFILE_TRANSLATE_SOURCES}
         -ts "${PROJECT_SOURCE_DIR}/i18n/seadrive_${LANGUAGE}.ts"
         -I "${PROJECT_SOURCE_DIR}/src"
+        -I  ${PROJECT_SOURCE_DIR}/src/win-sso
         -locations none
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
 
