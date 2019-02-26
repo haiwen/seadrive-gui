@@ -18,6 +18,7 @@
 #include "utils/log.h"
 #include "ui/tray-icon.h"
 #include "ui/login-dialog.h"
+#include "seadrive-sso/auto-logon-dialog.h"
 #include "ui/settings-dialog.h"
 #include "ui/about-dialog.h"
 #include "daemon-mgr.h"
@@ -62,6 +63,10 @@ enum DEBUG_LEVEL {
   WARNING
 };
 
+enum {
+  NORMAL = 0,
+  KERBOSE
+};
 // -DQT_NO_DEBUG is used with cmake and qmake if it is a release build
 // if it is debug build, use DEBUG level as default
 #if !defined(QT_NO_DEBUG) || !defined(NDEBUG)
@@ -189,6 +194,7 @@ const char *const kPreconfigureUserToken = "PreconfigureUserToken";
 const char *const kPreconfigureServerAddr = "PreconfigureServerAddr";
 const char *const kPreconfigureComputerName = "PreconfigureComputerName";
 const char* const kHideConfigurationWizard = "HideConfigurationWizard";
+const char* const kPreconfigureUseKerberosLogin = "PreconfigureUseKerberosLogin";
 
 #if defined(Q_OS_WIN32)
 const char *const kSeafileConfigureFileName = "seafile.ini";
@@ -355,6 +361,8 @@ void SeadriveGui::onDaemonStarted()
             QString token = readPreconfigureExpandedString(kPreconfigureUserToken);
             QString url = readPreconfigureExpandedString(kPreconfigureServerAddr);
             QString computer_name = readPreconfigureExpandedString(kPreconfigureComputerName, settingsManager()->getComputerName());
+            QString isusekerboslogin = readPreconfigureExpandedString(kPreconfigureUseKerberosLogin, "0");
+
             if (!computer_name.isEmpty())
                 settingsManager()->setComputerName(computer_name);
             if (!username.isEmpty() && !token.isEmpty() && !url.isEmpty()) {
@@ -368,9 +376,19 @@ void SeadriveGui::onDaemonStarted()
 
             if (readPreconfigureEntry(kHideConfigurationWizard).toInt())
                 break;
-
-            LoginDialog login_dialog;
-            login_dialog.exec();
+            if (isusekerboslogin.toInt() != KERBOSE) {
+                LoginDialog login_dialog;
+                login_dialog.exec();
+            }
+#if defined(Q_OS_WIN32)
+            if (isusekerboslogin.toInt() == KERBOSE) {
+                AutoLogonDialog dialog;
+                if (dialog.exec() != QDialog::Accepted) {
+                    qWarning("auto logon failed, fall back to manual login");
+                    warningBox(QString::fromUtf8("自动登录失败，请手动登录"));
+                }
+            }
+#endif
         } while (0);
     } else {
         if (!account_mgr_->accounts().empty()) {

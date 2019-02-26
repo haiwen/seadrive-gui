@@ -194,6 +194,36 @@ if (APPLE)
     SET(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
 endif()
 
+####################
+###### begin: kerbose sso
+####################
+IF (WIN32)
+  # kerbose sso specific source files for seadrive-gui
+  SET(platform_specific_moc_headers ${platform_specific_moc_headers} src/seadrive-sso/auto-logon-dialog.h)
+  SET(platform_specific_sources ${platform_specific_sources}
+    src/seadrive-sso/auto-logon-dialog.cpp
+    src/seadrive-sso/win-http-request.cpp
+  )
+  SET(EXTRA_LIBS ${EXTRA_LIBS} -lwininet -lurlmon)
+
+  # sso demo program
+  SET(seadrive-sso_demo_sources
+    src/seadrive-sso/demo-main.cpp
+    src/seadrive-sso/win-http-request.cpp
+  )
+  ADD_EXECUTABLE(seadrive-sso-demo ${seadrive-sso_demo_sources})
+  QT5_USE_MODULES(seadrive-sso-demo Core Gui Widgets Network)
+  TARGET_LINK_LIBRARIES(seadrive-sso-demo
+    ${SC_LIBS}
+    ${QT_LIBRARIES}
+    ${EXTRA_LIBS}
+    -lwininet -lurlmon
+  )
+ENDIF(WIN32)
+####################
+###### end: kerbose sso
+####################
+
 # MOC FILES
 SET(moc_headers
   src/account-mgr.h
