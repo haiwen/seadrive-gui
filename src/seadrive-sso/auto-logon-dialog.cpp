@@ -35,7 +35,7 @@ AutoLogonDialog::AutoLogonDialog(const QUrl& url, QWidget* parent)
     : QDialog(parent), login_url_(url)
 {
     setWindowTitle(
-        QString("%1 %2").arg(getBrand()).arg(QString::fromUtf8("自动登录")));
+        QString("%1 %2").arg(getBrand()).arg(tr("auto login")));
     setWindowIcon(QIcon(":/images/seafile.png"));
     QHBoxLayout* layout = new QHBoxLayout;
 
@@ -43,7 +43,7 @@ AutoLogonDialog::AutoLogonDialog(const QUrl& url, QWidget* parent)
     lspacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     layout->addWidget(lspacer);
 
-    QLabel* label = new QLabel(QString::fromUtf8("自动登录中， 请稍候"));
+    QLabel* label = new QLabel(tr("auto logining, please wait a moment"));
     layout->addWidget(label);
 
     QWidget* rspacer = new QWidget;
@@ -79,7 +79,7 @@ QUrl AutoLogonDialog::readServerUrlFromRegistry()
     url = reg.stringValue();
     if (!url.isValid()) {
         errorAndExit(
-            QString::fromUtf8("服务器地址格式错误: %1").arg(reg.stringValue()));
+            tr("server address format error: %1").arg(reg.stringValue()));
     }
     return url;
 }
@@ -99,7 +99,7 @@ QUrl AutoLogonDialog::readServerUrlFromConfigFile(const QString& key)
     url = value.toString();
     if (!url.isValid()) {
         errorAndExit(
-            QString::fromUtf8("服务器地址格式错误：%1").arg(url.toString()));
+            tr("server address format error: %1").arg(url.toString()));
     }
     return url;
 }
@@ -110,8 +110,8 @@ QUrl AutoLogonDialog::askForServerUrl()
     QString str;
     bool ok;
     while (true) {
-        str = QInputDialog::getText(this, QString::fromUtf8("请输入服务器地址"),
-                                    QString::fromUtf8("地址"),
+        str = QInputDialog::getText(this, tr("Please input server address"),
+                                    tr("address"),
                                     QLineEdit::Normal, str, &ok)
                   .trimmed();
         if (!ok) {
@@ -120,12 +120,12 @@ QUrl AutoLogonDialog::askForServerUrl()
             return QUrl();
         }
         if (str.isEmpty()) {
-            warn(QString::fromUtf8("地址不能为空"));
+            warn(tr("address cannot empty"));
             continue;
         }
         url = QUrl(str);
         if (!url.isValid()) {
-            warn(QString::fromUtf8("错误的地址"));
+            warn(tr("server address error"));
             continue;
         }
         return url;
@@ -167,7 +167,7 @@ void AutoLogonDialog::startAutoLogon()
         reject();
         return;
     }
-    login_url_.setPath("/sso");
+    login_url_.setPath("//sso");
     qWarning("auto logon to %s (source: %s)",
              login_url_.toString().toUtf8().data(),
              source.toUtf8().data());
@@ -228,7 +228,7 @@ Account AutoLogonDialog::parseAccount(const QString& cookie_value)
 
 void AutoLogonDialog::errorAndExit(const QString& msg)
 {
-    QString content = QString::fromUtf8("登录失败");
+    QString content = tr("login failed");
     if (!msg.isEmpty()) {
         content += "\n" + msg;
     }

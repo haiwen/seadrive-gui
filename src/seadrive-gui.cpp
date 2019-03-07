@@ -385,7 +385,7 @@ void SeadriveGui::onDaemonStarted()
                 AutoLogonDialog dialog;
                 if (dialog.exec() != QDialog::Accepted) {
                     qWarning("auto logon failed, fall back to manual login");
-                    warningBox(QString::fromUtf8("自动登录失败，请手动登录"));
+                    warningBox(tr("auto logon failed, fall back to manual login"));
                 }
             }
 #endif

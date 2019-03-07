@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="zh_CN">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -33,6 +31,45 @@
     <message>
         <source>failed to open account database</source>
         <translation>打开帐户数据库失败</translation>
+    </message>
+</context>
+<context>
+    <name>AutoLogonDialog</name>
+    <message>
+        <source>auto login</source>
+        <translation>自动登录</translation>
+    </message>
+    <message>
+        <source>auto logining, please wait a moment</source>
+        <translation>自动登录中，请稍后</translation>
+    </message>
+    <message>
+        <source>server address format error: %1</source>
+        <translation>服务器地址格式错误：%1</translation>
+    </message>
+    <message>
+        <source>Please input server address</source>
+        <translation>请输入服务器地址</translation>
+    </message>
+    <message>
+        <source>address</source>
+        <translation>地址</translation>
+    </message>
+    <message>
+        <source>address cannot empty</source>
+        <translation>地址不能为空</translation>
+    </message>
+    <message>
+        <source>server address error</source>
+        <translation>错误的地址</translation>
+    </message>
+    <message>
+        <source>Failed to save current account</source>
+        <translation>保存当前账号失败</translation>
+    </message>
+    <message>
+        <source>login failed</source>
+        <translation>登录失败</translation>
     </message>
 </context>
 <context>
@@ -696,6 +733,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>failed to read %1</source>
         <translation>读取 %1 时出错</translation>
     </message>
+    <message>
+        <source>auto logon failed, fall back to manual login</source>
+        <translation>自动登录失败，请手动登录</translation>
+    </message>
 </context>
 <context>
     <name>SeafileLinkDialog</name>
@@ -1070,10 +1111,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>端口：</translation>
     </message>
     <message>
-        <source>0</source>
-        <translation type="vanished">0</translation>
-    </message>
-    <message>
         <source>Username:</source>
         <translation>用户名：</translation>
     </message>
@@ -1099,7 +1136,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Enable search in finder</source>
-        <translation type="unfinished"></translation>
+        <translation>Finder中启用搜索</translation>
     </message>
 </context>
 <context>

@@ -36,6 +36,45 @@
     </message>
 </context>
 <context>
+    <name>AutoLogonDialog</name>
+    <message>
+        <source>Failed to save current account</source>
+        <translation type="unfinished">Mistókst að vista reikninginn</translation>
+    </message>
+    <message>
+        <source>auto login</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>auto logining, please wait a moment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>server address format error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please input server address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>address cannot empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>server address error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>login failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -693,6 +732,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>failed to read %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>auto logon failed, fall back to manual login</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
