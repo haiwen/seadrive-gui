@@ -167,16 +167,16 @@ void AutoLogonDialog::startAutoLogon()
         reject();
         return;
     }
-    login_url_.setPath("//sso");
+    QUrl sso_url(QString("%1/sso").arg(login_url_.toString()));
     qWarning("auto logon to %s (source: %s)",
-             login_url_.toString().toUtf8().data(),
+             sso_url.toString().toUtf8().data(),
              source.toUtf8().data());
 
     QHash<QString, QString> params = ::getSeafileLoginParams(
         gui->settingsManager()->getComputerName(), "krb5_");
     params["from_desktop"] = "true";
 
-    WinInetHttpReqest request(::includeQueryParams(login_url_, params));
+    WinInetHttpReqest request(::includeQueryParams(sso_url, params));
     WinInetHttpResponse response;
 
     if (!request.send(&response)) {
