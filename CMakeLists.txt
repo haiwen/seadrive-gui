@@ -205,20 +205,6 @@ IF (WIN32)
     src/seadrive-sso/win-http-request.cpp
   )
   SET(EXTRA_LIBS ${EXTRA_LIBS} -lwininet -lurlmon)
-
-  # sso demo program
-  SET(seadrive-sso_demo_sources
-    src/seadrive-sso/demo-main.cpp
-    src/seadrive-sso/win-http-request.cpp
-  )
-  ADD_EXECUTABLE(seadrive-sso-demo ${seadrive-sso_demo_sources})
-  QT5_USE_MODULES(seadrive-sso-demo Core Gui Widgets Network)
-  TARGET_LINK_LIBRARIES(seadrive-sso-demo
-    ${SC_LIBS}
-    ${QT_LIBRARIES}
-    ${EXTRA_LIBS}
-    -lwininet -lurlmon
-  )
 ENDIF(WIN32)
 ####################
 ###### end: kerbose sso
