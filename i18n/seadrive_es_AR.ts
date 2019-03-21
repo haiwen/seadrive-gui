@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="es_AR">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="es_AR" version="2.1">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -65,7 +63,7 @@
     <name>FilterMenu</name>
     <message>
         <source>FilterMenu</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Text file    </source>
@@ -630,7 +628,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     <name>SeadriveGui</name>
     <message>
         <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to initialize: failed to install kernel driver</source>
@@ -696,6 +694,10 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
         <source>failed to read %1</source>
         <translation>fallo al leer %1</translation>
     </message>
+    <message>
+        <source>Auto logon failed, fall back to manual login</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SeafileLinkDialog</name>
@@ -709,7 +711,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>%1 Internal Link:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>OK</source>
@@ -911,7 +913,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Enable search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>None</source>
@@ -939,19 +941,19 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>enabled search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>disabled search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>You have %1. Restart to apply it?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>You have changed drive access option. Restart to apply it?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Please choose the cache folder</source>
@@ -1031,7 +1033,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Only allow current user to access the drive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cache clean interval (in minutes):</source>
@@ -1070,10 +1072,6 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
         <translation>Puerto:</translation>
     </message>
     <message>
-        <source>0</source>
-        <translation type="vanished">0</translation>
-    </message>
-    <message>
         <source>Username:</source>
         <translation>Usuario:</translation>
     </message>
@@ -1099,7 +1097,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Enable search in finder</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

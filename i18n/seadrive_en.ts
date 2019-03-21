@@ -694,6 +694,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>failed to read %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Auto logon failed, fall back to manual login</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SeafileLinkDialog</name>

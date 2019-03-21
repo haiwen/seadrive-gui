@@ -31,16 +31,18 @@ public:
     qint64 lastVisited;
     bool isShibboleth;
     bool isAutomaticLogin;
+    bool isKerberos;
 
     ~Account();
     Account() : serverInfoRequest(NULL),
                 serverInfo(),
                 lastVisited(0),
                 isShibboleth(false),
-                isAutomaticLogin(false) {}
+                isAutomaticLogin(false),
+                isKerberos(false) {}
     Account(QUrl serverUrl, QString username, QString token,
             qint64 lastVisited=0, bool isShibboleth = false,
-            bool isAutomaticLogin = true)
+            bool isAutomaticLogin = true, bool isKerberos = false)
         : serverInfoRequest(NULL),
           serverInfo(),
           accountInfo(),
@@ -49,7 +51,8 @@ public:
           token(token),
           lastVisited(lastVisited),
           isShibboleth(isShibboleth),
-          isAutomaticLogin(isAutomaticLogin) {}
+          isAutomaticLogin(isAutomaticLogin),
+          isKerberos(isKerberos) {}
 
     Account(const Account &rhs)
       : serverInfoRequest(NULL),
@@ -60,7 +63,8 @@ public:
         token(rhs.token),
         lastVisited(rhs.lastVisited),
         isShibboleth(rhs.isShibboleth),
-        isAutomaticLogin(rhs.isAutomaticLogin)
+        isAutomaticLogin(rhs.isAutomaticLogin),
+        isKerberos(rhs.isKerberos)
     {
     }
 
@@ -74,6 +78,7 @@ public:
         lastVisited = rhs.lastVisited;
         isShibboleth = rhs.isShibboleth;
         isAutomaticLogin = rhs.isAutomaticLogin;
+        isKerberos = rhs.isKerberos;
         return *this;
     }
 

@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="it">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="it" version="2.1">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -630,7 +628,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <name>SeadriveGui</name>
     <message>
         <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to initialize: failed to install kernel driver</source>
@@ -696,6 +694,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>failed to read %1</source>
         <translation>Impossibile leggere %1</translation>
     </message>
+    <message>
+        <source>Auto logon failed, fall back to manual login</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SeafileLinkDialog</name>
@@ -709,7 +711,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>%1 Internal Link:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>OK</source>
@@ -911,7 +913,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Enable search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>None</source>
@@ -939,19 +941,19 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>enabled search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>disabled search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>You have %1. Restart to apply it?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>You have changed drive access option. Restart to apply it?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Please choose the cache folder</source>
@@ -1031,7 +1033,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Only allow current user to access the drive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cache clean interval (in minutes):</source>
@@ -1070,10 +1072,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>Porta:</translation>
     </message>
     <message>
-        <source>0</source>
-        <translation type="vanished">0</translation>
-    </message>
-    <message>
         <source>Username:</source>
         <translation>Nome Utente:</translation>
     </message>
@@ -1099,7 +1097,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Enable search in finder</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

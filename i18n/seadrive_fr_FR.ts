@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="fr_FR">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="fr_FR" version="2.1">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -695,6 +693,10 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
         <source>failed to read %1</source>
         <translation>Impossible de lire %1</translation>
     </message>
+    <message>
+        <source>Auto logon failed, fall back to manual login</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SeafileLinkDialog</name>
@@ -1069,10 +1071,6 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
         <translation>Port :</translation>
     </message>
     <message>
-        <source>0</source>
-        <translation type="vanished">0</translation>
-    </message>
-    <message>
         <source>Username:</source>
         <translation>Identifiant :</translation>
     </message>
@@ -1098,7 +1096,7 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     </message>
     <message>
         <source>Enable search in finder</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer la recherche dans le Finder</translation>
     </message>
 </context>
 <context>

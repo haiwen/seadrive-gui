@@ -18,6 +18,10 @@
 #include "settings-mgr.h"
 #include "account-info-service.h"
 
+#if defined (Q_OS_WIN32)
+#include "win-sso/auto-logon-dialog.h"
+#endif
+
 namespace {
 const char *kVersionKeyName = "version";
 const char *kFeaturesKeyName = "features";
@@ -34,6 +38,17 @@ bool getShibbolethColumnInfoCallBack(sqlite3_stmt *stmt, void *data)
 
     if (0 == strcmp("isShibboleth", column_name))
         *has_shibboleth_column = true;
+
+    return true;
+}
+
+bool getKerberosColumnInfoCallBack(sqlite3_stmt *stmt, void *data)
+{
+    bool *has_kerberos_column = static_cast<bool*>(data);
+    const char *column_name = (const char *)sqlite3_column_text (stmt, 1);
+
+    if (0 == strcmp("isKerberos", column_name))
+        *has_kerberos_column = true;
 
     return true;
 }
@@ -57,6 +72,16 @@ void updateAccountDatabaseForColumnShibbolethUrl(struct sqlite3* db)
     sql = "ALTER TABLE Accounts ADD COLUMN isShibboleth INTEGER";
     if (!has_shibboleth_column && sqlite_query_exec (db, sql) < 0)
         qCritical("unable to create isShibboleth column\n");
+}
+
+void updateAccountDatabaseForColumnKerberosUrl(struct sqlite3* db)
+{
+    bool has_kerberos_column = false;
+    const char* sql = "PRAGMA table_info(Accounts);";
+    sqlite_foreach_selected_row (db, sql, getKerberosColumnInfoCallBack, &has_kerberos_column);
+    sql = "ALTER TABLE Accounts ADD COLUMN isKerberos INTEGER";
+    if (!has_kerberos_column && sqlite_query_exec (db, sql) < 0)
+        qCritical("unable to create isKerberos column\n");
 }
 
 void updateAccountDatabaseForColumnAutomaticLogin(struct sqlite3* db)
@@ -149,6 +174,7 @@ int AccountManager::start()
 
     updateAccountDatabaseForColumnShibbolethUrl(db);
     updateAccountDatabaseForColumnAutomaticLogin(db);
+    updateAccountDatabaseForColumnKerberosUrl(db);
 
     // create ServerInfo table
     sql = "CREATE TABLE IF NOT EXISTS ServerInfo ("
@@ -179,6 +205,7 @@ bool AccountManager::loadAccountsCB(sqlite3_stmt *stmt, void *data)
     qint64 atime = (qint64)sqlite3_column_int64 (stmt, 3);
     int isShibboleth = sqlite3_column_int (stmt, 4);
     int isAutomaticLogin = sqlite3_column_int (stmt, 5);
+    int isKerberos = sqlite3_column_int (stmt, 6);
 
     if (!token) {
         token = "";
@@ -186,7 +213,7 @@ bool AccountManager::loadAccountsCB(sqlite3_stmt *stmt, void *data)
 
     Account account = Account(QUrl(QString(url)), QString(username),
                               QString(token), atime, isShibboleth != 0,
-                              isAutomaticLogin != 0);
+                              isAutomaticLogin != 0, isKerberos != 0);
     char* zql = sqlite3_mprintf("SELECT key, value FROM ServerInfo WHERE url = %Q AND username = %Q", url, username);
     sqlite_foreach_selected_row (userdata->db, zql, loadServerInfoCB, &account);
     sqlite3_free(zql);
@@ -222,7 +249,7 @@ bool AccountManager::loadServerInfoCB(sqlite3_stmt *stmt, void *data)
 
 const std::vector<Account>& AccountManager::loadAccounts()
 {
-    const char *sql = "SELECT url, username, token, lastVisited, isShibboleth, AutomaticLogin "
+    const char *sql = "SELECT url, username, token, lastVisited, isShibboleth, AutomaticLogin, isKerberos "
                       "FROM Accounts ORDER BY lastVisited DESC";
     accounts_.clear();
     UserData userdata;
@@ -255,8 +282,8 @@ int AccountManager::saveAccount(const Account& account)
     updateServerInfo(0);
 
     char *zql = sqlite3_mprintf(
-        "REPLACE INTO Accounts(url, username, token, lastVisited, isShibboleth, AutomaticLogin)"
-        "VALUES (%Q, %Q, %Q, %Q, %Q, %Q) ",
+        "REPLACE INTO Accounts(url, username, token, lastVisited, isShibboleth, AutomaticLogin, isKerberos)"
+        "VALUES (%Q, %Q, %Q, %Q, %Q, %Q, %Q) ",
         // url
         new_account.serverUrl.toEncoded().data(),
         // username
@@ -268,7 +295,9 @@ int AccountManager::saveAccount(const Account& account)
         // isShibboleth
         QString::number(new_account.isShibboleth).toUtf8().data(),
         // isAutomaticLogin
-        QString::number(new_account.isAutomaticLogin).toUtf8().data());
+        QString::number(new_account.isAutomaticLogin).toUtf8().data(),
+        // isKerberos
+        QString::number(new_account.isKerberos).toUtf8().data());
     sqlite_query_exec(db, zql);
     sqlite3_free(zql);
 
@@ -517,6 +546,13 @@ bool AccountManager::reloginAccount(const Account &account)
             accepted = shib_dialog.exec() == QDialog::Accepted;
             break;
         }
+#if defined(Q_OS_WIN32)
+        if (account.isKerberos) {
+            AutoLogonDialog dialog;
+            accepted = dialog.exec() == QDialog::Accepted;
+            break;
+        }
+#endif
         LoginDialog dialog;
         dialog.initFromAccount(account);
         accepted = dialog.exec() == QDialog::Accepted;

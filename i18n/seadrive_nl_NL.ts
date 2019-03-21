@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="nl_NL">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl_NL" version="2.1">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -9,11 +7,11 @@
     </message>
     <message>
         <source>&lt;h4&gt;Seafile Drive Client %2&lt;/h4&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&lt;h5&gt; REV %1 &lt;/h5&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>About</source>
@@ -43,53 +41,53 @@
     </message>
     <message>
         <source>%1 exited unexpectedly</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>DiskLetterDialog</name>
     <message>
         <source>Choose the disk letter</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Your files would appear in a dedicated disk in your computer. Please choose the letter:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">Ok</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>FilterMenu</name>
     <message>
         <source>FilterMenu</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Text file    </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Document    </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Image    </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Video    </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Audio    </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Markdown</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -129,7 +127,7 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     <name>LoadMoreButton</name>
     <message>
         <source>load more</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -140,7 +138,7 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     </message>
     <message>
         <source>Single Sign On</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Re-login</source>
@@ -242,7 +240,7 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     </message>
     <message>
         <source>Automatic Login</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>status text</source>
@@ -285,59 +283,59 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is being uploaded</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Starting to move &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Starting to move &quot;%1&quot; to &quot;%2&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Successfully moved &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Successfully moved &quot;%1&quot; to &quot;%2&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to move &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to move &quot;%1&quot; to &quot;%2&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Download file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Start to download file &quot;%1&quot; </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>file &quot;%1&quot; has been downloaded </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to create file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>You can&apos;t create files in the %1 drive directly</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to delete folder</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -352,19 +350,19 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     </message>
     <message>
         <source>Folder %1 is locked by other programs</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Some folder is locked by other programs</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>File %1 is locked by another user</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Some file is locked by another user</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid path %1</source>
@@ -372,7 +370,7 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     </message>
     <message>
         <source>Trying to access an invalid path</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Error when indexing file %1</source>
@@ -384,7 +382,7 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     </message>
     <message>
         <source>You don&apos;t have enough permission for this library</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Network error</source>
@@ -392,15 +390,15 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     </message>
     <message>
         <source>Failed to resolve network proxy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to resolve remote server</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to connect to server</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>SSL error</source>
@@ -408,15 +406,15 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     </message>
     <message>
         <source>Error in network transmission</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Timeout in network transmission</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to handle http redirection</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Server internal error</source>
@@ -424,11 +422,11 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     </message>
     <message>
         <source>Local data is corrupt</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to write local data</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unknown error</source>
@@ -612,11 +610,11 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     </message>
     <message>
         <source>%1 Client is already running</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Choose the disk letter for %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -630,39 +628,39 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     <name>SeadriveGui</name>
     <message>
         <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to initialize: failed to install kernel driver</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Faild to choose a disk letter</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>failed to add default account</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive folder</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive logs folder</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive data folder</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to initialize log: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>OK</source>
@@ -682,19 +680,23 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     </message>
     <message>
         <source>failed to save client id</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>failed to access %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>incorrect client id</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>failed to read %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Auto logon failed, fall back to manual login</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -709,7 +711,7 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     </message>
     <message>
         <source>%1 Internal Link:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>OK</source>
@@ -720,7 +722,7 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     <name>SeafileRpcClient</name>
     <message>
         <source>internal error: failed to connect to seadrive daemon</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -731,7 +733,7 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     </message>
     <message>
         <source>Search files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Settings</source>
@@ -739,7 +741,7 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     </message>
     <message>
         <source>Show file sync errors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Open %1 &amp;folder</source>
@@ -795,19 +797,19 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     </message>
     <message>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Do you want to remove the local cache?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to remove local cache of account %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to delete account</source>
@@ -815,7 +817,7 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     </message>
     <message>
         <source>Up %1, Down %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>About %1</source>
@@ -823,7 +825,7 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     </message>
     <message>
         <source>Transfer progress</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>open %1 log folder</source>
@@ -838,61 +840,61 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     <name>SearchDialog</name>
     <message>
         <source>Search files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>All file types</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Custom file type</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>retry</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to search&lt;br/&gt;Please %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No result found</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>SearchItemsTableModel</name>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Last Modified</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Kind</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>SearchItemsTableView</name>
     <message>
         <source>&amp;Open the file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Show in folder</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>File not found, maybe not synchorized yet</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -907,11 +909,11 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     </message>
     <message>
         <source>Cache directory:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Enable search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>None</source>
@@ -931,43 +933,43 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     </message>
     <message>
         <source>cache directory</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>You have changed %1. Restart to apply it?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>enabled search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>disabled search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>You have %1. Restart to apply it?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>You have changed drive access option. Restart to apply it?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Please choose the cache folder</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>You have changed disk letter. Restart to apply it?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>language</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>language and cache directory</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>The proxy host address can&apos;t be empty</source>
@@ -1031,19 +1033,19 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     </message>
     <message>
         <source>Only allow current user to access the drive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cache clean interval (in minutes):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cache size limit (in GB):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>select...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Advanced</source>
@@ -1095,7 +1097,7 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     </message>
     <message>
         <source>Enable search in finder</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1136,18 +1138,18 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     <name>SyncErrorsDialog</name>
     <message>
         <source>File Sync Errors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No sync errors.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>SyncErrorsTableModel</name>
     <message>
         <source>Double click to open the library</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Library</source>
@@ -1170,34 +1172,34 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
     <name>TransferItemsTableModel</name>
     <message>
         <source>finished</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Progress</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>TransferProgressDialog</name>
     <message>
         <source>Transfer Progress</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Upload</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Download</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

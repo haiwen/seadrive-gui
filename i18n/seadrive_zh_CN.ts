@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="zh_CN">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -696,6 +694,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>failed to read %1</source>
         <translation>读取 %1 时出错</translation>
     </message>
+    <message>
+        <source>Auto logon failed, fall back to manual login</source>
+        <translation>自动登录失败，请手动登录</translation>
+    </message>
 </context>
 <context>
     <name>SeafileLinkDialog</name>
@@ -1070,10 +1072,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>端口：</translation>
     </message>
     <message>
-        <source>0</source>
-        <translation type="vanished">0</translation>
-    </message>
-    <message>
         <source>Username:</source>
         <translation>用户名：</translation>
     </message>
@@ -1099,7 +1097,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Enable search in finder</source>
-        <translation type="unfinished"></translation>
+        <translation>Finder中启用搜索</translation>
     </message>
 </context>
 <context>

@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ru">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ru" version="2.1">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -696,6 +694,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>failed to read %1</source>
         <translation>Ошибка чтения %1</translation>
     </message>
+    <message>
+        <source>Auto logon failed, fall back to manual login</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SeafileLinkDialog</name>
@@ -1071,10 +1073,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>Порт:</translation>
     </message>
     <message>
-        <source>0</source>
-        <translation type="vanished">0</translation>
-    </message>
-    <message>
         <source>Username:</source>
         <translation>Имя пользователя:</translation>
     </message>
@@ -1100,7 +1098,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Enable search in finder</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить поиск в найденном</translation>
     </message>
 </context>
 <context>
