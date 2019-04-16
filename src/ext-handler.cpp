@@ -627,10 +627,11 @@ void ExtCommandsHandler::handleLockFile(const QStringList& args, bool lock)
         return;
     }
 
-    if (!rpc_client_->markFileLockState(repo_id, path_in_repo, lock)) {
+    if (rpc_client_->markFileLockState(repo_id, path_in_repo, lock) == -1) {
         qWarning() << "failed to lock file " << path;
         return;
     }
+    emit lockFile(repo_id, path_in_repo, lock);
 }
 
 bool ExtCommandsHandler::parseRepoFileInfo(const QString& path,
