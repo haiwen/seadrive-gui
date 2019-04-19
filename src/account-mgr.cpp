@@ -301,7 +301,6 @@ int AccountManager::saveAccount(const Account& account)
     sqlite_query_exec(db, zql);
     sqlite3_free(zql);
 
-    gui->rpcClient()->switchAccount(new_account);
     gui->rpcClient()->seafileSetConfig(
         "client_name", gui->settingsManager()->getComputerName());
 
@@ -473,6 +472,7 @@ void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo 
     for (size_t i = 0; i < accounts_.size(); i++) {
         if (accounts_[i] == account) {
             accounts_[i].serverInfo = info;
+            gui->rpcClient()->switchAccount(account);
             if (i == 0)
                 emit accountsChanged();
             break;
