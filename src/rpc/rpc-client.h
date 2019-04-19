@@ -75,6 +75,7 @@ public:
                            const QString &value);
 
     bool switchAccount(const Account& account);
+    bool switchAccount(const Account& account, bool ispro);
 
     bool deleteAccount(const Account& account, bool remove_cache);
 
