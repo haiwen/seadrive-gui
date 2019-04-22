@@ -416,6 +416,35 @@ bool SeafileRpcClient::switchAccount(const Account& account)
     return true;
 }
 
+bool SeafileRpcClient::switchAccount(const Account& account, bool ispro)
+{
+    GError *error = NULL;
+    QString serverAddr = account.serverUrl.toString();
+    if (serverAddr.endsWith("/")) {
+        serverAddr = serverAddr.left(serverAddr.size() - 1);
+    }
+    searpc_client_call__int(seadrive_rpc_client_,
+                            "seafile_switch_account",
+                            &error,
+                            4,
+                            "string",
+                            toCStr(serverAddr),
+                            "string",
+                            toCStr(account.username),
+                            "string",
+                            toCStr(account.token),
+                            "int",
+                            ispro ? 1 : 0);
+    if (error) {
+        qWarning() << "Unable to switch to account" << account << ":"
+                   << (error->message ? error->message : "");
+        g_error_free(error);
+        return false;
+    }
+    qWarning() << "Switched to account" << account;
+    return true;
+}
+
 bool SeafileRpcClient::deleteAccount(const Account& account, bool remove_cache)
 {
     GError *error = NULL;
