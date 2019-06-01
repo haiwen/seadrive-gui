@@ -54,6 +54,8 @@ QList<SyncError> SyncError::listFromJSON(const json_t *json)
 #define SYNC_ERROR_ID_SERVER                    15
 #define SYNC_ERROR_ID_LOCAL_DATA_CORRUPT        16
 #define SYNC_ERROR_ID_WRITE_LOCAL_DATA          17
+#define SYNC_ERROR_ID_PERM_NOT_SYNCABLE         18
+#define SYNC_ERROR_ID_NO_WRITE_PERMISSION       19
 #define SYNC_ERROR_ID_GENERAL_ERROR             100
 
 QString SyncError::syncErrorIdToErrorStr(int error_id, const QString& path)
@@ -126,6 +128,10 @@ QString SyncError::syncErrorIdToErrorStr(int error_id, const QString& path)
         return QObject::tr("Local data is corrupt");
     case SYNC_ERROR_ID_WRITE_LOCAL_DATA:
         return QObject::tr("Failed to write local data");
+    case SYNC_ERROR_ID_PERM_NOT_SYNCABLE:
+        return QObject::tr("No permission to sync");
+    case SYNC_ERROR_ID_NO_WRITE_PERMISSION:
+        return QObject::tr("No permission to write");
     case SYNC_ERROR_ID_GENERAL_ERROR:
     default:
         return QObject::tr("Unknown error");
