@@ -105,3 +105,6 @@ com.seafile.seadrive.helper
 Cartfile.resolved
 Carthage/Checkouts/
 Carthage/Build/
+*.xcodeproj/
+
+Contents/

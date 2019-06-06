@@ -1,0 +1,68 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.11)
+
+PROJECT(SeaDriveQL)
+SET(PROJECT_VERSION "0.0.1")
+
+IF (NOT (${CMAKE_BUILD_TYPE} MATCHES Release))
+  SET(CMAKE_BUILD_TYPE Debug)
+  ADD_DEFINITIONS(-DDEBUG)
+ENDIF()
+
+SET(CODESIGN_CERTIFICATE "-" CACHE STRING "the certificate to sign code")
+
+MESSAGE(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+
+IF (NOT APPLE)
+    MESSAGE(FATAL_ERROR "Support only on OS X")
+ENDIF()
+
+IF (NOT CMAKE_GENERATOR STREQUAL Xcode)
+    MESSAGE(FATAL_ERROR "Support only for Xcode generator")
+ENDIF()
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/shared.cmake)
+
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
+SET(SEADRIVEQL_SRC
+  ${qlgen_shared_sources}
+  src/gen-preview.m
+  src/gen-thumbnail.m
+  src/main.c
+)
+
+## update en.lproj
+ADD_CUSTOM_TARGET(update-lproj
+  COMMAND genstrings -o en.lproj ${SEADRIVEQL_SRC}
+  DEPENDS ${SEADRIVEQL_SRC})
+
+# Collect resource files
+file(GLOB SEADRIVEQL_LPROJS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "rsrc/*.lproj")
+SET(RESOURCE_FILES
+  ${SEADRIVEQL_LPROJS}
+)
+
+ADD_EXECUTABLE(SeaDriveQL MACOSX_BUNDLE
+  ${SEADRIVEQL_SRC}
+  ${RESOURCE_FILES}
+)
+
+SET_TARGET_PROPERTIES(SeaDriveQL PROPERTIES
+  BUNDLE_EXTENSION "qlgenerator"
+  LINK_FLAGS "-bundle ${CMAKE_EXE_LINKER_FLAGS}"
+  RESOURCE "${RESOURCE_FILES}"
+  MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist
+  # MACOSX_RPATH "@executable_path/../Frameworks @executable_path/../../../../Frameworks"
+  XCODE_ATTRIBUTE_MACOSX_DEPLOYMENT_TARGET "10.10"
+  # XCODE_ATTRIBUTE_LD_RUNPATH_SEARCH_PATHS "@executable_path/../Frameworks @executable_path/../../../../Frameworks"
+  # XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC "YES"
+  XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++11"
+  XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++"
+  XCODE_ATTRIBUTE_DEVELOPMENT_LANGUAGE "English"
+  )
+
+TARGET_LINK_LIBRARIES(SeaDriveQL
+  ${WebKit_LIBRARY}
+  ${AppKit_LIBRARY}
+  ${QuickLook_LIBRARY}
+  ${ApplicationServices_LIBRARY}
+)

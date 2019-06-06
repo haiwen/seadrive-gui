@@ -85,8 +85,6 @@ DaemonManager::DaemonManager()
     current_state_ = DAEMON_INIT;
     conn_daemon_timer_ = new QTimer(this);
     connect(conn_daemon_timer_, SIGNAL(timeout()), this, SLOT(checkDaemonReady()));
-    shutdown_process (kSeadriveExecutable);
-
     first_start_ = true;
     restart_retried_ = 0;
 
@@ -110,6 +108,10 @@ void DaemonManager::restartSeadriveDaemon()
 
 void DaemonManager::startSeadriveDaemon()
 {
+    if (!gui->isDevMode()) {
+        shutdown_process (kSeadriveExecutable);
+    }
+
     if (!gui->settingsManager()->getCacheDir(&current_cache_dir_))
         current_cache_dir_ = QDir(gui->seadriveDataDir()).absolutePath();
 
@@ -129,15 +131,21 @@ void DaemonManager::startSeadriveDaemon()
         toCStr(QDir(current_cache_dir_).filePath(kSeadriveSockName)));
 #endif
 
-    seadrive_daemon_ = new QProcess(this);
-    connect(seadrive_daemon_, SIGNAL(started()), this, SLOT(onDaemonStarted()));
-    connect(seadrive_daemon_,
-            SIGNAL(finished(int, QProcess::ExitStatus)),
-            this,
-            SLOT(onDaemonFinished(int, QProcess::ExitStatus)));
-
     transitionState(DAEMON_STARTING);
-    seadrive_daemon_->start(RESOURCE_PATH(kSeadriveExecutable), collectSeaDriveArgs());
+    if (!gui->isDevMode()) {
+        seadrive_daemon_ = new QProcess(this);
+        connect(seadrive_daemon_, SIGNAL(started()), this, SLOT(onDaemonStarted()));
+        connect(seadrive_daemon_,
+                SIGNAL(finished(int, QProcess::ExitStatus)),
+                this,
+                SLOT(onDaemonFinished(int, QProcess::ExitStatus)));
+        seadrive_daemon_->start(RESOURCE_PATH(kSeadriveExecutable), collectSeaDriveArgs());
+    } else {
+        qWarning() << "dev mode enabled, you are supposed to launch seadrive daemon yourself";
+        transitionState(DAEMON_CONNECTING);
+        conn_daemon_timer_->start(kDaemonReadyCheckIntervalMilli);
+    }
+
 }
 
 QStringList DaemonManager::collectSeaDriveArgs()
@@ -262,7 +270,7 @@ void DaemonManager::stopAllDaemon()
         conn_daemon_timer_->stop();
         conn_daemon_timer_ = nullptr;
     }
-    if (seadrive_daemon_) {
+    if (!gui->isDevMode() && seadrive_daemon_) {
         seadrive_daemon_->kill();
         seadrive_daemon_->waitForFinished(50);
         conn_daemon_timer_ = nullptr;

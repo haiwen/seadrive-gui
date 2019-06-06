@@ -1,0 +1,5 @@
+/* Localized versions of Info.plist keys */
+
+CFBundleGetInfoString = "SeaDriveQL version 0.1.0";
+NSHumanReadableCopyright = "Copyright (c) 2019 Seafile Ltd.";
+

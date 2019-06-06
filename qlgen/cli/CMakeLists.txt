@@ -1,0 +1,34 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.11)
+
+PROJECT(SeaDriveQLCli)
+SET(PROJECT_VERSION "0.0.1")
+
+SET(CMAKE_BUILD_TYPE Debug)
+ADD_DEFINITIONS(-DDEBUG)
+
+MESSAGE(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+
+IF (NOT APPLE)
+    MESSAGE(FATAL_ERROR "Support only on OS X")
+ENDIF()
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/../shared.cmake)
+
+SET(qlgen_cli_sources
+  cli.m
+  ${qlgen_shared_sources}
+)
+ADD_EXECUTABLE(qlgen-cli ${qlgen_cli_sources})
+
+SET_TARGET_PROPERTIES(qlgen-cli PROPERTIES
+  LINK_FLAGS "-lc++ ${CMAKE_EXE_LINKER_FLAGS}"
+  XCODE_ATTRIBUTE_MACOSX_DEPLOYMENT_TARGET "10.10"
+  XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC "YES"
+)
+
+TARGET_LINK_LIBRARIES(qlgen-cli
+  ${WebKit_LIBRARY}
+  ${AppKit_LIBRARY}
+  ${QuickLook_LIBRARY}
+  ${ApplicationServices_LIBRARY}
+)

@@ -102,6 +102,9 @@ public:
 
     bool cachePath(const QString& repo_id,
                    const QString& path_in_repo);
+                   
+    bool isFileCached(const QString& repo_id,
+                      const QString& path_in_repo);
 
 private:
     Q_DISABLE_COPY(SeafileRpcClient)
