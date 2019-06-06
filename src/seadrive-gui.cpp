@@ -30,6 +30,8 @@
 #include "account-info-service.h"
 #ifdef HAVE_FINDER_SYNC_SUPPORT
 #include "finder-sync/finder-sync-listener.h"
+#include "qlgen/qlgen-listener.h"
+#include "qlgen/thumbnail-service.h"
 #endif
 
 #if defined(Q_OS_WIN32)
@@ -190,9 +192,9 @@ const char *const kPreconfigureUserToken = "PreconfigureUserToken";
 const char *const kPreconfigureServerAddr = "PreconfigureServerAddr";
 const char *const kPreconfigureComputerName = "PreconfigureComputerName";
 const char* const kHideConfigurationWizard = "HideConfigurationWizard";
-const char* const kPreconfigureUseKerberosLogin = "PreconfigureUseKerberosLogin";
 
 #if defined(Q_OS_WIN32)
+const char* const kPreconfigureUseKerberosLogin = "PreconfigureUseKerberosLogin";
 const char *const kSeafileConfigureFileName = "seafile.ini";
 const char *const kSeafileConfigurePath = "SOFTWARE\\Seafile";
 const int kIntervalBeforeShowInitVirtualDialog = 3000;
@@ -206,8 +208,9 @@ const char *const kSeafilePreconfigureGroupName = "preconfigure";
 
 SeadriveGui *gui;
 
-SeadriveGui::SeadriveGui()
-    : started_(false),
+SeadriveGui::SeadriveGui(bool dev_mode)
+    : dev_mode_(dev_mode),
+      started_(false),
       in_exit_(false),
       first_use_(false)
 {
@@ -226,7 +229,9 @@ SeadriveGui::SeadriveGui()
 SeadriveGui::~SeadriveGui()
 {
     // Must unmount before rpc client is destroyed.
-    daemon_mgr_->doUnmount();
+    if (!dev_mode_) {
+        daemon_mgr_->doUnmount();
+    }
 #ifdef HAVE_SPARKLE_SUPPORT
     AutoUpdateService::instance()->stop();
 #endif
@@ -274,7 +279,7 @@ void SeadriveGui::start()
     qDebug("client id is %s", toCStr(getUniqueClientId()));
 
     account_mgr_->start();
-    
+
     // auto update rpc server start
     SeaDriveRpcServer::instance()->start();
 
@@ -427,6 +432,10 @@ void SeadriveGui::onDaemonStarted()
 #ifdef HAVE_FINDER_SYNC_SUPPORT
     finderSyncListenerStart();
 #endif
+#if defined(Q_OS_MAC)
+    ThumbnailService::instance()->start();
+    qlgenListenerStart();
+#endif
 }
 
 void SeadriveGui::onAboutToQuit()
@@ -463,7 +472,9 @@ void SeadriveGui::restartApp()
 
     in_exit_ = true;
 
-    daemon_mgr_->doUnmount();
+    if (!dev_mode_) {
+        daemon_mgr_->doUnmount();
+    }
 
     QStringList args = QApplication::arguments();
 

@@ -713,3 +713,26 @@ bool SeafileRpcClient::cachePath(const QString& repo_id,
         return true;
     }
 }
+
+
+bool SeafileRpcClient::isFileCached(const QString& repo_id,
+                                    const QString& path_in_repo)
+{
+    GError *error = NULL;
+    int ret = searpc_client_call__int (
+        seadrive_rpc_client_,
+        "seafile_is_file_cached",
+        &error, 2, "string", toCStr(repo_id),
+        "string", toCStr(path_in_repo));
+
+    if (error) {
+        qWarning("failed to check file cached %s/%s, errors: %s.\n",
+                 toCStr(repo_id), toCStr(path_in_repo),
+                 error->message ? error->message : "");
+        g_error_free(error);
+        return false;
+    } else {
+        // This rpc returns 1 if file is cached and 0 otherwise
+        return ret != 0;
+    }
+}

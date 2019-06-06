@@ -26,7 +26,7 @@ class SeadriveGui : public QObject {
     Q_OBJECT
 
 public:
-    SeadriveGui();
+    SeadriveGui(bool dev_mode);
     ~SeadriveGui();
 
     void refreshQss();
@@ -54,6 +54,7 @@ public:
     QString readPreconfigureExpandedString(const QString& key, const QString& default_value = QString());
 
     // Accessors.
+    bool isDevMode() const { return dev_mode_; }
 
     // Get the seadrive folder. It's ~/seadrive on windows and ~/.seadrive on unix.
     QString seadriveDir() const;
@@ -103,6 +104,8 @@ private:
     bool initLog();
 
     bool loadQss(const QString& path);
+
+    bool dev_mode_;
 
     SeafileTrayIcon *tray_icon_;
 

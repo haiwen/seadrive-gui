@@ -2,6 +2,7 @@
 
 #include <QScopedPointer>
 #include <QtNetwork>
+#include <QPixmap>
 
 #include "account.h"
 
@@ -56,6 +57,7 @@ const char* kAuthPingURL = "api2/auth/ping/";
 
 const char* kLatestVersionUrl = "https://seafile.com/api/seadrive-latest/";
 const char* kGetSmartLink = "api/v2.1/smart-link/";
+const char* kGetThumbnailUrl = "api2/repos/%1/thumbnail/";
 // #if defined(Q_OS_WIN32)
 // const char* kOsName = "windows";
 // #elif defined(Q_OS_LINUX)
@@ -1498,4 +1500,35 @@ void GetSmartLinkRequest::requestSuccess(QNetworkReply& reply)
         json_string_value(json_object_get(json.data(), "smart_link"));
 
     emit success(smart_link);
+}
+
+GetThumbnailRequest::GetThumbnailRequest(const Account& account,
+                                         const QString& repo_id,
+                                         const QString& path,
+                                         uint size)
+    : SeafileApiRequest(
+          account.getAbsoluteUrl(QString(kGetThumbnailUrl).arg(repo_id)),
+          SeafileApiRequest::METHOD_GET,
+          account.token),
+      account_(account),
+      repo_id_(repo_id),
+      path_(path),
+      size_(size)
+{
+    setUrlParam("p", path);
+    setUrlParam("size", QString::number(size));
+    setUseCache(true);
+}
+
+void GetThumbnailRequest::requestSuccess(QNetworkReply& reply)
+{
+    QPixmap pixmap;
+    pixmap.loadFromData(reply.readAll());
+
+    if (pixmap.isNull()) {
+        qWarning("GetThumbnailRequest: invalid image data\n");
+        emit failed(ApiError::fromHttpError(400));
+    } else {
+        emit success(pixmap);
+    }
 }

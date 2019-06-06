@@ -30,6 +30,9 @@ namespace {
 
 const char *appName = "seadrive-gui";
 
+bool dev_mode = false;
+bool stop_app = false;
+
 void initGlib()
 {
 #if !GLIB_CHECK_VERSION(2, 35, 0)
@@ -80,14 +83,23 @@ void setupSettingDomain()
 void handleCommandLineOption(int argc, char *argv[])
 {
     int c;
-    static const char *short_options = "o:L:";
+#if defined(Q_OS_WIN32)
+    static const char *short_options = "KDEo:";
+#else
+    static const char *short_options = "KDEo:L:";
+#endif
     static const struct option long_options[] = {
         { "fuse-opts", required_argument, NULL, 'o' },
-	{ "stop", no_argument, NULL, 'K'},
+        { "stop", no_argument, NULL, 'K'},
 #if defined(Q_OS_WIN32)
         { "drive-letter", required_argument, NULL, 'L' },
 #endif
         { "delay", no_argument, NULL, 'D' },
+        // seadrive-gui --dev won't launch seadrive daemon (you are
+        // supposed to launch it yourself). This is for speeding up
+        // the development cycles because starting the seadrvie daemon
+        // and wait for it to be ready is very slow.
+        { "dev", no_argument, NULL, 'E' },
         { NULL, 0, NULL, 0, },
     };
 
@@ -110,9 +122,14 @@ void handleCommandLineOption(int argc, char *argv[])
         case 'D':
             msleep(1000);
             break;
+        case 'E':
+            dev_mode = true;
+            break;
 	case 'K':
-	    do_stop_app();
-	    exit(0);	
+        // do_stop_app requires gui object be initialized. We save a
+        // flag here and exeute it later.
+        stop_app = true;
+        return;
         default:
             exit(1);
         }
@@ -144,11 +161,16 @@ int main(int argc, char *argv[])
     // initialize i18n settings
     I18NHelper::getInstance()->init();
 
+    handleCommandLineOption(argc, argv);
+
     // start applet
-    SeadriveGui mGui;
+    SeadriveGui mGui(dev_mode);
     gui = &mGui;
 
-    handleCommandLineOption(argc, argv);
+    if (stop_app) {
+        do_stop_app();
+        exit(0);
+    }
 
     if (count_process(appName) > 1) {
         QMessageBox::warning(NULL, getBrand(),

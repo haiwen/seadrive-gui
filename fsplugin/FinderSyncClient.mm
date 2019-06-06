@@ -263,7 +263,7 @@ void FinderSyncClient::getWatchSet() {
                   0,               /*send size*/
                   recv_msg.size(), /*receive size*/
                   local_port_,     /*receive port*/
-                  100,             /*timeout, in milliseconds*/
+                  1000,             /*timeout, in milliseconds*/
                   MACH_PORT_NULL); /*no notification*/
     // retry
     if (kr == MACH_RCV_TOO_LARGE) {
