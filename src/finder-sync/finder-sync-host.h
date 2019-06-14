@@ -22,6 +22,7 @@ public:
     // called from another thread
     uint32_t getFileStatus(const QString& path);
 private slots:
+    void onDaemonRestarted();
     void updateWatchSet();
     void doLockFile(const QString &path, bool lock);
     void doShareLink(const QString &path);

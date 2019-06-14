@@ -151,6 +151,17 @@ FinderSyncHost::~FinderSyncHost() {
     lock_file_req_.reset();
 }
 
+void FinderSyncHost::onDaemonRestarted()
+{
+    qDebug("[FinderSyncHost] reviving rpc client when daemon is restarted");
+    if (rpc_client_) {
+        delete rpc_client_;
+    }
+
+    rpc_client_ = new SeafileRpcClient();
+    rpc_client_->connectDaemon();
+}
+
 std::string FinderSyncHost::getWatchSet()
 {
     updateWatchSet(); // lock is inside
