@@ -231,6 +231,7 @@ void SeafileExtensionHandler::start()
 
 void SeafileExtensionHandler::onDaemonRestarted()
 {
+    QMutexLocker locker(&rpc_client_mutex_);
     if (rpc_client_) {
         delete rpc_client_;
     }
@@ -627,6 +628,7 @@ void ExtCommandsHandler::handleLockFile(const QStringList& args, bool lock)
         return;
     }
 
+    QMutexLocker locker(&rpc_client_mutex_);
     if (rpc_client_->markFileLockState(repo_id, path_in_repo, lock) == -1) {
         qWarning() << "failed to lock file " << path;
         return;
@@ -706,5 +708,6 @@ void ExtCommandsHandler::handleDownload(const QStringList& args)
         return;
     }
 
+    QMutexLocker locker(&rpc_client_mutex_);
     rpc_client_->cachePath(repo_id, path_in_repo);
 }
