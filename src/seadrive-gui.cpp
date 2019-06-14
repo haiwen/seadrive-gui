@@ -164,7 +164,7 @@ void myLogHandler(QtMsgType type, const QMessageLogContext &context, const QStri
 
 bool debugEnabledInDebugFlagFile()
 {
-    QFile debugflag_file(QDir::home().filePath("seafile-debug.txt"));
+    QFile debugflag_file(QDir::home().filePath("seafile-client-debug.txt"));
     if (!debugflag_file.exists()) {
         return false;
     }
