@@ -162,6 +162,23 @@ void myLogHandler(QtMsgType type, const QMessageLogContext &context, const QStri
     }
 }
 
+bool debugEnabledInDebugFlagFile()
+{
+    QFile debugflag_file(QDir::home().filePath("seafile-debug.txt"));
+    if (!debugflag_file.exists()) {
+        return false;
+    }
+    if (!debugflag_file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return false;
+    }
+
+    QTextStream input(&debugflag_file);
+    input.setCodec("UTF-8");
+    QString debug_level = input.readLine().trimmed();
+    return !debug_level.isEmpty() && debug_level != "false" &&
+           debug_level != "0";
+}
+
 
 #ifdef Q_OS_MAC
 void writeCABundleForCurl()
@@ -537,8 +554,13 @@ bool SeadriveGui::initLog()
     // give a change to override DEBUG_LEVEL by environment
     QString debug_level = qgetenv("SEAFILE_CLIENT_DEBUG");
     if (!debug_level.isEmpty() && debug_level != "false" &&
-        debug_level != "0")
+        debug_level != "0") {
         seafile_client_debug_level = DEBUG;
+        printf ("debug enabled from env \n");
+    } else if (debugEnabledInDebugFlagFile()) {
+        seafile_client_debug_level = DEBUG;
+        printf ("debug enabled from ~/seafile-debug.txt \n");
+    }
 
     if (seafile_client_debug_level == DEBUG)
         qInstallMessageHandler(myLogHandlerDebug);

@@ -219,7 +219,6 @@ public:
         while (iterator.hasNext()) {
             iterator.next();
             QString file_path = iterator.filePath();
-            QString base_name = ::getBaseName(file_path);
             QFileInfo finfo(file_path);
             if (!finfo.isFile()) {
                 continue;
