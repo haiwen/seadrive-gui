@@ -556,10 +556,10 @@ bool SeadriveGui::initLog()
     if (!debug_level.isEmpty() && debug_level != "false" &&
         debug_level != "0") {
         seafile_client_debug_level = DEBUG;
-        printf ("debug enabled from env \n");
+        printf ("debug enabled from env\n");
     } else if (debugEnabledInDebugFlagFile()) {
         seafile_client_debug_level = DEBUG;
-        printf ("debug enabled from ~/seafile-debug.txt \n");
+        printf ("debug enabled from ~/seafile-client-debug.txt\n");
     }
 
     if (seafile_client_debug_level == DEBUG)
