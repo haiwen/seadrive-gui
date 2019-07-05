@@ -5,6 +5,11 @@
 #import "system-qlgen.h"
 #import "qlgen.h"
 
+namespace {
+
+const CGFloat kDefaultPreviewSize = 400;
+
+}
 
 @interface SFQLGenImpl : NSObject<SFQLGen>
 
@@ -159,6 +164,42 @@
     DbgLog(@"SFQLGenImpl::genPreview is called for %@", path);
     BOOL localOrCached = [self isFileLocalOrCached:path];
     if (!localOrCached) {
+        // We can't return empty response here directly, because
+        // Finder has this undocumented behavior to disable a
+        // qlgenerator if it fails to generate a preview for more than
+        // 10 times. In console.app logs one would find message like this:
+        //
+        //   [QL] Too many problems with <QLGenerator ....qlgenerator>. Disabling it
+        //
+        // Thus, For non-cached files:
+        //
+        // 1. If the file is an image, we generate a large enough
+        // thumbnail to display as the preview. This is what finder
+        // would do if we return null in GeneratePreviewForURL.
+        //
+        // 2. Otherwise, we generate a placeholder preview.
+        if ([self isSupportedImageFile:path contentTypeUTI:contentTypeUTI]) {
+            NSString *png;
+            if ([self askForThumbnail:path size:kDefaultPreviewSize output:&png]) {
+                DbgLog(@"use api generated thumbnail as preview at path %@", png);
+                NSURL *pngURL = SFPathToURL(png);
+                QLPreviewRequestSetURLRepresentation(preview,
+                                                     (__bridge CFURLRef)pngURL,
+                                                     (__bridge CFStringRef)
+                                                         @"public.png",
+                                                     nil);
+                return noErr;
+            } else {
+                DbgLog(@"Failed to ask for thumbnail as preview for file %@", path);
+            }
+        }
+
+        NSURL *pngURL = SFPathToURL(@"/Users/lin/Pictures/forum1.png");
+        QLPreviewRequestSetURLRepresentation(preview,
+                                             (__bridge CFURLRef)pngURL,
+                                             (__bridge CFStringRef)
+                                             @"public.png",
+                                             nil);
         return noErr;
     }
 
