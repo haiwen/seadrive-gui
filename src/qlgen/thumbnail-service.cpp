@@ -198,6 +198,12 @@ bool ThumbnailService::waitForRequest(const ThumbnailRequest& request, int timeo
 // the main thread to avoid using any locks for it.
 void ThumbnailService::doSchedule()
 {
+    // printf ("downloader has free slot: %s\n", downloader_->hasFreeSlot() ? "yes" : "no");
+    // printf ("total thumb requests in queue: %d\n", queue_.size());
+    // foreach (const ThumbnailRequest& t, queue_) {
+    //     printf ("queued thumb request: %s\n", toCStr(t.path));
+    // }
+
     if (!downloader_->hasFreeSlot()) {
         return;
     }

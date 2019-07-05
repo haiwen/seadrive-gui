@@ -140,7 +140,7 @@
         NSString *mountPoint;
         if (![self getMountPoint:&mountPoint]) {
             // If we fail to get the montpoint, then seadrive may be
-            // not runnin. In such case we treat all files as local
+            // not running. In such case we treat all files as local
             // files.
             return YES;
         }
