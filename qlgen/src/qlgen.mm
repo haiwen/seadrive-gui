@@ -32,6 +32,7 @@ const CGFloat kDefaultPreviewSize = 400;
                     url:(CFURLRef)url
          contentTypeUTI:(CFStringRef)contentTypeUTI
                 options:(CFDictionaryRef)options;
+- (void)finishPreviewWithPNG:(QLPreviewRequestRef)preview pngPath:(NSString *)pngPath;
 - (BOOL)isSupportedImageFile:(NSString *)path contentTypeUTI:(CFStringRef)contentTypeUTI;
 @end
 
@@ -85,8 +86,7 @@ const CGFloat kDefaultPreviewSize = 400;
     // We also registers for types like PDF and docx (to prevent
     // Finder from auto downloading files of these types), but seahub
     // api doesn't support thumbnails for these types.
-    if (!UTTypeConformsTo(contentTypeUTI,
-                         (__bridge CFStringRef)@"public.image")) {
+    if (!UTTypeConformsTo(contentTypeUTI, kUTTypeImage)) {
         return NO;
     }
 
@@ -182,24 +182,15 @@ const CGFloat kDefaultPreviewSize = 400;
             NSString *png;
             if ([self askForThumbnail:path size:kDefaultPreviewSize output:&png]) {
                 DbgLog(@"use api generated thumbnail as preview at path %@", png);
-                NSURL *pngURL = SFPathToURL(png);
-                QLPreviewRequestSetURLRepresentation(preview,
-                                                     (__bridge CFURLRef)pngURL,
-                                                     (__bridge CFStringRef)
-                                                         @"public.png",
-                                                     nil);
+                [self finishPreviewWithPNG:preview pngPath:png];
                 return noErr;
             } else {
                 DbgLog(@"Failed to ask for thumbnail as preview for file %@", path);
             }
         }
 
-        NSURL *pngURL = SFPathToURL(@"/Users/lin/Pictures/forum1.png");
-        QLPreviewRequestSetURLRepresentation(preview,
-                                             (__bridge CFURLRef)pngURL,
-                                             (__bridge CFStringRef)
-                                             @"public.png",
-                                             nil);
+        DbgLog(@"Using placeholder preview for file %@", path);
+        [self finishPreviewWithPNG:preview pngPath:@"/Users/lin/Pictures/forum1.png"];
         return noErr;
     }
 
@@ -213,6 +204,27 @@ const CGFloat kDefaultPreviewSize = 400;
                           url:url
                contentTypeUTI:contentTypeUTI
                       options:options];
+}
+
+- (void)finishPreviewWithPNG:(QLPreviewRequestRef)preview pngPath:(NSString *)pngPath
+{
+    NSMutableDictionary *properties = [NSMutableDictionary dictionary];
+    properties[(__bridge NSString *)kQLPreviewPropertyMIMETypeKey] = @"image/png";
+
+    // NSURL *pngURL = SFPathToURL(pngPath);
+    NSData *pngData = [[NSFileManager defaultManager] contentsAtPath:pngPath];
+
+    // // Have to draw the image ourselves
+    // CGContextRef ctx = QLPreviewRequestCreateContext(preview, (CGSize){.width = OUT_WIDTH, .height = OUT_HEIGHT+LOGO_HEIGHT}, YES, properties);
+    // CGContextDrawImage(ctx, (CGRect){.origin = CGPointZero, .size.width = OUT_WIDTH, .size.height = OUT_HEIGHT+LOGO_HEIGHT}, img_ref);
+    // QLPreviewRequestFlushContext(preview, ctx);
+    // CGContextRelease(ctx);
+    // CGImageRelease(img_ref);
+
+    QLPreviewRequestSetDataRepresentation(preview,
+                                          (__bridge CFDataRef)pngData,
+                                          kUTTypePNG,
+                                          (__bridge CFDictionaryRef)(properties));
 }
 
 - (BOOL)isFileCached:(NSString *)path
