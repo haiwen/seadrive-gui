@@ -76,10 +76,11 @@ ThumbnailRequest ThumbnailService::newRequest(const QString &repo_id,
 {
     ThumbnailRequest req;
     // `ThumbnailRequest::idgen` is a `QAtomicInt`, whose ++ operator
-    // is overloaded to be an atomic action. So no lock required for
-    // it, even if this function could be called from diffrent threads
+    // (or `fetchAndAddOrdered` function for Qt < 5.3) is overloaded
+    // to be an atomic action. So no lock required for it, even if
+    // this function could be called from diffrent threads
     // concurrently.
-    req.id = ThumbnailRequest::idgen++;
+    req.id = ThumbnailRequest::idgen.fetchAndAddOrdered(1);
     req.repo_id = repo_id;
     req.path = path;
     req.size = size;
