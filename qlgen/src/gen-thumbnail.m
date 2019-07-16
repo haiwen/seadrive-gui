@@ -22,19 +22,21 @@ OSStatus GenerateThumbnailForURL(void *thisInterface,
                                  CFDictionaryRef options,
                                  CGSize maxSize)
 {
-    DbgLog(@"Generating %dx%d Thumbnail for %@",
-           (int)maxSize.width,
-           (int)maxSize.height,
-           SFURLToPath((__bridge NSURL *)url));
-    if (QLThumbnailRequestIsCancelled(thumbnail))
-        return noErr;
+    @autoreleasepool {
+        DbgLog(@"Generating %dx%d Thumbnail for %@",
+               (int)maxSize.width,
+               (int)maxSize.height,
+               SFURLToPath((__bridge NSURL *)url));
+        if (QLThumbnailRequestIsCancelled(thumbnail))
+            return noErr;
 
-    id<SFQLGen> qlgen = getDefaultSFQLGen();
-    return [qlgen genThumnail:thumbnail
-                          url:url
-               contentTypeUTI:contentTypeUTI
-                      options:options
-                      maxSize:maxSize];
+        id<SFQLGen> qlgen = getDefaultSFQLGen();
+        return [qlgen genThumnail:thumbnail
+                              url:url
+                   contentTypeUTI:contentTypeUTI
+                          options:options
+                          maxSize:maxSize];
+    }
 }
 
 void CancelThumbnailGeneration(void *thisInterface,

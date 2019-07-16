@@ -15,14 +15,16 @@ OSStatus GeneratePreviewForURL(void *thisInterface,
                                CFStringRef contentTypeUTI,
                                CFDictionaryRef options)
 {
-    DbgLog(@"Generating preview for %@", SFURLToPath((__bridge NSURL *)url));
-    if (QLPreviewRequestIsCancelled(preview))
-        return noErr;
-    id<SFQLGen> qlgen = getDefaultSFQLGen();
-    return [qlgen genPreview:preview
-                         url:url
-              contentTypeUTI:contentTypeUTI
-                     options:options];
+    @autoreleasepool {
+        DbgLog(@"Generating preview for %@", SFURLToPath((__bridge NSURL *)url));
+        if (QLPreviewRequestIsCancelled(preview))
+            return noErr;
+        id<SFQLGen> qlgen = getDefaultSFQLGen();
+        return [qlgen genPreview:preview
+                            url:url
+                contentTypeUTI:contentTypeUTI
+                        options:options];
+    }
 }
 
 void CancelPreviewGeneration(void *thisInterface, QLPreviewRequestRef preview)
