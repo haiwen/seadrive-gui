@@ -47,6 +47,7 @@ private:
 
 struct ThumbnailWaiter {
     QSemaphore sem;
+    bool success;
 };
 
 QAtomicInt ThumbnailRequest::idgen;
@@ -104,6 +105,7 @@ bool ThumbnailService::getThumbnailFromCache(const QString &repo_id,
                                              QString *file)
 {
     QString cached_file = getCacheFilePath(repo_id, path, size);
+    printf ("cache file path = %s\n", toCStr(cached_file));
     QFileInfo finfo(cached_file);
     if (!finfo.exists()) {
         return false;
@@ -181,7 +183,7 @@ bool ThumbnailService::waitForRequest(const ThumbnailRequest& request, int timeo
 
     bool ret = waiter->sem.tryAcquire(1, timeout_msecs);
     // printf ("waiting for result\n");
-    if (ret) {
+    if (ret && waiter->success) {
         *file = getCacheFilePath(request.repo_id, request.path, request.size);
         // *file = "/data/github/seadrive-gui/qlgen/test.jpg";
     }
@@ -198,6 +200,12 @@ bool ThumbnailService::waitForRequest(const ThumbnailRequest& request, int timeo
 // the main thread to avoid using any locks for it.
 void ThumbnailService::doSchedule()
 {
+    // printf ("downloader has free slot: %s\n", downloader_->hasFreeSlot() ? "yes" : "no");
+    // printf ("total thumb requests in queue: %d\n", queue_.size());
+    // foreach (const ThumbnailRequest& t, queue_) {
+    //     printf ("queued thumb request: %s\n", toCStr(t.path));
+    // }
+
     if (!downloader_->hasFreeSlot()) {
         return;
     }
@@ -250,6 +258,7 @@ void ThumbnailService::onRequestFinished(const ThumbnailRequest &request, bool s
         return;
     }
     ThumbnailWaiter *waiter = waiters_[request.id];
+    waiter->success = success;
     lock.unlock();
     waiter->sem.release();
     doSchedule();
