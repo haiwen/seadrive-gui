@@ -105,7 +105,7 @@ bool ThumbnailService::getThumbnailFromCache(const QString &repo_id,
                                              QString *file)
 {
     QString cached_file = getCacheFilePath(repo_id, path, size);
-    printf ("cache file path = %s\n", toCStr(cached_file));
+    // printf ("cache file path = %s\n", toCStr(cached_file));
     QFileInfo finfo(cached_file);
     if (!finfo.exists()) {
         return false;
