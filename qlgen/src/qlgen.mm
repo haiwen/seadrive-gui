@@ -162,8 +162,20 @@ const CGFloat kDefaultPreviewSize = 400;
     NSString *path = ((__bridge NSURL *)url).path;
 
     DbgLog(@"SFQLGenImpl::genPreview is called for %@", path);
+
+    NSString *pngPath;
     BOOL localOrCached = [self isFileLocalOrCached:path];
-    if (!localOrCached) {
+    if (localOrCached) {
+        DbgLog(@"calling system qlgen for file %@", path);
+        SystemQLGen *system = [SystemQLGen sharedInstance];
+        if (QLPreviewRequestIsCancelled(preview)) {
+            return noErr;
+        }
+        return [system genPreview:preview
+                              url:url
+                   contentTypeUTI:contentTypeUTI
+                          options:options];
+    } else {
         // We can't return empty response here directly, because
         // Finder has this undocumented behavior to disable a
         // qlgenerator if it fails to generate a preview for more than
@@ -179,46 +191,41 @@ const CGFloat kDefaultPreviewSize = 400;
         //
         // 2. Otherwise, we generate a placeholder preview.
         if ([self isSupportedImageFile:path contentTypeUTI:contentTypeUTI]) {
-            NSString *png;
-            if ([self askForThumbnail:path size:kDefaultPreviewSize output:&png]) {
-                DbgLog(@"use api generated thumbnail as preview at path %@", png);
-                [self finishPreviewWithPNG:preview pngPath:png options:options];
-                return noErr;
+            if ([self askForThumbnail:path size:kDefaultPreviewSize output:&pngPath]) {
+                DbgLog(@"use api generated thumbnail as preview at path %@", pngPath);
             } else {
                 DbgLog(@"Failed to ask for thumbnail as preview for file %@", path);
             }
         }
 
-        DbgLog(@"Using placeholder preview for file %@", path);
-        [self finishPreviewWithPNG:preview pngPath:@"/Users/lin/Pictures/forum1.png" options:options];
+        if (!pngPath) {
+            DbgLog(@"Using placeholder preview for file %@", path);
+        }
+
+        if (QLPreviewRequestIsCancelled(preview)) {
+            return noErr;
+        }
+
+        [self finishPreviewWithPNG:preview pngPath:pngPath options:options];
         return noErr;
     }
-
-    if (QLPreviewRequestIsCancelled(preview)) {
-        return noErr;
-    }
-
-    [self finishPreviewWithPNG:preview pngPath:@"/Users/lin/Pictures/forum1.png" options:options];
-    return noErr;
-
-    // DbgLog(@"calling system qlgen for file %@", path);
-    // SystemQLGen *system = [SystemQLGen sharedInstance];
-    // return [system genPreview:preview
-    //                       url:url
-    //            contentTypeUTI:contentTypeUTI
-    //                   options:options];
 }
 
 - (void)finishPreviewWithPNG:(QLPreviewRequestRef)preview pngPath:(NSString *)pngPath options:(CFDictionaryRef)options
 {
-    CGImageSourceRef source = CGImageSourceCreateWithURL((__bridge CFURLRef)SFPathToURL(pngPath), NULL);
-    CGImageRef image = CGImageSourceCreateImageAtIndex(source, 0, NULL);
-    CFRelease(source);
-
-    CGFloat width = CGImageGetWidth(image);
-    CGFloat height = CGImageGetHeight(image);
-
-    DbgLog(@"width = %d, height = %d", (int)width, (int)height);
+    CGImageRef image;
+    CGFloat width, height;
+    if (pngPath) {
+        CGImageSourceRef source = CGImageSourceCreateWithURL((__bridge CFURLRef)SFPathToURL(pngPath), NULL);
+        image = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+        CFRelease(source);
+        width = CGImageGetWidth(image);
+        height = CGImageGetHeight(image);
+        DbgLog(@"width = %d, height = %d", (int)width, (int)height);
+    } else {
+        width = 400;
+        height = 300;
+    }
 
     NSString *displayName = (NSString *)[(__bridge NSDictionary *)options
         objectForKey:(__bridge NSString *)kQLPreviewPropertyDisplayNameKey];
@@ -236,14 +243,16 @@ const CGFloat kDefaultPreviewSize = 400;
 
     CGContextRef ctx =
         QLPreviewRequestCreateContext(preview,
-                                    CGSizeMake(width, height),
-                                    YES,
-                                    (__bridge CFDictionaryRef)newOpt);
+                                      CGSizeMake(width, height),
+                                      YES,
+                                      (__bridge CFDictionaryRef)newOpt);
 
-    CGContextDrawImage(ctx, CGRectMake(0, 0, width, height), image);
+    if (pngPath) {
+        CGContextDrawImage(ctx, CGRectMake(0, 0, width, height), image);
+        CGImageRelease(image);
+    }
     QLPreviewRequestFlushContext(preview, ctx);
     CGContextRelease(ctx);
-    CGImageRelease(image);
 }
 
 - (BOOL)isFileCached:(NSString *)path
