@@ -38,6 +38,7 @@
 #include "utils/registry.h"
 #include "utils/utils-win.h"
 #include "ext-handler.h"
+#include "ext-windows-thumbnail.h"
 #include "ui/disk-letter-dialog.h"
 #endif
 
@@ -437,6 +438,7 @@ void SeadriveGui::onDaemonStarted()
 
 #if defined(Q_OS_WIN32)
     SeafileExtensionHandler::instance()->start();
+    WindowsThumbnailExtensionHandler::instance()->start();
 #endif
 
 #ifdef HAVE_SPARKLE_SUPPORT
