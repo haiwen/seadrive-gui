@@ -315,8 +315,7 @@ void ExtThumbnailCommandsHandler::run()
             if (getDiskLetter(&diskletter)) {
                 resp = toCStr(diskletter);
             }
-        }
-         else {
+        } else {
             qWarning ("[ext] unknown request command: %s", cmd.toUtf8().data());
         }
 
