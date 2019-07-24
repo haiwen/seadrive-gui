@@ -244,7 +244,11 @@ const CGFloat kDefaultPreviewSize = 400;
     CGContextRef ctx =
         QLPreviewRequestCreateContext(preview,
                                       CGSizeMake(width, height),
-                                      YES,
+                                      // isBitmap. If we use YES here
+                                      // finder would try to download
+                                      // uncached files when being
+                                      // previewed.
+                                      NO,
                                       (__bridge CFDictionaryRef)newOpt);
 
     if (pngPath) {
