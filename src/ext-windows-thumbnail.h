@@ -62,7 +62,6 @@ class ExtThumbnailCommandsHandler : public QThread {
     Q_OBJECT
 public:
     ExtThumbnailCommandsHandler(HANDLE pipe);
-    bool handlerFileStatus(const QString & path);
     void run();
 
 private:
@@ -73,7 +72,9 @@ private:
     bool lookUpFileInformation(const QString &path,
                                 QString *ptr_repo_id,
                                 QString *ptr_path_in_rpo);
-    bool getDiskLetter(QString disk_letter);
+    bool handlerFileStatus(const QString & path);
+    QString handlerGetDiskLetter();
+
 };
 
 #endif // SEADRIVE_CLIENT_EXT_THUMBNAIL_HANLDER_H

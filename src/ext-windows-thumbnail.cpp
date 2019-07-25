@@ -26,7 +26,7 @@
 
 namespace {
 
-const char *kSeafExtPipeName = "\\\\.\\pipe\\seadrive_ext_windows_thumbail_pipe_";
+const char *kSeafExtPipeName = "\\\\.\\pipe\\seadrive_ext_windows_thumbnail_pipe_";
 const int kPipeBufSize = 1024;
 
 bool
@@ -43,9 +43,9 @@ extPipeReadN (HANDLE pipe, void *buf, size_t len)
     if (!success || bytes_read != (DWORD)len) {
         DWORD error = GetLastError();
         if (error == ERROR_BROKEN_PIPE) {
-            qDebug("[ext] connection closed by extension\n");
+            qDebug("[windows thumbnail] connection closed by windows thumbnail extension\n");
         } else {
-            qWarning("[ext] Failed to read command from extension(), "
+            qWarning("[windows thumbnail] Failed to read command from windows thumbnail extension(), "
                      "error code %lu\n", error);
         }
         return false;
@@ -68,9 +68,9 @@ extPipeWriteN(HANDLE pipe, void *buf, size_t len)
     if (!success || bytes_written != (DWORD)len) {
         DWORD error = GetLastError();
         if (error == ERROR_BROKEN_PIPE) {
-            qDebug("[ext] connection closed by extension\n");
+            qDebug("[windows thumbnail] connection closed by windows thumbnail extension\n");
         } else {
-            qWarning("[ext] Failed to read command from extension(), "
+            qWarning("[windows thumbnail] Failed to read command from windows thumbnail extension(), "
                      "error code %lu\n", error);
         }
         return false;
@@ -257,7 +257,7 @@ void ExtThumbnailConnectionListenerThread::run()
             NULL);                    // default security attribute
 
         if (pipe == INVALID_HANDLE_VALUE) {
-            qWarning ("Failed to create named pipe, GLE=%lu\n",
+            qWarning ("[windows thumbnail]Failed to create named pipe, GLE=%lu\n",
                       GetLastError());
             return;
         }
@@ -267,13 +267,13 @@ void ExtThumbnailConnectionListenerThread::run()
             true : (GetLastError() == ERROR_PIPE_CONNECTED);
 
         if (!connected) {
-            qWarning ("Failed on ConnectNamedPipe(), GLE=%lu\n",
+            qWarning ("[windows thumbnail]Failed on ConnectNamedPipe(), GLE=%lu\n",
                       GetLastError());
             CloseHandle(pipe);
             return;
         }
 
-        qDebug ("[ext pipe] Accepted an extension pipe client\n");
+        qDebug ("[windows thumbnail] Accepted an extension pipe client\n");
         servePipeInNewThread(pipe);
     }
 }
@@ -298,7 +298,7 @@ void ExtThumbnailCommandsHandler::run()
     while (1) {
         QStringList args;
         if (!readRequest(&args)) {
-            qWarning ("failed to read request from shell extension: %s",
+            qWarning ("failed to read request from windows thumbnail extension: %s",
                       formatErrorMessage().c_str());
             break;
 
@@ -309,24 +309,25 @@ void ExtThumbnailCommandsHandler::run()
         QString cmd = args.takeAt(0);
         QString resp;
         if (cmd == "get-cached-status") {
+            // TODO: the path to windows thumbnail, 将扩展中的文件路径传递过来
             resp = handlerFileStatus(args.takeAt(1));
-        } else if (cmd == "get-disk-letter") {
-            QString diskletter;
-            if (getDiskLetter(&diskletter)) {
-                resp = toCStr(diskletter);
-            }
-        } else {
-            qWarning ("[ext] unknown request command: %s", cmd.toUtf8().data());
+        }
+        else if (cmd == "get-disk-letter") {
+            // TODO: get seadrive disk letter
+            resp = handlerGetDiskLetter();
+        }
+         else {
+            qWarning ("[windows thumbnail] unknown request command: %s", cmd.toUtf8().data());
         }
 
         if (!sendResponse(resp)) {
-            qWarning ("failed to write response to shell extension: %s",
+            qWarning ("failed to write response to windows thumbnail extension: %s",
                       formatErrorMessage().c_str());
             break;
         }
     }
 
-    qDebug ("An extension client is disconnected: GLE=%lu\n",
+    qDebug ("An  windows thumbnail extension client is disconnected: GLE=%lu\n",
             GetLastError());
     DisconnectNamedPipe(pipe_);
     CloseHandle(pipe_);
@@ -345,7 +346,7 @@ bool ExtThumbnailCommandsHandler::readRequest(QStringList *args)
 
     QStringList list = QString::fromUtf8(buf.data()).split('\t');
     if (list.empty()) {
-        qWarning("[ext] got an empty request");
+        qWarning("[windows thumbnail] got an empty request");
         return false;
     }
     *args = list;
@@ -376,7 +377,7 @@ bool ExtThumbnailCommandsHandler::isFileCached(const QString &path) {
     QString repo_id;
     QString path_in_repo;
     if (!lookUpFileInformation(path, &repo_id, &path_in_repo)) {
-        qWarning("[ExtThumbnailCommandsHandler] invalid path %s", toCStr(path));
+        qWarning("[WindowsThumbnailCommandsHandler] invalid path %s", toCStr(path));
         return false;
     }
 
@@ -398,11 +399,11 @@ bool ExtThumbnailCommandsHandler::lookUpFileInformation(const QString &path,
     return rpc_client_->getRepoIdByPath(path_concat(category, repo), ptr_repo_id);
 }
 
-bool ExtThumbnailCommandsHandler::getDiskLetter(QString disk_letter)
-{
-    if (!gui->settingsManager()->getDiskLetter(&disk_letter)) {
-        qWarning("get disk letter failed");
-        return false;
+QString ExtThumbnailCommandsHandler::handlerGetDiskLetter() {
+    QString diskletter;
+    if (gui->settingsManager()->getDiskLetter(&diskletter)) {
+        return diskletter;
+    } else {
+        return "";
     }
-    return true;
 }
