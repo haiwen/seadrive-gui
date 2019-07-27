@@ -239,7 +239,7 @@ void WindowsThumbnailExtensionHandler::stop()
 void ExtThumbnailConnectionListenerThread::run()
 {
     std::string local_pipe_name = utils::win::getLocalPipeName(kSeafExtPipeName);
-    qWarning("[ext listener] listening on %s", local_pipe_name.c_str());
+    qWarning("[windows thumbnail ext listener] listening on %s", local_pipe_name.c_str());
     while (1) {
         HANDLE pipe = INVALID_HANDLE_VALUE;
         bool connected = false;
@@ -310,7 +310,12 @@ void ExtThumbnailCommandsHandler::run()
         QString resp;
         if (cmd == "get-cached-status") {
             // TODO: the path to windows thumbnail, 将扩展中的文件路径传递过来
-            resp = handlerFileStatus(args.takeAt(1));
+            const static int index = 0;
+            if (args.size() >= index + 1) {
+                resp = handlerFileStatus(args.takeAt(0));
+            } else {
+                qWarning("commmand error");
+            }
         }
         else if (cmd == "get-disk-letter") {
             // TODO: get seadrive disk letter
@@ -333,6 +338,10 @@ void ExtThumbnailCommandsHandler::run()
     CloseHandle(pipe_);
 }
 
+/**
+* Save message to QStringList
+*
+*/
 bool ExtThumbnailCommandsHandler::readRequest(QStringList *args)
 {
     uint32_t len = 0;
@@ -344,6 +353,7 @@ bool ExtThumbnailCommandsHandler::readRequest(QStringList *args)
     if (!extPipeReadN(pipe_, buf.data(), len))
         return false;
 
+    qWarning("read request from windows thumbnail extension is %s", buf.data());
     QStringList list = QString::fromUtf8(buf.data()).split('\t');
     if (list.empty()) {
         qWarning("[windows thumbnail] got an empty request");
