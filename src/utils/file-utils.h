@@ -3,6 +3,7 @@
 
 #include <QString>
 class QStringList;
+class QDateTime;
 
 QString mimeTypeFromFileName(const QString& fileName);
 QString iconPrefixFromFileName(const QString& fileName);
@@ -27,6 +28,8 @@ QString expandVars(const QString& origin);
 QString expandUser(const QString& origin);
 
 bool createDirIfNotExists(const QString& path);
+
+void updateFileTimestamp(const QString& path);
 
 
 #endif // SEAFILE_CLIENT_FILE_UTILS_H_

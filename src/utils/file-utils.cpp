@@ -6,6 +6,9 @@
 
 #ifdef Q_OS_WIN32
 #include <windows.h>
+#include <sys/utime.h>
+#else
+#include <utime.h>
 #endif
 
 #include "file-utils.h"
@@ -834,4 +837,9 @@ QString expandUser(const QString& origin)
         return pathJoin(homepath, origin.right(origin.size() - pos));
     }
     return origin;
+}
+
+void updateFileTimestamp(const QString& path)
+{
+    utime(path.toUtf8().data(), nullptr);
 }

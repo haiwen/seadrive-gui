@@ -23,7 +23,7 @@ namespace {
 
 // If a cached thumbnail is older than this time, we would re-request
 // it from the server.
-const int kThumbCacheValidSecs = 60;
+const int kThumbCacheValidSecs = 600;
 // How often do we run the cache cleaner to purge expired thumb
 // caches.
 const int kThumbCacheCleanIntervalSecs = 300;
@@ -132,6 +132,9 @@ bool ThumbnailService::getThumbnailFromCache(const QString &repo_id,
     if (FileTimeComparator(finfo).isOlderThan(kThumbCacheValidSecs)) {
         return false;
     }
+
+    updateFileTimestamp(cached_file);
+
     *file = cached_file;
     return true;
 }
@@ -235,6 +238,9 @@ public:
             if (FileTimeComparator(finfo).isOlderThan(kThumbCacheValidSecs)) {
                 files_to_delete.push_back(file_path);
             }
+        }
+        if (!files_to_delete.isEmpty()) {
+            qDebug("[ThumbCacheCleaner] removing %d expired thumb cache", files_to_delete.size());
         }
         foreach (const QString& file_path, files_to_delete) {
             // printf ("removing file %s\n", toCStr(file_path));
