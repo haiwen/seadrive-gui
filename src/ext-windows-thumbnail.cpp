@@ -310,18 +310,13 @@ void ExtThumbnailCommandsHandler::run()
         QString resp;
         if (cmd == "get-cached-status") {
             // TODO: the path to windows thumbnail, 将扩展中的文件路径传递过来
-            const static int index = 0;
-            if (args.size() >= index + 1) {
-                resp = handlerFileStatus(args.takeAt(0));
-            } else {
-                qWarning("commmand error");
-            }
-        }
-        else if (cmd == "get-disk-letter") {
-            // TODO: get seadrive disk letter
-            resp = handlerGetDiskLetter();
-        }
-         else {
+            bool is_cached;
+            handlerFileStatus(args, &is_cached);
+            resp = is_cached ? "Cached" : "unCached";
+            qWarning("file cached status is %s", toCStr(resp));
+        } else if (cmd == "get-disk-letter") {
+            resp = handlerGetDiskLetter().toLower();
+        } else {
             qWarning ("[windows thumbnail] unknown request command: %s", cmd.toUtf8().data());
         }
 
@@ -379,8 +374,15 @@ bool ExtThumbnailCommandsHandler::sendResponse(const QString& resp)
     return true;
 }
 
-bool ExtThumbnailCommandsHandler::handlerFileStatus(const QString &path) {
-    return isFileCached(path);
+void ExtThumbnailCommandsHandler::handlerFileStatus(QStringList &args, bool* is_cached) {
+    if (args.size() != 1) {
+        return ;
+    }
+
+    QString file_path = args.takeAt(0).replace("\\", "/");
+    // TODO: delete it
+    qWarning("file path is %s", toCStr(file_path));
+    *is_cached = isFileCached(file_path);
 }
 
 bool ExtThumbnailCommandsHandler::isFileCached(const QString &path) {
@@ -410,10 +412,11 @@ bool ExtThumbnailCommandsHandler::lookUpFileInformation(const QString &path,
 }
 
 QString ExtThumbnailCommandsHandler::handlerGetDiskLetter() {
-    QString diskletter;
-    if (gui->settingsManager()->getDiskLetter(&diskletter)) {
-        return diskletter;
+    QString disk_letter;
+    if (gui->settingsManager()->getDiskLetter(&disk_letter)) {
+        return disk_letter;
+
     } else {
-        return "";
+        return QString("");
     }
 }

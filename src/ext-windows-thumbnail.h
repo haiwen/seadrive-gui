@@ -72,7 +72,7 @@ private:
     bool lookUpFileInformation(const QString &path,
                                 QString *ptr_repo_id,
                                 QString *ptr_path_in_rpo);
-    bool handlerFileStatus(const QString & path);
+    void handlerFileStatus(QStringList &args, bool* is_cached);
     QString handlerGetDiskLetter();
 
 };
