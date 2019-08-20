@@ -153,6 +153,13 @@ private:
                            Account *account,
                            QString *repo_id,
                            QString *path_in_repo);
+ 
+    bool isFileCached(const QString &path);
+    bool lookUpFileInformation(const QString &path,
+                                QString *ptr_repo_id,
+                                QString *ptr_path_in_rpo);
+    void handlerFileStatus(QStringList &args, bool* is_cached);
+    QString handlerGetDiskLetter();
 };
 
 #endif // SEADRIVE_CLIENT_EXT_HANLDER_H

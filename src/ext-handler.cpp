@@ -554,6 +554,13 @@ void ExtCommandsHandler::run()
             handleGetUploadLink(args);
         } else if (cmd == "download") {
             handleDownload(args);
+        } else if (cmd == "get-cached-status") {
+            bool is_cached;
+            handlerFileStatus(args, &is_cached);
+            resp = is_cached ? "Cached" : "unCached";
+            qWarning("file cached status is %s", toCStr(resp));
+        } else if (cmd == "get-disk-letter") {
+            resp = handlerGetDiskLetter().toLower();
         } else {
             qWarning ("[ext] unknown request command: %s", cmd.toUtf8().data());
         }
@@ -844,4 +851,52 @@ void ExtCommandsHandler::handleShowLockedBy(const QStringList& args)
     }
     // qWarning("emitting showLockedBy\n");
     emit showLockedBy(account, repo_id, path_in_repo);
+}
+
+
+void ExtCommandsHandler::handlerFileStatus(QStringList &args, bool* is_cached) {
+    if (args.size() != 1) {
+        return ;
+    }
+
+    QString file_path = args.takeAt(0).replace("\\", "/");
+    // TODO: delete it
+    qWarning("file path is %s", toCStr(file_path));
+    *is_cached = isFileCached(file_path);
+}
+
+bool ExtCommandsHandler::isFileCached(const QString &path) {
+    QString repo_id;
+    QString path_in_repo;
+    if (!lookUpFileInformation(path, &repo_id, &path_in_repo)) {
+        qWarning("[ext] invalid path %s", toCStr(path));
+        return false;
+    }
+
+    QMutexLocker lock(&rpc_client_mutex_);
+    return rpc_client_->isFileCached(repo_id, path_in_repo);
+}
+
+bool ExtCommandsHandler::lookUpFileInformation(const QString &path,
+                                               QString *ptr_repo_id,
+                                               QString *ptr_path_in_repo)
+{
+    QString repo;
+    QString category;
+    if (!getRepoAndRelativePath(path, &repo, ptr_path_in_repo, &category)) {
+        return false;
+    }
+
+    QMutexLocker lock(&rpc_client_mutex_);
+    return rpc_client_->getRepoIdByPath(path_concat(category, repo), ptr_repo_id);
+}
+
+QString ExtCommandsHandler::handlerGetDiskLetter() {
+    QString disk_letter;
+    if (gui->settingsManager()->getDiskLetter(&disk_letter)) {
+        return disk_letter;
+
+    } else {
+        return QString("");
+    }
 }
