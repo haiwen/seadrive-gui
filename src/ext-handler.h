@@ -135,6 +135,7 @@ private:
                                 QString *ptr_path_in_rpo);
     void handlerFileStatus(QStringList &args, bool* is_cached);
     QString handlerGetDiskLetter();
+    QString handlerGetThumbnailFromServer();
 };
 
 #endif // SEADRIVE_CLIENT_EXT_HANLDER_H
