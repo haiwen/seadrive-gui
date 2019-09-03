@@ -561,6 +561,8 @@ void ExtCommandsHandler::run()
             qWarning("file cached status is %s", toCStr(resp));
         } else if (cmd == "get-disk-letter") {
             resp = handlerGetDiskLetter().toLower();
+        } else if (cmd = "get-thumbnail-from-server") {
+        // TODO: get seafile server from server;
         } else {
             qWarning ("[ext] unknown request command: %s", cmd.toUtf8().data());
         }
@@ -899,4 +901,10 @@ QString ExtCommandsHandler::handlerGetDiskLetter() {
     } else {
         return QString("");
     }
+}
+
+// Get thumbanil from server and return the cached thumbnail path
+// TODO:
+QString ExtCommandsHandler::handlerGetThumbnailFromServer() {
+
 }
