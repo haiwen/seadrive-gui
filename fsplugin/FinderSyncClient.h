@@ -71,6 +71,7 @@ class FinderSyncClient {
         DoUnlockFile = 5,
         DoShowFileHistory = 6,
         DoDownloadFile = 7,
+        DoShowFileLockedBy = 8,
     };
 
     FinderSyncClient(FinderSync *parent);

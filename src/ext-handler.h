@@ -44,6 +44,9 @@ private slots:
     void openUrlWithAutoLogin(const QUrl& url);
     void onGetSmartLinkSuccess(const QString& smart_link);
     void onGetSmartLinkFailed(const ApiError& error);
+    void showLockedBy(const QString& repo, const QString& path_in_repo);
+    void onGetFileLockInfoSuccess(bool found, const QString &owner);
+    void onGetFileLockInfoFailed(const ApiError& error);
 
 private:
     ExtConnectionListenerThread *listener_thread_;
@@ -75,6 +78,7 @@ signals:
                       const QString& path_in_repo,
                       bool to_group);
     void openUrlWithAutoLogin(const QUrl& url);
+    void showLockedBy(const QString& repo, const QString& path_in_repo);
 
 private:
     void servePipeInNewThread(HANDLE pipe);
@@ -103,6 +107,7 @@ signals:
                       const QString& path_in_repo,
                       bool to_group);
     void openUrlWithAutoLogin(const QUrl& url);
+    void showLockedBy(const QString& repo, const QString& path_in_repo);
 
 private:
     HANDLE pipe_;
@@ -118,6 +123,7 @@ private:
     void handlePrivateShare(const QStringList& args, bool to_group);
     void handleShowHistory(const QStringList& args);
     void handleDownload(const QStringList& args);
+    void handleShowLockedBy(const QStringList& args);
 
     bool parseRepoFileInfo(const QString& path,
                            QString *repo_id,

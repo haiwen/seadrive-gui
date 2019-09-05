@@ -141,6 +141,7 @@ static std::mutex update_mutex_;
 static std::vector<std::string> watch_set_;
 static std::unique_ptr<GetSharedLinkRequest, QtLaterDeleter> get_shared_link_req_;
 static std::unique_ptr<LockFileRequest, QtLaterDeleter> lock_file_req_;
+static std::unique_ptr<GetFileLockInfoRequest, QtLaterDeleter> get_lock_info_req_;
 
 FinderSyncHost::FinderSyncHost() : rpc_client_(new SeafileRpcClient) {
     rpc_client_->connectDaemon();
@@ -364,4 +365,48 @@ void FinderSyncHost::doDownloadFile(const QString &path)
         return;
     }
     rpc_client_->cachePath(repo_id, path_in_repo);
+}
+
+void FinderSyncHost::doShowFileLockedBy(const QString &path)
+{
+    const Account& account = gui->accountManager()->currentAccount();
+    if (!account.isValid()) {
+        return;
+    }
+    
+    QString repo_id;
+    QString path_in_repo;
+    if (!lookUpFileInformation(path, &repo_id, &path_in_repo)) {
+        qWarning("[FinderSync] invalid path %s", path.toUtf8().data());
+        return;
+    }
+
+    // printf ("getting lock info for %s\n", toCStr(path));
+    get_lock_info_req_.reset(new GetFileLockInfoRequest(
+        account, repo_id, QString("/").append(path_in_repo)));
+
+    connect(get_lock_info_req_.get(), SIGNAL(success(bool, const QString&)), this,
+            SLOT(onGetFileLockInfoSuccess(bool, const QString &)));
+    connect(get_lock_info_req_.get(), SIGNAL(failed(const ApiError&)), this,
+            SLOT(onGetFileLockInfoFailed(const ApiError&)));
+
+    get_lock_info_req_->send();
+}
+
+void FinderSyncHost::onGetFileLockInfoSuccess(bool found, const QString& lock_owner)
+{
+    // printf ("found: %s, lock_owner: %s\n", found ? "true" : "false", toCStr(lock_owner));
+    const QString file = ::getBaseName(get_lock_info_req_->path());
+
+    if (found) {
+        gui->messageBox(tr("File \"%1\" is locked by %2").arg(file, lock_owner));
+    } else {
+        gui->messageBox(tr("Failed to get lock information for file \"%1\"").arg(file));
+    }
+}
+
+void FinderSyncHost::onGetFileLockInfoFailed(const ApiError& error)
+{
+    const QString file = ::getBaseName(get_lock_info_req_->path());
+    gui->messageBox(tr("Failed to get lock information for file \"%1\"").arg(file));
 }

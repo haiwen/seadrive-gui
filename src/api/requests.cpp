@@ -1532,3 +1532,55 @@ void GetThumbnailRequest::requestSuccess(QNetworkReply& reply)
         emit success(pixmap);
     }
 }
+
+GetFileLockInfoRequest::GetFileLockInfoRequest(const Account& account,
+                                               const QString &repo_id,
+                                               const QString &path)
+    : SeafileApiRequest(
+          account.getAbsoluteUrl(QString(kGetDirentsUrl)),
+          SeafileApiRequest::METHOD_GET, account.token),
+      path_(path)
+{
+    // Seahub doesn't provide a standalone api for getting file lock
+    // info. We have to get that from dirents api.
+    dirents_req_.reset(
+        new GetDirentsRequest(account, repo_id, ::getParentPath(path_)));
+    connect(dirents_req_.data(),
+            SIGNAL(success(bool, const QList<SeafDirent> &)),
+            this,
+            SLOT(onGetDirentsSuccess(bool, const QList<SeafDirent> &)));
+    connect(dirents_req_.data(),
+            SIGNAL(failed(const ApiError &)),
+            this,
+            SIGNAL(failed(const ApiError &)));
+}
+
+void GetFileLockInfoRequest::send()
+{
+    dirents_req_->send();
+}
+
+void GetFileLockInfoRequest::requestSuccess(QNetworkReply& reply)
+{
+    // Just a place holder. A `GetFileLockInfoRequest` is a wrapper around a
+    // `GetDirentsRequest`, which really sends the api
+    // requests.
+}
+
+void GetFileLockInfoRequest::onGetDirentsSuccess(bool current_readonly, const QList<SeafDirent> &dirents)
+{
+    const QString name = ::getBaseName(path_);
+    foreach(const SeafDirent& dirent, dirents) {
+        if (dirent.name == name) {
+            const QString lock_owner = dirent.getLockOwnerDisplayString();
+            if (!lock_owner.isEmpty()) {
+                emit success(true, lock_owner);
+            } else {
+                emit success(false, "");
+            }
+            return;
+        }
+    }
+    emit success(false, "");
+}
+

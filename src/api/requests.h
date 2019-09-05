@@ -1029,4 +1029,30 @@ private:
     uint size_;
 };
 
+class GetFileLockInfoRequest : public SeafileApiRequest
+{
+    Q_OBJECT
+public:
+    GetFileLockInfoRequest(const Account& account,
+                           const QString& repo_id,
+                           const QString& path);
+
+    virtual void send() Q_DECL_OVERRIDE;
+
+    const QString& path() const { return path_; }
+
+signals:
+    void success(bool found, const QString& lock_owner);
+
+protected slots:
+    void requestSuccess(QNetworkReply& reply);
+    void onGetDirentsSuccess(bool current_readonly, const QList<SeafDirent> &dirents);
+
+private:
+    Q_DISABLE_COPY(GetFileLockInfoRequest);
+
+    const QString path_;
+    QScopedPointer<GetDirentsRequest, QScopedPointerDeleteLater> dirents_req_;
+};
+
 #endif // SEADRIVE_GUI_API_REQUESTS_H
