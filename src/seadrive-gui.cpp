@@ -31,6 +31,7 @@
 #include "remote-wipe-service.h"
 #include "account-info-service.h"
 #include "file-provider-mgr.h"
+#include "thumbnail-service.h"
 
 #if defined(Q_OS_WIN32)
 #include "utils/registry.h"
@@ -435,6 +436,8 @@ void SeadriveGui::onDaemonStarted()
         AutoUpdateService::instance()->start();
     }
 #endif // HAVE_SPARKLE_SUPPORT
+
+    ThumbnailService::instance()->start();
 }
 
 void SeadriveGui::updateAccountToDaemon()
