@@ -530,9 +530,9 @@ void ExtCommandsHandler::run()
             qWarning("file cached status is %s", toCStr(resp));
         } else if (cmd == "get-disk-letter") {
             resp = handlerGetDiskLetter().toLower();
-        } else if (cmd = "get-thumbnail-from-server") {
+        } else if (cmd == "get-thumbnail-from-server") {
         // TODO: get seafile server from server;
-            qWarning ("[ext] begin to get thumbnail);
+            qWarning ("[ext] begin to get thumbnail");
             resp =handlerGetThumbnailFromServer(args);
         } else {
             qWarning ("[ext] unknown request command: %s", cmd.toUtf8().data());
@@ -842,7 +842,7 @@ QString ExtCommandsHandler::handlerGetDiskLetter() {
 }
 
 // Get thumbanil from server and return the cached thumbnail path
-QString ExtCommandsHandler::handlerGetThumbnailFromServer(const QStringList& args) {
+QString ExtCommandsHandler::handlerGetThumbnailFromServer(QStringList& args) {
     if (args.size() != 1) {
         qWarning("invalid command args of get thumbnail");
         return "Failed";
