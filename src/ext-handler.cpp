@@ -526,14 +526,15 @@ void ExtCommandsHandler::run()
         } else if (cmd == "get-cached-status") {
             bool is_cached;
             handlerFileStatus(args, &is_cached);
-            resp = is_cached ? "Cached" : "unCached";
+            resp = is_cached ? "cached" : "uncached";
+            // TODO: delete it
             qWarning("file cached status is %s", toCStr(resp));
         } else if (cmd == "get-disk-letter") {
-            resp = handlerGetDiskLetter().toLower();
+            resp = handlerGetDiskLetter();
         } else if (cmd == "get-thumbnail-from-server") {
         // TODO: get seafile server from server;
             qWarning ("[ext] begin to get thumbnail");
-            resp =handlerGetThumbnailFromServer(args);
+            resp = handlerGetThumbnailFromServer(args);
         } else {
             qWarning ("[ext] unknown request command: %s", cmd.toUtf8().data());
         }
@@ -799,7 +800,7 @@ void ExtCommandsHandler::handlerFileStatus(QStringList &args, bool* is_cached) {
         return ;
     }
 
-    QString file_path = args.takeAt(0).replace("\\", "/");
+    QString file_path = args.at(0).replace("\\", "/");
     // TODO: delete it
     qWarning("file path is %s", toCStr(file_path));
     *is_cached = isFileCached(file_path);
@@ -832,13 +833,7 @@ bool ExtCommandsHandler::lookUpFileInformation(const QString &path,
 }
 
 QString ExtCommandsHandler::handlerGetDiskLetter() {
-    QString disk_letter;
-    if (gui->settingsManager()->getDiskLetter(&disk_letter)) {
-        return disk_letter;
-
-    } else {
-        return QString("");
-    }
+    return gui->mountDir().toLower();
 }
 
 // Get thumbanil from server and return the cached thumbnail path
