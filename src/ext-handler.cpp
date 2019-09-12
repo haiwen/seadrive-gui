@@ -800,7 +800,7 @@ void ExtCommandsHandler::handlerFileStatus(QStringList &args, bool* is_cached) {
         return ;
     }
 
-    QString file_path = args.at(0).replace("\\", "/");
+    QString file_path = args.first().replace("\\", "/");
     // TODO: delete it
     qWarning("file path is %s", toCStr(file_path));
     *is_cached = isFileCached(file_path);
@@ -844,7 +844,7 @@ QString ExtCommandsHandler::handlerGetThumbnailFromServer(QStringList& args) {
     }
 
     QString cached_thumbnail_path;
-    QString uncached_thumbnail_path = args.takeAt(0).replace("\\", "/");
+    QString uncached_thumbnail_path = args.first().replace("\\", "/");
     bool success = fetchThumbnail(uncached_thumbnail_path, 256, &cached_thumbnail_path);
     if (!success) {
         qWarning("fetch thumbnail from server failed");
