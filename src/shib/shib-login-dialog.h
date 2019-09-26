@@ -18,6 +18,9 @@ class QWebEngineView;
 class QSslError;
 class QNetworkReply;
 class QLineEdit;
+class ApiError;
+class FetchAccountInfoRequest;
+class AccountInfo;
 
 /**
  * Login with Shibboleth SSO.
@@ -40,6 +43,8 @@ private slots:
     void onNewCookieCreated(const QUrl& url, const QNetworkCookie& cookie);
     void onWebEngineCookieAdded(const QNetworkCookie& cookie);
     void updateAddressBar(const QUrl& url);
+    void onFetchAccountInfoSuccess(const AccountInfo& info);
+    void onFetchAccountInfoFailed(const ApiError&);
 
 private:
     Account parseAccount(const QString& txt);
@@ -54,6 +59,7 @@ private:
     bool cookie_seen_;
 
     Account account_;
+    FetchAccountInfoRequest *account_info_req_;
 };
 
 
