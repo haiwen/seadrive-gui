@@ -36,7 +36,7 @@ QString getAppcastURI() {
             url_from_env.toUtf8().data());
         return url_from_env;
     }
-    return I18NHelper::getInstance()->isChinese() ? kSparkleAppcastURIForCN : kSparkleAppcastURI;
+    return I18NHelper::getInstance()->isTargetLanguage("zh-CN") ? kSparkleAppcastURIForCN : kSparkleAppcastURI;
 }
 
 } // namespace
