@@ -30,7 +30,7 @@ public:
         return languages;
     }
 
-    bool isChinese();
+    bool isTargetLanguage(QString language);
     int preferredLanguage();
     void setPreferredLanguage(int langIndex);
 private:

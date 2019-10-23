@@ -154,8 +154,12 @@ QStringList DaemonManager::collectSeaDriveArgs()
 
     args << "-d" << current_cache_dir_;
     args << "-l" << QDir(gui->logsDir()).absoluteFilePath("seadrive.log");
-    if (I18NHelper::getInstance()->isChinese()) {
+    if (I18NHelper::getInstance()->isTargetLanguage("zh_CN")) {
         args << "-L" << "zh_cn";
+    } else if (I18NHelper::getInstance()->isTargetLanguage("de_de")) {
+        args << "-L" << "de_de";
+    } else if (I18NHelper::getInstance()->isTargetLanguage("fr_fr")) {
+        args << "-L" << "fr_fr";
     }
 
 #if defined(Q_OS_WIN32)
