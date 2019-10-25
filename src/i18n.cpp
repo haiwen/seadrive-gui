@@ -145,6 +145,7 @@ const QList<QLocale> &I18NHelper::getInstalledLocales() {
 
 bool I18NHelper::isTargetLanguage(QString language)
 {
+    QString languagecode = language.toLower();
     int lang_index = preferredLanguage();
     if (lang_index < 0 || lang_index >= (int)G_N_ELEMENTS(langs))
         return false;
@@ -153,16 +154,18 @@ bool I18NHelper::isTargetLanguage(QString language)
         // An index of 0 means seafile client is configured to use the system locale.
         QLocale sys_locale = QLocale::system();
         int target_locale;
-        if (language == "zh_CN") {
+        if (languagecode == "zh_cn") {
             target_locale = QLocale::China;
-        } else if (language == "de_de") {
+        } else if (languagecode == "de_de") {
             target_locale = QLocale::Germany;
-        } else if (language == "fr_fr") {
+        } else if (languagecode == "fr_fr") {
             target_locale = QLocale::France;
+        } else {
+            return false;
         }
         return sys_locale.country() == target_locale;
     } else {
-        QString lang = QString(langs[lang_index]);
-        return lang == language;
+        QString lang = QString(langs[lang_index]).toLower();
+        return lang == languagecode;
     }
 }
