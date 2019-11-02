@@ -19,18 +19,18 @@
     </message>
     <message>
         <source>Check For Updates</source>
-        <translation>Verificar si hay actualizaciones</translation>
+        <translation>Buscar actualizaciones</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Aceptar</translation>
     </message>
 </context>
 <context>
     <name>AccountManager</name>
     <message>
         <source>failed to open account database</source>
-        <translation>fallo al abrir la base de datos de las cuentas</translation>
+        <translation>fallo al abrir la base de datos de cuentas</translation>
     </message>
 </context>
 <context>
@@ -52,11 +52,11 @@
     </message>
     <message>
         <source>Your files would appear in a dedicated disk in your computer. Please choose the letter:</source>
-        <translation>Sus archivos aparecerían en un disco dedicado en su computadora. Por favor escoja la letra:</translation>
+        <translation>Sus archivos aparecerían en un disco dedicado en su equipo. Por favor escoja la letra:</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Aceptar</translation>
     </message>
 </context>
 <context>
@@ -79,7 +79,7 @@
     </message>
     <message>
         <source>Video    </source>
-        <translation>Video</translation>
+        <translation>Vídeo</translation>
     </message>
     <message>
         <source>Audio    </source>
@@ -98,13 +98,13 @@
     </message>
     <message>
         <source>%1 is fetching the files list, please wait</source>
-        <translation>%1 está recuperando la lista de archivost, por favor espere</translation>
+        <translation>%1 está recuperando la lista de archivos, por favor, espere</translation>
     </message>
     <message>
         <source>%1 has dowloaded your files list.
 Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>%1 ha descargado su lista de archivos.
-Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1.</translation>
+Por favor, haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1.</translation>
     </message>
     <message>
         <source>Dialog</source>
@@ -127,7 +127,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     <name>LoadMoreButton</name>
     <message>
         <source>load more</source>
-        <translation>Cargar mas</translation>
+        <translation>Cargar más</translation>
     </message>
 </context>
 <context>
@@ -156,27 +156,27 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The ssl certificate of this server is not trusted, proceed anyway?</source>
-        <translation>&lt;b&gt;Aviso:&lt;/b&gt; el certificado ssl de este servidor no es de confianza, proceder de todos modos?</translation>
+        <translation>&lt;b&gt;Aviso:&lt;/b&gt; el certificado SSL de este servidor no es de confianza, ¿proceder de todos modos?</translation>
     </message>
     <message>
         <source>Please enter the server address</source>
-        <translation>Dirección del servidor</translation>
+        <translation>Por favor, introduzca la dirección del servidor</translation>
     </message>
     <message>
         <source>%1 is not a valid server address</source>
-        <translation>%1 no es una dirección válida</translation>
+        <translation>%1 no es una dirección de servidor válida</translation>
     </message>
     <message>
         <source>Please enter the username</source>
-        <translation>Ingrese el nombre de usuario</translation>
+        <translation>Por favor, introduzca el nombre de usuario</translation>
     </message>
     <message>
         <source>Please enter the computer name</source>
-        <translation>Ingrese el nombre del equipo</translation>
+        <translation>Por favor, introduzca el nombre del equipo</translation>
     </message>
     <message>
         <source>Failed to save current account</source>
-        <translation>Fallo al modificar la cuenta actual</translation>
+        <translation>Hubo un fallo al modificar la cuenta actual</translation>
     </message>
     <message>
         <source>Two Factor Authentication</source>
@@ -184,35 +184,35 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>%1 Server Address</source>
-        <translation>Dirección del Servidor %1</translation>
+        <translation>Dirección del servidor %1</translation>
     </message>
     <message>
         <source>Please enter the password</source>
-        <translation>Ingrese la contraseña</translation>
+        <translation>Por favor, introduzca la contraseña</translation>
     </message>
     <message>
         <source>Enter the two factor authentication token</source>
-        <translation>Ingrese el identificador de autenticación de dos factores</translation>
+        <translation>Introduzca el identificador de autenticación de dos factores</translation>
     </message>
     <message>
         <source>Incorrect email or password</source>
-        <translation>Contraseña o correo incorrectos</translation>
+        <translation>El correo electrónico o la contraseña son incorrectos</translation>
     </message>
     <message>
         <source>Logging in too frequently, please wait a minute</source>
-        <translation>Demasiados intentos, por favor espere un minuto</translation>
+        <translation>Demasiados intentos, por favor espere unos minutos</translation>
     </message>
     <message>
         <source>Internal Server Error</source>
-        <translation>Error Interno del Servidor</translation>
+        <translation>Error interno del servidor</translation>
     </message>
     <message>
         <source>Failed to login: %1</source>
-        <translation>Fallo al iniciar sesión: %1</translation>
+        <translation>Hubo un fallo al iniciar sesión: %1</translation>
     </message>
     <message>
         <source>Failed to login</source>
-        <translation>Fallo al iniciar sesión</translation>
+        <translation>Hubo un fallo al iniciar sesión</translation>
     </message>
     <message>
         <source>Dialog</source>
@@ -232,7 +232,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>or http://192.168.1.24:8000</source>
-        <translation>ó http://192.168.1.24:8000</translation>
+        <translation>o http://192.168.1.24:8000</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -240,7 +240,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Automatic Login</source>
-        <translation>Ingreso Automático</translation>
+        <translation>Iniciar sesión de forma automática</translation>
     </message>
     <message>
         <source>status text</source>
@@ -252,15 +252,15 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Email / Username:</source>
-        <translation>Email / Usuario:</translation>
+        <translation>Email o usuario:</translation>
     </message>
     <message>
         <source>e.g. Jim&apos;s laptop</source>
-        <translation>p.ej. laptop de Juan</translation>
+        <translation>P. ej. portátil de Juan</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation>Iniciar</translation>
+        <translation>Acceder</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -283,7 +283,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>&quot;%1&quot; is being uploaded</source>
-        <translation>&quot;%1&quot; está siendo subido</translation>
+        <translation>&quot;%1&quot; se está subiendo</translation>
     </message>
     <message>
         <source>Starting to move &quot;%1&quot;</source>
@@ -303,11 +303,11 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Failed to move &quot;%1&quot;</source>
-        <translation>Fallo al mover &quot;%1&quot;</translation>
+        <translation>Hubo un fallo al mover &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Failed to move &quot;%1&quot; to &quot;%2&quot;</source>
-        <translation>Fallo al mover &quot;%1&quot; a &quot;%2&quot;</translation>
+        <translation>Hubo un fallo al mover &quot;%1&quot; a &quot;%2&quot;</translation>
     </message>
     <message>
         <source>Download file</source>
@@ -323,7 +323,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Failed to create file &quot;%1&quot;</source>
-        <translation>Fallo al crear el archivo &quot;%1&quot;</translation>
+        <translation>Hubo un fallo al crear el archivo &quot;%1&quot;</translation>
     </message>
     <message>
         <source>You can&apos;t create files in the %1 drive directly</source>
@@ -331,7 +331,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Failed to delete folder</source>
-        <translation>Fallo al eliminar carpeta</translation>
+        <translation>Hubo un fallo al eliminar la carpeta</translation>
     </message>
     <message>
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
@@ -382,7 +382,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>You don&apos;t have enough permission for this library</source>
-        <translation>No tiene suficientes permisos para esta biblioteca</translation>
+        <translation>No tiene suficientes permisos en esta biblioteca</translation>
     </message>
     <message>
         <source>Network error</source>
@@ -390,15 +390,15 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Failed to resolve network proxy</source>
-        <translation>Fallo al resolver el proxy de red</translation>
+        <translation>Hubo un fallo al resolver el proxy de red</translation>
     </message>
     <message>
         <source>Failed to resolve remote server</source>
-        <translation>Fallo al resolver el servidor remoto</translation>
+        <translation>Hubo un fallo al resolver el servidor remoto</translation>
     </message>
     <message>
         <source>Failed to connect to server</source>
-        <translation>Fallo al conectar con el servidor</translation>
+        <translation>Hubo un fallo al conectar con el servidor</translation>
     </message>
     <message>
         <source>SSL error</source>
@@ -406,19 +406,19 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Error in network transmission</source>
-        <translation>Error en la transmisión de la red</translation>
+        <translation>Error en la transmisión de red</translation>
     </message>
     <message>
         <source>Timeout in network transmission</source>
-        <translation>Tiempo agotado en la transmisión de la red</translation>
+        <translation>Tiempo agotado en la transmisión de red</translation>
     </message>
     <message>
         <source>Failed to handle http redirection</source>
-        <translation>Fallo al manejar la redirección http</translation>
+        <translation>Hubo un fallo al manejar la redirección HTTP</translation>
     </message>
     <message>
         <source>Server internal error</source>
-        <translation>Error Interno del Servidor</translation>
+        <translation>Error interno del servidor</translation>
     </message>
     <message>
         <source>Local data is corrupt</source>
@@ -426,7 +426,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Failed to write local data</source>
-        <translation>Fallo al escribir los datos locales</translation>
+        <translation>Hubo un fallo al escribir los datos locales</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -462,11 +462,11 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Deleted</source>
-        <translation>Borrado</translation>
+        <translation>Eliminado</translation>
     </message>
     <message>
         <source>Removed</source>
-        <translation>Removido</translation>
+        <translation>Eliminado</translation>
     </message>
     <message>
         <source>Modified</source>
@@ -490,7 +490,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Removed directory</source>
-        <translation>Carpeta removida</translation>
+        <translation>Carpeta eliminada</translation>
     </message>
     <message>
         <source>Renamed directory</source>
@@ -522,7 +522,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Recovered deleted directory</source>
-        <translation>Carpeta borrada recuperada</translation>
+        <translation>Carpeta eliminada recuperada</translation>
     </message>
     <message>
         <source>Changed library name or description</source>
@@ -562,7 +562,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>&lt;Not Part of Certificate&gt;</source>
-        <translation>&lt;No es Parte del Certificado&gt;</translation>
+        <translation>&lt;No es parte del certificado&gt;</translation>
     </message>
     <message>
         <source>Folder</source>
@@ -570,7 +570,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Readonly Folder</source>
-        <translation>Carpeta de sólo lectura</translation>
+        <translation>Carpeta de solo lectura</translation>
     </message>
     <message>
         <source>Document</source>
@@ -582,19 +582,19 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Image File</source>
-        <translation>Archivo de Imagen</translation>
+        <translation>Archivo de imagen</translation>
     </message>
     <message>
         <source>Text Document</source>
-        <translation>Documento de Texto</translation>
+        <translation>Documento de texto</translation>
     </message>
     <message>
         <source>Audio File</source>
-        <translation>Archivo de Audio</translation>
+        <translation>Archivo de audio</translation>
     </message>
     <message>
         <source>Video File</source>
-        <translation>Archivo de Video</translation>
+        <translation>Archivo de vídeo</translation>
     </message>
     <message>
         <source>Word Document</source>
@@ -632,43 +632,43 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Failed to initialize: failed to install kernel driver</source>
-        <translation>Fallo al inicializar: fallo al instalar en controlador en el núcleo</translation>
+        <translation>Hubo un fallo al inicializar: fallo al instalar el controlador del núcleo</translation>
     </message>
     <message>
-        <source>Faild to choose a disk letter</source>
-        <translation>Fallo al elegir una letra de disco</translation>
+        <source>Failed to choose a disk letter</source>
+        <translation>Hubo un fallo al elegir una letra de disco</translation>
     </message>
     <message>
         <source>failed to add default account</source>
-        <translation>fallo al agregar la cuenta predefinida</translation>
+        <translation>hubo un fallo al agregar la cuenta predefinida</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive folder</source>
-        <translation>Fallo al inicializar: fallo al crear la carpeta seadrive</translation>
+        <translation>Hubo un fallo al inicializar: fallo al crear la carpeta seadrive</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive logs folder</source>
-        <translation>Fallo al inicializar: fallo al crear la carpeta de registros de seadrive</translation>
+        <translation>Hubo un fallo al inicializar: fallo al crear la carpeta de registros de seadrive</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive data folder</source>
-        <translation>Fallo al inicializar: fallo al crear la carpeta de datos de seadrive</translation>
+        <translation>Hubo un fallo al inicializar: fallo al crear la carpeta de datos de seadrive</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
-        <translation>Fallo al inicializar: fallo al crear la carpeta de montaje de seadrive</translation>
+        <translation>Hubo un fallo al inicializar: fallo al crear la carpeta de montaje de seadrive</translation>
     </message>
     <message>
         <source>Failed to initialize log: %1</source>
-        <translation>Fallo al iniciar registro: %1</translation>
+        <translation>Hubo un fallo al iniciar el registro: %1</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation>Si</translation>
+        <translation>Sí</translation>
     </message>
     <message>
         <source>No</source>
@@ -680,15 +680,15 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>failed to save client id</source>
-        <translation>fallo al guardar la identificación del cliente</translation>
+        <translation>hubo un fallo al guardar la identificación del cliente</translation>
     </message>
     <message>
         <source>failed to access %1</source>
-        <translation>Fallo al acceder a %1</translation>
+        <translation>hubo un fallo al acceder a %1</translation>
     </message>
     <message>
         <source>incorrect client id</source>
-        <translation>identificación del cliente errónea</translation>
+        <translation>identificador del cliente erróneo</translation>
     </message>
     <message>
         <source>failed to read %1</source>
@@ -696,14 +696,14 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Auto logon failed, fall back to manual login</source>
-        <translation type="unfinished"/>
+        <translation>Hubo un fallo en el inicio de sesión automático, volviendo al modo manual por defecto</translation>
     </message>
 </context>
 <context>
     <name>SeafileLinkDialog</name>
     <message>
         <source>%1 Internal Link</source>
-        <translation>Enlace Interno %1</translation>
+        <translation>Enlace interno %1</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -711,25 +711,25 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>%1 Internal Link:</source>
-        <translation type="unfinished"/>
+        <translation>Enlace interno %1:</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Aceptar</translation>
     </message>
 </context>
 <context>
     <name>SeafileRpcClient</name>
     <message>
         <source>internal error: failed to connect to seadrive daemon</source>
-        <translation>error interno: fallo al conectarse al proceso seadrive</translation>
+        <translation>error interno: fallo al conectarse al servicio seadrive</translation>
     </message>
 </context>
 <context>
     <name>SeafileTrayIcon</name>
     <message>
         <source>&amp;Quit</source>
-        <translation>&amp;Cerrar</translation>
+        <translation>&amp;Salir</translation>
     </message>
     <message>
         <source>Search files</source>
@@ -761,7 +761,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Show the application&apos;s About box</source>
-        <translation>Muestra la información de la aplicación</translation>
+        <translation>Ver información de la aplicación</translation>
     </message>
     <message>
         <source>&amp;Online help</source>
@@ -801,23 +801,23 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Do you want to remove the local cache?</source>
-        <translation>¿Desea remover el caché local?</translation>
+        <translation>¿Desea eliminar la caché local?</translation>
     </message>
     <message>
         <source>Failed to remove local cache of account %1</source>
-        <translation>Fallo al remover el caché local de la cuenta %1</translation>
+        <translation>Hubo un fallo al eliminar la caché local de la cuenta %1</translation>
     </message>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
-        <translation>¿Está seguro que desea eliminar la cuenta de &quot;%1&quot;?</translation>
+        <translation>¿Está seguro de que desea eliminar la cuenta de &quot;%1&quot;?</translation>
     </message>
     <message>
         <source>Failed to delete account</source>
-        <translation>Fallo al eliminar la cuenta</translation>
+        <translation>Hubo un fallo al eliminar la cuenta</translation>
     </message>
     <message>
         <source>Up %1, Down %2</source>
-        <translation>Sube %1, Baja %2</translation>
+        <translation>Sube %1, baja %2</translation>
     </message>
     <message>
         <source>About %1</source>
@@ -856,7 +856,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Failed to search&lt;br/&gt;Please %1</source>
-        <translation>Fallo al buscar&lt;br/&gt;Por favor %1</translation>
+        <translation>Hubo un fallo al buscar&lt;br/&gt;Por favor, %1</translation>
     </message>
     <message>
         <source>No result found</source>
@@ -905,7 +905,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Auto start %1 after login</source>
-        <translation>Iniciar automáticamente %1 después del inicio de sesión</translation>
+        <translation>Iniciar %1 automáticamente tras iniciar sesión</translation>
     </message>
     <message>
         <source>Cache directory:</source>
@@ -913,7 +913,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Enable search</source>
-        <translation type="unfinished"/>
+        <translation>Habilitar búsqueda</translation>
     </message>
     <message>
         <source>None</source>
@@ -929,7 +929,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>System Proxy</source>
-        <translation>Proxy del Sistema</translation>
+        <translation>Proxy del sistema</translation>
     </message>
     <message>
         <source>cache directory</source>
@@ -941,19 +941,19 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>enabled search</source>
-        <translation type="unfinished"/>
+        <translation>búsqueda habilitada</translation>
     </message>
     <message>
         <source>disabled search</source>
-        <translation type="unfinished"/>
+        <translation>búsqueda deshabilitada</translate>
     </message>
     <message>
         <source>You have %1. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>Ha %1. ¿Reiniciar para aplicar los cambios?</translation>
     </message>
     <message>
         <source>You have changed drive access option. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>Ha cambiado la configuración de acceso a la unidad. ¿Reiniciar para aplicar los cambios?</translation>
     </message>
     <message>
         <source>Please choose the cache folder</source>
@@ -997,7 +997,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Enable sync temporary files of MSOffice/Libreoffice</source>
-        <translation>Habilitar la sincronización de archivos temporarios de MSOffice/Libreoffice</translation>
+        <translation>Habilitar la sincronización de archivos temporales de MS Office y LibreOffice</translation>
     </message>
     <message>
         <source>Download speed limit (KB/s):</source>
@@ -1021,7 +1021,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Check for updates automatically</source>
-        <translation>Verificar si hay actualizaciones automáticamente</translation>
+        <translation>Buscar actualizaciones automáticamente</translation>
     </message>
     <message>
         <source>Disk letter (need restart): </source>
@@ -1033,19 +1033,19 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Only allow current user to access the drive</source>
-        <translation type="unfinished"/>
+        <translation>Permitir acceder a la unidad sólo al usuario actual</translate>
     </message>
     <message>
         <source>Cache clean interval (in minutes):</source>
-        <translation>Intervalo de limpieza del caché (en minutos):</translation>
+        <translation>Intervalo de limpieza del caché (minutos):</translation>
     </message>
     <message>
         <source>Cache size limit (in GB):</source>
-        <translation>Límite de tamaño del caché (en GB):</translation>
+        <translation>Límite de tamaño del caché (GB):</translation>
     </message>
     <message>
         <source>select...</source>
-        <translation>seleccione...</translation>
+        <translation>Explorar...</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -1061,11 +1061,11 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Proxy Type:</source>
-        <translation>Tipo de Proxy:</translation>
+        <translation>Tipo de proxy:</translation>
     </message>
     <message>
         <source>Host:</source>
-        <translation>Dirección:</translation>
+        <translation>Servidor:</translation>
     </message>
     <message>
         <source>Port:</source>
@@ -1089,7 +1089,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1097,14 +1097,14 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Enable search in finder</source>
-        <translation type="unfinished"/>
+        <translation>Habilitar búsqueda en Finder</translation>
     </message>
 </context>
 <context>
     <name>SharedLinkDialog</name>
     <message>
         <source>Share Link</source>
-        <translation>Enlace para Compartir</translation>
+        <translation>Enlace para compartir</translation>
     </message>
     <message>
         <source>Share link:</source>
@@ -1112,7 +1112,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Direct Download</source>
-        <translation>Descarga Directa</translation>
+        <translation>Descarga directa</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -1120,7 +1120,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Aceptar</translation>
     </message>
 </context>
 <context>
@@ -1131,7 +1131,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Failed to save current account</source>
-        <translation>Fallo al guardar la cuenta actual</translation>
+        <translation>Hubo un fallo al guardar la cuenta actual</translation>
     </message>
 </context>
 <context>
@@ -1149,7 +1149,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     <name>SyncErrorsTableModel</name>
     <message>
         <source>Double click to open the library</source>
-        <translation>Doble click para abrir la biblioteca</translation>
+        <translation>Doble clic para abrir la biblioteca</translation>
     </message>
     <message>
         <source>Library</source>
