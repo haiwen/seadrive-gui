@@ -189,7 +189,7 @@ QStringList DaemonManager::collectSeaDriveArgs()
         if (mgr->getSearchEnabled())
             fuse_opts += QString(" -o volname=%1,allow_other,local").arg(getBrand());
         else
-            fuse_opts += QString(" -o volname=%1").arg(getBrand());
+            fuse_opts += QString(" -o volname=%1,noappledouble").arg(getBrand());
 #elif defined(Q_OS_LINUX)
         QStringList umount_arguments;
         umount_arguments << "-u" << gui->mountDir();
