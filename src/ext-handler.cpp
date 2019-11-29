@@ -276,9 +276,11 @@ void SeafileExtensionHandler::generateShareLink(const QString& repo_id,
         req->send();
     } else {
         GetSharedLinkRequest *req = new GetSharedLinkRequest(
-            account, repo_id, path_in_repo, is_file);
+            account, repo_id, path_in_repo);
 
         connect(req, SIGNAL(success(const QString&)),
+                this, SLOT(onShareLinkGenerated(const QString&)));
+        connect(req->getCreateSharedLinkRequest(), SIGNAL(success(const QString&)),
                 this, SLOT(onShareLinkGenerated(const QString&)));
 
         req->send();
