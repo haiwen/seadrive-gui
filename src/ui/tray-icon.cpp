@@ -532,9 +532,9 @@ void SeafileTrayIcon::openHelp()
 {
     QString url;
     if (QLocale::system().name() == "zh_CN") {
-        url = "https://help.seafile.com/zh/seadrive_client/install_seadrive_client.html";
+        url = "https://cloud.seafile.com/published/seafile-user-manual/seadrive_client/install_seadrive_client.md";
     } else {
-        url = "https://help.seafile.com/en/drive_client/using_drive_client.html";
+        url = "https://download.seafile.com/published/seafile-user-manual/drive_client/using_drive_client.md";
     }
 
     QDesktopServices::openUrl(QUrl(url));
