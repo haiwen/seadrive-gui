@@ -790,12 +790,27 @@ private:
     const QString path_;
 };
 
+class CreateSharedLinkRequest : public SeafileApiRequest {
+Q_OBJECT
+public:
+    CreateSharedLinkRequest(const Account &account, const QString &repo_id,
+                            const QString &path);
+
+signals:
+    void success(const QString& url);
+
+protected slots:
+    void requestSuccess(QNetworkReply& reply);
+
+private:
+    Q_DISABLE_COPY(CreateSharedLinkRequest)
+};
 
 class GetSharedLinkRequest : public SeafileApiRequest {
     Q_OBJECT
 public:
     GetSharedLinkRequest(const Account &account, const QString &repo_id,
-                             const QString &path, bool is_file);
+                             const QString &path);
 
 signals:
     void success(const QString& url);
@@ -805,6 +820,7 @@ protected slots:
 
 private:
     Q_DISABLE_COPY(GetSharedLinkRequest)
+    CreateSharedLinkRequest* create_shared_link_req_;
 };
 
 class GetFileUploadLinkRequest : public SeafileApiRequest {
