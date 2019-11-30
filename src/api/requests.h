@@ -812,7 +812,6 @@ public:
     GetSharedLinkRequest(const Account &account, const QString &repo_id,
                              const QString &path);
 
-    CreateSharedLinkRequest* getCreateSharedLinkRequest() { return create_shared_link_req_; }
 signals:
     void success(const QString& url);
 

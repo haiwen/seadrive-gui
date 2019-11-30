@@ -247,9 +247,6 @@ void FinderSyncHost::doShareLink(const QString &path) {
     connect(get_shared_link_req_.get(), SIGNAL(success(const QString &)), this,
             SLOT(onShareLinkGenerated(const QString &)));
 
-    connect(get_shared_link_req_.get()->getCreateSharedLinkRequest(), SIGNAL(success(const QString &)), this,
-            SLOT(onShareLinkGenerated(const QString &)));
-
     get_shared_link_req_->send();
 }
 

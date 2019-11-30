@@ -280,9 +280,6 @@ void SeafileExtensionHandler::generateShareLink(const QString& repo_id,
 
         connect(req, SIGNAL(success(const QString&)),
                 this, SLOT(onShareLinkGenerated(const QString&)));
-        connect(req->getCreateSharedLinkRequest(), SIGNAL(success(const QString&)),
-                this, SLOT(onShareLinkGenerated(const QString&)));
-
         req->send();
     }
 }

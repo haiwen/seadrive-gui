@@ -1277,6 +1277,7 @@ void GetSharedLinkRequest::requestSuccess(QNetworkReply& reply)
     if (!QString(share_link).isEmpty()) {
         emit success(share_link);
     } else {
+        connect(create_shared_link_req_, SIGNAL(success(const QString&)), this, SIGNAL(const success(QString&)));
         create_shared_link_req_->send();
     }
 }
