@@ -7,6 +7,10 @@
 #include <QSet>
 
 #include "utils/utils-win.h"
+#if defined(_MSC_VER)
+#include <ciso646>
+#endif
+
 
 namespace utils {
 namespace win {
@@ -329,10 +333,12 @@ char *b64encode(const char *input)
 
 std::string getLocalPipeName(const char *pipe_name)
 {
-    DWORD buf_char_count = 32767;
+    const DWORD buf_char_count = 32767;
     char user_name_buf[buf_char_count];
 
-    if (GetUserName(user_name_buf, &buf_char_count) == 0) {
+    DWORD buf_char_count_size = buf_char_count;
+
+    if (GetUserName(user_name_buf, &buf_char_count_size) == 0) {
         qWarning ("Failed to get user name, GLE=%lu\n",
                   GetLastError());
         return pipe_name;

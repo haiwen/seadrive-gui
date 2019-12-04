@@ -1,0 +1,574 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Header Files\api">
+      <UniqueIdentifier>{81ee8b2d-f999-4f98-bce5-e12c854af1c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\api">
+      <UniqueIdentifier>{0be55873-9966-46f7-afe6-75e09c0d4693}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\rpc">
+      <UniqueIdentifier>{99aa23aa-19fb-410d-b7e4-ab5be02da28e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\rpc">
+      <UniqueIdentifier>{a59df491-6157-4ce3-9510-926abf552cb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\shib">
+      <UniqueIdentifier>{af8ad929-2043-49d6-b0e5-bb2cf024496e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shib">
+      <UniqueIdentifier>{6fc98515-e1b2-46cf-9f22-1f1cc959376c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ui">
+      <UniqueIdentifier>{f14196fa-9930-4c56-8260-3c2cd112be97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui">
+      <UniqueIdentifier>{6877a1a2-7f9c-4e44-9181-3cf2ef565e1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\utils">
+      <UniqueIdentifier>{4c6718e7-8ce7-4070-bf14-d6e2484ccbc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utils">
+      <UniqueIdentifier>{b6cd3a67-a0b4-42fa-a26d-f92090e3fa93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\win-sso">
+      <UniqueIdentifier>{000b6e03-5bde-4090-923a-c82dd48d499e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\win-sso">
+      <UniqueIdentifier>{aa28b344-197e-486b-8e81-01770690d67e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party">
+      <UniqueIdentifier>{c916e6ab-bd5c-4d00-a2b5-1285bdcb04cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\QtAwesome">
+      <UniqueIdentifier>{6aa040a3-b782-4ce6-ab77-ad3cd7a6d22c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\i18n">
+      <UniqueIdentifier>{ff9d20e1-e765-470f-a317-c6de2f4ec0cf}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\account.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\account-info-service.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\account-mgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\auto-login-service.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\daemon-mgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext-handler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\i18n.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\message-poller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\network-mgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\remote-wipe-service.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\seadrive-gui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\settings-mgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\traynotificationmanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\traynotificationwidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\api\api-client.cpp">
+      <Filter>Source Files\api</Filter>
+    </ClCompile>
+    <ClCompile Include="src\api\api-error.cpp">
+      <Filter>Source Files\api</Filter>
+    </ClCompile>
+    <ClCompile Include="src\api\api-request.cpp">
+      <Filter>Source Files\api</Filter>
+    </ClCompile>
+    <ClCompile Include="src\api\commit-details.cpp">
+      <Filter>Source Files\api</Filter>
+    </ClCompile>
+    <ClCompile Include="src\api\contact-share-info.cpp">
+      <Filter>Source Files\api</Filter>
+    </ClCompile>
+    <ClCompile Include="src\api\event.cpp">
+      <Filter>Source Files\api</Filter>
+    </ClCompile>
+    <ClCompile Include="src\api\requests.cpp">
+      <Filter>Source Files\api</Filter>
+    </ClCompile>
+    <ClCompile Include="src\api\seaf-dirent.cpp">
+      <Filter>Source Files\api</Filter>
+    </ClCompile>
+    <ClCompile Include="src\api\server-repo.cpp">
+      <Filter>Source Files\api</Filter>
+    </ClCompile>
+    <ClCompile Include="src\api\starred-file.cpp">
+      <Filter>Source Files\api</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rpc\rpc-client.cpp">
+      <Filter>Source Files\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rpc\rpc-server.cpp">
+      <Filter>Source Files\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rpc\sync-error.cpp">
+      <Filter>Source Files\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rpc\transfer-progress.cpp">
+      <Filter>Source Files\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shib\shib-login-dialog.cpp">
+      <Filter>Source Files\shib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\about-dialog.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\disk-letter-dialog.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\filter-menu.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\init-sync-dialog.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\loading-view.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\login-dialog.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\seafilelink-dialog.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\search-bar.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\search-dialog.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\settings-dialog.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\sharedlink-dialog.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\sync-errors-dialog.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\transfer-progress-dialog.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\tray-icon.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\api-utils.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\file-utils.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\i18n-utils.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\json-utils.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\log.c">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\paint-utils.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\process-win.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\registry.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\stl.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\translate-commit-desc.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\uninstall-helpers.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\utils.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\utils-win.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\win-sso\auto-logon-dialog.cpp">
+      <Filter>Source Files\win-sso</Filter>
+    </ClCompile>
+    <ClCompile Include="src\win-sso\win-http-request.cpp">
+      <Filter>Source Files\win-sso</Filter>
+    </ClCompile>
+    <ClCompile Include="third_party\QtAwesome\QtAwesome.cpp">
+      <Filter>third_party\QtAwesome</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\api\api-error.h">
+      <Filter>Header Files\api</Filter>
+    </ClInclude>
+    <ClInclude Include="src\api\commit-details.h">
+      <Filter>Header Files\api</Filter>
+    </ClInclude>
+    <ClInclude Include="src\api\contact-share-info.h">
+      <Filter>Header Files\api</Filter>
+    </ClInclude>
+    <ClInclude Include="src\api\event.h">
+      <Filter>Header Files\api</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rpc\searpc-marshal.h">
+      <Filter>Header Files\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rpc\searpc-signature.h">
+      <Filter>Header Files\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rpc\sync-error.h">
+      <Filter>Header Files\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rpc\transfer-progress.h">
+      <Filter>Header Files\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\api-utils.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\file-utils.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\i18n-utils.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\json-utils.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\log.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\objc-defines.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\paint-utils.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\process.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\registry.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\singleton.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\stl.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\translate-commit-desc.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\uninstall-helpers.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\utils.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\utils-win.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\win-sso\win-http-request.h">
+      <Filter>Header Files\win-sso</Filter>
+    </ClInclude>
+    <ClInclude Include="src\account.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\i18n.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\unistd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\api\seaf-dirent.h">
+      <Filter>Header Files\api</Filter>
+    </ClInclude>
+    <ClInclude Include="src\api\server-info.h">
+      <Filter>Header Files\api</Filter>
+    </ClInclude>
+    <ClInclude Include="src\api\server-repo.h">
+      <Filter>Header Files\api</Filter>
+    </ClInclude>
+    <ClInclude Include="src\api\starred-file.h">
+      <Filter>Header Files\api</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="src\api\api-client.h">
+      <Filter>Header Files\api</Filter>
+    </QtMoc>
+    <QtMoc Include="src\api\api-request.h">
+      <Filter>Header Files\api</Filter>
+    </QtMoc>
+    <QtMoc Include="src\rpc\rpc-client.h">
+      <Filter>Header Files\rpc</Filter>
+    </QtMoc>
+    <QtMoc Include="src\rpc\rpc-server.h">
+      <Filter>Header Files\rpc</Filter>
+    </QtMoc>
+    <QtMoc Include="src\shib\shib-helper.h">
+      <Filter>Header Files\shib</Filter>
+    </QtMoc>
+    <QtMoc Include="src\shib\shib-login-dialog.h">
+      <Filter>Header Files\shib</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\about-dialog.h">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\disk-letter-dialog.h">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\filter-menu.h">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\init-sync-dialog.h">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\loading-view.h">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\login-dialog.h">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\seafilelink-dialog.h">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\search-bar.h">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\search-dialog.h">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\settings-dialog.h">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\sharedlink-dialog.h">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\sync-errors-dialog.h">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\transfer-progress-dialog.h">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\tray-icon.h">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="src\win-sso\auto-logon-dialog.h">
+      <Filter>Header Files\win-sso</Filter>
+    </QtMoc>
+    <QtMoc Include="third_party\QtAwesome\QtAwesome.h">
+      <Filter>third_party\QtAwesome</Filter>
+    </QtMoc>
+    <QtMoc Include="src\account-info-service.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\account-mgr.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\auto-login-service.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\daemon-mgr.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ext-handler.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\message-poller.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\network-mgr.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\remote-wipe-service.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\seadrive-gui.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\settings-mgr.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\traynotificationmanager.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\traynotificationwidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\api\requests.h">
+      <Filter>Header Files\api</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="ui\about-dialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\disk-letter-dialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\filter-menu.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\init-sync-dialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\login-dialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\settings-dialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="seadrive-gui.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+    <QtRcc Include="third_party\QtAwesome\QtAwesome.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="i18n\seadrive_ca.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_cs_CZ.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_de_DE.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_el_GR.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_en.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_es.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_es_AR.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_es_MX.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_fr_FR.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_he_IL.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_hu_HU.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_is.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_it.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_ja.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_ko_KR.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_lv.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_nb_NO.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_nl_BE.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_nl_NL.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_pl_PL.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_pt_BR.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_pt_PT.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_ru.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_sk_SK.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_sv.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_tr.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_uk.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_zh_CN.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+    <None Include="i18n\seadrive_zh_TW.ts">
+      <Filter>Resource Files\i18n</Filter>
+    </None>
+  </ItemGroup>
+</Project>
