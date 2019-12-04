@@ -1,0 +1,385 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="WIN32|Win32">
+      <Configuration>WIN32</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="WIN32|x64">
+      <Configuration>WIN32</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\account-info-service.cpp" />
+    <ClCompile Include="src\account-mgr.cpp" />
+    <ClCompile Include="src\account.cpp" />
+    <ClCompile Include="src\api\api-client.cpp" />
+    <ClCompile Include="src\api\api-error.cpp" />
+    <ClCompile Include="src\api\api-request.cpp" />
+    <ClCompile Include="src\api\commit-details.cpp" />
+    <ClCompile Include="src\api\contact-share-info.cpp" />
+    <ClCompile Include="src\api\event.cpp" />
+    <ClCompile Include="src\api\requests.cpp" />
+    <ClCompile Include="src\api\seaf-dirent.cpp" />
+    <ClCompile Include="src\api\server-repo.cpp" />
+    <ClCompile Include="src\api\starred-file.cpp" />
+    <ClCompile Include="src\auto-login-service.cpp" />
+    <ClCompile Include="src\auto-update-service.cpp" />
+    <ClCompile Include="src\daemon-mgr.cpp" />
+    <ClCompile Include="src\ext-handler.cpp" />
+    <ClCompile Include="src\i18n.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\message-poller.cpp" />
+    <ClCompile Include="src\network-mgr.cpp" />
+    <ClCompile Include="src\remote-wipe-service.cpp" />
+    <ClCompile Include="src\rpc\rpc-client.cpp" />
+    <ClCompile Include="src\rpc\rpc-server.cpp" />
+    <ClCompile Include="src\rpc\sync-error.cpp" />
+    <ClCompile Include="src\rpc\transfer-progress.cpp" />
+    <ClCompile Include="src\seadrive-gui.cpp" />
+    <ClCompile Include="src\settings-mgr.cpp" />
+    <ClCompile Include="src\shib\shib-login-dialog.cpp" />
+    <ClCompile Include="src\traynotificationmanager.cpp" />
+    <ClCompile Include="src\traynotificationwidget.cpp" />
+    <ClCompile Include="src\ui\about-dialog.cpp" />
+    <ClCompile Include="src\ui\disk-letter-dialog.cpp" />
+    <ClCompile Include="src\ui\filter-menu.cpp" />
+    <ClCompile Include="src\ui\init-sync-dialog.cpp" />
+    <ClCompile Include="src\ui\loading-view.cpp" />
+    <ClCompile Include="src\ui\login-dialog.cpp" />
+    <ClCompile Include="src\ui\seafilelink-dialog.cpp" />
+    <ClCompile Include="src\ui\search-bar.cpp" />
+    <ClCompile Include="src\ui\search-dialog.cpp" />
+    <ClCompile Include="src\ui\settings-dialog.cpp" />
+    <ClCompile Include="src\ui\sharedlink-dialog.cpp" />
+    <ClCompile Include="src\ui\sync-errors-dialog.cpp" />
+    <ClCompile Include="src\ui\transfer-progress-dialog.cpp" />
+    <ClCompile Include="src\ui\tray-icon.cpp" />
+    <ClCompile Include="src\utils\api-utils.cpp" />
+    <ClCompile Include="src\utils\file-utils.cpp" />
+    <ClCompile Include="src\utils\i18n-utils.cpp" />
+    <ClCompile Include="src\utils\json-utils.cpp" />
+    <ClCompile Include="src\utils\log.c" />
+    <ClCompile Include="src\utils\paint-utils.cpp" />
+    <ClCompile Include="src\utils\process-win.cpp" />
+    <ClCompile Include="src\utils\registry.cpp" />
+    <ClCompile Include="src\utils\stl.cpp" />
+    <ClCompile Include="src\utils\translate-commit-desc.cpp" />
+    <ClCompile Include="src\utils\uninstall-helpers.cpp" />
+    <ClCompile Include="src\utils\utils-win.cpp" />
+    <ClCompile Include="src\utils\utils.cpp" />
+    <ClCompile Include="src\win-sso\auto-logon-dialog.cpp" />
+    <ClCompile Include="src\win-sso\win-http-request.cpp" />
+    <ClCompile Include="third_party\QtAwesome\QtAwesome.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="src\api\requests.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="src\api\seaf-dirent.h" />
+    <ClInclude Include="src\api\server-info.h" />
+    <ClInclude Include="src\api\server-repo.h" />
+    <ClInclude Include="src\api\starred-file.h" />
+    <QtMoc Include="src\auto-update-service.h" />
+    <ClInclude Include="src\i18n.h" />
+    <ClInclude Include="src\unistd.h" />
+    <QtMoc Include="src\traynotificationwidget.h" />
+    <QtMoc Include="src\traynotificationmanager.h" />
+    <QtMoc Include="src\settings-mgr.h" />
+    <QtMoc Include="src\seadrive-gui.h" />
+    <QtMoc Include="src\remote-wipe-service.h" />
+    <QtMoc Include="src\network-mgr.h" />
+    <QtMoc Include="src\message-poller.h" />
+    <QtMoc Include="src\ext-handler.h" />
+    <QtMoc Include="src\daemon-mgr.h" />
+    <QtMoc Include="src\auto-login-service.h" />
+    <QtMoc Include="src\account-mgr.h" />
+    <QtMoc Include="src\account-info-service.h" />
+    <ClInclude Include="src\account.h" />
+    <ClInclude Include="src\api\api-error.h" />
+    <ClInclude Include="src\api\commit-details.h" />
+    <ClInclude Include="src\api\contact-share-info.h" />
+    <ClInclude Include="src\api\event.h" />
+    <ClInclude Include="src\rpc\searpc-marshal.h" />
+    <ClInclude Include="src\rpc\searpc-signature.h" />
+    <ClInclude Include="src\rpc\sync-error.h" />
+    <ClInclude Include="src\rpc\transfer-progress.h" />
+    <ClInclude Include="src\utils\api-utils.h" />
+    <ClInclude Include="src\utils\dirent.h" />
+    <ClInclude Include="src\utils\file-utils.h" />
+    <ClInclude Include="src\utils\i18n-utils.h" />
+    <ClInclude Include="src\utils\json-utils.h" />
+    <ClInclude Include="src\utils\log.h" />
+    <ClInclude Include="src\utils\objc-defines.h" />
+    <ClInclude Include="src\utils\paint-utils.h" />
+    <ClInclude Include="src\utils\process.h" />
+    <ClInclude Include="src\utils\registry.h" />
+    <ClInclude Include="src\utils\singleton.h" />
+    <ClInclude Include="src\utils\stl.h" />
+    <ClInclude Include="src\utils\translate-commit-desc.h" />
+    <ClInclude Include="src\utils\uninstall-helpers.h" />
+    <ClInclude Include="src\utils\utils-win.h" />
+    <ClInclude Include="src\utils\utils.h" />
+    <ClInclude Include="src\win-sso\win-http-request.h" />
+    <QtMoc Include="third_party\QtAwesome\QtAwesome.h" />
+    <QtMoc Include="src\win-sso\auto-logon-dialog.h" />
+    <QtMoc Include="src\ui\tray-icon.h" />
+    <QtMoc Include="src\ui\transfer-progress-dialog.h" />
+    <QtMoc Include="src\ui\sync-errors-dialog.h" />
+    <QtMoc Include="src\ui\sharedlink-dialog.h" />
+    <QtMoc Include="src\ui\settings-dialog.h" />
+    <QtMoc Include="src\ui\search-dialog.h" />
+    <QtMoc Include="src\ui\search-bar.h" />
+    <QtMoc Include="src\ui\seafilelink-dialog.h" />
+    <QtMoc Include="src\ui\login-dialog.h" />
+    <QtMoc Include="src\ui\loading-view.h" />
+    <QtMoc Include="src\ui\init-sync-dialog.h" />
+    <QtMoc Include="src\ui\filter-menu.h" />
+    <QtMoc Include="src\ui\disk-letter-dialog.h" />
+    <QtMoc Include="src\ui\about-dialog.h" />
+    <QtMoc Include="src\shib\shib-login-dialog.h" />
+    <QtMoc Include="src\shib\shib-helper.h" />
+    <QtMoc Include="src\rpc\rpc-server.h" />
+    <QtMoc Include="src\rpc\rpc-client.h" />
+    <QtMoc Include="src\api\api-request.h" />
+    <QtMoc Include="src\api\api-client.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="ui\about-dialog.ui" />
+    <QtUic Include="ui\disk-letter-dialog.ui" />
+    <QtUic Include="ui\filter-menu.ui" />
+    <QtUic Include="ui\init-sync-dialog.ui" />
+    <QtUic Include="ui\login-dialog.ui" />
+    <QtUic Include="ui\settings-dialog.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="seadrive-gui.qrc" />
+    <QtRcc Include="third_party\QtAwesome\QtAwesome.qrc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="i18n\seadrive_ca.ts" />
+    <None Include="i18n\seadrive_cs_CZ.ts" />
+    <None Include="i18n\seadrive_de_DE.ts" />
+    <None Include="i18n\seadrive_el_GR.ts" />
+    <None Include="i18n\seadrive_en.ts" />
+    <None Include="i18n\seadrive_es.ts" />
+    <None Include="i18n\seadrive_es_AR.ts" />
+    <None Include="i18n\seadrive_es_MX.ts" />
+    <None Include="i18n\seadrive_fr_FR.ts" />
+    <None Include="i18n\seadrive_he_IL.ts" />
+    <None Include="i18n\seadrive_hu_HU.ts" />
+    <None Include="i18n\seadrive_is.ts" />
+    <None Include="i18n\seadrive_it.ts" />
+    <None Include="i18n\seadrive_ja.ts" />
+    <None Include="i18n\seadrive_ko_KR.ts" />
+    <None Include="i18n\seadrive_lv.ts" />
+    <None Include="i18n\seadrive_nb_NO.ts" />
+    <None Include="i18n\seadrive_nl_BE.ts" />
+    <None Include="i18n\seadrive_nl_NL.ts" />
+    <None Include="i18n\seadrive_pl_PL.ts" />
+    <None Include="i18n\seadrive_pt_BR.ts" />
+    <None Include="i18n\seadrive_pt_PT.ts" />
+    <None Include="i18n\seadrive_ru.ts" />
+    <None Include="i18n\seadrive_sk_SK.ts" />
+    <None Include="i18n\seadrive_sv.ts" />
+    <None Include="i18n\seadrive_tr.ts" />
+    <None Include="i18n\seadrive_uk.ts" />
+    <None Include="i18n\seadrive_zh_CN.ts" />
+    <None Include="i18n\seadrive_zh_TW.ts" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B12702AD-ABFB-343A-A199-8E24837244A3}</ProjectGuid>
+    <Keyword>QtVS_v301</Keyword>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='WIN32|Win32'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='WIN32|x64'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup Condition="'$(QtMsBuild)'=='' or !Exists('$(QtMsBuild)\qt.targets')">
+    <QtMsBuild>$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
+    <Import Project="$(QtMsBuild)\qt_defaults.props" />
+  </ImportGroup>
+  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <QtInstall>Qt 5.13.1-64bit</QtInstall>
+    <QtModules>core;gui;network;webchannel;webengine;webenginewidgets;websockets;widgets</QtModules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="QtSettings">
+    <QtInstall>Qt 5.13.1-32bit</QtInstall>
+    <QtModules>core;gui;network;qml;webchannel;webengine;webenginewidgets;websockets;widgets</QtModules>
+  </PropertyGroup>
+  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <QtInstall>Qt 5.13.1-64bit</QtInstall>
+    <QtModules>core;gui;network;webengine;webenginewidgets;widgets</QtModules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="QtSettings">
+    <QtInstall>Qt 5.13.1-64bit</QtInstall>
+    <QtModules>core;gui;network;webengine;webenginewidgets;widgets</QtModules>
+  </PropertyGroup>
+  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='WIN32|Win32'">
+    <QtInstall>Qt 5.13.1-32bit</QtInstall>
+  </PropertyGroup>
+  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='WIN32|x64'">
+    <QtInstall>Qt 5.13.1-32bit</QtInstall>
+    <QtModules>core;gui;network;webengine;webenginewidgets;widgets</QtModules>
+  </PropertyGroup>
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
+    <Import Project="$(QtMsBuild)\qt.props" />
+  </ImportGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)\third_party\WinSparkle-0.5.3\include;$(ProjectDir)..\libsearpc\lib;$(ProjectDir)\third_party\QtAwesome;$(ProjectDir)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <UndefinePreprocessorDefinitions>%(UndefinePreprocessorDefinitions)</UndefinePreprocessorDefinitions>
+      <PreprocessorDefinitions>SEADRIVE_GUI_VERSION=1.0.9;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)\third_party\WinSparkle-0.5.3\x64\Release;$(ProjectDir)..\libsearpc\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>psapi.lib;ws2_32.lib;shlwapi.lib;mpr.lib;crypt32.lib;wininet.lib;urlmon.lib;libsearpc.lib;winsparkle.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <AdditionalIncludeDirectories>C:\Users\sun\source\repo\seadrive-gui-vc\seadrive-gui\third_party\WinSparkle-0.5.3\include;C:\Users\sun\source\repo\seadrive-gui-vc\dirent\include;C:\Users\sun\source\repo\seadrive-gui-vc\libsearpc\lib;C:\Users\sun\source\repo\seadrive-gui-vc\seadrive-gui\third_party\QtAwesome;C:\Users\sun\source\repo\seadrive-gui-vc\seadrive-gui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <UndefinePreprocessorDefinitions>%(UndefinePreprocessorDefinitions)</UndefinePreprocessorDefinitions>
+      <PreprocessorDefinitions>SEADRIVE_GUI_VERSION=1.0.9;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\sun\source\repo\seadrive-gui-vc\seadrive-gui\third_party\WinSparkle-0.5.3\Release;C:\Users\sun\source\repo\seadrive-gui-vc\libsearpc\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>psapi.lib;ws2_32.lib;shlwapi.lib;mpr.lib;crypt32.lib;wininet.lib;urlmon.lib;libsearpc.lib;winsparkle.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat />
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <AdditionalIncludeDirectories>C:\Users\sun\source\repo\seadrive-gui-vc\seadrive-gui\third_party\QtAwesome;C:\Users\sun\source\repo\seadrive-gui-vc\libsearpc\lib;C:\Users\sun\source\repo\seadrive-gui-vc\seadrive-gui\src\utils;C:\Users\sun\source\repo\seadrive-gui-vc\seadrive-gui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalDependencies>wininet.lib;urlmon.lib;psapi.lib;ws2_32.lib;shlwapi.lib;mpr.lib;crypt32.lib;libsearpc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\sun\source\repo\seadrive-gui-vc\libsearpc\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <AdditionalIncludeDirectories>C:\Users\sun\source\repo\seadrive-gui-vc\seadrive-gui\third_party\QtAwesome;C:\Users\sun\source\repo\seadrive-gui-vc\libsearpc\lib;C:\Users\sun\source\repo\seadrive-gui-vc\seadrive-gui\src\utils;C:\Users\sun\source\repo\seadrive-gui-vc\seadrive-gui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalDependencies>wininet.lib;urlmon.lib;psapi.lib;ws2_32.lib;shlwapi.lib;mpr.lib;crypt32.lib;libsearpc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\sun\source\repo\seadrive-gui-vc\libsearpc\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
+    <Import Project="$(QtMsBuild)\qt.targets" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

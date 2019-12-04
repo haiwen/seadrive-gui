@@ -18,6 +18,10 @@
 
 #include "auto-logon-dialog.h"
 
+#if defined(_MSC_VER)
+#include <ciso646>
+#endif
+
 namespace
 {
 const char* kSeahubApiTokenCookieName = "seahub_auth";

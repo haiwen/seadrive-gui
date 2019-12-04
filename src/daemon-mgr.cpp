@@ -139,7 +139,12 @@ void DaemonManager::startSeadriveDaemon()
                 SIGNAL(finished(int, QProcess::ExitStatus)),
                 this,
                 SLOT(onDaemonFinished(int, QProcess::ExitStatus)));
+#if defined(_MSC_VER)
+        QString app_dir = QCoreApplication::applicationDirPath();
+        seadrive_daemon_->start(QString("%1//seadrive//%2").arg(app_dir).arg(kSeadriveExecutable), collectSeaDriveArgs());
+#else
         seadrive_daemon_->start(RESOURCE_PATH(kSeadriveExecutable), collectSeaDriveArgs());
+#endif
     } else {
         qWarning() << "dev mode enabled, you are supposed to launch seadrive daemon yourself";
         transitionState(DAEMON_CONNECTING);
