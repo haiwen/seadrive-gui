@@ -431,7 +431,7 @@ SearchItemsTableView::SearchItemsTableView(QWidget* parent)
 void SearchItemsTableView::setupContextMenu()
 {
     context_menu_ = new QMenu(this);
-    connect(parent_, SIGNAL(aboutToClose()),
+    connect(parent_, SIGNAL(aboutClose()),
             context_menu_, SLOT(close()));
     open_file_action_ = new QAction(tr("&Open the file"), this);
     connect(open_file_action_, SIGNAL(triggered()),

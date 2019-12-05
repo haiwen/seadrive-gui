@@ -248,6 +248,9 @@
     <ClCompile Include="third_party\QtAwesome\QtAwesome.cpp">
       <Filter>third_party\QtAwesome</Filter>
     </ClCompile>
+    <ClCompile Include="src\auto-update-service.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\api\api-error.h">
@@ -408,9 +411,6 @@
     <QtMoc Include="src\ui\tray-icon.h">
       <Filter>Header Files\ui</Filter>
     </QtMoc>
-    <QtMoc Include="src\win-sso\auto-logon-dialog.h">
-      <Filter>Header Files\win-sso</Filter>
-    </QtMoc>
     <QtMoc Include="third_party\QtAwesome\QtAwesome.h">
       <Filter>third_party\QtAwesome</Filter>
     </QtMoc>
@@ -452,6 +452,12 @@
     </QtMoc>
     <QtMoc Include="src\api\requests.h">
       <Filter>Header Files\api</Filter>
+    </QtMoc>
+    <QtMoc Include="src\auto-update-service.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\win-sso\auto-logon-dialog.h">
+      <Filter>Header Files\win-sso</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

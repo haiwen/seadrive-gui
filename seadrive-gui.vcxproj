@@ -25,6 +25,7 @@
     <ClCompile Include="src\api\server-repo.cpp" />
     <ClCompile Include="src\api\starred-file.cpp" />
     <ClCompile Include="src\auto-login-service.cpp" />
+    <ClCompile Include="src\auto-update-service.cpp" />
     <ClCompile Include="src\daemon-mgr.cpp" />
     <ClCompile Include="src\ext-handler.cpp" />
     <ClCompile Include="src\i18n.cpp" />
@@ -79,6 +80,7 @@
     <ClInclude Include="src\api\server-info.h" />
     <ClInclude Include="src\api\server-repo.h" />
     <ClInclude Include="src\api\starred-file.h" />
+    <QtMoc Include="src\auto-update-service.h" />
     <ClInclude Include="src\i18n.h" />
     <ClInclude Include="src\unistd.h" />
     <QtMoc Include="src\traynotificationwidget.h" />
@@ -228,7 +230,7 @@
   </ImportGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <QtInstall>Qt 5.13.1-64bit</QtInstall>
-    <QtModules>core;gui;network;qml;webchannel;webengine;webenginewidgets;widgets</QtModules>
+    <QtModules>core;gui;network;webchannel;webengine;webenginewidgets;websockets;widgets</QtModules>
   </PropertyGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <QtInstall>Qt 5.13.1-64bit</QtInstall>
@@ -246,13 +248,15 @@
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <LanguageStandard>stdcpp14</LanguageStandard>
       <AdditionalIncludeDirectories>C:\Users\sun\source\repo\seadrive-gui-vc\seadrive-gui\third_party\WinSparkle-0.5.3\include;C:\Users\sun\source\repo\seadrive-gui-vc\dirent\include;C:\Users\sun\source\repo\seadrive-gui-vc\libsearpc\lib;C:\Users\sun\source\repo\seadrive-gui-vc\seadrive-gui\third_party\QtAwesome;C:\Users\sun\source\repo\seadrive-gui-vc\seadrive-gui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <UndefinePreprocessorDefinitions>%(UndefinePreprocessorDefinitions)</UndefinePreprocessorDefinitions>
+      <PreprocessorDefinitions>SEADRIVE_GUI_VERSION=1.0.9;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\sun\source\repo\seadrive-gui-vc\libsearpc\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>psapi.lib;ws2_32.lib;shlwapi.lib;mpr.lib;crypt32.lib;wininet.lib;urlmon.lib;libsearpc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\sun\source\repo\seadrive-gui-vc\seadrive-gui\third_party\WinSparkle-0.5.3\x64\Release;C:\Users\sun\source\repo\seadrive-gui-vc\libsearpc\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>psapi.lib;ws2_32.lib;shlwapi.lib;mpr.lib;crypt32.lib;wininet.lib;urlmon.lib;libsearpc.lib;winsparkle.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
