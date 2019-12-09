@@ -527,7 +527,7 @@ void ExtCommandsHandler::run()
             break;
         }
 
-        // qWarning() << "get a new command: " << args;
+        qWarning() << "get a new command: " << args;
 
         QString cmd = args.takeAt(0);
         QString resp;
