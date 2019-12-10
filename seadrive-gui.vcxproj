@@ -309,7 +309,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <LanguageStandard>stdcpp14</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)\third_party\WinSparkle-0.5.3\include;$(ProjectDir)..\libsearpc\lib;$(ProjectDir)\third_party\QtAwesome;$(ProjectDir)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\third_party\WinSparkle-0.5.3\include;$(ProjectDir)..\libsearpc\lib;$(ProjectDir)\third_party\QtAwesome;$(ProjectDir)\src;$(ProjectDir)\src\utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <UndefinePreprocessorDefinitions>%(UndefinePreprocessorDefinitions)</UndefinePreprocessorDefinitions>
       <PreprocessorDefinitions>SEADRIVE_GUI_VERSION=1.0.9;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
