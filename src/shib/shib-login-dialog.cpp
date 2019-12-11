@@ -205,8 +205,9 @@ bool CustomCookieJar::setCookiesFromUrl(const QList<QNetworkCookie>& cookies, co
 // cookie to be persisted (the seahub_auth cookie should be cleared each time
 // the shib login dialog is called)
 SeafileQWebEnginePage::SeafileQWebEnginePage(QObject *parent)
-    : QWebEnginePage(new QWebEngineProfile(parent), parent)
 {
+    // QWebEnginePage cannot deleled before QWebEngineProfile
+    QWebEnginePage(new QWebEngineProfile(parent), parent);
 }
 
 bool SeafileQWebEnginePage::certificateError(
