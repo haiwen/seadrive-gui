@@ -17,11 +17,11 @@ pushd $CURRENT_PWD
 
 if [[ $1 == "debug" ]]; then
     CONFIG=Debug
-    [[ -f CMakeCache.txt ]] || cmake -G Xcode -DCMAKE_BUILD_TYPE="$CONFIG"
+    [[ -f CMakeCache.txt ]] || cmake -G Xcode -DCMAKE_BUILD_TYPE="$CONFIG" .
 else
     CONFIG=Release
     rm -rf CMakeCache.txt CMakeFiles
-    cmake -G Xcode -DCMAKE_BUILD_TYPE="$CONFIG"
+    cmake -G Xcode -DCMAKE_BUILD_TYPE="$CONFIG" .
     xcodebuild clean
 fi
 
