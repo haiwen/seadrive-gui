@@ -17,6 +17,6 @@ export CXX=$(xcrun -f clang)
 unset CFLAGS CXXFLAGS LDFLAGS
 
 CONFIG=Release
-cmake -G Xcode -DCMAKE_BUILD_TYPE="$CONFIG"
+cmake -G Xcode -DCMAKE_BUILD_TYPE="$CONFIG" .
 xcodebuild clean
 xcodebuild -jobs "$(sysctl -n hw.ncpu)" -configuration "$CONFIG"
