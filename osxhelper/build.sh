@@ -6,7 +6,7 @@ CURRENT_PWD="$(dirname "${BASH_SOURCE[0]}")"
 
 pushd $CURRENT_PWD
 rm -rf CMakeCache.txt CMakeFiles
-cmake -GNinja -DCMAKE_BUILD_TYPE="Release"
+cmake -GNinja -DCMAKE_BUILD_TYPE="Release" .
 ninja
 
 if [[ $# -gt 0 ]]; then
