@@ -1,6 +1,5 @@
 #include <cassert>
 #include <errno.h>
-#include <dirent.h>
 #include <cstdio>
 #include <cstdlib>
 #include <unistd.h>

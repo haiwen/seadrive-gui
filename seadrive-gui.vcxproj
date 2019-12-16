@@ -90,6 +90,8 @@
     <ClCompile Include="third_party\QtAwesome\QtAwesome.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="third_party\WinSparkle-0.5.3\include\winsparkle-version.h" />
+    <ClInclude Include="third_party\WinSparkle-0.5.3\include\winsparkle.h" />
     <QtMoc Include="src\api\requests.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="src\api\seaf-dirent.h" />
@@ -330,7 +332,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <LanguageStandard>stdcpp14</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\sun\source\repo\seadrive-gui-vc\seadrive-gui\third_party\WinSparkle-0.5.3\include;C:\Users\sun\source\repo\seadrive-gui-vc\dirent\include;C:\Users\sun\source\repo\seadrive-gui-vc\libsearpc\lib;C:\Users\sun\source\repo\seadrive-gui-vc\seadrive-gui\third_party\QtAwesome;C:\Users\sun\source\repo\seadrive-gui-vc\seadrive-gui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)third_party/WinSparkle-0.5.3/include;C:\Users\sun\source\repo\seadrive-gui-vc\dirent\include;$(ProjectDir)../libsearpc/lib;$(ProjectDir)third_party/QtAwesome;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <UndefinePreprocessorDefinitions>%(UndefinePreprocessorDefinitions)</UndefinePreprocessorDefinitions>
       <PreprocessorDefinitions>SEADRIVE_GUI_VERSION=1.0.9;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
@@ -338,7 +340,7 @@
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\sun\source\repo\seadrive-gui-vc\seadrive-gui\third_party\WinSparkle-0.5.3\Release;C:\Users\sun\source\repo\seadrive-gui-vc\libsearpc\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)third_party\WinSparkle-0.5.3\Release;$(ProjectDir)..\libsearpc\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>psapi.lib;ws2_32.lib;shlwapi.lib;mpr.lib;crypt32.lib;wininet.lib;urlmon.lib;libsearpc.lib;winsparkle.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
@@ -349,14 +351,14 @@
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalIncludeDirectories>C:\Users\sun\source\repo\seadrive-gui-vc\seadrive-gui\third_party\QtAwesome;C:\Users\sun\source\repo\seadrive-gui-vc\libsearpc\lib;C:\Users\sun\source\repo\seadrive-gui-vc\seadrive-gui\src\utils;C:\Users\sun\source\repo\seadrive-gui-vc\seadrive-gui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)third_party\WinSparkle-0.5.3\include;$(ProjectDir)third_party\QtAwesome;$(ProjectDir)..\libsearpc\lib;$(ProjectDir)src\utils;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalDependencies>wininet.lib;urlmon.lib;psapi.lib;ws2_32.lib;shlwapi.lib;mpr.lib;crypt32.lib;libsearpc.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\sun\source\repo\seadrive-gui-vc\libsearpc\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)third_party\WinSparkle-0.5.3\x64\Release;$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

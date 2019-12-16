@@ -66,6 +66,9 @@
     <Filter Include="Resource Files\i18n">
       <UniqueIdentifier>{ff9d20e1-e765-470f-a317-c6de2f4ec0cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="third_party\winsparkle">
+      <UniqueIdentifier>{6622b2a6-ffb2-4ae8-a881-90512e01980e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\account.cpp">
@@ -351,6 +354,12 @@
     </ClInclude>
     <ClInclude Include="src\utils\dirent.h">
       <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\WinSparkle-0.5.3\include\winsparkle.h">
+      <Filter>third_party\winsparkle</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\WinSparkle-0.5.3\include\winsparkle-version.h">
+      <Filter>third_party\winsparkle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
