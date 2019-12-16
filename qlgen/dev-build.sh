@@ -30,7 +30,7 @@ build() {
         export CC=$(xcrun -f clang)
         export CXX=$(xcrun -f clang)
         unset CFLAGS CXXFLAGS LDFLAGS
-        cmake -G Xcode -DCMAKE_BUILD_TYPE="$CONFIG"
+        cmake -G Xcode -DCMAKE_BUILD_TYPE="$CONFIG" .
         # xcodebuild clean
     fi
 
