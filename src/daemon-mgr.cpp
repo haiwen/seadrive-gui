@@ -116,7 +116,7 @@ void DaemonManager::startSeadriveDaemon()
         current_cache_dir_ = QDir(gui->seadriveDataDir()).absolutePath();
 
 #if defined(Q_OS_WIN32)
-    QLibrary dokanlib("dokan1.dll");
+   /* QLibrary dokanlib("dokan1.dll");
     if (!dokanlib.load()) {
         qWarning("dokan1.dll could not be loaded");
         gui->errorAndExit(tr("%1 failed to initialize").arg(getBrand()));
@@ -124,6 +124,7 @@ void DaemonManager::startSeadriveDaemon()
     } else {
         dokanlib.unload();
     }
+    */
     searpc_pipe_client_ = searpc_create_named_pipe_client(
         utils::win::getLocalPipeName(kSeadriveSockName).c_str());
 #else
