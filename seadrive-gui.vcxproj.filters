@@ -63,11 +63,13 @@
     <Filter Include="third_party\QtAwesome">
       <UniqueIdentifier>{6aa040a3-b782-4ce6-ab77-ad3cd7a6d22c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\i18n">
-      <UniqueIdentifier>{ff9d20e1-e765-470f-a317-c6de2f4ec0cf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="third_party\winsparkle">
       <UniqueIdentifier>{6622b2a6-ffb2-4ae8-a881-90512e01980e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translation Files">
+      <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
+      <Extensions>ts</Extensions>
+      <ParseFiles>false</ParseFiles>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -502,91 +504,91 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="i18n\seadrive_ca.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_cs_CZ.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_de_DE.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_el_GR.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_en.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_es.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_es_AR.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_es_MX.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_fr_FR.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_he_IL.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_hu_HU.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_is.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_it.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_ja.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_ko_KR.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_lv.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_nb_NO.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_nl_BE.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_nl_NL.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_pl_PL.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_pt_BR.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_pt_PT.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_ru.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_sk_SK.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_sv.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_tr.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_uk.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_zh_CN.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
     <None Include="i18n\seadrive_zh_TW.ts">
-      <Filter>Resource Files\i18n</Filter>
+      <Filter>Translation Files</Filter>
     </None>
   </ItemGroup>
 </Project>
