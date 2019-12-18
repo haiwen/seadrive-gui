@@ -416,6 +416,7 @@ void SeadriveGui::onDaemonStarted()
         if (!account_mgr_->accounts().empty()) {
             const Account &account = account_mgr_->accounts()[0];
             account_mgr_->validateAndUseAccount(account);
+            rpc_client_->switchAccount(account);
         }
     }
 
