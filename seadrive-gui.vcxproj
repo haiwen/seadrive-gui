@@ -360,6 +360,13 @@
       <AdditionalDependencies>wininet.lib;urlmon.lib;psapi.lib;ws2_32.lib;shlwapi.lib;mpr.lib;crypt32.lib;libsearpc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)third_party\WinSparkle-0.5.3\x64\Release;$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>if exist $(OutDir)tmp rd /s/q $(OutDir)tmp
+md $(OutDir)tmp
+copy $(OutDir)*dll $(OutDir)tmp
+copy $(OutDir)seadrive-gui.exe $(OutDir)tmp
+C:\Qt\Qt5.13.1\5.13.1\msvc2017_64\bin\windeployqt.exe   $(OutDir)tmp\seadrive-gui.exe</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
