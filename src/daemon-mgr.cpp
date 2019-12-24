@@ -169,6 +169,7 @@ QStringList DaemonManager::collectSeaDriveArgs()
     }
 
 #if defined(Q_OS_WIN32)
+#if defined(__MINGW32__)
     QString drive_letter = QString(qgetenv("SEADRIVE_LETTER")).trimmed().toUpper().remove(":").remove("/");
     qDebug("SEADRIVE_LETTER = %s", qgetenv("SEADRIVE_LETTER").data());
     if (!drive_letter.isEmpty()) {
@@ -183,6 +184,10 @@ QStringList DaemonManager::collectSeaDriveArgs()
         drive_letter += ":";
     }
     args << drive_letter;
+#elif defined (_MSC_VER)
+    args << "C:";
+#endif
+
 #else
     args << "-f";
 

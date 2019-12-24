@@ -352,20 +352,25 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <AdditionalIncludeDirectories>$(ProjectDir)third_party\WinSparkle-0.5.3\include;$(ProjectDir)third_party\QtAwesome;$(ProjectDir)..\libsearpc\lib;$(ProjectDir)src\utils;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>HAVE_SPARKLE_SUPPORT;SEADRIVE_GUI_VERSION=1.0.9;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalDependencies>wininet.lib;urlmon.lib;psapi.lib;ws2_32.lib;shlwapi.lib;mpr.lib;crypt32.lib;libsearpc.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)third_party\WinSparkle-0.5.3\x64\Release;$(ProjectDir)..\libsearpc\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)third_party\WinSparkle-0.5.3\x64\Release;$(ProjectDir)..\libsearpc\$(IntDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>if exist $(OutDir)tmp rd /s/q $(OutDir)tmp
-md $(OutDir)tmp
-copy $(OutDir)*dll $(OutDir)tmp
-copy $(OutDir)seadrive-gui.exe $(OutDir)tmp
-C:\Qt\Qt5.13.1\5.13.1\msvc2017_64\bin\windeployqt.exe   $(OutDir)tmp\seadrive-gui.exe</Command>
+      <Command>if not exist C:\tmp (
+md C:\tmp
+)
+copy $(ProjectDir)third_party\WinSparkle-0.5.3\x64\Release\WinSparkle.dll C:\tmp
+copy $(OutDir)*dll C:\tmp
+copy $(OutDir)seadrive-gui.exe C:\tmp
+copy $(ProjectDir)..\libsearpc\x64\Release\libsearpc.dll C:\tmp
+C:\Qt\Qt5.13.1\5.13.1\msvc2017_64\bin\windeployqt.exe  C:\tmp\seadrive-gui.exe
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
