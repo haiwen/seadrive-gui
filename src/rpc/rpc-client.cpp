@@ -736,3 +736,62 @@ bool SeafileRpcClient::isFileCached(const QString& repo_id,
         return ret != 0;
     }
 }
+
+bool SeafileRpcClient::getEncryptedRepoList(json_t **ret_obj)
+{
+    GError *error = NULL;
+    json_t *ret = searpc_client_call__json (
+            seadrive_rpc_client_,
+            "seafile_get_enc_repo_list",
+            &error, 0);
+
+    if (error) {
+        qWarning("failed to get list of encrypted repository, errors: %s.\n",
+                 error->message);
+        g_error_free(error);
+        return false;
+    } else {
+        *ret_obj = ret;
+
+        return true;
+    }
+}
+
+bool SeafileRpcClient::setEncryptedRepoPassword(const QString& repo_id,
+                                                const QString& password)
+{
+    GError *error = NULL;
+    int ret = searpc_client_call__int(
+        seadrive_rpc_client_,
+        "seafile_set_enc_repo_passwd",
+        &error, 2,
+        "string", toCStr(repo_id),
+        "string", toCStr(password));
+
+    if (error) {
+        qWarning("failed to set the password of encrypted repository: %s\n", error->message);
+        g_error_free(error);
+        return false;
+    }
+
+    return ret == 0;
+}
+
+bool SeafileRpcClient::clearEncryptedRepoPassword(const QString& repo_id)
+{
+    GError *error = NULL;
+    int ret = searpc_client_call__int(
+        seadrive_rpc_client_,
+        "seafile_clear_enc_repo_passwd",
+        &error, 1,
+        "string", toCStr(repo_id));
+
+    if (error) {
+        qWarning("failed to clear the password of encrypted repository: %s\n", error->message);
+        g_error_free(error);
+        return false;
+    }
+
+    return ret == 0;
+}
+

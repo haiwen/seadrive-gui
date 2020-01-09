@@ -602,3 +602,60 @@ LoadMoreButton QToolButton#loadMoreBtn {
     width: 120px;
     height: 34px;
 }
+
+EncryptedRepoDialog {
+    margin: 0;
+    min-width: 700px;
+    min-height: 300px;
+}
+
+EncryptRepoTableView {
+    border: 0;
+    margin: 0;
+    padding-left: 14px;
+    padding-right: 14px;
+    border-bottom: 1px solid #e0e0e0;
+    background-color: white;
+    qproperty-focusPolicy: NoFocus;
+}
+
+EncryptRepoTableView QHeaderView::section {
+    border: 0;
+    padding: 8px;
+    padding-left: 5px;
+    outline: 0px;
+    color: #b3b3b3;
+    background-color: white;
+    font-size: 12px;
+    padding-top: 20px;
+}
+
+EncryptRepoTableView::item {
+    padding-top: 5px;
+    padding-left: 0px;
+    border-top: 1px solid #e0e0e0;
+}
+
+EncryptRepoTableView::item :last {
+    padding-right: 13px;
+}
+
+EncryptRepoTableView::item:selected {
+    background-color: #F9E0C7;
+}
+
+EncryptRepoSetting {
+    margin: 0;
+    min-width: 350px;
+    min-height: 100px;
+    backgroud-color: white;
+}
+
+EncryptRepoSetting QLabel#tiplabel {
+    font-size: 14px;
+}
+
+EncryptRepoSetting QLineEdit#repo_passwd_line_edit {
+    font-family: Arial;
+    font-size: 20px;
+}

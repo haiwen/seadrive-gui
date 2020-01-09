@@ -106,6 +106,13 @@ public:
     bool isFileCached(const QString& repo_id,
                       const QString& path_in_repo);
 
+    bool getEncryptedRepoList(json_t **ret_obj);
+
+    bool setEncryptedRepoPassword(const QString& repo_id,
+                                  const QString& password);
+
+    bool clearEncryptedRepoPassword(const QString& repo_id);
+
 private:
     Q_DISABLE_COPY(SeafileRpcClient)
 
