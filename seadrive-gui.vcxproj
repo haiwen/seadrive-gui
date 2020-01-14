@@ -311,7 +311,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <LanguageStandard>stdcpp14</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)\third_party\WinSparkle-0.5.3\include;$(ProjectDir)..\libsearpc\lib;$(ProjectDir)\third_party\QtAwesome;$(ProjectDir)\src;$(ProjectDir)\src\utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\third_party\WinSparkle-0.5.3\include;$(ProjectDir)..\libsearpc\lib;$(ProjectDir)\third_party\QtAwesome;$(ProjectDir)\src;$(ProjectDir)\src\utils;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <UndefinePreprocessorDefinitions>%(UndefinePreprocessorDefinitions)</UndefinePreprocessorDefinitions>
       <PreprocessorDefinitions>SEADRIVE_GUI_VERSION=1.0.9;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
@@ -351,7 +351,7 @@
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalIncludeDirectories>$(ProjectDir)third_party\WinSparkle-0.5.3\include;$(ProjectDir)third_party\QtAwesome;$(ProjectDir)..\libsearpc\lib;$(ProjectDir)src\utils;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)third_party\WinSparkle-0.5.3\include;$(ProjectDir)third_party\QtAwesome;$(ProjectDir)..\libsearpc\lib;$(ProjectDir)src\utils;$(ProjectDir)src;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>HAVE_SPARKLE_SUPPORT;SEADRIVE_GUI_VERSION=1.0.9;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
