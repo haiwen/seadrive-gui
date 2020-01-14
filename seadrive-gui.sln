@@ -4,14 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "seadrive-gui", "seadrive-gui.vcxproj", "{B12702AD-ABFB-343A-A199-8E24837244A3}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8E22F51A-A0EE-45B5-B065-932D7E3D2EA9} = {8E22F51A-A0EE-45B5-B065-932D7E3D2EA9}
-		{7E7BDAA2-D61E-466D-B138-CC2454CAB1D3} = {7E7BDAA2-D61E-466D-B138-CC2454CAB1D3}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libsearpc", "..\libsearpc\libsearpc.vcxproj", "{7E7BDAA2-D61E-466D-B138-CC2454CAB1D3}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "seadrive", "..\seadrive\seadrive.vcxproj", "{8E22F51A-A0EE-45B5-B065-932D7E3D2EA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,30 +27,6 @@ Global
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|x64.Build.0 = Release|x64
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|x86.ActiveCfg = Release|Win32
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|x86.Build.0 = Release|Win32
-		{7E7BDAA2-D61E-466D-B138-CC2454CAB1D3}.Debug|Win32.ActiveCfg = Debug|Win32
-		{7E7BDAA2-D61E-466D-B138-CC2454CAB1D3}.Debug|Win32.Build.0 = Debug|Win32
-		{7E7BDAA2-D61E-466D-B138-CC2454CAB1D3}.Debug|x64.ActiveCfg = Debug|x64
-		{7E7BDAA2-D61E-466D-B138-CC2454CAB1D3}.Debug|x64.Build.0 = Debug|x64
-		{7E7BDAA2-D61E-466D-B138-CC2454CAB1D3}.Debug|x86.ActiveCfg = Debug|Win32
-		{7E7BDAA2-D61E-466D-B138-CC2454CAB1D3}.Debug|x86.Build.0 = Debug|Win32
-		{7E7BDAA2-D61E-466D-B138-CC2454CAB1D3}.Release|Win32.ActiveCfg = Release|Win32
-		{7E7BDAA2-D61E-466D-B138-CC2454CAB1D3}.Release|Win32.Build.0 = Release|Win32
-		{7E7BDAA2-D61E-466D-B138-CC2454CAB1D3}.Release|x64.ActiveCfg = Release|x64
-		{7E7BDAA2-D61E-466D-B138-CC2454CAB1D3}.Release|x64.Build.0 = Release|x64
-		{7E7BDAA2-D61E-466D-B138-CC2454CAB1D3}.Release|x86.ActiveCfg = Release|Win32
-		{7E7BDAA2-D61E-466D-B138-CC2454CAB1D3}.Release|x86.Build.0 = Release|Win32
-		{8E22F51A-A0EE-45B5-B065-932D7E3D2EA9}.Debug|Win32.ActiveCfg = Debug|Win32
-		{8E22F51A-A0EE-45B5-B065-932D7E3D2EA9}.Debug|Win32.Build.0 = Debug|Win32
-		{8E22F51A-A0EE-45B5-B065-932D7E3D2EA9}.Debug|x64.ActiveCfg = Debug|x64
-		{8E22F51A-A0EE-45B5-B065-932D7E3D2EA9}.Debug|x64.Build.0 = Debug|x64
-		{8E22F51A-A0EE-45B5-B065-932D7E3D2EA9}.Debug|x86.ActiveCfg = Debug|Win32
-		{8E22F51A-A0EE-45B5-B065-932D7E3D2EA9}.Debug|x86.Build.0 = Debug|Win32
-		{8E22F51A-A0EE-45B5-B065-932D7E3D2EA9}.Release|Win32.ActiveCfg = Release|Win32
-		{8E22F51A-A0EE-45B5-B065-932D7E3D2EA9}.Release|Win32.Build.0 = Release|Win32
-		{8E22F51A-A0EE-45B5-B065-932D7E3D2EA9}.Release|x64.ActiveCfg = Release|x64
-		{8E22F51A-A0EE-45B5-B065-932D7E3D2EA9}.Release|x64.Build.0 = Release|x64
-		{8E22F51A-A0EE-45B5-B065-932D7E3D2EA9}.Release|x86.ActiveCfg = Release|Win32
-		{8E22F51A-A0EE-45B5-B065-932D7E3D2EA9}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
