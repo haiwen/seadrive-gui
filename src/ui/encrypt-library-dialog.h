@@ -64,6 +64,13 @@ signals:
 
 private slots:
     void onItemDoubleClicked(const QModelIndex& index);
+
+    void onClickSyncAction();
+private:
+    void createContextMenu();
+    void contextMenuEvent(QContextMenuEvent *event);
+    QMenu *context_menu_;
+    EncryptedRepoInfo enc_repo_info_;
 };
 
 

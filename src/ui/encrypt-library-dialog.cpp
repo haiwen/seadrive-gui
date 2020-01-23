@@ -2,6 +2,8 @@
 #include <QVBoxLayout>
 #include <QResizeEvent>
 #include <QLabel>
+#include <QMenu>
+#include <QAction>
 
 #include "ui/encrypt-repo-setting-dialog.h"
 #include "encrypt-library-dialog.h"
@@ -153,8 +155,6 @@ EncryptRepoTableView::EncryptRepoTableView(QWidget *parent)
     setSelectionMode(QAbstractItemView::ExtendedSelection);
     setMouseTracking(true);
 
-    connect(this, SIGNAL(doubleClicked(const QModelIndex&)),
-            this, SLOT(onItemDoubleClicked(const QModelIndex&)));
 }
 
 void EncryptRepoTableView::resizeEvent(QResizeEvent *event)
@@ -181,15 +181,58 @@ void EncryptRepoTableView::onItemDoubleClicked(const QModelIndex& index)
     }
 }
 
+void EncryptRepoTableView::contextMenuEvent(QContextMenuEvent *event)
+{
+    QPoint pos = event->pos();
+    int row = rowAt(pos.y());
+    if (row == -1) {
+        return;
+    }
+
+    EncryptRepoTableModel *model = (EncryptRepoTableModel *)this->model();
+
+    enc_repo_info_ =  model->encRepoInfoAt(row);
+
+    createContextMenu();
+    pos = viewport()->mapToGlobal(pos);
+    context_menu_->exec(pos);
+}
+
+void EncryptRepoTableView::createContextMenu()
+{
+    context_menu_ = new QMenu(this);
+    QAction *sync_status_action_ = new QAction(this);
+    if (enc_repo_info_.is_set_password) {
+       sync_status_action_->setText(tr("Unsync"));
+    } else {
+       sync_status_action_->setText(tr("Sync"));
+    }
+    context_menu_->addAction(sync_status_action_);
+    connect(sync_status_action_, SIGNAL(triggered()), this, SLOT(onClickSyncAction()));
+}
+
+void EncryptRepoTableView::onClickSyncAction()
+{
+    if (enc_repo_info_.is_set_password) {
+        EncryptRepoSetting dialog(false, this);
+        if (dialog.exec() == QDialog::Accepted) {
+            emit sigClearEncEncRepoPassword(enc_repo_info_.repo_id);
+        }
+    } else {
+        EncryptRepoSetting dialog(true, this);
+        if (dialog.exec() == QDialog::Accepted) {
+            emit sigSetEncRepoPassword(enc_repo_info_.repo_id, dialog.getRepoPassword());
+        }
+    }
+}
+
 
 EncryptRepoTableModel::EncryptRepoTableModel(QObject *parent)
         : QAbstractTableModel(parent),
           repo_name_column_width_(kRepoNameColumnWidth),
           repo_status_column_width_(kRepoStatus)
 {
-    rpc_client_ = new SeafileRpcClient();
-    rpc_client_ ->connectDaemon();
-
+    rpc_client_ = gui->rpcClient();
     updateEncryptRepoList();
 
 }
@@ -198,7 +241,7 @@ void EncryptRepoTableModel::updateEncryptRepoList()
 {
     json_t *ret;
     if (!rpc_client_->getEncryptedRepoList(&ret)) {
-       qWarning("falild get encrypt library list");
+       qWarning("failed get encrypt library list");
      }
     QList<EncryptedRepoInfo> enc_repo_infos = EncryptedRepoInfo::listFromJSON(ret);
     json_decref(ret);
@@ -209,13 +252,15 @@ void EncryptRepoTableModel::updateEncryptRepoList()
     return;
 }
 
-void EncryptRepoTableModel::slotSetEncRepoPassword(const QString& repo_id, const QString& password) {
+void EncryptRepoTableModel::slotSetEncRepoPassword(const QString& repo_id, const QString& password)
+{
     if (!rpc_client_->setEncryptedRepoPassword(repo_id, password)) {
         gui->messageBox(tr("Failed to set encrypted repository password"));
     }
 }
 
-void EncryptRepoTableModel::slotClearEncRepoPassword(const QString& repo_id) {
+void EncryptRepoTableModel::slotClearEncRepoPassword(const QString& repo_id)
+{
     if (!rpc_client_->clearEncryptedRepoPassword(repo_id)) {
         gui->messageBox(tr("Failed to clear encrypted repository password"));
     }
@@ -259,7 +304,7 @@ QVariant EncryptRepoTableModel::data(const QModelIndex & index, int role) const
         return Qt::AlignLeft + Qt::AlignVCenter;
 
     if (role == Qt::ToolTipRole)
-        return tr("Double click to set password or unset password");
+        return tr("Right click this item to sync or unsync the encrypted repository");
 
     if (role == Qt::SizeHintRole) {
         int h = kDefaultColumnHeight;

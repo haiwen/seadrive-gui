@@ -648,6 +648,8 @@ EncryptRepoSetting {
     margin: 0;
     min-width: 350px;
     min-height: 100px;
+    max-width: 350px;
+    max-height: 100px;
     backgroud-color: white;
 }
 

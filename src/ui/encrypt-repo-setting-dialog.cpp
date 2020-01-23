@@ -7,6 +7,7 @@
 #include <QPushButton>
 #include <QLineEdit>
 #include <QtGlobal>
+#include <QSpacerItem>
 
 
 EncryptRepoSetting::EncryptRepoSetting(const bool is_set_password, QWidget *parent)
@@ -37,6 +38,9 @@ EncryptRepoSetting::EncryptRepoSetting(const bool is_set_password, QWidget *pare
 
     QHBoxLayout *hlayout = new QHBoxLayout;
 
+    QSpacerItem *spacer = new QSpacerItem(20, 20,
+            QSizePolicy::Expanding, QSizePolicy::Fixed);
+    hlayout->addSpacerItem(spacer);
     QPushButton *ok = new QPushButton(tr("OK"));
     hlayout->addWidget(ok);
     connect(ok, SIGNAL(clicked()), this, SLOT(accept()));
@@ -56,11 +60,13 @@ EncryptRepoSetting::EncryptRepoSetting(const bool is_set_password, QWidget *pare
 
 }
 
-QString EncryptRepoSetting::getRepoPassword() {
+QString EncryptRepoSetting::getRepoPassword()
+{
     return password_;
 }
 
-void EncryptRepoSetting::slotSetPassword() {
+void EncryptRepoSetting::slotSetPassword()
+{
    password_ = repo_password_line_edit_->text();
 }
 
