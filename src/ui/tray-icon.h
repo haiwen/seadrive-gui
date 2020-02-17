@@ -19,7 +19,7 @@ class TrayNotificationManager;
 class SyncErrorsDialog;
 class TransferProgressDialog;
 class SearchDialog;
-class EncryptedRepoDialog;
+class EncryptedReposDialog;
 
 
 class SeafileTrayIcon : public QSystemTrayIcon {
@@ -177,7 +177,7 @@ private:
     SyncError global_sync_error_;
     SyncErrorsDialog *sync_errors_dialog_;
     TransferProgressDialog * transfer_progress_dialog_;
-    EncryptedRepoDialog *enc_repo_dialog_;
+    EncryptedReposDialog *enc_repo_dialog_;
     SearchDialog *search_dialog_;
 
 };

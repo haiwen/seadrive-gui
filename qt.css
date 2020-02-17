@@ -603,13 +603,13 @@ LoadMoreButton QToolButton#loadMoreBtn {
     height: 34px;
 }
 
-EncryptedRepoDialog {
+EncryptedReposDialog {
     margin: 0;
     min-width: 700px;
     min-height: 300px;
 }
 
-EncryptRepoTableView {
+EncryptedReposTableView {
     border: 0;
     margin: 0;
     padding-left: 14px;
@@ -619,7 +619,7 @@ EncryptRepoTableView {
     qproperty-focusPolicy: NoFocus;
 }
 
-EncryptRepoTableView QHeaderView::section {
+EncryptedReposTableView QHeaderView::section {
     border: 0;
     padding: 8px;
     padding-left: 5px;
@@ -630,34 +630,17 @@ EncryptRepoTableView QHeaderView::section {
     padding-top: 20px;
 }
 
-EncryptRepoTableView::item {
+EncryptedReposTableView::item {
     padding-top: 5px;
     padding-left: 0px;
     border-top: 1px solid #e0e0e0;
 }
 
-EncryptRepoTableView::item :last {
+EncryptedReposTableView::item :last {
     padding-right: 13px;
 }
 
-EncryptRepoTableView::item:selected {
+EncryptedReposTableView::item:selected {
     background-color: #F9E0C7;
 }
 
-EncryptRepoSetting {
-    margin: 0;
-    min-width: 350px;
-    min-height: 100px;
-    max-width: 350px;
-    max-height: 100px;
-    backgroud-color: white;
-}
-
-EncryptRepoSetting QLabel#tiplabel {
-    font-size: 14px;
-}
-
-EncryptRepoSetting QLineEdit#repo_passwd_line_edit {
-    font-family: Arial;
-    font-size: 20px;
-}

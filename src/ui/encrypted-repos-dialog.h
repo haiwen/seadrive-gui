@@ -6,16 +6,14 @@
 #include <QDialog>
 #include <QTableView>
 #include <QStackedWidget>
-
-#include "ui_encrypt-library-dialog.h"
-
+#include <QHeaderView>
 
 class EncryptedRepoInfo {
 
 public:
     QString repo_id;
     QString repo_name;
-    bool is_set_password;
+    bool is_password_set;
 
     bool operator==(const EncryptedRepoInfo& info) const {
         return repo_id == info.repo_id && repo_name == info.repo_name;
@@ -27,16 +25,16 @@ public:
 };
 
 
-class EncryptRepoTableView;
-class EncryptRepoTableModel;
+class EncryptedReposTableView;
+class EncryptedReposTableModel;
 class SeafileRpcClient;
 
-class EncryptedRepoDialog : public QDialog
+class EncryptedReposDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    EncryptedRepoDialog(QWidget *parent = 0);
+    EncryptedReposDialog(QWidget *parent = 0);
     void createEmptyView();
 
 private slots:
@@ -45,17 +43,17 @@ private slots:
 private:
     QStackedWidget *stack_;
     QWidget *empty_view_;
-    EncryptRepoTableView *table_;
-    EncryptRepoTableModel *model_;
+    EncryptedReposTableView *table_;
+    EncryptedReposTableModel *model_;
 };
 
 
-class EncryptRepoTableView : public QTableView
+class EncryptedReposTableView : public QTableView
 {
     Q_OBJECT
 
 public:
-    EncryptRepoTableView(QWidget *parent=0);
+    EncryptedReposTableView(QWidget *parent=0);
     void resizeEvent(QResizeEvent *event);
 
 signals:
@@ -74,11 +72,11 @@ private:
 };
 
 
-class EncryptRepoTableModel: public QAbstractTableModel
+class EncryptedReposTableModel: public QAbstractTableModel
 {
 Q_OBJECT
 public:
-    EncryptRepoTableModel(QObject *parent=0);
+    EncryptedReposTableModel(QObject *parent=0);
 
     int rowCount(const QModelIndex& parent=QModelIndex()) const;
     int columnCount(const QModelIndex& parent=QModelIndex()) const;

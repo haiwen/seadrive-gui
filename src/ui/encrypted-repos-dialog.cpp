@@ -4,9 +4,9 @@
 #include <QLabel>
 #include <QMenu>
 #include <QAction>
+#include <QInputDialog>
 
-#include "ui/encrypt-repo-setting-dialog.h"
-#include "encrypt-library-dialog.h"
+#include "encrypted-repos-dialog.h"
 
 #include "utils/json-utils.h"
 #include "utils/utils.h"
@@ -45,7 +45,7 @@ EncryptedRepoInfo EncryptedRepoInfo::fromJSON(const json_t *root) {
 
     enc_repo_info.repo_id = json.getString("repo_id");
     enc_repo_info.repo_name = json.getString("repo_display_name");
-    enc_repo_info.is_set_password  = json.getBool("is_passwd_set");
+    enc_repo_info.is_password_set  = json.getBool("is_passwd_set");
     return enc_repo_info;
 }
 
@@ -59,10 +59,10 @@ QList<EncryptedRepoInfo> EncryptedRepoInfo::listFromJSON(const json_t *json) {
 }
 
 
-EncryptedRepoDialog::EncryptedRepoDialog(QWidget *parent) : QDialog(parent)
+EncryptedReposDialog::EncryptedReposDialog(QWidget *parent) : QDialog(parent)
 {
 
-    setWindowTitle(tr("Encrypted Repository List"));
+    setWindowTitle(tr("Encrypted Libraries"));
     setWindowIcon(QIcon(":/images/seafile.png"));
     Qt::WindowFlags flags =
             (windowFlags() & ~Qt::WindowContextHelpButtonHint & ~Qt::Dialog) |
@@ -72,8 +72,8 @@ EncryptedRepoDialog::EncryptedRepoDialog(QWidget *parent) : QDialog(parent)
 
     setWindowFlags(flags);
 
-    table_ = new EncryptRepoTableView;
-    model_ = new EncryptRepoTableModel(this);
+    table_ = new EncryptedReposTableView;
+    model_ = new EncryptedReposTableModel(this);
     table_->setModel(model_);
 
     connect(table_, SIGNAL(sigSetEncRepoPassword(const QString&, const QString&)),
@@ -112,7 +112,7 @@ EncryptedRepoDialog::EncryptedRepoDialog(QWidget *parent) : QDialog(parent)
     connect(model_, SIGNAL(modelReset()), this, SLOT(onModelReset()));
 }
 
-void EncryptedRepoDialog::createEmptyView()
+void EncryptedReposDialog::createEmptyView()
 {
     empty_view_ = new QWidget(this);
 
@@ -120,13 +120,13 @@ void EncryptedRepoDialog::createEmptyView()
     empty_view_->setLayout(layout);
 
     QLabel *label = new QLabel;
-    label->setText(tr("No Encrypted Repo."));
+    label->setText(tr("No Encrypted Library."));
     label->setAlignment(Qt::AlignCenter);
 
     layout->addWidget(label);
 }
 
-void EncryptedRepoDialog::onModelReset()
+void EncryptedReposDialog::onModelReset()
 {
     if (model_->rowCount() == 0) {
         stack_->setCurrentIndex(INDEX_EMPTY_VIEW);
@@ -135,7 +135,7 @@ void EncryptedRepoDialog::onModelReset()
     }
 }
 
-EncryptRepoTableView::EncryptRepoTableView(QWidget *parent)
+EncryptedReposTableView::EncryptedReposTableView(QWidget *parent)
         : QTableView(parent)
 {
     verticalHeader()->hide();
@@ -157,31 +157,19 @@ EncryptRepoTableView::EncryptRepoTableView(QWidget *parent)
 
 }
 
-void EncryptRepoTableView::resizeEvent(QResizeEvent *event)
+void EncryptedReposTableView::resizeEvent(QResizeEvent *event)
 {
     QTableView::resizeEvent(event);
-    EncryptRepoTableModel *m = (EncryptRepoTableModel *)(model());
+    EncryptedReposTableModel *m = (EncryptedReposTableModel *)(model());
     m->onResize(event->size());
 }
 
-void EncryptRepoTableView::onItemDoubleClicked(const QModelIndex& index)
+void EncryptedReposTableView::onItemDoubleClicked(const QModelIndex& index)
 {
-    EncryptRepoTableModel *model = (EncryptRepoTableModel *)this->model();
-    EncryptedRepoInfo enc_repo_info = model->encRepoInfoAt(index.row());
-    if (enc_repo_info.is_set_password) {
-        EncryptRepoSetting dialog(false, this);
-        if (dialog.exec() == QDialog::Accepted) {
-            emit sigClearEncEncRepoPassword(enc_repo_info.repo_id);
-        }
-    } else {
-        EncryptRepoSetting dialog(true, this);
-        if (dialog.exec() == QDialog::Accepted) {
-            emit sigSetEncRepoPassword(enc_repo_info.repo_id, dialog.getRepoPassword());
-        }
-    }
+
 }
 
-void EncryptRepoTableView::contextMenuEvent(QContextMenuEvent *event)
+void EncryptedReposTableView::contextMenuEvent(QContextMenuEvent *event)
 {
     QPoint pos = event->pos();
     int row = rowAt(pos.y());
@@ -189,20 +177,21 @@ void EncryptRepoTableView::contextMenuEvent(QContextMenuEvent *event)
         return;
     }
 
-    EncryptRepoTableModel *model = (EncryptRepoTableModel *)this->model();
+    EncryptedReposTableModel *model = (EncryptedReposTableModel *)this->model();
 
     enc_repo_info_ =  model->encRepoInfoAt(row);
 
     createContextMenu();
     pos = viewport()->mapToGlobal(pos);
     context_menu_->exec(pos);
+    context_menu_->deleteLater();
 }
 
-void EncryptRepoTableView::createContextMenu()
+void EncryptedReposTableView::createContextMenu()
 {
     context_menu_ = new QMenu(this);
     QAction *sync_status_action_ = new QAction(this);
-    if (enc_repo_info_.is_set_password) {
+    if (enc_repo_info_.is_password_set) {
        sync_status_action_->setText(tr("Unsync"));
     } else {
        sync_status_action_->setText(tr("Sync"));
@@ -211,23 +200,26 @@ void EncryptRepoTableView::createContextMenu()
     connect(sync_status_action_, SIGNAL(triggered()), this, SLOT(onClickSyncAction()));
 }
 
-void EncryptRepoTableView::onClickSyncAction()
+void EncryptedReposTableView::onClickSyncAction()
 {
-    if (enc_repo_info_.is_set_password) {
-        EncryptRepoSetting dialog(false, this);
-        if (dialog.exec() == QDialog::Accepted) {
+    bool ok;
+    if (enc_repo_info_.is_password_set) {
+        ok = gui->yesOrCancelBox(tr("To unsync the library, please click \"OK\" button"), this, true);
+        if (ok) {
             emit sigClearEncEncRepoPassword(enc_repo_info_.repo_id);
         }
     } else {
-        EncryptRepoSetting dialog(true, this);
-        if (dialog.exec() == QDialog::Accepted) {
-            emit sigSetEncRepoPassword(enc_repo_info_.repo_id, dialog.getRepoPassword());
+        QString repo_password = QInputDialog::getText(this, QString(""),
+                                    tr("Please input encryption library password"),
+                                    QLineEdit::Password, QString(""), &ok);
+        if (ok && !repo_password.isEmpty()) {
+            emit sigSetEncRepoPassword(enc_repo_info_.repo_id, repo_password);
         }
     }
 }
 
 
-EncryptRepoTableModel::EncryptRepoTableModel(QObject *parent)
+EncryptedReposTableModel::EncryptedReposTableModel(QObject *parent)
         : QAbstractTableModel(parent),
           repo_name_column_width_(kRepoNameColumnWidth),
           repo_status_column_width_(kRepoStatus)
@@ -237,11 +229,11 @@ EncryptRepoTableModel::EncryptRepoTableModel(QObject *parent)
 
 }
 
-void EncryptRepoTableModel::updateEncryptRepoList()
+void EncryptedReposTableModel::updateEncryptRepoList()
 {
     json_t *ret;
     if (!rpc_client_->getEncryptedRepoList(&ret)) {
-       qWarning("failed get encrypt library list");
+       qWarning("failed to get encrypt library list");
      }
     QList<EncryptedRepoInfo> enc_repo_infos = EncryptedRepoInfo::listFromJSON(ret);
     json_decref(ret);
@@ -252,31 +244,31 @@ void EncryptRepoTableModel::updateEncryptRepoList()
     return;
 }
 
-void EncryptRepoTableModel::slotSetEncRepoPassword(const QString& repo_id, const QString& password)
+void EncryptedReposTableModel::slotSetEncRepoPassword(const QString& repo_id, const QString& password)
 {
     if (!rpc_client_->setEncryptedRepoPassword(repo_id, password)) {
-        gui->messageBox(tr("Failed to set encrypted repository password"));
+        gui->messageBox(tr("Failed to set encrypted library password"));
     }
 }
 
-void EncryptRepoTableModel::slotClearEncRepoPassword(const QString& repo_id)
+void EncryptedReposTableModel::slotClearEncRepoPassword(const QString& repo_id)
 {
     if (!rpc_client_->clearEncryptedRepoPassword(repo_id)) {
-        gui->messageBox(tr("Failed to clear encrypted repository password"));
+        gui->messageBox(tr("Failed to clear encrypted library password"));
     }
 }
 
-int EncryptRepoTableModel::rowCount(const QModelIndex& parent) const
+int EncryptedReposTableModel::rowCount(const QModelIndex& parent) const
 {
     return enc_repo_infos_.size();
 }
 
-int EncryptRepoTableModel::columnCount(const QModelIndex& parent) const
+int EncryptedReposTableModel::columnCount(const QModelIndex& parent) const
 {
     return MAX_COLUMN;
 }
 
-void EncryptRepoTableModel::onResize(const QSize &size)
+void EncryptedReposTableModel::onResize(const QSize &size)
 {
     int extra_width = size.width() - kDefaultColumnSum;
     int extra_width_per_column = extra_width / 3;
@@ -292,7 +284,7 @@ void EncryptRepoTableModel::onResize(const QSize &size)
             index(enc_repo_infos_.size() - 1 , COLUMN_IS_SET_PASSWORD));
 }
 
-QVariant EncryptRepoTableModel::data(const QModelIndex & index, int role) const
+QVariant EncryptedReposTableModel::data(const QModelIndex & index, int role) const
 {
     if (!index.isValid()) {
         return QVariant();
@@ -304,7 +296,7 @@ QVariant EncryptRepoTableModel::data(const QModelIndex & index, int role) const
         return Qt::AlignLeft + Qt::AlignVCenter;
 
     if (role == Qt::ToolTipRole)
-        return tr("Right click this item to sync or unsync the encrypted repository");
+        return tr("Right click this item to sync or unsync the encrypted library");
 
     if (role == Qt::SizeHintRole) {
         int h = kDefaultColumnHeight;
@@ -331,7 +323,7 @@ QVariant EncryptRepoTableModel::data(const QModelIndex & index, int role) const
     if (column == COLUMN_REPO_NAME) {
         return enc_repo_info.repo_name ;
     } else if (column == COLUMN_IS_SET_PASSWORD && role == Qt::DecorationRole) {
-        if (enc_repo_info.is_set_password) {
+        if (enc_repo_info.is_password_set) {
             return QIcon(":/images/sync/done.png");
         }
         return QIcon(":/images/sync/cloud.png");
@@ -340,7 +332,7 @@ QVariant EncryptRepoTableModel::data(const QModelIndex & index, int role) const
     return QVariant();
 }
 
-QVariant EncryptRepoTableModel::headerData(int section,
+QVariant EncryptedReposTableModel::headerData(int section,
                                           Qt::Orientation orientation,
                                           int role) const
 {
@@ -355,7 +347,7 @@ QVariant EncryptRepoTableModel::headerData(int section,
         return QVariant();
 
     if (section == COLUMN_REPO_NAME) {
-        return tr("Repository");
+        return tr("Library");
     } else if (section == COLUMN_IS_SET_PASSWORD) {
         return tr("Sync status");
     }

@@ -254,8 +254,7 @@ SET(moc_headers
   src/ui/sync-errors-dialog.h
   src/ui/tray-icon.h
   src/ui/about-dialog.h
-  src/ui/encrypt-library-dialog.h
-  src/ui/encrypt-repo-setting-dialog.h
+  src/ui/encrypted-repos-dialog.h
   src/ui/transfer-progress-dialog.h
 
   third_party/QtAwesome/QtAwesome.h
@@ -370,8 +369,7 @@ SET(seadrive_gui_sources
   src/ui/sync-errors-dialog.cpp
   src/ui/tray-icon.cpp
   src/ui/about-dialog.cpp
-  src/ui/encrypt-library-dialog.cpp
-  src/ui/encrypt-repo-setting-dialog.cpp
+  src/ui/encrypted-repos-dialog.cpp
   src/ui/transfer-progress-dialog.cpp
   ${platform_specific_sources}
 

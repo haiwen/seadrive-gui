@@ -746,7 +746,7 @@ bool SeafileRpcClient::getEncryptedRepoList(json_t **ret_obj)
             &error, 0);
 
     if (error) {
-        qWarning("failed to get list of encrypted repository, errors: %s.\n",
+        qWarning("failed to get list of encrypted library, errors: %s.\n",
                  error->message);
         g_error_free(error);
         return false;
@@ -769,7 +769,7 @@ bool SeafileRpcClient::setEncryptedRepoPassword(const QString& repo_id,
         "string", toCStr(password));
 
     if (error) {
-        qWarning("failed to set the password of encrypted repository: %s\n", error->message);
+        qWarning("failed to set the password of encrypted library: %s\n", error->message);
         g_error_free(error);
         return false;
     }
@@ -787,7 +787,7 @@ bool SeafileRpcClient::clearEncryptedRepoPassword(const QString& repo_id)
         "string", toCStr(repo_id));
 
     if (error) {
-        qWarning("failed to clear the password of encrypted repository: %s\n", error->message);
+        qWarning("failed to clear the password of encrypted library: %s\n", error->message);
         g_error_free(error);
         return false;
     }

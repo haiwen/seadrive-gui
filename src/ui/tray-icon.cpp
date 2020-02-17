@@ -22,7 +22,7 @@
 #include "src/ui/login-dialog.h"
 #include "src/ui/init-sync-dialog.h"
 #include "src/ui/about-dialog.h"
-#include "src/ui/encrypt-library-dialog.h"
+#include "src/ui/encrypted-repos-dialog.h"
 #include "src/ui/sync-errors-dialog.h"
 #include "src/ui/transfer-progress-dialog.h"
 #include "src/ui/search-dialog.h"
@@ -859,7 +859,10 @@ void SeafileTrayIcon::showTransferProgressDialog()
 }
 
 void SeafileTrayIcon::showEncRepoDialog() {
-    enc_repo_dialog_ = new EncryptedRepoDialog();
+
+    if (enc_repo_dialog_ == nullptr) {
+        enc_repo_dialog_ = new EncryptedReposDialog();
+    }
 
     enc_repo_dialog_->show();
     enc_repo_dialog_->raise();
