@@ -371,6 +371,16 @@ copy $(ProjectDir)..\libsearpc\x64\Release\libsearpc.dll C:\tmp
 C:\Qt\Qt5.13.1\5.13.1\msvc2017_64\bin\windeployqt.exe  C:\tmp\seadrive-gui.exe
 </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+set FolderName=$(ProjectDir)i18n\
+
+for /f "delims=. " %%a in ('dir /b /a-d /o-d "%FolderName%\*.ts"') do (
+   $(QtDllPath)\lrelease.exe   "$(ProjectDir)i18n\\"%%a".ts" -qm  "$(ProjectDir)i18n\\"%%a".qm"
+)
+
+</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
