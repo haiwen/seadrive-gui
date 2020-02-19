@@ -109,7 +109,8 @@ public:
     bool getEncryptedRepoList(json_t **ret_obj);
 
     bool setEncryptedRepoPassword(const QString& repo_id,
-                                  const QString& password);
+                                  const QString& password,
+                                  QString* error_msg);
 
     bool clearEncryptedRepoPassword(const QString& repo_id);
 

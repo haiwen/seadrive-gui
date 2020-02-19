@@ -204,13 +204,15 @@ void EncryptedReposTableView::onClickSyncAction()
 {
     bool ok;
     if (enc_repo_info_.is_password_set) {
-        ok = gui->yesOrCancelBox(tr("To unsync the library, please click \"OK\" button"), this, true);
+        ok = gui->yesOrCancelBox(
+                tr("After unsyncing, the local encryption key of this library will be cleared and this library cannot be accessed in virtual drive. Are you sure to unsync?"),
+                this, true);
         if (ok) {
             emit sigClearEncEncRepoPassword(enc_repo_info_.repo_id);
         }
     } else {
-        QString repo_password = QInputDialog::getText(this, QString(""),
-                                    tr("Please input encryption library password"),
+        QString repo_password = QInputDialog::getText(this, QString("Enter library password to sync"),
+                                    tr("Enter library password to sync"),
                                     QLineEdit::Password, QString(""), &ok);
         if (ok && !repo_password.isEmpty()) {
             emit sigSetEncRepoPassword(enc_repo_info_.repo_id, repo_password);
@@ -246,8 +248,13 @@ void EncryptedReposTableModel::updateEncryptRepoList()
 
 void EncryptedReposTableModel::slotSetEncRepoPassword(const QString& repo_id, const QString& password)
 {
-    if (!rpc_client_->setEncryptedRepoPassword(repo_id, password)) {
-        gui->messageBox(tr("Failed to set encrypted library password"));
+    QString error_msg;
+    if (!rpc_client_->setEncryptedRepoPassword(repo_id, password, &error_msg)) {
+        if (error_msg.isEmpty()) {
+            gui->messageBox(tr("Failed to set encrypted library password"));
+        } else if(error_msg == "Wrong password"){
+            gui->messageBox(tr("Password error"));
+        }
     }
 }
 

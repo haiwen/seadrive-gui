@@ -758,7 +758,8 @@ bool SeafileRpcClient::getEncryptedRepoList(json_t **ret_obj)
 }
 
 bool SeafileRpcClient::setEncryptedRepoPassword(const QString& repo_id,
-                                                const QString& password)
+                                                const QString& password,
+                                                QString* error_message)
 {
     GError *error = NULL;
     int ret = searpc_client_call__int(
@@ -770,6 +771,7 @@ bool SeafileRpcClient::setEncryptedRepoPassword(const QString& repo_id,
 
     if (error) {
         qWarning("failed to set the password of encrypted library: %s\n", error->message);
+        *error_message = error->message;
         g_error_free(error);
         return false;
     }
