@@ -131,6 +131,7 @@ applet_log_init (const char *seadrive_dir)
     g_free (seadrive_gui_log_file);
     return -1;
     }
+
     g_log_set_handler (NULL, G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL
                        | G_LOG_FLAG_RECURSION, applet_log, NULL);
 
