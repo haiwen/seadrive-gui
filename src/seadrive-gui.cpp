@@ -337,7 +337,7 @@ void SeadriveGui::start()
             this, SLOT(onDaemonRestarted()));
     daemon_mgr_->startSeadriveDaemon();
 
-#if defined(Q_OS_WIN32)
+#if defined(Q_OS_WIN32) && defined(__MINGW32__)
     QString program = "csmcmd.exe";
     QStringList arguments;
     // Exclude the file-cache folder from being indexed by windows search.

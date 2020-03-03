@@ -122,10 +122,14 @@ applet_log_init (const char *seadrive_dir)
     /* record all log message */
     applet_log_level = G_LOG_LEVEL_DEBUG;
 
+#if defined(_MSC_VER)
+    if ((logfp = (FILE *)g_fopen (seadrive_gui_log_file, "a+")) == NULL) {
+#else
     if ((logfp = (FILE *)(long)g_fopen (seadrive_gui_log_file, "a+")) == NULL) {
-        g_warning ("Open file %s failed errno=%d\n", seadrive_gui_log_file, errno);
-        g_free (seadrive_gui_log_file);
-        return -1;
+#endif
+    g_warning ("Open file %s failed errno=%d\n", seadrive_gui_log_file, errno);
+    g_free (seadrive_gui_log_file);
+    return -1;
     }
 
     g_log_set_handler (NULL, G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL

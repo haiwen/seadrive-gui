@@ -6,7 +6,9 @@
 
 #include <assert.h>
 #include <errno.h>
+#if !defined(_MSC_VER)
 #include <dirent.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -62,11 +64,19 @@ get_process_handle (const char *process_name_in)
         length -= (basename - process_name);
 
         // if basename doesn't start with `\` or not mached
+#if defined(_MSC_VER)
+        if (*basename != '\\' ||
+            strnicmp(name, ++basename, length) != 0) {
+            CloseHandle(hProcess);
+            continue;
+        }
+#else
         if (*basename != '\\' ||
             strncasecmp(name, ++basename, length) != 0) {
             CloseHandle(hProcess);
             continue;
         }
+#endif
 
         return hProcess;
     }
@@ -148,11 +158,19 @@ int count_process (const char *process_name_in)
         length -= (basename - process_name);
 
         // if basename doesn't start with `\` or not mached
+#if defined (_MSC_VER)
+        if (*basename != '\\' ||
+            strnicmp(name, ++basename, length) != 0) {
+            CloseHandle(hProcess);
+            continue;
+        }
+#else
         if (*basename != '\\' ||
             strncasecmp(name, ++basename, length) != 0) {
             CloseHandle(hProcess);
             continue;
         }
+#endif
 
         count++;
         CloseHandle(hProcess);
