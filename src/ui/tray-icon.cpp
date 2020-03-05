@@ -22,6 +22,7 @@
 #include "src/ui/login-dialog.h"
 #include "src/ui/init-sync-dialog.h"
 #include "src/ui/about-dialog.h"
+#include "src/ui/encrypted-repos-dialog.h"
 #include "src/ui/sync-errors-dialog.h"
 #include "src/ui/transfer-progress-dialog.h"
 #include "src/ui/search-dialog.h"
@@ -77,6 +78,7 @@ SeafileTrayIcon::SeafileTrayIcon(QObject *parent)
       down_rate_(0),
       sync_errors_dialog_(nullptr),
       transfer_progress_dialog_(nullptr),
+      enc_repo_dialog_(nullptr),
       search_dialog_(nullptr)
 {
     setState(STATE_DAEMON_UP);
@@ -129,6 +131,9 @@ void SeafileTrayIcon::createActions()
     transfer_progress_action_ = new QAction(tr("Transfer progress"), this);
     connect(transfer_progress_action_, SIGNAL(triggered()), this, SLOT(showTransferProgressDialog()));
 
+    show_enc_repos_action_ = new QAction(tr("Show encrypted libraries"), this);
+    connect(show_enc_repos_action_, SIGNAL(triggered()), this, SLOT(showEncRepoDialog()));
+
     quit_action_ = new QAction(tr("&Quit"), this);
     connect(quit_action_, SIGNAL(triggered()), this, SLOT(quitSeafile()));
 
@@ -172,6 +177,9 @@ void SeafileTrayIcon::createContextMenu()
     context_menu_->addAction(transfer_progress_action_);
     context_menu_->addAction(global_sync_error_action_);
     context_menu_->addAction(show_sync_errors_action_);
+    context_menu_->addSeparator();
+
+    context_menu_->addAction(show_enc_repos_action_);
     context_menu_->addSeparator();
 
     context_menu_->addAction(open_seafile_folder_action_);
@@ -848,4 +856,15 @@ void SeafileTrayIcon::showTransferProgressDialog()
     transfer_progress_dialog_->show();
     transfer_progress_dialog_->raise();
     transfer_progress_dialog_->activateWindow();
+}
+
+void SeafileTrayIcon::showEncRepoDialog() {
+
+    if (enc_repo_dialog_ == nullptr) {
+        enc_repo_dialog_ = new EncryptedReposDialog();
+    }
+
+    enc_repo_dialog_->show();
+    enc_repo_dialog_->raise();
+    enc_repo_dialog_->activateWindow();
 }

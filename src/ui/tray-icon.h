@@ -19,6 +19,7 @@ class TrayNotificationManager;
 class SyncErrorsDialog;
 class TransferProgressDialog;
 class SearchDialog;
+class EncryptedReposDialog;
 
 
 class SeafileTrayIcon : public QSystemTrayIcon {
@@ -99,6 +100,7 @@ private slots:
 
     void showSyncErrorsDialog();
     void showTransferProgressDialog();
+    void showEncRepoDialog();
 
 private:
     Q_DISABLE_COPY(SeafileTrayIcon)
@@ -167,6 +169,7 @@ private:
 
     QAction *transfer_rate_display_action_;
     QAction *transfer_progress_action_;
+    QAction *show_enc_repos_action_;
     qint64 up_rate_;
     qint64 down_rate_;
 
@@ -174,6 +177,7 @@ private:
     SyncError global_sync_error_;
     SyncErrorsDialog *sync_errors_dialog_;
     TransferProgressDialog * transfer_progress_dialog_;
+    EncryptedReposDialog *enc_repo_dialog_;
     SearchDialog *search_dialog_;
 
 };
