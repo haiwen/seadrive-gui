@@ -5,6 +5,7 @@ extern "C" {
 
 #if defined(_MSC_VER)
 #include <windows.h>
+#include <file-utils.h>
 #else
 #include <unistd.h>
 #endif
@@ -190,7 +191,17 @@ QStringList DaemonManager::collectSeaDriveArgs()
     }
     args << drive_letter;
 #elif defined (_MSC_VER)
-    args << "C:";
+
+    QDir dir(QDir::home());
+    QString seadrive_root_name = "seadrive_root";
+    if (!dir.exists(seadrive_root_name)) {
+        if (!dir.mkpath("seadrive_root")) {
+            gui->errorAndExit(tr("Create seadrive_root dir failed"));
+        }
+    }
+    QString sync_root = pathJoin(QDir::homePath(), "seadrive_root");
+    QString sync_root_path = QDir::toNativeSeparators(sync_root);
+    args << sync_root_path;
 #endif
 
 #else
