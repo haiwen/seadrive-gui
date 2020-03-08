@@ -740,8 +740,15 @@ QString SeadriveGui::logsDir() const
 
 QString SeadriveGui::mountDir() const
 {
-#if defined(Q_OS_WIN32)
+#if defined(__MINGW32__)
     return disk_letter_;
+#elif defined(_MSC_VER)
+    const Account account = gui->accountManager()->currentAccount();
+    QString username = account.username;
+    QString addr = account.serverUrl.host();
+    QString sync_dir = QString("%1_%2").arg(addr).arg(username);
+    QString sync_root = ::pathJoin(QDir::homePath(), "seadrive_root", sync_dir);
+    return sync_root;
 #else
     return QDir::home().absoluteFilePath(getBrand());
 #endif
