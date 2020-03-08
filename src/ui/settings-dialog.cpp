@@ -73,6 +73,11 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
     mShowCacheDir->setText(current_cache_dir_);
     mShowCacheDir->setReadOnly(true);
     mCacheLabel->setText(tr("Cache directory:"));
+#ifdef _MSC_VER
+    mShowCacheDir->setVisible(false);
+    mCacheLabel->setVisible(false);
+    mSelectBtn->setVisible(false);
+#endif
     mSpotlightCheckBox->setText(tr("Enable search in finder"));
 
     // The range of mProxyPort is set to (0, 65535) in the ui file, so we
@@ -313,6 +318,11 @@ void SettingsDialog::showEvent(QShowEvent *event)
     current_session_access_  = mgr->currentUserAccess();
     state = current_session_access_ ? Qt::Checked : Qt::Unchecked;
     mCurrentAccess->setCheckState(state);
+#ifdef _MSC_VER
+    mDiskLetterLabel->setVisible(false);
+    mDiskLetter->setVisible(false);
+    mCurrentAccess->setVisible(false);
+#endif
 #else
     mDiskLetterLabel->setVisible(false);
     mDiskLetter->setVisible(false);
