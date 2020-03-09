@@ -256,6 +256,9 @@
     <ClCompile Include="src\auto-update-service.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ui\encrypted-repos-dialog.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\api\api-error.h">
@@ -466,6 +469,9 @@
     </QtMoc>
     <QtMoc Include="src\win-sso\auto-logon-dialog.h">
       <Filter>Header Files\win-sso</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\encrypted-repos-dialog.h">
+      <Filter>Header Files\ui</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
