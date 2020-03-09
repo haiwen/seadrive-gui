@@ -60,6 +60,7 @@
     <ClCompile Include="src\traynotificationwidget.cpp" />
     <ClCompile Include="src\ui\about-dialog.cpp" />
     <ClCompile Include="src\ui\disk-letter-dialog.cpp" />
+    <ClCompile Include="src\ui\encrypted-repos-dialog.cpp" />
     <ClCompile Include="src\ui\filter-menu.cpp" />
     <ClCompile Include="src\ui\init-sync-dialog.cpp" />
     <ClCompile Include="src\ui\loading-view.cpp" />
@@ -90,6 +91,7 @@
     <ClCompile Include="third_party\QtAwesome\QtAwesome.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="src\ui\encrypted-repos-dialog.h" />
     <ClInclude Include="third_party\WinSparkle-0.5.3\include\winsparkle-version.h" />
     <ClInclude Include="third_party\WinSparkle-0.5.3\include\winsparkle.h" />
     <QtMoc Include="src\api\requests.h" />
