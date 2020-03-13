@@ -13,6 +13,7 @@
 namespace
 {
 const int kCheckDownloadInterval = 1000;
+const char* kExplorerPath = "c:/windows/explorer.exe";
 
 } // namespace
 
@@ -64,7 +65,11 @@ void InitSyncDialog::onFSLoaded()
 
 void InitSyncDialog::openMountPointAndCloseDialog()
 {
+#if defined(_MSC_VER)
+    QProcess::execute(kExplorerPath);
+#else
     QDesktopServices::openUrl(QUrl::fromLocalFile(gui->mountDir()));
+#endif
     accept();
 }
 
