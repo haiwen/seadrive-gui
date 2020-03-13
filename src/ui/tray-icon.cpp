@@ -182,9 +182,9 @@ void SeafileTrayIcon::createContextMenu()
     context_menu_->addAction(show_enc_repos_action_);
     context_menu_->addSeparator();
 
+#if defined(_MSC_VER)
     context_menu_->addAction(open_seafile_folder_action_);
-
-    context_menu_->addAction(open_seafile_folder_action_);
+#endif
     context_menu_->addAction(open_log_directory_action_);
     context_menu_->addAction(search_action_);
     context_menu_->addAction(settings_action_);
@@ -216,6 +216,10 @@ void SeafileTrayIcon::prepareContextMenu()
     } else {
         global_sync_error_action_->setVisible(false);
     }
+
+#if defined(_MSC_VER)
+    open_seafile_folder_action_->setVisible(false);
+#endif
 
     show_sync_errors_action_->setVisible(!sync_errors_.isEmpty());
 
@@ -623,7 +627,9 @@ void SeafileTrayIcon::onActivated(QSystemTrayIcon::ActivationReason reason)
 #if !defined(Q_OS_MAC)
     switch(reason) {
     case QSystemTrayIcon::Trigger: // single click
+#if !defined(_MSC_VER)
         openSeafileFolder();
+#endif
     case QSystemTrayIcon::MiddleClick:
     case QSystemTrayIcon::DoubleClick:
         // showMainWindow();
