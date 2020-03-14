@@ -314,7 +314,7 @@ void SeadriveGui::start()
         account_mgr_->currentAccount().serverUrl,
         QDir(seadriveDataDir()).filePath("system-proxy.txt"));
 
-#if defined(Q_OS_WIN32)
+#if defined(__MINGW32__)
     QString disk_letter;
     if (settings_mgr_->getDiskLetter(&disk_letter)) {
         disk_letter_ = disk_letter;
