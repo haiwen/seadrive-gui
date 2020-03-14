@@ -43,6 +43,7 @@ const int kDaemonRestartMaxRetries = 10;
 const char *kSeadriveSockName = "\\\\.\\pipe\\seadrive_";
 const char *kSeadriveExecutable = "seadrive.exe";
 const int kDLLMissingErrorCode = -1073741515;
+const char *kOnlyCurrentSessionAccess = "OnlyCurrentSessionAccess";
 #else
 const char *kSeadriveSockName = "seadrive.sock";
 const char *kSeadriveExecutable = "seadrive";
@@ -151,6 +152,15 @@ void DaemonManager::startSeadriveDaemon()
 QStringList DaemonManager::collectSeaDriveArgs()
 {
     QStringList args;
+
+#if defined(Q_OS_WIN32)
+     QString only_current_session_access = gui->readPreconfigureExpandedString(kOnlyCurrentSessionAccess);
+     bool current_access = only_current_session_access == "1";
+     if (current_access) {
+        qWarning("enable only current seesion access");
+        args << "-u";
+     }
+#endif
 
     args << "-d" << current_cache_dir_;
     args << "-l" << QDir(gui->logsDir()).absoluteFilePath("seadrive.log");
