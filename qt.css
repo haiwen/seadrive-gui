@@ -630,6 +630,10 @@ EncryptedReposTableView QHeaderView::section {
     padding-top: 20px;
 }
 
+EncryptedReposTableView QHeaderView::section:first {
+    padding-left: 33px;
+}
+
 EncryptedReposTableView::item {
     padding-top: 5px;
     padding-left: 0px;
@@ -643,4 +647,3 @@ EncryptedReposTableView::item :last {
 EncryptedReposTableView::item:selected {
     background-color: #F9E0C7;
 }
-
