@@ -43,6 +43,10 @@
         <source>%1 exited unexpectedly</source>
         <translation>%1 意外退出</translation>
     </message>
+    <message>
+        <source>Create seadrive_root dir failed</source>
+        <translation>创建 seadrive_root 目录失败</translation>
+    </message>
 </context>
 <context>
     <name>DiskLetterDialog</name>
@@ -57,6 +61,63 @@
     <message>
         <source>OK</source>
         <translation>确定</translation>
+    </message>
+</context>
+<context>
+    <name>EncryptedReposDialog</name>
+    <message>
+        <source>Encrypted Libraries</source>
+        <translation>加密资料库</translation>
+    </message>
+    <message>
+        <source>No Encrypted Library.</source>
+        <translation>未加密资料库</translation>
+    </message>
+</context>
+<context>
+    <name>EncryptedReposTableModel</name>
+    <message>
+        <source>Failed to set encrypted library password</source>
+        <translation>设置加密资料库密码失败</translation>
+    </message>
+    <message>
+        <source>Password error</source>
+        <translation>密码错误</translation>
+    </message>
+    <message>
+        <source>Failed to clear encrypted library password</source>
+        <translation>清除加密资料库密码失败</translation>
+    </message>
+    <message>
+        <source>Right click this item to sync or unsync the encrypted library</source>
+        <translation>右击该条目同步或解除同步加密资料库</translation>
+    </message>
+    <message>
+        <source>Library</source>
+        <translation>资料库</translation>
+    </message>
+    <message>
+        <source>Sync status</source>
+        <translation>同步状态</translation>
+    </message>
+</context>
+<context>
+    <name>EncryptedReposTableView</name>
+    <message>
+        <source>Unsync</source>
+        <translation>解除同步</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translation>同步</translation>
+    </message>
+    <message>
+        <source>After unsyncing, the local encryption key of this library will be cleared and this library cannot be accessed in virtual drive. Are you sure to unsync?</source>
+        <translation>解除同步后会清除本地的资料库秘钥，且不会在虚拟盘中列出该资料库。确认解除同步？</translation>
+    </message>
+    <message>
+        <source>Enter library password to sync</source>
+        <translation>输入资料库密码同步加密资料库</translation>
     </message>
 </context>
 <context>
@@ -88,6 +149,17 @@
     <message>
         <source>Markdown</source>
         <translation>Markdown</translation>
+    </message>
+</context>
+<context>
+    <name>FinderSyncHost</name>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation>文件 “%1” 被 %2 锁定</translation>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation>获取 “%1” 的锁定信息失败</translation>
     </message>
 </context>
 <context>
@@ -616,6 +688,14 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>Choose the disk letter for %1</source>
         <translation>为 %1 选择盘符</translation>
     </message>
+    <message>
+        <source>No permission to sync</source>
+        <translation>没有权限同步</translation>
+    </message>
+    <message>
+        <source>No permission to write</source>
+        <translation>没有写入权限</translation>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -834,6 +914,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>open %1 online help</source>
         <translation>打开 %1 在线帮助文档</translation>
+    </message>
+    <message>
+        <source>Show encrypted libraries</source>
+        <translation>显示加密资料库</translation>
     </message>
 </context>
 <context>

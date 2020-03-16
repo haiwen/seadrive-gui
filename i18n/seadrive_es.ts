@@ -43,6 +43,10 @@
         <source>%1 exited unexpectedly</source>
         <translation>%1 terminó de forma inesperada</translation>
     </message>
+    <message>
+        <source>Create seadrive_root dir failed</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DiskLetterDialog</name>
@@ -60,10 +64,67 @@
     </message>
 </context>
 <context>
+    <name>EncryptedReposDialog</name>
+    <message>
+        <source>Encrypted Libraries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No Encrypted Library.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>EncryptedReposTableModel</name>
+    <message>
+        <source>Failed to set encrypted library password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to clear encrypted library password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Right click this item to sync or unsync the encrypted library</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Library</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sync status</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>EncryptedReposTableView</name>
+    <message>
+        <source>Unsync</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>After unsyncing, the local encryption key of this library will be cleared and this library cannot be accessed in virtual drive. Are you sure to unsync?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enter library password to sync</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>FilterMenu</name>
     <message>
         <source>FilterMenu</source>
-        <translation type="unfinished"/>
+        <translation>FiltrosMenu</translation>
     </message>
     <message>
         <source>Text file    </source>
@@ -88,6 +149,17 @@
     <message>
         <source>Markdown</source>
         <translation>Markdown</translation>
+    </message>
+</context>
+<context>
+    <name>FinderSyncHost</name>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -616,6 +688,14 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
         <source>Choose the disk letter for %1</source>
         <translation>Escoja la letra de disco para %1</translation>
     </message>
+    <message>
+        <source>No permission to sync</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No permission to write</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -628,7 +708,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     <name>SeadriveGui</name>
     <message>
         <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
-        <translation type="unfinished"/>
+        <translation>Necesita permitir la extensión del núcleo %1  manualmente en las preferencias del sistema. Haga clic en aceptar para abrir la ventana de preferencias del sistema. Por favor ejecute nuevamente %1 después de realizar los cambios pertinentes. </translation>
     </message>
     <message>
         <source>Failed to initialize: failed to install kernel driver</source>
@@ -696,7 +776,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Auto logon failed, fall back to manual login</source>
-        <translation type="unfinished"/>
+        <translation>Inicio automático fallido, revirtiendo a Inicio manual</translation>
     </message>
 </context>
 <context>
@@ -711,7 +791,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>%1 Internal Link:</source>
-        <translation type="unfinished"/>
+        <translation>%1 Enlace Interno:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -835,6 +915,10 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
         <source>open %1 online help</source>
         <translation>abrir ayuda en línea %1</translation>
     </message>
+    <message>
+        <source>Show encrypted libraries</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -913,7 +997,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Enable search</source>
-        <translation type="unfinished"/>
+        <translation>Habilitar búsqueda</translation>
     </message>
     <message>
         <source>None</source>
@@ -941,19 +1025,19 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>enabled search</source>
-        <translation type="unfinished"/>
+        <translation>búsqueda habilitada</translation>
     </message>
     <message>
         <source>disabled search</source>
-        <translation type="unfinished"/>
+        <translation>búsqueda deshabilitada</translation>
     </message>
     <message>
         <source>You have %1. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>Tiene %1. ¿Reiniciar para aplicar?</translation>
     </message>
     <message>
         <source>You have changed drive access option. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>Usted a cambiado las opciones de acceso al disco. ¿Reiniciar para aplicar?</translation>
     </message>
     <message>
         <source>Please choose the cache folder</source>
@@ -1033,7 +1117,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Only allow current user to access the drive</source>
-        <translation type="unfinished"/>
+        <translation>Sólo permitir al usuario actual el acceso al disco</translation>
     </message>
     <message>
         <source>Cache clean interval (in minutes):</source>
@@ -1097,7 +1181,7 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Enable search in finder</source>
-        <translation type="unfinished"/>
+        <translation>Habilitar búsqueda en buscador</translation>
     </message>
 </context>
 <context>
