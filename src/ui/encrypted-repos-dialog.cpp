@@ -211,7 +211,7 @@ void EncryptedReposTableView::onClickSyncAction()
             emit sigClearEncEncRepoPassword(enc_repo_info_.repo_id);
         }
     } else {
-        QString repo_password = QInputDialog::getText(this, QString("Enter library password to sync"),
+        QString repo_password = QInputDialog::getText(this, tr("Enter library password to sync"),
                                     tr("Enter library password to sync"),
                                     QLineEdit::Password, QString(""), &ok);
         if (ok && !repo_password.isEmpty()) {

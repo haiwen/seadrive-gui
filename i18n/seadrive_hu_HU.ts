@@ -43,6 +43,10 @@
         <source>%1 exited unexpectedly</source>
         <translation>%1 váratlanul megszakadt</translation>
     </message>
+    <message>
+        <source>Create seadrive_root dir failed</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DiskLetterDialog</name>
@@ -58,6 +62,63 @@ Kérem válassza ki a betűt:</translation>
     <message>
         <source>OK</source>
         <translation>Rendben</translation>
+    </message>
+</context>
+<context>
+    <name>EncryptedReposDialog</name>
+    <message>
+        <source>Encrypted Libraries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No Encrypted Library.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>EncryptedReposTableModel</name>
+    <message>
+        <source>Failed to set encrypted library password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to clear encrypted library password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Right click this item to sync or unsync the encrypted library</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Library</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sync status</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>EncryptedReposTableView</name>
+    <message>
+        <source>Unsync</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>After unsyncing, the local encryption key of this library will be cleared and this library cannot be accessed in virtual drive. Are you sure to unsync?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enter library password to sync</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -89,6 +150,17 @@ Kérem válassza ki a betűt:</translation>
     <message>
         <source>Markdown</source>
         <translation>Markdown-fájl</translation>
+    </message>
+</context>
+<context>
+    <name>FinderSyncHost</name>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -617,6 +689,14 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
         <source>Choose the disk letter for %1</source>
         <translation>Meghajtó betűjel kiválasztása ehhez: %1</translation>
     </message>
+    <message>
+        <source>No permission to sync</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No permission to write</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -835,6 +915,10 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
     <message>
         <source>open %1 online help</source>
         <translation>%1 online súgó megnyitása</translation>
+    </message>
+    <message>
+        <source>Show encrypted libraries</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

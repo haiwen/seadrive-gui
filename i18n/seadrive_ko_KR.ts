@@ -43,6 +43,10 @@
         <source>%1 exited unexpectedly</source>
         <translation>갑작스럽게 %1에서 나왔습니다</translation>
     </message>
+    <message>
+        <source>Create seadrive_root dir failed</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DiskLetterDialog</name>
@@ -60,33 +64,101 @@
     </message>
 </context>
 <context>
+    <name>EncryptedReposDialog</name>
+    <message>
+        <source>Encrypted Libraries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No Encrypted Library.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>EncryptedReposTableModel</name>
+    <message>
+        <source>Failed to set encrypted library password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to clear encrypted library password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Right click this item to sync or unsync the encrypted library</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Library</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sync status</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>EncryptedReposTableView</name>
+    <message>
+        <source>Unsync</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>After unsyncing, the local encryption key of this library will be cleared and this library cannot be accessed in virtual drive. Are you sure to unsync?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enter library password to sync</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>FilterMenu</name>
     <message>
         <source>FilterMenu</source>
-        <translation type="unfinished"/>
+        <translation>FilterMenu</translation>
     </message>
     <message>
         <source>Text file    </source>
-        <translation type="unfinished"/>
+        <translation>텍스트 파일</translation>
     </message>
     <message>
         <source>Document    </source>
-        <translation type="unfinished"/>
+        <translation>문서</translation>
     </message>
     <message>
         <source>Image    </source>
-        <translation type="unfinished"/>
+        <translation>그림</translation>
     </message>
     <message>
         <source>Video    </source>
-        <translation type="unfinished"/>
+        <translation>동영상</translation>
     </message>
     <message>
         <source>Audio    </source>
-        <translation type="unfinished"/>
+        <translation>음악</translation>
     </message>
     <message>
         <source>Markdown</source>
+        <translation>마크다운</translation>
+    </message>
+</context>
+<context>
+    <name>FinderSyncHost</name>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -127,7 +199,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <name>LoadMoreButton</name>
     <message>
         <source>load more</source>
-        <translation type="unfinished"/>
+        <translation>더 불러오기</translation>
     </message>
 </context>
 <context>
@@ -138,7 +210,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Single Sign On</source>
-        <translation type="unfinished"/>
+        <translation>단일 접속(SSO)</translation>
     </message>
     <message>
         <source>Re-login</source>
@@ -311,15 +383,15 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Download file</source>
-        <translation type="unfinished"/>
+        <translation>파일 다운로드</translation>
     </message>
     <message>
         <source>Start to download file &quot;%1&quot; </source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; 파일 다운로드 시작</translation>
     </message>
     <message>
         <source>file &quot;%1&quot; has been downloaded </source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; 파일을 다운로드했습니다</translation>
     </message>
     <message>
         <source>Failed to create file &quot;%1&quot;</source>
@@ -616,6 +688,14 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>Choose the disk letter for %1</source>
         <translation>%1의 디스크 문자를 선택하세요</translation>
     </message>
+    <message>
+        <source>No permission to sync</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No permission to write</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -628,11 +708,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <name>SeadriveGui</name>
     <message>
         <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
-        <translation type="unfinished"/>
+        <translation>시스템 기본 설정에서 %1 커널 확장 기능을 직접 허용해야 합니다. 확인을 누르면 시스템 기본 설정 대화상자가 뜹니다. 이후 %1을(를) 다시 실행해주십시오.</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to install kernel driver</source>
-        <translation type="unfinished"/>
+        <translation>초기화 실패: 커널 드라이버 설치에 실패했습니다</translation>
     </message>
     <message>
         <source>Faild to choose a disk letter</source>
@@ -696,7 +776,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Auto logon failed, fall back to manual login</source>
-        <translation type="unfinished"/>
+        <translation>자동 로그인 실패, 대신 직접 로그인합니다</translation>
     </message>
 </context>
 <context>
@@ -711,7 +791,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>%1 Internal Link:</source>
-        <translation type="unfinished"/>
+        <translation>%1 내부 링크:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -733,7 +813,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Search files</source>
-        <translation type="unfinished"/>
+        <translation>파일 검색</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -835,66 +915,70 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>open %1 online help</source>
         <translation>%1 온라인 도움말 열기</translation>
     </message>
+    <message>
+        <source>Show encrypted libraries</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
     <message>
         <source>Search files</source>
-        <translation type="unfinished"/>
+        <translation>파일 검색</translation>
     </message>
     <message>
         <source>All file types</source>
-        <translation type="unfinished"/>
+        <translation>모든 파일 형식</translation>
     </message>
     <message>
         <source>Custom file type</source>
-        <translation type="unfinished"/>
+        <translation>개별 파일 형식</translation>
     </message>
     <message>
         <source>retry</source>
-        <translation type="unfinished"/>
+        <translation>다시 시도</translation>
     </message>
     <message>
         <source>Failed to search&lt;br/&gt;Please %1</source>
-        <translation type="unfinished"/>
+        <translation>검색 실패&lt;br/&gt;%1 하십시오</translation>
     </message>
     <message>
         <source>No result found</source>
-        <translation type="unfinished"/>
+        <translation>결과가 없습니다</translation>
     </message>
 </context>
 <context>
     <name>SearchItemsTableModel</name>
     <message>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>이름</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>크기</translation>
     </message>
     <message>
         <source>Last Modified</source>
-        <translation type="unfinished"/>
+        <translation>최종 수정</translation>
     </message>
     <message>
         <source>Kind</source>
-        <translation type="unfinished"/>
+        <translation>종류</translation>
     </message>
 </context>
 <context>
     <name>SearchItemsTableView</name>
     <message>
         <source>&amp;Open the file</source>
-        <translation type="unfinished"/>
+        <translation>파일 열기(&amp;O)</translation>
     </message>
     <message>
         <source>&amp;Show in folder</source>
-        <translation type="unfinished"/>
+        <translation>폴더에 표시(&amp;S)</translation>
     </message>
     <message>
         <source>File not found, maybe not synchorized yet</source>
-        <translation type="unfinished"/>
+        <translation>파일이 없습니다. 동기화 하지 않았을 수도 있습니다</translation>
     </message>
 </context>
 <context>
@@ -909,11 +993,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Cache directory:</source>
-        <translation type="unfinished"/>
+        <translation>캐시 디렉터리:</translation>
     </message>
     <message>
         <source>Enable search</source>
-        <translation type="unfinished"/>
+        <translation>검색 활성화</translation>
     </message>
     <message>
         <source>None</source>
@@ -933,31 +1017,31 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>cache directory</source>
-        <translation type="unfinished"/>
+        <translation>캐시 디렉터리</translation>
     </message>
     <message>
         <source>You have changed %1. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>%1 내용을 바꾸었습니다. 다시 시작해서 적용할까요?</translation>
     </message>
     <message>
         <source>enabled search</source>
-        <translation type="unfinished"/>
+        <translation>검색 활성</translation>
     </message>
     <message>
         <source>disabled search</source>
-        <translation type="unfinished"/>
+        <translation>검색 비활성</translation>
     </message>
     <message>
         <source>You have %1. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>%1 했습니다. 다시 시작해서 적용할까요?</translation>
     </message>
     <message>
         <source>You have changed drive access option. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>드라이브 접근 옵션을 바꾸었습니다. 다시 시작해서 적용할까요?</translation>
     </message>
     <message>
         <source>Please choose the cache folder</source>
-        <translation type="unfinished"/>
+        <translation>캐시 폴더를 선택하십시오</translation>
     </message>
     <message>
         <source>You have changed disk letter. Restart to apply it?</source>
@@ -965,11 +1049,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>language</source>
-        <translation type="unfinished"/>
+        <translation>언어</translation>
     </message>
     <message>
         <source>language and cache directory</source>
-        <translation type="unfinished"/>
+        <translation>언어와 캐시 디렉터리</translation>
     </message>
     <message>
         <source>The proxy host address can&apos;t be empty</source>
@@ -1033,7 +1117,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Only allow current user to access the drive</source>
-        <translation type="unfinished"/>
+        <translation>현재 사용자만 드라이브에 접근 허용</translation>
     </message>
     <message>
         <source>Cache clean interval (in minutes):</source>
@@ -1045,7 +1129,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>select...</source>
-        <translation type="unfinished"/>
+        <translation>선택...</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -1097,7 +1181,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Enable search in finder</source>
-        <translation type="unfinished"/>
+        <translation>파인더에서 검색 활성</translation>
     </message>
 </context>
 <context>

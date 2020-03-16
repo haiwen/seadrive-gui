@@ -3,15 +3,15 @@
     <name>AboutDialog</name>
     <message>
         <source>About %1</source>
-        <translation type="unfinished"/>
+        <translation>Sobre %1</translation>
     </message>
     <message>
         <source>&lt;h4&gt;Seafile Drive Client %2&lt;/h4&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;h4&gt;Cliente Seafile Drive %2&lt;/h4&gt;</translation>
     </message>
     <message>
         <source>&lt;h5&gt; REV %1 &lt;/h5&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;h5&gt; REV %1 &lt;/h5&gt;</translation>
     </message>
     <message>
         <source>About</source>
@@ -41,6 +41,10 @@
     </message>
     <message>
         <source>%1 exited unexpectedly</source>
+        <translation>%1 foi encerrado inesperadamente</translation>
+    </message>
+    <message>
+        <source>Create seadrive_root dir failed</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -52,7 +56,7 @@
     </message>
     <message>
         <source>Your files would appear in a dedicated disk in your computer. Please choose the letter:</source>
-        <translation type="unfinished"/>
+        <translation>Seus arquivos serão exibidos como uma unidade de disco no seu computador. Escolha uma letra:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -60,10 +64,67 @@
     </message>
 </context>
 <context>
+    <name>EncryptedReposDialog</name>
+    <message>
+        <source>Encrypted Libraries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No Encrypted Library.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>EncryptedReposTableModel</name>
+    <message>
+        <source>Failed to set encrypted library password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to clear encrypted library password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Right click this item to sync or unsync the encrypted library</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Library</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sync status</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>EncryptedReposTableView</name>
+    <message>
+        <source>Unsync</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>After unsyncing, the local encryption key of this library will be cleared and this library cannot be accessed in virtual drive. Are you sure to unsync?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enter library password to sync</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>FilterMenu</name>
     <message>
         <source>FilterMenu</source>
-        <translation type="unfinished"/>
+        <translation>Filtro</translation>
     </message>
     <message>
         <source>Text file    </source>
@@ -87,6 +148,17 @@
     </message>
     <message>
         <source>Markdown</source>
+        <translation>Marcação</translation>
+    </message>
+</context>
+<context>
+    <name>FinderSyncHost</name>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -98,12 +170,12 @@
     </message>
     <message>
         <source>%1 is fetching the files list, please wait</source>
-        <translation type="unfinished"/>
+        <translation>%1 está buscando a lista de arquivos, aguarde por favor</translation>
     </message>
     <message>
         <source>%1 has dowloaded your files list.
 Please click the &quot;Finish&quot; button to open %1 folder.</source>
-        <translation type="unfinished"/>
+        <translation>%1 baixou sua lista de arquivos. Clique em &quot;Finalizar&quot; para abrir a pasta %1</translation>
     </message>
     <message>
         <source>Dialog</source>
@@ -126,7 +198,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <name>LoadMoreButton</name>
     <message>
         <source>load more</source>
-        <translation type="unfinished"/>
+        <translation>mais</translation>
     </message>
 </context>
 <context>
@@ -137,7 +209,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Single Sign On</source>
-        <translation type="unfinished"/>
+        <translation>Login único (SSO)</translation>
     </message>
     <message>
         <source>Re-login</source>
@@ -179,19 +251,19 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Two Factor Authentication</source>
-        <translation type="unfinished"/>
+        <translation>Autenticação de dois fatores</translation>
     </message>
     <message>
         <source>%1 Server Address</source>
-        <translation type="unfinished"/>
+        <translation>%1 Endereço do Servidor</translation>
     </message>
     <message>
         <source>Please enter the password</source>
-        <translation>Favor informa a senha</translation>
+        <translation>Digite sua senha</translation>
     </message>
     <message>
         <source>Enter the two factor authentication token</source>
-        <translation type="unfinished"/>
+        <translation>Digite o código da autenticação de dois fatores</translation>
     </message>
     <message>
         <source>Incorrect email or password</source>
@@ -239,7 +311,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Automatic Login</source>
-        <translation type="unfinished"/>
+        <translation>Login automático</translation>
     </message>
     <message>
         <source>status text</source>
@@ -251,7 +323,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Email / Username:</source>
-        <translation type="unfinished"/>
+        <translation>Email / Usuário:</translation>
     </message>
     <message>
         <source>e.g. Jim&apos;s laptop</source>
@@ -270,35 +342,35 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <name>MessagePoller</name>
     <message>
         <source>&quot;%1&quot; is synchronized</source>
-        <translation type="unfinished"/>
+        <translation>%1 está sincronizado</translation>
     </message>
     <message>
         <source>Error when syncing &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Erro ao sincronizar %1</translation>
     </message>
     <message>
         <source>Error when syncing</source>
-        <translation type="unfinished"/>
+        <translation>Erro ao sincronizar</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is being uploaded</source>
-        <translation type="unfinished"/>
+        <translation>%1 está sendo carregado</translation>
     </message>
     <message>
         <source>Starting to move &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Começando a mover &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Starting to move &quot;%1&quot; to &quot;%2&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Começando a mover &quot;%1&quot; para &quot;%2&quot;</translation>
     </message>
     <message>
         <source>Successfully moved &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; movido com sucesso</translation>
     </message>
     <message>
         <source>Successfully moved &quot;%1&quot; to &quot;%2&quot;</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; foi movido para &quot;2&quot; com sucesso</translation>
     </message>
     <message>
         <source>Failed to move &quot;%1&quot;</source>
@@ -310,31 +382,31 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Download file</source>
-        <translation type="unfinished"/>
+        <translation>Baixar arquivo</translation>
     </message>
     <message>
         <source>Start to download file &quot;%1&quot; </source>
-        <translation type="unfinished"/>
+        <translation>Baixar arquivo &quot;%1&quot;</translation>
     </message>
     <message>
         <source>file &quot;%1&quot; has been downloaded </source>
-        <translation type="unfinished"/>
+        <translation>arquivo &quot;%1&quot; foi baixado</translation>
     </message>
     <message>
         <source>Failed to create file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Falha ao criar arquivo &quot;%1&quot;</translation>
     </message>
     <message>
         <source>You can&apos;t create files in the %1 drive directly</source>
-        <translation type="unfinished"/>
+        <translation>Você não pode criar arquivos no drive &quot;%1&quot; diretamente</translation>
     </message>
     <message>
         <source>Failed to delete folder</source>
-        <translation type="unfinished"/>
+        <translation>Falha ao apagar pasta</translation>
     </message>
     <message>
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
-        <translation type="unfinished"/>
+        <translation>Você não pode apagar a biblioteca &quot;%1&quot; diretamente</translation>
     </message>
 </context>
 <context>
@@ -615,6 +687,14 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>Choose the disk letter for %1</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>No permission to sync</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No permission to write</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -834,6 +914,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>open %1 online help</source>
         <translation>
 Abrir % 1 ajuda on-line</translation>
+    </message>
+    <message>
+        <source>Show encrypted libraries</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

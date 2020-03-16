@@ -43,6 +43,10 @@
         <source>%1 exited unexpectedly</source>
         <translation>%1 Neočekávané ukončení</translation>
     </message>
+    <message>
+        <source>Create seadrive_root dir failed</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DiskLetterDialog</name>
@@ -52,11 +56,68 @@
     </message>
     <message>
         <source>Your files would appear in a dedicated disk in your computer. Please choose the letter:</source>
-        <translation type="unfinished"/>
+        <translation>Tvé soubory se objeví ve vyhrazeném disku v tomto počítači. Vyber si prosím písmeno jednotky:</translation>
     </message>
     <message>
         <source>OK</source>
         <translation>OK</translation>
+    </message>
+</context>
+<context>
+    <name>EncryptedReposDialog</name>
+    <message>
+        <source>Encrypted Libraries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No Encrypted Library.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>EncryptedReposTableModel</name>
+    <message>
+        <source>Failed to set encrypted library password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to clear encrypted library password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Right click this item to sync or unsync the encrypted library</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Library</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sync status</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>EncryptedReposTableView</name>
+    <message>
+        <source>Unsync</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>After unsyncing, the local encryption key of this library will be cleared and this library cannot be accessed in virtual drive. Are you sure to unsync?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enter library password to sync</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -87,6 +148,17 @@
     </message>
     <message>
         <source>Markdown</source>
+        <translation>Označení</translation>
+    </message>
+</context>
+<context>
+    <name>FinderSyncHost</name>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -127,7 +199,7 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     <name>LoadMoreButton</name>
     <message>
         <source>load more</source>
-        <translation type="unfinished"/>
+        <translation>načíst více</translation>
     </message>
 </context>
 <context>
@@ -283,7 +355,7 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>&quot;%1&quot; is being uploaded</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; se právě nahrává</translation>
     </message>
     <message>
         <source>Starting to move &quot;%1&quot;</source>
@@ -327,7 +399,7 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>You can&apos;t create files in the %1 drive directly</source>
-        <translation type="unfinished"/>
+        <translation>Nemůžeš vytvářet soubory v kořenu jednotky %1</translation>
     </message>
     <message>
         <source>Failed to delete folder</source>
@@ -335,7 +407,7 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
-        <translation type="unfinished"/>
+        <translation>Nemůžeš smazat knihovnu &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -390,7 +462,7 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>Failed to resolve network proxy</source>
-        <translation type="unfinished"/>
+        <translation>Nepovedlo se rozlišit síťovou proxy</translation>
     </message>
     <message>
         <source>Failed to resolve remote server</source>
@@ -402,19 +474,19 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>SSL error</source>
-        <translation type="unfinished"/>
+        <translation>Chyba SSL</translation>
     </message>
     <message>
         <source>Error in network transmission</source>
-        <translation type="unfinished"/>
+        <translation>Chyba v síťovém přenosu</translation>
     </message>
     <message>
         <source>Timeout in network transmission</source>
-        <translation type="unfinished"/>
+        <translation>Vypršel limit síťového přenosu</translation>
     </message>
     <message>
         <source>Failed to handle http redirection</source>
-        <translation type="unfinished"/>
+        <translation>Nepovedlo se zpracovat http přesměrování</translation>
     </message>
     <message>
         <source>Server internal error</source>
@@ -422,11 +494,11 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>Local data is corrupt</source>
-        <translation type="unfinished"/>
+        <translation>Místní data jsou poškozené</translation>
     </message>
     <message>
         <source>Failed to write local data</source>
-        <translation type="unfinished"/>
+        <translation>Nepovedlo se zapsat místní data</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -614,6 +686,14 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>Choose the disk letter for %1</source>
+        <translation>Vyberte písmeno disku pro %1</translation>
+    </message>
+    <message>
+        <source>No permission to sync</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No permission to write</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -628,11 +708,11 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     <name>SeadriveGui</name>
     <message>
         <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
-        <translation type="unfinished"/>
+        <translation>Musíš povolit výjimku kernelu %1 manuálně v systémovém nastavení. Klikni na OK pro otevření dialogu systémového nastavení. Spusť potom prosím znovu %1.</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to install kernel driver</source>
-        <translation type="unfinished"/>
+        <translation>Chyba při inicializaci: nepovedlo se nainstalovat ovladač kernelu</translation>
     </message>
     <message>
         <source>Faild to choose a disk letter</source>
@@ -696,7 +776,7 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>Auto logon failed, fall back to manual login</source>
-        <translation type="unfinished"/>
+        <translation>Automatické přihlášení selhalo, vracím se k ručnímu přihlášení</translation>
     </message>
 </context>
 <context>
@@ -711,7 +791,7 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>%1 Internal Link:</source>
-        <translation type="unfinished"/>
+        <translation>%1 Vnitřní odkaz:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -817,7 +897,7 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>Up %1, Down %2</source>
-        <translation>Nahoru %1, Dolů %2</translation>
+        <translation>Upload %1, Download %2</translation>
     </message>
     <message>
         <source>About %1</source>
@@ -834,6 +914,10 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     <message>
         <source>open %1 online help</source>
         <translation>otevřít %1 online nápovědu</translation>
+    </message>
+    <message>
+        <source>Show encrypted libraries</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -856,7 +940,7 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>Failed to search&lt;br/&gt;Please %1</source>
-        <translation type="unfinished"/>
+        <translation>Nepovedlo se vyhledat&lt;br/&gt;Prosím %1</translation>
     </message>
     <message>
         <source>No result found</source>
@@ -913,7 +997,7 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>Enable search</source>
-        <translation type="unfinished"/>
+        <translation>Povolit vyhledávání</translation>
     </message>
     <message>
         <source>None</source>
@@ -933,31 +1017,31 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>cache directory</source>
-        <translation type="unfinished"/>
+        <translation>adresář mezipaměti</translation>
     </message>
     <message>
         <source>You have changed %1. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>Změnil jsi %1. Restartovat pro aplikování ?</translation>
     </message>
     <message>
         <source>enabled search</source>
-        <translation type="unfinished"/>
+        <translation>povolené vyhledávání</translation>
     </message>
     <message>
         <source>disabled search</source>
-        <translation type="unfinished"/>
+        <translation>zakázané vyhledávání</translation>
     </message>
     <message>
         <source>You have %1. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>Máš %1. Restartovat pro aplikování ?</translation>
     </message>
     <message>
         <source>You have changed drive access option. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>Změnil jsi nastavení pro přístup k jednotce. Restart pro aplikování ?</translation>
     </message>
     <message>
         <source>Please choose the cache folder</source>
-        <translation type="unfinished"/>
+        <translation>Vyber prosím složku mezipaměti</translation>
     </message>
     <message>
         <source>You have changed disk letter. Restart to apply it?</source>
@@ -969,7 +1053,7 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>language and cache directory</source>
-        <translation type="unfinished"/>
+        <translation>adresář jazyka a mezipaměti</translation>
     </message>
     <message>
         <source>The proxy host address can&apos;t be empty</source>
@@ -1033,7 +1117,7 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>Only allow current user to access the drive</source>
-        <translation type="unfinished"/>
+        <translation>Povolí pouze aktuálnímu uživateli přistupovat k jednotce</translation>
     </message>
     <message>
         <source>Cache clean interval (in minutes):</source>
@@ -1097,7 +1181,7 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>Enable search in finder</source>
-        <translation type="unfinished"/>
+        <translation>Povolit vyhledávání ve vyhledávači</translation>
     </message>
 </context>
 <context>
@@ -1149,7 +1233,7 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     <name>SyncErrorsTableModel</name>
     <message>
         <source>Double click to open the library</source>
-        <translation type="unfinished"/>
+        <translation>Dvakrát klikni pro otevření knihovny</translation>
     </message>
     <message>
         <source>Library</source>
@@ -1180,7 +1264,7 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>Progress</source>
-        <translation type="unfinished"/>
+        <translation>Postup</translation>
     </message>
     <message>
         <source>Size</source>
