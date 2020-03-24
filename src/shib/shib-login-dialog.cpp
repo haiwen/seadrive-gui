@@ -111,40 +111,11 @@ void ShibLoginDialog::onNewCookieCreated(const QUrl& url, const QNetworkCookie& 
         }
         cookie_seen_ = true;
 
-        // Request accountinfo
-        account_info_req_ = new FetchAccountInfoRequest(account);
-        connect(account_info_req_, SIGNAL(success(const AccountInfo&)), this,
-                SLOT(onFetchAccountInfoSuccess(const AccountInfo&)));
-        connect(account_info_req_, SIGNAL(failed(const ApiError&)), this,
-                SLOT(onFetchAccountInfoFailed(const ApiError&)));
-        account_info_req_->send();
-
-    }
-}
-
-void ShibLoginDialog::onFetchAccountInfoFailed(const ApiError& error)
-{
-    qWarning("get accountInfo failed");
-    reject();
-    account_info_req_->deleteLater();
-}
-
-void ShibLoginDialog::onFetchAccountInfoSuccess(const AccountInfo& info)
-{
-    Account account = account_info_req_->account();
-    account.username = info.email;
-
-    if (gui->accountManager()->saveAccount(account) < 0) {
-        gui->warningBox(tr("Failed to save current account"), this);
-        reject();
-    } else {
-        gui->accountManager()->updateAccountInfo(account, info);
-        account_ = account;
+        gui->accountManager()->setCurrentAccount(account);
         accept();
         InitSyncDialog *dlg = new InitSyncDialog(account);
         dlg->ensureVisible();
     }
-    account_info_req_->deleteLater();
 }
 
 void ShibLoginDialog::updateAddressBar(const QUrl& url)
