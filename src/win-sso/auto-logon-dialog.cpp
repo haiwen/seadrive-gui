@@ -144,14 +144,7 @@ void AutoLogonDialog::startAutoLogon()
 
     qDebug("adding new autologon account, token is %s",
            account.token.toUtf8().data());
-
-    if (gui->accountManager()->saveAccount(account) < 0) {
-        gui->warningBox(tr("Failed to save current account"), this);
-        reject();
-    }
-    else {
-        accept();
-    }
+    gui->AccountManager->setCurrentAccount(account);
 }
 
 Account AutoLogonDialog::parseAccount(const QString& cookie_value)

@@ -14,9 +14,7 @@ struct sqlite3_stmt;
 class ApiError;
 class SeafileRpcClient;
 
-/**
- * Load/Save seahub accounts
- */
+
 class AccountManager : public QObject {
     Q_OBJECT
 
@@ -26,37 +24,54 @@ public:
 
     int start();
 
-    int saveAccount(const Account& account);
+    // Load the accounts from local db when client starts.
+    const std::vector<Account>& loadAccounts();
+
+    /**
+     * Account operations
+     */
+
+    // Use the given account. This account would also be persisted to
+    // the accounts db.
+    void setCurrentAccount(const Account& account);
+
+    // Remove the account. Used when user removes an account from the
+    // account menu.
     int removeAccount(const Account& account);
 
-    bool clearAccountToken(const Account& account,
-                           bool force_relogin=false);
+    // Use the account if it's valid, otherwise require a re-login.
+    void validateAndUseAccount(const Account& account);
 
-    const std::vector<Account>& loadAccounts();
-    bool accountExists(const QUrl& url, const QString& username);
+    // Called when API returns 401 and we need to re-login current
+    // account.
+    void invalidateCurrentLogin();
 
-    bool hasAccount() const { return !accounts_.empty(); }
+    // Update AccountInfo (e.g. nick name, quota etc.) for the given
+    // account.
+    void updateAccountInfo(const Account& account, const AccountInfo& info);
 
-    Account currentAccount() const { return hasAccount() ? accounts_[0] : Account(); }
+    // Trigger server info refresh for all accounts when client
+    // starts.
+    void updateServerInfoForAllAccounts();
 
-    bool setCurrentAccount(const Account& account);
+    /**
+     * Accessors
+     */
+    const std::vector<Account>& accounts() const;
+    const Account currentAccount() const;
+    bool hasAccount() const;
+    bool accountExists(const QUrl& url, const QString& username) const;
 
     Account getAccountByHostAndUsername(const QString& host,
                                         const QString& username) const;
 
     Account getAccountBySignature(const QString& account_sig) const;
 
-    void updateAccountInfo(const Account& account, const AccountInfo& info);
+    void clearAccountToken(const Account& account,
+                           bool force_relogin=false);
 
-    bool validateAndUseAccount(const Account& account);
-
-    // accessors
-    const std::vector<Account>& accounts() const { return accounts_; }
-
-    // invalidate current login and emit a re-login signal
-    void invalidateCurrentLogin();
-
-    bool reloginAccount(const Account &account);
+public slots:
+    void reloginAccount(const Account &account);
 
 signals:
     /**
@@ -77,7 +92,7 @@ private slots:
 private:
     Q_DISABLE_COPY(AccountManager)
 
-    void updateServerInfo(unsigned index);
+    void updateAccountServerInfo(const Account& account);
     static bool loadAccountsCB(struct sqlite3_stmt *stmt, void *data);
     static bool loadServerInfoCB(struct sqlite3_stmt *stmt, void *data);
 

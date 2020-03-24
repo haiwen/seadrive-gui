@@ -8,8 +8,6 @@
 
 #include "api/server-info.h"
 
-class ServerInfoRequest;
-
 class AccountInfo {
 public:
     QString email;
@@ -20,8 +18,6 @@ public:
 
 class Account {
     friend class AccountManager;
-    ServerInfoRequest *serverInfoRequest;
-    ServerInfoRequest* createServerInfoRequest();
 public:
     ServerInfo serverInfo;
     AccountInfo accountInfo;
@@ -33,9 +29,7 @@ public:
     bool isAutomaticLogin;
     bool isKerberos;
 
-    ~Account();
-    Account() : serverInfoRequest(NULL),
-                serverInfo(),
+    Account() : serverInfo(),
                 lastVisited(0),
                 isShibboleth(false),
                 isAutomaticLogin(false),
@@ -43,8 +37,7 @@ public:
     Account(QUrl serverUrl, QString username, QString token,
             qint64 lastVisited=0, bool isShibboleth = false,
             bool isAutomaticLogin = true, bool isKerberos = false)
-        : serverInfoRequest(NULL),
-          serverInfo(),
+        : serverInfo(),
           accountInfo(),
           serverUrl(serverUrl),
           username(username),
@@ -55,8 +48,7 @@ public:
           isKerberos(isKerberos) {}
 
     Account(const Account &rhs)
-      : serverInfoRequest(NULL),
-        serverInfo(rhs.serverInfo),
+      : serverInfo(rhs.serverInfo),
         accountInfo(rhs.accountInfo),
         serverUrl(rhs.serverUrl),
         username(rhs.username),
@@ -69,7 +61,6 @@ public:
     }
 
     Account& operator=(const Account&rhs) {
-        serverInfoRequest = NULL;
         serverInfo = rhs.serverInfo;
         accountInfo = rhs.accountInfo;
         serverUrl = rhs.serverUrl;
