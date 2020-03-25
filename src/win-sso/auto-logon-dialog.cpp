@@ -145,6 +145,7 @@ void AutoLogonDialog::startAutoLogon()
     qDebug("adding new autologon account, token is %s",
            account.token.toUtf8().data());
     gui->AccountManager->setCurrentAccount(account);
+    accept();
 }
 
 Account AutoLogonDialog::parseAccount(const QString& cookie_value)
