@@ -389,10 +389,7 @@ void SeadriveGui::onDaemonStarted()
                 settingsManager()->setComputerName(computer_name);
             if (!username.isEmpty() && !token.isEmpty() && !url.isEmpty()) {
                 Account account(url, username, token);
-                if (account_mgr_->saveAccount(account) < 0) {
-                    errorAndExit(tr("failed to add default account"));
-                    return;
-                }
+                account_mgr_->setCurrentAccount(account);
                 break;
             }
 
@@ -435,6 +432,8 @@ void SeadriveGui::onDaemonStarted()
 
     RemoteWipeService::instance()->start();
     AccountInfoService::instance()->start();
+
+    account_mgr_->updateServerInfoForAllAccounts();
 
 #if defined(Q_OS_WIN32)
     SeafileExtensionHandler::instance()->start();
