@@ -436,7 +436,7 @@ void SeadriveGui::onDaemonStarted()
     RemoteWipeService::instance()->start();
     AccountInfoService::instance()->start();
 
-#if defined(Q_OS_WIN32)
+#if defined(__MINGW32__)
     SeafileExtensionHandler::instance()->start();
 #endif
 
