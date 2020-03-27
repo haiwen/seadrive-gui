@@ -16,7 +16,7 @@ public:
     bool is_password_set;
 
     bool operator==(const EncryptedRepoInfo& info) const {
-        return repo_id == info.repo_id && repo_name == info.repo_name;
+        return repo_id == info.repo_id && repo_name == info.repo_name && is_password_set == info.is_password_set;
     }
 
     static  EncryptedRepoInfo fromJSON(const json_t *root);
@@ -39,6 +39,10 @@ public:
 
 private slots:
     void onModelReset();
+
+private:
+    void showEvent(QShowEvent *event);
+    void hideEvent(QHideEvent *event);
 
 private:
     QStackedWidget *stack_;
@@ -87,6 +91,7 @@ public:
     EncryptedRepoInfo encRepoInfoAt(int i) const { return  enc_repo_infos_[i]; }
 
     void onResize(const QSize& size);
+    QTimer* getUpdateTimer() { return update_timer_; }
 
 public slots:
     void updateEncryptRepoList();
@@ -95,6 +100,7 @@ public slots:
 
 private:
 
+    QTimer* update_timer_;
     QList<EncryptedRepoInfo> enc_repo_infos_;
     SeafileRpcClient *rpc_client_;
     int repo_name_column_width_;

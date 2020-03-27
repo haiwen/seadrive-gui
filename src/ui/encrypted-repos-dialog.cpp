@@ -5,6 +5,7 @@
 #include <QMenu>
 #include <QAction>
 #include <QInputDialog>
+#include <QTimer>
 
 #include "encrypted-repos-dialog.h"
 
@@ -34,6 +35,8 @@ const int kRepoNameColumnWidth = 100;
 const int kRepoStatus = 30;
 
 const int kDefaultColumnSum = kRepoNameColumnWidth + kRepoStatus;
+
+const int kUpdateErrorsIntervalMsecs = 3000;
 
 } //namespace
 
@@ -135,6 +138,17 @@ void EncryptedReposDialog::onModelReset()
     }
 }
 
+void EncryptedReposDialog::showEvent(QShowEvent *event)
+{
+    model_->getUpdateTimer()->start();
+}
+
+void EncryptedReposDialog::hideEvent(QHideEvent *event)
+{
+    model_->getUpdateTimer()->stop();
+}
+
+
 EncryptedReposTableView::EncryptedReposTableView(QWidget *parent)
         : QTableView(parent)
 {
@@ -152,7 +166,7 @@ EncryptedReposTableView::EncryptedReposTableView(QWidget *parent)
     setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
 
     setSelectionBehavior(QAbstractItemView::SelectRows);
-    setSelectionMode(QAbstractItemView::ExtendedSelection);
+    setSelectionMode(QAbstractItemView::SingleSelection);
     setMouseTracking(true);
 
 }
@@ -226,24 +240,46 @@ EncryptedReposTableModel::EncryptedReposTableModel(QObject *parent)
           repo_name_column_width_(kRepoNameColumnWidth),
           repo_status_column_width_(kRepoStatus)
 {
-    rpc_client_ = gui->rpcClient();
+    update_timer_ = new QTimer(this);
+    connect(update_timer_, SIGNAL(timeout()), this, SLOT(updateEncryptRepoList()));
+    update_timer_->start(kUpdateErrorsIntervalMsecs);
+
     updateEncryptRepoList();
 
 }
 
 void EncryptedReposTableModel::updateEncryptRepoList()
 {
+    rpc_client_ = gui->rpcClient();
     json_t *ret;
     if (!rpc_client_->getEncryptedRepoList(&ret)) {
        qWarning("failed to get encrypt library list");
+       return;
      }
     QList<EncryptedRepoInfo> enc_repo_infos = EncryptedRepoInfo::listFromJSON(ret);
     json_decref(ret);
 
-    beginResetModel();
-    enc_repo_infos_ = enc_repo_infos;
-    endResetModel();
-    return;
+    if (enc_repo_infos_ == enc_repo_infos) {
+        return;
+    }
+
+    if (enc_repo_infos_.size() != enc_repo_infos.size()) {
+        beginResetModel();
+        enc_repo_infos_ = enc_repo_infos;
+        endResetModel();
+        return;
+    }
+
+    for (int i = 0, n = enc_repo_infos.size(); i < n; i++) {
+        if (enc_repo_infos_[i] == enc_repo_infos[i]) {
+            continue;
+        }
+        enc_repo_infos_[i] = enc_repo_infos[i];
+        QModelIndex start = QModelIndex().child(i, 0);
+        QModelIndex stop = QModelIndex().child(i, MAX_COLUMN - 1);
+        emit dataChanged(start, stop);
+
+    }
 }
 
 void EncryptedReposTableModel::slotSetEncRepoPassword(const QString& repo_id, const QString& password)
