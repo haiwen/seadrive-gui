@@ -259,10 +259,6 @@ void EncryptedReposTableModel::updateEncryptRepoList()
     QList<EncryptedRepoInfo> enc_repo_infos = EncryptedRepoInfo::listFromJSON(ret);
     json_decref(ret);
 
-    if (enc_repo_infos_ == enc_repo_infos) {
-        return;
-    }
-
     if (enc_repo_infos_.size() != enc_repo_infos.size()) {
         beginResetModel();
         enc_repo_infos_ = enc_repo_infos;
