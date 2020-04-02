@@ -26,6 +26,7 @@ namespace
     const char *kSparkleAppcastURIForCN = "https://www.seafile.com/api/client-updates/seadrive-client-mac-cn/appcast.xml";
 #endif
     const char *kSparkleAlreadyEnableUpdateByDefault = "SparkleAlreadyEnableUpdateByDefault";
+    const char *const kPreconfigureEnableAutoUpdate = "PreconfigureEnableAutoUpdate";
 
 QString getAppcastURI() {
     QString url_from_env = qgetenv("SEADRIVE_CLIENT_APPCAST_URI");
@@ -140,10 +141,23 @@ void AutoUpdateService::enableUpdateByDefault() {
     settings.beginGroup("Misc");
     bool already_enable_update_by_default = settings.value(kSparkleAlreadyEnableUpdateByDefault, false).toBool();
 
+#if defined(Q_OS_WIN32)
+    QString enable_auto_update = gui->readPreconfigureExpandedString(kPreconfigureEnableAutoUpdate);
+
+    if (enable_auto_update == "1") {
+        setAutoUpdateEnabled(true);
+    } else if (enable_auto_update == "0") {
+        setAutoUpdateEnabled(false);
+    } else if (!already_enable_update_by_default && enable_auto_update.isEmpty()) {
+        settings.setValue(kSparkleAlreadyEnableUpdateByDefault, true);
+        setAutoUpdateEnabled(true);
+    }
+#else
     if (!already_enable_update_by_default) {
         settings.setValue(kSparkleAlreadyEnableUpdateByDefault, true);
         setAutoUpdateEnabled(true);
     }
+#endif
 
     settings.endGroup();
 }
