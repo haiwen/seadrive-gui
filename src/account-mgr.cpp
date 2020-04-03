@@ -307,7 +307,7 @@ void AccountManager::setCurrentAccount(const Account& account)
 
     gui->rpcClient()->seafileSetConfig(
         "client_name", gui->settingsManager()->getComputerName());
-
+    gui->rpcClient()->switchAccount(new_account);
     emit accountsChanged();
 }
 
@@ -456,8 +456,6 @@ void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo 
     url.setPath("/");
     // gui->rpcClient()->setServerProperty(
     //     url.toString(), "is_pro", account.isPro() ? "true" : "false");
-
-    gui->rpcClient()->switchAccount(account, info.proEdition);
 
     bool changed = account.serverInfo != info;
     if (!changed)
