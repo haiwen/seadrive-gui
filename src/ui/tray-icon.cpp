@@ -177,12 +177,10 @@ void SeafileTrayIcon::createContextMenu()
     context_menu_->addAction(transfer_progress_action_);
     context_menu_->addAction(global_sync_error_action_);
     context_menu_->addAction(show_sync_errors_action_);
-#if defined(_MSC_VER)
     context_menu_->addSeparator();
 
     context_menu_->addAction(show_enc_repos_action_);
     context_menu_->addSeparator();
-#endif
 
 #if defined(_MSC_VER)
     context_menu_->addAction(open_seafile_folder_action_);
