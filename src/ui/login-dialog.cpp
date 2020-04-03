@@ -294,15 +294,11 @@ void LoginDialog::onFetchAccountInfoSuccess(const AccountInfo& info)
     account.isAutomaticLogin =
         mAutomaticLogin->checkState() == Qt::Checked;
 
-    if (gui->accountManager()->saveAccount(account) < 0) {
-        showWarning(tr("Failed to save current account"));
-    }
-    else {
-        gui->accountManager()->updateAccountInfo(account, info);
-        accept();
-        InitSyncDialog *dlg = new InitSyncDialog(account);
-        dlg->ensureVisible();
-    }
+    gui->accountManager()->setCurrentAccount(account);
+    gui->accountManager()->updateAccountInfo(account, info);
+    accept();
+    InitSyncDialog *dlg = new InitSyncDialog(account);
+    dlg->ensureVisible();
 }
 
 void LoginDialog::onHttpError(int code)

@@ -364,7 +364,7 @@ protected slots:
 
 private:
     Q_DISABLE_COPY(ServerInfoRequest);
-    const Account& account_;
+    const Account account_;
 };
 
 class LogoutDeviceRequest : public SeafileApiRequest

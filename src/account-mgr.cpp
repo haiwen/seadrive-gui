@@ -264,14 +264,17 @@ const std::vector<Account>& AccountManager::loadAccounts()
     return accounts_;
 }
 
-int AccountManager::saveAccount(const Account& account)
+void AccountManager::setCurrentAccount(const Account& account)
 {
+    Q_ASSERT(account.isValid());
+
     qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
     Account new_account = account;
     new_account.lastVisited = timestamp;
     {
         QMutexLocker lock(&accounts_mutex_);
-        for (size_t i = 0; i < accounts_.size(); i++) {
+        size_t i;
+        for (i = 0; i < accounts_.size(); i++) {
             if (accounts_[i] == account) {
                 accounts_.erase(accounts_.begin() + i);
                 break;
@@ -279,7 +282,8 @@ int AccountManager::saveAccount(const Account& account)
         }
         accounts_.insert(accounts_.begin(), new_account);
     }
-    updateServerInfo(0);
+    AccountInfoService::instance()->refresh();
+    updateAccountServerInfo(new_account);
 
     char *zql = sqlite3_mprintf(
         "REPLACE INTO Accounts(url, username, token, lastVisited, isShibboleth, AutomaticLogin, isKerberos)"
@@ -305,8 +309,6 @@ int AccountManager::saveAccount(const Account& account)
         "client_name", gui->settingsManager()->getComputerName());
 
     emit accountsChanged();
-
-    return 0;
 }
 
 int AccountManager::removeAccount(const Account& account)
@@ -358,7 +360,7 @@ void AccountManager::updateAccountLastVisited(const Account& account)
     sqlite3_free(zql);
 }
 
-bool AccountManager::accountExists(const QUrl& url, const QString& username)
+bool AccountManager::accountExists(const QUrl& url, const QString& username) const
 {
     for (size_t i = 0; i < accounts_.size(); i++) {
         if (accounts_[i].serverUrl == url && accounts_[i].username == username) {
@@ -369,31 +371,15 @@ bool AccountManager::accountExists(const QUrl& url, const QString& username)
     return false;
 }
 
-bool AccountManager::validateAndUseAccount(const Account& account)
+void AccountManager::validateAndUseAccount(const Account& account)
 {
     if (!account.isAutomaticLogin && account.lastVisited < gui->startupTime()) {
-        return clearAccountToken(account, true);
+        clearAccountToken(account, true);
     } else if (!account.isValid()) {
-        return reloginAccount(account);
+        reloginAccount(account);
     } else {
-        return setCurrentAccount(account);
+        setCurrentAccount(account);
     }
-}
-
-bool AccountManager::setCurrentAccount(const Account& account)
-{
-    Q_ASSERT(account.isValid());
-
-    // Update the account timestamp and emit "accountsChanged" signal
-    saveAccount(account);
-
-    if (account == currentAccount()) {
-        return false;
-    }
-
-    AccountInfoService::instance()->refresh();
-
-    return true;
 }
 
 Account AccountManager::getAccountByHostAndUsername(const QString& host,
@@ -420,11 +406,15 @@ Account AccountManager::getAccountBySignature(const QString& account_sig) const
     return Account();
 }
 
-void AccountManager::updateServerInfo(unsigned index)
+void AccountManager::updateServerInfoForAllAccounts()
 {
-    ServerInfoRequest *request;
-    // request is taken owner by Account object
-    request = accounts_[index].createServerInfoRequest();
+    for (size_t i = 0; i < accounts_.size(); i++)
+        updateAccountServerInfo(accounts_[i]);
+}
+
+void AccountManager::updateAccountServerInfo(const Account& account)
+{
+    ServerInfoRequest *request = new ServerInfoRequest(account);
     connect(request, SIGNAL(success(const Account&, const ServerInfo &)),
             this, SLOT(serverInfoSuccess(const Account&, const ServerInfo &)));
     connect(request, SIGNAL(failed(const ApiError&)),
@@ -454,6 +444,9 @@ void AccountManager::updateAccountInfo(const Account& account,
 
 void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo &info)
 {
+    ServerInfoRequest *req = (ServerInfoRequest *)(sender());
+    req->deleteLater();
+
     setServerInfoKeyValue(db, account, kVersionKeyName, info.getVersionString());
     setServerInfoKeyValue(db, account, kFeaturesKeyName, info.getFeatureStrings().join(","));
     setServerInfoKeyValue(db, account, kCustomLogoKeyName, info.customLogo);
@@ -483,10 +476,13 @@ void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo 
 
 void AccountManager::serverInfoFailed(const ApiError &error)
 {
+    ServerInfoRequest *req = (ServerInfoRequest *)(sender());
+    req->deleteLater();
+
     qWarning("update server info failed %s\n", error.toString().toUtf8().data());
 }
 
-bool AccountManager::clearAccountToken(const Account& account,
+void AccountManager::clearAccountToken(const Account& account,
                                        bool force_relogin)
 {
     for (size_t i = 0; i < accounts_.size(); i++) {
@@ -514,8 +510,6 @@ bool AccountManager::clearAccountToken(const Account& account,
     } else {
         emit accountsChanged();
     }
-
-    return true;
 }
 
 
@@ -538,7 +532,7 @@ void AccountManager::invalidateCurrentLogin()
     clearAccountToken(account);
 }
 
-bool AccountManager::reloginAccount(const Account &account)
+void AccountManager::reloginAccount(const Account &account)
 {
     bool accepted;
     do {
@@ -558,5 +552,17 @@ bool AccountManager::reloginAccount(const Account &account)
         dialog.initFromAccount(account);
         accepted = dialog.exec() == QDialog::Accepted;
     } while (0);
-    return accepted;
+}
+
+const std::vector<Account>& AccountManager::accounts() const
+{
+    return accounts_;
+}
+
+bool AccountManager::hasAccount() const {
+    return !accounts_.empty();
+}
+
+const Account AccountManager::currentAccount() const {
+    return hasAccount() ? accounts_[0] : Account();
 }
