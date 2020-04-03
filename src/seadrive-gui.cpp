@@ -433,7 +433,6 @@ void SeadriveGui::onDaemonStarted()
     RemoteWipeService::instance()->start();
     AccountInfoService::instance()->start();
 
-    account_mgr_->updateServerInfoForAllAccounts();
 
 #if defined(__MINGW32__)
     SeafileExtensionHandler::instance()->start();
