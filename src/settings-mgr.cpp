@@ -31,6 +31,10 @@ const char *kBehaviorGroup = "Behavior";
 const char *kDiskLetter = "diskLetter";
 #endif
 
+#if defined(_MSC_VER)
+const char *kSeadriveRoot = "seadriveRoot";
+#endif
+
 // const char *kDefaultLibraryAlreadySetup = "defaultLibraryAlreadySetup";
 // const char *kStatusGroup = "Status";
 
@@ -630,6 +634,34 @@ void SettingsManager::setDiskLetter(const QString& disk_letter)
 
 
 #endif // Q_OS_WIN32
+
+#if defined(_MSC_VER)
+bool SettingsManager::getSeadriveRoot(QString *seadrive_root)
+{
+    QSettings settings;
+
+    settings.beginGroup(kSettingsGroup);
+    if (!settings.contains(kSeadriveRoot)) {
+        return false;
+    }
+
+    *seadrive_root = settings.value(kSeadriveRoot, true).toString();
+    settings.endGroup();
+
+    return true;
+
+}
+
+void SettingsManager::setSeadriveRoot(const QString& seadrive_root)
+{
+    QSettings settings;
+
+    settings.beginGroup(kSettingsGroup);
+    settings.setValue(kSeadriveRoot, seadrive_root);
+    settings.endGroup();
+
+}
+#endif // _MSC_VER
 
 bool SettingsManager::getCacheDir(QString *current_cache_dir)
 {

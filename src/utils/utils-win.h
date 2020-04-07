@@ -35,6 +35,11 @@ bool isWindows10OrHigher();
 bool fixQtHDPINonIntegerScaling();
 
 bool diskLetterAvailable(const QString& disk_letter);
+
+#if defined(_MSC_VER)
+QSet<QString> getUsedDiskLetters();
+#endif
+
 QStringList getAvailableDiskLetters();
 std::string getLocalPipeName(const char *pipeName);
 

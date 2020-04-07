@@ -5,6 +5,8 @@
 #include <QPair>
 #include <QString>
 #include <QSet>
+#include <QFileInfo>
+#include <QDir>
 
 #include "utils/utils-win.h"
 #if defined(_MSC_VER)
@@ -281,6 +283,24 @@ bool fixQtHDPINonIntegerScaling()
     // printf("set QT_SCALE_FACTOR to %s\n", factor.toUtf8().data());
     return true;
 }
+
+#if defined(_MSC_VER)
+QSet<QString> getUsedDiskLetters()
+{
+    QSet<QString> used;
+
+    Q_FOREACH(QFileInfo disk_letter, QDir::drives())
+    {
+        QString str_disk_letter = disk_letter.absoluteFilePath();
+        int drive_type = GetDriveType(str_disk_letter.toUtf8().data());
+        // exclude cd_rom diskletter
+        if (drive_type == 2 || drive_type == 3) {
+            used.insert(str_disk_letter.mid(0,1));
+        }
+    }
+    return used;
+}
+#endif
 
 QSet<QString> getUsedLetters()
 {

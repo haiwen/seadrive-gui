@@ -44,6 +44,10 @@
 #include "ui/disk-letter-dialog.h"
 #endif
 
+#if defined(_MSC_VER)
+#include "ui/seadrive-root-dialog.h"
+#endif
+
 #ifdef HAVE_SPARKLE_SUPPORT
 #include "auto-update-service.h"
 #endif
@@ -332,6 +336,24 @@ void SeadriveGui::start()
         settings_mgr_->setDiskLetter(disk_letter_);
     }
     qWarning("Using disk letter %s", toCStr(disk_letter_));
+#elif defined(_MSC_VER)
+    QString seadrive_root;
+    if (settings_mgr_->getSeadriveRoot(&seadrive_root)) {
+        seadrive_root_= seadrive_root;
+    } else {
+        qWarning("cache directory not set, asking the user for it");
+
+        SeaDriveRootDialog dialog;
+        if (dialog.exec() != QDialog::Accepted) {
+            errorAndExit(tr("Faild to choose a cache directory"));
+            return;
+        }
+
+        seadrive_root_= dialog.seaDriveRoot();
+        settings_mgr_->setSeadriveRoot(seadrive_root_);
+    }
+    qWarning("Using cache directory: %s", toCStr(seadrive_root_));
+
 #endif
 
     connect(daemon_mgr_, SIGNAL(daemonStarted()),

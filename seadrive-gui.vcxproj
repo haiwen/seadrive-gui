@@ -65,6 +65,7 @@
     <ClCompile Include="src\ui\init-sync-dialog.cpp" />
     <ClCompile Include="src\ui\loading-view.cpp" />
     <ClCompile Include="src\ui\login-dialog.cpp" />
+    <ClCompile Include="src\ui\seadrive-root-dialog.cpp" />
     <ClCompile Include="src\ui\seafilelink-dialog.cpp" />
     <ClCompile Include="src\ui\search-bar.cpp" />
     <ClCompile Include="src\ui\search-dialog.cpp" />
@@ -92,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="src\ui\encrypted-repos-dialog.h" />
+    <QtMoc Include="src\ui\seadrive-root-dialog.h" />
     <ClInclude Include="third_party\WinSparkle-0.5.3\include\winsparkle-version.h" />
     <ClInclude Include="third_party\WinSparkle-0.5.3\include\winsparkle.h" />
     <QtMoc Include="src\api\requests.h" />
@@ -168,6 +170,7 @@
     <QtUic Include="ui\filter-menu.ui" />
     <QtUic Include="ui\init-sync-dialog.ui" />
     <QtUic Include="ui\login-dialog.ui" />
+    <QtUic Include="ui\seadrive-root-dialog.ui" />
     <QtUic Include="ui\settings-dialog.ui" />
   </ItemGroup>
   <ItemGroup>
