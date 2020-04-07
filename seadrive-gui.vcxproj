@@ -353,7 +353,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <AdditionalIncludeDirectories>$(ProjectDir)third_party\WinSparkle-0.5.3\include;$(ProjectDir)third_party\QtAwesome;$(ProjectDir)..\libsearpc\lib;$(ProjectDir)src\utils;$(ProjectDir)src;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>HAVE_SPARKLE_SUPPORT;SEADRIVE_GUI_VERSION=2.0.0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_SPARKLE_SUPPORT;SEADRIVE_GUI_VERSION=2.0.1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
