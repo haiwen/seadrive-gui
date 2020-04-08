@@ -71,7 +71,7 @@
     </message>
     <message>
         <source>No Encrypted Library.</source>
-        <translation>未加密资料库</translation>
+        <translation>没有加密资料库</translation>
     </message>
 </context>
 <context>
