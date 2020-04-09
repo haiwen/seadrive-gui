@@ -141,6 +141,7 @@ void EncryptedReposDialog::onModelReset()
 void EncryptedReposDialog::showEvent(QShowEvent *event)
 {
     model_->getUpdateTimer()->start();
+    model_->updateEncryptRepoList();
 }
 
 void EncryptedReposDialog::hideEvent(QHideEvent *event)

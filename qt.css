@@ -631,7 +631,7 @@ EncryptedReposTableView QHeaderView::section {
 }
 
 EncryptedReposTableView QHeaderView::section:first {
-    padding-left: 33px;
+    padding-left: 25px;
 }
 
 EncryptedReposTableView::item {
