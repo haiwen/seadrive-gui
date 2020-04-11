@@ -782,6 +782,11 @@ QString SeadriveGui::mountDir() const
 #endif
 }
 
+QString SeadriveGui::seadriveRoot() const
+{
+    return seadrive_root_;
+}
+
 QString SeadriveGui::getUniqueClientId()
 {
     // Id file path is `~/.seadrive/id`

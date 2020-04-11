@@ -348,7 +348,7 @@ void SettingsDialog::showEvent(QShowEvent *event)
     QDialog::showEvent(event);
 #if defined(_MSC_VER)
     if (!mgr->getSeadriveRoot(&current_seadrive_root_)) {
-        current_seadrive_root_ = gui->mountDir();
+        current_seadrive_root_ = gui->seadriveRoot();
     }
     mShowCacheDir->setText(current_seadrive_root_);
     mShowCacheDir->setReadOnly(true);

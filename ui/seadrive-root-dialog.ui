@@ -186,43 +186,10 @@ min-width: 260px;
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
-          <widget class="QComboBox" name="mDiskLetter">
-           <property name="currentText">
-            <string notr="true">C</string>
-           </property>
-           <property name="sizeAdjustPolicy">
-            <enum>QComboBox::AdjustToContents</enum>
-           </property>
-           <item>
-            <property name="text">
-             <string notr="true">C</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">X</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
           <widget class="QLineEdit" name="mCacheDirLineEdit">
            <property name="minimumSize">
             <size>
-             <width>223</width>
+             <width>262</width>
              <height>0</height>
             </size>
            </property>
