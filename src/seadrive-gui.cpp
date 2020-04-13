@@ -775,7 +775,7 @@ QString SeadriveGui::mountDir() const
 
     QString mid_sync_dir_md5 = sync_dir_md5.mid(0, 8);
 
-    QString sync_root = ::pathJoin(QDir::homePath(), "seadrive_root", mid_sync_dir_md5);
+    QString sync_root = ::pathJoin(seadriveRoot(), mid_sync_dir_md5);
     return sync_root;
 #else
     return QDir::home().absoluteFilePath(getBrand());
