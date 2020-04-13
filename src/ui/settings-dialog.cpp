@@ -160,7 +160,7 @@ void SettingsDialog::updateSettings()
         mgr->setSeadriveRoot(mShowCacheDir->text());
     }
 
-    if (seadrive_root_changed && gui->yesOrNoBox(tr("You have changed seadrive root. Restart to apply it?"), this, true)) {
+    if (seadrive_root_changed && gui->yesOrNoBox(tr("You have changed SeaDrive cache folder. Restart to apply it?"), this, true)) {
         gui->restartApp();
     }
 #else
