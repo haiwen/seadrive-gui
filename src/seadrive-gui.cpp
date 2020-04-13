@@ -9,6 +9,9 @@
 #include <QCoreApplication>
 #include <QMessageBox>
 #include <QHostInfo>
+#if defined(_MSC_VER)
+#include <QCryptoGraphicHash>
+#endif
 
 #include <errno.h>
 #include <glib.h>
@@ -744,8 +747,13 @@ QString SeadriveGui::mountDir() const
     const Account account = gui->accountManager()->currentAccount();
     QString username = account.username;
     QString addr = account.serverUrl.host();
+
     QString sync_dir = QString("%1_%2").arg(addr).arg(username);
-    QString sync_root = ::pathJoin(QDir::homePath(), "seadrive_root", sync_dir);
+    QByteArray sync_dir_md5 = QCryptographicHash::hash(sync_dir.toUtf8(), QCryptographicHash::Md5).toHex();
+
+    QString mid_sync_dir_md5 = sync_dir_md5.mid(0, 8);
+
+    QString sync_root = ::pathJoin(QDir::homePath(), "seadrive_root", mid_sync_dir_md5);
     return sync_root;
 #else
     return QDir::home().absoluteFilePath(getBrand());
