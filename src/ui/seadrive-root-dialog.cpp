@@ -9,7 +9,7 @@ SeaDriveRootDialog::SeaDriveRootDialog(QWidget *parent)
 {
     setupUi(this);
     mLogo->setPixmap(QPixmap(":/images/seafile-32.png"));
-    setWindowTitle(tr("Select SeaDrive cache folder"));
+    setWindowTitle(tr("Choose SeaDrive Cache Folder"));
     setWindowIcon(QIcon(":/images/seafile.png"));
     setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
                    Qt::WindowStaysOnTopHint);
