@@ -67,7 +67,11 @@ ShibLoginDialog::ShibLoginDialog(const QUrl& url,
             this, SLOT(onNewCookieCreated(const QUrl&, const QNetworkCookie&)));
 #else
     webview_ = new QWebEngineView;
-    webview_->setPage(new SeafileQWebEnginePage(this));
+
+    web_engine_profile_ = new QWebEngineProfile();
+    web_engine_page_ = new QWebEnginePage(web_engine_profile_);
+
+    webview_->setPage(web_engine_page_);
     QWebEngineCookieStore *jar = webview_->page()->profile()->cookieStore();
     connect(jar, SIGNAL(cookieAdded(const QNetworkCookie&)),
             this, SLOT(onWebEngineCookieAdded(const QNetworkCookie&)));
@@ -89,6 +93,13 @@ ShibLoginDialog::ShibLoginDialog(const QUrl& url,
                        shib_login_url, ::getSeafileLoginParams(computer_name, "shib_")));
 }
 
+ShibLoginDialog::~ShibLoginDialog()
+{
+
+    // The web_engine_page_ object must delete before web_engine_profile.
+    web_engine_page_->deleteLater();
+    web_engine_profile_->deleteLater();
+}
 
 void ShibLoginDialog::sslErrorHandler(QNetworkReply* reply,
                                       const QList<QSslError> & ssl_errors)
