@@ -103,7 +103,6 @@
     <ClInclude Include="src\api\starred-file.h" />
     <QtMoc Include="src\auto-update-service.h" />
     <ClInclude Include="src\i18n.h" />
-    <ClInclude Include="src\unistd.h" />
     <QtMoc Include="src\traynotificationwidget.h" />
     <QtMoc Include="src\traynotificationmanager.h" />
     <QtMoc Include="src\settings-mgr.h" />

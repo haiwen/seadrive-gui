@@ -342,9 +342,6 @@
     <ClInclude Include="src\i18n.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\unistd.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\api\seaf-dirent.h">
       <Filter>Header Files\api</Filter>
     </ClInclude>
