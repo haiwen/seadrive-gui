@@ -36,6 +36,37 @@
     </message>
 </context>
 <context>
+    <name>AutoLogonDialog</name>
+    <message>
+        <source>auto login</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>auto logining, please wait a moment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please input server address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please enter the server address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is not a valid server address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>login failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -43,10 +74,6 @@
     </message>
     <message>
         <source>%1 exited unexpectedly</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create seadrive_root dir failed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -154,17 +181,6 @@
     </message>
 </context>
 <context>
-    <name>FinderSyncHost</name>
-    <message>
-        <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>InitSyncDialog</name>
     <message>
         <source>Download files list</source>
@@ -244,10 +260,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Please enter the computer name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to save current account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -705,6 +717,29 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
 </context>
 <context>
+    <name>SeaDriveRootDialog</name>
+    <message>
+        <source>Choose SeaDrive Cache Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your files will appear in a local cache folder. Please choose the folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>choose...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please choose seadrive cache folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SeadriveGui</name>
     <message>
         <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
@@ -716,10 +751,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Faild to choose a disk letter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>failed to add default account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -776,6 +807,29 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Auto logon failed, fall back to manual login</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Faild to choose a cache directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SeafileExtensionHandler</name>
+    <message>
+        <source>Failed to lock file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to unlock file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1016,14 +1070,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>cache directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You have changed %1. Restart to apply it?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>enabled search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1049,10 +1095,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>language</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>language and cache directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1183,6 +1225,18 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>Enable search in finder</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>You have changed language, Restart to apply it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You have changed SeaDrive cache folder. Restart to apply it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You have changed cache directory. Restart to apply it?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SharedLinkDialog</name>
@@ -1211,10 +1265,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <name>ShibLoginDialog</name>
     <message>
         <source>Login with Shibboleth</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to save current account</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
