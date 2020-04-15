@@ -34,6 +34,37 @@
     </message>
 </context>
 <context>
+    <name>AutoLogonDialog</name>
+    <message>
+        <source>auto login</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>auto logining, please wait a moment</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please input server address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please enter the server address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 is not a valid server address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>login failed</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -42,10 +73,6 @@
     <message>
         <source>%1 exited unexpectedly</source>
         <translation>%1 s&apos;est fermé de manière inattendue</translation>
-    </message>
-    <message>
-        <source>Create seadrive_root dir failed</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -67,57 +94,57 @@
     <name>EncryptedReposDialog</name>
     <message>
         <source>Encrypted Libraries</source>
-        <translation type="unfinished"/>
+        <translation>Bibliothèques chiffrées</translation>
     </message>
     <message>
         <source>No Encrypted Library.</source>
-        <translation type="unfinished"/>
+        <translation>Bibliothèque non chiffrée</translation>
     </message>
 </context>
 <context>
     <name>EncryptedReposTableModel</name>
     <message>
         <source>Failed to set encrypted library password</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de définir le mot de passe de la bibliothèque chiffrée</translation>
     </message>
     <message>
         <source>Password error</source>
-        <translation type="unfinished"/>
+        <translation>Erreur de mot de passe</translation>
     </message>
     <message>
         <source>Failed to clear encrypted library password</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de supprimer le mot de passe de la bibliothèque chiffrée</translation>
     </message>
     <message>
         <source>Right click this item to sync or unsync the encrypted library</source>
-        <translation type="unfinished"/>
+        <translation>Click droit sur cet objet pour synchroniser ou de-synchroniser la bibliothèque chiffrée</translation>
     </message>
     <message>
         <source>Library</source>
-        <translation type="unfinished"/>
+        <translation>Bibliothèque</translation>
     </message>
     <message>
         <source>Sync status</source>
-        <translation type="unfinished"/>
+        <translation>Status de la synchronisation</translation>
     </message>
 </context>
 <context>
     <name>EncryptedReposTableView</name>
     <message>
         <source>Unsync</source>
-        <translation type="unfinished"/>
+        <translation>De-synchroniser</translation>
     </message>
     <message>
         <source>Sync</source>
-        <translation type="unfinished"/>
+        <translation>Synchronisé</translation>
     </message>
     <message>
         <source>After unsyncing, the local encryption key of this library will be cleared and this library cannot be accessed in virtual drive. Are you sure to unsync?</source>
-        <translation type="unfinished"/>
+        <translation>Après la de-synchronisation, la clé locale de chiffrement de la bibliothèque seras effacée, cette bibliothèque ne pourra plus être accessible dans le disque virtuel. Êtes-vous sur de vouloir de-synchroniser ?</translation>
     </message>
     <message>
         <source>Enter library password to sync</source>
-        <translation type="unfinished"/>
+        <translation>Saisir le mot de passe de la bibliothèque pour synchroniser</translation>
     </message>
 </context>
 <context>
@@ -149,17 +176,6 @@
     <message>
         <source>Markdown</source>
         <translation>Réduction</translation>
-    </message>
-</context>
-<context>
-    <name>FinderSyncHost</name>
-    <message>
-        <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -244,10 +260,6 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     <message>
         <source>Please enter the computer name</source>
         <translation>Veuillez entrer le nom de l&apos;ordinateur</translation>
-    </message>
-    <message>
-        <source>Failed to save current account</source>
-        <translation>Impossible d&apos;enregistrer le compte actuel</translation>
     </message>
     <message>
         <source>Two Factor Authentication</source>
@@ -689,11 +701,11 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     </message>
     <message>
         <source>No permission to sync</source>
-        <translation type="unfinished"/>
+        <translation>Vous n&apos;avez pas la permission de synchroniser</translation>
     </message>
     <message>
         <source>No permission to write</source>
-        <translation type="unfinished"/>
+        <translation>Vous n&apos;avez pas la permission d&apos;écrire</translation>
     </message>
 </context>
 <context>
@@ -701,6 +713,29 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     <message>
         <source>Authorization expired, please re-login</source>
         <translation>L&apos;autorisation a expiré, veuillez vous reconnecter</translation>
+    </message>
+</context>
+<context>
+    <name>SeaDriveRootDialog</name>
+    <message>
+        <source>Choose SeaDrive Cache Folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your files will appear in a local cache folder. Please choose the folder:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>choose...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please choose seadrive cache folder</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -716,10 +751,6 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     <message>
         <source>Faild to choose a disk letter</source>
         <translation>Échec du choix de la lettre du disque</translation>
-    </message>
-    <message>
-        <source>failed to add default account</source>
-        <translation>Échec de l&apos;ajout du compte par défaut</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive folder</source>
@@ -776,6 +807,29 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     <message>
         <source>Auto logon failed, fall back to manual login</source>
         <translation>La connexion automatique a échoué, revenez à la connexion manuelle.</translation>
+    </message>
+    <message>
+        <source>Faild to choose a cache directory</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>SeafileExtensionHandler</name>
+    <message>
+        <source>Failed to lock file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to unlock file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -916,7 +970,7 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     </message>
     <message>
         <source>Show encrypted libraries</source>
-        <translation type="unfinished"/>
+        <translation>Voir les bibliothèques chiffrées</translation>
     </message>
 </context>
 <context>
@@ -1015,14 +1069,6 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
         <translation>Proxy système </translation>
     </message>
     <message>
-        <source>cache directory</source>
-        <translation>Répertoire du cache</translation>
-    </message>
-    <message>
-        <source>You have changed %1. Restart to apply it?</source>
-        <translation>Vous avez modifié %1. Redémarrer pour appliquer ?</translation>
-    </message>
-    <message>
         <source>enabled search</source>
         <translation>Recherche activée</translation>
     </message>
@@ -1049,10 +1095,6 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     <message>
         <source>language</source>
         <translation>Langue</translation>
-    </message>
-    <message>
-        <source>language and cache directory</source>
-        <translation>Langue et répertoire du cache</translation>
     </message>
     <message>
         <source>The proxy host address can&apos;t be empty</source>
@@ -1182,6 +1224,18 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
         <source>Enable search in finder</source>
         <translation>Activer la recherche dans le Finder</translation>
     </message>
+    <message>
+        <source>You have changed language, Restart to apply it?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You have changed SeaDrive cache folder. Restart to apply it?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You have changed cache directory. Restart to apply it?</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SharedLinkDialog</name>
@@ -1211,10 +1265,6 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     <message>
         <source>Login with Shibboleth</source>
         <translation>Se connecter avec Shibboleth</translation>
-    </message>
-    <message>
-        <source>Failed to save current account</source>
-        <translation>Impossible de sauvegarder le compte actuel</translation>
     </message>
 </context>
 <context>
