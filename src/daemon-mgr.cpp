@@ -202,15 +202,9 @@ QStringList DaemonManager::collectSeaDriveArgs()
     args << drive_letter;
 #elif defined (_MSC_VER)
 
-    QDir dir(QDir::home());
-    QString seadrive_root_name = "seadrive_root";
-    if (!dir.exists(seadrive_root_name)) {
-        if (!dir.mkpath("seadrive_root")) {
-            gui->errorAndExit(tr("Create seadrive_root dir failed"));
-        }
-    }
-    QString sync_root = pathJoin(QDir::homePath(), "seadrive_root");
-    QString sync_root_path = QDir::toNativeSeparators(sync_root);
+    QString seadrive_root = gui->seadriveRoot();
+    QString sync_root_path = QDir::toNativeSeparators(seadrive_root);
+
     args << sync_root_path;
 #endif
 

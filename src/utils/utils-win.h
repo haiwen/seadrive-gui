@@ -33,8 +33,8 @@ bool isWindows8OrGreater();
 bool isWindows8Point1OrGreater();
 bool isWindows10OrHigher();
 bool fixQtHDPINonIntegerScaling();
-
 bool diskLetterAvailable(const QString& disk_letter);
+
 QStringList getAvailableDiskLetters();
 std::string getLocalPipeName(const char *pipeName);
 

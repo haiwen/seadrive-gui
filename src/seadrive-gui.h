@@ -68,6 +68,8 @@ public:
     // Get the seadrive mount dir, $HOME/SeaDrive
     QString mountDir() const;
 
+    QString seadriveRoot() const;
+
     SeafileTrayIcon *trayIcon() { return tray_icon_; }
 
     DaemonManager *daemonManager() { return daemon_mgr_; }
@@ -136,6 +138,11 @@ private:
     bool first_use_;
 
     QString disk_letter_;
+#if defined(_MSC_VER)
+
+    QString seadrive_root_;
+
+#endif // _MSC_VER
 
     qint64 startup_time_;
 };

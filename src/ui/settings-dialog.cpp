@@ -68,16 +68,14 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
 
     mLanguageComboBox->addItems(I18NHelper::getInstance()->getLanguages());
     SettingsManager mgr;
+#if !defined(_MSC_VER)
     if (!mgr.getCacheDir(&current_cache_dir_))
         current_cache_dir_ = QDir(gui->seadriveDataDir()).absolutePath();
     mShowCacheDir->setText(current_cache_dir_);
     mShowCacheDir->setReadOnly(true);
     mCacheLabel->setText(tr("Cache directory:"));
-#ifdef _MSC_VER
-    mShowCacheDir->setVisible(false);
-    mCacheLabel->setVisible(false);
-    mSelectBtn->setVisible(false);
 #endif
+
     mSpotlightCheckBox->setText(tr("Enable search in finder"));
 
     // The range of mProxyPort is set to (0, 65535) in the ui file, so we
@@ -148,17 +146,35 @@ void SettingsDialog::updateSettings()
         msg = tr("language");
     }
 
+    if(language_changed && gui->yesOrNoBox
+            (tr("You have changed language, Restart to apply it?"), this, true)) {
+        gui->restartApp();
+    }
+
+
+#if defined(_MSC_VER)
+
+    bool seadrive_root_changed = false;
+    if (mShowCacheDir->text() != current_seadrive_root_ ) {
+        seadrive_root_changed = true;
+        mgr->setSeadriveRoot(mShowCacheDir->text());
+    }
+
+    if (seadrive_root_changed && gui->yesOrNoBox(tr("You have changed SeaDrive cache folder. Restart to apply it?"), this, true)) {
+        gui->restartApp();
+    }
+#else
     bool cache_dir_changed = false;
     if (mShowCacheDir->text() != current_cache_dir_) {
         cache_dir_changed = true;
         mgr->setCacheDir(mShowCacheDir->text());
-        msg = language_changed ?  tr("language and cache directory") : tr("cache directory");
     }
 
-    if ((language_changed || cache_dir_changed) && gui->yesOrNoBox
-            (tr("You have changed %1. Restart to apply it?").arg(msg), this, true)) {
+    if (cache_dir_changed && gui->yesOrNoBox
+            (tr("You have changed cache directory. Restart to apply it?"), this, true)) {
         gui->restartApp();
     }
+#endif
 
     bool enable_spotlight = false;
     if ((mSpotlightCheckBox->checkState() == Qt::Checked) != mgr->getSearchEnabled()) {
@@ -330,6 +346,13 @@ void SettingsDialog::showEvent(QShowEvent *event)
 #endif // Q_OS_WIN32
 
     QDialog::showEvent(event);
+#if defined(_MSC_VER)
+    if (!mgr->getSeadriveRoot(&current_seadrive_root_)) {
+        current_seadrive_root_ = gui->seadriveRoot();
+    }
+    mShowCacheDir->setText(current_seadrive_root_);
+    mShowCacheDir->setReadOnly(true);
+#endif
 }
 
 void SettingsDialog::proxyRequirePasswordChanged(int state)

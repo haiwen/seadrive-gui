@@ -5,6 +5,8 @@
 #include <QPair>
 #include <QString>
 #include <QSet>
+#include <QFileInfo>
+#include <QDir>
 
 #include "utils/utils-win.h"
 #if defined(_MSC_VER)

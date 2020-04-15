@@ -107,6 +107,11 @@ public:
     bool getDiskLetter(QString *disk_letter);
     void setDiskLetter(const QString& disk_letter);
 #endif // Q_OS_WIN32
+
+#if defined(_MSC_VER)
+    bool getSeadriveRoot(QString *seadrive_root);
+    void setSeadriveRoot(const QString& seadrive_root);
+#endif
     bool getCacheDir(QString *current_cache_dir);
     void setCacheDir(const QString& current_cache_dir);
 public:
