@@ -65,11 +65,7 @@ void InitSyncDialog::onFSLoaded()
 
 void InitSyncDialog::openMountPointAndCloseDialog()
 {
-#if defined(_MSC_VER)
-    QProcess::execute(kExplorerPath);
-#else
     QDesktopServices::openUrl(QUrl::fromLocalFile(gui->mountDir()));
-#endif
     accept();
 }
 
