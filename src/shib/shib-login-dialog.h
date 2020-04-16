@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QUrl>
 #include <QNetworkCookieJar>
+#include <QWebEngineProfile>
+#include <QWebEnginePage>
 
 #include "account.h"
 
@@ -35,6 +37,7 @@ public:
     ShibLoginDialog(const QUrl& url,
                     const QString& computer_name,
                     QWidget *parent=0);
+    ~ShibLoginDialog();
 
     Account account() const { return account_; }
 
@@ -46,6 +49,11 @@ private slots:
 
 private:
     Account parseAccount(const QString& txt);
+
+private:
+    QWebEngineProfile *web_engine_profile_;
+    QWebEnginePage *web_engine_page_;
+
 
 #if defined(SEAFILE_USE_WEBKIT)
     QWebView *webview_;
