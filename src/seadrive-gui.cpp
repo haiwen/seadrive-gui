@@ -261,8 +261,8 @@ SeadriveGui::~SeadriveGui()
 #endif
 
     delete tray_icon_;
-    delete rpc_client_;
     delete daemon_mgr_;
+    delete rpc_client_;
     delete account_mgr_;
     delete message_poller_;
 }

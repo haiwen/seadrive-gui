@@ -797,3 +797,19 @@ bool SeafileRpcClient::clearEncryptedRepoPassword(const QString& repo_id)
     return ret == 0;
 }
 
+bool SeafileRpcClient::exitSeadriveDaemon()
+{
+   GError *error = NULL;
+   int ret = searpc_client_call__int(seadrive_rpc_client_,
+       "seafile_stop_process", &error,
+       0);
+
+    if (error) {
+        qWarning("failed to stop seadrive daemon process: %s\n", error->message);
+        g_error_free(error);
+        return false;
+    }
+
+    return ret == 0;
+
+}
