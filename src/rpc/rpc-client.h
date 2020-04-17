@@ -114,6 +114,8 @@ public:
 
     bool clearEncryptedRepoPassword(const QString& repo_id);
 
+    bool exitSeadriveDaemon();
+
 private:
     Q_DISABLE_COPY(SeafileRpcClient)
 

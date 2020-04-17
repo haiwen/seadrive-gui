@@ -306,8 +306,14 @@ void DaemonManager::stopAllDaemon()
         conn_daemon_timer_ = nullptr;
     }
     if (!gui->isDevMode() && seadrive_daemon_) {
+#if defined(_MSC_VER)
+        if (!gui->rpcClient()->exitSeadriveDaemon()) {
+            qWarning("failed to exit seadrive daemon");
+        }
+#else
         seadrive_daemon_->kill();
-        seadrive_daemon_->waitForFinished(50);
+#endif
+        seadrive_daemon_->waitForFinished(1500);
         conn_daemon_timer_ = nullptr;
     }
 }
