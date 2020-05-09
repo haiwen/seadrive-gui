@@ -21,7 +21,6 @@ private:
     Q_DISABLE_COPY(SeaDriveRootDialog)
 
     QString seadrive_root_;
-    QString selected_path_;
 };
 
 #endif // SEAFILE_CLIENT_SEADRIVE_ROOT_DIALOG_H
