@@ -13,6 +13,7 @@ SeaDriveRootDialog::SeaDriveRootDialog(QWidget *parent)
     setWindowIcon(QIcon(":/images/seafile.png"));
     setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
                    Qt::WindowStaysOnTopHint);
+    mCacheDirLineEdit->setText(QDir::homePath());
 
     connect(mOkBtn, SIGNAL(clicked()), this, SLOT(onOkBtnClicked()));
     connect(mSelectSeadriveRootButton, SIGNAL(clicked()), this, SLOT(onSelectSeadriveRootButtonClicked()));
@@ -33,12 +34,17 @@ void SeaDriveRootDialog::onSelectSeadriveRootButtonClicked()
         text.resize(text.size() - 1);
     }
     mCacheDirLineEdit->setText(text);
-    selected_path_ = text;
 
 }
 
 void SeaDriveRootDialog::onOkBtnClicked()
 {
-    seadrive_root_ = selected_path_;
-    accept();
+    seadrive_root_ = mCacheDirLineEdit->text();
+
+    if (!seadrive_root_.isEmpty()) {
+        QDir dir(seadrive_root_);
+        if (dir.exists()) {
+            accept();
+        }
+    }
 }
