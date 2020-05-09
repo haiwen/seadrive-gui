@@ -56,6 +56,12 @@ QList<SyncError> SyncError::listFromJSON(const json_t *json)
 #define SYNC_ERROR_ID_WRITE_LOCAL_DATA          17
 #define SYNC_ERROR_ID_PERM_NOT_SYNCABLE         18
 #define SYNC_ERROR_ID_NO_WRITE_PERMISSION       19
+#define SYNC_ERROR_ID_FOLDER_PERM_DENIED        20
+#define SYNC_ERROR_ID_PATH_END_SPACE_PERIOD     21
+#define SYNC_ERROR_ID_PATH_INVALID_CHARACTER    22
+#define SYNC_ERROR_ID_UPDATE_TO_READ_ONLY_REPO  23
+#define SYNC_ERROR_ID_CONFLICT                  24
+
 #define SYNC_ERROR_ID_GENERAL_ERROR             100
 
 QString SyncError::syncErrorIdToErrorStr(int error_id, const QString& path)
@@ -132,6 +138,16 @@ QString SyncError::syncErrorIdToErrorStr(int error_id, const QString& path)
         return QObject::tr("No permission to sync");
     case SYNC_ERROR_ID_NO_WRITE_PERMISSION:
         return QObject::tr("No permission to write");
+    case SYNC_ERROR_ID_FOLDER_PERM_DENIED:
+        return QObject::tr("Update to file denied by folder permission setting");
+    case SYNC_ERROR_ID_PATH_END_SPACE_PERIOD:
+        return QObject::tr("Path ends with space or period character");
+    case SYNC_ERROR_ID_PATH_INVALID_CHARACTER:
+        return QObject::tr("Path contains invalid characters like '|' or ':'");
+    case SYNC_ERROR_ID_UPDATE_TO_READ_ONLY_REPO:
+        return QObject::tr("Created or updated a file in a non-writable library or folder");
+    case SYNC_ERROR_ID_CONFLICT:
+        return QObject::tr("Concurrent updates to file. File is saved as conflict file");
     case SYNC_ERROR_ID_GENERAL_ERROR:
     default:
         return QObject::tr("Unknown error");
