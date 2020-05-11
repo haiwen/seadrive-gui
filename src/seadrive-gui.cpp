@@ -782,10 +782,12 @@ QString SeadriveGui::mountDir() const
 #endif
 }
 
+#if defined(_MSC_VER)
 QString SeadriveGui::seadriveRoot() const
 {
     return seadrive_root_;
 }
+#endif
 
 QString SeadriveGui::getUniqueClientId()
 {

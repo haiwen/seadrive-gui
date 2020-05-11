@@ -68,7 +68,9 @@ public:
     // Get the seadrive mount dir, $HOME/SeaDrive
     QString mountDir() const;
 
+#if defined(_MSC_VER)
     QString seadriveRoot() const;
+#endif
 
     SeafileTrayIcon *trayIcon() { return tray_icon_; }
 
