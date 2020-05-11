@@ -139,15 +139,15 @@ QString SyncError::syncErrorIdToErrorStr(int error_id, const QString& path)
     case SYNC_ERROR_ID_NO_WRITE_PERMISSION:
         return QObject::tr("No permission to write");
     case SYNC_ERROR_ID_FOLDER_PERM_DENIED:
-        return QObject::tr("Update to file denied by folder permission setting");
+        return QObject::tr("Update to file %1 denied by folder permission setting").arg(file);
     case SYNC_ERROR_ID_PATH_END_SPACE_PERIOD:
-        return QObject::tr("Path ends with space or period character");
+        return QObject::tr("Path %1 ends with space or period character").arg(file);
     case SYNC_ERROR_ID_PATH_INVALID_CHARACTER:
-        return QObject::tr("Path contains invalid characters like '|' or ':'");
+        return QObject::tr("Path %1 contains invalid characters like '|' or ':'").arg(file);
     case SYNC_ERROR_ID_UPDATE_TO_READ_ONLY_REPO:
-        return QObject::tr("Created or updated a file in a non-writable library or folder");
+        return QObject::tr("Created or updated a file %1 in a non-writable library or folder").arg(file);
     case SYNC_ERROR_ID_CONFLICT:
-        return QObject::tr("Concurrent updates to file. File is saved as conflict file");
+        return QObject::tr("Concurrent updates to file %1. File is saved as conflict file").arg(file);
     case SYNC_ERROR_ID_GENERAL_ERROR:
     default:
         return QObject::tr("Unknown error");
