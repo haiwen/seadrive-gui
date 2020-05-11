@@ -94,6 +94,7 @@
   <ItemGroup>
     <QtMoc Include="src\ui\encrypted-repos-dialog.h" />
     <QtMoc Include="src\ui\seadrive-root-dialog.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="third_party\WinSparkle-0.5.3\include\winsparkle-version.h" />
     <ClInclude Include="third_party\WinSparkle-0.5.3\include\winsparkle.h" />
     <QtMoc Include="src\api\requests.h" />
@@ -206,6 +207,12 @@
     <None Include="i18n\seadrive_uk.ts" />
     <None Include="i18n\seadrive_zh_CN.ts" />
     <None Include="i18n\seadrive_zh_TW.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="seadrive-gui.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="seadrive.ico" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B12702AD-ABFB-343A-A199-8E24837244A3}</ProjectGuid>
