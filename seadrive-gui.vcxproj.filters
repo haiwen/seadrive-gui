@@ -360,6 +360,9 @@
     <ClInclude Include="third_party\WinSparkle-0.5.3\include\winsparkle-version.h">
       <Filter>third_party\winsparkle</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="src\api\api-client.h">
@@ -596,5 +599,11 @@
     <None Include="i18n\seadrive_zh_TW.ts">
       <Filter>Translation Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="seadrive.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="seadrive-gui.rc" />
   </ItemGroup>
 </Project>
