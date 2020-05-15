@@ -34,6 +34,37 @@
     </message>
 </context>
 <context>
+    <name>AutoLogonDialog</name>
+    <message>
+        <source>auto login</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>auto logining, please wait a moment</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please input server address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please enter the server address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 is not a valid server address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>login failed</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -42,10 +73,6 @@
     <message>
         <source>%1 exited unexpectedly</source>
         <translation>%1 Neočekávané ukončení</translation>
-    </message>
-    <message>
-        <source>Create seadrive_root dir failed</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -152,17 +179,6 @@
     </message>
 </context>
 <context>
-    <name>FinderSyncHost</name>
-    <message>
-        <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
     <name>InitSyncDialog</name>
     <message>
         <source>Download files list</source>
@@ -245,10 +261,6 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     <message>
         <source>Please enter the computer name</source>
         <translation>Název počítače</translation>
-    </message>
-    <message>
-        <source>Failed to save current account</source>
-        <translation>Chyba při ukládání informací o účtu</translation>
     </message>
     <message>
         <source>Two Factor Authentication</source>
@@ -705,6 +717,29 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
 </context>
 <context>
+    <name>SeaDriveRootDialog</name>
+    <message>
+        <source>Choose SeaDrive Cache Folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your files will appear in a local cache folder. Please choose the folder:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>choose...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please choose seadrive cache folder</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>SeadriveGui</name>
     <message>
         <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
@@ -717,10 +752,6 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     <message>
         <source>Faild to choose a disk letter</source>
         <translation>Při volbě písmene disku nastala chyba</translation>
-    </message>
-    <message>
-        <source>failed to add default account</source>
-        <translation>Při přidání základního účtu nastala chyba</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive folder</source>
@@ -777,6 +808,29 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     <message>
         <source>Auto logon failed, fall back to manual login</source>
         <translation>Automatické přihlášení selhalo, vracím se k ručnímu přihlášení</translation>
+    </message>
+    <message>
+        <source>Faild to choose a cache directory</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>SeafileExtensionHandler</name>
+    <message>
+        <source>Failed to lock file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to unlock file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1016,14 +1070,6 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
         <translation>Systémová proxy</translation>
     </message>
     <message>
-        <source>cache directory</source>
-        <translation>adresář mezipaměti</translation>
-    </message>
-    <message>
-        <source>You have changed %1. Restart to apply it?</source>
-        <translation>Změnil jsi %1. Restartovat pro aplikování ?</translation>
-    </message>
-    <message>
         <source>enabled search</source>
         <translation>povolené vyhledávání</translation>
     </message>
@@ -1050,10 +1096,6 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     <message>
         <source>language</source>
         <translation>jazyk</translation>
-    </message>
-    <message>
-        <source>language and cache directory</source>
-        <translation>adresář jazyka a mezipaměti</translation>
     </message>
     <message>
         <source>The proxy host address can&apos;t be empty</source>
@@ -1183,6 +1225,18 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
         <source>Enable search in finder</source>
         <translation>Povolit vyhledávání ve vyhledávači</translation>
     </message>
+    <message>
+        <source>You have changed language, Restart to apply it?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You have changed SeaDrive cache folder. Restart to apply it?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You have changed cache directory. Restart to apply it?</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SharedLinkDialog</name>
@@ -1212,10 +1266,6 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     <message>
         <source>Login with Shibboleth</source>
         <translation>Přihlásit pomocí Shibboleth</translation>
-    </message>
-    <message>
-        <source>Failed to save current account</source>
-        <translation>Současný účet se nepodařilo uložit </translation>
     </message>
 </context>
 <context>

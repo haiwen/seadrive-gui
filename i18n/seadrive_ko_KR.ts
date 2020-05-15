@@ -34,6 +34,37 @@
     </message>
 </context>
 <context>
+    <name>AutoLogonDialog</name>
+    <message>
+        <source>auto login</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>auto logining, please wait a moment</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please input server address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please enter the server address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 is not a valid server address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>login failed</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -42,10 +73,6 @@
     <message>
         <source>%1 exited unexpectedly</source>
         <translation>갑작스럽게 %1에서 나왔습니다</translation>
-    </message>
-    <message>
-        <source>Create seadrive_root dir failed</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -152,17 +179,6 @@
     </message>
 </context>
 <context>
-    <name>FinderSyncHost</name>
-    <message>
-        <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
     <name>InitSyncDialog</name>
     <message>
         <source>Download files list</source>
@@ -245,10 +261,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Please enter the computer name</source>
         <translation>컴퓨터 이름을 입력해주세요</translation>
-    </message>
-    <message>
-        <source>Failed to save current account</source>
-        <translation>현재 계정 저장에 실패했습니다</translation>
     </message>
     <message>
         <source>Two Factor Authentication</source>
@@ -705,6 +717,29 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
 </context>
 <context>
+    <name>SeaDriveRootDialog</name>
+    <message>
+        <source>Choose SeaDrive Cache Folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your files will appear in a local cache folder. Please choose the folder:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>choose...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please choose seadrive cache folder</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>SeadriveGui</name>
     <message>
         <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
@@ -717,10 +752,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Faild to choose a disk letter</source>
         <translation>디스크 문자 선택에 실패했습니다</translation>
-    </message>
-    <message>
-        <source>failed to add default account</source>
-        <translation>기본 계정 추가에 실패했습니다</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive folder</source>
@@ -777,6 +808,29 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Auto logon failed, fall back to manual login</source>
         <translation>자동 로그인 실패, 대신 직접 로그인합니다</translation>
+    </message>
+    <message>
+        <source>Faild to choose a cache directory</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>SeafileExtensionHandler</name>
+    <message>
+        <source>Failed to lock file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to unlock file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1016,14 +1070,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>시스템 프록시</translation>
     </message>
     <message>
-        <source>cache directory</source>
-        <translation>캐시 디렉터리</translation>
-    </message>
-    <message>
-        <source>You have changed %1. Restart to apply it?</source>
-        <translation>%1 내용을 바꾸었습니다. 다시 시작해서 적용할까요?</translation>
-    </message>
-    <message>
         <source>enabled search</source>
         <translation>검색 활성</translation>
     </message>
@@ -1050,10 +1096,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>language</source>
         <translation>언어</translation>
-    </message>
-    <message>
-        <source>language and cache directory</source>
-        <translation>언어와 캐시 디렉터리</translation>
     </message>
     <message>
         <source>The proxy host address can&apos;t be empty</source>
@@ -1183,6 +1225,18 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>Enable search in finder</source>
         <translation>파인더에서 검색 활성</translation>
     </message>
+    <message>
+        <source>You have changed language, Restart to apply it?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You have changed SeaDrive cache folder. Restart to apply it?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You have changed cache directory. Restart to apply it?</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SharedLinkDialog</name>
@@ -1212,10 +1266,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Login with Shibboleth</source>
         <translation>시볼레스 로그인</translation>
-    </message>
-    <message>
-        <source>Failed to save current account</source>
-        <translation>현재 계정 정보 저장에 실패했습니다</translation>
     </message>
 </context>
 <context>
