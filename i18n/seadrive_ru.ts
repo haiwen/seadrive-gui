@@ -34,6 +34,37 @@
     </message>
 </context>
 <context>
+    <name>AutoLogonDialog</name>
+    <message>
+        <source>auto login</source>
+        <translation>автоматический вход</translation>
+    </message>
+    <message>
+        <source>auto logining, please wait a moment</source>
+        <translation>автоматический вход, пожалуйста, подождите</translation>
+    </message>
+    <message>
+        <source>Please input server address</source>
+        <translation>Введите адрес сервера</translation>
+    </message>
+    <message>
+        <source>address</source>
+        <translation>адрес</translation>
+    </message>
+    <message>
+        <source>Please enter the server address</source>
+        <translation>Введите адрес сервера</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid server address</source>
+        <translation>%1 неправильный адрес сервера</translation>
+    </message>
+    <message>
+        <source>login failed</source>
+        <translation>не удалось войти</translation>
+    </message>
+</context>
+<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -42,10 +73,6 @@
     <message>
         <source>%1 exited unexpectedly</source>
         <translation>%1 неожиданно вышел</translation>
-    </message>
-    <message>
-        <source>Create seadrive_root dir failed</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -67,57 +94,57 @@
     <name>EncryptedReposDialog</name>
     <message>
         <source>Encrypted Libraries</source>
-        <translation type="unfinished"/>
+        <translation>Зашифрованные библиотеки</translation>
     </message>
     <message>
         <source>No Encrypted Library.</source>
-        <translation type="unfinished"/>
+        <translation>Нет зашифрованных библиотек.</translation>
     </message>
 </context>
 <context>
     <name>EncryptedReposTableModel</name>
     <message>
         <source>Failed to set encrypted library password</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось установить пароль зашифрованной библиотеки</translation>
     </message>
     <message>
         <source>Password error</source>
-        <translation type="unfinished"/>
+        <translation>Ошибка пароля</translation>
     </message>
     <message>
         <source>Failed to clear encrypted library password</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось удалить пароль зашифрованной библиотеки</translation>
     </message>
     <message>
         <source>Right click this item to sync or unsync the encrypted library</source>
-        <translation type="unfinished"/>
+        <translation>Щелкните правой кнопкой мыши этот элемент, чтобы синхронизировать или отменить синхронизацию зашифрованной библиотеки</translation>
     </message>
     <message>
         <source>Library</source>
-        <translation type="unfinished"/>
+        <translation>Библиотека</translation>
     </message>
     <message>
         <source>Sync status</source>
-        <translation type="unfinished"/>
+        <translation>Статус синхронизации</translation>
     </message>
 </context>
 <context>
     <name>EncryptedReposTableView</name>
     <message>
         <source>Unsync</source>
-        <translation type="unfinished"/>
+        <translation>Не синхронизировано</translation>
     </message>
     <message>
         <source>Sync</source>
-        <translation type="unfinished"/>
+        <translation>Синхронизировано</translation>
     </message>
     <message>
         <source>After unsyncing, the local encryption key of this library will be cleared and this library cannot be accessed in virtual drive. Are you sure to unsync?</source>
-        <translation type="unfinished"/>
+        <translation>После отмены синхронизации локальный ключ шифрования этой библиотеки будет удален, и эта библиотека не будет доступна на виртуальном диске. Вы уверены, что хотите отменить синхронизацию?</translation>
     </message>
     <message>
         <source>Enter library password to sync</source>
-        <translation type="unfinished"/>
+        <translation>Введите пароль библиотеки для синхронизации</translation>
     </message>
 </context>
 <context>
@@ -149,17 +176,6 @@
     <message>
         <source>Markdown</source>
         <translation>Markdown</translation>
-    </message>
-</context>
-<context>
-    <name>FinderSyncHost</name>
-    <message>
-        <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -245,10 +261,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Please enter the computer name</source>
         <translation>Пожалуйста, введите имя компьютера</translation>
-    </message>
-    <message>
-        <source>Failed to save current account</source>
-        <translation>Не удалось сохранить текущий аккаунт</translation>
     </message>
     <message>
         <source>Two Factor Authentication</source>
@@ -690,10 +702,30 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>No permission to sync</source>
-        <translation type="unfinished"/>
+        <translation>Нет разрешения на синхронизацию</translation>
     </message>
     <message>
         <source>No permission to write</source>
+        <translation>Нет разрешения на запись</translation>
+    </message>
+    <message>
+        <source>Update to file %1 denied by folder permission setting</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path %1 ends with space or period character</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path %1 contains invalid characters like &apos;|&apos; or &apos;:&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Created or updated a file %1 in a non-writable library or folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Concurrent updates to file %1. File is saved as conflict file</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -702,6 +734,33 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Authorization expired, please re-login</source>
         <translation>Авторизация истекла. Пожалуйста, войдите снова</translation>
+    </message>
+</context>
+<context>
+    <name>SeaDriveRootDialog</name>
+    <message>
+        <source>Choose SeaDrive Cache Folder</source>
+        <translation> Выберите папку для кэша SeaDrive</translation>
+    </message>
+    <message>
+        <source>Your files will appear in a local cache folder. Please choose the folder:</source>
+        <translation>Ваши файлы появятся в папке локального кэша. Выберите папку:</translation>
+    </message>
+    <message>
+        <source>choose...</source>
+        <translation>выбрать...</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Please choose seadrive cache folder</source>
+        <translation>Выберите папку для кэша Seadrive</translation>
+    </message>
+    <message>
+        <source>Create seadrive_root folder failed!</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -717,10 +776,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Faild to choose a disk letter</source>
         <translation>Не удалось выбрать букву диска</translation>
-    </message>
-    <message>
-        <source>failed to add default account</source>
-        <translation>Не удалось добавить учетную запись по умолчанию</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive folder</source>
@@ -777,6 +832,29 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Auto logon failed, fall back to manual login</source>
         <translation>Автоматический вход не выполнен, вернитесь к ручному входу</translation>
+    </message>
+    <message>
+        <source>Faild to choose a cache directory</source>
+        <translation>Не удалось выбрать папку для кэша</translation>
+    </message>
+</context>
+<context>
+    <name>SeafileExtensionHandler</name>
+    <message>
+        <source>Failed to lock file</source>
+        <translation>Не удалось заблокировать файл</translation>
+    </message>
+    <message>
+        <source>Failed to unlock file</source>
+        <translation>Не удалось разблокировать файл</translation>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation>Файл &quot;%1&quot; заблокирован %2</translation>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation>Не удалось получить информацию о блокировке для файла &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -918,7 +996,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Show encrypted libraries</source>
-        <translation type="unfinished"/>
+        <translation>Показать зашифрованные библиотеки</translation>
     </message>
 </context>
 <context>
@@ -1017,14 +1095,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>Системный прокси</translation>
     </message>
     <message>
-        <source>cache directory</source>
-        <translation>каталог для кэша</translation>
-    </message>
-    <message>
-        <source>You have changed %1. Restart to apply it?</source>
-        <translation>Вы изменили %1. Перезапустить приложение сейчас?</translation>
-    </message>
-    <message>
         <source>enabled search</source>
         <translation>поиск включен</translation>
     </message>
@@ -1051,10 +1121,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>language</source>
         <translation>язык</translation>
-    </message>
-    <message>
-        <source>language and cache directory</source>
-        <translation>язык и каталог для кэша</translation>
     </message>
     <message>
         <source>The proxy host address can&apos;t be empty</source>
@@ -1184,6 +1250,18 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>Enable search in finder</source>
         <translation>Включить поиск в найденном</translation>
     </message>
+    <message>
+        <source>You have changed language, Restart to apply it?</source>
+        <translation>Вы изменили язык, перезапустить, чтобы применить изменения?</translation>
+    </message>
+    <message>
+        <source>You have changed SeaDrive cache folder. Restart to apply it?</source>
+        <translation>Вы изменили папку кэша SeaDrive. Перезапустить, чтобы применить изменения?</translation>
+    </message>
+    <message>
+        <source>You have changed cache directory. Restart to apply it?</source>
+        <translation>Вы изменили папку для кэша. Перезапустить, чтобы применить изменения?</translation>
+    </message>
 </context>
 <context>
     <name>SharedLinkDialog</name>
@@ -1213,10 +1291,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Login with Shibboleth</source>
         <translation>Shibboleth Вход</translation>
-    </message>
-    <message>
-        <source>Failed to save current account</source>
-        <translation>Не удалось сохранить учетную запись</translation>
     </message>
 </context>
 <context>

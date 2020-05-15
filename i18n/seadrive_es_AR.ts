@@ -34,6 +34,37 @@
     </message>
 </context>
 <context>
+    <name>AutoLogonDialog</name>
+    <message>
+        <source>auto login</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>auto logining, please wait a moment</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please input server address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please enter the server address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 is not a valid server address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>login failed</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -42,10 +73,6 @@
     <message>
         <source>%1 exited unexpectedly</source>
         <translation>%1 terminó de forma inesperada</translation>
-    </message>
-    <message>
-        <source>Create seadrive_root dir failed</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -152,17 +179,6 @@
     </message>
 </context>
 <context>
-    <name>FinderSyncHost</name>
-    <message>
-        <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
     <name>InitSyncDialog</name>
     <message>
         <source>Download files list</source>
@@ -245,10 +261,6 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     <message>
         <source>Please enter the computer name</source>
         <translation>Ingrese el nombre del equipo</translation>
-    </message>
-    <message>
-        <source>Failed to save current account</source>
-        <translation>Fallo al modificar la cuenta actual</translation>
     </message>
     <message>
         <source>Two Factor Authentication</source>
@@ -696,12 +708,59 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
         <source>No permission to write</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Update to file %1 denied by folder permission setting</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path %1 ends with space or period character</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path %1 contains invalid characters like &apos;|&apos; or &apos;:&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Created or updated a file %1 in a non-writable library or folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Concurrent updates to file %1. File is saved as conflict file</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
     <message>
         <source>Authorization expired, please re-login</source>
         <translation>La autorización expiró, por favor ingrese nuevamente</translation>
+    </message>
+</context>
+<context>
+    <name>SeaDriveRootDialog</name>
+    <message>
+        <source>Choose SeaDrive Cache Folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your files will appear in a local cache folder. Please choose the folder:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>choose...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please choose seadrive cache folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Create seadrive_root folder failed!</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -717,10 +776,6 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     <message>
         <source>Faild to choose a disk letter</source>
         <translation>Fallo al elegir una letra de disco</translation>
-    </message>
-    <message>
-        <source>failed to add default account</source>
-        <translation>fallo al agregar la cuenta predefinida</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive folder</source>
@@ -776,6 +831,29 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>Auto logon failed, fall back to manual login</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Faild to choose a cache directory</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>SeafileExtensionHandler</name>
+    <message>
+        <source>Failed to lock file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to unlock file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1016,14 +1094,6 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
         <translation>Proxy del Sistema</translation>
     </message>
     <message>
-        <source>cache directory</source>
-        <translation>directorio de caché</translation>
-    </message>
-    <message>
-        <source>You have changed %1. Restart to apply it?</source>
-        <translation>Ha modificado %1. ¿Reiniciar para aplicar los cambios?</translation>
-    </message>
-    <message>
         <source>enabled search</source>
         <translation type="unfinished"/>
     </message>
@@ -1050,10 +1120,6 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     <message>
         <source>language</source>
         <translation>idioma</translation>
-    </message>
-    <message>
-        <source>language and cache directory</source>
-        <translation>idioma y directorio de caché</translation>
     </message>
     <message>
         <source>The proxy host address can&apos;t be empty</source>
@@ -1183,6 +1249,18 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
         <source>Enable search in finder</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>You have changed language, Restart to apply it?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You have changed SeaDrive cache folder. Restart to apply it?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You have changed cache directory. Restart to apply it?</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SharedLinkDialog</name>
@@ -1212,10 +1290,6 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     <message>
         <source>Login with Shibboleth</source>
         <translation>Iniciar sesión con Shibboleth</translation>
-    </message>
-    <message>
-        <source>Failed to save current account</source>
-        <translation>Fallo al guardar la cuenta actual</translation>
     </message>
 </context>
 <context>

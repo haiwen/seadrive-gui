@@ -708,6 +708,26 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>No permission to write</source>
         <translation>没有写入权限</translation>
     </message>
+    <message>
+        <source>Update to file %1 denied by folder permission setting</source>
+        <translation>文件夹权限设置拒绝更新文件 ％1</translation>
+    </message>
+    <message>
+        <source>Path %1 ends with space or period character</source>
+        <translation>路径 ％1 以空格或句点字符结尾</translation>
+    </message>
+    <message>
+        <source>Path %1 contains invalid characters like &apos;|&apos; or &apos;:&apos;</source>
+        <translation>路径 ％1 包含无效字符，例如 &apos;|&apos; 或 ‘:’</translation>
+    </message>
+    <message>
+        <source>Created or updated a file %1 in a non-writable library or folder</source>
+        <translation>在只读资料库或文件夹中创建或更新文件 ％1</translation>
+    </message>
+    <message>
+        <source>Concurrent updates to file %1. File is saved as conflict file</source>
+        <translation>同时更新文件 ％1。文件另存为冲突文件</translation>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -737,6 +757,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Please choose seadrive cache folder</source>
         <translation>请选择 seadrive 缓存文件夹</translation>
+    </message>
+    <message>
+        <source>Create seadrive_root folder failed!</source>
+        <translation>创建 seadrive_root 文件夹失败！</translation>
     </message>
 </context>
 <context>
