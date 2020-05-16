@@ -34,6 +34,37 @@
     </message>
 </context>
 <context>
+    <name>AutoLogonDialog</name>
+    <message>
+        <source>auto login</source>
+        <translation>Automatisch anmelden</translation>
+    </message>
+    <message>
+        <source>auto logining, please wait a moment</source>
+        <translation>Automatisches Anmelden, bitte warten Sie</translation>
+    </message>
+    <message>
+        <source>Please input server address</source>
+        <translation>Bitte geben Sie die Serveradresse ein</translation>
+    </message>
+    <message>
+        <source>address</source>
+        <translation>Adresse</translation>
+    </message>
+    <message>
+        <source>Please enter the server address</source>
+        <translation>Bitte geben Sie die Serveradresse ein</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid server address</source>
+        <translation>%1 ist keine gültige Serveradresse</translation>
+    </message>
+    <message>
+        <source>login failed</source>
+        <translation>Anmeldung fehlgeschlagen</translation>
+    </message>
+</context>
+<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -42,10 +73,6 @@
     <message>
         <source>%1 exited unexpectedly</source>
         <translation>%1 unvorhergesehen ausgeworfen</translation>
-    </message>
-    <message>
-        <source>Create seadrive_root dir failed</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -67,57 +94,57 @@
     <name>EncryptedReposDialog</name>
     <message>
         <source>Encrypted Libraries</source>
-        <translation type="unfinished"/>
+        <translation>Verschlüsselte Bibliotheken</translation>
     </message>
     <message>
         <source>No Encrypted Library.</source>
-        <translation type="unfinished"/>
+        <translation>Keine verschlüsselte Bibliothek vorhanden.</translation>
     </message>
 </context>
 <context>
     <name>EncryptedReposTableModel</name>
     <message>
         <source>Failed to set encrypted library password</source>
-        <translation type="unfinished"/>
+        <translation>Passwort für die Verschlüsselung der Bibliothek konnte nicht gesetzt werden</translation>
     </message>
     <message>
         <source>Password error</source>
-        <translation type="unfinished"/>
+        <translation>Passwort ist falsch</translation>
     </message>
     <message>
         <source>Failed to clear encrypted library password</source>
-        <translation type="unfinished"/>
+        <translation>Passwort für die Verschlüsselung der Bibliothek konnte nicht zurückgesetzt werden</translation>
     </message>
     <message>
         <source>Right click this item to sync or unsync the encrypted library</source>
-        <translation type="unfinished"/>
+        <translation>Rechtsklick zum Starten oder Aufheben der Synchronisierung der verschlüsselten Bibliothek</translation>
     </message>
     <message>
         <source>Library</source>
-        <translation type="unfinished"/>
+        <translation>Bibliothek</translation>
     </message>
     <message>
         <source>Sync status</source>
-        <translation type="unfinished"/>
+        <translation>Status der Synchronisierung</translation>
     </message>
 </context>
 <context>
     <name>EncryptedReposTableView</name>
     <message>
         <source>Unsync</source>
-        <translation type="unfinished"/>
+        <translation>Synchronisieren aufheben</translation>
     </message>
     <message>
         <source>Sync</source>
-        <translation type="unfinished"/>
+        <translation>Synchronisieren</translation>
     </message>
     <message>
         <source>After unsyncing, the local encryption key of this library will be cleared and this library cannot be accessed in virtual drive. Are you sure to unsync?</source>
-        <translation type="unfinished"/>
+        <translation>Mit dem Aufheben der Synchronisierung wird der lokale Schlüssel für diese Bibliothek gelöscht. Danach ist diese verschlüsselte Bibliothek im lokalen virtuellen Laufwerk nicht mehr zugänglich. Möchten Sie die Synchronisierung wirklich aufheben?</translation>
     </message>
     <message>
         <source>Enter library password to sync</source>
-        <translation type="unfinished"/>
+        <translation>Passwort der verschlüsselten Bibliothek zum Starten der Synchronisierung</translation>
     </message>
 </context>
 <context>
@@ -149,17 +176,6 @@
     <message>
         <source>Markdown</source>
         <translation>Markdown</translation>
-    </message>
-</context>
-<context>
-    <name>FinderSyncHost</name>
-    <message>
-        <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -245,10 +261,6 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     <message>
         <source>Please enter the computer name</source>
         <translation>Bitte geben Sie den Rechnernamen ein</translation>
-    </message>
-    <message>
-        <source>Failed to save current account</source>
-        <translation>Aktuelles Konto konnte nicht gespeichert werden</translation>
     </message>
     <message>
         <source>Two Factor Authentication</source>
@@ -690,10 +702,30 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
     <message>
         <source>No permission to sync</source>
-        <translation type="unfinished"/>
+        <translation>Synchronisieren nicht erlaubt</translation>
     </message>
     <message>
         <source>No permission to write</source>
+        <translation>Schreiben nicht erlaubt</translation>
+    </message>
+    <message>
+        <source>Update to file %1 denied by folder permission setting</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path %1 ends with space or period character</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path %1 contains invalid characters like &apos;|&apos; or &apos;:&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Created or updated a file %1 in a non-writable library or folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Concurrent updates to file %1. File is saved as conflict file</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -702,6 +734,33 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     <message>
         <source>Authorization expired, please re-login</source>
         <translation>Sitzung abgelaufen, bitte neu anmelden</translation>
+    </message>
+</context>
+<context>
+    <name>SeaDriveRootDialog</name>
+    <message>
+        <source>Choose SeaDrive Cache Folder</source>
+        <translation>Wählen Sie einen Ordner für den SeaDrive-Zwischenspeicher</translation>
+    </message>
+    <message>
+        <source>Your files will appear in a local cache folder. Please choose the folder:</source>
+        <translation>Ihre Dateien werden in einem lokalen Zwischenspeicher angezeigt. Bitte wählen Sie einen Ordner dafür:</translation>
+    </message>
+    <message>
+        <source>choose...</source>
+        <translation>Wählen …</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Please choose seadrive cache folder</source>
+        <translation>Bitte wählen Sie einen Ordner für den SeaDrive-Zwischenspeicher</translation>
+    </message>
+    <message>
+        <source>Create seadrive_root folder failed!</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -717,10 +776,6 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     <message>
         <source>Faild to choose a disk letter</source>
         <translation>Fehler bei der Auswahl eines Laufwerksbuchstabens</translation>
-    </message>
-    <message>
-        <source>failed to add default account</source>
-        <translation>Hinzufügen des Standardkontos fehlgeschlagen</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive folder</source>
@@ -777,6 +832,29 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     <message>
         <source>Auto logon failed, fall back to manual login</source>
         <translation>Manuelle Anmeldung erforderlich, automatisch nicht möglich</translation>
+    </message>
+    <message>
+        <source>Faild to choose a cache directory</source>
+        <translation>Fehler bei der Auswahl eines Ordners für den Zwischenspeicher</translation>
+    </message>
+</context>
+<context>
+    <name>SeafileExtensionHandler</name>
+    <message>
+        <source>Failed to lock file</source>
+        <translation>Sperren der Datei nicht möglich</translation>
+    </message>
+    <message>
+        <source>Failed to unlock file</source>
+        <translation>Entsperren der Datei nicht möglich</translation>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation>Datei „%1“ ist von %2 gesperrt</translation>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation>Für Datei „%1“ konnte keine Information zur Sperrung gefunden werden</translation>
     </message>
 </context>
 <context>
@@ -917,7 +995,7 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
     <message>
         <source>Show encrypted libraries</source>
-        <translation type="unfinished"/>
+        <translation>Verschlüsselte Bibliotheken anzeigen</translation>
     </message>
 </context>
 <context>
@@ -1016,14 +1094,6 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
         <translation>Proxy-Einstellungen des Systems</translation>
     </message>
     <message>
-        <source>cache directory</source>
-        <translation>Ordner für Zwischenspeicher</translation>
-    </message>
-    <message>
-        <source>You have changed %1. Restart to apply it?</source>
-        <translation>%1 geändert. Jetzt Neustart zum Ausführen?</translation>
-    </message>
-    <message>
         <source>enabled search</source>
         <translation>Suche aktiviert</translation>
     </message>
@@ -1050,10 +1120,6 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     <message>
         <source>language</source>
         <translation>Sprache</translation>
-    </message>
-    <message>
-        <source>language and cache directory</source>
-        <translation>Ordner für Sprache und Zwischenspreicher</translation>
     </message>
     <message>
         <source>The proxy host address can&apos;t be empty</source>
@@ -1183,6 +1249,18 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
         <source>Enable search in finder</source>
         <translation>Lokale Suche aktivieren</translation>
     </message>
+    <message>
+        <source>You have changed language, Restart to apply it?</source>
+        <translation>Sie haben die Sprache geändert. Jetzt Neustart zum Ausführen?</translation>
+    </message>
+    <message>
+        <source>You have changed SeaDrive cache folder. Restart to apply it?</source>
+        <translation>Sie haben den Ordner für SeaDrive-Zwischenspeicher geändert. Möchten Sie das jetzt aktivieren mit einem Neustart?</translation>
+    </message>
+    <message>
+        <source>You have changed cache directory. Restart to apply it?</source>
+        <translation>Sie haben den Ordner für den Zwischenspeicher geändert. Möchten Sie das jetzt aktivieren mit einem Neustart?</translation>
+    </message>
 </context>
 <context>
     <name>SharedLinkDialog</name>
@@ -1212,10 +1290,6 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     <message>
         <source>Login with Shibboleth</source>
         <translation>Anmelden mit Shibboleth</translation>
-    </message>
-    <message>
-        <source>Failed to save current account</source>
-        <translation>Aktuelles Konto konnte nicht gespeichert werden</translation>
     </message>
 </context>
 <context>
