@@ -468,6 +468,29 @@ bool SeafileRpcClient::deleteAccount(const Account& account, bool remove_cache)
     return true;
 }
 
+bool SeafileRpcClient::logoutAccount(const Account& account, bool remove_cache)
+{
+    GError *error = NULL;
+    searpc_client_call__int(seadrive_rpc_client_,
+                            "seafile_logout_account",
+                            &error,
+                            3,
+                            "string",
+                            toCStr(account.serverUrl.toString()),
+                            "string",
+                            toCStr(account.username),
+                            "int",
+                            remove_cache ? 1 : 0);
+    if (error) {
+        qWarning() << "Unable to logout account" << account << ":"
+                   << (error->message ? error->message : "");
+        g_error_free(error);
+        return false;
+    }
+    qWarning() << "logout account" << account;
+    return true;
+}
+
 bool SeafileRpcClient::getRepoIdByPath(const QString &repo_uname,
                                        QString *repo_id)
 {

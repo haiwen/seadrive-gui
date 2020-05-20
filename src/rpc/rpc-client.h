@@ -77,6 +77,7 @@ public:
     bool switchAccount(const Account& account);
     bool switchAccount(const Account& account, bool ispro);
 
+    bool logoutAccount(const Account& account, bool remove_cache);
     bool deleteAccount(const Account& account, bool remove_cache);
 
     bool getRepoIdByPath(const QString& repo_uname, QString *repo_id);
