@@ -766,10 +766,17 @@ void SeafileTrayIcon::onLogoutDeviceRequestSuccess()
     LogoutDeviceRequest *req = (LogoutDeviceRequest *)QObject::sender();
     const Account& account = req->account();
 
+#if defined(_MSC_VER)
+    if (!gui->rpcClient()->logoutAccount(account, req->shouldRemoveCache())) {
+        gui->warningBox(
+            tr("Failed to logout account %1").arg(account.toString()));
+    }
+#else
     if (!gui->rpcClient()->deleteAccount(account, req->shouldRemoveCache())) {
         gui->warningBox(
             tr("Failed to remove local cache of account %1").arg(account.toString()));
     }
+#endif
 
     gui->accountManager()->clearAccountToken(account);
     req->deleteLater();
