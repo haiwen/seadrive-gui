@@ -95,6 +95,7 @@ void handleCommandLineOption(int argc, char *argv[])
         { "drive-letter", required_argument, NULL, 'L' },
 #endif
         { "delay", no_argument, NULL, 'D' },
+        { "remove-user-data", no_argument, NULL, 'X' },
         // seadrive-gui --dev won't launch seadrive daemon (you are
         // supposed to launch it yourself). This is for speeding up
         // the development cycles because starting the seadrvie daemon
@@ -122,6 +123,9 @@ void handleCommandLineOption(int argc, char *argv[])
         case 'D':
             msleep(1000);
             break;
+        case 'X':
+            do_remove_user_data();
+            exit(0);
         case 'E':
             dev_mode = true;
             break;
@@ -161,11 +165,12 @@ int main(int argc, char *argv[])
     // initialize i18n settings
     I18NHelper::getInstance()->init();
 
-    handleCommandLineOption(argc, argv);
-
     // start applet
     SeadriveGui mGui(dev_mode);
     gui = &mGui;
+
+    // HandleCommandLineOption function must excute after gui variable initialized
+    handleCommandLineOption(argc, argv);
 
     if (stop_app) {
         do_stop_app();
