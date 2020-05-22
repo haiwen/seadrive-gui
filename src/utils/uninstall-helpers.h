@@ -4,8 +4,6 @@
 #include <QString>
 
 
-int get_seadrive_dir(QString *ret);
-int get_seadrive_data_dir(const QString& seadrive_dir, QString *ret);
 int delete_dir_recursively(const QString& path_in);
 
 /**

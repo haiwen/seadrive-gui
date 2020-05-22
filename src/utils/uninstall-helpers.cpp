@@ -100,29 +100,6 @@ int posix_rmdir(const QString &root)
 } // namespace
 
 
-int get_seadrive_dir(QString *ret)
-{
-    QString path = gui->seadriveDir();
-
-    if (!QFileInfo(path).exists()) {
-        return -1;
-    }
-
-    *ret = path;
-    return 0;
-}
-
-int get_seadrive_data_dir(const QString& seadrive_dir, QString *ret)
-{
-    QDir dir(seadrive_dir);
-    if (dir.exists("data")) {
-        return -1;
-    }
-    *ret = ::pathJoin(seadrive_dir, "data");
-    return 0;
-
-}
-
 int delete_dir_recursively(const QString& path_in)
 {
     qWarning ("removing folder %s\n", toCStr(path_in));

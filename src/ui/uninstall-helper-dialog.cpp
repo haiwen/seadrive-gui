@@ -84,17 +84,7 @@ bool UninstallHelperDialog::loadQss(const QString& path)
 
 void RemoveSeafileDataThread::run()
 {
-    QString seadrive_dir;
-    QString seadrive_data_dir;
-
-    if (get_seadrive_dir(&seadrive_dir) < 0) {
-        fprintf(stderr, "seadrive directory not found");
-        return;
-    }
-
-    if (get_seadrive_data_dir(seadrive_dir, &seadrive_data_dir) < 0) {
-        delete_dir_recursively(seadrive_dir);
-        return;
-    }
-
+    QString seadrive_data_dir = gui->seadriveDataDir();
+    delete_dir_recursively(seadrive_data_dir);
+    return;
 }
