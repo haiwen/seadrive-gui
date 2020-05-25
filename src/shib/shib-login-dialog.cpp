@@ -96,9 +96,11 @@ ShibLoginDialog::ShibLoginDialog(const QUrl& url,
 ShibLoginDialog::~ShibLoginDialog()
 {
 
+#if !defined(SEAFILE_USE_WEBKIT)
     // The web_engine_page_ object must delete before web_engine_profile.
     web_engine_page_->deleteLater();
     web_engine_profile_->deleteLater();
+#endif
 }
 
 void ShibLoginDialog::sslErrorHandler(QNetworkReply* reply,
