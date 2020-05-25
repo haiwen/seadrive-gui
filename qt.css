@@ -647,3 +647,10 @@ EncryptedReposTableView::item :last {
 EncryptedReposTableView::item:selected {
     background-color: #F9E0C7;
 }
+
+UninstallHelperDialog {
+    min-width: 400px;
+    /* max-width: 400px; */
+    min-height: 100px;
+    max-height: 100px;
+}

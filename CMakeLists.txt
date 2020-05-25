@@ -256,6 +256,7 @@ SET(moc_headers
   src/ui/about-dialog.h
   src/ui/encrypted-repos-dialog.h
   src/ui/transfer-progress-dialog.h
+  src/ui/uninstall-helper-dialog.h
 
   third_party/QtAwesome/QtAwesome.h
 
@@ -266,6 +267,7 @@ SET(moc_headers
 QT5_WRAP_CPP(moc_output ${moc_headers})
 
 SET(ui_files
+  ui/uninstall-helper-dialog.ui
   ui/filter-menu.ui
   ui/init-sync-dialog.ui
   ui/login-dialog.ui
@@ -371,6 +373,9 @@ SET(seadrive_gui_sources
   src/ui/about-dialog.cpp
   src/ui/encrypted-repos-dialog.cpp
   src/ui/transfer-progress-dialog.cpp
+  src/ui/uninstall-helper-dialog.cpp
+
+  src/utils/uninstall-helpers.cpp
   ${platform_specific_sources}
 
   src/i18n.cpp
@@ -450,7 +455,6 @@ LIST(APPEND utils_sources
     src/utils/translate-commit-desc.cpp
     src/utils/json-utils.cpp
     src/utils/log.c
-    src/utils/uninstall-helpers.cpp
     src/utils/stl.cpp
     src/utils/i18n-utils.cpp
     )

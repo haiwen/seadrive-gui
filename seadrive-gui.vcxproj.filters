@@ -262,6 +262,9 @@
     <ClCompile Include="src\ui\seadrive-root-dialog.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
+    <ClCompile Include="src\ui\uninstall-helper-dialog.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\api\api-error.h">
@@ -479,6 +482,9 @@
     <QtMoc Include="src\ui\seadrive-root-dialog.h">
       <Filter>Header Files\ui</Filter>
     </QtMoc>
+    <QtMoc Include="src\ui\uninstall-helper-dialog.h">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="ui\about-dialog.ui">
@@ -500,6 +506,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ui\seadrive-root-dialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\uninstall-helper-dialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
