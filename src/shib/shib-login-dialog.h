@@ -4,8 +4,10 @@
 #include <QDialog>
 #include <QUrl>
 #include <QNetworkCookieJar>
+#if !defined(SEAFILE_USE_WEBKIT)
 #include <QWebEngineProfile>
 #include <QWebEnginePage>
+#endif
 
 #include "account.h"
 
@@ -51,8 +53,10 @@ private:
     Account parseAccount(const QString& txt);
 
 private:
+#if !defined(SEAFILE_USE_WEBKIT)
     QWebEngineProfile *web_engine_profile_;
     QWebEnginePage *web_engine_page_;
+#endif
 
 
 #if defined(SEAFILE_USE_WEBKIT)
