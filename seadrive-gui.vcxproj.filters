@@ -265,6 +265,9 @@
     <ClCompile Include="src\ui\uninstall-helper-dialog.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
+    <ClCompile Include="src\crash-handler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\api\api-error.h">
@@ -364,6 +367,9 @@
       <Filter>third_party\winsparkle</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\crash-handler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
