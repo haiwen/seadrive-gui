@@ -264,6 +264,14 @@ void SeafileTrayIcon::prepareContextMenu()
                 connect(logout_action, SIGNAL(triggered()), this, SLOT(logoutAccount()));
                 logout_action->setText(tr("Logout"));
                 submenu->addAction(logout_action);
+
+// Only current account enable logout action
+#if defined(_MSC_VER)
+                if (account != gui->accountManager()->currentAccount()) {
+                    logout_action->setDisabled(true);
+                }
+#endif
+
             }
 
             QAction *delete_account_action = new QAction(tr("Delete"), this);
@@ -272,6 +280,13 @@ void SeafileTrayIcon::prepareContextMenu()
             delete_account_action->setData(QVariant::fromValue(account));
             connect(delete_account_action, SIGNAL(triggered()), this, SLOT(deleteAccount()));
             submenu->addAction(delete_account_action);
+
+// Only current account enable delete account action
+#if defined(_MSC_VER)
+            if (account != gui->accountManager()->currentAccount()) {
+                delete_account_action->setDisabled(true);
+            }
+#endif
 
             account_menu_->addMenu(submenu);
         }
