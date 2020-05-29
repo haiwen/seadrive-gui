@@ -23,6 +23,7 @@
 #endif
 
 #include "i18n.h"
+#include "crash-handler.h"
 #include "utils/utils.h"
 #include "utils/uninstall-helpers.h"
 
@@ -40,6 +41,15 @@ void initGlib()
 #endif
 #if !GLIB_CHECK_VERSION(2, 31, 0)
     g_thread_init(NULL);
+#endif
+}
+
+void initBreakpad()
+{
+#ifdef SEADRIVE_CLIENT_HAS_CRASH_REPORTER
+    // if we have built with breakpad, load it in run time
+    Breakpad::CrashHandler::instance()->Init(
+        QDir(defaultSeadriveLogDir()).absoluteFilePath("crash-gui"));
 #endif
 }
 
@@ -156,6 +166,10 @@ int main(int argc, char *argv[])
 
     // call glib's init functions
     initGlib();
+
+#if defined(Q_OS_WIN32)
+    initBreakpad();
+#endif
 
     setupHDPIFix();
 

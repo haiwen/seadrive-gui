@@ -26,6 +26,7 @@
 
 #include "utils/utils-mac.h"
 #include "utils/utils-win.h"
+#include "utils/file-utils.h"
 
 #if defined(Q_OS_MAC)
     #include <sys/sysctl.h>
@@ -50,9 +51,9 @@ namespace {
 
 const char *kSeafileClientBrand = "SeaDrive";
 #if defined(Q_OS_WIN32)
-const char *kCcnetConfDir = "ccnet";
+const char *kSeadriveConfDir = "seadrive";
 #else
-const char *kCcnetConfDir = ".ccnet";
+const char *kSeadriveConfDir = ".seadrive";
 #endif
 
 #ifdef Q_OS_LINUX
@@ -102,13 +103,10 @@ bool getOpenApplicationFromXdgUtils(const QString &mime, QString *application)
 } // namespace
 
 
-QString defaultCcnetDir() {
-    const char *env = g_getenv("CCNET_CONF_DIR");
-    if (env) {
-        return QString::fromUtf8(env);
-    } else {
-        return QDir::home().filePath(kCcnetConfDir);
-    }
+QString defaultSeadriveLogDir() {
+    QString seadrive_cofig_dir = QDir::home().filePath(kSeadriveConfDir);
+    QString seadrive_log_dir = pathJoin(seadrive_cofig_dir, "logs");
+    return seadrive_log_dir;
 }
 
 QString defaultDownloadDir() {
