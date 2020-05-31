@@ -265,12 +265,9 @@ void SeafileTrayIcon::prepareContextMenu()
                 logout_action->setText(tr("Logout"));
                 submenu->addAction(logout_action);
 
-// Only current account enable logout action
-#if defined(_MSC_VER)
                 if (account != gui->accountManager()->currentAccount()) {
                     logout_action->setDisabled(true);
                 }
-#endif
 
             }
 
@@ -281,12 +278,9 @@ void SeafileTrayIcon::prepareContextMenu()
             connect(delete_account_action, SIGNAL(triggered()), this, SLOT(deleteAccount()));
             submenu->addAction(delete_account_action);
 
-// Only current account enable delete account action
-#if defined(_MSC_VER)
             if (account != gui->accountManager()->currentAccount()) {
                 delete_account_action->setDisabled(true);
             }
-#endif
 
             account_menu_->addMenu(submenu);
         }
