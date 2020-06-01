@@ -1,3 +1,4 @@
+#if defined(SEADRIVE_CLIENT_HAS_CRASH_REPORTER)
 #include "crash-handler.h"
 #include <QDir>
 #include <QString>
@@ -158,3 +159,5 @@ bool CrashHandlerPrivate::DumpCallback(const char* _dump_dir,
         d->InitCrashHandler(reportPath);
     }
 }
+#endif // SEADRIVE_CLIENT_HAS_CRASH_REPORTER
+
