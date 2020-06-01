@@ -23,7 +23,9 @@
 #endif
 
 #include "i18n.h"
+#if defined(SEADRIVE_CLIENT_HAS_CRASH_REPORTER)
 #include "crash-handler.h"
+#endif // SEADRIVE_CLIENT_HAS_CRASH_REPORTER
 #include "utils/utils.h"
 #include "utils/uninstall-helpers.h"
 
@@ -167,9 +169,11 @@ int main(int argc, char *argv[])
     // call glib's init functions
     initGlib();
 
+#if defined(SEADRIVE_CLIENT_HAS_CRASH_REPORTER)
 #if defined(Q_OS_WIN32)
     initBreakpad();
-#endif
+#endif // Q_OS_WIN32
+#endif // SEADRIVE_CLIENT_HAS_CRASH_REPORTER
 
     setupHDPIFix();
 
