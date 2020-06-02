@@ -1,3 +1,4 @@
+#if defined(HAVE_SPARKLE_SUPPORT)
 #include <QSettings>
 
 #ifdef Q_OS_WIN32
@@ -186,3 +187,4 @@ void AutoUpdateService::setAutoUpdateEnabled(bool enabled) {
     // qWarning() << "setAutoUpdateEnabled:" << enabled;
     adapter_->setAutoUpdateEnabled(enabled);
 }
+#endif // HAVE_SPARKLE_SUPPORT
