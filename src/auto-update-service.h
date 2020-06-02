@@ -1,6 +1,7 @@
 #ifndef SEADRIVE_GUI_AUTO_UPDATE_SERVICE_H
 #define SEADRIVE_GUI_AUTO_UPDATE_SERVICE_H
 
+#if defined(HAVE_SPARKLE_SUPPORT)
 #include <QObject>
 #include <QString>
 
@@ -33,4 +34,6 @@ private:
     AutoUpdateAdapter *adapter_;
 };
 
+#endif // HAVE_SPARKLE_SUPPORT
 #endif // SEADRIVE_GUI_AUTO_UPDATE_SERVICE_H
+
