@@ -14,6 +14,7 @@
 
 #include "utils/utils.h"
 #include "seadrive-gui.h"
+#include "settings-mgr.h"
 #include "utils/uninstall-helpers.h"
 
 #include "uninstall-helper-dialog.h"
@@ -53,6 +54,8 @@ void UninstallHelperDialog::onYesClicked()
     mYesBtn->setEnabled(false);
     mNoBtn->setEnabled(false);
     mText->setText(tr("Removing account information..."));
+
+    SettingsManager::removeAllSettings();
 
     RemoveSeafileDataThread *thread = new RemoveSeafileDataThread;
     thread->start();
