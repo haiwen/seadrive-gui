@@ -20,7 +20,6 @@
 
 #include "utils/utils.h"
 #include "utils/file-utils.h"
-#include "settings-mgr.h"
 #include "ui/uninstall-helper-dialog.h"
 #include "rpc/rpc-server.h"
 
@@ -174,8 +173,6 @@ void do_remove_user_data()
         return;
     }
 #endif
-
-    SettingsManager::removeAllSettings();
 
     UninstallHelperDialog *dialog = new UninstallHelperDialog;
 
