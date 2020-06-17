@@ -85,6 +85,9 @@ bool UninstallHelperDialog::loadQss(const QString& path)
 void RemoveSeafileDataThread::run()
 {
     QString seadrive_data_dir = gui->seadriveDataDir();
+    QString seadrive_dir = gui->seadriveDir();
     delete_dir_recursively(seadrive_data_dir);
+    QDir dir(seadrive_dir);
+    dir.remove("accounts.db");
     return;
 }
