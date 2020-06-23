@@ -841,8 +841,20 @@ void SeafileTrayIcon::setSyncErrors(const QList<SyncError> errors)
 
 void SeafileTrayIcon::setStateWithSyncErrors()
 {
-    if (!sync_errors_.isEmpty() || global_sync_error_.isValid()) {
+    qint64 timestamp;
+    if(sync_errors_dialog_ != nullptr) {
+        timestamp = sync_errors_dialog_->getLastOpenSyncDialogTimestamp();
+    } else {
+        timestamp = 0;
+    }
+    if (global_sync_error_.isValid()) {
         setState(STATE_HAS_SYNC_ERRORS);
+    } else if(!sync_errors_.isEmpty()) {
+        if(timestamp > sync_errors_[0].timestamp) {
+            setState(STATE_DAEMON_UP);
+        } else {
+            setState(STATE_HAS_SYNC_ERRORS);
+        }
     } else {
         setState(STATE_DAEMON_UP);
     }
