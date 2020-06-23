@@ -92,6 +92,18 @@ SyncErrorsDialog::SyncErrorsDialog(QWidget *parent)
 
     onModelReset();
     connect(model_, SIGNAL(modelReset()), this, SLOT(onModelReset()));
+    last_open_sync_error_dialog_timestamp_ = 0;
+}
+
+void SyncErrorsDialog::showEvent(QShowEvent *event)
+{
+    qint64 timestamp = QDateTime::currentMSecsSinceEpoch()/1000;
+    last_open_sync_error_dialog_timestamp_ = timestamp;
+}
+
+qint64 SyncErrorsDialog::getLastOpenSyncDialogTimestamp()
+{
+    return last_open_sync_error_dialog_timestamp_;
 }
 
 void SyncErrorsDialog::closeEvent(QCloseEvent *event)

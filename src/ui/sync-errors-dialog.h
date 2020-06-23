@@ -26,6 +26,8 @@ public:
     void updateErrors();
 
     void closeEvent(QCloseEvent *event);
+    void showEvent(QShowEvent *event);
+    qint64 getLastOpenSyncDialogTimestamp();
 
 private slots:
     void onModelReset();
@@ -39,6 +41,7 @@ private:
     SyncErrorsTableView *table_;
     SyncErrorsTableModel *model_;
     QWidget *empty_view_;
+    qint64 last_open_sync_error_dialog_timestamp_;
 };
 
 class SyncErrorsTableView : public QTableView
