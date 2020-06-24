@@ -39,9 +39,9 @@ void getTransferringListFromJSON(
         transferring_info.file_path =
             dict.value("file_path").toString();
         transferring_info.transferred_bytes =
-            dict.value(transferred_name.toUtf8().data()).toUInt();
+            dict.value(transferred_name.toUtf8().data()).toULongLong();
         transferring_info.total_bytes =
-            dict.value(total_bytes_name.toUtf8().data()).toUInt();
+            dict.value(total_bytes_name.toUtf8().data()).toULongLong();
         list->push_back(transferring_info);
     }
 }
