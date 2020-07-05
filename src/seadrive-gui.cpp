@@ -766,16 +766,9 @@ QString SeadriveGui::mountDir() const
 #if defined(__MINGW32__)
     return disk_letter_;
 #elif defined(_MSC_VER)
-    const Account account = gui->accountManager()->currentAccount();
-    QString username = account.username;
-    QString addr = account.serverUrl.host();
+    QString sync_root_name = gui->accountManager()->genSyncRootName();
 
-    QString sync_dir = QString("%1_%2").arg(addr).arg(username);
-    QByteArray sync_dir_md5 = QCryptographicHash::hash(sync_dir.toUtf8(), QCryptographicHash::Md5).toHex();
-
-    QString mid_sync_dir_md5 = sync_dir_md5.mid(0, 8);
-
-    QString sync_root = ::pathJoin(seadriveRoot(), mid_sync_dir_md5);
+    QString sync_root = ::pathJoin(seadriveRoot(), sync_root_name);
     return sync_root;
 #else
     return QDir::home().absoluteFilePath(getBrand());

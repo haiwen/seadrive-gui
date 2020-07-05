@@ -14,6 +14,9 @@
 #include "api/requests.h"
 #include "rpc/rpc-client.h"
 #include "ui/login-dialog.h"
+#if defined(_MSC_VER)
+#include "utils/file-utils.h"
+#endif
 #include "shib/shib-login-dialog.h"
 #include "settings-mgr.h"
 #include "account-info-service.h"
@@ -114,6 +117,13 @@ struct UserData {
     struct sqlite3 *db;
 };
 
+#if defined(_MSC_VER)
+struct SyncRootInfoData {
+    std::vector<SyncRootInfo> *syncrootinfos;
+    struct sqlite3 *db;
+};
+#endif
+
 inline void setServerInfoKeyValue(struct sqlite3 *db, const Account &account, const QString& key, const QString &value)
 {
     char *zql = sqlite3_mprintf(
@@ -190,7 +200,25 @@ int AccountManager::start()
         return -1;
     }
 
+#if defined(_MSC_VER)
+    sql = "CREATE TABLE IF NOT EXISTS SyncRootInfo ("
+        "url VARCHAR(24), "
+        "username VARCHAR(15), "
+        "syncrootpath TEXT, "
+        "PRIMARY KEY(url, username))";
+    if (sqlite_query_exec (db, sql) < 0) {
+        qCritical("failed to create SyncRootInfo table\n");
+        sqlite3_close(db);
+        db = NULL;
+        return -1;
+    }
+#endif
+
     loadAccounts();
+
+#if defined(_MSC_VER)
+    loadSyncRootInfo();
+#endif
 
     connect(this, SIGNAL(accountsChanged()), this, SLOT(onAccountsChanged()));
     return 0;
@@ -247,6 +275,33 @@ bool AccountManager::loadServerInfoCB(sqlite3_stmt *stmt, void *data)
     return true;
 }
 
+#if defined(_MSC_VER)
+bool AccountManager::loadSyncRootInfoCB(sqlite3_stmt *stmt, void* data)
+{
+
+    SyncRootInfoData *sync_root_info_data = static_cast<SyncRootInfoData* >(data);
+    const char *url = (const char *)sqlite3_column_text(stmt, 0);
+    const char *username = (const char *)sqlite3_column_text(stmt, 1);
+    const char *sync_root_path = (const char *)sqlite3_column_text(stmt, 2);
+
+    SyncRootInfo sync_root_info = SyncRootInfo(url, username, sync_root_path);
+
+    sync_root_info_data->syncrootinfos->push_back(sync_root_info);
+    return true;
+}
+
+void AccountManager::loadSyncRootInfo()
+{
+    const char* sql = "SELECT url, username, syncrootpath From SyncRootInfo";
+    sync_root_infos_.clear();
+    SyncRootInfoData sync_root_info_data;
+    sync_root_info_data.syncrootinfos = &sync_root_infos_;
+    sync_root_info_data.db = db;
+    sqlite_foreach_selected_row(db, sql, loadSyncRootInfoCB, &sync_root_info_data);
+    qWarning("[%s], load sync root info number is %d", __func__, sync_root_info_data.syncrootinfos->size());
+}
+#endif
+
 const std::vector<Account>& AccountManager::loadAccounts()
 {
     const char *sql = "SELECT url, username, token, lastVisited, isShibboleth, AutomaticLogin, isKerberos "
@@ -269,8 +324,8 @@ void AccountManager::setCurrentAccount(const Account& account)
     Q_ASSERT(account.isValid());
 
     qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
-    Account new_account = account;
-    new_account.lastVisited = timestamp;
+    new_account_ = account;
+    new_account_.lastVisited = timestamp;
     {
         QMutexLocker lock(&accounts_mutex_);
         size_t i;
@@ -280,28 +335,29 @@ void AccountManager::setCurrentAccount(const Account& account)
                 break;
             }
         }
-        accounts_.insert(accounts_.begin(), new_account);
+        accounts_.insert(accounts_.begin(), new_account_);
     }
-    AccountInfoService::instance()->refresh();
-    updateAccountServerInfo(new_account);
+    AccountInfoService::instance()->refresh(true);
+    connect(AccountInfoService::instance(), SIGNAL(success()), this, SLOT(slotUpdateAccountInfoSucess()));
+
 
     char *zql = sqlite3_mprintf(
         "REPLACE INTO Accounts(url, username, token, lastVisited, isShibboleth, AutomaticLogin, isKerberos)"
         "VALUES (%Q, %Q, %Q, %Q, %Q, %Q, %Q) ",
         // url
-        new_account.serverUrl.toEncoded().data(),
+        new_account_.serverUrl.toEncoded().data(),
         // username
-        new_account.username.toUtf8().data(),
+        new_account_.username.toUtf8().data(),
         // token
-        new_account.token.toUtf8().data(),
+        new_account_.token.toUtf8().data(),
         // lastVisited
         QString::number(timestamp).toUtf8().data(),
         // isShibboleth
-        QString::number(new_account.isShibboleth).toUtf8().data(),
+        QString::number(new_account_.isShibboleth).toUtf8().data(),
         // isAutomaticLogin
-        QString::number(new_account.isAutomaticLogin).toUtf8().data(),
+        QString::number(new_account_.isAutomaticLogin).toUtf8().data(),
         // isKerberos
-        QString::number(new_account.isKerberos).toUtf8().data());
+        QString::number(new_account_.isKerberos).toUtf8().data());
     sqlite_query_exec(db, zql);
     sqlite3_free(zql);
 
@@ -359,6 +415,23 @@ void AccountManager::updateAccountLastVisited(const Account& account)
     sqlite_query_exec(db, zql);
     sqlite3_free(zql);
 }
+
+#if defined(_MSC_VER)
+void AccountManager::updateSyncRootInfo(SyncRootInfo& sync_root_info)
+{
+    char *zql = sqlite3_mprintf(
+            "REPLACE INTO SyncRootInfo(url, username, syncrootpath)"
+            "VALUES (%Q, %Q, %Q) ",
+            // url
+            sync_root_info.getUrl().toUtf8().data(),
+            // username
+            sync_root_info.getUserName().toUtf8().data(),
+            // sync root name
+            sync_root_info.syncRootName().toUtf8().data());
+    sqlite_query_exec(db, zql);
+    sqlite3_free(zql);
+}
+#endif
 
 bool AccountManager::accountExists(const QUrl& url, const QString& username) const
 {
@@ -442,6 +515,11 @@ void AccountManager::updateAccountInfo(const Account& account,
 }
 
 
+void::AccountManager::slotUpdateAccountInfoSucess()
+{
+    updateAccountServerInfo(new_account_);
+}
+
 void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo &info)
 {
     ServerInfoRequest *req = (ServerInfoRequest *)(sender());
@@ -512,6 +590,61 @@ void AccountManager::clearAccountToken(const Account& account,
     }
 }
 
+#if defined(_MSC_VER)
+const QString AccountManager::genSyncRootName()
+{
+    QString url = currentAccount().serverUrl.toString();
+    QString nickname = currentAccount().accountInfo.name;
+    QString email = currentAccount().username;
+    QString seadrive_root = gui->seadriveRoot();
+    QString sync_root_path, sync_root_name;
+
+    qDebug("[%s] url is %s, nickname is %s, email is %s", __func__,
+                        toCStr(url), toCStr(nickname), toCStr(email));
+
+    if (!nickname.isEmpty()) {
+        sync_root_name = toCStr(nickname);
+    } else {
+        int pos = email.indexOf("@");
+        sync_root_name = email.left(pos);
+    }
+
+    if (sync_root_name.size() > 8) {
+        sync_root_name = sync_root_name.left(8);
+    }
+
+    foreach (SyncRootInfo sync_root_info, sync_root_infos_)
+    {
+        if (url == sync_root_info.getUrl() &&
+            email == sync_root_info.getUserName()) {
+            if (sync_root_info.syncRootName().startsWith(sync_root_name)) {
+                qDebug("[%s]find sync root name %s in SyncRootInfo table ", __func__, toCStr(sync_root_info.syncRootName()));
+                return sync_root_info.syncRootName();
+            }
+        }
+    }
+
+    QString new_sync_root_name = sync_root_name;
+
+    QDir dir(seadrive_root);
+    int i = 1;
+
+    while(dir.exists(new_sync_root_name)) {
+        new_sync_root_name = QString("%1_%2").arg(sync_root_name).arg(i);
+        i++;
+    }
+
+    sync_root_name = new_sync_root_name;
+
+    SyncRootInfo sync_root_info(url, email, new_sync_root_name);
+    updateSyncRootInfo(sync_root_info);
+    sync_root_infos_.push_back(sync_root_info);
+
+    qDebug("[%s] This a new accout gen a new sync root name is %s", __func__, toCStr(new_sync_root_name));
+    return new_sync_root_name;
+}
+
+#endif
 
 void AccountManager::onAccountsChanged()
 {
@@ -558,6 +691,13 @@ const std::vector<Account>& AccountManager::accounts() const
 {
     return accounts_;
 }
+
+#if defined(_MSC_VER)
+const std::vector<SyncRootInfo>& AccountManager::getSyncRootInfos() const
+{
+    return sync_root_infos_;
+}
+#endif
 
 bool AccountManager::hasAccount() const {
     return !accounts_.empty();

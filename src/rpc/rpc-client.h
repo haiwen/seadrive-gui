@@ -20,6 +20,9 @@ struct _SearpcClient;
 }
 
 class Account;
+#if defined(_MSC_VER)
+class AccountManager;
+#endif
 class CommitDetails;
 
 class SeafileRpcClient : public QObject {
