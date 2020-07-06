@@ -115,7 +115,8 @@ signals:
     void accountInfoUpdated(const Account& account);
 
 private slots:
-    void slotUpdateAccountInfoSucess();
+    void slotUpdateAccountInfoSucess(const AccountInfo& info);
+    void slotUpdateAccountInfoFailed();
     void serverInfoSuccess(const Account &account, const ServerInfo &info);
     void serverInfoFailed(const ApiError&);
 
@@ -124,6 +125,7 @@ private slots:
 private:
     Q_DISABLE_COPY(AccountManager)
 
+    void fetchAccountInfoFromServer(const Account& account);
     void updateAccountServerInfo(const Account& account);
 #if defined(_MSC_VER)
     static bool loadSyncRootInfoCB(struct sqlite3_stmt *stmt, void *data);
@@ -146,7 +148,6 @@ private:
     std::vector<SyncRootInfo> sync_root_infos_;
 #endif
 
-    Account new_account_;
     QMutex accounts_mutex_;
     QMutex accounts_cache_mutex_;
 };

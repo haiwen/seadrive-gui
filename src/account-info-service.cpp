@@ -30,42 +30,21 @@ void AccountInfoService::stop()
     refresh_timer_->stop();
 }
 
-void AccountInfoService::refresh(bool is_emit_signal)
+void AccountInfoService::refresh()
 {
     const Account account = gui->accountManager()->currentAccount();
     if (!account.isValid()) {
         return;
     }
 
-    if (is_emit_signal) {
-        FetchAccountInfoRequest* fetch_account_info_request = new FetchAccountInfoRequest(account);
-        connect(fetch_account_info_request, SIGNAL(success(const AccountInfo&)), this,
-                SLOT(onFetchAccountInfoSuccess(const AccountInfo&)));
-        connect(fetch_account_info_request, SIGNAL(failed(const ApiError&)), this,
-                SLOT(onFetchAccountInfoFailed()));
-        fetch_account_info_request->send();
-    } else {
-        FetchAccountInfoRequest* fetch_account_info_req = new FetchAccountInfoRequest(account);
-        connect(fetch_account_info_req, SIGNAL(success(const AccountInfo&)), this,
-                SLOT(onFetchAccountInfoSuccessAndEmitSignal(const AccountInfo&)));
-        connect(fetch_account_info_req, SIGNAL(failed(const ApiError&)), this,
-                SLOT(onFetchAccountInfoFailed()));
-        fetch_account_info_req->send();
-    }
+    FetchAccountInfoRequest* fetch_account_info_request = new FetchAccountInfoRequest(account);
+    connect(fetch_account_info_request, SIGNAL(success(const AccountInfo&)), this,
+            SLOT(onFetchAccountInfoSuccess(const AccountInfo&)));
+    connect(fetch_account_info_request, SIGNAL(failed(const ApiError&)), this,
+            SLOT(onFetchAccountInfoFailed()));
+    fetch_account_info_request->send();
 }
 
-void AccountInfoService::onFetchAccountInfoSuccessAndEmitSignal(const AccountInfo& info)
-{
-
-    FetchAccountInfoRequest* req = (FetchAccountInfoRequest*)(sender());
-    gui->accountManager()->updateAccountInfo(req->account(), info);
-
-    req->deleteLater();
-    req = NULL;
-
-    emit success();
-
-}
 
 void AccountInfoService::onFetchAccountInfoSuccess(const AccountInfo& info)
 {

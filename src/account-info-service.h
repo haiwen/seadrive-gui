@@ -24,15 +24,11 @@ public:
     void start();
     void stop();
 
-signals:
-    void success();
-
 public slots:
-    void refresh(bool is_emit_signal = false);
+    void refresh();
 
 private slots:
     void onFetchAccountInfoSuccess(const AccountInfo& info);
-    void onFetchAccountInfoSuccessAndEmitSignal(const AccountInfo& info);
     void onFetchAccountInfoFailed();
 
 private:

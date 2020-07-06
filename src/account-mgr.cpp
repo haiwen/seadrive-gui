@@ -298,7 +298,6 @@ void AccountManager::loadSyncRootInfo()
     sync_root_info_data.syncrootinfos = &sync_root_infos_;
     sync_root_info_data.db = db;
     sqlite_foreach_selected_row(db, sql, loadSyncRootInfoCB, &sync_root_info_data);
-    qWarning("[%s], load sync root info number is %d", __func__, sync_root_info_data.syncrootinfos->size());
 }
 #endif
 
@@ -324,8 +323,8 @@ void AccountManager::setCurrentAccount(const Account& account)
     Q_ASSERT(account.isValid());
 
     qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
-    new_account_ = account;
-    new_account_.lastVisited = timestamp;
+    Account new_account = account;
+    new_account.lastVisited = timestamp;
     {
         QMutexLocker lock(&accounts_mutex_);
         size_t i;
@@ -335,29 +334,28 @@ void AccountManager::setCurrentAccount(const Account& account)
                 break;
             }
         }
-        accounts_.insert(accounts_.begin(), new_account_);
+        accounts_.insert(accounts_.begin(), new_account);
     }
-    AccountInfoService::instance()->refresh(true);
-    connect(AccountInfoService::instance(), SIGNAL(success()), this, SLOT(slotUpdateAccountInfoSucess()));
 
+    fetchAccountInfoFromServer(account);
 
     char *zql = sqlite3_mprintf(
         "REPLACE INTO Accounts(url, username, token, lastVisited, isShibboleth, AutomaticLogin, isKerberos)"
         "VALUES (%Q, %Q, %Q, %Q, %Q, %Q, %Q) ",
         // url
-        new_account_.serverUrl.toEncoded().data(),
+        new_account.serverUrl.toEncoded().data(),
         // username
-        new_account_.username.toUtf8().data(),
+        new_account.username.toUtf8().data(),
         // token
-        new_account_.token.toUtf8().data(),
+        new_account.token.toUtf8().data(),
         // lastVisited
         QString::number(timestamp).toUtf8().data(),
         // isShibboleth
-        QString::number(new_account_.isShibboleth).toUtf8().data(),
+        QString::number(new_account.isShibboleth).toUtf8().data(),
         // isAutomaticLogin
-        QString::number(new_account_.isAutomaticLogin).toUtf8().data(),
+        QString::number(new_account.isAutomaticLogin).toUtf8().data(),
         // isKerberos
-        QString::number(new_account_.isKerberos).toUtf8().data());
+        QString::number(new_account.isKerberos).toUtf8().data());
     sqlite_query_exec(db, zql);
     sqlite3_free(zql);
 
@@ -485,6 +483,16 @@ void AccountManager::updateServerInfoForAllAccounts()
         updateAccountServerInfo(accounts_[i]);
 }
 
+void AccountManager::fetchAccountInfoFromServer(const Account& account)
+{
+    FetchAccountInfoRequest* fetch_account_info_request = new FetchAccountInfoRequest(account);
+    connect(fetch_account_info_request, SIGNAL(success(const AccountInfo&)), this,
+            SLOT(slotUpdateAccountInfoSucess(const AccountInfo&)));
+    connect(fetch_account_info_request, SIGNAL(failed(const ApiError&)), this,
+            SLOT(slotUpdateAccountInfoFailed()));
+    fetch_account_info_request->send();
+}
+
 void AccountManager::updateAccountServerInfo(const Account& account)
 {
     ServerInfoRequest *request = new ServerInfoRequest(account);
@@ -515,9 +523,22 @@ void AccountManager::updateAccountInfo(const Account& account,
 }
 
 
-void::AccountManager::slotUpdateAccountInfoSucess()
+void::AccountManager::slotUpdateAccountInfoSucess(const AccountInfo& info)
 {
-    updateAccountServerInfo(new_account_);
+    FetchAccountInfoRequest* req = (FetchAccountInfoRequest*)(sender());
+    updateAccountInfo(req->account(), info);
+    updateAccountServerInfo(req->account());
+
+    req->deleteLater();
+    req = NULL;
+
+}
+
+void AccountManager::slotUpdateAccountInfoFailed()
+{
+    FetchAccountInfoRequest* req = (FetchAccountInfoRequest*)(sender());
+    req->deleteLater();
+    req = NULL;
 }
 
 void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo &info)
