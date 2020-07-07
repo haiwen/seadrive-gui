@@ -612,11 +612,11 @@ void AccountManager::clearAccountToken(const Account& account,
 }
 
 #if defined(_MSC_VER)
-const QString AccountManager::genSyncRootName()
+const QString AccountManager::genSyncRootName(const Account& account)
 {
-    QString url = currentAccount().serverUrl.toString();
-    QString nickname = currentAccount().accountInfo.name;
-    QString email = currentAccount().username;
+    QString url = account.serverUrl.toString();
+    QString nickname = account.accountInfo.name;
+    QString email = account.username;
     QString seadrive_root = gui->seadriveRoot();
     QString sync_root_path, sync_root_name;
 

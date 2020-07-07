@@ -98,7 +98,7 @@ public:
     void clearAccountToken(const Account& account,
                            bool force_relogin=false);
 #if defined(_MSC_VER)
-    const QString genSyncRootName();
+    const QString genSyncRootName(const Account& account);
 #endif
 
 public slots:
