@@ -15,6 +15,28 @@ class ApiError;
 class SeafileRpcClient;
 
 
+#if defined(_MSC_VER)
+class SyncRootInfo {
+public:
+
+    SyncRootInfo(QString url, QString username, QString sync_root_path) {
+        url_ = url;
+        username_ = username;
+        sync_root_path_ = sync_root_path;
+    }
+
+    QString getUrl() { return url_; }
+    QString getUserName() { return username_; }
+    QString syncRootName() { return sync_root_path_; }
+
+private:
+    QString url_;
+    QString username_;
+    QString sync_root_path_;
+
+};
+#endif
+
 class AccountManager : public QObject {
     Q_OBJECT
 
@@ -24,6 +46,9 @@ public:
 
     int start();
 
+#if defined(_MSC_VER)
+    void loadSyncRootInfo();
+#endif
     // Load the accounts from local db when client starts.
     const std::vector<Account>& loadAccounts();
 
@@ -58,6 +83,9 @@ public:
      * Accessors
      */
     const std::vector<Account>& accounts() const;
+# if defined(_MSC_VER)
+    const std::vector<SyncRootInfo>& getSyncRootInfos() const;
+#endif
     const Account currentAccount() const;
     bool hasAccount() const;
     bool accountExists(const QUrl& url, const QString& username) const;
@@ -69,6 +97,9 @@ public:
 
     void clearAccountToken(const Account& account,
                            bool force_relogin=false);
+#if defined(_MSC_VER)
+    const QString genSyncRootName(const Account& account);
+#endif
 
 public slots:
     void reloginAccount(const Account &account);
@@ -84,6 +115,8 @@ signals:
     void accountInfoUpdated(const Account& account);
 
 private slots:
+    void slotUpdateAccountInfoSucess(const AccountInfo& info);
+    void slotUpdateAccountInfoFailed();
     void serverInfoSuccess(const Account &account, const ServerInfo &info);
     void serverInfoFailed(const ApiError&);
 
@@ -92,16 +125,28 @@ private slots:
 private:
     Q_DISABLE_COPY(AccountManager)
 
+    void fetchAccountInfoFromServer(const Account& account);
     void updateAccountServerInfo(const Account& account);
+#if defined(_MSC_VER)
+    static bool loadSyncRootInfoCB(struct sqlite3_stmt *stmt, void *data);
+#endif
     static bool loadAccountsCB(struct sqlite3_stmt *stmt, void *data);
     static bool loadServerInfoCB(struct sqlite3_stmt *stmt, void *data);
 
     void updateAccountLastVisited(const Account& account);
+#if defined(_MSC_VER)
+    void updateSyncRootInfo(SyncRootInfo& sync_root_info);
+#endif
 
     QHash<QString, Account> accounts_cache_;
 
     struct sqlite3 *db;
     std::vector<Account> accounts_;
+
+#if defined(_MSC_VER)
+    // Store All sync root information
+    std::vector<SyncRootInfo> sync_root_infos_;
+#endif
 
     QMutex accounts_mutex_;
     QMutex accounts_cache_mutex_;

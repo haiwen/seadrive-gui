@@ -12,6 +12,9 @@ extern "C" {
 #include "settings-mgr.h"
 
 #include "account.h"
+#if defined(_MSC_VER)
+#include "account-mgr.h"
+#endif
 #include "utils/utils.h"
 #include "api/commit-details.h"
 #include "message-poller.h"
@@ -397,13 +400,21 @@ bool SeafileRpcClient::switchAccount(const Account& account)
     searpc_client_call__int(seadrive_rpc_client_,
                             "seafile_switch_account",
                             &error,
+#if defined(_MSC_VER)
+                            5,
+#else
                             4,
+#endif
                             "string",
                             toCStr(serverAddr),
                             "string",
                             toCStr(account.username),
                             "string",
                             toCStr(account.token),
+#if defined(_MSC_VER)
+                            "string",
+                            toCStr(QDir::toNativeSeparators(gui->mountDir())),
+#endif
                             "int",
                             account.isPro() ? 1 : 0);
     if (error) {
@@ -426,13 +437,21 @@ bool SeafileRpcClient::switchAccount(const Account& account, bool ispro)
     searpc_client_call__int(seadrive_rpc_client_,
                             "seafile_switch_account",
                             &error,
+#if defined(_MSC_VER)
+                            5,
+#else
                             4,
+#endif
                             "string",
                             toCStr(serverAddr),
                             "string",
                             toCStr(account.username),
                             "string",
                             toCStr(account.token),
+#if defined(_MSC_VER)
+                            "string",
+                            toCStr(QDir::toNativeSeparators(gui->mountDir())),
+#endif
                             "int",
                             ispro ? 1 : 0);
     if (error) {

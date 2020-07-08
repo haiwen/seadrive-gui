@@ -24,7 +24,7 @@ public:
     void start();
     void stop();
 
-public slots:               
+public slots:
     void refresh();
 
 private slots:
