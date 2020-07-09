@@ -212,10 +212,14 @@ QStringList DaemonManager::collectSeaDriveArgs()
         diskUtilUnmount();
         SettingsManager *mgr = gui->settingsManager();
         fuse_opts = gui->mountDir();
+#if 0
         if (mgr->getSearchEnabled())
             fuse_opts += QString(" -o volname=%1,allow_other,local").arg(getBrand());
         else
             fuse_opts += QString(" -o volname=%1,noappledouble").arg(getBrand());
+#endif
+        fuse_opts += QString(" -o volname=%1,noappledouble").arg(getBrand());
+
 #elif defined(Q_OS_LINUX)
         QStringList umount_arguments;
         umount_arguments << "-u" << gui->mountDir();
