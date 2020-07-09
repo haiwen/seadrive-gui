@@ -100,6 +100,8 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
     connect(mSelectBtn, SIGNAL(clicked()), this, SLOT(selectDirAction()));
     connect(mOkBtn, SIGNAL(clicked()), this, SLOT(onOkBtnClicked()));
     adjustSize();
+
+    mSpotlightCheckBox->hide();
 }
 
 void SettingsDialog::updateSettings()
@@ -236,11 +238,13 @@ void SettingsDialog::showEvent(QShowEvent *event)
     state = mgr->httpSyncCertVerifyDisabled() ? Qt::Checked : Qt::Unchecked;
     mDisableVerifyHttpSyncCert->setCheckState(state);
 
+#if 0
 #if defined(Q_OS_MAC)
     state = mgr->getSearchEnabled() ? Qt::Checked : Qt::Unchecked;;
     mSpotlightCheckBox->setCheckState(state);
 #else
     mSpotlightCheckBox->hide();
+#endif
 #endif
 
     // currently supports windows only
