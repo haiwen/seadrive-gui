@@ -612,6 +612,26 @@ void AccountManager::clearAccountToken(const Account& account,
 }
 
 #if defined(_MSC_VER)
+const QString AccountManager::getOldSyncRootDir(const Account& account)
+{
+
+    QString username = account.username;
+    QString addr = account.serverUrl.host();
+
+    QString sync_dir = QString("%1_%2").arg(addr).arg(username);
+    QByteArray sync_dir_md5 = QCryptographicHash::hash(sync_dir.toUtf8(),
+                                                    QCryptographicHash::Md5).toHex();
+
+    QString mid_sync_dir_md5 = sync_dir_md5.mid(0, 8);
+
+    QDir dir(gui->seadriveRoot());
+    if (dir.exists(mid_sync_dir_md5)) {
+        return mid_sync_dir_md5;
+    }
+
+    return "";
+}
+
 const QString AccountManager::genSyncRootName(const Account& account)
 {
     QString url = account.serverUrl.toString();
@@ -622,6 +642,11 @@ const QString AccountManager::genSyncRootName(const Account& account)
 
     qDebug("[%s] url is %s, nickname is %s, email is %s", __func__,
                         toCStr(url), toCStr(nickname), toCStr(email));
+
+    QString old_sync_dir = getOldSyncRootDir(account);
+    if (!old_sync_dir.isEmpty()) {
+        return old_sync_dir;
+    }
 
     if (!nickname.isEmpty()) {
         sync_root_name = toCStr(nickname);
