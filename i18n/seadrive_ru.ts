@@ -710,23 +710,23 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Update to file %1 denied by folder permission setting</source>
-        <translation type="unfinished"/>
+        <translation>Обновление файла %1 запрещено настройкой разрешений для папки</translation>
     </message>
     <message>
         <source>Path %1 ends with space or period character</source>
-        <translation type="unfinished"/>
+        <translation>Путь %1 заканчивается символом пробела или точки</translation>
     </message>
     <message>
         <source>Path %1 contains invalid characters like &apos;|&apos; or &apos;:&apos;</source>
-        <translation type="unfinished"/>
+        <translation>Путь %1 содержит недопустимые символы, такие как &apos;|&apos; или &apos;:&apos;</translation>
     </message>
     <message>
         <source>Created or updated a file %1 in a non-writable library or folder</source>
-        <translation type="unfinished"/>
+        <translation>Создан или обновлен файл %1 в недоступной для записи библиотеке или папке</translation>
     </message>
     <message>
         <source>Concurrent updates to file %1. File is saved as conflict file</source>
-        <translation type="unfinished"/>
+        <translation>Одновременные обновления файла %1. Файл сохранен как файл конфликта</translation>
     </message>
 </context>
 <context>
@@ -760,7 +760,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Create seadrive_root folder failed!</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось создать папку seadrive_root!</translation>
     </message>
 </context>
 <context>
