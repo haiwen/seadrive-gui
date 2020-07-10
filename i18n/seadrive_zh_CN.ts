@@ -714,11 +714,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Path %1 ends with space or period character</source>
-        <translation>路径 ％1 以空格或句点字符结尾</translation>
+        <translation>路径 %1 以空格或句点字符结尾</translation>
     </message>
     <message>
         <source>Path %1 contains invalid characters like &apos;|&apos; or &apos;:&apos;</source>
-        <translation>路径 ％1 包含无效字符，例如 &apos;|&apos; 或 ‘:’</translation>
+        <translation>路径 %1 包含无效字符，例如 &apos;|&apos; 或 ‘:’</translation>
     </message>
     <message>
         <source>Created or updated a file %1 in a non-writable library or folder</source>

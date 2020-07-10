@@ -710,23 +710,23 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
     <message>
         <source>Update to file %1 denied by folder permission setting</source>
-        <translation type="unfinished"/>
+        <translation>Aktualisierung von %1 nicht möglich wegen fehlender Rechte im Ordner</translation>
     </message>
     <message>
         <source>Path %1 ends with space or period character</source>
-        <translation type="unfinished"/>
+        <translation>Der Pfad %1 endet unzulässig mit einem Leerzeichen oder einem Punkt</translation>
     </message>
     <message>
         <source>Path %1 contains invalid characters like &apos;|&apos; or &apos;:&apos;</source>
-        <translation type="unfinished"/>
+        <translation>Der Pfad %1 enthält unzulässige Zeichen wie &apos;|&apos; oder &apos;:&apos;</translation>
     </message>
     <message>
         <source>Created or updated a file %1 in a non-writable library or folder</source>
-        <translation type="unfinished"/>
+        <translation>Datei %1 wurde in einer Bibliothek oder einem Ordner angelegt bzw. aktualisiert</translation>
     </message>
     <message>
         <source>Concurrent updates to file %1. File is saved as conflict file</source>
-        <translation type="unfinished"/>
+        <translation>Dateikonflikt bei der Aktualisierung von %1. Die Datei ist als Konfliktversion gesichert</translation>
     </message>
 </context>
 <context>
@@ -760,7 +760,7 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
     <message>
         <source>Create seadrive_root folder failed!</source>
-        <translation type="unfinished"/>
+        <translation>Der Ordner für seadrive_root konnte nicht angelegt werden!</translation>
     </message>
 </context>
 <context>
