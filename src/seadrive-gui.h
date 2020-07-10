@@ -105,10 +105,6 @@ private slots:
 private:
     Q_DISABLE_COPY(SeadriveGui)
 
-#if defined(_MSC_VER)
-    void reuseOldSyncRootDir();
-#endif
-
     bool initLog();
 
     bool loadQss(const QString& path);

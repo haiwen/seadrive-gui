@@ -356,10 +356,6 @@ void SeadriveGui::start()
 
 #endif
 
-#if defined(_MSC_VER)
-    reuseOldSyncRootDir();
-#endif
-
     connect(daemon_mgr_, SIGNAL(daemonStarted()),
             this, SLOT(onDaemonStarted()));
     connect(daemon_mgr_, SIGNAL(daemonRestarted()),
@@ -541,35 +537,6 @@ void SeadriveGui::restartApp()
     QProcess::startDetached(QApplication::applicationFilePath(), args);
     QCoreApplication::quit();
 }
-
-#if defined(_MSC_VER)
-void SeadriveGui::reuseOldSyncRootDir()
-{
-    std::vector<Account> accounts = accountManager()->accounts();
-    foreach (const Account& account, accounts) {
-        QString username = account.username;
-        QString addr = account.serverUrl.host();
-
-        QString sync_dir = QString("%1_%2").arg(addr).arg(username);
-        QByteArray sync_dir_md5 = QCryptographicHash::hash(sync_dir.toUtf8(),
-                                                        QCryptographicHash::Md5).toHex();
-
-        QString mid_sync_dir_md5 = sync_dir_md5.mid(0, 8);
-
-        QDir dir(seadriveRoot());
-        if (dir.exists(mid_sync_dir_md5)) {
-            QString old_sync_dir = dir.absoluteFilePath(mid_sync_dir_md5);
-            QString new_sync_dir = pathJoin(seadriveRoot(),
-                                   accountManager()->genSyncRootName(account));
-            bool success = dir.rename(old_sync_dir, new_sync_dir);
-            if (!success) {
-                qWarning("failed to rename %s to %s", toCStr(old_sync_dir),
-                        toCStr(new_sync_dir));
-            }
-        }
-    }
-}
-#endif
 
 bool SeadriveGui::initLog()
 {
