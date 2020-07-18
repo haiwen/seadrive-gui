@@ -29,6 +29,28 @@
 
 #include "uninstall-helpers.h"
 
+#if defined(_MSC_VER)
+#include <sqlite3.h>
+#include "seadrive-gui.h"
+#include "account-mgr.h"
+#include "utils/utils-win.h"
+#endif
+
+#if defined(_MSC_VER)
+struct UserData {
+    std::vector<Account> *accounts;
+    struct sqlite3 *db;
+};
+
+const char *kVersionKeyName = "version";
+const char *kFeaturesKeyName = "features";
+const char *kCustomBrandKeyName = "custom-brand";
+const char *kCustomLogoKeyName = "custom-logo";
+const char *kTotalStorage = "storage.total";
+const char *kUsedStorage = "storage.used";
+const char *kNickname = "name";
+#endif //_MSC_VER
+
 
 namespace {
 
@@ -182,3 +204,106 @@ void do_remove_user_data()
 
     qApp->exec();
 }
+
+#if defined(_MSC_VER)
+static bool loadServerInfoCB(sqlite3_stmt *stmt, void *data)
+{
+    Account *account = static_cast<Account*>(data);
+    const char *key = (const char *)sqlite3_column_text (stmt, 0);
+    const char *value = (const char *)sqlite3_column_text (stmt, 1);
+    QString key_string = key;
+    QString value_string = value;
+    if (key_string == kVersionKeyName) {
+        account->serverInfo.parseVersionFromString(value_string);
+    } else if (key_string == kFeaturesKeyName) {
+        account->serverInfo.parseFeatureFromStrings(value_string.split(","));
+    } else if (key_string == kCustomBrandKeyName) {
+        account->serverInfo.customBrand = value_string;
+    } else if (key_string == kCustomLogoKeyName) {
+        account->serverInfo.customLogo = value_string;
+    } else if (key_string == kTotalStorage) {
+        account->accountInfo.totalStorage = value_string.toLongLong();
+    } else if (key_string == kUsedStorage) {
+        account->accountInfo.usedStorage = value_string.toLongLong();
+    } else if (key_string == kNickname) {
+        account->accountInfo.name = value_string;
+    }
+    return true;
+}
+
+static bool loadAccountsCB(sqlite3_stmt *stmt, void *data)
+{
+    UserData *userdata = static_cast<UserData *>(data);
+    const char *url = (const char *)sqlite3_column_text (stmt, 0);
+    const char *username = (const char *)sqlite3_column_text (stmt, 1);
+    const char *token = (const char *)sqlite3_column_text (stmt, 2);
+    qint64 atime = (qint64)sqlite3_column_int64 (stmt, 3);
+    int isShibboleth = sqlite3_column_int (stmt, 4);
+    int isAutomaticLogin = sqlite3_column_int (stmt, 5);
+    int isKerberos = sqlite3_column_int (stmt, 6);
+
+    if (!token) {
+        token = "";
+    }
+
+    Account account = Account(QUrl(QString(url)), QString(username),
+        QString(token), atime, isShibboleth != 0,
+        isAutomaticLogin != 0, isKerberos != 0);
+    char *zql = sqlite3_mprintf("SELECT key, value FROM ServerInfo WHERE url = %Q AND username = %Q", url, username);
+    sqlite_foreach_selected_row (userdata->db, zql, loadServerInfoCB, &account);
+    sqlite3_free(zql);
+
+    userdata->accounts->push_back(account);
+    return true;
+}
+
+static void read_account_info_from_db(std::vector<Account>* ptr_accounts)
+{
+    const char *errmsg;
+    struct sqlite3 *db;
+
+    QString db_path = QDir(gui->seadriveDir()).filePath("accounts.db");
+    if (sqlite3_open (toCStr(db_path), &db)) {
+        errmsg = sqlite3_errmsg (db);
+        qCritical("failed to open account database %s: %s",
+            toCStr(db_path), errmsg ? errmsg : "no error given");
+
+        return;
+    }
+
+    const char *sql = "SELECT url, username, token, lastVisited, isShibboleth, AutomaticLogin, isKerberos "
+        "FROM Accounts ORDER BY lastVisited DESC";
+    ptr_accounts->clear();
+    UserData userdata;
+    userdata.accounts = ptr_accounts;
+    userdata.db = db;
+    sqlite_foreach_selected_row (db, sql, loadAccountsCB, &userdata);
+
+    return;
+
+}
+
+void do_seadrive_unregister_sync_root()
+{
+
+    do_stop_app();
+
+    std::vector<Account> accounts;
+    read_account_info_from_db(&accounts);
+
+    QString serverAddr, user_name;
+
+    foreach(const Account& account, accounts) {
+        serverAddr = account.serverUrl.toString();
+        user_name = account.username;
+
+        if (serverAddr.endsWith("/")) {
+            serverAddr = serverAddr.left(serverAddr.size() - 1);
+        }
+
+        utils::win::seadrive_unregister_sync_root(serverAddr.toStdWString().data(), user_name.toStdWString().data());
+    }
+
+}
+#endif // _MSC_VER
+
