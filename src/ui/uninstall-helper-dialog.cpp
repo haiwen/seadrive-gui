@@ -55,8 +55,6 @@ void UninstallHelperDialog::onYesClicked()
     mNoBtn->setEnabled(false);
     mText->setText(tr("Removing account information..."));
 
-    SettingsManager::removeAllSettings();
-
     RemoveSeafileDataThread *thread = new RemoveSeafileDataThread;
     thread->start();
     connect(thread, SIGNAL(finished()), this, SLOT(doExit()));
@@ -85,12 +83,32 @@ bool UninstallHelperDialog::loadQss(const QString& path)
     return true;
 }
 
+
 void RemoveSeafileDataThread::run()
 {
     QString seadrive_data_dir = gui->seadriveDataDir();
     QString seadrive_dir = gui->seadriveDir();
     delete_dir_recursively(seadrive_data_dir);
+
+#if defined(_MSC_VER)
+    QString seadrive_root;
+    gui->settingsManager()->getSeadriveRoot(&seadrive_root);
+    QDir sync_dir(seadrive_root);
+
+    bool success = false;
+    int i = 0;
+
+    do {
+        success = sync_dir.removeRecursively();
+        msleep(3000);
+    } while (!success && i < 3);
+
+    if (!success) {
+        printf("remove sync root failed");
+    }
+#endif
     QDir dir(seadrive_dir);
     dir.remove("accounts.db");
+    SettingsManager::removeAllSettings();
     return;
 }
