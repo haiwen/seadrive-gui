@@ -108,6 +108,11 @@ void handleCommandLineOption(int argc, char *argv[])
 #endif
         { "delay", no_argument, NULL, 'D' },
         { "remove-user-data", no_argument, NULL, 'X' },
+
+#if defined(_MSC_VER)
+        { "unregister-sync-root", no_argument, NULL, 'S' },
+#endif
+
         // seadrive-gui --dev won't launch seadrive daemon (you are
         // supposed to launch it yourself). This is for speeding up
         // the development cycles because starting the seadrvie daemon
@@ -138,6 +143,11 @@ void handleCommandLineOption(int argc, char *argv[])
         case 'X':
             do_remove_user_data();
             exit(0);
+#if defined(_MSC_VER)
+        case 'S':
+            do_seadrive_unregister_sync_root();
+            exit(0);
+#endif
         case 'E':
             dev_mode = true;
             break;

@@ -38,6 +38,10 @@ bool diskLetterAvailable(const QString& disk_letter);
 QStringList getAvailableDiskLetters();
 std::string getLocalPipeName(const char *pipeName);
 
+#if defined(_MSC_VER)
+void seadrive_unregister_sync_root(const wchar_t* server, const wchar_t* username);
+#endif
+
 } // namespace win
 } // namespace utils
 #else

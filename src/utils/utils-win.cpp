@@ -8,6 +8,23 @@
 #include <QFileInfo>
 #include <QDir>
 
+#if defined(_MSC_VER)
+#include <comdef.h>
+#include <wincrypt.h>
+#include <Unknwn.h>
+#include <winrt/base.h>
+#include <winrt/Windows.Storage.Provider.h>
+#include <SearchAPI.h>
+#include <comdef.h>
+#include <Shlwapi.h>
+
+namespace winrt {
+    using namespace Windows::Storage;
+    using namespace Windows::Storage::Provider;
+}
+
+#endif //_MSC_VER
+
 #include "utils/utils-win.h"
 #if defined(_MSC_VER)
 #include <ciso646>
@@ -360,6 +377,38 @@ std::string getLocalPipeName(const char *pipe_name)
         return ret;
     }
 }
+
+#if defined(_MSC_VER)
+static std::wstring create_sync_root_id(const wchar_t* server, const wchar_t* username)
+{
+    std::wstring id;
+
+    id.append(L"seadrive");
+    id.append(L"!");
+    id.append(server);
+    id.append(L"!");
+    id.append(username);
+
+    return id;
+}
+
+static const TCHAR* hresult_to_str (HRESULT hres)
+{
+    _com_error err(hres);
+    return err.ErrorMessage();
+}
+
+void seadrive_unregister_sync_root(const wchar_t* server, const wchar_t* username)
+{
+    try {
+        winrt::StorageProviderSyncRootManager::Unregister(create_sync_root_id(server, username));
+    }
+    catch (...) {
+        printf("failed to unregister sync root: %s", hresult_to_str(winrt::to_hresult()));
+    }
+
+}
+#endif
 
 } // namespace win
 

@@ -16,4 +16,12 @@ void do_stop_app();
  */
 void do_remove_user_data();
 
+/**
+ * Unregister sync root
+ */
+
+#if defined(_MSC_VER)
+void do_seadrive_unregister_sync_root();
+#endif // _MSC_VER
+
 #endif

@@ -367,13 +367,14 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <AdditionalIncludeDirectories>$(ProjectDir)third_party\WinSparkle-0.5.3\include;$(ProjectDir)third_party\QtAwesome;$(ProjectDir)..\libsearpc\lib;$(ProjectDir)src\utils;$(ProjectDir)src;$(ProjectDir);$(ProjectDir)..\breakpad\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>HAVE_SPARKLE_SUPPORT;SEADRIVE_GUI_VERSION=2.0.4;SEADRIVE_CLIENT_HAS_CRASH_REPORTER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_SPARKLE_SUPPORT;SEADRIVE_GUI_VERSION=2.0.4;SEADRIVE_CLIENT_HAS_CRASH_REPORTER;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalDependencies>wininet.lib;urlmon.lib;psapi.lib;ws2_32.lib;shlwapi.lib;mpr.lib;crypt32.lib;libsearpc.lib;common.lib;crash_generation_client.lib;exception_handler.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>wininet.lib;urlmon.lib;psapi.lib;ws2_32.lib;shlwapi.lib;mpr.lib;crypt32.lib;libsearpc.lib;common.lib;crash_generation_client.lib;exception_handler.lib;rpcrt4.lib;onecoreuap.lib;onecore.lib;winspool.lib;cldapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)third_party\WinSparkle-0.5.3\x64\Release;$(ProjectDir)..\libsearpc\$(IntDir);$(ProjectDir)..\breakpad\src\client\windows\Release\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
