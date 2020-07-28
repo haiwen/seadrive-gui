@@ -20,6 +20,7 @@
 class RegElement {
 public:
     static void removeRegKey(const QString& key);
+    static void removeIconRegItem();
 
     RegElement(const HKEY& root,
                const QString& path,
@@ -57,6 +58,11 @@ public:
 
 private:
     int openParentKey(HKEY *pKey);
+#if defined(_MSC_VER)
+    static bool isSeadriveRegister(const QString &seadrive_key);
+    static QStringList RegElement::collectRegisterKeys(HKEY root, const QString &path);
+
+#endif
 
     HKEY root_;
     QString path_;

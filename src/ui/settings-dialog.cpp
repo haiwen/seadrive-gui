@@ -12,6 +12,9 @@
 #include "settings-mgr.h"
 #include "api/requests.h"
 #include "settings-dialog.h"
+#if defined(_MSC_VER)
+#include "utils/registry.h"
+#endif
 
 #ifdef HAVE_SPARKLE_SUPPORT
 #include "auto-update-service.h"
@@ -162,6 +165,8 @@ void SettingsDialog::updateSettings()
         mgr->setSeadriveRoot(mShowCacheDir->text());
     }
 
+
+    RegElement::removeIconRegItem();
     if (seadrive_root_changed && gui->yesOrNoBox(tr("You have changed SeaDrive cache folder. Restart to apply it?"), this, true)) {
         gui->restartApp();
     }

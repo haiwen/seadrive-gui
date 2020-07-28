@@ -10,6 +10,12 @@
 
 namespace {
 
+#if defined(_MSC_VER)
+const int kMAX_VALUE_NAME = 16383;
+const int kMAX_KEY_LENGTH = 255;
+const wchar_t kHKCU_NAMESPACE_PATH[] = L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace";
+#endif
+
 LONG openKey(HKEY root, const QString& path, HKEY *p_key, REGSAM samDesired = KEY_ALL_ACCESS)
 {
     LONG result;
@@ -126,6 +132,149 @@ int RegElement::removeRegKey(HKEY root, const QString& path, const QString& subk
 
     return 0;
 }
+
+#if defined(_MSC_VER)
+bool RegElement::isSeadriveRegister(const QString &seadrive_key)
+{
+
+    HKEY hKey;
+    DWORD type = REG_SZ;
+
+    wchar_t seadrive_value_w[kMAX_VALUE_NAME];
+    DWORD value_size = sizeof(seadrive_value_w);
+
+    wchar_t seadrive_key_w[kMAX_KEY_LENGTH];
+
+    swprintf(seadrive_key_w, kMAX_KEY_LENGTH, L"%s\\%s",
+             kHKCU_NAMESPACE_PATH,
+             seadrive_key.toStdWString().c_str());
+
+    LONG result = openKey(HKEY_CURRENT_USER,
+                          QString::fromWCharArray(seadrive_key_w),
+                          &hKey,
+                          KEY_READ);
+
+    if (result != ERROR_SUCCESS) {
+        qWarning("failed to open registry item %s, errorcode is %d",
+                  QString::fromWCharArray(seadrive_key_w).toUtf8().data(),
+                  GetLastError());
+        return false;
+    }
+
+
+    result = RegQueryValueExW(hKey,
+                             0,
+                             0,
+                             &type,
+                             (LPBYTE)&seadrive_value_w,
+                             &value_size );
+
+    if (result != ERROR_SUCCESS) {
+        qWarning("failed to read registry item %s, errorcode is %d",
+                  seadrive_key.toUtf8().data(),
+                  GetLastError());
+        return false;
+    }
+
+    QString reg_value = QString::fromWCharArray(seadrive_value_w);
+
+    if (reg_value.contains("seadrive")) {
+        return true;
+    }
+    return false;
+}
+
+QStringList RegElement::collectRegisterKeys(HKEY root, const QString& path)
+{
+    HKEY parent_key;
+    QStringList subkey_list;
+
+    LONG result = openKey(root,
+                          path,
+                          &parent_key,
+                          KEY_READ);
+
+    if (result != ERROR_SUCCESS) {
+        qWarning("open registry item:  %s, errorcode is: %d",
+                  path.toUtf8().data(),
+                  GetLastError());
+        return subkey_list;
+    }
+
+    DWORD subkeys_count = 0;
+    DWORD subkeys_max_len = 0;
+
+    // Query registry subkey numbers.
+    result = RegQueryInfoKeyW(parent_key,
+                              NULL,
+                              NULL,
+                              NULL,
+                              &subkeys_count,
+                              &subkeys_max_len,
+                              NULL,
+                              NULL,
+                              NULL,
+                              NULL,
+                              NULL,
+                              NULL);
+
+    if (result != ERROR_SUCCESS) {
+        qWarning("failed to query registry info");
+        return subkey_list;
+    }
+
+    DWORD subkey_len = 1024;
+    wchar_t subkey_name[1024] = L"";
+    for (DWORD subkey_index = 0; subkey_index < subkeys_count; ++subkey_index)
+    {
+        RegEnumKeyExW(parent_key,
+                      subkey_index,
+                      subkey_name,
+                      &subkey_len,
+                      NULL,
+                      NULL,
+                      NULL,
+                      NULL);
+
+        QString key_name = QString::fromStdWString(subkey_name);
+
+        if(!isSeadriveRegister(key_name)) {
+            memset(subkey_name, 0, sizeof(subkey_name));
+            subkey_len = 1024;
+            continue;
+        }
+        subkey_list.push_back(key_name);
+        memset(subkey_name, 0, sizeof(subkey_name));
+        subkey_len = 1024;
+    }
+
+    RegCloseKey(parent_key);
+
+    return subkey_list;
+}
+
+void RegElement::removeIconRegItem()
+{
+    int result = 0;
+    QStringList subkey_list = collectRegisterKeys(HKEY_CURRENT_USER,
+                                                  QString::fromWCharArray(kHKCU_NAMESPACE_PATH));
+
+    if (subkey_list.size() == 0) {
+        return ;
+    }
+
+    Q_FOREACH(QString key, subkey_list) {
+        result = removeRegKey(HKEY_CURRENT_USER,
+                              QString::fromWCharArray(kHKCU_NAMESPACE_PATH),
+                              key);
+
+        if (result != 0) {
+            qWarning("failed to remove the key: %s", key.toUtf8().data());
+        }
+    }
+    return;
+}
+#endif
 
 bool RegElement::exists()
 {
