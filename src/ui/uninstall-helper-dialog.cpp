@@ -90,6 +90,7 @@ void RemoveSeafileDataThread::run()
     QString seadrive_dir = gui->seadriveDir();
     delete_dir_recursively(seadrive_data_dir);
 
+#if 0
 #if defined(_MSC_VER)
     QString seadrive_root;
     gui->settingsManager()->getSeadriveRoot(&seadrive_root);
@@ -106,6 +107,7 @@ void RemoveSeafileDataThread::run()
     if (!success) {
         printf("remove sync root failed");
     }
+#endif // _MSC_VER
 #endif
     QDir dir(seadrive_dir);
     dir.remove("accounts.db");
