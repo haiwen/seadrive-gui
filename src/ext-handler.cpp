@@ -192,6 +192,25 @@ inline QString path_concat(const QString& s1, const QString& s2)
     return QString("%1/%2").arg(s1).arg(s2);
 }
 
+QString translateHttpErrorCode(const ApiError& error, const QString& req_type)
+{
+    QString error_msg;
+    if ( error.httpErrorCode() == 400 ) {
+        error_msg = QObject::tr("path or repo_id invalid.");
+    } else if ( error.httpErrorCode() == 403 ) {
+        if (req_type == "shared link") {
+            error_msg = QObject::tr("no permissions to create a shared link");
+        }
+    } else if ( error.httpErrorCode() == 404 ) {
+        error_msg = QObject::tr("the file or folder or library could not be found.");
+    } else if ( error.httpErrorCode() == 500 ) {
+        error_msg = QObject::tr("internal server error");
+    } else {
+        error_msg = QObject::tr("unknown error");
+    }
+    return error_msg;
+}
+
 } // namespace
 
 
@@ -280,8 +299,17 @@ void SeafileExtensionHandler::generateShareLink(const QString& repo_id,
 
         connect(req, SIGNAL(success(const QString&)),
                 this, SLOT(onShareLinkGenerated(const QString&)));
+        connect(req, SIGNAL(failed(const ApiError&)),
+                this, SLOT(onGetShareLinkFailed(const ApiError&)));
         req->send();
     }
+}
+
+void SeafileExtensionHandler::onGetShareLinkFailed(const ApiError& error)
+{
+    QString error_msg = translateHttpErrorCode(error, "shared link");
+    gui->warningBox(tr("Failed to get shared link: ") + error_msg);
+
 }
 
 void SeafileExtensionHandler::onGetSmartLinkSuccess(const QString& smart_link)
