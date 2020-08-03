@@ -29,6 +29,7 @@ public:
 private slots:
     void onDaemonRestarted();
     void onShareLinkGenerated(const QString& link);
+    void onGetShareLinkFailed(const ApiError& error);
     void onLockFileSuccess();
     void onLockFileFailed(const ApiError& error);
     void generateShareLink(const QString& repo_id,
