@@ -36,6 +36,37 @@
     </message>
 </context>
 <context>
+    <name>AutoLogonDialog</name>
+    <message>
+        <source>auto login</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>auto logining, please wait a moment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please input server address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please enter the server address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is not a valid server address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>login failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -172,10 +203,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Please enter the computer name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to save current account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -616,6 +643,34 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>Choose the disk letter for %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No permission to sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No permission to write</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>path or repo_id invalid.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no permissions to create a shared link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>the file or folder or library could not be found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>internal server error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unknown error</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -636,10 +691,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Faild to choose a disk letter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>failed to add default account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -696,6 +747,29 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Auto logon failed, fall back to manual login</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SeafileExtensionHandler</name>
+    <message>
+        <source>Failed to get shared link: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to lock file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to unlock file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1127,10 +1201,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <name>ShibLoginDialog</name>
     <message>
         <source>Login with Shibboleth</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to save current account</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

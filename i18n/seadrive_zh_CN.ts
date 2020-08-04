@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_CN">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -31,6 +33,37 @@
     <message>
         <source>failed to open account database</source>
         <translation>打开帐户数据库失败</translation>
+    </message>
+</context>
+<context>
+    <name>AutoLogonDialog</name>
+    <message>
+        <source>auto login</source>
+        <translation>自动登录</translation>
+    </message>
+    <message>
+        <source>auto logining, please wait a moment</source>
+        <translation>自动登录中，请稍后</translation>
+    </message>
+    <message>
+        <source>Please input server address</source>
+        <translation>请输入云盘网址</translation>
+    </message>
+    <message>
+        <source>address</source>
+        <translation>地址</translation>
+    </message>
+    <message>
+        <source>Please enter the server address</source>
+        <translation>请输入云盘网址</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid server address</source>
+        <translation>%1 不是合法的云盘网址</translation>
+    </message>
+    <message>
+        <source>login failed</source>
+        <translation>登录失败</translation>
     </message>
 </context>
 <context>
@@ -176,7 +209,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Failed to save current account</source>
-        <translation>保存帐户失败</translation>
+        <translation type="vanished">保存帐户失败</translation>
     </message>
     <message>
         <source>Two Factor Authentication</source>
@@ -616,6 +649,34 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>Choose the disk letter for %1</source>
         <translation>为 %1 选择盘符</translation>
     </message>
+    <message>
+        <source>No permission to sync</source>
+        <translation>没有同步的权限</translation>
+    </message>
+    <message>
+        <source>No permission to write</source>
+        <translation>没有写的权限</translation>
+    </message>
+    <message>
+        <source>path or repo_id invalid.</source>
+        <translation>路径或资料库 id 无效.</translation>
+    </message>
+    <message>
+        <source>no permissions to create a shared link</source>
+        <translation>没有创建共享链接的权限</translation>
+    </message>
+    <message>
+        <source>the file or folder or library could not be found.</source>
+        <translation>文件或文件夹或资料库无法找到。</translation>
+    </message>
+    <message>
+        <source>internal server error</source>
+        <translation>服务器内部错误</translation>
+    </message>
+    <message>
+        <source>unknown error</source>
+        <translation>未知错误</translation>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -640,7 +701,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>failed to add default account</source>
-        <translation>添加默认帐户时出错</translation>
+        <translation type="vanished">添加默认帐户时出错</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive folder</source>
@@ -697,6 +758,29 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Auto logon failed, fall back to manual login</source>
         <translation>自动登录失败，请手动登录</translation>
+    </message>
+</context>
+<context>
+    <name>SeafileExtensionHandler</name>
+    <message>
+        <source>Failed to get shared link: </source>
+        <translation>获取共享链接失败: </translation>
+    </message>
+    <message>
+        <source>Failed to lock file</source>
+        <translation>锁定文件失败</translation>
+    </message>
+    <message>
+        <source>Failed to unlock file</source>
+        <translation>解锁文件失败</translation>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation>文件 %1 已被用户 %2 锁定</translation>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation>获取文件 &quot;%1&quot; 的锁定信息失败</translation>
     </message>
 </context>
 <context>
@@ -1131,7 +1215,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Failed to save current account</source>
-        <translation>保存当前帐户信息时出错</translation>
+        <translation type="vanished">保存当前帐户信息时出错</translation>
     </message>
 </context>
 <context>
