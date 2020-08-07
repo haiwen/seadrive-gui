@@ -27,6 +27,7 @@ const char *kDefaultServerAddr1 = "https://seacloud.cc";
 const char *kUsedServerAddresses = "UsedServerAddresses";
 const char *const kPreconfigureServerAddr = "PreconfigureServerAddr";
 const char *const kPreconfigureServerAddrOnly = "PreconfigureServerAddrOnly";
+const char *const kPreconfigureShibbolethLoginUrl = "PreconfigureShibbolethLoginUrl";
 
 const char *const kSeafileOTPHeader = "X-Seafile-OTP";
 const char *const kSchemeHTTPS = "https";
@@ -347,29 +348,48 @@ void LoginDialog::showWarning(const QString& msg)
 
 void LoginDialog::loginWithShib()
 {
-    QString serverAddr = gui->settingsManager()->getLastShibUrl();
+    QString server_addr =
+        gui->readPreconfigureEntry(kPreconfigureShibbolethLoginUrl)
+        .toString()
+        .trimmed();
+
+    if (!server_addr.isEmpty()) {
+        if (QUrl(server_addr).isValid()) {
+            qWarning("using preconfigured shibboleth login url: %s\n",
+                        toCStr(server_addr));
+        } else {
+            qWarning("invalid preconfigured shibboleth login url: %s\n",
+                        toCStr(server_addr));
+            server_addr = "";
+        }
+    }
+
+    if (server_addr.isEmpty()) {
+        server_addr = gui->settingsManager()->getLastShibUrl();
+    }
+
     QString brand = getBrand() == "SeaDrive" ? "Seafile" : getBrand();
-    serverAddr = QInputDialog::getText(this, tr("Single Sign On"),
+    server_addr = QInputDialog::getText(this, tr("Single Sign On"),
                                        tr("%1 Server Address").arg(brand),
                                        QLineEdit::Normal,
-                                       serverAddr);
-    serverAddr = serverAddr.trimmed();
-    if (serverAddr.isEmpty()) {
+                                       server_addr);
+    server_addr = server_addr.trimmed();
+    if (server_addr.isEmpty()) {
         return;
     }
 
-    if (!serverAddr.startsWith("http://") && !serverAddr.startsWith("https://")) {
-        showWarning(tr("%1 is not a valid server address").arg(serverAddr));
+    if (!server_addr.startsWith("http://") && !server_addr.startsWith("https://")) {
+        showWarning(tr("%1 is not a valid server address").arg(server_addr));
         return;
     }
 
-    QUrl url = QUrl(serverAddr, QUrl::StrictMode);
+    QUrl url = QUrl(server_addr, QUrl::StrictMode);
     if (!url.isValid()) {
-        showWarning(tr("%1 is not a valid server address").arg(serverAddr));
+        showWarning(tr("%1 is not a valid server address").arg(server_addr));
         return;
     }
 
-    gui->settingsManager()->setLastShibUrl(serverAddr);
+    gui->settingsManager()->setLastShibUrl(server_addr);
 
     ShibLoginDialog shib_dialog(url, mComputerName->text(), this);
     if (shib_dialog.exec() == QDialog::Accepted) {
