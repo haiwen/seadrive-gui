@@ -655,6 +655,9 @@ const QString AccountManager::genSyncRootName(const Account& account)
         sync_root_name = email.left(pos);
     }
 
+    QRegExp rx("[<>:\"/\\\\|?*.]");
+    sync_root_name = sync_root_name.remove(rx);
+
     if (sync_root_name.size() > 8) {
         sync_root_name = sync_root_name.left(8);
     }
