@@ -655,8 +655,22 @@ const QString AccountManager::genSyncRootName(const Account& account)
         sync_root_name = email.left(pos);
     }
 
+    // Delete windows reserved characters
+    QRegExp rx("[<>:\"/\\\\|?*]");
+    sync_root_name = sync_root_name.remove(rx);
+
     if (sync_root_name.size() > 8) {
         sync_root_name = sync_root_name.left(8);
+    }
+
+    // Windows 10 folders name cannot end with a dot
+    while(sync_root_name.endsWith(".") || sync_root_name.endsWith(" ")) {
+       sync_root_name.resize(sync_root_name.size()-1);
+    }
+
+    if (sync_root_name.isEmpty()) {
+        qWarning("invalid sync root name");
+        return "";
     }
 
     foreach (SyncRootInfo sync_root_info, sync_root_infos_)
