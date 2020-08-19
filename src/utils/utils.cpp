@@ -56,6 +56,12 @@ const char *kSeadriveConfDir = "seadrive";
 const char *kSeadriveConfDir = ".seadrive";
 #endif
 
+const char *kSettingsGroup = "Settings";
+
+#if defined(_MSC_VER)
+const char *kSeadriveRoot = "seadriveRoot";
+#endif
+
 #ifdef Q_OS_LINUX
 /// \brief call xdg-mime to find out the mime filetype X11 recognizes it as
 /// xdg-mime's usage:
@@ -103,11 +109,34 @@ bool getOpenApplicationFromXdgUtils(const QString &mime, QString *application)
 } // namespace
 
 
-QString defaultSeadriveLogDir() {
-    QString seadrive_cofig_dir = QDir::home().filePath(kSeadriveConfDir);
-    QString seadrive_log_dir = pathJoin(seadrive_cofig_dir, "logs");
-    return seadrive_log_dir;
+QString seadriveDir() {
+    return QDir::home().absoluteFilePath(kSeadriveConfDir);
 }
+
+QString seadriveDataDir() {
+    return QDir(seadriveDir()).filePath("data");
+}
+
+QString defaultSeadriveLogDir() {
+    return QDir(seadriveDir()).filePath("logs");
+}
+
+#if defined(_MSC_VER)
+bool getSeadriveRoot(QString *seadrive_root)
+{
+    QSettings settings;
+
+    settings.beginGroup(kSettingsGroup);
+    if (!settings.contains(kSeadriveRoot)) {
+        return false;
+    }
+
+    *seadrive_root = settings.value(kSeadriveRoot, true).toString();
+    settings.endGroup();
+
+    return true;
+}
+#endif
 
 QString defaultDownloadDir() {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
