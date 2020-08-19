@@ -58,6 +58,14 @@ QString readableFileSizeV2(qint64 size);
 QMap<QString, QVariant> mapFromJSON(json_t *json, json_error_t *error);
 QString mapToJson(QMap<QString, QVariant> map);
 
+#if defined(_MSC_VER)
+bool getSeadriveRoot(QString *seadrive_root);
+#endif
+
+QString seadriveDir();
+
+QString seadriveDataDir();
+
 QString defaultSeadriveLogDir();
 
 QString defaultDownloadDir();

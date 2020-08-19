@@ -193,12 +193,11 @@ int main(int argc, char *argv[])
     // initialize i18n settings
     I18NHelper::getInstance()->init();
 
+    handleCommandLineOption(argc, argv);
+
     // start applet
     SeadriveGui mGui(dev_mode);
     gui = &mGui;
-
-    // HandleCommandLineOption function must excute after gui variable initialized
-    handleCommandLineOption(argc, argv);
 
     if (stop_app) {
         do_stop_app();
