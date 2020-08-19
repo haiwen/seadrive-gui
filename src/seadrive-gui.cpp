@@ -768,6 +768,9 @@ QString SeadriveGui::mountDir() const
 #elif defined(_MSC_VER)
     const Account &account = gui->accountManager()->currentAccount();
     QString sync_root_name = gui->accountManager()->genSyncRootName(account);
+    if (sync_root_name.isEmpty()) {
+        gui->errorAndExit(tr("Invalid sync root name"));
+    }
 
     QString sync_root = ::pathJoin(seadriveRoot(), sync_root_name);
     return sync_root;
