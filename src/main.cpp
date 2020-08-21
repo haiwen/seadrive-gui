@@ -33,6 +33,10 @@ namespace {
 
 const char *appName = "seadrive-gui";
 
+#if defined(_MSC_VER)
+const char *seadriveName = "seadrive.exe";
+#endif
+
 bool dev_mode = false;
 bool stop_app = false;
 
@@ -193,6 +197,23 @@ int main(int argc, char *argv[])
     // initialize i18n settings
     I18NHelper::getInstance()->init();
 
+    if (count_process(appName) > 1) {
+        QMessageBox::warning(NULL, getBrand(),
+                             QObject::tr("%1 Client is already running").arg(getBrand()),
+                             QMessageBox::Ok);
+        return -1;
+    }
+
+    // check seadrive is running
+#if defined(_MSC_VER)
+    if (count_process(seadriveName) > 0) {
+       QProcess p;
+       QString cmd = QString("taskkill /im %1 /f").arg(seadriveName);
+       p.execute(cmd);
+       p.close();
+    }
+#endif // _MSC_VER
+
     handleCommandLineOption(argc, argv);
 
     // start applet
@@ -202,13 +223,6 @@ int main(int argc, char *argv[])
     if (stop_app) {
         do_stop_app();
         exit(0);
-    }
-
-    if (count_process(appName) > 1) {
-        QMessageBox::warning(NULL, getBrand(),
-                             QObject::tr("%1 Client is already running").arg(getBrand()),
-                             QMessageBox::Ok);
-        return -1;
     }
 
     // init qtawesome component
