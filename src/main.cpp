@@ -197,13 +197,6 @@ int main(int argc, char *argv[])
     // initialize i18n settings
     I18NHelper::getInstance()->init();
 
-    if (count_process(appName) > 1) {
-        QMessageBox::warning(NULL, getBrand(),
-                             QObject::tr("%1 Client is already running").arg(getBrand()),
-                             QMessageBox::Ok);
-        return -1;
-    }
-
     // check seadrive is running
 #if defined(_MSC_VER)
     if (count_process(seadriveName) > 0) {
@@ -225,6 +218,12 @@ int main(int argc, char *argv[])
         exit(0);
     }
 
+    if (count_process(appName) > 1) {
+        QMessageBox::warning(NULL, getBrand(),
+                             QObject::tr("%1 Client is already running").arg(getBrand()),
+                             QMessageBox::Ok);
+        return -1;
+    }
     // init qtawesome component
     awesome = new QtAwesome(qApp);
     awesome->initFontAwesome();

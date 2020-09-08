@@ -438,7 +438,6 @@ void SeadriveGui::onDaemonStarted()
         if (!account_mgr_->accounts().empty()) {
             const Account &account = account_mgr_->accounts()[0];
             account_mgr_->validateAndUseAccount(account);
-            rpc_client_->switchAccount(account);
         }
     }
 
@@ -766,10 +765,9 @@ QString SeadriveGui::mountDir() const
 #if defined(__MINGW32__)
     return disk_letter_;
 #elif defined(_MSC_VER)
-    const Account &account = gui->accountManager()->currentAccount();
-    QString sync_root_name = gui->accountManager()->genSyncRootName(account);
+    QString sync_root_name = gui->accountManager()->getSyncRootName();
     if (sync_root_name.isEmpty()) {
-        gui->errorAndExit(tr("Invalid sync root name"));
+        qWarning("get sync root name is empty.");
     }
 
     QString sync_root = ::pathJoin(seadriveRoot(), sync_root_name);

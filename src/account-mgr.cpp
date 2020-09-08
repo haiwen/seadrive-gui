@@ -556,6 +556,12 @@ void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo 
     // gui->rpcClient()->setServerProperty(
     //     url.toString(), "is_pro", account.isPro() ? "true" : "false");
 
+#if defined(_MSC_VER)
+    const Account& current_account = currentAccount();
+    sync_root_name_= genSyncRootName(current_account);
+    qWarning("generated sync root name is : %s", toCStr(sync_root_name_));
+#endif
+
     gui->rpcClient()->switchAccount(account, info.proEdition);
 
     bool changed = account.serverInfo != info;
@@ -571,6 +577,7 @@ void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo 
             break;
         }
     }
+
 }
 
 void AccountManager::serverInfoFailed(const ApiError &error)
