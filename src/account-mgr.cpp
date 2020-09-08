@@ -450,6 +450,15 @@ void AccountManager::validateAndUseAccount(const Account& account)
         reloginAccount(account);
     } else {
         setCurrentAccount(account);
+    // If the account is an old account, the account
+    // information has been updated at this time so
+    // you can calculate the SyncRoot and then call the switch account.
+#if defined(_MSC_VER)
+        const Account& current_account = currentAccount();
+        sync_root_name_= genSyncRootName(current_account);
+        qWarning("generated sync root name is : %s", toCStr(sync_root_name_));
+#endif
+        gui->rpcClient()->switchAccount(account);
     }
 }
 
