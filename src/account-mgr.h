@@ -98,8 +98,7 @@ public:
     void clearAccountToken(const Account& account,
                            bool force_relogin=false);
 #if defined(_MSC_VER)
-    const QString getOldSyncRootDir(const Account& account);
-    const QString genSyncRootName(const Account& account);
+    const QString getSyncRootName() { return sync_root_name_; }
 #endif
 
 public slots:
@@ -130,6 +129,8 @@ private:
     void updateAccountServerInfo(const Account& account);
 #if defined(_MSC_VER)
     static bool loadSyncRootInfoCB(struct sqlite3_stmt *stmt, void *data);
+    const QString getOldSyncRootDir(const Account& account);
+    const QString genSyncRootName(const Account& account);
 #endif
     static bool loadAccountsCB(struct sqlite3_stmt *stmt, void *data);
     static bool loadServerInfoCB(struct sqlite3_stmt *stmt, void *data);
@@ -147,6 +148,8 @@ private:
 #if defined(_MSC_VER)
     // Store All sync root information
     std::vector<SyncRootInfo> sync_root_infos_;
+
+    QString sync_root_name_;
 #endif
 
     QMutex accounts_mutex_;
