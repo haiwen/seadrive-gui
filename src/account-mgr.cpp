@@ -664,6 +664,16 @@ const QString AccountManager::genSyncRootName(const Account& account)
         return old_sync_dir;
     }
 
+    foreach (SyncRootInfo sync_root_info, sync_root_infos_)
+    {
+        if (url == sync_root_info.getUrl() && email == sync_root_info.getUserName()) {
+            QString sync_root_name = sync_root_info.syncRootName();
+            if (!sync_root_name.isEmpty()) {
+                return sync_root_name;
+            }
+        }
+    }
+
     if (!nickname.isEmpty()) {
         sync_root_name = toCStr(nickname);
     } else {
@@ -687,17 +697,6 @@ const QString AccountManager::genSyncRootName(const Account& account)
     if (sync_root_name.isEmpty()) {
         qWarning("invalid sync root name");
         return "";
-    }
-
-    foreach (SyncRootInfo sync_root_info, sync_root_infos_)
-    {
-        if (url == sync_root_info.getUrl() &&
-            email == sync_root_info.getUserName()) {
-            if (sync_root_info.syncRootName().startsWith(sync_root_name)) {
-                qDebug("[%s]find sync root name %s in SyncRootInfo table ", __func__, toCStr(sync_root_info.syncRootName()));
-                return sync_root_info.syncRootName();
-            }
-        }
     }
 
     QString new_sync_root_name = sync_root_name;
