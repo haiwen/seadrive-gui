@@ -64,7 +64,7 @@ void SeafileRpcClient::connectDaemon()
 #endif
         if (searpc_named_pipe_client_connect(pipe_client) < 0) {
             if (retry++ > 5) {
-                gui->errorAndExit(tr("internal error: failed to connect to seadrive daemon"));
+                gui->errorAndExit(tr("internal error: failed to connect to %1 daemon").arg(getBrand()));
                 return;
             } else {
                 g_usleep(500000);

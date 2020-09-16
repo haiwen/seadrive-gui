@@ -4,18 +4,24 @@
 #include "seadrive-root-dialog.h"
 #include "utils/file-utils.h"
 #include "seadrive-gui.h"
+#include "utils/utils.h"
 
+
+namespace {
+    const char* kSeadriveRootFolderName = "seadrive_root";
+}
 
 SeaDriveRootDialog::SeaDriveRootDialog(QWidget *parent)
     : QDialog(parent)
 {
     setupUi(this);
     mLogo->setPixmap(QPixmap(":/images/seafile-32.png"));
-    setWindowTitle(tr("Choose SeaDrive Cache Folder"));
+    mTitle->setText(tr("Choose %1 Cache Folder ").arg(getBrand()));
+    setWindowTitle(tr("Choose %1 Cache Folder").arg(getBrand()));
     setWindowIcon(QIcon(":/images/seafile.png"));
     setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
                    Qt::WindowStaysOnTopHint);
-    mCacheDirLineEdit->setText(pathJoin(QDir::homePath(), "seadrive_root"));
+    mCacheDirLineEdit->setText(pathJoin(QDir::homePath(), kSeadriveRootFolderName));
 
     connect(mOkBtn, SIGNAL(clicked()), this, SLOT(onOkBtnClicked()));
     connect(mSelectSeadriveRootButton, SIGNAL(clicked()), this, SLOT(onSelectSeadriveRootButtonClicked()));
@@ -24,7 +30,7 @@ SeaDriveRootDialog::SeaDriveRootDialog(QWidget *parent)
 void SeaDriveRootDialog::onSelectSeadriveRootButtonClicked()
 {
     QString home_path = QDir::homePath();
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Please choose seadrive cache folder"),
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Please choose %1 cache folder").arg(getBrand()),
                                                     home_path,
                                                     QFileDialog::ShowDirsOnly
                                                     | QFileDialog::DontResolveSymlinks);
@@ -45,11 +51,11 @@ void SeaDriveRootDialog::onOkBtnClicked()
     QString home_path = QDir::homePath();
 
     if (!seadrive_root_.isEmpty()) {
-        if (seadrive_root_ == pathJoin(home_path, "seadrive_root")) {
+        if (seadrive_root_ == pathJoin(home_path, kSeadriveRootFolderName)) {
             QDir home_dir(home_path);
-            if (!home_dir.exists("seadrive_root")) {
-                if (!home_dir.mkdir("seadrive_root")) {
-                    gui->errorAndExit(tr("Create seadrive_root folder failed!"));
+            if (!home_dir.exists(kSeadriveRootFolderName)) {
+                if (!home_dir.mkdir(kSeadriveRootFolderName)) {
+                    gui->errorAndExit(tr("Create %1 folder failed!").arg(kSeadriveRootFolderName));
                 }
             }
         }

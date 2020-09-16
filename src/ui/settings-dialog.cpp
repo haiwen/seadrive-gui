@@ -167,7 +167,7 @@ void SettingsDialog::updateSettings()
 
 
     RegElement::removeIconRegItem();
-    if (seadrive_root_changed && gui->yesOrNoBox(tr("You have changed SeaDrive cache folder. Restart to apply it?"), this, true)) {
+    if (seadrive_root_changed && gui->yesOrNoBox(tr("You have changed %1 cache folder. Restart to apply it?").arg(getBrand()), this, true)) {
         gui->restartApp();
     }
 #else
