@@ -541,15 +541,15 @@ bool SeadriveGui::initLog()
 {
     QDir seadrive_dir = seadriveDir();
     if (checkdir_with_mkdir(toCStr(seadrive_dir.absolutePath())) < 0) {
-        errorAndExit(tr("Failed to initialize: failed to create seadrive folder"));
+        errorAndExit(tr("Failed to initialize: failed to create %1 folder").arg(getBrand()));
         return false;
     }
     if (checkdir_with_mkdir(toCStr(logsDir())) < 0) {
-        errorAndExit(tr("Failed to initialize: failed to create seadrive logs folder"));
+        errorAndExit(tr("Failed to initialize: failed to create %1 logs folder").arg(getBrand()));
         return false;
     }
     if (checkdir_with_mkdir(toCStr(seadriveDataDir())) < 0) {
-        errorAndExit(tr("Failed to initialize: failed to create seadrive data folder"));
+        errorAndExit(tr("Failed to initialize: failed to create %1 data folder").arg(getBrand()));
         return false;
     }
 
