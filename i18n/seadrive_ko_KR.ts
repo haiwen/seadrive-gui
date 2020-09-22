@@ -34,37 +34,6 @@
     </message>
 </context>
 <context>
-    <name>AutoLogonDialog</name>
-    <message>
-        <source>auto login</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>auto logining, please wait a moment</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Please input server address</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>address</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Please enter the server address</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>%1 is not a valid server address</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>login failed</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -94,57 +63,57 @@
     <name>EncryptedReposDialog</name>
     <message>
         <source>Encrypted Libraries</source>
-        <translation type="unfinished"/>
+        <translation>암호화 라이브러리</translation>
     </message>
     <message>
         <source>No Encrypted Library.</source>
-        <translation type="unfinished"/>
+        <translation>라이브러리를 암호화하지 않았습니다.</translation>
     </message>
 </context>
 <context>
     <name>EncryptedReposTableModel</name>
     <message>
         <source>Failed to set encrypted library password</source>
-        <translation type="unfinished"/>
+        <translation>암호화 라이브러리 암호 설정에 실패했습니다</translation>
     </message>
     <message>
         <source>Password error</source>
-        <translation type="unfinished"/>
+        <translation>암호 오류</translation>
     </message>
     <message>
         <source>Failed to clear encrypted library password</source>
-        <translation type="unfinished"/>
+        <translation>암호화 라이브러리 암호 제거에 실패했습니다</translation>
     </message>
     <message>
         <source>Right click this item to sync or unsync the encrypted library</source>
-        <translation type="unfinished"/>
+        <translation>암호화 라이브러리를 동기화 및 해제하려면 오른쪽 단추를 누르세요</translation>
     </message>
     <message>
         <source>Library</source>
-        <translation type="unfinished"/>
+        <translation>라이브러리</translation>
     </message>
     <message>
         <source>Sync status</source>
-        <translation type="unfinished"/>
+        <translation>동기화 상태</translation>
     </message>
 </context>
 <context>
     <name>EncryptedReposTableView</name>
     <message>
         <source>Unsync</source>
-        <translation type="unfinished"/>
+        <translation>동기화 해제</translation>
     </message>
     <message>
         <source>Sync</source>
-        <translation type="unfinished"/>
+        <translation>동기화</translation>
     </message>
     <message>
         <source>After unsyncing, the local encryption key of this library will be cleared and this library cannot be accessed in virtual drive. Are you sure to unsync?</source>
-        <translation type="unfinished"/>
+        <translation>동기화 해제 후, 이 라이브러리의 로컬 암호화 키를 삭제하며 가상 드라이브의 이 라이브러리로 접근할 수 없습니다. 정말로 동기화 해제할까요?</translation>
     </message>
     <message>
         <source>Enter library password to sync</source>
-        <translation type="unfinished"/>
+        <translation>동기화 라이브러리 암호를 입력하세요</translation>
     </message>
 </context>
 <context>
@@ -176,6 +145,17 @@
     <message>
         <source>Markdown</source>
         <translation>마크다운</translation>
+    </message>
+</context>
+<context>
+    <name>FinderSyncHost</name>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -702,23 +682,23 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>No permission to sync</source>
-        <translation type="unfinished"/>
+        <translation>동기화 권한 없음</translation>
     </message>
     <message>
         <source>No permission to write</source>
-        <translation type="unfinished"/>
+        <translation>기록 권한 없음</translation>
     </message>
     <message>
         <source>Update to file %1 denied by folder permission setting</source>
-        <translation type="unfinished"/>
+        <translation>폴더 권한 설정에 따라 %1 파일 업데이트를 거절했습니다</translation>
     </message>
     <message>
         <source>Path %1 ends with space or period character</source>
-        <translation type="unfinished"/>
+        <translation>%1 경로가 공백 또는 구두점 문자로 끝납니다</translation>
     </message>
     <message>
         <source>Path %1 contains invalid characters like &apos;|&apos; or &apos;:&apos;</source>
-        <translation type="unfinished"/>
+        <translation>%1 경로에 &apos;|&apos; 또는 &apos;:&apos;과 같은 잘못된 문자가 있습니다</translation>
     </message>
     <message>
         <source>Created or updated a file %1 in a non-writable library or folder</source>
@@ -737,33 +717,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
 </context>
 <context>
-    <name>SeaDriveRootDialog</name>
-    <message>
-        <source>Choose SeaDrive Cache Folder</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Your files will appear in a local cache folder. Please choose the folder:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>choose...</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Please choose seadrive cache folder</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Create seadrive_root folder failed!</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
     <name>SeadriveGui</name>
     <message>
         <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
@@ -776,18 +729,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Faild to choose a disk letter</source>
         <translation>디스크 문자 선택에 실패했습니다</translation>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to create seadrive folder</source>
-        <translation>초기화 실패: Seadrive 폴더 만들기에 실패했습니다</translation>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to create seadrive logs folder</source>
-        <translation>초기화 실패: Seadrive 로그 폴더 만들기에 실패했습니다</translation>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to create seadrive data folder</source>
-        <translation>초기화 실패: Seadrive 데이터 폴더 만들기에 실패했습니다</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
@@ -837,23 +778,16 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>Faild to choose a cache directory</source>
         <translation type="unfinished"/>
     </message>
-</context>
-<context>
-    <name>SeafileExtensionHandler</name>
     <message>
-        <source>Failed to lock file</source>
+        <source>Failed to initialize: failed to create %1 folder</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Failed to unlock file</source>
+        <source>Failed to initialize: failed to create %1 logs folder</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <source>Failed to initialize: failed to create %1 data folder</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -879,8 +813,8 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SeafileRpcClient</name>
     <message>
-        <source>internal error: failed to connect to seadrive daemon</source>
-        <translation>내부 오류: Seadrive 데몬 연결에 실패했습니다</translation>
+        <source>internal error: failed to connect to %1 daemon</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -995,6 +929,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Show encrypted libraries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to logout account %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1254,11 +1192,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>You have changed SeaDrive cache folder. Restart to apply it?</source>
+        <source>You have changed cache directory. Restart to apply it?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>You have changed cache directory. Restart to apply it?</source>
+        <source>You have changed %1 cache folder. Restart to apply it?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1358,6 +1296,37 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Download</source>
         <translation>다운로드</translation>
+    </message>
+</context>
+<context>
+    <name>UninstallHelperDialog</name>
+    <message>
+        <source>Uninstall %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to remove the %1 account information?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Removing account information...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>text</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

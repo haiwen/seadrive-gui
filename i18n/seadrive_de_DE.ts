@@ -34,37 +34,6 @@
     </message>
 </context>
 <context>
-    <name>AutoLogonDialog</name>
-    <message>
-        <source>auto login</source>
-        <translation>Automatisch anmelden</translation>
-    </message>
-    <message>
-        <source>auto logining, please wait a moment</source>
-        <translation>Automatisches Anmelden, bitte warten Sie</translation>
-    </message>
-    <message>
-        <source>Please input server address</source>
-        <translation>Bitte geben Sie die Serveradresse ein</translation>
-    </message>
-    <message>
-        <source>address</source>
-        <translation>Adresse</translation>
-    </message>
-    <message>
-        <source>Please enter the server address</source>
-        <translation>Bitte geben Sie die Serveradresse ein</translation>
-    </message>
-    <message>
-        <source>%1 is not a valid server address</source>
-        <translation>%1 ist keine gültige Serveradresse</translation>
-    </message>
-    <message>
-        <source>login failed</source>
-        <translation>Anmeldung fehlgeschlagen</translation>
-    </message>
-</context>
-<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -176,6 +145,17 @@
     <message>
         <source>Markdown</source>
         <translation>Markdown</translation>
+    </message>
+</context>
+<context>
+    <name>FinderSyncHost</name>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -737,33 +717,6 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
 </context>
 <context>
-    <name>SeaDriveRootDialog</name>
-    <message>
-        <source>Choose SeaDrive Cache Folder</source>
-        <translation>Wählen Sie einen Ordner für den SeaDrive-Zwischenspeicher</translation>
-    </message>
-    <message>
-        <source>Your files will appear in a local cache folder. Please choose the folder:</source>
-        <translation>Ihre Dateien werden in einem lokalen Zwischenspeicher angezeigt. Bitte wählen Sie einen Ordner dafür:</translation>
-    </message>
-    <message>
-        <source>choose...</source>
-        <translation>Wählen …</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>Please choose seadrive cache folder</source>
-        <translation>Bitte wählen Sie einen Ordner für den SeaDrive-Zwischenspeicher</translation>
-    </message>
-    <message>
-        <source>Create seadrive_root folder failed!</source>
-        <translation>Der Ordner für seadrive_root konnte nicht angelegt werden!</translation>
-    </message>
-</context>
-<context>
     <name>SeadriveGui</name>
     <message>
         <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
@@ -776,18 +729,6 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     <message>
         <source>Faild to choose a disk letter</source>
         <translation>Fehler bei der Auswahl eines Laufwerksbuchstabens</translation>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to create seadrive folder</source>
-        <translation>Fehler bei der Initialisierung: konnte keinen Seadrive Ordner erstellen</translation>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to create seadrive logs folder</source>
-        <translation>Fehler bei der Initialisierung: konnte keinen Seadrive-Log Ordner erstellen</translation>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to create seadrive data folder</source>
-        <translation>Fehler bei der Initialisierung: konnte keinen Seadrive Datei-Ordner erstellen</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
@@ -837,24 +778,17 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
         <source>Faild to choose a cache directory</source>
         <translation>Fehler bei der Auswahl eines Ordners für den Zwischenspeicher</translation>
     </message>
-</context>
-<context>
-    <name>SeafileExtensionHandler</name>
     <message>
-        <source>Failed to lock file</source>
-        <translation>Sperren der Datei nicht möglich</translation>
+        <source>Failed to initialize: failed to create %1 folder</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Failed to unlock file</source>
-        <translation>Entsperren der Datei nicht möglich</translation>
+        <source>Failed to initialize: failed to create %1 logs folder</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>File &quot;%1&quot; is locked by %2</source>
-        <translation>Datei „%1“ ist von %2 gesperrt</translation>
-    </message>
-    <message>
-        <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation>Für Datei „%1“ konnte keine Information zur Sperrung gefunden werden</translation>
+        <source>Failed to initialize: failed to create %1 data folder</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -879,8 +813,8 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
 <context>
     <name>SeafileRpcClient</name>
     <message>
-        <source>internal error: failed to connect to seadrive daemon</source>
-        <translation>Interner Fehler: konnte nicht mit dem Seadrive Daemon verbinden</translation>
+        <source>internal error: failed to connect to %1 daemon</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -996,6 +930,10 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     <message>
         <source>Show encrypted libraries</source>
         <translation>Verschlüsselte Bibliotheken anzeigen</translation>
+    </message>
+    <message>
+        <source>Failed to logout account %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1254,12 +1192,12 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
         <translation>Sie haben die Sprache geändert. Jetzt Neustart zum Ausführen?</translation>
     </message>
     <message>
-        <source>You have changed SeaDrive cache folder. Restart to apply it?</source>
-        <translation>Sie haben den Ordner für SeaDrive-Zwischenspeicher geändert. Möchten Sie das jetzt aktivieren mit einem Neustart?</translation>
-    </message>
-    <message>
         <source>You have changed cache directory. Restart to apply it?</source>
         <translation>Sie haben den Ordner für den Zwischenspeicher geändert. Möchten Sie das jetzt aktivieren mit einem Neustart?</translation>
+    </message>
+    <message>
+        <source>You have changed %1 cache folder. Restart to apply it?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1358,6 +1296,37 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     <message>
         <source>Download</source>
         <translation>Herunterladen</translation>
+    </message>
+</context>
+<context>
+    <name>UninstallHelperDialog</name>
+    <message>
+        <source>Uninstall %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to remove the %1 account information?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Removing account information...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>text</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

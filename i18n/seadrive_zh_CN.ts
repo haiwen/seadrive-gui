@@ -34,37 +34,6 @@
     </message>
 </context>
 <context>
-    <name>AutoLogonDialog</name>
-    <message>
-        <source>auto login</source>
-        <translation>自动登录</translation>
-    </message>
-    <message>
-        <source>auto logining, please wait a moment</source>
-        <translation>自动登录中，请稍等</translation>
-    </message>
-    <message>
-        <source>Please input server address</source>
-        <translation>请输入服务器地址</translation>
-    </message>
-    <message>
-        <source>address</source>
-        <translation>地址</translation>
-    </message>
-    <message>
-        <source>Please enter the server address</source>
-        <translation>请输入服务器地址</translation>
-    </message>
-    <message>
-        <source>%1 is not a valid server address</source>
-        <translation>%1 不是一个有效的服务器地址</translation>
-    </message>
-    <message>
-        <source>login failed</source>
-        <translation>登录失败</translation>
-    </message>
-</context>
-<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -176,6 +145,17 @@
     <message>
         <source>Markdown</source>
         <translation>Markdown</translation>
+    </message>
+</context>
+<context>
+    <name>FinderSyncHost</name>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation>文件 “%1” 被 %2 锁定</translation>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation>获取文件 “%1” 的锁定信息失败</translation>
     </message>
 </context>
 <context>
@@ -737,33 +717,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
 </context>
 <context>
-    <name>SeaDriveRootDialog</name>
-    <message>
-        <source>Choose SeaDrive Cache Folder</source>
-        <translation>选择 SeaDrive 缓存文件夹</translation>
-    </message>
-    <message>
-        <source>Your files will appear in a local cache folder. Please choose the folder:</source>
-        <translation>您的文件将出现在本地缓存文件夹中。请选择文件夹：</translation>
-    </message>
-    <message>
-        <source>choose...</source>
-        <translation>选择...</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>确定</translation>
-    </message>
-    <message>
-        <source>Please choose seadrive cache folder</source>
-        <translation>请选择 seadrive 缓存文件夹</translation>
-    </message>
-    <message>
-        <source>Create seadrive_root folder failed!</source>
-        <translation>创建 seadrive_root 文件夹失败！</translation>
-    </message>
-</context>
-<context>
     <name>SeadriveGui</name>
     <message>
         <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
@@ -776,18 +729,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Faild to choose a disk letter</source>
         <translation>选择盘符失败</translation>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to create seadrive folder</source>
-        <translation>初始化失败: 创建 seadrive 文件夹时出错</translation>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to create seadrive logs folder</source>
-        <translation>初始化失败: 创建 seadrive 日志文件夹时出错</translation>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to create seadrive data folder</source>
-        <translation>初始化失败: 创建 seadrive 数据文件夹时出错</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
@@ -837,24 +778,17 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>Faild to choose a cache directory</source>
         <translation>选择缓存目录失败</translation>
     </message>
-</context>
-<context>
-    <name>SeafileExtensionHandler</name>
     <message>
-        <source>Failed to lock file</source>
-        <translation>锁定文件失败</translation>
+        <source>Failed to initialize: failed to create %1 folder</source>
+        <translation>初始化失败： 创建 %1 文件夹失败</translation>
     </message>
     <message>
-        <source>Failed to unlock file</source>
-        <translation>解锁文件失败</translation>
+        <source>Failed to initialize: failed to create %1 logs folder</source>
+        <translation>初始化失败：创建 %1 日志文件夹失败</translation>
     </message>
     <message>
-        <source>File &quot;%1&quot; is locked by %2</source>
-        <translation>文件 ”％1“ 已被 ％2 锁定</translation>
-    </message>
-    <message>
-        <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation>获取文件 &quot;%1&quot; 的锁定信息失败</translation>
+        <source>Failed to initialize: failed to create %1 data folder</source>
+        <translation>初始化失败：创建 %1 数据数据文件夹失败</translation>
     </message>
 </context>
 <context>
@@ -879,8 +813,8 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SeafileRpcClient</name>
     <message>
-        <source>internal error: failed to connect to seadrive daemon</source>
-        <translation>内部错误: 与 seadrive 服务通信时出错</translation>
+        <source>internal error: failed to connect to %1 daemon</source>
+        <translation>内部错误：连接 %1 守护进程失败</translation>
     </message>
 </context>
 <context>
@@ -996,6 +930,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Show encrypted libraries</source>
         <translation>显示加密资料库</translation>
+    </message>
+    <message>
+        <source>Failed to logout account %1</source>
+        <translation>登出账号 %1 失败</translation>
     </message>
 </context>
 <context>
@@ -1254,12 +1192,12 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>您已改变语言， 是否重启使其生效？</translation>
     </message>
     <message>
-        <source>You have changed SeaDrive cache folder. Restart to apply it?</source>
-        <translation>您已经改变 SeaDrive 缓存目录，重启使其生效？</translation>
-    </message>
-    <message>
         <source>You have changed cache directory. Restart to apply it?</source>
         <translation>您已经修改缓存目录。 是否重启使其生效？</translation>
+    </message>
+    <message>
+        <source>You have changed %1 cache folder. Restart to apply it?</source>
+        <translation>你已经修改了 %1 缓存文件夹失败。重启应用使其生效</translation>
     </message>
 </context>
 <context>
@@ -1358,6 +1296,37 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Download</source>
         <translation>下载</translation>
+    </message>
+</context>
+<context>
+    <name>UninstallHelperDialog</name>
+    <message>
+        <source>Uninstall %1</source>
+        <translation>卸载 %1</translation>
+    </message>
+    <message>
+        <source>Do you want to remove the %1 account information?</source>
+        <translation>你想删除 %1 的账号信息吗？</translation>
+    </message>
+    <message>
+        <source>Removing account information...</source>
+        <translation>删除账号信息...</translation>
+    </message>
+    <message>
+        <source>Dialog</source>
+        <translation>对话框</translation>
+    </message>
+    <message>
+        <source>text</source>
+        <translation>文本</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation>确定</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation>否</translation>
     </message>
 </context>
 </TS>

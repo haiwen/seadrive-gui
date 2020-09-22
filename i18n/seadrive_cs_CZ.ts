@@ -34,37 +34,6 @@
     </message>
 </context>
 <context>
-    <name>AutoLogonDialog</name>
-    <message>
-        <source>auto login</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>auto logining, please wait a moment</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Please input server address</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>address</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Please enter the server address</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>%1 is not a valid server address</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>login failed</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -94,57 +63,57 @@
     <name>EncryptedReposDialog</name>
     <message>
         <source>Encrypted Libraries</source>
-        <translation type="unfinished"/>
+        <translation>Šifrované knihovny</translation>
     </message>
     <message>
         <source>No Encrypted Library.</source>
-        <translation type="unfinished"/>
+        <translation>Žádná šifrovaná knihovna</translation>
     </message>
 </context>
 <context>
     <name>EncryptedReposTableModel</name>
     <message>
         <source>Failed to set encrypted library password</source>
-        <translation type="unfinished"/>
+        <translation>Nepodařilo se nastavit heslo šifrované knihovně</translation>
     </message>
     <message>
         <source>Password error</source>
-        <translation type="unfinished"/>
+        <translation>Chyba hesla</translation>
     </message>
     <message>
         <source>Failed to clear encrypted library password</source>
-        <translation type="unfinished"/>
+        <translation>Nepodařilo se smazat heslo šifrované knihovně</translation>
     </message>
     <message>
         <source>Right click this item to sync or unsync the encrypted library</source>
-        <translation type="unfinished"/>
+        <translation>Klikni pravým tlačítkem na tuto položku pro synchronizaci nebo desynchronizaci šifrované knihovny</translation>
     </message>
     <message>
         <source>Library</source>
-        <translation type="unfinished"/>
+        <translation>Knihovna</translation>
     </message>
     <message>
         <source>Sync status</source>
-        <translation type="unfinished"/>
+        <translation>Status synchronizace</translation>
     </message>
 </context>
 <context>
     <name>EncryptedReposTableView</name>
     <message>
         <source>Unsync</source>
-        <translation type="unfinished"/>
+        <translation>Desynchronizovat</translation>
     </message>
     <message>
         <source>Sync</source>
-        <translation type="unfinished"/>
+        <translation>Synchronizovat</translation>
     </message>
     <message>
         <source>After unsyncing, the local encryption key of this library will be cleared and this library cannot be accessed in virtual drive. Are you sure to unsync?</source>
-        <translation type="unfinished"/>
+        <translation>Po desynchronizaci bude lokální šifrovací klíč této knihovny vymazán a knihovna nebude přístupná ve virtuální jednotce. Opravdu chceš desynchronizovat ?</translation>
     </message>
     <message>
         <source>Enter library password to sync</source>
-        <translation type="unfinished"/>
+        <translation>Zadej heslo ke knihovně pro synchronizaci</translation>
     </message>
 </context>
 <context>
@@ -176,6 +145,17 @@
     <message>
         <source>Markdown</source>
         <translation>Označení</translation>
+    </message>
+</context>
+<context>
+    <name>FinderSyncHost</name>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -702,31 +682,31 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>No permission to sync</source>
-        <translation type="unfinished"/>
+        <translation>Nemáš oprávnění k synchronizaci</translation>
     </message>
     <message>
         <source>No permission to write</source>
-        <translation type="unfinished"/>
+        <translation>Nemáš oprávnění k zápisu</translation>
     </message>
     <message>
         <source>Update to file %1 denied by folder permission setting</source>
-        <translation type="unfinished"/>
+        <translation>Aktualizace souboru %1 je zakázaná kvůli oprávnění na složce</translation>
     </message>
     <message>
         <source>Path %1 ends with space or period character</source>
-        <translation type="unfinished"/>
+        <translation>Cesta %1 končí mezerou nebo znakem tečky</translation>
     </message>
     <message>
         <source>Path %1 contains invalid characters like &apos;|&apos; or &apos;:&apos;</source>
-        <translation type="unfinished"/>
+        <translation>Cesta %1 obsahuje nepovolený znak jako &apos;|&apos; nebo &apos;:&apos;</translation>
     </message>
     <message>
         <source>Created or updated a file %1 in a non-writable library or folder</source>
-        <translation type="unfinished"/>
+        <translation>Vytvořen nebo zaktualizován soubor %1 v nezapisovatelné knihovně nebo složce</translation>
     </message>
     <message>
         <source>Concurrent updates to file %1. File is saved as conflict file</source>
-        <translation type="unfinished"/>
+        <translation>Souběžné aktualizace souboru %1. Soubor byl uložen jako konfliktní soubor</translation>
     </message>
 </context>
 <context>
@@ -734,33 +714,6 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     <message>
         <source>Authorization expired, please re-login</source>
         <translation>Přihlášení vypršelo, přihlašte se prosím</translation>
-    </message>
-</context>
-<context>
-    <name>SeaDriveRootDialog</name>
-    <message>
-        <source>Choose SeaDrive Cache Folder</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Your files will appear in a local cache folder. Please choose the folder:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>choose...</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Please choose seadrive cache folder</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Create seadrive_root folder failed!</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -776,18 +729,6 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     <message>
         <source>Faild to choose a disk letter</source>
         <translation>Při volbě písmene disku nastala chyba</translation>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to create seadrive folder</source>
-        <translation>Spuštění neproběhlo: nepodařilo se vytvořit adresář seadrive</translation>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to create seadrive logs folder</source>
-        <translation>Spuštění neproběhlo: nepodařilo se vytvořit adresář pro seadrive logy</translation>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to create seadrive data folder</source>
-        <translation>Spuštění neproběhlo: nepodařilo se vytvořit adresář pro seadrive data</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
@@ -835,25 +776,18 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>Faild to choose a cache directory</source>
-        <translation type="unfinished"/>
+        <translation>Nepodařilo se vybrat složku cache</translation>
     </message>
-</context>
-<context>
-    <name>SeafileExtensionHandler</name>
     <message>
-        <source>Failed to lock file</source>
+        <source>Failed to initialize: failed to create %1 folder</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Failed to unlock file</source>
+        <source>Failed to initialize: failed to create %1 logs folder</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <source>Failed to initialize: failed to create %1 data folder</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -879,8 +813,8 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
 <context>
     <name>SeafileRpcClient</name>
     <message>
-        <source>internal error: failed to connect to seadrive daemon</source>
-        <translation>Interní chyba: seadrive daemon se nepodařilo připojit</translation>
+        <source>internal error: failed to connect to %1 daemon</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -995,6 +929,10 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>Show encrypted libraries</source>
+        <translation>Zobrazit šifrované knihovny</translation>
+    </message>
+    <message>
+        <source>Failed to logout account %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1251,14 +1189,14 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>You have changed language, Restart to apply it?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>You have changed SeaDrive cache folder. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>Změnil jsi jazyk, restartovat pro aplikování ?</translation>
     </message>
     <message>
         <source>You have changed cache directory. Restart to apply it?</source>
+        <translation>Změnil jsi složku cache. Restartovat pro aplikování ?</translation>
+    </message>
+    <message>
+        <source>You have changed %1 cache folder. Restart to apply it?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1358,6 +1296,37 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     <message>
         <source>Download</source>
         <translation>Stáhnout</translation>
+    </message>
+</context>
+<context>
+    <name>UninstallHelperDialog</name>
+    <message>
+        <source>Uninstall %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to remove the %1 account information?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Removing account information...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>text</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

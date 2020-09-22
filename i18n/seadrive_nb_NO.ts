@@ -34,37 +34,6 @@
     </message>
 </context>
 <context>
-    <name>AutoLogonDialog</name>
-    <message>
-        <source>auto login</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>auto logining, please wait a moment</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Please input server address</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>address</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Please enter the server address</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>%1 is not a valid server address</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>login failed</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -175,6 +144,17 @@
     </message>
     <message>
         <source>Markdown</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>FinderSyncHost</name>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -736,33 +716,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
 </context>
 <context>
-    <name>SeaDriveRootDialog</name>
-    <message>
-        <source>Choose SeaDrive Cache Folder</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Your files will appear in a local cache folder. Please choose the folder:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>choose...</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Please choose seadrive cache folder</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Create seadrive_root folder failed!</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
     <name>SeadriveGui</name>
     <message>
         <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
@@ -774,18 +727,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Faild to choose a disk letter</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to create seadrive folder</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to create seadrive logs folder</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to create seadrive data folder</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -836,23 +777,16 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>Faild to choose a cache directory</source>
         <translation type="unfinished"/>
     </message>
-</context>
-<context>
-    <name>SeafileExtensionHandler</name>
     <message>
-        <source>Failed to lock file</source>
+        <source>Failed to initialize: failed to create %1 folder</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Failed to unlock file</source>
+        <source>Failed to initialize: failed to create %1 logs folder</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <source>Failed to initialize: failed to create %1 data folder</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -878,7 +812,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SeafileRpcClient</name>
     <message>
-        <source>internal error: failed to connect to seadrive daemon</source>
+        <source>internal error: failed to connect to %1 daemon</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -994,6 +928,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Show encrypted libraries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to logout account %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1253,11 +1191,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>You have changed SeaDrive cache folder. Restart to apply it?</source>
+        <source>You have changed cache directory. Restart to apply it?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>You have changed cache directory. Restart to apply it?</source>
+        <source>You have changed %1 cache folder. Restart to apply it?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1356,6 +1294,37 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Download</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>UninstallHelperDialog</name>
+    <message>
+        <source>Uninstall %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to remove the %1 account information?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Removing account information...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>text</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No</source>
         <translation type="unfinished"/>
     </message>
 </context>
