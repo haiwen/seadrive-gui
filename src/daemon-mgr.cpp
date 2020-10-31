@@ -147,7 +147,40 @@ void DaemonManager::startSeadriveDaemon()
                 SIGNAL(finished(int, QProcess::ExitStatus)),
                 this,
                 SLOT(onDaemonFinished(int, QProcess::ExitStatus)));
+
+#if defined(_MSC_VER)
+        QStringList args;
+        QString output;
+        args << " /c powershell -Command \"$(get-appxpackage -name \"*ms*\" | select -expandproperty PackageFamilyName)\"";
+
+        QString debug_info;
+        foreach(const QString arg, args) {
+            debug_info = debug_info + arg;
+        }
+
+        qWarning("cmd is: %s", debug_info.toStdString().data());
+        QProcess get_app_name_process;
+        get_app_name_process.start("cmd", args);
+        get_app_name_process.waitForFinished();
+        output = get_app_name_process.readAllStandardOutput();
+        qWarning("out put is %s", output.toStdString().data());
+
+        QStringList args2;
+        args2 << "/c powershell -Command \"start shell:AppsFolder\\" + output + "!App";
+        args2 = args2 + collectSeaDriveArgs() ;
+
+        debug_info.clear();
+        foreach(const QString arg, args2) {
+            debug_info = debug_info +  " " + arg;
+        }
+        qWarning("cmd is: %s", debug_info.toStdString().data());
+
+        QProcess::execute("cmd", args2);
+
+#else
         seadrive_daemon_->start(RESOURCE_PATH(kSeadriveExecutable), collectSeaDriveArgs());
+#endif // _MSC_VER
+
     } else {
         qWarning() << "dev mode enabled, you are supposed to launch seadrive daemon yourself";
         transitionState(DAEMON_CONNECTING);
