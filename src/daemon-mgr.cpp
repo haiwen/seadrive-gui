@@ -151,7 +151,7 @@ void DaemonManager::startSeadriveDaemon()
 #if defined(_MSC_VER)
         QStringList args;
         QString output;
-        args << " /c powershell -Command \"$(get-appxpackage -name \"*ms*\" | select -expandproperty PackageFamilyName)\"";
+        args << " /c powershell -Command \"$(get-appxpackage -name \"*seadrive*\" | select -expandproperty PackageFamilyName)\"";
 
         QString debug_info;
         foreach(const QString arg, args) {
@@ -162,12 +162,14 @@ void DaemonManager::startSeadriveDaemon()
         QProcess get_app_name_process;
         get_app_name_process.start("cmd", args);
         get_app_name_process.waitForFinished();
-        output = get_app_name_process.readAllStandardOutput();
+        output = get_app_name_process.readAllStandardOutput().trimmed();
         qWarning("out put is %s", output.toStdString().data());
 
         QStringList args2;
-        args2 << "/c powershell -Command \"start shell:AppsFolder\\" + output + "!App";
-        args2 = args2 + collectSeaDriveArgs() ;
+        args2 << "/c powershell -Command \"start shell:AppsFolder\\" + output + "!Seadrive";
+        args2 << "'";
+        args2 = args2 + collectSeaDriveArgs();
+        args2 << "'\"" ;
 
         debug_info.clear();
         foreach(const QString arg, args2) {
