@@ -177,7 +177,8 @@ void DaemonManager::startSeadriveDaemon()
         }
         qWarning("cmd is: %s", debug_info.toStdString().data());
 
-        QProcess::execute("cmd", args2);
+        QProcess start_daemon;
+        start_daemon.start("cmd", args2);
 
 #else
         seadrive_daemon_->start(RESOURCE_PATH(kSeadriveExecutable), collectSeaDriveArgs());
