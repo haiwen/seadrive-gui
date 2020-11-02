@@ -149,36 +149,7 @@ void DaemonManager::startSeadriveDaemon()
                 SLOT(onDaemonFinished(int, QProcess::ExitStatus)));
 
 #if defined(_MSC_VER)
-        QStringList args;
-        QString output;
-        args << " /c powershell -Command \"$(get-appxpackage -name \"*seadrive*\" | select -expandproperty PackageFamilyName)\"";
-
-        QString debug_info;
-        foreach(const QString arg, args) {
-            debug_info = debug_info + arg;
-        }
-
-        qWarning("cmd is: %s", debug_info.toStdString().data());
-        QProcess get_app_name_process;
-        get_app_name_process.start("cmd", args);
-        get_app_name_process.waitForFinished();
-        output = get_app_name_process.readAllStandardOutput().trimmed();
-        qWarning("out put is %s", output.toStdString().data());
-
-        QStringList args2;
-        args2 << "/c powershell -Command \"start shell:AppsFolder\\" + output + "!Seadrive";
-        args2 << "'";
-        args2 = args2 + collectSeaDriveArgs();
-        args2 << "'\"" ;
-
-        debug_info.clear();
-        foreach(const QString arg, args2) {
-            debug_info = debug_info +  " " + arg;
-        }
-        qWarning("cmd is: %s", debug_info.toStdString().data());
-
-        QProcess start_daemon;
-        start_daemon.start("cmd", args2);
+        seadrive_daemon_->start("cmd", collectSeaDriveArgs());
 
 #else
         seadrive_daemon_->start(RESOURCE_PATH(kSeadriveExecutable), collectSeaDriveArgs());
@@ -271,7 +242,39 @@ QStringList DaemonManager::collectSeaDriveArgs()
         stream << arg;
     }
 
-    return args;
+
+#if defined(_MSC_VER)
+        // Get app name
+        QStringList args_app_info;
+        QString output;
+        args_app_info << " /c powershell -Command \"$(get-appxpackage -name \"*seadrive*\" | select -expandproperty PackageFamilyName)\"";
+
+        QString debug_info;
+        foreach(const QString arg, args_app_info) {
+            debug_info = debug_info + arg;
+        }
+
+        qWarning("cmd is: %s", debug_info.toStdString().data());
+        QProcess get_app_name_process;
+        get_app_name_process.start("cmd", args_app_info);
+        get_app_name_process.waitForFinished();
+        output = get_app_name_process.readAllStandardOutput().trimmed();
+        qWarning("out put is %s", output.toStdString().data());
+
+        QStringList args_start_info;
+        args_start_info << "/k powershell -Command \"start shell:AppsFolder\\" + output + "!Seadrive";
+        args_start_info << "'";
+        args_start_info << args_start_info + args;
+        args_start_info << "'\"" ;
+
+        debug_info.clear();
+        foreach(const QString arg_start_info, args_start_info) {
+            debug_info = debug_info +  " " + arg_start_info;
+        }
+        qWarning("cmd is: %s", debug_info.toStdString().data());
+#endif
+
+    return args_start_info;
 }
 
 void DaemonManager::seadriveExiting()
