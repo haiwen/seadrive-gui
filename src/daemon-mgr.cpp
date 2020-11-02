@@ -264,7 +264,7 @@ QStringList DaemonManager::collectSeaDriveArgs()
         QStringList args_start_info;
         args_start_info << "/k powershell -Command \"start shell:AppsFolder\\" + output + "!Seadrive";
         args_start_info << "'";
-        args_start_info << args_start_info + args;
+        args_start_info = args_start_info + args;
         args_start_info << "'\"" ;
 
         debug_info.clear();
