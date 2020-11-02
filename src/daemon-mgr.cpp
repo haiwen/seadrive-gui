@@ -149,7 +149,9 @@ void DaemonManager::startSeadriveDaemon()
                 SLOT(onDaemonFinished(int, QProcess::ExitStatus)));
 
 #if defined(_MSC_VER)
-        seadrive_daemon_->start("cmd", collectSeaDriveArgs());
+        //seadrive_daemon_->start("cmd", collectSeaDriveArgs());
+        seadrive_daemon_->startDetached("cmd", collectSeaDriveArgs());
+
 
 #else
         seadrive_daemon_->start(RESOURCE_PATH(kSeadriveExecutable), collectSeaDriveArgs());
