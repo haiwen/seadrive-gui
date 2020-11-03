@@ -252,9 +252,7 @@ QStringList DaemonManager::collectSeaDriveArgs()
         args_app_info << " /c powershell -Command \"$(get-appxpackage -name \"*seadrive*\" | select -expandproperty PackageFamilyName)\"";
 
         QString debug_info;
-        foreach(const QString arg, args_app_info) {
-            debug_info = debug_info + arg;
-        }
+        debug_info = args_app_info.join(' ');
 
         qWarning("cmd is: %s", debug_info.toStdString().data());
         QProcess get_app_name_process;
@@ -264,15 +262,12 @@ QStringList DaemonManager::collectSeaDriveArgs()
         qWarning("out put is %s", output.toStdString().data());
 
         QStringList args_start_info;
-        args_start_info << "/k powershell -Command \"start shell:AppsFolder\\" + output + "!Seadrive";
-        args_start_info << "'";
+        args_start_info << "/k powershell -Command \"start shell:AppsFolder\\" + output + "!Seadrive" + "'";
         args_start_info = args_start_info + args;
         args_start_info << "'\"" ;
 
         debug_info.clear();
-        foreach(const QString arg_start_info, args_start_info) {
-            debug_info = debug_info +  " " + arg_start_info;
-        }
+        debug_info = args_start_info.join(' ');
         qWarning("cmd is: %s", debug_info.toStdString().data());
 #endif
 
