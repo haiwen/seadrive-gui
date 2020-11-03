@@ -198,6 +198,7 @@ int main(int argc, char *argv[])
     I18NHelper::getInstance()->init();
 
     // check seadrive is running
+#if 0
 #if defined(_MSC_VER)
     if (count_process(seadriveName) > 0) {
        QProcess p;
@@ -206,6 +207,7 @@ int main(int argc, char *argv[])
        p.close();
     }
 #endif // _MSC_VER
+#endif
 
     handleCommandLineOption(argc, argv);
 

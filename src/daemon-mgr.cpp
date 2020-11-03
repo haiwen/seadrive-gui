@@ -114,9 +114,11 @@ void DaemonManager::restartSeadriveDaemon()
 
 void DaemonManager::startSeadriveDaemon()
 {
+#if 0
     if (!gui->isDevMode()) {
         shutdown_process (kSeadriveExecutable);
     }
+#endif 
 
     if (!gui->settingsManager()->getCacheDir(&current_cache_dir_))
         current_cache_dir_ = QDir(gui->seadriveDataDir()).absolutePath();
@@ -150,9 +152,9 @@ void DaemonManager::startSeadriveDaemon()
 
 #if defined(_MSC_VER)
         //seadrive_daemon_->start("cmd", collectSeaDriveArgs());
-        seadrive_daemon_->startDetached("cmd", collectSeaDriveArgs());
-
-
+        //seadrive_daemon_->waitForStarted();
+        transitionState(DAEMON_CONNECTING);
+        conn_daemon_timer_->start(kDaemonReadyCheckIntervalMilli);
 #else
         seadrive_daemon_->start(RESOURCE_PATH(kSeadriveExecutable), collectSeaDriveArgs());
 #endif // _MSC_VER
@@ -262,7 +264,7 @@ QStringList DaemonManager::collectSeaDriveArgs()
         qWarning("out put is %s", output.toStdString().data());
 
         QStringList args_start_info;
-        args_start_info << "/k powershell -Command \"start shell:AppsFolder\\" + output + "!Seadrive" + "'";
+        args_start_info << "/c powershell -Command \"start shell:AppsFolder\\" + output + "!Seadrive" + " '";
         args_start_info = args_start_info + args;
         args_start_info << "'\"" ;
 
