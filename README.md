@@ -49,7 +49,7 @@ Package names are according to Ubuntu 14.04. For other Linux distros, please fin
 sudo apt-get install autoconf automake libtool libevent-dev libcurl4-openssl-dev libgtk2.0-dev uuid-dev intltool libsqlite3-dev valac libjansson-dev cmake qtchooser qtbase5-dev libqt5webkit5-dev qttools5-dev qttools5-dev-tools libssl-dev
 ```
 
-For a fresh Fedora 20 / 23 installation, the following will install all dependencies via YUM:
+For a fresh Fedora or CentOS installation, the following will install all dependencies via YUM:
 
 ```bash
 sudo yum install wget gcc libevent-devel openssl-devel gtk2-devel libuuid-devel sqlite-devel jansson-devel intltool cmake libtool vala gcc-c++ qt5-qtbase-devel qt5-qttools-devel qt5-qtwebkit-devel libcurl-devel openssl-devel
@@ -89,40 +89,14 @@ tar xf seadrive-gui-${version}.tar.gz
 
 3. Build Seadrive gui
 
-To build seadrive gui client you need first build libsearpc seadrive-fuse.
+To build seadrive gui client you need first build libsearpc seadrive-fuse. To compile seadrive-fuse please refer to the link https://github.com/haiwen/seadrive-fuse/blob/master/README.md
 
 ```bash
 set paths
 export PREFIX=/usr
 export PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PATH="$PREFIX/bin:$PATH"
-```
 
-* libsearpc
-
-```bash
-cd libsearpc-3.2-latest
-./autogen.sh
-./configure --prefix=$PREFIX
-make
-sudo make install
-cd ..
-```
-
-* seadrive-fuse
-
-```bash
-cd seadrive-fuse-${version}
-./autogen.sh
-./configure --prefix=$PREFIX --disable-fuse
-make
-sudo make install
-cd ..
-```
-
-* seadrive-gui
-
-```bash
 cd seadrive-gui-${version}
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PREFIX .
 make
