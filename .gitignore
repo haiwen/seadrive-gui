@@ -105,6 +105,5 @@ Carthage/Checkouts/
 Carthage/Build/
 *.xcodeproj/
 
-Contents/
 # vsrelated
 seadrive-gui.vcxproj.user

@@ -6,7 +6,7 @@
 	<dict>
 		<key>Resources/License.rtf</key>
 		<data>
-		Emw+yM1dSu9eIB1bFxqyp1GCtfg=
+		zfhbBbvLZpodcNTB80QDi2J0Ph8=
 		</data>
 		<key>Resources/Volume.icns</key>
 		<data>
@@ -14,11 +14,11 @@
 		</data>
 		<key>Resources/load_osxfuse</key>
 		<data>
-		o5c7dPok9Rjk//6mS4y5p5HIdN0=
+		Va2o77CItRTmkT3ff68GyoKtHu8=
 		</data>
 		<key>Resources/mount_osxfuse</key>
 		<data>
-		/xKXJnOuFlkAkD6gVg2jarJY03Q=
+		vuA7XnWL6KwQxKZKCvFIawlxLJ4=
 		</data>
 		<key>Resources/uninstall_osxfuse.app/Contents/Info.plist</key>
 		<data>
@@ -26,7 +26,7 @@
 		</data>
 		<key>Resources/uninstall_osxfuse.app/Contents/MacOS/applet</key>
 		<data>
-		pPN8qsBIs6bCiAjO9OYn7k5Ynuw=
+		6WKsgl3sGwNLZrb8HbwEgx9HPWk=
 		</data>
 		<key>Resources/uninstall_osxfuse.app/Contents/PkgInfo</key>
 		<data>
@@ -78,7 +78,7 @@
 		</data>
 		<key>version.plist</key>
 		<data>
-		iIiJiZmYE7RkN2vlfqPgzp87nHY=
+		9uFAZbREBIDdCId6TNFIzNuT8EY=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -92,22 +92,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			aFUN+8ZsatXyi0juXky2kn+uivc=
+			389ZskQ/y+qnqdgvwx0smS30X2A=
 			</data>
 			<key>hash2</key>
 			<data>
-			T/AUG+uTWCGeJ0p8huaD3Nakbm4sgI07oWcUF8Vfgn8=
+			rS99TtzFWGAWiE1g+/JnnFnvMiZrxAb7KJGMQdt6VoM=
 			</data>
 		</dict>
 		<key>Extensions/10.11/osxfuse.kext/Contents/MacOS/osxfuse</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			JPuc8NShSwBMDqKjfXyjG0vCwIk=
+			Tl6/pkFON5nBGxLJ+of8LxI1U7M=
 			</data>
 			<key>hash2</key>
 			<data>
-			TTjDclSuRE4DaG9ZUzL/+8H9m+JNEBjwJ4Q9j31gyP8=
+			YcD0Blvcj2yPF+gra3uv0eqehmixg9EtH7x/S24Tyys=
 			</data>
 		</dict>
 		<key>Extensions/10.11/osxfuse.kext/Contents/_CodeSignature/CodeResources</key>
@@ -141,37 +141,42 @@
 			<key>symlink</key>
 			<string>10.11</string>
 		</dict>
+		<key>Extensions/10.16</key>
+		<dict>
+			<key>symlink</key>
+			<string>10.11</string>
+		</dict>
 		<key>Extensions/10.5/osxfuse.kext/Contents/Info.plist</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			An55qmSX53yN/o9uH6rRdX2jLRA=
+			t3xVcE0Fs4p8/v2OsDwUsd1RJAc=
 			</data>
 			<key>hash2</key>
 			<data>
-			G6e4s3wIjtGPp4T20cGM3Cg5rtTipN+YyPTiZQwtJL4=
+			caiEk5P2ff7HC2dybDHjNcnSKyLU6a4YabcXD5WjTN8=
 			</data>
 		</dict>
 		<key>Extensions/10.5/osxfuse.kext/Contents/MacOS/osxfuse</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			EvOFUOfTHY+3s/uAUh3HSaoMTTQ=
+			fzFY91Rec2r+2z7R/J4eEzWM8O4=
 			</data>
 			<key>hash2</key>
 			<data>
-			DIeGrvZm3Eh0YBK9Qex5itis8Efv6g2ArVFQrrFfTgc=
+			kEvh5aXSsrG0ffrnF/DTeGEHQ6ELO9NgIwkjk5TY0MM=
 			</data>
 		</dict>
 		<key>Extensions/10.5/osxfuse.kext/Contents/_CodeSignature/CodeDirectory</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			BJ1JHIxEbq5sGSyUSBJj/N65XK8=
+			XlELPbBPQ1xwr7Ija0KZYKmNwb8=
 			</data>
 			<key>hash2</key>
 			<data>
-			iYmIJ5dDU83gvxQHtMz8D5MJLU7MYs71FqJDf8WNb6Y=
+			/FBCxXa6Lp3EV4eDMnVccB3adehdTdwamVsKx35dX2w=
 			</data>
 		</dict>
 		<key>Extensions/10.5/osxfuse.kext/Contents/_CodeSignature/CodeRequirements</key>
@@ -189,11 +194,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			HRlZyGChoquCbCCxhXBqLn+vgFs=
+			b+BfcBpf4LRLpNQH0h37mbM8IwQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			hrLD3MJFBjAHwGqtpTAYhhT5g1J2gJlYAXY/1JqvgXo=
+			XdhQpo37SyhzMdPPeV6dZfKWpPpDnOjYsPVoDCvhTtc=
 			</data>
 		</dict>
 		<key>Extensions/10.5/osxfuse.kext/Contents/_CodeSignature/CodeResources</key>
@@ -211,44 +216,44 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			dAWs11+vFU2BNnHoiF6GegSiAyY=
+			p/0yrLlahJbykko1Dvu814YvKXM=
 			</data>
 			<key>hash2</key>
 			<data>
-			OBGjfuGGOc9UndvUB85Pkh08cxacZCDAqHpddGYYMQA=
+			pDbCi31yvyqgahJ7O9NzUIzyJJOHy25kR723hmaMisA=
 			</data>
 		</dict>
 		<key>Extensions/10.6/osxfuse.kext/Contents/Info.plist</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			8XumEvGm1FEn+GXL7dUEl8IF7Mw=
+			5c3asWPeJEI9toToFeDGRodYo5w=
 			</data>
 			<key>hash2</key>
 			<data>
-			n9lOFHF86qwKIEvfsCfgHdmRJS41MaZ0+0xe4wuwPCI=
+			Efm2pvX/E0qVCetg+P7o9Ksyn7wcg/lwcsXA28v5HWw=
 			</data>
 		</dict>
 		<key>Extensions/10.6/osxfuse.kext/Contents/MacOS/osxfuse</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			MyObsyy9dTh/otVemoChrgyO4/s=
+			w7Ce7obKNy8URq1GGne2WFJhpcA=
 			</data>
 			<key>hash2</key>
 			<data>
-			fHrutpZBqh8qxlN2jPNk/0cj7cDg5Gcz0AM3WT30afg=
+			IkVJ9eFBwbLKJ1cP0LShV75J2fy9ENxxZwksFiZ8lPs=
 			</data>
 		</dict>
 		<key>Extensions/10.6/osxfuse.kext/Contents/_CodeSignature/CodeDirectory</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			dw6SXXcS6X23LdaAUCEj3QhudYw=
+			/0NXxGPbFoKcWGZ3QhDXNN/3xWc=
 			</data>
 			<key>hash2</key>
 			<data>
-			WTgJOj60v5hL5FzK1S6KvjiC19KFIzZY0X6jccxKKHo=
+			EpXNgGPB3hzrf4LZ7c3nBHfpcgG0wKlrh8E2SwjBIFY=
 			</data>
 		</dict>
 		<key>Extensions/10.6/osxfuse.kext/Contents/_CodeSignature/CodeRequirements</key>
@@ -266,11 +271,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			eFS4zmBEDOxSQHZjAZB7CMURSec=
+			gQTPsMx1u9R6QfY42dMSUiU9Loo=
 			</data>
 			<key>hash2</key>
 			<data>
-			hJqIP2iQkQxrU7OW2LCy45nzEupcM+wQ0C9z7Snfp4E=
+			dO98afIU7qWYCFClhS0TVb9Mmpn7gk8cu4o0MWp6d9Y=
 			</data>
 		</dict>
 		<key>Extensions/10.6/osxfuse.kext/Contents/_CodeSignature/CodeResources</key>
@@ -288,11 +293,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			vyato8GQBkkRLy/AWIH3Li+w/UM=
+			rOKwHFisSBVQiRec59WiNaTijGQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			/QqB0sjKiq7PuuFOL3JXymgpnx12KIanQNTFDJFKUB4=
+			mV4DGrfzdsWck5QB4/z3FhZvVO8xsfCdnxPn7E3H1ZU=
 			</data>
 		</dict>
 		<key>Extensions/10.7</key>
@@ -309,22 +314,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			xO1+NIA0Fj/ftFRVFsGEh9rvZDM=
+			viGy/lvEQOjye7nzfLyL3g6mr4Y=
 			</data>
 			<key>hash2</key>
 			<data>
-			+a+k7qn+0laWnSE02TcbqHKAACzaEob9e+RHZiZcfjc=
+			hSFxJOOa8vC6yrrqNO7OSviVTUk23WfaX7RoF4vuMcU=
 			</data>
 		</dict>
 		<key>Extensions/10.9/osxfuse.kext/Contents/MacOS/osxfuse</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			wUY7JQfEtzB5WIAdYqIn8ey4a38=
+			nb8IMjLXLaCsV9JADwDXwYYXrZE=
 			</data>
 			<key>hash2</key>
 			<data>
-			P95PXCmyfRQNsJL+dp1XBmlBv8L4yxZYrsfJOsSDmjk=
+			AzlL8tTPZs7OO9aDBcDxqZWTAxOQLcHPoh5GgcYphzc=
 			</data>
 		</dict>
 		<key>Extensions/10.9/osxfuse.kext/Contents/_CodeSignature/CodeResources</key>
@@ -338,15 +343,20 @@
 			ZobeEKKKL+EbNsu4bcusyCfPxOoRa02r8YReWu5inps=
 			</data>
 		</dict>
+		<key>Extensions/11</key>
+		<dict>
+			<key>symlink</key>
+			<string>10.11</string>
+		</dict>
 		<key>Resources/License.rtf</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Emw+yM1dSu9eIB1bFxqyp1GCtfg=
+			zfhbBbvLZpodcNTB80QDi2J0Ph8=
 			</data>
 			<key>hash2</key>
 			<data>
-			CNitzQFDTQFs/KLJ+Bb0INRAW+m50bS051WZtQTsnik=
+			P+aGqv2tc5IpnPHg24f6PTlehGoVK9u2SGY+cuz0irc=
 			</data>
 		</dict>
 		<key>Resources/Volume.icns</key>
@@ -364,22 +374,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			o5c7dPok9Rjk//6mS4y5p5HIdN0=
+			Va2o77CItRTmkT3ff68GyoKtHu8=
 			</data>
 			<key>hash2</key>
 			<data>
-			+vVKipeQ1JnlJ+DIc3o6oGIvlh3u4msyfwU2Cc2u2p0=
+			a2iOF7i83h/O5txDX6TexSnOVJileA2V83LAfYKD5Ic=
 			</data>
 		</dict>
 		<key>Resources/mount_osxfuse</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			/xKXJnOuFlkAkD6gVg2jarJY03Q=
+			vuA7XnWL6KwQxKZKCvFIawlxLJ4=
 			</data>
 			<key>hash2</key>
 			<data>
-			vy/O+SMNiAIqQlfkTOIsdqNO4WJuk6WZ0qTRsfZLS2A=
+			5lFF315flfoUyWUw1rLh/GQy8+ohGTV581xz6AX7L4E=
 			</data>
 		</dict>
 		<key>Resources/uninstall_osxfuse.app/Contents/Info.plist</key>
@@ -397,11 +407,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			pPN8qsBIs6bCiAjO9OYn7k5Ynuw=
+			6WKsgl3sGwNLZrb8HbwEgx9HPWk=
 			</data>
 			<key>hash2</key>
 			<data>
-			+wJR9zw8MkgFvN5bwhbfIuYJQuhvbGYI0Fi0nSZH+mc=
+			HhqhVpoWSZCy5clBAcTUM683ucpd/GjwrXrt0kHznmA=
 			</data>
 		</dict>
 		<key>Resources/uninstall_osxfuse.app/Contents/PkgInfo</key>
@@ -540,11 +550,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			iIiJiZmYE7RkN2vlfqPgzp87nHY=
+			9uFAZbREBIDdCId6TNFIzNuT8EY=
 			</data>
 			<key>hash2</key>
 			<data>
-			2fOEymyQthBMYiXSZ16+Id6QiNjHfDee6xAnM8NPWFY=
+			JzE7jQKkxbjzSz06pfFFj2rW7AgcFt+UTUOQ9FlCU8s=
 			</data>
 		</dict>
 	</dict>

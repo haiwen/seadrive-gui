@@ -5,7 +5,7 @@
 	<key>BuildFlavor</key>
 	<string></string>
 	<key>BuildMachineOSBuild</key>
-	<string>17G9016</string>
+	<string>17G11023</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleIdentifier</key>
@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>fs </string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.10.4</string>
+	<string>3.11.2</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>3.10.4</string>
+	<string>3.11.2</string>
 	<key>DTCompiler</key>
 	<string>4.2</string>
 	<key>DTPlatformBuild</key>
