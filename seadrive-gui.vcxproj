@@ -328,7 +328,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir)\third_party\WinSparkle-0.5.3\include;$(ProjectDir)\third_party\QtAwesome;$(ProjectDir)..\libsearpc\lib;$(ProjectDir)\src\utils;$(ProjectDir)\src;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <UndefinePreprocessorDefinitions>%(UndefinePreprocessorDefinitions)</UndefinePreprocessorDefinitions>
-      <PreprocessorDefinitions>SEADRIVE_GUI_VERSION=2.0.7;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SEADRIVE_GUI_VERSION=2.0.8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -367,7 +367,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <AdditionalIncludeDirectories>$(ProjectDir)third_party\WinSparkle-0.5.3\include;$(ProjectDir)third_party\QtAwesome;$(ProjectDir)..\libsearpc\lib;$(ProjectDir)src\utils;$(ProjectDir)src;$(ProjectDir);$(ProjectDir)..\breakpad\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>HAVE_SPARKLE_SUPPORT;SEADRIVE_GUI_VERSION=2.0.7;SEADRIVE_CLIENT_HAS_CRASH_REPORTER;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_SPARKLE_SUPPORT;SEADRIVE_GUI_VERSION=2.0.8;SEADRIVE_CLIENT_HAS_CRASH_REPORTER;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
