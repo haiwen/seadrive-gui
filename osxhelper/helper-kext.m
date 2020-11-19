@@ -168,8 +168,15 @@
 }
 
 + (void)loadKextID:(NSString *)kextID path:(NSString *)path completion:(HelperOnCompletion)completion {
-  HelperLog(@"Loading kextID: %@ (%@)", kextID, path);
-  OSReturn status = KextManagerLoadKextWithIdentifier((__bridge CFStringRef)(kextID), (__bridge CFArrayRef)@[[NSURL fileURLWithPath:path]]);
+  HelperLog(@"Loading kext path: %@", path);
+  CFURLRef km_url = CFURLCreateWithFileSystemPath(kCFAllocatorDefault,
+                                                   (__bridge CFStringRef)(path),
+                                                   kCFURLPOSIXPathStyle,
+                                                   true);
+  OSReturn status = KextManagerLoadKextWithURL(km_url, NULL);
+  CFRelease(km_url);
+
+  // OSReturn status = KextManagerLoadKextWithIdentifier((__bridge CFStringRef)(kextID), (__bridge CFArrayRef)@[[NSURL fileURLWithPath:path]]);
   if (status != kOSReturnSuccess) {
     NSError *error = HelperMakeError(HelperErrorKext, @"KextManager failed to load with status: %@", @(status));
     completion(error, nil);
