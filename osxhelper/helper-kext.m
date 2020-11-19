@@ -168,7 +168,7 @@
 }
 
 + (void)loadKextID:(NSString *)kextID path:(NSString *)path completion:(HelperOnCompletion)completion {
-  HelperLog(@"Loading kextID: %@ (%@)", kextID, path);
+  HelperLog(@"Loading kext path: %@", path);
   CFURLRef km_url = CFURLCreateWithFileSystemPath(kCFAllocatorDefault,
                                                    (__bridge CFStringRef)(path),
                                                    kCFURLPOSIXPathStyle,
