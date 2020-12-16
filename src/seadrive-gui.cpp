@@ -458,9 +458,7 @@ void SeadriveGui::onDaemonStarted()
     AccountInfoService::instance()->start();
 
 
-#if defined(__MINGW32__)
     SeafileExtensionHandler::instance()->start();
-#endif
 
 #ifdef HAVE_SPARKLE_SUPPORT
     if (AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
