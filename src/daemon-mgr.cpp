@@ -309,6 +309,9 @@ void DaemonManager::stopAllDaemon()
         if (!gui->rpcClient()->exitSeadriveDaemon()) {
             qWarning("failed to exit seadrive daemon");
         }
+#elif defined(Q_OS_LINUX)
+        // https://forum.seafile.com/t/seadrive-transport-endpoint-is-not-connected/13240/5
+        seadrive_daemon_->terminate();
 #else
         seadrive_daemon_->kill();
 #endif
