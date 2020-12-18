@@ -620,6 +620,11 @@ QString ExtCommandsHandler::handleListRepos(const QStringList& args)
             ? "internal-link-supported"
             : "internal-link-unsupported";
     fullpaths << internal_link_supported;
+
+    // if use seadrive 2.x, need pass seadrive root to seafile-ext
+#if defined(_MSC_VER)
+    fullpaths << gui->mountDir();
+#endif
     foreach (const QString &subdir, subdirs) {
         QStringList repos =
             QDir(pathJoin(gui->mountDir(), subdir))

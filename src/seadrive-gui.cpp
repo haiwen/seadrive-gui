@@ -458,7 +458,7 @@ void SeadriveGui::onDaemonStarted()
     AccountInfoService::instance()->start();
 
 
-#if defined(__MINGW32__)
+#if defined(_MSC_VER)
     SeafileExtensionHandler::instance()->start();
 #endif
 
