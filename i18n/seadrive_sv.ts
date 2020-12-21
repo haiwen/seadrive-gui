@@ -3,27 +3,27 @@
     <name>AboutDialog</name>
     <message>
         <source>About %1</source>
-        <translation type="unfinished"/>
+        <translation>Om %1</translation>
     </message>
     <message>
         <source>&lt;h4&gt;Seafile Drive Client %2&lt;/h4&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;h4&gt;Seafile Drive Klient %2&lt;/h4&gt;</translation>
     </message>
     <message>
         <source>&lt;h5&gt; REV %1 &lt;/h5&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;h5&gt; REV %1 &lt;/h5&gt;</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"/>
+        <translation>Om</translation>
     </message>
     <message>
         <source>Check For Updates</source>
-        <translation type="unfinished"/>
+        <translation>Kontrollera Uppdateringar</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -37,1368 +37,1370 @@
     <name>AutoLogonDialog</name>
     <message>
         <source>auto login</source>
-        <translation type="unfinished"/>
+        <translation>auto login</translation>
     </message>
     <message>
         <source>auto logining, please wait a moment</source>
-        <translation type="unfinished"/>
+        <translation>auto login, vänligen vänta</translation>
     </message>
     <message>
         <source>Please input server address</source>
-        <translation type="unfinished"/>
+        <translation>Vänligen ange serveradress</translation>
     </message>
     <message>
         <source>address</source>
-        <translation type="unfinished"/>
+        <translation>adress</translation>
     </message>
     <message>
         <source>Please enter the server address</source>
-        <translation type="unfinished"/>
+        <translation>Vänligen ange serveradress</translation>
     </message>
     <message>
         <source>%1 is not a valid server address</source>
-        <translation type="unfinished"/>
+        <translation>%1 är inte en giltig serveradress</translation>
     </message>
     <message>
         <source>login failed</source>
-        <translation type="unfinished"/>
+        <translation>inloggningen misslyckades</translation>
     </message>
 </context>
 <context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
-        <translation type="unfinished"/>
+        <translation>%1 misslyckades att initiera</translation>
     </message>
     <message>
         <source>%1 exited unexpectedly</source>
-        <translation type="unfinished"/>
+        <translation>%1 avslutades oväntat</translation>
     </message>
 </context>
 <context>
     <name>DiskLetterDialog</name>
     <message>
         <source>Choose the disk letter</source>
-        <translation type="unfinished"/>
+        <translation>Välj diskens bokstav</translation>
     </message>
     <message>
         <source>Your files would appear in a dedicated disk in your computer. Please choose the letter:</source>
-        <translation type="unfinished"/>
+        <translation>Dina filer kommer visas som en dedikerad disk på din dator. Vänligen ange en bokstav:</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
     <name>EncryptedReposDialog</name>
     <message>
         <source>Encrypted Libraries</source>
-        <translation type="unfinished"/>
+        <translation>Krypterade Kataloger</translation>
     </message>
     <message>
         <source>No Encrypted Library.</source>
-        <translation type="unfinished"/>
+        <translation>Ingen Krypterad Katalog.</translation>
     </message>
 </context>
 <context>
     <name>EncryptedReposTableModel</name>
     <message>
         <source>Failed to set encrypted library password</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att sätta krypterad katalogslösenord</translation>
     </message>
     <message>
         <source>Password error</source>
-        <translation type="unfinished"/>
+        <translation>Lösenordsfel</translation>
     </message>
     <message>
         <source>Failed to clear encrypted library password</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att rensa krypterad katalogslösenord</translation>
     </message>
     <message>
         <source>Right click this item to sync or unsync the encrypted library</source>
-        <translation type="unfinished"/>
+        <translation>Högerklicka på detta objekt för att synka eller avsynka den krypterade katalogen</translation>
     </message>
     <message>
         <source>Library</source>
-        <translation type="unfinished"/>
+        <translation>Katalog</translation>
     </message>
     <message>
         <source>Sync status</source>
-        <translation type="unfinished"/>
+        <translation>Synkroniseringsstatus</translation>
     </message>
 </context>
 <context>
     <name>EncryptedReposTableView</name>
     <message>
         <source>Unsync</source>
-        <translation type="unfinished"/>
+        <translation>Avsynka</translation>
     </message>
     <message>
         <source>Sync</source>
-        <translation type="unfinished"/>
+        <translation>Synka</translation>
     </message>
     <message>
         <source>After unsyncing, the local encryption key of this library will be cleared and this library cannot be accessed in virtual drive. Are you sure to unsync?</source>
-        <translation type="unfinished"/>
+        <translation>Efter avsynkronisering kommer den lokala krypteringsnyckeln för denna katalog att rensas, och denna katalog kommer inte vara nåbar som en virtuell disk. Är du säker på att du vill avsynkronisera?</translation>
     </message>
     <message>
         <source>Enter library password to sync</source>
-        <translation type="unfinished"/>
+        <translation>Ange katalogslösenord för att synka</translation>
     </message>
 </context>
 <context>
     <name>FilterMenu</name>
     <message>
         <source>FilterMenu</source>
-        <translation type="unfinished"/>
+        <translation>FilterMeny</translation>
     </message>
     <message>
         <source>Text file    </source>
-        <translation type="unfinished"/>
+        <translation>Textfil</translation>
     </message>
     <message>
         <source>Document    </source>
-        <translation type="unfinished"/>
+        <translation>Dokument</translation>
     </message>
     <message>
         <source>Image    </source>
-        <translation type="unfinished"/>
+        <translation>Bild</translation>
     </message>
     <message>
         <source>Video    </source>
-        <translation type="unfinished"/>
+        <translation>Video</translation>
     </message>
     <message>
         <source>Audio    </source>
-        <translation type="unfinished"/>
+        <translation>Ljud</translation>
     </message>
     <message>
         <source>Markdown</source>
-        <translation type="unfinished"/>
+        <translation>Markdown</translation>
     </message>
 </context>
 <context>
     <name>InitSyncDialog</name>
     <message>
         <source>Download files list</source>
-        <translation type="unfinished"/>
+        <translation>Ladda ner fillista</translation>
     </message>
     <message>
         <source>%1 is fetching the files list, please wait</source>
-        <translation type="unfinished"/>
+        <translation>%1 hämtar fillistan, vänligen vänta</translation>
     </message>
     <message>
         <source>%1 has dowloaded your files list.
 Please click the &quot;Finish&quot; button to open %1 folder.</source>
-        <translation type="unfinished"/>
+        <translation>%1 har laddat ner din fillista.
+Vänligen klicka på &quot;Klart&quot; knappen för att öppna %1 mappen.</translation>
     </message>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"/>
+        <translation>Dialog</translation>
     </message>
     <message>
         <source>logo</source>
-        <translation type="unfinished"/>
+        <translation>logo</translation>
     </message>
     <message>
         <source>Run in Background</source>
-        <translation type="unfinished"/>
+        <translation>Kör i bakgrunden</translation>
     </message>
     <message>
         <source>Finish</source>
-        <translation type="unfinished"/>
+        <translation>Klart</translation>
     </message>
 </context>
 <context>
     <name>LoadMoreButton</name>
     <message>
         <source>load more</source>
-        <translation type="unfinished"/>
+        <translation>ladda mer</translation>
     </message>
 </context>
 <context>
     <name>LoginDialog</name>
     <message>
         <source>Add an account</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till ett konto</translation>
     </message>
     <message>
         <source>Single Sign On</source>
-        <translation type="unfinished"/>
+        <translation>Single Sign On</translation>
     </message>
     <message>
         <source>Re-login</source>
-        <translation type="unfinished"/>
+        <translation>Logga in igen</translation>
     </message>
     <message>
         <source>Logging in...</source>
-        <translation type="unfinished"/>
+        <translation>Loggar in...</translation>
     </message>
     <message>
         <source>Network Error:
  %1</source>
-        <translation type="unfinished"/>
+        <translation>Nätverksfel:
+%1</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The ssl certificate of this server is not trusted, proceed anyway?</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Varning;&lt;/b&gt; SSL certifikatet för denna server är inte betrodd, vill du fortsätta?</translation>
     </message>
     <message>
         <source>Please enter the server address</source>
-        <translation type="unfinished"/>
+        <translation>Vänligen ange serveradressen</translation>
     </message>
     <message>
         <source>%1 is not a valid server address</source>
-        <translation type="unfinished"/>
+        <translation>%1 är inte en giltig serveradress</translation>
     </message>
     <message>
         <source>Please enter the username</source>
-        <translation type="unfinished"/>
+        <translation>Vänligen ange användarnamn</translation>
     </message>
     <message>
         <source>Please enter the computer name</source>
-        <translation type="unfinished"/>
+        <translation>Vänligen ange datornamn</translation>
     </message>
     <message>
         <source>Two Factor Authentication</source>
-        <translation type="unfinished"/>
+        <translation>Två Faktors Autentisiering</translation>
     </message>
     <message>
         <source>%1 Server Address</source>
-        <translation type="unfinished"/>
+        <translation>%1 Serveradress</translation>
     </message>
     <message>
         <source>Please enter the password</source>
-        <translation type="unfinished"/>
+        <translation>Vänligen ange lösenordet</translation>
     </message>
     <message>
         <source>Enter the two factor authentication token</source>
-        <translation type="unfinished"/>
+        <translation>Ange två faktors autentisieringsnyckeln</translation>
     </message>
     <message>
         <source>Incorrect email or password</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltigt mailadress eller lösenord</translation>
     </message>
     <message>
         <source>Logging in too frequently, please wait a minute</source>
-        <translation type="unfinished"/>
+        <translation>Loggar in för ofta, vänligen vänta en minut</translation>
     </message>
     <message>
         <source>Internal Server Error</source>
-        <translation type="unfinished"/>
+        <translation>Internt serverfel</translation>
     </message>
     <message>
         <source>Failed to login: %1</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att logga in: %1</translation>
     </message>
     <message>
         <source>Failed to login</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att logga in</translation>
     </message>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"/>
+        <translation>Dialog</translation>
     </message>
     <message>
         <source>logo</source>
-        <translation type="unfinished"/>
+        <translation>logo</translation>
     </message>
     <message>
         <source>Server:</source>
-        <translation type="unfinished"/>
+        <translation>Server:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://seacloud.cc&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Till exempel: https://seacloud.cc&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>or http://192.168.1.24:8000</source>
-        <translation type="unfinished"/>
+        <translation>eller http://192.168.1.24:8000</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation type="unfinished"/>
+        <translation>Lösenord:</translation>
     </message>
     <message>
         <source>Automatic Login</source>
-        <translation type="unfinished"/>
+        <translation>Automatisk Inloggning</translation>
     </message>
     <message>
         <source>status text</source>
-        <translation type="unfinished"/>
+        <translation>status text</translation>
     </message>
     <message>
         <source>Computer Name:</source>
-        <translation type="unfinished"/>
+        <translation>Datornamn:</translation>
     </message>
     <message>
         <source>Email / Username:</source>
-        <translation type="unfinished"/>
+        <translation>Mailadress / Användarnamn:</translation>
     </message>
     <message>
         <source>e.g. Jim&apos;s laptop</source>
-        <translation type="unfinished"/>
+        <translation>t.ex. Jim&apos;s laptop</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"/>
+        <translation>Logga in</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Avbryt</translation>
     </message>
 </context>
 <context>
     <name>MessagePoller</name>
     <message>
         <source>&quot;%1&quot; is synchronized</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; är synkroniserad</translation>
     </message>
     <message>
         <source>Error when syncing &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Fel vid synkronisering &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Error when syncing</source>
-        <translation type="unfinished"/>
+        <translation>Fel vid synkronisering</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is being uploaded</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; håller på att laddas upp</translation>
     </message>
     <message>
         <source>Starting to move &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Startar med att flytta &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Starting to move &quot;%1&quot; to &quot;%2&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Startar att flytta &quot;%1&quot; till &quot;%2&quot;</translation>
     </message>
     <message>
         <source>Successfully moved &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Lyckades flytta &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Successfully moved &quot;%1&quot; to &quot;%2&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Lyckades flytta &quot;%1&quot; till &quot;%2&quot;</translation>
     </message>
     <message>
         <source>Failed to move &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades flytta &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Failed to move &quot;%1&quot; to &quot;%2&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att flytta &quot;%1&quot; till &quot;%2&quot;</translation>
     </message>
     <message>
         <source>Download file</source>
-        <translation type="unfinished"/>
+        <translation>Ladda ner fil</translation>
     </message>
     <message>
         <source>Start to download file &quot;%1&quot; </source>
-        <translation type="unfinished"/>
+        <translation>Påbörjat ladda ner fil &quot;%1&quot;</translation>
     </message>
     <message>
         <source>file &quot;%1&quot; has been downloaded </source>
-        <translation type="unfinished"/>
+        <translation>filen &quot;%1&quot; har laddats ner</translation>
     </message>
     <message>
         <source>Failed to create file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att skapa filen &quot;%1&quot;</translation>
     </message>
     <message>
         <source>You can&apos;t create files in the %1 drive directly</source>
-        <translation type="unfinished"/>
+        <translation>Du kan inte skapa filer direkt på %1 disken</translation>
     </message>
     <message>
         <source>Failed to delete folder</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades ta bort mapp</translation>
     </message>
     <message>
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
-        <translation type="unfinished"/>
+        <translation>Du kan inte ta bort katalogen &quot;%1&quot; direkt</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>File %1 is locked by other programs</source>
-        <translation type="unfinished"/>
+        <translation>Filen %1 är låst av andra program</translation>
     </message>
     <message>
         <source>Some file is locked by other programs</source>
-        <translation type="unfinished"/>
+        <translation>Någon fil är låst av andra program</translation>
     </message>
     <message>
         <source>Folder %1 is locked by other programs</source>
-        <translation type="unfinished"/>
+        <translation>Mappen %1 är låst av andra program</translation>
     </message>
     <message>
         <source>Some folder is locked by other programs</source>
-        <translation type="unfinished"/>
+        <translation>Någon mapp är låst av andra program</translation>
     </message>
     <message>
         <source>File %1 is locked by another user</source>
-        <translation type="unfinished"/>
+        <translation>Filen %1 är låst av en annan användare</translation>
     </message>
     <message>
         <source>Some file is locked by another user</source>
-        <translation type="unfinished"/>
+        <translation>Någon fil är låst av en annan användare</translation>
     </message>
     <message>
         <source>Invalid path %1</source>
-        <translation type="unfinished"/>
+        <translation>Felaktig sökväg %1</translation>
     </message>
     <message>
         <source>Trying to access an invalid path</source>
-        <translation type="unfinished"/>
+        <translation>Testar att nå en felaktig sökväg</translation>
     </message>
     <message>
         <source>Error when indexing file %1</source>
-        <translation type="unfinished"/>
+        <translation>Fel vid indexring av fil %1</translation>
     </message>
     <message>
         <source>Error when indexing files</source>
-        <translation type="unfinished"/>
+        <translation>Fel vid indexering av filer</translation>
     </message>
     <message>
         <source>You don&apos;t have enough permission for this library</source>
-        <translation type="unfinished"/>
+        <translation>Du har inte tillräckligt med rättigheter för denna katalog</translation>
     </message>
     <message>
         <source>Network error</source>
-        <translation type="unfinished"/>
+        <translation>Nätverksfel</translation>
     </message>
     <message>
         <source>Failed to resolve network proxy</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att översätta nätverksproxy</translation>
     </message>
     <message>
         <source>Failed to resolve remote server</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att översätta server</translation>
     </message>
     <message>
         <source>Failed to connect to server</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att ansluta till server</translation>
     </message>
     <message>
         <source>SSL error</source>
-        <translation type="unfinished"/>
+        <translation>SSL fel</translation>
     </message>
     <message>
         <source>Error in network transmission</source>
-        <translation type="unfinished"/>
+        <translation>Fel vid nätverksöverföring</translation>
     </message>
     <message>
         <source>Timeout in network transmission</source>
-        <translation type="unfinished"/>
+        <translation>Timeout vid nätverksöverföring</translation>
     </message>
     <message>
         <source>Failed to handle http redirection</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades hantera http omdirigering</translation>
     </message>
     <message>
         <source>Server internal error</source>
-        <translation type="unfinished"/>
+        <translation>Server interntfel</translation>
     </message>
     <message>
         <source>Local data is corrupt</source>
-        <translation type="unfinished"/>
+        <translation>Lokal data är korrupt</translation>
     </message>
     <message>
         <source>Failed to write local data</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att skriva lokal data</translation>
     </message>
     <message>
         <source>Unknown error</source>
-        <translation type="unfinished"/>
+        <translation>Okänt fel</translation>
     </message>
     <message>
         <source>The storage quota has been used up</source>
-        <translation type="unfinished"/>
+        <translation>All lagringskvot har blivit använt</translation>
     </message>
     <message>
         <source>SSL Error</source>
-        <translation type="unfinished"/>
+        <translation>SSL Fel</translation>
     </message>
     <message>
         <source>Network Error: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nätverksfel: %1</translation>
     </message>
     <message>
         <source>Server Error</source>
-        <translation type="unfinished"/>
+        <translation>Serverfel</translation>
     </message>
     <message>
         <source>Created library &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Skapade katalogen &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Deleted library &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Tagit bort katalogen &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Added</source>
-        <translation type="unfinished"/>
+        <translation>Tillagd</translation>
     </message>
     <message>
         <source>Deleted</source>
-        <translation type="unfinished"/>
+        <translation>Borttagen</translation>
     </message>
     <message>
         <source>Removed</source>
-        <translation type="unfinished"/>
+        <translation>Borttagen</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation type="unfinished"/>
+        <translation>Ändrad</translation>
     </message>
     <message>
         <source>Renamed</source>
-        <translation type="unfinished"/>
+        <translation>Omdöpt</translation>
     </message>
     <message>
         <source>Added or modified</source>
-        <translation type="unfinished"/>
+        <translation>Tillagd eller ändrad</translation>
     </message>
     <message>
         <source>Moved</source>
-        <translation type="unfinished"/>
+        <translation>Flyttad</translation>
     </message>
     <message>
         <source>Added directory</source>
-        <translation type="unfinished"/>
+        <translation>Lagt till katalogen</translation>
     </message>
     <message>
         <source>Removed directory</source>
-        <translation type="unfinished"/>
+        <translation>Tagit bort katalogen</translation>
     </message>
     <message>
         <source>Renamed directory</source>
-        <translation type="unfinished"/>
+        <translation>Döpt om katalogen</translation>
     </message>
     <message>
         <source>Moved directory</source>
-        <translation type="unfinished"/>
+        <translation>Flyttat katalogen</translation>
     </message>
     <message>
         <source>files</source>
-        <translation type="unfinished"/>
+        <translation>filer</translation>
     </message>
     <message>
         <source>directories</source>
-        <translation type="unfinished"/>
+        <translation>kataloger</translation>
     </message>
     <message>
         <source>and %1 more</source>
-        <translation type="unfinished"/>
+        <translation>och %1 till</translation>
     </message>
     <message>
         <source>Reverted library to status at</source>
-        <translation type="unfinished"/>
+        <translation>Backat katalogen till statusen</translation>
     </message>
     <message>
         <source>Reverted file &quot;%1&quot; to status at %2.</source>
-        <translation type="unfinished"/>
+        <translation>Backat filen &quot;%1&quot; till statusen &quot;%2&quot;</translation>
     </message>
     <message>
         <source>Recovered deleted directory</source>
-        <translation type="unfinished"/>
+        <translation>Återställt borttagna katalogen</translation>
     </message>
     <message>
         <source>Changed library name or description</source>
-        <translation type="unfinished"/>
+        <translation>Ändrat katalognamn eller beskrivning</translation>
     </message>
     <message>
         <source>Auto merge by %1 system</source>
-        <translation type="unfinished"/>
+        <translation>Automatisk ihopslagning av %1 systemet</translation>
     </message>
     <message>
         <source>Just now</source>
-        <translation type="unfinished"/>
+        <translation>Just nu</translation>
     </message>
     <message>
         <source>1 day ago</source>
-        <translation type="unfinished"/>
+        <translation>1 dag sedan</translation>
     </message>
     <message>
         <source>%1 days ago</source>
-        <translation type="unfinished"/>
+        <translation>%1 dagar sedan</translation>
     </message>
     <message>
         <source>1 hour ago</source>
-        <translation type="unfinished"/>
+        <translation>1 timme sedan</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
-        <translation type="unfinished"/>
+        <translation>%1 timmar sedan</translation>
     </message>
     <message>
         <source>1 minute ago</source>
-        <translation type="unfinished"/>
+        <translation>1 minut sedan</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
-        <translation type="unfinished"/>
+        <translation>%1 minuter sedan</translation>
     </message>
     <message>
         <source>&lt;Not Part of Certificate&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;Not Part of Certificate&gt;</translation>
     </message>
     <message>
         <source>Folder</source>
-        <translation type="unfinished"/>
+        <translation>Mapp</translation>
     </message>
     <message>
         <source>Readonly Folder</source>
-        <translation type="unfinished"/>
+        <translation>Läs endast mapp</translation>
     </message>
     <message>
         <source>Document</source>
-        <translation type="unfinished"/>
+        <translation>Dokument</translation>
     </message>
     <message>
         <source>PDF Document</source>
-        <translation type="unfinished"/>
+        <translation>PDF Dokument</translation>
     </message>
     <message>
         <source>Image File</source>
-        <translation type="unfinished"/>
+        <translation>Bildfil</translation>
     </message>
     <message>
         <source>Text Document</source>
-        <translation type="unfinished"/>
+        <translation>Textdokument</translation>
     </message>
     <message>
         <source>Audio File</source>
-        <translation type="unfinished"/>
+        <translation>Ljudfil</translation>
     </message>
     <message>
         <source>Video File</source>
-        <translation type="unfinished"/>
+        <translation>Videofil</translation>
     </message>
     <message>
         <source>Word Document</source>
-        <translation type="unfinished"/>
+        <translation>Word dokument</translation>
     </message>
     <message>
         <source>PowerPoint Document</source>
-        <translation type="unfinished"/>
+        <translation>PowerPoint Dokument</translation>
     </message>
     <message>
         <source>Excel Document</source>
-        <translation type="unfinished"/>
+        <translation>Excel Dokument</translation>
     </message>
     <message>
         <source>%1 Client is already running</source>
-        <translation type="unfinished"/>
+        <translation>%1 Klienten körs redan</translation>
     </message>
     <message>
         <source>Choose the disk letter for %1</source>
-        <translation type="unfinished"/>
+        <translation>Välj diskbokstav för %1</translation>
     </message>
     <message>
         <source>No permission to sync</source>
-        <translation type="unfinished"/>
+        <translation>Inga rättigheter för att synka</translation>
     </message>
     <message>
         <source>No permission to write</source>
-        <translation type="unfinished"/>
+        <translation>Inga rättigheter för att skriva</translation>
     </message>
     <message>
         <source>Update to file %1 denied by folder permission setting</source>
-        <translation type="unfinished"/>
+        <translation>Uppdatering av fil %1 nekad av mapprättighetersinställning</translation>
     </message>
     <message>
         <source>Path %1 ends with space or period character</source>
-        <translation type="unfinished"/>
+        <translation>Sökvägen %1 slutar med ett blanksteg eller punkt tecken</translation>
     </message>
     <message>
         <source>Path %1 contains invalid characters like &apos;|&apos; or &apos;:&apos;</source>
-        <translation type="unfinished"/>
+        <translation>Sökvägen %1 innehåller ett ogiltigt tecken, t.ex &apos;|&apos; eller &apos;:&apos;</translation>
     </message>
     <message>
         <source>Created or updated a file %1 in a non-writable library or folder</source>
-        <translation type="unfinished"/>
+        <translation>Skapat eller uppdaterat en fil %1 i en ej skrivbar katalog eller mapp</translation>
     </message>
     <message>
         <source>Concurrent updates to file %1. File is saved as conflict file</source>
-        <translation type="unfinished"/>
+        <translation>Krockande uppdateringar av filen %1. Filen är sparad som en konfliktfil</translation>
     </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
     <message>
         <source>Authorization expired, please re-login</source>
-        <translation type="unfinished"/>
+        <translation>Autentisiering utgången, vänligen logga in igen</translation>
     </message>
 </context>
 <context>
     <name>SeaDriveRootDialog</name>
     <message>
         <source>Choose SeaDrive Cache Folder</source>
-        <translation type="unfinished"/>
+        <translation>Välj SeaDrive Cache Mapp</translation>
     </message>
     <message>
         <source>Your files will appear in a local cache folder. Please choose the folder:</source>
-        <translation type="unfinished"/>
+        <translation>Dina filer kommer finnas i en lokal cachemapp. Vänligen välj mappen:</translation>
     </message>
     <message>
         <source>choose...</source>
-        <translation type="unfinished"/>
+        <translation>välj...</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Choose %1 Cache Folder </source>
-        <translation type="unfinished"/>
+        <translation>Välj %1 Cachemapp</translation>
     </message>
     <message>
         <source>Choose %1 Cache Folder</source>
-        <translation type="unfinished"/>
+        <translation>Välj %1 Cachemapp</translation>
     </message>
     <message>
         <source>Please choose %1 cache folder</source>
-        <translation type="unfinished"/>
+        <translation>Vänligen välj %1 cachemappen</translation>
     </message>
     <message>
         <source>Create %1 folder failed!</source>
-        <translation type="unfinished"/>
+        <translation>Skapa %1 mappen misslyckades!</translation>
     </message>
 </context>
 <context>
     <name>SeadriveGui</name>
     <message>
         <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
-        <translation type="unfinished"/>
+        <translation>Du behöver tillåta %1 kärntillägg manuellt i systemegenskaper. Klicka OK för att öppna systemegenskaper dialogen. Vänligen starta om %1 efter det.</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to install kernel driver</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att initiera: misslyckades att installera kärndrivrutin</translation>
     </message>
     <message>
         <source>Faild to choose a disk letter</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades välja en diskbokstav</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att initiera: misslyckades att skapa seadrive monteringsmapp</translation>
     </message>
     <message>
         <source>Failed to initialize log: %1</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att initiera logg: %1</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"/>
+        <translation>Ja</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"/>
+        <translation>Nej</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <source>failed to save client id</source>
-        <translation type="unfinished"/>
+        <translation>misslyckades att spara klientid</translation>
     </message>
     <message>
         <source>failed to access %1</source>
-        <translation type="unfinished"/>
+        <translation>misslyckades att öppna %1</translation>
     </message>
     <message>
         <source>incorrect client id</source>
-        <translation type="unfinished"/>
+        <translation>felaktigt klientid</translation>
     </message>
     <message>
         <source>failed to read %1</source>
-        <translation type="unfinished"/>
+        <translation>misslyckades att läsa %1</translation>
     </message>
     <message>
         <source>Auto logon failed, fall back to manual login</source>
-        <translation type="unfinished"/>
+        <translation>Autologin misslyckades, gå tillbaka till manuell inloggning</translation>
     </message>
     <message>
         <source>Faild to choose a cache directory</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att välja cachekatalog</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create %1 folder</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att initiera: misslyckades att skapa %1 mappen</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create %1 logs folder</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att initiera: misslyckades att skapa %1 loggmappen</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create %1 data folder</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att initiera: misslyckades att skapa %1 datamappen</translation>
     </message>
 </context>
 <context>
     <name>SeafileExtensionHandler</name>
     <message>
         <source>Failed to lock file</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att låsa fil</translation>
     </message>
     <message>
         <source>Failed to unlock file</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att låsa upp fil</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
+        <translation>Filen &quot;%1&quot; är låst av %2</translation>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att hämta låsinformation för filen &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
     <name>SeafileLinkDialog</name>
     <message>
         <source>%1 Internal Link</source>
-        <translation type="unfinished"/>
+        <translation>%1 Internlänk</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera till urklipp</translation>
     </message>
     <message>
         <source>%1 Internal Link:</source>
-        <translation type="unfinished"/>
+        <translation>%1 Internlänk:</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
     <name>SeafileRpcClient</name>
     <message>
         <source>internal error: failed to connect to %1 daemon</source>
-        <translation type="unfinished"/>
+        <translation>Interntfel: misslyckades att ansluta till %1 daemon</translation>
     </message>
 </context>
 <context>
     <name>SeafileTrayIcon</name>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Quit</translation>
     </message>
     <message>
         <source>Search files</source>
-        <translation type="unfinished"/>
+        <translation>Sök filer</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <source>Show file sync errors</source>
-        <translation type="unfinished"/>
+        <translation>Visa filsynkfel</translation>
     </message>
     <message>
         <source>Open %1 &amp;folder</source>
-        <translation type="unfinished"/>
+        <translation>Öppna %1 &amp;folder</translation>
     </message>
     <message>
         <source>open %1 folder</source>
-        <translation type="unfinished"/>
+        <translation>öppna %1 mappen</translation>
     </message>
     <message>
         <source>Open &amp;logs folder</source>
-        <translation type="unfinished"/>
+        <translation>Öppna %logs mappen</translation>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation type="unfinished"/>
+        <translation>&amp;About</translation>
     </message>
     <message>
         <source>Show the application&apos;s About box</source>
-        <translation type="unfinished"/>
+        <translation>Visa applikationens Om box</translation>
     </message>
     <message>
         <source>&amp;Online help</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Online hjälp</translation>
     </message>
     <message>
         <source>Accounts</source>
-        <translation type="unfinished"/>
+        <translation>Konton</translation>
     </message>
     <message>
         <source>not logged in</source>
-        <translation type="unfinished"/>
+        <translation>inte inloggad</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation type="unfinished"/>
+        <translation>Välj</translation>
     </message>
     <message>
         <source>Logout</source>
-        <translation type="unfinished"/>
+        <translation>Logga ut</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort</translation>
     </message>
     <message>
         <source>Add an account</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till konto</translation>
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished"/>
+        <translation>Fil</translation>
     </message>
     <message>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</translation>
     </message>
     <message>
         <source>Do you want to remove the local cache?</source>
-        <translation type="unfinished"/>
+        <translation>Vill du ta bort den lokala cachen?</translation>
     </message>
     <message>
         <source>Failed to remove local cache of account %1</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att ta bort den lokala cachen för konto %1</translation>
     </message>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
-        <translation type="unfinished"/>
+        <translation>Är du säker på att du vill ta bort konto från &quot;%1&quot;?</translation>
     </message>
     <message>
         <source>Failed to delete account</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades ta bort konto</translation>
     </message>
     <message>
         <source>Up %1, Down %2</source>
-        <translation type="unfinished"/>
+        <translation>Upp %1, Ned %2</translation>
     </message>
     <message>
         <source>About %1</source>
-        <translation type="unfinished"/>
+        <translation>Om %1</translation>
     </message>
     <message>
         <source>Transfer progress</source>
-        <translation type="unfinished"/>
+        <translation>Överföringsframsteg</translation>
     </message>
     <message>
         <source>open %1 log folder</source>
-        <translation type="unfinished"/>
+        <translation>öppna %1 logmapp</translation>
     </message>
     <message>
         <source>open %1 online help</source>
-        <translation type="unfinished"/>
+        <translation>öppna %1 online hjälp</translation>
     </message>
     <message>
         <source>Show encrypted libraries</source>
-        <translation type="unfinished"/>
+        <translation>Visa krypterade kataloger</translation>
     </message>
     <message>
         <source>Failed to logout account %1</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att logga ut konto %1</translation>
     </message>
 </context>
 <context>
     <name>SearchDialog</name>
     <message>
         <source>Search files</source>
-        <translation type="unfinished"/>
+        <translation>Sök filer</translation>
     </message>
     <message>
         <source>All file types</source>
-        <translation type="unfinished"/>
+        <translation>Alla filtyper</translation>
     </message>
     <message>
         <source>Custom file type</source>
-        <translation type="unfinished"/>
+        <translation>Egen filtyp</translation>
     </message>
     <message>
         <source>retry</source>
-        <translation type="unfinished"/>
+        <translation>prova igen</translation>
     </message>
     <message>
         <source>Failed to search&lt;br/&gt;Please %1</source>
-        <translation type="unfinished"/>
+        <translation>Misslyckades att söka &lt;br/&gt;Vänligen %1</translation>
     </message>
     <message>
         <source>No result found</source>
-        <translation type="unfinished"/>
+        <translation>Inga resultat funna</translation>
     </message>
 </context>
 <context>
     <name>SearchItemsTableModel</name>
     <message>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Namn</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>Storlek</translation>
     </message>
     <message>
         <source>Last Modified</source>
-        <translation type="unfinished"/>
+        <translation>Senast Ändrad</translation>
     </message>
     <message>
         <source>Kind</source>
-        <translation type="unfinished"/>
+        <translation>Snäll</translation>
     </message>
 </context>
 <context>
     <name>SearchItemsTableView</name>
     <message>
         <source>&amp;Open the file</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Open filen</translation>
     </message>
     <message>
         <source>&amp;Show in folder</source>
-        <translation type="unfinished"/>
+        <translation>%Show i mappen</translation>
     </message>
     <message>
         <source>File not found, maybe not synchorized yet</source>
-        <translation type="unfinished"/>
+        <translation>Filen ej funnen, kanske inte synkroniserad ännu</translation>
     </message>
 </context>
 <context>
     <name>SettingsDialog</name>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <source>Auto start %1 after login</source>
-        <translation type="unfinished"/>
+        <translation>Automatiskt starta %1 efter inloggning</translation>
     </message>
     <message>
         <source>Cache directory:</source>
-        <translation type="unfinished"/>
+        <translation>Cache-katalog:</translation>
     </message>
     <message>
         <source>Enable search</source>
-        <translation type="unfinished"/>
+        <translation>Tillåt sök</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Ingen</translation>
     </message>
     <message>
         <source>HTTP Proxy</source>
-        <translation type="unfinished"/>
+        <translation>HTTP Proxy</translation>
     </message>
     <message>
         <source>Socks5 Proxy</source>
-        <translation type="unfinished"/>
+        <translation>Socks5 Proxy</translation>
     </message>
     <message>
         <source>System Proxy</source>
-        <translation type="unfinished"/>
+        <translation>System Proxy</translation>
     </message>
     <message>
         <source>enabled search</source>
-        <translation type="unfinished"/>
+        <translation>tillåten sökning</translation>
     </message>
     <message>
         <source>disabled search</source>
-        <translation type="unfinished"/>
+        <translation>avstängd sökning</translation>
     </message>
     <message>
         <source>You have %1. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>Du har %1. Starta om för att applicera den?</translation>
     </message>
     <message>
         <source>You have changed drive access option. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>Du har ändrat diskaccess inställning. Starta om för att applicera den?</translation>
     </message>
     <message>
         <source>Please choose the cache folder</source>
-        <translation type="unfinished"/>
+        <translation>Vänligen välj cache-mappen</translation>
     </message>
     <message>
         <source>You have changed disk letter. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>Du har ändrat diskbokstav. Starta om för att applicera den?</translation>
     </message>
     <message>
         <source>language</source>
-        <translation type="unfinished"/>
+        <translation>språk</translation>
     </message>
     <message>
         <source>The proxy host address can&apos;t be empty</source>
-        <translation type="unfinished"/>
+        <translation>Proxy host addressen kan inte vara tom</translation>
     </message>
     <message>
         <source>The proxy port is incorrect</source>
-        <translation type="unfinished"/>
+        <translation>Proxyporten är felaktig</translation>
     </message>
     <message>
         <source>Proxy username can&apos;t be empty</source>
-        <translation type="unfinished"/>
+        <translation>Proxy användarnamnet kan inte vara tom</translation>
     </message>
     <message>
         <source>Proxy password can&apos;t be empty</source>
-        <translation type="unfinished"/>
+        <translation>Proxy lösenordet kan inte vara tom</translation>
     </message>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"/>
+        <translation>Dialog</translation>
     </message>
     <message>
         <source>Notify when libraries are synchronized</source>
-        <translation type="unfinished"/>
+        <translation>Meddela när katalogerna är synkroniserade</translation>
     </message>
     <message>
         <source>Enable sync temporary files of MSOffice/Libreoffice</source>
-        <translation type="unfinished"/>
+        <translation>Tillåt synkronisering av temporära filer för MSOffice/Libreoffice</translation>
     </message>
     <message>
         <source>Download speed limit (KB/s):</source>
-        <translation type="unfinished"/>
+        <translation>Nedlaggning hastighetsbegränsning (KB/s):</translation>
     </message>
     <message>
         <source>Upload speed limit (KB/s):</source>
-        <translation type="unfinished"/>
+        <translation>Uppladdning hastighetsbegränsning (KB/s):</translation>
     </message>
     <message>
         <source>Basic</source>
-        <translation type="unfinished"/>
+        <translation>Bas</translation>
     </message>
     <message>
         <source>Enable FinderSync Extension</source>
-        <translation type="unfinished"/>
+        <translation>Aktivera FinderSync Tillägg</translation>
     </message>
     <message>
         <source>Enable Explorer Extension</source>
-        <translation type="unfinished"/>
+        <translation>Aktivera Explorer Tillägg</translation>
     </message>
     <message>
         <source>Check for updates automatically</source>
-        <translation type="unfinished"/>
+        <translation>Kontrollera efter uppdateringar automatiskt</translation>
     </message>
     <message>
         <source>Disk letter (need restart): </source>
-        <translation type="unfinished"/>
+        <translation>Diskbokstav (kräver omstart):</translation>
     </message>
     <message>
         <source>Do not verify server certificate in HTTPS syncing</source>
-        <translation type="unfinished"/>
+        <translation>Verifiera inte servercertifikatet i HTTPS synkronisering</translation>
     </message>
     <message>
         <source>Only allow current user to access the drive</source>
-        <translation type="unfinished"/>
+        <translation>Tillåt endast nuvarande användare att ansluta till disken</translation>
     </message>
     <message>
         <source>Cache clean interval (in minutes):</source>
-        <translation type="unfinished"/>
+        <translation>Cache rensningsintervall (i minuter):</translation>
     </message>
     <message>
         <source>Cache size limit (in GB):</source>
-        <translation type="unfinished"/>
+        <translation>Cachestorleksbegränsning (i GB):</translation>
     </message>
     <message>
         <source>select...</source>
-        <translation type="unfinished"/>
+        <translation>välj...</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation type="unfinished"/>
+        <translation>Avancerat</translation>
     </message>
     <message>
         <source>Language (need restart)</source>
-        <translation type="unfinished"/>
+        <translation>Språk (kräver omstart)</translation>
     </message>
     <message>
         <source>Language</source>
-        <translation type="unfinished"/>
+        <translation>Språk</translation>
     </message>
     <message>
         <source>Proxy Type:</source>
-        <translation type="unfinished"/>
+        <translation>Proxy Typ:</translation>
     </message>
     <message>
         <source>Host:</source>
-        <translation type="unfinished"/>
+        <translation>Host:</translation>
     </message>
     <message>
         <source>Port:</source>
-        <translation type="unfinished"/>
+        <translation>Port:</translation>
     </message>
     <message>
         <source>Username:</source>
-        <translation type="unfinished"/>
+        <translation>Användarnamn:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation type="unfinished"/>
+        <translation>Lösenord:</translation>
     </message>
     <message>
         <source>Proxy server requires a password</source>
-        <translation type="unfinished"/>
+        <translation>Proxyserver kräver ett lösenord</translation>
     </message>
     <message>
         <source>Network</source>
-        <translation type="unfinished"/>
+        <translation>Nätverk</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <source>Enable search in finder</source>
-        <translation type="unfinished"/>
+        <translation>Aktivera sök i finder</translation>
     </message>
     <message>
         <source>You have changed language, Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>Du har ändrat språk. Starta om för att applicera?</translation>
     </message>
     <message>
         <source>You have changed cache directory. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>Du har ändrat cachekatalog. Starta om för att applicera?</translation>
     </message>
     <message>
         <source>You have changed %1 cache folder. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>Du har ändrat %1 cachemapp. Starta om för att applicera?</translation>
     </message>
 </context>
 <context>
     <name>SharedLinkDialog</name>
     <message>
         <source>Share Link</source>
-        <translation type="unfinished"/>
+        <translation>Delningslänk</translation>
     </message>
     <message>
         <source>Share link:</source>
-        <translation type="unfinished"/>
+        <translation>Delningslänk:</translation>
     </message>
     <message>
         <source>Direct Download</source>
-        <translation type="unfinished"/>
+        <translation>Direkt Nedladdning</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera till urklipp</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
     <name>ShibLoginDialog</name>
     <message>
         <source>Login with Shibboleth</source>
-        <translation type="unfinished"/>
+        <translation>Logga in med Shibboleth</translation>
     </message>
 </context>
 <context>
     <name>SyncErrorsDialog</name>
     <message>
         <source>File Sync Errors</source>
-        <translation type="unfinished"/>
+        <translation>Filsynkroniseringsfel</translation>
     </message>
     <message>
         <source>No sync errors.</source>
-        <translation type="unfinished"/>
+        <translation>Inga synkroniseringsfel.</translation>
     </message>
 </context>
 <context>
     <name>SyncErrorsTableModel</name>
     <message>
         <source>Double click to open the library</source>
-        <translation type="unfinished"/>
+        <translation>Dubbelklicka för att öppna katalog</translation>
     </message>
     <message>
         <source>Library</source>
-        <translation type="unfinished"/>
+        <translation>Katalog</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>Sökväg</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Fel</translation>
     </message>
     <message>
         <source>Time</source>
-        <translation type="unfinished"/>
+        <translation>Tid</translation>
     </message>
 </context>
 <context>
     <name>TransferItemsTableModel</name>
     <message>
         <source>finished</source>
-        <translation type="unfinished"/>
+        <translation>klar</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Namn</translation>
     </message>
     <message>
         <source>Progress</source>
-        <translation type="unfinished"/>
+        <translation>framsteg</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>Storlek</translation>
     </message>
 </context>
 <context>
     <name>TransferProgressDialog</name>
     <message>
         <source>Transfer Progress</source>
-        <translation type="unfinished"/>
+        <translation>Överföringsframsteg</translation>
     </message>
     <message>
         <source>Upload</source>
-        <translation type="unfinished"/>
+        <translation>Ladda upp</translation>
     </message>
     <message>
         <source>Download</source>
-        <translation type="unfinished"/>
+        <translation>Ladda ned</translation>
     </message>
 </context>
 <context>
     <name>UninstallHelperDialog</name>
     <message>
         <source>Uninstall %1</source>
-        <translation type="unfinished"/>
+        <translation>Avinstallera %1</translation>
     </message>
     <message>
         <source>Do you want to remove the %1 account information?</source>
-        <translation type="unfinished"/>
+        <translation>Vill du ta bort %1 kontoinformation?</translation>
     </message>
     <message>
         <source>Removing account information...</source>
-        <translation type="unfinished"/>
+        <translation>Tar bort konto information...</translation>
     </message>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"/>
+        <translation>Dialog</translation>
     </message>
     <message>
         <source>text</source>
-        <translation type="unfinished"/>
+        <translation>text</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"/>
+        <translation>Ja</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"/>
+        <translation>Nej</translation>
     </message>
 </context>
 </TS>

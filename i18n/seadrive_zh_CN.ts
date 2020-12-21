@@ -722,7 +722,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Created or updated a file %1 in a non-writable library or folder</source>
-        <translation>在只读资料库或文件夹中创建或更新文件 ％1</translation>
+        <translation>在只读资料库或文件夹中创建或更新文件 %1</translation>
     </message>
     <message>
         <source>Concurrent updates to file %1. File is saved as conflict file</source>
