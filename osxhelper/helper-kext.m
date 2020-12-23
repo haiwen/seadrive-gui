@@ -9,7 +9,7 @@
 #import "helper-log.h"
 
 #define MACOSX_ADMIN_GROUP_NAME "admin"
-#define OSXFUSE_SYSCTL_TUNABLES_ADMIN "vfs.generic.osxfuse.tunables.admin_group"
+#define MACFUSE_SYSCTL_TUNABLES_ADMIN "vfs.generic.macfuse.tunables.admin_group"
 
 @implementation HelperKext
 
@@ -41,18 +41,18 @@
     }
     [self loadKextID:kextID path:kextPath completion:completion];
 
-    // Make any user in the admin group also admins of the osxfuse
+    // Make any user in the admin group also admins of the macfuse
     // admin group. Otherwise we can not use "allow_other" flag when
     // mounting.
     // See https://github.com/osxfuse/osxfuse/wiki/Mount-options#allow_other
     struct group *admin_group = getgrnam(MACOSX_ADMIN_GROUP_NAME);
     if (admin_group) {
         int admin_gid = admin_group->gr_gid;
-        HelperLog(@"setting osxfuse admin group to osx admin group (group id = %d)", admin_group);
-        (void)sysctlbyname(OSXFUSE_SYSCTL_TUNABLES_ADMIN, NULL, NULL,
+        HelperLog(@"setting macfuse admin group to osx admin group (group id = %d)", admin_group);
+        (void)sysctlbyname(MACFUSE_SYSCTL_TUNABLES_ADMIN, NULL, NULL,
                            &admin_gid, sizeof(admin_gid));
     } else {
-        HelperLog(@"osxfuse admin group not set because reading admin group failed");
+        HelperLog(@"macfuse admin group not set because reading admin group failed");
     }
   }];
 }
@@ -92,7 +92,7 @@
 }
 
 + (BOOL)updateLoaderFileAttributes:(NSString *)destination error:(NSError **)error {
-  NSString *path = [NSString stringWithFormat:@"%@/Contents/Resources/load_osxfuse", destination];
+  NSString *path = [NSString stringWithFormat:@"%@/Contents/Resources/load_macfuse", destination];
   return [self setUID:path error:error];
 }
 
