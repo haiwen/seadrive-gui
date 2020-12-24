@@ -92,6 +92,13 @@ private:
 class ExtCommandsHandler: public QThread {
     Q_OBJECT
 public:
+    enum FileLockStatus {
+        NONE = 0,
+        LOCKED_BY_OTHER,
+        LOCKED_BY_OWNER,
+        LOCKED_AUTO,
+    };
+
     ExtCommandsHandler(HANDLE pipe);
     void run();
 
@@ -118,7 +125,7 @@ private:
 
     void handleGenShareLink(const QStringList& args, bool internal);
     QString handleListRepos(const QStringList& args);
-    QString handleGetFileStatus(const QStringList& args);
+    QString handleGetFileLockStatus(const QStringList& args);
     void handleLockFile(const QStringList& args, bool lock);
     void handlePrivateShare(const QStringList& args, bool to_group);
     void handleShowHistory(const QStringList& args);
