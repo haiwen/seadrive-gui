@@ -507,7 +507,7 @@ void ExtCommandsHandler::run()
         } else if (cmd == "get-internal-link") {
             handleGenShareLink(args, true);
         } else if (cmd == "get-file-status") {
-            resp = handleGetFileStatus(args);
+            resp = handleGetFileLockStatus(args);
         } else if (cmd == "lock-file") {
             handleLockFile(args, true);
         } else if (cmd == "unlock-file") {
@@ -638,33 +638,42 @@ QString ExtCommandsHandler::handleListRepos(const QStringList& args)
     return fullpaths.join("\n");
 }
 
-QString ExtCommandsHandler::handleGetFileStatus(const QStringList& args)
+QString ExtCommandsHandler::handleGetFileLockStatus(const QStringList& args)
 {
     if (args.size() != 1) {
         return "";
     }
     QString path = args[0];
 
-    QString status;
-    QString category;
-    if (getCategoryFromPath(path, &category)) {
-        QMutexLocker locker(&rpc_client_mutex_);
-        if (rpc_client_->getCategorySyncStatus(category, &status) != 0) {
-            return "";
-        }
-        return status;
+    QString repo_id, path_in_repo;
+    if (!parseRepoFileInfo(path, &repo_id, &path_in_repo)) {
+        return"";
     }
 
-    QString repo;
-    QString path_in_repo;
-    if (!getRepoAndRelativePath(path, &repo, &path_in_repo, &category)) {
-        qWarning() << "failed to getRepoAndRelativePath for " << path;
-        return "";
-    }
 
     QMutexLocker locker(&rpc_client_mutex_);
-    if (rpc_client_->getRepoFileStatus(path_concat(category, repo), path_in_repo, &status) != 0) {
-        return "";
+    int lock_status;
+    if (!rpc_client_->getRepoFileLockStatus(repo_id, path_in_repo, &lock_status)) {
+        qWarning() << "failed to file lock status" << path;
+        return"";
+    }
+
+    QString status = "none";
+    switch (lock_status) {
+    case NONE:
+        status = "none";
+        break;
+    case LOCKED_BY_OTHER:
+        status = "locked";
+        break;
+    case LOCKED_BY_OWNER:
+        status = "locked_by_me";
+        break;
+    case LOCKED_AUTO:
+        status = "locked_auto";
+        break;
+    default:
+        qWarning() << "unknown locked status";
     }
 
     return status;

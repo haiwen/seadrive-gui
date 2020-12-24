@@ -324,6 +324,26 @@ int SeafileRpcClient::getRepoFileStatus(const QString& repo_uname,
     return 0;
 }
 
+#if defined(Q_OS_WIN32)
+bool SeafileRpcClient::getRepoFileLockStatus(const QString& repo_id,
+                                             const QString& path_in_repo,
+                                             int* status)
+{
+    GError *error = NULL;
+    *status = searpc_client_call__int(seadrive_rpc_client_, "seafile_get_path_lock_status",
+                            &error, 2,
+                            "string", toCStr(repo_id),
+                            "string", toCStr(path_in_repo));
+    if (error) {
+        qWarning("unable to get file locked status %s %s", toCStr(repo_id),
+                 toCStr(path_in_repo));
+        g_error_free(error);
+        return false;
+    }
+    return true;
+}
+#endif
+
 int SeafileRpcClient::getCategorySyncStatus(const QString& category, QString *status)
 {
     GError *error = NULL;
