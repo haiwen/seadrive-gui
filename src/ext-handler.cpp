@@ -658,9 +658,7 @@ QString ExtCommandsHandler::handleGetFileLockStatus(const QStringList& args)
         return"";
     }
 
-    qWarning() << "lock status is" << lock_status;
-
-    QString status;
+    QString status = "none";
     switch (lock_status) {
     case NONE:
         status = "none";
