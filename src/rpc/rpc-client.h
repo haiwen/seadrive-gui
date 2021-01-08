@@ -126,6 +126,9 @@ public:
 
     bool exitSeadriveDaemon();
 
+    bool unCachePath(const QString& repo_id,
+                     const QString& path_in_repo);
+
 private:
     Q_DISABLE_COPY(SeafileRpcClient)
 

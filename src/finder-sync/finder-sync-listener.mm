@@ -32,6 +32,7 @@ enum CommandType : uint32_t {
     DoShowFileHistory = 6,
     DoDownloadFile = 7,
     DoShowFileLockedBy = 8,
+    DoUncache = 9,
 };
 
 struct mach_msg_command_send_t {
@@ -284,6 +285,11 @@ static void handleGetWatchSet(mach_msg_command_rcv_t* msg) {
         break;
     case DoShowFileLockedBy:
         QMetaObject::invokeMethod(finder_sync_host_.get(), "doShowFileLockedBy",
+                                  Qt::QueuedConnection,
+                                  Q_ARG(QString, msg->body));
+        break;
+    case DoUncache:
+        QMetaObject::invokeMethod(finder_sync_host_.get(), "doUncache",
                                   Qt::QueuedConnection,
                                   Q_ARG(QString, msg->body));
         break;

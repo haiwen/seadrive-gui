@@ -31,6 +31,7 @@ private slots:
     void onLockFileSuccess();
     void doShowFileHistory(const QString& path);
     void doDownloadFile(const QString& path);
+    void doUncache(const QString& path);
     void onGetSmartLinkSuccess(const QString& smart_link);
     void onGetSmartLinkFailed(const ApiError& error);
     void doShowFileLockedBy(const QString& path);
