@@ -413,6 +413,14 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
                 keyEquivalent:@""];
     [downloadFileItem setImage:seafileImage];
 
+    // add item for uncacher file or folder
+    NSMenuItem *uncacheItem =
+        [menu addItemWithTitle:NSLocalizedString(@"Uncache",
+                                                 @"Uncache")
+                        action:@selector(uncacheAction:)
+                    keyEquivalent:@""];
+        [uncacheItem setImage:seafileImage];
+
     // add a menu item for lockFile
     if (isCategoryDir(file_path)) {
         return nil;
@@ -496,6 +504,30 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
       client_->doSendCommandWithPath(FinderSyncClient::DoShareLink,
                                      path.c_str());
     });
+}
+
+- (IBAction)uncacheAction:(id)sender {
+    NSArray *items =
+        [[FIFinderSyncController defaultController] selectedItemURLs];
+    if (![items count])
+        return;
+    NSURL *item = items.firstObject;
+
+    // do it in another thread
+    std::string path =
+        item.path.precomposedStringWithCanonicalMapping.UTF8String;
+    NSNumber *isDirectory;
+    if ([item getResourceValue:&isDirectory
+                        forKey:NSURLIsDirectoryKey
+                         error:nil] &&
+        [isDirectory boolValue])
+        path += "/";
+
+    dispatch_async(self.client_command_queue_, ^{
+      client_->doSendCommandWithPath(FinderSyncClient::DoUncache,
+                                     path.c_str());
+    });
+
 }
 
 - (IBAction)downloadFileAction:(id)sender {
