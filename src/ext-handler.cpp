@@ -275,8 +275,9 @@ void SeafileExtensionHandler::generateShareLink(const QString& repo_id,
 
         req->send();
     } else {
+        QString encoded_path_in_repo = path_in_repo.toUtf8().toPercentEncoding();
         GetSharedLinkRequest *req = new GetSharedLinkRequest(
-            account, repo_id, path_in_repo);
+            account, repo_id, encoded_path_in_repo);
 
         connect(req, SIGNAL(success(const QString&)),
                 this, SLOT(onShareLinkGenerated(const QString&)));
