@@ -241,8 +241,9 @@ void FinderSyncHost::doShareLink(const QString &path) {
         return;
     }
 
+    QString encoded_path_in_repo = path_in_repo.toUtf8().toPercentEncoding();
     get_shared_link_req_.reset(new GetSharedLinkRequest(
-        account, repo_id, path_in_repo));
+        account, repo_id, encoded_path_in_repo));
 
     connect(get_shared_link_req_.get(), SIGNAL(success(const QString &)), this,
             SLOT(onShareLinkGenerated(const QString &)));
