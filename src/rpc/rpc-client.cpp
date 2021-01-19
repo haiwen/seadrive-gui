@@ -421,7 +421,7 @@ bool SeafileRpcClient::switchAccount(const Account& account)
                             "seafile_switch_account",
                             &error,
 #if defined(_MSC_VER)
-                            5,
+                            6,
 #else
                             4,
 #endif
@@ -434,6 +434,8 @@ bool SeafileRpcClient::switchAccount(const Account& account)
 #if defined(_MSC_VER)
                             "string",
                             toCStr(QDir::toNativeSeparators(gui->mountDir())),
+                            "string",
+                            toCStr(account.accountInfo.name),
 #endif
                             "int",
                             account.isPro() ? 1 : 0);
@@ -458,7 +460,7 @@ bool SeafileRpcClient::switchAccount(const Account& account, bool ispro)
                             "seafile_switch_account",
                             &error,
 #if defined(_MSC_VER)
-                            5,
+                            6,
 #else
                             4,
 #endif
@@ -471,6 +473,8 @@ bool SeafileRpcClient::switchAccount(const Account& account, bool ispro)
 #if defined(_MSC_VER)
                             "string",
                             toCStr(QDir::toNativeSeparators(gui->mountDir())),
+                            "string",
+                            toCStr(account.accountInfo.name),
 #endif
                             "int",
                             ispro ? 1 : 0);
