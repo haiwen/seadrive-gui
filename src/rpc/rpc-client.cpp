@@ -417,11 +417,17 @@ bool SeafileRpcClient::switchAccount(const Account& account)
     if (serverAddr.endsWith("/")) {
         serverAddr = serverAddr.left(serverAddr.size() - 1);
     }
+
+    QString email_addr = account.username;
+    int pos = email_addr.indexOf("@");
+    QString nickname = account.accountInfo.name;
+    QString name = nickname.isEmpty() ? email_addr.left(pos) : nickname;
+
     searpc_client_call__int(seadrive_rpc_client_,
                             "seafile_switch_account",
                             &error,
 #if defined(_MSC_VER)
-                            5,
+                            6,
 #else
                             4,
 #endif
@@ -434,6 +440,8 @@ bool SeafileRpcClient::switchAccount(const Account& account)
 #if defined(_MSC_VER)
                             "string",
                             toCStr(QDir::toNativeSeparators(gui->mountDir())),
+                            "string",
+                            toCStr(name),
 #endif
                             "int",
                             account.isPro() ? 1 : 0);
@@ -454,11 +462,18 @@ bool SeafileRpcClient::switchAccount(const Account& account, bool ispro)
     if (serverAddr.endsWith("/")) {
         serverAddr = serverAddr.left(serverAddr.size() - 1);
     }
+
+
+    QString email_addr = account.username;
+    int pos = email_addr.indexOf("@");
+    QString nickname = account.accountInfo.name;
+    QString name = nickname.isEmpty() ? email_addr.left(pos) : nickname;
+
     searpc_client_call__int(seadrive_rpc_client_,
                             "seafile_switch_account",
                             &error,
 #if defined(_MSC_VER)
-                            5,
+                            6,
 #else
                             4,
 #endif
@@ -471,6 +486,8 @@ bool SeafileRpcClient::switchAccount(const Account& account, bool ispro)
 #if defined(_MSC_VER)
                             "string",
                             toCStr(QDir::toNativeSeparators(gui->mountDir())),
+                            "string",
+                            toCStr(name),
 #endif
                             "int",
                             ispro ? 1 : 0);
