@@ -61,6 +61,7 @@ QList<SyncError> SyncError::listFromJSON(const json_t *json)
 #define SYNC_ERROR_ID_PATH_INVALID_CHARACTER    22
 #define SYNC_ERROR_ID_UPDATE_TO_READ_ONLY_REPO  23
 #define SYNC_ERROR_ID_CONFLICT                  24
+#define SYNC_ERROR_ID_UPDATE_NOT_IN_REPO        25
 
 #define SYNC_ERROR_ID_GENERAL_ERROR             100
 
@@ -148,6 +149,8 @@ QString SyncError::syncErrorIdToErrorStr(int error_id, const QString& path)
         return QObject::tr("Created or updated a file %1 in a non-writable library or folder").arg(file);
     case SYNC_ERROR_ID_CONFLICT:
         return QObject::tr("Concurrent updates to file %1. File is saved as conflict file").arg(file);
+    case SYNC_ERROR_ID_UPDATE_NOT_IN_REPO:
+        return QObject::tr("%1 is not added to a library and will not be uploaded").arg(file);
     case SYNC_ERROR_ID_GENERAL_ERROR:
     default:
         return QObject::tr("Unknown error");
