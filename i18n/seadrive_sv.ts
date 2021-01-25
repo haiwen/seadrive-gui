@@ -34,37 +34,6 @@
     </message>
 </context>
 <context>
-    <name>AutoLogonDialog</name>
-    <message>
-        <source>auto login</source>
-        <translation>auto login</translation>
-    </message>
-    <message>
-        <source>auto logining, please wait a moment</source>
-        <translation>auto login, vänligen vänta</translation>
-    </message>
-    <message>
-        <source>Please input server address</source>
-        <translation>Vänligen ange serveradress</translation>
-    </message>
-    <message>
-        <source>address</source>
-        <translation>adress</translation>
-    </message>
-    <message>
-        <source>Please enter the server address</source>
-        <translation>Vänligen ange serveradress</translation>
-    </message>
-    <message>
-        <source>%1 is not a valid server address</source>
-        <translation>%1 är inte en giltig serveradress</translation>
-    </message>
-    <message>
-        <source>login failed</source>
-        <translation>inloggningen misslyckades</translation>
-    </message>
-</context>
-<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -176,6 +145,17 @@
     <message>
         <source>Markdown</source>
         <translation>Markdown</translation>
+    </message>
+</context>
+<context>
+    <name>FinderSyncHost</name>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -728,47 +708,16 @@ Vänligen klicka på &quot;Klart&quot; knappen för att öppna %1 mappen.</trans
         <source>Concurrent updates to file %1. File is saved as conflict file</source>
         <translation>Krockande uppdateringar av filen %1. Filen är sparad som en konfliktfil</translation>
     </message>
+    <message>
+        <source>%1 is not added to a library and will not be uploaded</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
     <message>
         <source>Authorization expired, please re-login</source>
         <translation>Autentisiering utgången, vänligen logga in igen</translation>
-    </message>
-</context>
-<context>
-    <name>SeaDriveRootDialog</name>
-    <message>
-        <source>Choose SeaDrive Cache Folder</source>
-        <translation>Välj SeaDrive Cache Mapp</translation>
-    </message>
-    <message>
-        <source>Your files will appear in a local cache folder. Please choose the folder:</source>
-        <translation>Dina filer kommer finnas i en lokal cachemapp. Vänligen välj mappen:</translation>
-    </message>
-    <message>
-        <source>choose...</source>
-        <translation>välj...</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>Choose %1 Cache Folder </source>
-        <translation>Välj %1 Cachemapp</translation>
-    </message>
-    <message>
-        <source>Choose %1 Cache Folder</source>
-        <translation>Välj %1 Cachemapp</translation>
-    </message>
-    <message>
-        <source>Please choose %1 cache folder</source>
-        <translation>Vänligen välj %1 cachemappen</translation>
-    </message>
-    <message>
-        <source>Create %1 folder failed!</source>
-        <translation>Skapa %1 mappen misslyckades!</translation>
     </message>
 </context>
 <context>
@@ -844,25 +793,6 @@ Vänligen klicka på &quot;Klart&quot; knappen för att öppna %1 mappen.</trans
     <message>
         <source>Failed to initialize: failed to create %1 data folder</source>
         <translation>Misslyckades att initiera: misslyckades att skapa %1 datamappen</translation>
-    </message>
-</context>
-<context>
-    <name>SeafileExtensionHandler</name>
-    <message>
-        <source>Failed to lock file</source>
-        <translation>Misslyckades att låsa fil</translation>
-    </message>
-    <message>
-        <source>Failed to unlock file</source>
-        <translation>Misslyckades att låsa upp fil</translation>
-    </message>
-    <message>
-        <source>File &quot;%1&quot; is locked by %2</source>
-        <translation>Filen &quot;%1&quot; är låst av %2</translation>
-    </message>
-    <message>
-        <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation>Misslyckades att hämta låsinformation för filen &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
