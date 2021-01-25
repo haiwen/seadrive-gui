@@ -114,7 +114,7 @@ TransferItemsHeadView::TransferItemsHeadView(QWidget* parent)
     setHighlightSections(false);
     setDefaultAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-    setSectionResizeMode(QHeaderView::ResizeToContents);
+    setSectionResizeMode(QHeaderView::Interactive);
 #else
     setResizeMode(QHeaderView::ResizeToContents);
 #endif
