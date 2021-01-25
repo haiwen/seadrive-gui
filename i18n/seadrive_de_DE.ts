@@ -34,37 +34,6 @@
     </message>
 </context>
 <context>
-    <name>AutoLogonDialog</name>
-    <message>
-        <source>auto login</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>auto logining, please wait a moment</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Please input server address</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>address</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Please enter the server address</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>%1 is not a valid server address</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>login failed</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -176,6 +145,17 @@
     <message>
         <source>Markdown</source>
         <translation>Markdown</translation>
+    </message>
+</context>
+<context>
+    <name>FinderSyncHost</name>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -728,47 +708,16 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
         <source>Concurrent updates to file %1. File is saved as conflict file</source>
         <translation>Dateikonflikt bei der Aktualisierung von %1. Die Datei ist als Konfliktversion gesichert</translation>
     </message>
+    <message>
+        <source>%1 is not added to a library and will not be uploaded</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
     <message>
         <source>Authorization expired, please re-login</source>
         <translation>Sitzung abgelaufen, bitte neu anmelden</translation>
-    </message>
-</context>
-<context>
-    <name>SeaDriveRootDialog</name>
-    <message>
-        <source>Choose SeaDrive Cache Folder</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Your files will appear in a local cache folder. Please choose the folder:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>choose...</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Choose %1 Cache Folder </source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Choose %1 Cache Folder</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Please choose %1 cache folder</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Create %1 folder failed!</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -844,25 +793,6 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     <message>
         <source>Failed to initialize: failed to create %1 data folder</source>
         <translation>Fehler bei der Initialisierung: Es konnte kein %1 Ordner für Dateien erstellt werden</translation>
-    </message>
-</context>
-<context>
-    <name>SeafileExtensionHandler</name>
-    <message>
-        <source>Failed to lock file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to unlock file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>

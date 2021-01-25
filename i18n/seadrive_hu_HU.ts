@@ -34,37 +34,6 @@
     </message>
 </context>
 <context>
-    <name>AutoLogonDialog</name>
-    <message>
-        <source>auto login</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>auto logining, please wait a moment</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Please input server address</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>address</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Please enter the server address</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>%1 is not a valid server address</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>login failed</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -177,6 +146,17 @@ Kérem válassza ki a betűt:</translation>
     <message>
         <source>Markdown</source>
         <translation>Markdown-fájl</translation>
+    </message>
+</context>
+<context>
+    <name>FinderSyncHost</name>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -729,47 +709,16 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
         <source>Concurrent updates to file %1. File is saved as conflict file</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>%1 is not added to a library and will not be uploaded</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
     <message>
         <source>Authorization expired, please re-login</source>
         <translation>Az autentikáció lejárt, jelentkezz be újra</translation>
-    </message>
-</context>
-<context>
-    <name>SeaDriveRootDialog</name>
-    <message>
-        <source>Choose SeaDrive Cache Folder</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Your files will appear in a local cache folder. Please choose the folder:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>choose...</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Choose %1 Cache Folder </source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Choose %1 Cache Folder</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Please choose %1 cache folder</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Create %1 folder failed!</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -844,25 +793,6 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
     </message>
     <message>
         <source>Failed to initialize: failed to create %1 data folder</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>SeafileExtensionHandler</name>
-    <message>
-        <source>Failed to lock file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to unlock file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to get lock information for file &quot;%1&quot;</source>
         <translation type="unfinished"/>
     </message>
 </context>

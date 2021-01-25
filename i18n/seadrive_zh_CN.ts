@@ -34,37 +34,6 @@
     </message>
 </context>
 <context>
-    <name>AutoLogonDialog</name>
-    <message>
-        <source>auto login</source>
-        <translation>自动登录</translation>
-    </message>
-    <message>
-        <source>auto logining, please wait a moment</source>
-        <translation>自动登录中， 请稍后</translation>
-    </message>
-    <message>
-        <source>Please input server address</source>
-        <translation>请输入服务器地址</translation>
-    </message>
-    <message>
-        <source>address</source>
-        <translation>地址</translation>
-    </message>
-    <message>
-        <source>Please enter the server address</source>
-        <translation>请输入服务器地址</translation>
-    </message>
-    <message>
-        <source>%1 is not a valid server address</source>
-        <translation>%1 不是有效的服务器地址</translation>
-    </message>
-    <message>
-        <source>login failed</source>
-        <translation>登录失败</translation>
-    </message>
-</context>
-<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -176,6 +145,17 @@
     <message>
         <source>Markdown</source>
         <translation>Markdown</translation>
+    </message>
+</context>
+<context>
+    <name>FinderSyncHost</name>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation>文件 &quot;%1&quot; 被 %2 锁定</translation>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation>获取文件 &quot;%1&quot; 的锁定信息失败</translation>
     </message>
 </context>
 <context>
@@ -728,47 +708,16 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>Concurrent updates to file %1. File is saved as conflict file</source>
         <translation>同时更新文件 ％1。文件另存为冲突文件</translation>
     </message>
+    <message>
+        <source>%1 is not added to a library and will not be uploaded</source>
+        <translation>%1 没有被添加到资料库文件夹中，因此不会被上传</translation>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
     <message>
         <source>Authorization expired, please re-login</source>
         <translation>账号验证信息已过期，请重新登录</translation>
-    </message>
-</context>
-<context>
-    <name>SeaDriveRootDialog</name>
-    <message>
-        <source>Choose SeaDrive Cache Folder</source>
-        <translation>选择 SeaDrive 缓存目录</translation>
-    </message>
-    <message>
-        <source>Your files will appear in a local cache folder. Please choose the folder:</source>
-        <translation>你的文件将会出现在一个本地缓存文件夹，请选择文件夹:</translation>
-    </message>
-    <message>
-        <source>choose...</source>
-        <translation>选择...</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>确定</translation>
-    </message>
-    <message>
-        <source>Choose %1 Cache Folder </source>
-        <translation>选择 %1 缓存目录</translation>
-    </message>
-    <message>
-        <source>Choose %1 Cache Folder</source>
-        <translation>选择 %1 缓存目录</translation>
-    </message>
-    <message>
-        <source>Please choose %1 cache folder</source>
-        <translation>请选择 %1 缓存目录</translation>
-    </message>
-    <message>
-        <source>Create %1 folder failed!</source>
-        <translation>创建 %1  目录失败！</translation>
     </message>
 </context>
 <context>
@@ -844,25 +793,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Failed to initialize: failed to create %1 data folder</source>
         <translation>初始化失败：创建 %1 数据数据文件夹失败</translation>
-    </message>
-</context>
-<context>
-    <name>SeafileExtensionHandler</name>
-    <message>
-        <source>Failed to lock file</source>
-        <translation>锁定文件失败</translation>
-    </message>
-    <message>
-        <source>Failed to unlock file</source>
-        <translation>解锁文件失败</translation>
-    </message>
-    <message>
-        <source>File &quot;%1&quot; is locked by %2</source>
-        <translation>文件 “%1” 被 %2 锁定</translation>
-    </message>
-    <message>
-        <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation>获取文件 “%1” 的锁定信息失败</translation>
     </message>
 </context>
 <context>
