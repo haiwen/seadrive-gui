@@ -793,8 +793,11 @@ private:
 class CreateSharedLinkRequest : public SeafileApiRequest {
 Q_OBJECT
 public:
-    CreateSharedLinkRequest(const Account &account, const QString &repo_id,
-                            const QString &path);
+    CreateSharedLinkRequest(const Account &account,
+                            const QString &repo_id,
+                            const QString &path,
+                            const QString &password,
+                            const QString &expire_days);
 
 signals:
     void success(const QString& url);
@@ -809,8 +812,12 @@ private:
 class GetSharedLinkRequest : public SeafileApiRequest {
     Q_OBJECT
 public:
-    GetSharedLinkRequest(const Account &account, const QString &repo_id,
-                             const QString &path);
+    GetSharedLinkRequest(const Account &account,
+                         const QString &repo_id,
+                         const QString &path);
+
+    const QString getRepoId() {return repo_id_;}
+    const QString getRepoPath() {return repo_path_;}
 
 signals:
     void success(const QString& url);
@@ -821,6 +828,8 @@ protected slots:
 private:
     Q_DISABLE_COPY(GetSharedLinkRequest)
     CreateSharedLinkRequest* create_shared_link_req_;
+    const QString repo_id_;
+    const QString repo_path_;
 };
 
 class GetFileUploadLinkRequest : public SeafileApiRequest {
@@ -1071,4 +1080,22 @@ private:
     QScopedPointer<GetDirentsRequest, QScopedPointerDeleteLater> dirents_req_;
 };
 
+class GetUploadLinkRequest : public SeafileApiRequest
+{
+Q_OBJECT
+public:
+    GetUploadLinkRequest(const Account& account,
+                         const QString& repo_id,
+                         const QString& path);
+    const QString& path() const { return path_; }
+signals:
+    void success(const QString& upload_link);
+
+protected slots:
+    void requestSuccess(QNetworkReply& reply);
+
+private:
+    Q_DISABLE_COPY(GetUploadLinkRequest);
+    QString path_;
+};
 #endif // SEADRIVE_GUI_API_REQUESTS_H

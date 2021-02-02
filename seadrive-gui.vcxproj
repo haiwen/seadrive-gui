@@ -76,6 +76,7 @@
     <ClCompile Include="src\ui\transfer-progress-dialog.cpp" />
     <ClCompile Include="src\ui\tray-icon.cpp" />
     <ClCompile Include="src\ui\uninstall-helper-dialog.cpp" />
+    <ClCompile Include="src\ui\uploadlink-dialog.cpp" />
     <ClCompile Include="src\utils\api-utils.cpp" />
     <ClCompile Include="src\utils\file-utils.cpp" />
     <ClCompile Include="src\utils\i18n-utils.cpp" />
@@ -99,6 +100,7 @@
     <ClInclude Include="resource.h" />
     <QtMoc Include="src\ui\uninstall-helper-dialog.h" />
     <ClInclude Include="src\crash-handler.h" />
+    <QtMoc Include="src\ui\uploadlink-dialog.h" />
     <ClInclude Include="third_party\WinSparkle-0.5.3\include\winsparkle-version.h" />
     <ClInclude Include="third_party\WinSparkle-0.5.3\include\winsparkle.h" />
     <QtMoc Include="src\api\requests.h" />

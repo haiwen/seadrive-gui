@@ -17,6 +17,7 @@
 #include "api/requests.h"
 #include "ui/sharedlink-dialog.h"
 #include "ui/seafilelink-dialog.h"
+#include "ui/uploadlink-dialog.h"
 // #include "ui/private-share-dialog.h"
 #include "rpc/rpc-client.h"
 #include "api/api-error.h"
@@ -220,6 +221,9 @@ SeafileExtensionHandler::SeafileExtensionHandler()
     connect(listener_thread_, SIGNAL(showLockedBy(const QString&, const QString&)),
             this, SLOT(showLockedBy(const QString&, const QString&)));
 
+    connect(listener_thread_, &ExtConnectionListenerThread::getUploadLink,
+            this, &SeafileExtensionHandler::getUploadLink);
+
     rpc_client_ = new SeafileRpcClient();
 }
 
@@ -249,6 +253,41 @@ void SeafileExtensionHandler::stop()
         // status icons
         SHChangeNotify (SHCNE_ASSOCCHANGED, SHCNF_IDLIST, NULL, NULL);
     }
+}
+
+void SeafileExtensionHandler::getUploadLink(const QString& repo_id, const QString& path_in_repo)
+{
+    const Account account =
+            gui->accountManager()->currentAccount();
+    if (!account.isValid()) {
+        return;
+    }
+
+    GetUploadLinkRequest *req = new GetUploadLinkRequest(
+            account, repo_id, "/" + path_in_repo);
+    connect(req, &GetUploadLinkRequest::success,
+            this,&SeafileExtensionHandler::onGetUploadLinkSuccess);
+    connect(req, &GetUploadLinkRequest::failed,
+            this,&SeafileExtensionHandler::onGetUploadLinkFailed);
+    req->send();
+
+}
+
+void SeafileExtensionHandler::onGetUploadLinkSuccess(const QString& upload_link)
+{
+    UploadLinkDialog *dialog = new UploadLinkDialog(upload_link, NULL);
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+    dialog->show();
+    dialog->raise();
+    dialog->activateWindow();
+}
+
+void SeafileExtensionHandler::onGetUploadLinkFailed(const ApiError& error)
+{
+    GetUploadLinkRequest *req = qobject_cast<GetUploadLinkRequest *>(sender());
+    const QString file = ::getBaseName(req->path());
+    gui->messageBox(tr("Failed to get upload link information for file \"%1\"").arg(file));
+    req->deleteLater();
 }
 
 void SeafileExtensionHandler::generateShareLink(const QString& repo_id,
@@ -353,7 +392,14 @@ void SeafileExtensionHandler::openUrlWithAutoLogin(const QUrl& url)
 
 void SeafileExtensionHandler::onShareLinkGenerated(const QString& link)
 {
-    SharedLinkDialog *dialog = new SharedLinkDialog(link, NULL);
+    GetSharedLinkRequest *req = qobject_cast<GetSharedLinkRequest *>(sender());
+    const QString repo_id = req->getRepoId();
+    const QString repo_path = req->getRepoPath();
+
+    SharedLinkDialog *dialog = new SharedLinkDialog(link,
+                                                    repo_id,
+                                                    repo_path,
+                                                    NULL);
     dialog->setAttribute(Qt::WA_DeleteOnClose);
     dialog->show();
     dialog->raise();
@@ -479,6 +525,8 @@ void ExtConnectionListenerThread::servePipeInNewThread(HANDLE pipe)
             this, SIGNAL(openUrlWithAutoLogin(const QUrl&)));
     connect(t, SIGNAL(showLockedBy(const QString&, const QString&)),
             this, SIGNAL(showLockedBy(const QString&, const QString&)));
+    connect(t, &ExtCommandsHandler::getUploadLink,
+            this, &ExtConnectionListenerThread::getUploadLink);
     t->start();
 }
 
@@ -521,6 +569,8 @@ void ExtCommandsHandler::run()
             handleShowHistory(args);
         } else if (cmd == "show-locked-by") {
             handleShowLockedBy(args);
+        } else if (cmd == "get-upload-link") {
+            handleGetUploadLink(args);
         } else if (cmd == "download") {
             handleDownload(args);
         } else {
@@ -637,6 +687,21 @@ QString ExtCommandsHandler::handleListRepos(const QStringList& args)
     }
 
     return fullpaths.join("\n");
+}
+
+void ExtCommandsHandler::handleGetUploadLink(const QStringList& args)
+{
+    if (args.size() != 1) {
+        return;
+    }
+    QString path = normalizedPath(args[0]);
+    QString repo_id, path_in_repo;
+
+    if (!parseRepoFileInfo(path, &repo_id, &path_in_repo)) {
+        return;
+    }
+
+    emit getUploadLink(repo_id, path_in_repo);
 }
 
 QString ExtCommandsHandler::handleGetFileLockStatus(const QStringList& args)

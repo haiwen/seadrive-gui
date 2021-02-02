@@ -254,6 +254,7 @@ SET(moc_headers
   src/ui/search-dialog.h
   src/ui/settings-dialog.h
   src/ui/sharedlink-dialog.h
+  src/ui/uploadlink-dialog.h
   src/ui/sync-errors-dialog.h
   src/ui/tray-icon.h
   src/ui/about-dialog.h
@@ -371,6 +372,7 @@ SET(seadrive_gui_sources
   src/ui/search-dialog.cpp
   src/ui/settings-dialog.cpp
   src/ui/sharedlink-dialog.cpp
+  src/ui/uploadlink-dialog.cpp
   src/ui/sync-errors-dialog.cpp
   src/ui/tray-icon.cpp
   src/ui/about-dialog.cpp

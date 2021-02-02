@@ -434,8 +434,17 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
 
     // we don't have a lock-file menuitem for folders
     // early return
-    if (is_dir)
+    if (is_dir) {
+        NSMenuItem *showUploadLinkByMenuItem =
+            [menu addItemWithTitle:NSLocalizedString(@"Get Seafile Upload Link",
+                                                     @"Get Seafile Upload Link")
+                            action:@selector(getUploadLinkAction:)
+                        keyEquivalent:@""];
+            [showUploadLinkByMenuItem setImage:seafileImage];
+
         return menu;
+    }
+
 
     // find where we have it
     auto file = file_status_.find(is_dir ? file_path + "/" : file_path);
@@ -528,6 +537,22 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
                                      path.c_str());
     });
 
+}
+
+- (IBAction)getUploadLinkAction:(id)sender {
+    NSArray *items =
+            [[FIFinderSyncController defaultController] selectedItemURLs];
+    if (![items count])
+        return;
+    NSURL *item = items.firstObject;
+
+    // do it in another thread
+    std::string path =
+            item.path.precomposedStringWithCanonicalMapping.UTF8String;
+    dispatch_async(self.client_command_queue_, ^{
+        client_->doSendCommandWithPath(FinderSyncClient::DoGetUploadLink,
+                                       path.c_str());
+    });
 }
 
 - (IBAction)downloadFileAction:(id)sender {
