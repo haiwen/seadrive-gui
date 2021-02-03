@@ -33,6 +33,7 @@ enum CommandType : uint32_t {
     DoDownloadFile = 7,
     DoShowFileLockedBy = 8,
     DoUncache = 9,
+    DoGetUploadLink = 10,
 };
 
 struct mach_msg_command_send_t {
@@ -255,6 +256,12 @@ static void handleGetWatchSet(mach_msg_command_rcv_t* msg) {
         break;
     case DoInternalLink:
         QMetaObject::invokeMethod(finder_sync_host_.get(), "doInternalLink",
+                                  Qt::QueuedConnection,
+                                  Q_ARG(QString, msg->body));
+        break;
+
+    case DoGetUploadLink:
+        QMetaObject::invokeMethod(finder_sync_host_.get(), "doGetUploadLink",
                                   Qt::QueuedConnection,
                                   Q_ARG(QString, msg->body));
         break;

@@ -37,6 +37,9 @@ private slots:
     void doShowFileLockedBy(const QString& path);
     void onGetFileLockInfoSuccess(bool found, const QString& lock_owner);
     void onGetFileLockInfoFailed(const ApiError& error);
+    void doGetUploadLink(const QString& path);
+    void onGetUploadLinkSuccess(const QString& upload_link);
+    void onGetUploadLinkFailed(const ApiError& error);
 private:
     bool lookUpFileInformation(const QString &path, QString *repo_id, QString *path_in_repo);
     SeafileRpcClient *rpc_client_;

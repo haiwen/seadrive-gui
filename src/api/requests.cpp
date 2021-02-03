@@ -51,6 +51,7 @@ const char* kGetFileSharedLinkUrl = "api/v2.1/share-links/?repo_id=%1&path=%2";
 const char* kCreateFileSharedLinkUrl = "api/v2.1/share-links/";
 const char* kGetFileUploadUrl = "api2/repos/%1/upload-link/";
 const char* kGetFileUpdateUrl = "api2/repos/%1/update-link/";
+const char* kGetUploadLinkUrl = "api/v2.1/upload-links/";
 const char* kGetStarredFilesUrl = "api2/starredfiles/";
 const char* kFileOperationCopy = "api2/repos/%1/fileops/copy/";
 const char* kFileOperationMove = "api2/repos/%1/fileops/move/";
@@ -1226,13 +1227,27 @@ void GetFileDownloadLinkRequest::requestSuccess(QNetworkReply& reply)
 
 CreateSharedLinkRequest::CreateSharedLinkRequest(const Account &account,
                                                  const QString &repo_id,
-                                                 const QString &path)
+                                                 const QString &path,
+                                                 const QString &password,
+                                                 const QString &expire_days)
         : SeafileApiRequest(
         account.getAbsoluteUrl(QString(kCreateFileSharedLinkUrl)),
         SeafileApiRequest::METHOD_POST, account.token)
 {
+    QString repo_in_path = QByteArray::fromPercentEncoding(path.toUtf8());
     setFormParam("repo_id", repo_id);
-    setFormParam("path", path);
+    setFormParam("path", repo_in_path);
+    if (!password.isEmpty()) {
+        setFormParam("password", password);
+    }
+
+    QDateTime now = QDateTime::currentDateTime();
+    int offset = now.offsetFromUtc();
+    now.setOffsetFromUtc(offset);
+    QString target_time = now.addDays(expire_days.toInt()).toString(Qt::ISODate);
+    if (!expire_days.isEmpty()) {
+        setFormParam("expiration_time", target_time);
+    }
 }
 
 void CreateSharedLinkRequest::requestSuccess(QNetworkReply& reply)
@@ -1256,9 +1271,8 @@ GetSharedLinkRequest::GetSharedLinkRequest(const Account &account,
                                            const QString &path)
     : SeafileApiRequest(
           account.getAbsoluteUrl(QString(kGetFileSharedLinkUrl).arg(repo_id).arg(path)),
-          SeafileApiRequest::METHOD_GET, account.token)
+          SeafileApiRequest::METHOD_GET, account.token), repo_id_(repo_id), repo_path_(path)
 {
-    create_shared_link_req_ = new CreateSharedLinkRequest(account, repo_id, path);
 }
 
 void GetSharedLinkRequest::requestSuccess(QNetworkReply& reply)
@@ -1274,12 +1288,7 @@ void GetSharedLinkRequest::requestSuccess(QNetworkReply& reply)
     QScopedPointer<json_t, JsonPointerCustomDeleter> json(root);
 
     const char* share_link = json_string_value(json_object_get(json_array_get(json.data(),0), "link"));
-    if (!QString(share_link).isEmpty()) {
-        emit success(share_link);
-    } else {
-        connect(create_shared_link_req_, SIGNAL(success(const QString&)), this, SIGNAL(success(const QString&)));
-        create_shared_link_req_->send();
-    }
+    emit success(share_link);
 }
 
 CreateDirectoryRequest::CreateDirectoryRequest(const Account &account,
@@ -1622,5 +1631,32 @@ void GetFileLockInfoRequest::onGetDirentsSuccess(bool current_readonly, const QL
         }
     }
     emit success(false, "");
+}
+
+GetUploadLinkRequest::GetUploadLinkRequest(const Account& account,
+                                           const QString& repo_id,
+                                           const QString& path)
+        : SeafileApiRequest(
+        account.getAbsoluteUrl(QString(kGetUploadLinkUrl)),
+        SeafileApiRequest::METHOD_POST, account.token),
+        path_(path)
+{
+    setFormParam("repo_id", repo_id);
+    setFormParam("path", path);
+}
+
+void GetUploadLinkRequest::requestSuccess(QNetworkReply& reply)
+{
+    json_error_t error;
+    json_t* root = parseJSON(reply, &error);
+    if (!root) {
+        qWarning("failed to parse json:%s\n", error.text);
+        emit failed(ApiError::fromJsonError());
+        return;
+    }
+    QScopedPointer<json_t, JsonPointerCustomDeleter> json(root);
+    QMap<QString, QVariant> dict = mapFromJSON(json.data(), &error);
+    QString upload_link = dict["link"].toString();
+    emit success(upload_link);
 }
 

@@ -16,6 +16,7 @@
 #include "api/requests.h"
 #include "ui/sharedlink-dialog.h"
 #include "ui/seafilelink-dialog.h"
+#include "ui/uploadlink-dialog.h"
 #include "utils/utils.h"
 #include "utils/file-utils.h"
 
@@ -142,6 +143,7 @@ static std::vector<std::string> watch_set_;
 static std::unique_ptr<GetSharedLinkRequest, QtLaterDeleter> get_shared_link_req_;
 static std::unique_ptr<LockFileRequest, QtLaterDeleter> lock_file_req_;
 static std::unique_ptr<GetFileLockInfoRequest, QtLaterDeleter> get_lock_info_req_;
+static std::unique_ptr<GetUploadLinkRequest, QtLaterDeleter> get_upload_link_req_;
 
 FinderSyncHost::FinderSyncHost() : rpc_client_(new SeafileRpcClient) {
     rpc_client_->connectDaemon();
@@ -310,7 +312,11 @@ void FinderSyncHost::doLockFile(const QString &path, bool lock)
 
 void FinderSyncHost::onShareLinkGenerated(const QString &link)
 {
-    SharedLinkDialog *dialog = new SharedLinkDialog(link, NULL);
+    GetSharedLinkRequest *req = qobject_cast<GetSharedLinkRequest *>(sender());
+    const QString repo_id = req->getRepoId();
+    const QString repo_path = req->getRepoPath();
+
+    SharedLinkDialog *dialog = new SharedLinkDialog(link, repo_id, repo_path, NULL);
     dialog->setAttribute(Qt::WA_DeleteOnClose);
     dialog->show();
     dialog->raise();
@@ -425,4 +431,47 @@ void FinderSyncHost::onGetFileLockInfoFailed(const ApiError& error)
 {
     const QString file = ::getBaseName(get_lock_info_req_->path());
     gui->messageBox(tr("Failed to get lock information for file \"%1\"").arg(file));
+}
+
+void FinderSyncHost::doGetUploadLink(const QString &path)
+{
+    QString repo_id;
+    QString path_in_repo;
+
+    const Account& account = gui->accountManager()->currentAccount();
+    if (!account.isValid()) {
+        return;
+    }
+
+    if (!lookUpFileInformation(path, &repo_id, &path_in_repo)) {
+        qWarning("[FinderSync] invalid path %s", path.toUtf8().data());
+        return;
+    }
+
+    // printf ("get upload link for %s\n", toCStr(path));
+    get_upload_link_req_.reset(new GetUploadLinkRequest(
+            account, repo_id, QString("/").append(path_in_repo)));
+
+    connect(get_upload_link_req_.get(), SIGNAL(success(const QString&)), this,
+            SLOT(onGetUploadLinkSuccess(const QString &)));
+    connect(get_upload_link_req_.get(), SIGNAL(failed(const ApiError&)), this,
+            SLOT(onGetUploadLinkFailed(const ApiError&)));
+
+    get_upload_link_req_->send();
+}
+
+void FinderSyncHost::onGetUploadLinkSuccess(const QString& upload_link)
+{
+    // printf ("get upload link is %s", toCStr(upload_link));
+    UploadLinkDialog *dialog = new UploadLinkDialog(upload_link, NULL);
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+    dialog->show();
+    dialog->raise();
+    dialog->activateWindow();
+}
+
+void FinderSyncHost::onGetUploadLinkFailed(const ApiError& error)
+{
+    const QString file = ::getBaseName(get_upload_link_req_->path());
+    gui->messageBox(tr("Failed to get upload link for file \"%1\"").arg(file));
 }

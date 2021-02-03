@@ -73,6 +73,7 @@ class FinderSyncClient {
         DoDownloadFile = 7,
         DoShowFileLockedBy = 8,
         DoUncache = 9,
+        DoGetUploadLink = 10,
     };
 
     FinderSyncClient(FinderSync *parent);
