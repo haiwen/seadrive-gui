@@ -18,6 +18,7 @@ private slots:
     void slotGenSharedLink();
     void slotGetSharedLink(const QString& link);
     void slotPasswordEditTextChanged(const QString& text);
+    void slotShowPasswordCheckBoxClicked(int state);
 
 private:
     QString text_;

@@ -24,10 +24,16 @@ SharedLinkDialog::SharedLinkDialog(const QString& link, const QString &repo_id,
     QLabel *password_label = new QLabel(tr("Password(At least 8 characters)"));
     layout->addWidget(password_label);
 
+    QCheckBox *show_password = new QCheckBox(tr("Show password"), this);
+    connect(show_password, &QCheckBox::stateChanged,
+            this, &SharedLinkDialog::slotShowPasswordCheckBoxClicked);
+    layout->addWidget(show_password);
+
     password_editor_ = new QLineEdit;
     layout->addWidget(password_editor_);
     connect(password_editor_, &QLineEdit::textChanged, this,
             &SharedLinkDialog::slotPasswordEditTextChanged);
+    password_editor_->setEchoMode(QLineEdit::Password);
 
     QLabel *expire_days_label = new QLabel(tr("Expire days"));
     layout->addWidget(expire_days_label);
@@ -76,6 +82,7 @@ SharedLinkDialog::SharedLinkDialog(const QString& link, const QString &repo_id,
     setLayout(layout);
 
     if (!link.isEmpty()) {
+        show_password->hide();
         password_label->hide();
         password_editor_->hide();
         expire_days_label->hide();
@@ -140,5 +147,14 @@ void SharedLinkDialog::slotPasswordEditTextChanged(const QString &text)
         generate_link_pushbutton_->setEnabled(true);
     }
 
+}
+
+void SharedLinkDialog::slotShowPasswordCheckBoxClicked(int state)
+{
+    if (state == Qt::Checked) {
+        password_editor_ -> setEchoMode(QLineEdit::Normal);
+        return;
+    }
+    password_editor_ -> setEchoMode(QLineEdit::Password);
 }
 
