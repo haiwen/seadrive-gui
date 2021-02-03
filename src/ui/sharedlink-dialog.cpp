@@ -24,16 +24,18 @@ SharedLinkDialog::SharedLinkDialog(const QString& link, const QString &repo_id,
     QLabel *password_label = new QLabel(tr("Password(At least 8 characters)"));
     layout->addWidget(password_label);
 
+    QHBoxLayout *passwd_hlayout = new QHBoxLayout;
     QCheckBox *show_password = new QCheckBox(tr("Show password"), this);
     connect(show_password, &QCheckBox::stateChanged,
             this, &SharedLinkDialog::slotShowPasswordCheckBoxClicked);
-    layout->addWidget(show_password);
+    passwd_hlayout->addWidget(show_password);
 
     password_editor_ = new QLineEdit;
-    layout->addWidget(password_editor_);
+    passwd_hlayout->addWidget(password_editor_);
     connect(password_editor_, &QLineEdit::textChanged, this,
             &SharedLinkDialog::slotPasswordEditTextChanged);
     password_editor_->setEchoMode(QLineEdit::Password);
+    layout->addLayout(passwd_hlayout);
 
     QLabel *expire_days_label = new QLabel(tr("Expire days"));
     layout->addWidget(expire_days_label);
