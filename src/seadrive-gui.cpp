@@ -62,6 +62,7 @@
 namespace {
 
 #if defined(Q_OS_WIN32)
+    const char *kPreconfigureCacheDirectory = "PreconfigureCacheDirectory";
     const char *kSeadriveDirName = "seadrive";
 #else
     const char *kSeadriveDirName = ".seadrive";
@@ -337,21 +338,41 @@ void SeadriveGui::start()
     }
     qWarning("Using disk letter %s", toCStr(disk_letter_));
 #elif defined(_MSC_VER)
-    QString seadrive_root;
-    if (settings_mgr_->getSeadriveRoot(&seadrive_root)) {
-        seadrive_root_= seadrive_root;
-    } else {
-        qWarning("cache directory not set, asking the user for it");
-
-        SeaDriveRootDialog dialog;
-        if (dialog.exec() != QDialog::Accepted) {
-            errorAndExit(tr("Faild to choose a cache directory"));
-            return;
+    QString preconfig_cache_dir = gui->readPreconfigureExpandedString(kPreconfigureCacheDirectory);
+    if (!preconfig_cache_dir.isEmpty()) {
+        QString prev_seadrive_root;
+        if (settings_mgr_->getSeadriveRoot(&prev_seadrive_root)) {
+            if (prev_seadrive_root.toLower() != preconfig_cache_dir.toLower()) {
+               RegElement::removeIconRegItem();
+            }
         }
 
-        seadrive_root_= dialog.seaDriveRoot();
-        settings_mgr_->setSeadriveRoot(seadrive_root_);
+        QDir cache_dir;
+        if (!cache_dir.exists(preconfig_cache_dir)) {
+            bool ok = cache_dir.mkdir(preconfig_cache_dir);
+            if (!ok) {
+                errorAndExit(tr("Failed to create seadrive cache directory"));
+            }
+        }
+        seadrive_root_= preconfig_cache_dir;
+    } else {
+        QString seadrive_root;
+        if (settings_mgr_->getSeadriveRoot(&seadrive_root)) {
+            seadrive_root_= seadrive_root;
+        } else {
+            qWarning("cache directory not set, asking the user for it");
+
+            SeaDriveRootDialog dialog;
+            if (dialog.exec() != QDialog::Accepted) {
+                errorAndExit(tr("Faild to choose a cache directory"));
+                return;
+            }
+
+            seadrive_root_= dialog.seaDriveRoot();
+        }
     }
+
+    settings_mgr_->setSeadriveRoot(seadrive_root_);
     qWarning("Using cache directory: %s", toCStr(seadrive_root_));
 
 #endif
