@@ -702,11 +702,27 @@ const QString AccountManager::genSyncRootName(const Account& account)
 
     QString new_sync_root_name = sync_root_name;
 
+
+    // Get all sync root names except current account.
+    QVector<QString> other_account_sync_root_names;
+    foreach (SyncRootInfo sync_root_info, sync_root_infos_)
+    {
+        if (sync_root_info.getUrl() != url || sync_root_info.getUserName() != sync_root_name) {
+            QString sync_root_name = sync_root_info.syncRootName();
+            other_account_sync_root_names.push_back(sync_root_name);
+        }
+    }
+
     QDir dir(seadrive_root);
     int i = 1;
 
     while(dir.exists(new_sync_root_name)) {
         new_sync_root_name = QString("%1_%2").arg(sync_root_name).arg(i);
+        i++;
+    }
+
+    while (other_account_sync_root_names.contains(new_sync_root_name)) {
+        new_sync_root_name = QString("%1_%2").arg(new_sync_root_name).arg(i);
         i++;
     }
 
