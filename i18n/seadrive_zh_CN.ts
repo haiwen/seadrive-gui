@@ -157,6 +157,10 @@
         <source>Failed to get lock information for file &quot;%1&quot;</source>
         <translation>获取文件 &quot;%1&quot; 的锁定信息失败</translation>
     </message>
+    <message>
+        <source>Failed to get upload link for file &quot;%1&quot;</source>
+        <translation>获取文件 &quot;%1&quot; 的上传链接失败</translation>
+    </message>
 </context>
 <context>
     <name>InitSyncDialog</name>
@@ -706,7 +710,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Concurrent updates to file %1. File is saved as conflict file</source>
-        <translation>同时更新文件 ％1。文件另存为冲突文件</translation>
+        <translation>同时更新文件 %1。文件另存为冲突文件</translation>
     </message>
     <message>
         <source>%1 is not added to a library and will not be uploaded</source>
@@ -793,6 +797,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Failed to initialize: failed to create %1 data folder</source>
         <translation>初始化失败：创建 %1 数据数据文件夹失败</translation>
+    </message>
+    <message>
+        <source>Failed to create seadrive cache directory</source>
+        <translation>创建缓存目录失败</translation>
     </message>
 </context>
 <context>
@@ -1223,8 +1231,20 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>复制至剪贴板</translation>
     </message>
     <message>
-        <source>OK</source>
-        <translation>确认</translation>
+        <source>Password(At least 8 characters)</source>
+        <translation>密码（至少 8 个字符）</translation>
+    </message>
+    <message>
+        <source>Show password</source>
+        <translation>显示密码</translation>
+    </message>
+    <message>
+        <source>Expire days</source>
+        <translation>过期天数</translation>
+    </message>
+    <message>
+        <source>Generate link</source>
+        <translation>生成链接</translation>
     </message>
 </context>
 <context>
@@ -1331,6 +1351,25 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>No</source>
         <translation>否</translation>
+    </message>
+</context>
+<context>
+    <name>UploadLinkDialog</name>
+    <message>
+        <source>Upload Link</source>
+        <translation>上传链接</translation>
+    </message>
+    <message>
+        <source>Upload link:</source>
+        <translation>上传链接：</translation>
+    </message>
+    <message>
+        <source>Copy to clipboard</source>
+        <translation>复制到剪贴板</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>确定</translation>
     </message>
 </context>
 </TS>

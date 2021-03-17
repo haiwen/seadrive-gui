@@ -157,6 +157,10 @@
         <source>Failed to get lock information for file &quot;%1&quot;</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Failed to get upload link for file &quot;%1&quot;</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>InitSyncDialog</name>
@@ -794,6 +798,10 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
         <source>Failed to initialize: failed to create %1 data folder</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Failed to create seadrive cache directory</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SeafileLinkDialog</name>
@@ -1223,8 +1231,20 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
         <translation>Copiar al portapapeles</translation>
     </message>
     <message>
-        <source>OK</source>
-        <translation>OK</translation>
+        <source>Password(At least 8 characters)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expire days</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Generate link</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1330,6 +1350,25 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>No</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>UploadLinkDialog</name>
+    <message>
+        <source>Upload Link</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Upload link:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>OK</source>
         <translation type="unfinished"/>
     </message>
 </context>

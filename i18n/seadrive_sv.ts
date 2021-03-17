@@ -157,6 +157,10 @@
         <source>Failed to get lock information for file &quot;%1&quot;</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Failed to get upload link for file &quot;%1&quot;</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>InitSyncDialog</name>
@@ -794,6 +798,10 @@ Vänligen klicka på &quot;Klart&quot; knappen för att öppna %1 mappen.</trans
         <source>Failed to initialize: failed to create %1 data folder</source>
         <translation>Misslyckades att initiera: misslyckades att skapa %1 datamappen</translation>
     </message>
+    <message>
+        <source>Failed to create seadrive cache directory</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SeafileLinkDialog</name>
@@ -1223,8 +1231,20 @@ Vänligen klicka på &quot;Klart&quot; knappen för att öppna %1 mappen.</trans
         <translation>Kopiera till urklipp</translation>
     </message>
     <message>
-        <source>OK</source>
-        <translation>OK</translation>
+        <source>Password(At least 8 characters)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expire days</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Generate link</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1331,6 +1351,25 @@ Vänligen klicka på &quot;Klart&quot; knappen för att öppna %1 mappen.</trans
     <message>
         <source>No</source>
         <translation>Nej</translation>
+    </message>
+</context>
+<context>
+    <name>UploadLinkDialog</name>
+    <message>
+        <source>Upload Link</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Upload link:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>
