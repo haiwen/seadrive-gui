@@ -157,6 +157,10 @@
         <source>Failed to get lock information for file &quot;%1&quot;</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Failed to get upload link for file &quot;%1&quot;</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>InitSyncDialog</name>
@@ -793,6 +797,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>Failed to initialize: failed to create %1 data folder</source>
         <translation>初期化に失敗しました： ％1 データフォルダの作成に失敗しました</translation>
     </message>
+    <message>
+        <source>Failed to create seadrive cache directory</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SeafileLinkDialog</name>
@@ -1222,8 +1230,20 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>クリップボードにコピー</translation>
     </message>
     <message>
-        <source>OK</source>
-        <translation>よし</translation>
+        <source>Password(At least 8 characters)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expire days</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Generate link</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1330,6 +1350,25 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>No</source>
         <translation>いいえ</translation>
+    </message>
+</context>
+<context>
+    <name>UploadLinkDialog</name>
+    <message>
+        <source>Upload Link</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Upload link:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

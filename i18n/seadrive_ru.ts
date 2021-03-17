@@ -151,10 +151,14 @@
     <name>FinderSyncHost</name>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
+        <translation>Файл &quot;%1&quot; заблокирован %2</translation>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation>Не удалось получить информацию о блокировке файла &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <source>Failed to get upload link for file &quot;%1&quot;</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -710,7 +714,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>%1 is not added to a library and will not be uploaded</source>
-        <translation type="unfinished"/>
+        <translation>%1 не добавлен в библиотеку и не будет загружен</translation>
     </message>
 </context>
 <context>
@@ -793,6 +797,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Failed to initialize: failed to create %1 data folder</source>
         <translation>Не удалось инициализировать: не удалось создать папку для данных %1</translation>
+    </message>
+    <message>
+        <source>Failed to create seadrive cache directory</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1224,8 +1232,20 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>Копировать в буфер обмена</translation>
     </message>
     <message>
-        <source>OK</source>
-        <translation>ОК</translation>
+        <source>Password(At least 8 characters)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expire days</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Generate link</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1332,6 +1352,25 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>No</source>
         <translation>Нет</translation>
+    </message>
+</context>
+<context>
+    <name>UploadLinkDialog</name>
+    <message>
+        <source>Upload Link</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Upload link:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>
