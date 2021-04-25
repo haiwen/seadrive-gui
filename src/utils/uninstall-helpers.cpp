@@ -190,6 +190,10 @@ void do_remove_user_data()
     do_stop_app();
     set_seafile_auto_start(false);
 
+#if defined(_MSC_VER)
+    RegElement::removeAllSyncRootManagerItem();
+#endif
+
 #if defined(Q_OS_WIN32)
     if (hasPreconfigureKeepConfigWhenUninstall()) {
         return;

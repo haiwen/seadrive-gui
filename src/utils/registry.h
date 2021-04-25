@@ -47,7 +47,6 @@ public:
 
 public:
     static int removeRegKey(HKEY root, const QString& path, const QString& subkey);
-
     static int getIntValue(HKEY root, const QString& path, const QString& name, bool *exists=NULL, int default_val=0);
     static QString getStringValue(HKEY root, const QString& path, const QString& name, bool *exists=NULL, QString default_val=QString());
     static int getPreconfigureIntValue(const QString& name);
@@ -55,12 +54,16 @@ public:
 
     static QVariant getPreconfigureValue(const QString& name);
     static QVariant getValue(HKEY root, const QString& path, const QString& name);
+    static void removeAllSyncRootManagerItem();
 
 private:
     int openParentKey(HKEY *pKey);
 #if defined(_MSC_VER)
     static bool isSeadriveRegister(const QString &seadrive_key);
-    static QStringList RegElement::collectRegisterKeys(HKEY root, const QString &path);
+    static QStringList collectRegisterKeys(HKEY root, const QString &path);
+    static bool isSeadriveSyncRootManager(const QString &key);
+    static QStringList collectSyncRootMangerKeys(HKEY root, const QString& path);
+    static int registryDeleteNodeRecurse(HKEY root, const QString& path, const QString &subkey);
 
 #endif
 
