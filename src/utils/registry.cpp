@@ -14,6 +14,7 @@ namespace {
 const int kMAX_VALUE_NAME = 16383;
 const int kMAX_KEY_LENGTH = 255;
 const wchar_t kHKCU_NAMESPACE_PATH[] = L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace";
+const wchar_t kSYNC_ROOT_MANAGER[] = L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\SyncRootManager";
 #endif
 
 LONG openKey(HKEY root, const QString& path, HKEY *p_key, REGSAM samDesired = KEY_ALL_ACCESS)
@@ -134,6 +135,32 @@ int RegElement::removeRegKey(HKEY root, const QString& path, const QString& subk
 }
 
 #if defined(_MSC_VER)
+int RegElement::registryDeleteNodeRecurse (HKEY root, const QString& path, const QString& subkey)
+{
+    HKEY hKey;
+    LONG result = RegOpenKeyExW(root,
+                                path.toStdWString().c_str(),
+                                0L,
+                                KEY_READ,
+                                &hKey);
+
+    if (result != ERROR_SUCCESS) {
+        qWarning("failed to open key %s, return value is %d", subkey.toUtf8().data(),result);
+
+        return -1;
+    }
+
+    result = RegDeleteTree(hKey, subkey.toLocal8Bit().constData());
+    if (result != ERROR_SUCCESS) {
+        qWarning("failed to delete key %s, return value is %d", subkey.toUtf8().data(), result);
+        return -1;
+    }
+    RegDeleteTree(hKey, subkey.toLocal8Bit().constData());
+    RegCloseKey(hKey);
+    return 0;
+}
+
+
 bool RegElement::isSeadriveRegister(const QString &seadrive_key)
 {
 
@@ -274,6 +301,107 @@ void RegElement::removeIconRegItem()
     }
     return;
 }
+
+// Clean syncRootManger register
+bool RegElement::isSeadriveSyncRootManager(const QString &key)
+{
+    return key.startsWith("seadrive");
+
+}
+
+QStringList RegElement::collectSyncRootMangerKeys(HKEY root, const QString& path)
+{
+    HKEY parent_key;
+    QStringList subkey_list;
+
+    LONG result = openKey(root,
+                          path,
+                          &parent_key,
+                          KEY_READ);
+
+    if (result != ERROR_SUCCESS) {
+        qWarning("open registry item:  %s, errorcode is: %d",
+                  path.toUtf8().data(),
+                  GetLastError());
+        return subkey_list;
+    }
+
+    DWORD subkeys_count = 0;
+    DWORD subkeys_max_len = 0;
+
+    // Query registry subkey numbers.
+    result = RegQueryInfoKeyW(parent_key,
+                              NULL,
+                              NULL,
+                              NULL,
+                              &subkeys_count,
+                              &subkeys_max_len,
+                              NULL,
+                              NULL,
+                              NULL,
+                              NULL,
+                              NULL,
+                              NULL);
+
+    if (result != ERROR_SUCCESS) {
+        qWarning("failed to query registry info");
+        return subkey_list;
+    }
+
+    DWORD subkey_len = 1024;
+    wchar_t subkey_name[1024] = L"";
+    for (DWORD subkey_index = 0; subkey_index < subkeys_count; ++subkey_index)
+    {
+        RegEnumKeyExW(parent_key,
+                      subkey_index,
+                      subkey_name,
+                      &subkey_len,
+                      NULL,
+                      NULL,
+                      NULL,
+                      NULL);
+
+        QString key_name = QString::fromStdWString(subkey_name);
+
+        if(!isSeadriveSyncRootManager(key_name)) {
+            memset(subkey_name, 0, sizeof(subkey_name));
+            subkey_len = 1024;
+            continue;
+        }
+        subkey_list.push_back(key_name);
+        memset(subkey_name, 0, sizeof(subkey_name));
+        subkey_len = 1024;
+    }
+
+    RegCloseKey(parent_key);
+
+    return subkey_list;
+
+}
+
+void RegElement::removeAllSyncRootManagerItem()
+{
+    int result = 0;
+    QStringList subkey_list = collectSyncRootMangerKeys(HKEY_LOCAL_MACHINE,
+                                                        QString::fromWCharArray(kSYNC_ROOT_MANAGER));
+
+    if (subkey_list.size() == 0) {
+        return ;
+    }
+
+    Q_FOREACH(QString key, subkey_list) {
+        result = registryDeleteNodeRecurse(HKEY_LOCAL_MACHINE,
+                              QString::fromWCharArray(kSYNC_ROOT_MANAGER),
+                              key);
+
+        if (result != 0) {
+            qWarning("failed to remove the key: %s, error code is %d", key.toUtf8().data(), GetLastError());
+        }
+    }
+    return;
+
+}
+
 #endif
 
 bool RegElement::exists()
