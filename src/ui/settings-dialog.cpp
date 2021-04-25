@@ -131,10 +131,8 @@ void SettingsDialog::updateSettings()
 
     updateProxySettings();
 
-#if !defined _MSC_VER
     mgr->setCacheCleanIntervalMinutes(mCacheCleanInterval->value());
     mgr->setCacheSizeLimitGB(mCacheSizeLimit->value());
-#endif
 
 #ifdef HAVE_SPARKLE_SUPPORT
     if (AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
@@ -288,20 +286,11 @@ void SettingsDialog::showEvent(QShowEvent *event)
     ratio = mgr->maxUploadRatio();
     mUploadSpinBox->setValue(ratio);
 
-#if !defined _MSC_VER
     int value;
     value = mgr->getCacheCleanIntervalMinutes();
     mCacheCleanInterval->setValue(value);
     value = mgr->getCacheSizeLimitGB();
     mCacheSizeLimit->setValue(value);
-#endif
-
-#ifdef _MSC_VER
-    mCacheCleanInterval->hide();
-    mCacheSizeLimit->hide();
-    label_6->hide();
-    label_7->hide();
-#endif
 
 #ifdef HAVE_SPARKLE_SUPPORT
     if (AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
