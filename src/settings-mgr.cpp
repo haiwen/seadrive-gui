@@ -143,7 +143,6 @@ void SettingsManager::loadSettings()
                                                   &str) >= 0)
         current_session_access_ = (str == "true") ? true : false;
 
-#if !defined _MSC_VER
     if (gui->rpcClient()->getCacheSizeLimitGB(&value)) {
         cache_size_limit_gb_ = qMax(1, value);
     }
@@ -151,7 +150,6 @@ void SettingsManager::loadSettings()
     if (gui->rpcClient()->getCacheCleanIntervalMinutes(&value)) {
         cache_clean_limit_minutes_ = qMax(1, value);
     }
-#endif
 
     loadProxySettings();
     applyProxySettings();
