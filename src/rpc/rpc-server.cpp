@@ -17,6 +17,7 @@ extern "C" {
 #include "settings-mgr.h"
 #include "utils/file-utils.h"
 #include "rpc-server.h"
+#include "open-local-helper.h"
 
 #if defined(Q_OS_WIN32)
 #include "utils/utils-win.h"
@@ -55,6 +56,14 @@ handle_exit_command (GError **error)
     return 0;
 }
 
+int
+handle_open_seafile_url_command (const char *url, GError **error)
+{
+    qWarning("[rpc server] opening seafile url %s", url);
+    RpcServerProxy::instance()->proxyOpenSeafileUrlCommand(QUrl::fromEncoded(url));
+    return 0;
+ }
+
  void register_rpc_service ()
 {
     searpc_server_init ((RegisterMarshalFunc)register_marshals);
@@ -63,6 +72,10 @@ handle_exit_command (GError **error)
                                      (void *)handle_exit_command,
                                      "exit",
                                      searpc_signature_int__void());
+    searpc_server_register_function (kSeaDriveRpcService,
+                                     (void *)handle_open_seafile_url_command,
+                                     "open_seafile_url",
+                                     searpc_signature_int__string());
 }
 
  SearpcClient *createSearpcClientWithPipeTransport(const char *rpc_service)
@@ -104,6 +117,22 @@ public:
         return true;
     }
 
+    bool sendOpenSeafileUrlCommand(const QUrl& url) {
+        GError *error = NULL;
+        int ret = searpc_client_call__int(
+                seadrive_rpc_client_,
+                "open_seafile_url",
+                &error, 1, "string", url.toEncoded().data());
+        if (error) {
+            g_error_free(error);
+            return false;
+        }
+        if (ret != 0) {
+            return false;
+        }
+        return true;
+    }
+
 private:
     SearpcClient *seadrive_rpc_client_;
 
@@ -124,6 +153,10 @@ SeaDriveRpcServer::SeaDriveRpcServer()
 
     RpcServerProxy *proxy = RpcServerProxy::instance();
     connect(proxy, SIGNAL(exitCommand()), this, SLOT(handleExitCommand()));
+    connect(proxy,
+            SIGNAL(openSeafileUrlCommand(const QUrl &)),
+            this,
+            SLOT(handleOpenSeafileUrlCommand(const QUrl &)));
 }
 
 SeaDriveRpcServer::~SeaDriveRpcServer()
@@ -153,6 +186,12 @@ void SeaDriveRpcServer::handleExitCommand()
     QCoreApplication::exit(0);
 }
 
+void SeaDriveRpcServer::handleOpenSeafileUrlCommand(const QUrl& url)
+{
+    OpenLocalHelper::instance()->openLocalFile(url);
+}
+
+
 SINGLETON_IMPL(RpcServerProxy)
 
 RpcServerProxy::RpcServerProxy()
@@ -162,4 +201,9 @@ RpcServerProxy::RpcServerProxy()
 void RpcServerProxy::proxyExitCommand()
 {
     emit exitCommand();
+}
+
+void RpcServerProxy::proxyOpenSeafileUrlCommand(const QUrl& url)
+{
+    emit openSeafileUrlCommand(url);
 }

@@ -13,6 +13,7 @@
 #include "utils/utils.h"
 #include "utils/process.h"
 #include "seadrive-gui.h"
+#include "open-local-helper.h"
 
 #if defined(Q_OS_WIN32)
 #include "utils/utils-win.h"
@@ -112,6 +113,7 @@ void handleCommandLineOption(int argc, char *argv[])
 #endif
         { "delay", no_argument, NULL, 'D' },
         { "remove-user-data", no_argument, NULL, 'X' },
+        { "open-local-file", no_argument, NULL, 'f' },
 
 #if defined(_MSC_VER)
         { "unregister-sync-root", no_argument, NULL, 'S' },
@@ -152,6 +154,9 @@ void handleCommandLineOption(int argc, char *argv[])
             do_seadrive_unregister_sync_root();
             exit(0);
 #endif
+        case 'f':
+            OpenLocalHelper::instance()->handleOpenLocalFromCommandLine(optarg);
+            break;
         case 'E':
             dev_mode = true;
             break;
