@@ -11,22 +11,23 @@ extern "C" {
 #include <searpc-client.h>
 
 #include <searpc.h>
-#if defined(_MSC_VER)
-#include "include/seafile.h"
-#include "lib/seafile-object.h"
-#else
-#include <seafile/seafile.h>
-#include <seafile/seafile-object.h>
-#endif
+// #if defined(_MSC_VER)
+// #include "include/seafile.h"
+// #include "lib/seafile-object.h"
+// #else
+// #include <seafile/seafile.h>
+// #include <seafile/seafile-object.h>
+// #endif
 
 }
 
+#include "account.h"
+#include "open-local-helper.h"
 #include "utils/utils.h"
+#include "utils/file-utils.h"
 #include "seadrive-gui.h"
 #include "rpc/rpc-client.h"
 
-#include "account.h"
-#include "open-local-helper.h"
 
 namespace {
 
@@ -44,7 +45,7 @@ void openLocalFile(QString& repo_id, QString& path_in_repo)
         QString path_to_open = ::pathJoin(gui->mountDir(), repo_name, path_in_repo);
         QFileInfo fi(path_to_open);
         if (fi.exists()) {
-            QDesktopServices::openUrl(QUrl::fromLocalFile(path_to_open)) :
+            QDesktopServices::openUrl(QUrl::fromLocalFile(path_to_open)); 
             return;
         }
     }
@@ -120,7 +121,7 @@ bool OpenLocalHelper::openLocalFile(const QUrl &url)
            repo_id.toUtf8().data(), path.toUtf8().data());
 
     qWarning("get file repo id is %s, eamil is %s, path is %s\n", toCStr(repo_id), toCStr(email), toCStr(path));
-    openLocalFile(repo_id, path);
+    ::openLocalFile(repo_id, path);
 
     return true;
 }

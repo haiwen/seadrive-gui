@@ -23,11 +23,11 @@
     <key>CFBundleURLTypes</key>
     <array>
         <dict>
-            <key>CFBundleName</key>
+            <key>CFBundleURLName</key>
             <string>com.seafile.seadrive-client</string>
             <key>CFBundleURLSchemes</key>
             <array>
-                <string>seadrive</string>
+                <string>seafile</string>
             </array>
         </dict>
     </array>
