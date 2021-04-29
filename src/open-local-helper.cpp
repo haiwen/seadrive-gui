@@ -36,10 +36,18 @@ const char *kSeafileProtocolHostOpenFile = "openfile";
 
 } // namespace
 
-// TODO: openlocal file
-void openLocalFile(QString& repo_id, QString& path)
-{
 
+void openLocalFile(QString& repo_id, QString& path_in_repo)
+{
+    QString repo_name;
+    if (gui->rpcClient()->getRepoUnameById(repo_id, &repo_name)) {
+        QString path_to_open = ::pathJoin(gui->mountDir(), repo_name, path_in_repo);
+        QFileInfo fi(path_to_open);
+        if (fi.exists()) {
+            QDesktopServices::openUrl(QUrl::fromLocalFile(path_to_open)) :
+            return;
+        }
+    }
 }
 
 OpenLocalHelper* OpenLocalHelper::singleton_ = NULL;
@@ -112,8 +120,7 @@ bool OpenLocalHelper::openLocalFile(const QUrl &url)
            repo_id.toUtf8().data(), path.toUtf8().data());
 
     qWarning("get file repo id is %s, eamil is %s, path is %s\n", toCStr(repo_id), toCStr(email), toCStr(path));
-    //TODO: Open local file in url.
-//    openLocalFile(repo_id, path);
+    openLocalFile(repo_id, path);
 
     return true;
 }
