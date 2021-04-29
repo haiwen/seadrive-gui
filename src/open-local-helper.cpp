@@ -148,10 +148,8 @@ void OpenLocalHelper::handleOpenLocalFromCommandLine(const char *url)
 
 void OpenLocalHelper::checkPendingOpenLocalRequest()
 {
-    /*
     if (!url_.isEmpty()) {
         openLocalFile(QUrl::fromEncoded(url_));
         setUrl(NULL);
     }
-    */
 }
