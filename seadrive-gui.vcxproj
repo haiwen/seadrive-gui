@@ -49,6 +49,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\message-poller.cpp" />
     <ClCompile Include="src\network-mgr.cpp" />
+    <ClCompile Include="src\open-local-helper.cpp" />
     <ClCompile Include="src\remote-wipe-service.cpp" />
     <ClCompile Include="src\rpc\rpc-client.cpp" />
     <ClCompile Include="src\rpc\rpc-server.cpp" />
@@ -101,6 +102,7 @@
     <QtMoc Include="src\ui\uninstall-helper-dialog.h" />
     <ClInclude Include="src\crash-handler.h" />
     <QtMoc Include="src\ui\uploadlink-dialog.h" />
+    <QtMoc Include="src\open-local-helper.h" />
     <ClInclude Include="third_party\WinSparkle-0.5.3\include\winsparkle-version.h" />
     <ClInclude Include="third_party\WinSparkle-0.5.3\include\winsparkle.h" />
     <QtMoc Include="src\api\requests.h" />
@@ -295,7 +297,7 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <QtInstall>Qt 5.13.1-64bit</QtInstall>
+    <QtInstall>Qt5.15.1-64bit</QtInstall>
     <QtModules>core;gui;network;webengine;webenginewidgets;widgets</QtModules>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="QtSettings">

@@ -21,12 +21,15 @@ public:
     public:
         virtual bool connect() = 0;
         virtual bool sendExitCommand() = 0;
+        virtual bool sendOpenSeafileUrlCommand(const QUrl& url) = 0;
     };
 
     static Client* getClient();
 
 private slots:
     void handleExitCommand();
+    void handleOpenSeafileUrlCommand(const QUrl& url);
+
 
 private:
     SeaDriveRpcServerPriv *priv_;
@@ -43,9 +46,12 @@ public:
     RpcServerProxy();
 
     void proxyExitCommand();
+    void proxyOpenSeafileUrlCommand(const QUrl&);
+
 
 signals:
     void exitCommand();
+    void openSeafileUrlCommand(const QUrl&);
 };
 
 #endif
