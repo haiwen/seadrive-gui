@@ -200,10 +200,11 @@ int main(int argc, char *argv[])
 
     // check seadrive is running
     // start applet
+    handleCommandLineOption(argc, argv);
+
     SeadriveGui mGui(dev_mode);
     gui = &mGui;
 
-    handleCommandLineOption(argc, argv);
 
 #if defined(_MSC_VER)
     if (count_process(seadriveName) > 0) {

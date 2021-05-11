@@ -33,14 +33,18 @@ const char *kSeafileProtocolHostOpenFile = "openfile";
 void openLocalFile(QString& repo_id, QString& path_in_repo)
 {
     QString repo_name;
-    if (gui->rpcClient()->getRepoUnameById(repo_id, &repo_name)) {
-        QString path_to_open = ::pathJoin(gui->mountDir(), repo_name, path_in_repo);
-        QFileInfo fi(path_to_open);
-        if (fi.exists()) {
-            QDesktopServices::openUrl(QUrl::fromLocalFile(path_to_open)); 
-            return;
-        }
+    if (!gui->rpcClient()->getRepoUnameById(repo_id, &repo_name)) {
+        qWarning("failed to get repo uname by %s", toCStr(repo_id));
+        return;
     }
+    QString path_to_open = ::pathJoin(gui->mountDir(), repo_name, path_in_repo);
+    QFileInfo fi(path_to_open);
+    if (!fi.exists()) {
+        qWarning("the file or directory %s not exists ", toCStr(path_to_open));
+        return;
+    }
+    QDesktopServices::openUrl(QUrl::fromLocalFile(path_to_open));
+    return;
 }
 
 OpenLocalHelper* OpenLocalHelper::singleton_ = NULL;
