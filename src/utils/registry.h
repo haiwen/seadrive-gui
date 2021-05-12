@@ -55,6 +55,7 @@ public:
     static QVariant getPreconfigureValue(const QString& name);
     static QVariant getValue(HKEY root, const QString& path, const QString& name);
     static void removeAllSyncRootManagerItem();
+    static void installCustomUrlHandler();
 
 private:
     int openParentKey(HKEY *pKey);

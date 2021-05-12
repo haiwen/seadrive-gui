@@ -13,6 +13,7 @@
 #include "utils/utils.h"
 #include "utils/process.h"
 #include "seadrive-gui.h"
+#include "open-local-helper.h"
 
 #if defined(Q_OS_WIN32)
 #include "utils/utils-win.h"
@@ -99,14 +100,11 @@ void setupSettingDomain()
 void handleCommandLineOption(int argc, char *argv[])
 {
     int c;
-#if defined(Q_OS_WIN32)
-    static const char *short_options = "KDEo:";
-#else
-    static const char *short_options = "KDEo:L:";
-#endif
+    static const char *short_options = "KDXPc:d:f:";
     static const struct option long_options[] = {
         { "fuse-opts", required_argument, NULL, 'o' },
         { "stop", no_argument, NULL, 'K'},
+        { "open-local-file", no_argument, NULL, 'f' },
 #if defined(Q_OS_WIN32)
         { "drive-letter", required_argument, NULL, 'L' },
 #endif
@@ -152,14 +150,17 @@ void handleCommandLineOption(int argc, char *argv[])
             do_seadrive_unregister_sync_root();
             exit(0);
 #endif
+        case 'f':
+            OpenLocalHelper::instance()->handleOpenLocalFromCommandLine(optarg);
+            break;
         case 'E':
             dev_mode = true;
             break;
-	case 'K':
-        // do_stop_app requires gui object be initialized. We save a
-        // flag here and exeute it later.
-        stop_app = true;
-        return;
+        case 'K':
+            // do_stop_app requires gui object be initialized. We save a
+            // flag here and exeute it later.
+            stop_app = true;
+            return;
         default:
             exit(1);
         }
@@ -198,6 +199,13 @@ int main(int argc, char *argv[])
     I18NHelper::getInstance()->init();
 
     // check seadrive is running
+    // start applet
+    handleCommandLineOption(argc, argv);
+
+    SeadriveGui mGui(dev_mode);
+    gui = &mGui;
+
+
 #if defined(_MSC_VER)
     if (count_process(seadriveName) > 0) {
        QProcess p;
@@ -207,11 +215,6 @@ int main(int argc, char *argv[])
     }
 #endif // _MSC_VER
 
-    handleCommandLineOption(argc, argv);
-
-    // start applet
-    SeadriveGui mGui(dev_mode);
-    gui = &mGui;
 
     if (stop_app) {
         do_stop_app();

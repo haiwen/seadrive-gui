@@ -261,6 +261,7 @@ SET(moc_headers
   src/ui/encrypted-repos-dialog.h
   src/ui/transfer-progress-dialog.h
   src/ui/uninstall-helper-dialog.h
+  src/open-local-helper.h
 
   third_party/QtAwesome/QtAwesome.h
 
@@ -379,6 +380,8 @@ SET(seadrive_gui_sources
   src/ui/encrypted-repos-dialog.cpp
   src/ui/transfer-progress-dialog.cpp
   src/ui/uninstall-helper-dialog.cpp
+
+  src/open-local-helper.cpp
 
   src/utils/uninstall-helpers.cpp
   ${platform_specific_sources}

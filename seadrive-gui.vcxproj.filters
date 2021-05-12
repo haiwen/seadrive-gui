@@ -271,6 +271,9 @@
     <ClCompile Include="src\ui\uploadlink-dialog.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
+    <ClCompile Include="src\open-local-helper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\api\api-error.h">
@@ -496,6 +499,9 @@
     </QtMoc>
     <QtMoc Include="src\ui\uploadlink-dialog.h">
       <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="src\open-local-helper.h">
+      <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

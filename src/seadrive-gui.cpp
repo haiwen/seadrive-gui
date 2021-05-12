@@ -481,6 +481,7 @@ void SeadriveGui::onDaemonStarted()
 
 #if defined(_MSC_VER)
     SeafileExtensionHandler::instance()->start();
+    RegElement::installCustomUrlHandler();
 #endif
 
 #ifdef HAVE_SPARKLE_SUPPORT

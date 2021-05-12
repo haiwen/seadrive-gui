@@ -1,4 +1,5 @@
 #include "application.h"
+#include <QFileOpenEvent>
 
 #include <objc/objc.h>
 #include <objc/message.h>
@@ -8,6 +9,7 @@
 #include <QMainWindow>
 
 #include "seadrive-gui.h"
+#include "open-local-helper.h"
 static bool dockClickHandler(id self,SEL _cmd,...)
 {
     Q_UNUSED(self)
@@ -40,19 +42,19 @@ Application::Application (int &argc, char **argv):QApplication(argc, argv)
 
 bool Application::event(QEvent *e)
 {
-    // if (e->type() == QEvent::FileOpen)
-    // {
-    //     QFileOpenEvent *event = static_cast<QFileOpenEvent *>(e);
-    //     // this event has native mac handler callee
-    //     if(event && event->url().scheme() == "seafile")
-    //     {
-    //         qWarning("[FileOpen] trying to open %s\n", event->url().toEncoded().data());
-    //         if (!gui->started())
-    //             OpenLocalHelper::instance()->setUrl(event->url().toEncoded().data());
-    //         else
-    //             OpenLocalHelper::instance()->openLocalFile(event->url());
-    //         return true;
-    //     }
-    // }
+    if (e->type() == QEvent::FileOpen)
+    {
+        QFileOpenEvent *event = static_cast<QFileOpenEvent *>(e);
+        // this event has native mac handler callee
+        if(event && event->url().scheme() == "seafile")
+        {
+            qWarning("[FileOpen] trying to open %s\n", event->url().toEncoded().data());
+            if (!gui->started())
+                OpenLocalHelper::instance()->setUrl(event->url().toEncoded().data());
+            else
+                OpenLocalHelper::instance()->openLocalFile(event->url());
+            return true;
+        }
+    }
     return QApplication::event(e);
 }
