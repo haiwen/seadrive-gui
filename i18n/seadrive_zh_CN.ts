@@ -716,6 +716,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>%1 is not added to a library and will not be uploaded</source>
         <translation>%1 没有被添加到资料库文件夹中，因此不会被上传</translation>
     </message>
+    <message>
+        <source>Library is too large to sync.</source>
+        <translation>资料库太大无法同步</translation>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>

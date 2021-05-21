@@ -716,6 +716,10 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
         <source>%1 is not added to a library and will not be uploaded</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Library is too large to sync.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>

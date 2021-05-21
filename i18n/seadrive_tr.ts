@@ -239,7 +239,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Please enter the username</source>
-        <translation>lütfen kullanıcı adını giriniz</translation>
+        <translation>Lütfen kullanıcı adını giriniz</translation>
     </message>
     <message>
         <source>Please enter the computer name</source>
@@ -295,7 +295,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://seacloud.cc&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Örneğin: https://seacloud.cc&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Örneğin: https://seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>or http://192.168.1.24:8000</source>
@@ -713,6 +713,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>%1 is not added to a library and will not be uploaded</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Library is too large to sync.</source>
         <translation type="unfinished"/>
     </message>
 </context>

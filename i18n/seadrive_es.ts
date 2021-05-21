@@ -716,6 +716,10 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
         <source>%1 is not added to a library and will not be uploaded</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Library is too large to sync.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>

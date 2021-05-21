@@ -151,15 +151,15 @@
     <name>FinderSyncHost</name>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
+        <translation>Le fichier &quot;%1&quot; est verrouillé par %2</translation>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de récupérer les informations sur le verrouillage du fichier &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Failed to get upload link for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de récupérer le lien de téléversement du fichier &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -713,6 +713,10 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     </message>
     <message>
         <source>%1 is not added to a library and will not be uploaded</source>
+        <translation>Le fichier %1 ne peut pas êtres ajouté à la bibliothèque, il ne seras pas téléversé.</translation>
+    </message>
+    <message>
+        <source>Library is too large to sync.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -799,7 +803,7 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     </message>
     <message>
         <source>Failed to create seadrive cache directory</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de créer le répertoire de cache de SeaDrive.</translation>
     </message>
 </context>
 <context>
@@ -1231,19 +1235,19 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     </message>
     <message>
         <source>Password(At least 8 characters)</source>
-        <translation type="unfinished"/>
+        <translation>Mot de passe(8 caractères minimum)</translation>
     </message>
     <message>
         <source>Show password</source>
-        <translation type="unfinished"/>
+        <translation>Voir le mot de passe.</translation>
     </message>
     <message>
         <source>Expire days</source>
-        <translation type="unfinished"/>
+        <translation>Délais d&apos;expiration</translation>
     </message>
     <message>
         <source>Generate link</source>
-        <translation type="unfinished"/>
+        <translation>Générer un lien de partage</translation>
     </message>
 </context>
 <context>
@@ -1356,19 +1360,19 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     <name>UploadLinkDialog</name>
     <message>
         <source>Upload Link</source>
-        <translation type="unfinished"/>
+        <translation>Lien de téléversement</translation>
     </message>
     <message>
         <source>Upload link:</source>
-        <translation type="unfinished"/>
+        <translation>Lien de téléversement :</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copier dans le presse-papier</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
 </context>
 </TS>
