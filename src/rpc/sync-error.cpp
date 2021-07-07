@@ -63,6 +63,7 @@ QList<SyncError> SyncError::listFromJSON(const json_t *json)
 #define SYNC_ERROR_ID_CONFLICT                  24
 #define SYNC_ERROR_ID_UPDATE_NOT_IN_REPO        25
 #define SYNC_ERROR_ID_LIBRARY_TOO_LARGE         26
+#define SYNC_ERROR_ID_MOVE_NOT_IN_REPO          27
 
 #define SYNC_ERROR_ID_GENERAL_ERROR             100
 
@@ -154,6 +155,10 @@ QString SyncError::syncErrorIdToErrorStr(int error_id, const QString& path)
         return QObject::tr("%1 is not added to a library and will not be uploaded").arg(file);
     case SYNC_ERROR_ID_LIBRARY_TOO_LARGE:
         return QObject::tr("Library is too large to sync.");
+#if defined(Q_OS_WIN32)
+    case SYNC_ERROR_ID_MOVE_NOT_IN_REPO:
+        return QObject::tr("You can only move files/folders within a library or from one library to another library");
+#endif
     case SYNC_ERROR_ID_GENERAL_ERROR:
     default:
         return QObject::tr("Unknown error");
