@@ -157,7 +157,7 @@ QString SyncError::syncErrorIdToErrorStr(int error_id, const QString& path)
         return QObject::tr("Library is too large to sync.");
 #if defined(Q_OS_WIN32)
     case SYNC_ERROR_ID_MOVE_NOT_IN_REPO:
-        return QObject::tr("The moving source or destination directory is illegal");
+        return QObject::tr("You can only move files/folders within a library or from one library to another library");
 #endif
     case SYNC_ERROR_ID_GENERAL_ERROR:
     default:
