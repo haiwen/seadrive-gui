@@ -720,6 +720,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>Library is too large to sync.</source>
         <translation>资料库太大无法同步</translation>
     </message>
+    <message>
+        <source>You can only move files/folders within a library or from one library to another library</source>
+        <translation>您只能将库中的文件/文件夹或从一个库移动到另一个库</translation>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>

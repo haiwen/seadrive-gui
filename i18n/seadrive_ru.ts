@@ -159,7 +159,7 @@
     </message>
     <message>
         <source>Failed to get upload link for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось получить ссылку для загрузки файла &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -718,6 +718,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Library is too large to sync.</source>
+        <translation>Библиотека слишком велика для синхронизации.</translation>
+    </message>
+    <message>
+        <source>You can only move files/folders within a library or from one library to another library</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -804,7 +808,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Failed to create seadrive cache directory</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось создать папку для кэша Seadrive</translation>
     </message>
 </context>
 <context>
@@ -1237,19 +1241,19 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Password(At least 8 characters)</source>
-        <translation type="unfinished"/>
+        <translation>Пароль (Не менее 8 символов)</translation>
     </message>
     <message>
         <source>Show password</source>
-        <translation type="unfinished"/>
+        <translation>Показать пароль</translation>
     </message>
     <message>
         <source>Expire days</source>
-        <translation type="unfinished"/>
+        <translation>Срок действия дней</translation>
     </message>
     <message>
         <source>Generate link</source>
-        <translation type="unfinished"/>
+        <translation>Создать ссылку</translation>
     </message>
 </context>
 <context>
@@ -1362,19 +1366,19 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <name>UploadLinkDialog</name>
     <message>
         <source>Upload Link</source>
-        <translation type="unfinished"/>
+        <translation>Ссылка для загрузки</translation>
     </message>
     <message>
         <source>Upload link:</source>
-        <translation type="unfinished"/>
+        <translation>Ссылка для загрузки:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Копировать в буфер обмена</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
 </context>
 </TS>

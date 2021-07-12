@@ -720,6 +720,10 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
         <source>Library is too large to sync.</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>You can only move files/folders within a library or from one library to another library</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>

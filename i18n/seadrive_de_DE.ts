@@ -37,11 +37,11 @@
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
-        <translation>%1 konnte nicht initialisiert werden</translation>
+        <translation>%1 konnte nicht initialisiert werden.</translation>
     </message>
     <message>
         <source>%1 exited unexpectedly</source>
-        <translation>%1 unvorhergesehen ausgeworfen</translation>
+        <translation>%1 wurde unvorhergesehen ausgeworfen.</translation>
     </message>
 </context>
 <context>
@@ -67,22 +67,22 @@
     </message>
     <message>
         <source>No Encrypted Library.</source>
-        <translation>Keine verschlüsselte Bibliothek vorhanden.</translation>
+        <translation>Es sind keine verschlüsselten Bibliotheken vorhanden.</translation>
     </message>
 </context>
 <context>
     <name>EncryptedReposTableModel</name>
     <message>
         <source>Failed to set encrypted library password</source>
-        <translation>Passwort für die Verschlüsselung der Bibliothek konnte nicht gesetzt werden</translation>
+        <translation>Das Passwort für die verschlüsselte Bibliothek konnte nicht gesetzt werden.</translation>
     </message>
     <message>
         <source>Password error</source>
-        <translation>Passwort ist falsch</translation>
+        <translation>Das Passwort ist falsch.</translation>
     </message>
     <message>
         <source>Failed to clear encrypted library password</source>
-        <translation>Passwort für die Verschlüsselung der Bibliothek konnte nicht zurückgesetzt werden</translation>
+        <translation>Das Passwort für die verschlüsselte Bibliothek konnte nicht zurückgesetzt werden.</translation>
     </message>
     <message>
         <source>Right click this item to sync or unsync the encrypted library</source>
@@ -94,14 +94,14 @@
     </message>
     <message>
         <source>Sync status</source>
-        <translation>Status der Synchronisierung</translation>
+        <translation>Status der Synchronisation</translation>
     </message>
 </context>
 <context>
     <name>EncryptedReposTableView</name>
     <message>
         <source>Unsync</source>
-        <translation>Synchronisieren aufheben</translation>
+        <translation>Synchronisation aufheben</translation>
     </message>
     <message>
         <source>Sync</source>
@@ -109,11 +109,11 @@
     </message>
     <message>
         <source>After unsyncing, the local encryption key of this library will be cleared and this library cannot be accessed in virtual drive. Are you sure to unsync?</source>
-        <translation>Mit dem Aufheben der Synchronisierung wird der lokale Schlüssel für diese Bibliothek gelöscht. Danach ist diese verschlüsselte Bibliothek im lokalen virtuellen Laufwerk nicht mehr zugänglich. Möchten Sie die Synchronisierung wirklich aufheben?</translation>
+        <translation>Mit dem Aufheben der Synchronisation wird der lokale Schlüssel für diese Bibliothek gelöscht. Danach ist diese verschlüsselte Bibliothek lokal nicht mehr verfügbar. Möchten Sie die Synchronisation wirklich aufheben?</translation>
     </message>
     <message>
         <source>Enter library password to sync</source>
-        <translation>Passwort der verschlüsselten Bibliothek zum Starten der Synchronisierung</translation>
+        <translation>Passwort der verschlüsselten Bibliothek</translation>
     </message>
 </context>
 <context>
@@ -151,15 +151,15 @@
     <name>FinderSyncHost</name>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
+        <translation>Die Datei &quot;%1&quot; ist durch %2 gesperrt.</translation>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Für die Datei &quot;%1&quot; konnten keine Informationen zur Sperrung gefunden werden.</translation>
     </message>
     <message>
         <source>Failed to get upload link for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Für die Datei &quot;%1&quot; konnte kein Upload-Link erstellt werden.</translation>
     </message>
 </context>
 <context>
@@ -176,7 +176,7 @@
         <source>%1 has dowloaded your files list.
 Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>%1 hat die Dateiliste erfolgreich heruntergeladen.
-Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translation>
+Klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translation>
     </message>
     <message>
         <source>Dialog</source>
@@ -228,23 +228,23 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The ssl certificate of this server is not trusted, proceed anyway?</source>
-        <translation>&lt;b&gt;Warnung:&lt;/b&gt; Das SSL-Zertifikat dieses Servers ist nicht vertrauenswürdig. Trotzdem fortfahren?</translation>
+        <translation>&lt;b&gt;Warnung:&lt;/b&gt; Das SSL-Zertifikat dieses Servers ist nicht vertrauenswürdig. Wollen Sie trotzdem fortfahren?</translation>
     </message>
     <message>
         <source>Please enter the server address</source>
-        <translation>Bitte geben Sie die Serveradresse ein</translation>
+        <translation>Geben Sie die Serveradresse ein</translation>
     </message>
     <message>
         <source>%1 is not a valid server address</source>
-        <translation>%1 ist keine gültige Serveradresse</translation>
+        <translation>%1 ist keine gültige Serveradresse.</translation>
     </message>
     <message>
         <source>Please enter the username</source>
-        <translation>Bitte geben Sie den Benutzernamen ein</translation>
+        <translation>Geben Sie den Benutzernamen ein</translation>
     </message>
     <message>
         <source>Please enter the computer name</source>
-        <translation>Bitte geben Sie den Rechnernamen ein</translation>
+        <translation>Geben Sie den Rechnernamen ein</translation>
     </message>
     <message>
         <source>Two Factor Authentication</source>
@@ -256,7 +256,7 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
     <message>
         <source>Please enter the password</source>
-        <translation>Bitte geben Sie das Passwort ein</translation>
+        <translation>Geben Sie das Passwort ein</translation>
     </message>
     <message>
         <source>Enter the two factor authentication token</source>
@@ -264,11 +264,11 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
     <message>
         <source>Incorrect email or password</source>
-        <translation>E-Mail-Adresse oder Passwort sind ungültig</translation>
+        <translation>E-Mail-Adresse oder Passwort sind ungültig.</translation>
     </message>
     <message>
         <source>Logging in too frequently, please wait a minute</source>
-        <translation>Zu viele Anmeldeversuche, bitte warten Sie eine Minute</translation>
+        <translation>Zu viele Anmeldeversuche, warten Sie eine Minute.</translation>
     </message>
     <message>
         <source>Internal Server Error</source>
@@ -339,15 +339,15 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     <name>MessagePoller</name>
     <message>
         <source>&quot;%1&quot; is synchronized</source>
-        <translation>&quot;%1&quot; wurde synchronisiert</translation>
+        <translation>&quot;%1&quot; wurde synchronisiert.</translation>
     </message>
     <message>
         <source>Error when syncing &quot;%1&quot;</source>
-        <translation>Fehler beim Synchronisieren &quot;%1&quot;</translation>
+        <translation>Fehler bei der Synchronisation &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Error when syncing</source>
-        <translation>Fehler beim Synchronisieren</translation>
+        <translation>Fehler bei der Synchronisation</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is being uploaded</source>
@@ -363,19 +363,19 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
     <message>
         <source>Successfully moved &quot;%1&quot;</source>
-        <translation>&quot;%1&quot; wurde erfolgreich verschoben</translation>
+        <translation>&quot;%1&quot; wurde erfolgreich verschoben.</translation>
     </message>
     <message>
         <source>Successfully moved &quot;%1&quot; to &quot;%2&quot;</source>
-        <translation>&quot;%1&quot; wurde erfolgreich zu &quot;%2&quot; verschoben</translation>
+        <translation>&quot;%1&quot; wurde erfolgreich zu &quot;%2&quot; verschoben.</translation>
     </message>
     <message>
         <source>Failed to move &quot;%1&quot;</source>
-        <translation>Verschieben von &quot;%1&quot; fehlgeschlagen</translation>
+        <translation>Das Verschieben von &quot;%1&quot; ist fehlgeschlagen.</translation>
     </message>
     <message>
         <source>Failed to move &quot;%1&quot; to &quot;%2&quot;</source>
-        <translation>Verschieben von &quot;%1&quot; zu &quot;%2&quot; fehlgeschlagen </translation>
+        <translation>Das Verschieben von &quot;%1&quot; zu &quot;%2&quot; ist fehlgeschlagen.</translation>
     </message>
     <message>
         <source>Download file</source>
@@ -387,46 +387,46 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
     <message>
         <source>file &quot;%1&quot; has been downloaded </source>
-        <translation>&quot;%1&quot; ist heruntergeladen</translation>
+        <translation>&quot;%1&quot; wurde heruntergeladen.</translation>
     </message>
     <message>
         <source>Failed to create file &quot;%1&quot;</source>
-        <translation>Datei „%1“ konnte nicht erstellt werden</translation>
+        <translation>Datei „%1“ konnte nicht erstellt werden.</translation>
     </message>
     <message>
         <source>You can&apos;t create files in the %1 drive directly</source>
-        <translation>Sie können Dateien nicht direkt im Ordner %1 erstellen</translation>
+        <translation>Sie können Dateien nicht direkt im Ordner %1 erstellen.</translation>
     </message>
     <message>
         <source>Failed to delete folder</source>
-        <translation>Ordner konnte nicht gelöscht werden</translation>
+        <translation>Der Ordner konnte nicht gelöscht werden.</translation>
     </message>
     <message>
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
-        <translation>Sie können die Bibliothek „%1“ nicht direkt löschen</translation>
+        <translation>Sie können die Bibliothek „%1“ nicht direkt löschen.</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>File %1 is locked by other programs</source>
-        <translation>Datei &quot;%1&quot; ist durch ein anderes Programm gesperrt</translation>
+        <translation>Die Datei &quot;%1&quot; ist durch ein anderes Programm gesperrt.</translation>
     </message>
     <message>
         <source>Some file is locked by other programs</source>
-        <translation>Eine Datei ist durch ein anderes Programm gesperrt</translation>
+        <translation>Eine Datei ist durch ein anderes Programm gesperrt.</translation>
     </message>
     <message>
         <source>Folder %1 is locked by other programs</source>
-        <translation>Ordner &quot;%1&quot; ist durch ein anderes Programm gesperrt</translation>
+        <translation>Der Ordner &quot;%1&quot; ist durch ein anderes Programm gesperrt.</translation>
     </message>
     <message>
         <source>Some folder is locked by other programs</source>
-        <translation>Ein Ordner ist von einem anderen Programm gesperrt</translation>
+        <translation>Ein Ordner ist von einem anderen Programm gesperrt.</translation>
     </message>
     <message>
         <source>File %1 is locked by another user</source>
-        <translation>Datei &quot;%1&quot; ist durch einen anderen Benutzer gesperrt</translation>
+        <translation>Die Datei &quot;%1&quot; ist durch einen anderen Benutzer gesperrt.</translation>
     </message>
     <message>
         <source>Some file is locked by another user</source>
@@ -450,7 +450,7 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
     <message>
         <source>You don&apos;t have enough permission for this library</source>
-        <translation>Sie haben keine ausreichenden Rechte, um auf diese Bibliothek zugreifen zu können.</translation>
+        <translation>Sie haben keine ausreichenden Rechte, um auf diese Bibliothek zuzugreifen.</translation>
     </message>
     <message>
         <source>Network error</source>
@@ -462,11 +462,11 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
     <message>
         <source>Failed to resolve remote server</source>
-        <translation>Adresse des Servers nicht gefunden</translation>
+        <translation>Die Adresse des Servers wurde nicht gefunden.</translation>
     </message>
     <message>
         <source>Failed to connect to server</source>
-        <translation>Verbindung mit dem Server fehlgeschlagen</translation>
+        <translation>Die Verbindung mit dem Server ist fehlgeschlagen.</translation>
     </message>
     <message>
         <source>SSL error</source>
@@ -490,11 +490,11 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
     <message>
         <source>Local data is corrupt</source>
-        <translation>Lokale Daten sind defekt</translation>
+        <translation>Lokale Daten sind defekt.</translation>
     </message>
     <message>
         <source>Failed to write local data</source>
-        <translation>Lokale Daten konnten nicht geschrieben werden</translation>
+        <translation>Lokale Daten konnten nicht geschrieben werden.</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -502,7 +502,7 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
     <message>
         <source>The storage quota has been used up</source>
-        <translation>Das Speicherkontingent ist aufgebraucht</translation>
+        <translation>Das Speicherkontingent ist aufgebraucht.</translation>
     </message>
     <message>
         <source>SSL Error</source>
@@ -518,11 +518,11 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
     <message>
         <source>Created library &quot;%1&quot;</source>
-        <translation>Bibliothek &quot;%1&quot; wurde erstellt</translation>
+        <translation>Die Bibliothek &quot;%1&quot; wurde erstellt.</translation>
     </message>
     <message>
         <source>Deleted library &quot;%1&quot;</source>
-        <translation>Bibliothek &quot;%1&quot; wurde gelöscht</translation>
+        <translation>Die Bibliothek &quot;%1&quot; wurde gelöscht.</translation>
     </message>
     <message>
         <source>Added</source>
@@ -586,7 +586,7 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
     <message>
         <source>Reverted file &quot;%1&quot; to status at %2.</source>
-        <translation>Datei &quot;%1&quot; zurückgesetzt auf den Status vom &quot;%2&quot;.</translation>
+        <translation>Die Datei &quot;%1&quot; wurde auf den Status vom &quot;%2&quot; zurückgesetzt.</translation>
     </message>
     <message>
         <source>Recovered deleted directory</source>
@@ -686,7 +686,7 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
     <message>
         <source>No permission to sync</source>
-        <translation>Synchronisieren nicht erlaubt</translation>
+        <translation>Synchronisation ist nicht erlaubt.</translation>
     </message>
     <message>
         <source>No permission to write</source>
@@ -714,10 +714,14 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
     <message>
         <source>%1 is not added to a library and will not be uploaded</source>
-        <translation type="unfinished"/>
+        <translation>%1 wurde keiner Bibliothek hinzugefügt und wird daher nicht hochgeladen.</translation>
     </message>
     <message>
         <source>Library is too large to sync.</source>
+        <translation>Die Bibliothek ist für die Synchronisation zu groß.</translation>
+    </message>
+    <message>
+        <source>You can only move files/folders within a library or from one library to another library</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -725,7 +729,7 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     <name>RemoteWipeService</name>
     <message>
         <source>Authorization expired, please re-login</source>
-        <translation>Sitzung abgelaufen, bitte neu anmelden</translation>
+        <translation>Die Sitzung ist abgelaufen. Melden Sie sich neu an.</translation>
     </message>
 </context>
 <context>
@@ -804,7 +808,7 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
     <message>
         <source>Failed to create seadrive cache directory</source>
-        <translation type="unfinished"/>
+        <translation>Die Erstellung des Caching-Orders ist fehlgeschlagen.</translation>
     </message>
 </context>
 <context>
@@ -815,7 +819,7 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>in die Zwischenablage kopieren</translation>
+        <translation>In die Zwischenablage kopieren</translation>
     </message>
     <message>
         <source>%1 Internal Link:</source>
@@ -913,7 +917,7 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
     <message>
         <source>Failed to remove local cache of account %1</source>
-        <translation>Entfernen des lokalen Cachs zu Konto %1 fehlgeschlagen</translation>
+        <translation>Das Entfernen des lokalen Caches für Konto %1 ist fehlgeschlagen.</translation>
     </message>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
@@ -1065,7 +1069,7 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
     <message>
         <source>Please choose the cache folder</source>
-        <translation>Bitte wählen Sie einen Ordner für den Zwischenspeicher</translation>
+        <translation>Wählen Sie einen Ordner für den Zwischenspeicher</translation>
     </message>
     <message>
         <source>You have changed disk letter. Restart to apply it?</source>
@@ -1236,19 +1240,19 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     </message>
     <message>
         <source>Password(At least 8 characters)</source>
-        <translation type="unfinished"/>
+        <translation>Passwort (mindestens 8 Zeichen)</translation>
     </message>
     <message>
         <source>Show password</source>
-        <translation type="unfinished"/>
+        <translation>Passwort anzeigen</translation>
     </message>
     <message>
         <source>Expire days</source>
-        <translation type="unfinished"/>
+        <translation>Tage bis Ablauf</translation>
     </message>
     <message>
         <source>Generate link</source>
-        <translation type="unfinished"/>
+        <translation>Link erstellen</translation>
     </message>
 </context>
 <context>
@@ -1262,11 +1266,11 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     <name>SyncErrorsDialog</name>
     <message>
         <source>File Sync Errors</source>
-        <translation>Dateifehler beim Synchronisieren</translation>
+        <translation>Dateifehler bei der Synchronisation</translation>
     </message>
     <message>
         <source>No sync errors.</source>
-        <translation>Keine Fehler beim Synchronisieren.</translation>
+        <translation>Keine Fehler bei der Synchronisation</translation>
     </message>
 </context>
 <context>
@@ -1361,19 +1365,19 @@ Bitte klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translat
     <name>UploadLinkDialog</name>
     <message>
         <source>Upload Link</source>
-        <translation type="unfinished"/>
+        <translation>Upload-Link</translation>
     </message>
     <message>
         <source>Upload link:</source>
-        <translation type="unfinished"/>
+        <translation>Upload-Link:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>In die Zwischenablage kopieren</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
 </context>
 </TS>
