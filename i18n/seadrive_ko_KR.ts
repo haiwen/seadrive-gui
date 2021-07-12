@@ -720,6 +720,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>Library is too large to sync.</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>You can only move files/folders within a library or from one library to another library</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
