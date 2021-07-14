@@ -722,7 +722,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>You can only move files/folders within a library or from one library to another library</source>
-        <translation type="unfinished"/>
+        <translation>Вы можете перемещать файлы/папки только внутри библиотеки или из одной библиотеки в другую</translation>
     </message>
 </context>
 <context>
