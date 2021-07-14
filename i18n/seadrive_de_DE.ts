@@ -722,7 +722,7 @@ Klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translation>
     </message>
     <message>
         <source>You can only move files/folders within a library or from one library to another library</source>
-        <translation type="unfinished"/>
+        <translation>Sie können Dateien oder Ordner nur innerhalb einer Bibliothek bzw. von einer Bibliothek in eine andere verschieben.</translation>
     </message>
 </context>
 <context>

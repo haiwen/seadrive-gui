@@ -722,7 +722,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>You can only move files/folders within a library or from one library to another library</source>
-        <translation>您只能将库中的文件/文件夹或从一个库移动到另一个库</translation>
+        <translation>您只能将文件、文件夹在一个资料库内移动，或者从一个资料库移动到另一个资料库。</translation>
     </message>
 </context>
 <context>
