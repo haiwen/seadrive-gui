@@ -71,6 +71,12 @@
       <Extensions>ts</Extensions>
       <ParseFiles>false</ParseFiles>
     </Filter>
+    <Filter Include="Source Files\qlgen">
+      <UniqueIdentifier>{8075f4b4-19eb-4e67-a910-b9cba06d3d7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\qlgen">
+      <UniqueIdentifier>{6243bcf9-3e80-43b5-bc94-932c48d433df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\account.cpp">
@@ -274,6 +280,12 @@
     <ClCompile Include="src\open-local-helper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\qlgen\qlgen-handler.cpp">
+      <Filter>Header Files\qlgen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\qlgen\thumbnail-service.cpp">
+      <Filter>Header Files\qlgen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\api\api-error.h">
@@ -377,6 +389,9 @@
     </ClInclude>
     <ClInclude Include="src\crash-handler.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\qlgen\qlgen-listener.h">
+      <Filter>Source Files\qlgen</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -502,6 +517,12 @@
     </QtMoc>
     <QtMoc Include="src\open-local-helper.h">
       <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\qlgen\qlgen-handler.h">
+      <Filter>Source Files\qlgen</Filter>
+    </QtMoc>
+    <QtMoc Include="src\qlgen\thumbnail-service.h">
+      <Filter>Source Files\qlgen</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

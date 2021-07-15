@@ -50,6 +50,8 @@
     <ClCompile Include="src\message-poller.cpp" />
     <ClCompile Include="src\network-mgr.cpp" />
     <ClCompile Include="src\open-local-helper.cpp" />
+    <ClCompile Include="src\qlgen\qlgen-handler.cpp" />
+    <ClCompile Include="src\qlgen\thumbnail-service.cpp" />
     <ClCompile Include="src\remote-wipe-service.cpp" />
     <ClCompile Include="src\rpc\rpc-client.cpp" />
     <ClCompile Include="src\rpc\rpc-server.cpp" />
@@ -103,6 +105,9 @@
     <ClInclude Include="src\crash-handler.h" />
     <QtMoc Include="src\ui\uploadlink-dialog.h" />
     <QtMoc Include="src\open-local-helper.h" />
+    <QtMoc Include="src\qlgen\qlgen-handler.h" />
+    <ClInclude Include="src\qlgen\qlgen-listener.h" />
+    <QtMoc Include="src\qlgen\thumbnail-service.h" />
     <ClInclude Include="third_party\WinSparkle-0.5.3\include\winsparkle-version.h" />
     <ClInclude Include="third_party\WinSparkle-0.5.3\include\winsparkle.h" />
     <QtMoc Include="src\api\requests.h" />
