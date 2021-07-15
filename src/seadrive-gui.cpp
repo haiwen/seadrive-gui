@@ -34,6 +34,9 @@
 #ifdef HAVE_FINDER_SYNC_SUPPORT
 #include "finder-sync/finder-sync-listener.h"
 #include "qlgen/qlgen-listener.h"
+#endif
+
+#if !defined(Q_OS_LINUX)
 #include "qlgen/thumbnail-service.h"
 #endif
 
@@ -494,8 +497,12 @@ void SeadriveGui::onDaemonStarted()
 #ifdef HAVE_FINDER_SYNC_SUPPORT
     finderSyncListenerStart();
 #endif
-#if defined(Q_OS_MAC)
+
+#if !defined(Q_OS_LINUX)
     ThumbnailService::instance()->start();
+#endif
+
+#if defined(Q_OS_MAC)
     qlgenListenerStart();
 #endif
 }
