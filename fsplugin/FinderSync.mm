@@ -380,8 +380,8 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
     // Produce a menu for the extension.
     NSMenu *menu = [[NSMenu alloc] initWithTitle:@""];
     NSMenuItem *shareLinkItem =
-        [menu addItemWithTitle:NSLocalizedString(@"Get Seafile Share Link",
-                                                 @"Get Seafile Share Link")
+        [menu addItemWithTitle:NSLocalizedString(@"Get Share Link",
+                                                 @"Get Share Link")
                         action:@selector(shareLinkAction:)
                  keyEquivalent:@""];
     NSImage *seafileImage = [NSImage imageNamed:@"seadrive.icns"];
@@ -399,8 +399,8 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
         findRepoContainPath(watched_repos_, file_path) !=
             watched_repos_.end()) {
         NSMenuItem *internalLinkItem = [menu
-            addItemWithTitle:NSLocalizedString(@"Get Seafile Internal Link",
-                                               @"Get Seafile Internal Link")
+            addItemWithTitle:NSLocalizedString(@"Get Internal Link",
+                                               @"Get Internal Link")
                       action:@selector(internalLinkAction:)
                keyEquivalent:@""];
         [internalLinkItem setImage:seafileImage];
