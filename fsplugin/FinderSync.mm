@@ -436,8 +436,8 @@ cleanFileStatus(std::unordered_map<std::string, PathStatus> *file_status,
     // early return
     if (is_dir) {
         NSMenuItem *showUploadLinkByMenuItem =
-            [menu addItemWithTitle:NSLocalizedString(@"Get Seafile Upload Link",
-                                                     @"Get Seafile Upload Link")
+            [menu addItemWithTitle:NSLocalizedString(@"Get Upload Link",
+                                                     @"Get Upload Link")
                             action:@selector(getUploadLinkAction:)
                         keyEquivalent:@""];
             [showUploadLinkByMenuItem setImage:seafileImage];
