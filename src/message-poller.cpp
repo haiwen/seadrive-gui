@@ -204,8 +204,8 @@ void MessagePoller::processNotification(const SyncNotification& notification)
             notification.commit_id,
             notification.parent_commit_id);
     } else if (notification.type == "fs-loaded") {
-        QString title = tr("fs loaded");
-        QString msg = tr("fs has been loaded");
+        QString title = tr("Libraries are ready");
+        QString msg = tr("All libraries are loaded and ready to use.");
         gui->trayIcon()->showMessage(
             title,
             msg,
