@@ -204,6 +204,15 @@ void MessagePoller::processNotification(const SyncNotification& notification)
             notification.commit_id,
             notification.parent_commit_id);
     } else if (notification.type == "fs-loaded") {
+        QString title = tr("Libraries are ready");
+        QString msg = tr("All libraries are loaded and ready to use.");
+        gui->trayIcon()->showMessage(
+            title,
+            msg,
+            "",
+            "",
+            "",
+            QSystemTrayIcon::Information);
         emit seadriveFSLoaded();
     } else if (notification.isCrossRepoMove()) {
         // printf("src path = %s, dst path = %s\n", toCStr(notification.move.src_path), toCStr(notification.move.dst_path));
