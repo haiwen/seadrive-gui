@@ -406,6 +406,14 @@ Nyomja meg a &quot;Befejezés&quot; gombot a %1 könyvtár megnyitásához.</tra
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
         <translation>&quot;%1&quot; kötet közvetlenül nem törölhető</translation>
     </message>
+    <message>
+        <source>Libraries are ready</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All libraries are loaded and ready to use.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QObject</name>

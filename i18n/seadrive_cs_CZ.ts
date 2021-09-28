@@ -405,6 +405,14 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
         <translation>Nemůžeš smazat knihovnu &quot;%1&quot;</translation>
     </message>
+    <message>
+        <source>Libraries are ready</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All libraries are loaded and ready to use.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QObject</name>

@@ -404,6 +404,14 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
         <translation>Você não pode apagar a biblioteca &quot;%1&quot; diretamente</translation>
     </message>
+    <message>
+        <source>Libraries are ready</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All libraries are loaded and ready to use.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QObject</name>

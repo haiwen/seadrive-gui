@@ -405,6 +405,14 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
         <translation>No puede eliminar la biblioteca &quot;%1&quot; directamente</translation>
     </message>
+    <message>
+        <source>Libraries are ready</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All libraries are loaded and ready to use.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QObject</name>

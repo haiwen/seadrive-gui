@@ -405,6 +405,14 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Libraries are ready</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All libraries are loaded and ready to use.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -718,6 +726,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Library is too large to sync.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can only move files/folders within a library or from one library to another library</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

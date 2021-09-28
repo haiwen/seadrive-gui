@@ -405,6 +405,14 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
         <translation>不能直接删除资料库 “%1”</translation>
     </message>
+    <message>
+        <source>Libraries are ready</source>
+        <translation>资料库准备就绪</translation>
+    </message>
+    <message>
+        <source>All libraries are loaded and ready to use.</source>
+        <translation>所有资料库已加载完毕并可以使用</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
