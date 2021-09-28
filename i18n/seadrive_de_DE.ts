@@ -405,6 +405,14 @@ Klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translation>
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
         <translation>Sie können die Bibliothek „%1“ nicht direkt löschen.</translation>
     </message>
+    <message>
+        <source>Libraries are ready</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All libraries are loaded and ready to use.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QObject</name>

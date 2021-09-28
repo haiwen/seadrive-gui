@@ -405,6 +405,14 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
         <translation>&quot;%1&quot; 라이브러리를 직접 삭제할 수 없습니다</translation>
     </message>
+    <message>
+        <source>Libraries are ready</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All libraries are loaded and ready to use.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QObject</name>

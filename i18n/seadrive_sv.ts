@@ -405,6 +405,14 @@ Vänligen klicka på &quot;Klart&quot; knappen för att öppna %1 mappen.</trans
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
         <translation>Du kan inte ta bort katalogen &quot;%1&quot; direkt</translation>
     </message>
+    <message>
+        <source>Libraries are ready</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All libraries are loaded and ready to use.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QObject</name>

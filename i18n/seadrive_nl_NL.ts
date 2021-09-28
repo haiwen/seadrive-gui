@@ -405,6 +405,14 @@ Klik op de knop &quot;voltooien&quot; om de map %1 te openen.</translation>
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Libraries are ready</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All libraries are loaded and ready to use.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QObject</name>
