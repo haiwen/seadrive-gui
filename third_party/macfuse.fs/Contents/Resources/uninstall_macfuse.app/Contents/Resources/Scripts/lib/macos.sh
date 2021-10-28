@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (c) 2011-2020 Benjamin Fleischer
+# Copyright (c) 2011-2021 Benjamin Fleischer
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@
 
 function macos_get_version
 {
-    sw_vers -productVersion | /usr/bin/cut -d . -f 1,2 2> /dev/null
+    sw_vers -productVersion 2> /dev/null
 }
 
 function macos_version_to_major

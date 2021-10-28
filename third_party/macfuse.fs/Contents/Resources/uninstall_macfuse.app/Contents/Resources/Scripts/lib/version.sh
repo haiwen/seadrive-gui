@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (c) 2011-2014 Benjamin Fleischer
+# Copyright (c) 2011-2021 Benjamin Fleischer
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -84,4 +84,15 @@ function version_compare_ge
 {
     version_compare "${1}" "${2}"
     (( ${?} != 1 ))
+}
+
+function version_increment
+{
+    common_assert "version_is_version `string_escape "${1}"`"
+
+    local -a components=()
+    IFS="." read -ra components <<< "${1}"
+
+    array_set components ${2} "$((`array_get components ${2}` + 1))"
+    array_join components "."
 }

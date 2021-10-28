@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (c) 2011-2020 Benjamin Fleischer
+# Copyright (c) 2011-2021 Benjamin Fleischer
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -79,9 +79,14 @@ function array_get
 function array_set
 {
     common_assert "array_is_array `string_escape "${1}"`"
-    common_assert "math_is_integer `string_escape "${2}"` && [[ ${2} -ge 0 ]]"
+    common_assert "math_is_integer `string_escape "${2}"`"
 
-    eval "${1}[${2}]=`string_escape "${3}"`"
+    if [[ ${2} -lt 0 ]]
+    then
+        eval "${1}[$((`array_size "${1}"` + ${2}))]=`string_escape "${3}"`"
+    else
+        eval "${1}[${2}]=`string_escape "${3}"`"
+    fi
 }
 
 function array_append
@@ -97,7 +102,7 @@ function array_get_elements
 
     function array_get_elements_serialize
     {
-        local offset=$(( ${#} / 2 + 1 ))
+        local offset=$((${#} / 2 + 1))
 
         if [[ ${#} -ge ${offset} ]]
         then

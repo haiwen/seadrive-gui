@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (c) 2011-2014 Benjamin Fleischer
+# Copyright (c) 2011-2021 Benjamin Fleischer
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -67,7 +67,7 @@ function string_escape
 
     if [[ "${count}" =~ [0-9]+ ]] && (( count > 0 ))
     then
-        printf "%q" "`string_escape "${1}" $(( count - 1 ))`"
+        printf "%q" "`string_escape "${1}" $((count - 1))`"
     else
         printf "%s" "${1}"
     fi

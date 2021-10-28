@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (c) 2011-2014 Benjamin Fleischer
+# Copyright (c) 2011-2021 Benjamin Fleischer
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -108,13 +108,13 @@ function common_log
     then
         case ${verbose} in
             1|2)
-                color="1;30"
+                color="1;39"
                 ;;
-            4)
-                color="0;37"
+            3)
+                color="0;39"
                 ;;
-            [0-9]+)
-                color="0:30"
+            *)
+                color="0;2"
                 ;;
         esac
     fi
@@ -567,7 +567,7 @@ function common_path_absolute
                 unset -v tokens[${i}]
                 ;;
             ..)
-                unset -v tokens[$(( i - 1 ))]
+                unset -v tokens[$((i - 1))]
                 unset -v tokens[${i}]
                 ;;
         esac
