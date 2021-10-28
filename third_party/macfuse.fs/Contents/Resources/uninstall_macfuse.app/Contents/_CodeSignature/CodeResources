@@ -6,11 +6,11 @@
 	<dict>
 		<key>Resources/Scripts/lib/array.sh</key>
 		<data>
-		Q+a8H4iDUNQWpv0tBrMG/1vbPh8=
+		OvCVDhz+rtecoEzke3xVXmJ/O6A=
 		</data>
 		<key>Resources/Scripts/lib/common.sh</key>
 		<data>
-		ENbs4voSh0jU5KEK5BvFWSTjcNw=
+		Xhr18cI3d241i+KzcF6pX1mxY4s=
 		</data>
 		<key>Resources/Scripts/lib/installer.sh</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>Resources/Scripts/lib/macos.sh</key>
 		<data>
-		A2nwKa8NxCvcMiw2FGX5UnqfSIw=
+		SU68o+ZuNZECTO4XYnlyZgpD/lQ=
 		</data>
 		<key>Resources/Scripts/lib/math.sh</key>
 		<data>
@@ -30,15 +30,15 @@
 		</data>
 		<key>Resources/Scripts/lib/string.sh</key>
 		<data>
-		m3XuFEuae7unzvq2PMsL/+tKZfU=
+		brtYvfn8PKLsRfE3AvpQrJmIlqU=
 		</data>
 		<key>Resources/Scripts/lib/version.sh</key>
 		<data>
-		Maq9UhAmPuP1u0uG0CClOnEtXUI=
+		Qe0KCUUOfwCplVQFOuoVRQldMiE=
 		</data>
 		<key>Resources/Scripts/main.scpt</key>
 		<data>
-		pfUoLjBOSgmJXtalpHR1jUQrUzE=
+		rC6CE9bvQ46bZ1ePOWHdfs/EGDM=
 		</data>
 		<key>Resources/Scripts/uninstall_macfuse.sh</key>
 		<data>
@@ -46,7 +46,7 @@
 		</data>
 		<key>Resources/applet.rsrc</key>
 		<data>
-		/jVQqMpNI1L5OTLhyJaYiMBCQY8=
+		tRA5pd03wR8N1b6YjfbCWqBJAzc=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -55,22 +55,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Q+a8H4iDUNQWpv0tBrMG/1vbPh8=
+			OvCVDhz+rtecoEzke3xVXmJ/O6A=
 			</data>
 			<key>hash2</key>
 			<data>
-			kX0PL6XcZoH87+ILWeDPtXk5oirXPYFfA1RcO74jNSU=
+			6hzL3XlW58dW30R6W+NbNAyrQ6Aw8F8cEYxqolLP2aQ=
 			</data>
 		</dict>
 		<key>Resources/Scripts/lib/common.sh</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ENbs4voSh0jU5KEK5BvFWSTjcNw=
+			Xhr18cI3d241i+KzcF6pX1mxY4s=
 			</data>
 			<key>hash2</key>
 			<data>
-			kH6kB2aWWzDgMHvo8zS4YLcpXSSaylMzSnEn0gQQpoc=
+			9Y+rA1iVlW8XVSpqfv4vSbHBxqCE4hoxINvgN88pLh4=
 			</data>
 		</dict>
 		<key>Resources/Scripts/lib/installer.sh</key>
@@ -99,11 +99,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			A2nwKa8NxCvcMiw2FGX5UnqfSIw=
+			SU68o+ZuNZECTO4XYnlyZgpD/lQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			gZCWTz2eellIXiWEPfFddRO+qQD8zsdwBp1YKIPaeOc=
+			T11LDxQF+WxrkwdFg12Ksj4A3wlv7PKsm+RflJgxfUg=
 			</data>
 		</dict>
 		<key>Resources/Scripts/lib/math.sh</key>
@@ -121,33 +121,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			m3XuFEuae7unzvq2PMsL/+tKZfU=
+			brtYvfn8PKLsRfE3AvpQrJmIlqU=
 			</data>
 			<key>hash2</key>
 			<data>
-			/vj6gilOvFq6Fz/rDQeT7tpYcOw684tKnVED/Uf/fIA=
+			mFz9tuMAORenUb8FHUzYjWuRzSi5r3YOW4cclJBguYo=
 			</data>
 		</dict>
 		<key>Resources/Scripts/lib/version.sh</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Maq9UhAmPuP1u0uG0CClOnEtXUI=
+			Qe0KCUUOfwCplVQFOuoVRQldMiE=
 			</data>
 			<key>hash2</key>
 			<data>
-			wfjFX+pXNt58pax1r1g8tld4SjgO/Ln9cwqDR7uactc=
+			NXpz1WFi70nqHKTZW9X/8EnargPttIlJ03ObPyLMBJ0=
 			</data>
 		</dict>
 		<key>Resources/Scripts/main.scpt</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			pfUoLjBOSgmJXtalpHR1jUQrUzE=
+			rC6CE9bvQ46bZ1ePOWHdfs/EGDM=
 			</data>
 			<key>hash2</key>
 			<data>
-			7m68KsZ1qvdh1jwNtjxhaeDnXR0R9q9SGEdczN6zprc=
+			rnvI3q4/Q2ivEEmvnM/Y0hiht3kU2AmNqinQIrWMKho=
 			</data>
 		</dict>
 		<key>Resources/Scripts/uninstall_macfuse.sh</key>
@@ -165,11 +165,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			/jVQqMpNI1L5OTLhyJaYiMBCQY8=
+			tRA5pd03wR8N1b6YjfbCWqBJAzc=
 			</data>
 			<key>hash2</key>
 			<data>
-			0jPapEMRihcikRr/mzmNOcrNOYLHxGEOVmOrcBa6U/E=
+			O75rLSMDDz6tfEUO7CcmNe0FCBSKm9ImoDaboHzbcrQ=
 			</data>
 		</dict>
 	</dict>
