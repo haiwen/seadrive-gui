@@ -16,6 +16,9 @@
 #include "seadrive-gui.h"
 #include "settings-mgr.h"
 #include "utils/uninstall-helpers.h"
+#if defined(_MSC_VER)
+#include "utils/registry.h"
+#endif
 
 #include "uninstall-helper-dialog.h"
 
@@ -88,27 +91,14 @@ void RemoveSeafileDataThread::run()
 {
     QString seadrive_data_dir = seadriveDataDir();
     QString seadrive_dir = seadriveDir();
+
+#if defined(_MSC_VER)
+    do_seadrive_unregister_sync_root();
+    RegElement::removeAllSyncRootManagerItem();
+    RegElement::removeIconRegItem();
+#endif
     delete_dir_recursively(seadrive_data_dir);
 
-#if 0
-#if defined(_MSC_VER)
-    QString seadrive_root;
-    getSeadriveRoot(&seadrive_root);
-    QDir sync_dir(seadrive_root);
-
-    bool success = false;
-    int i = 0;
-
-    do {
-        success = sync_dir.removeRecursively();
-        msleep(3000);
-    } while (!success && i < 3);
-
-    if (!success) {
-        printf("remove sync root failed");
-    }
-#endif // _MSC_VER
-#endif
     QDir dir(seadrive_dir);
     dir.remove("accounts.db");
     SettingsManager::removeAllSettings();
