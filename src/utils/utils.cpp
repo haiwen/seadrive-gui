@@ -22,6 +22,7 @@
 #include <jansson.h>
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QUrlQuery>
+#include <QStandardPaths>
 #endif
 
 #include "utils/utils-mac.h"
@@ -709,8 +710,8 @@ QString dumpCipher(const QSslCipher &cipher)
     s += "Key Exchange:    " + cipher.keyExchangeMethod() + "\n";
     s += "Cipher Name:     " + cipher.name() + "\n";
     s += "Protocol:        " +  cipher.protocolString() + "\n";
-    s += "Supported Bits:  " + QString(cipher.supportedBits()) + "\n";
-    s += "Used Bits:       " + QString(cipher.usedBits()) + "\n";
+    s += "Supported Bits:  " + QString::number(cipher.supportedBits()) + "\n";
+    s += "Used Bits:       " + QString::number(cipher.usedBits()) + "\n";
     return s;
 }
 
@@ -790,11 +791,12 @@ QUrl includeQueryParams(const QUrl& url,
                         const QMultiHash<QString, QString>& params)
 {
     QUrl u(url);
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     QUrlQuery query;
-    QHashIterator<QString, QString > i(params);
-    while (i.hasNext()) {
-        i.next();
+#if ((QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)) && (QT_VERSION <= QT_VERSION_CHECK(6, 0, 0)))
+    QHashIterator<QString, QString> i(params);
+#elif (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+    QMultiHash<QString, QString>::const_iterator i;
+    for (i = params.constBegin(); i != params.constEnd(); ++i) {
         query.addQueryItem(QUrl::toPercentEncoding(i.key()),
                            QUrl::toPercentEncoding(i.value()));
     }
@@ -847,7 +849,6 @@ QString translateTransferRate(int rate)
         }
     }
     else {
-        display_rate = KBps;
         unit = "kB/s";
         display_rate = QString::number(int(KBps));
     }

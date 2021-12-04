@@ -181,7 +181,12 @@ bool debugEnabledInDebugFlagFile()
     }
 
     QTextStream input(&debugflag_file);
+#if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
+    input.setEncoding(QStringConverter::Utf8);
+#else
     input.setCodec("UTF-8");
+#endif
+
     QString debug_level = input.readLine().trimmed();
     return !debug_level.isEmpty() && debug_level != "false" &&
            debug_level != "0";
@@ -834,7 +839,11 @@ QString SeadriveGui::getUniqueClientId()
     }
 
     QTextStream input(&id_file);
+#if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
+    input.setEncoding(QStringConverter::Utf8);
+#else
     input.setCodec("UTF-8");
+#endif
 
     if (input.atEnd()) {
         errorAndExit(tr("incorrect client id"));

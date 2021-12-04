@@ -119,7 +119,7 @@ void AutoLogonDialog::startAutoLogon()
              sso_url.toString().toUtf8().data(),
              source.toUtf8().data());
 
-    QHash<QString, QString> params = ::getSeafileLoginParams(
+    QMultiHash<QString, QString> params = ::getSeafileLoginParams(
         gui->settingsManager()->getComputerName(), "krb5_");
     params["from_desktop"] = "true";
 

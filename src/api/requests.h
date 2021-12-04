@@ -3,24 +3,24 @@
 
 #include <QMap>
 #include <vector>
+#include <QStringList>
 
 #include "account.h"
 #include "api-request.h"
 #include "contact-share-info.h"
 #include "server-repo.h"
 #include "server-repo.h"
+#include "api/seaf-dirent.h"
 
 class QDir;
 class QNetworkReply;
 class QImage;
-class QStringList;
 
 class ServerRepo;
 class Account;
 class StarredFile;
 class SeafEvent;
 class CommitDetails;
-class SeafDirent;
 
 class PingServerRequest : public SeafileApiRequest
 {

@@ -5,12 +5,12 @@
 #include <QString>
 #include <QObject>
 #include <QNetworkReply>
+#include <QSslError>
 
 #include "account.h"
 #include "server-repo.h"
 
 class QNetworkAccessManager;
-class QSslError;
 
 /**
  * SeafileApiClient handles the underlying api mechanism

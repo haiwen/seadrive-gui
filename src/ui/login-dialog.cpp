@@ -85,7 +85,11 @@ LoginDialog::LoginDialog(QWidget *parent) : QDialog(parent)
         mServerAddr->addItems(getUsedServerAddresses());
         mServerAddr->clearEditText();
     }
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 13, 0))
+    mServerAddr->setCompleter(nullptr);
+#else
     mServerAddr->setAutoCompletion(false);
+#endif
 
     QString computerName = gui->settingsManager()->getComputerName();
 
@@ -95,7 +99,14 @@ LoginDialog::LoginDialog(QWidget *parent) : QDialog(parent)
 
     connect(mSubmitBtn, SIGNAL(clicked()), this, SLOT(doLogin()));
 
-    const QRect screen = QApplication::desktop()->screenGeometry();
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    QRect screen;
+    if (!QGuiApplication::screens().isEmpty()) {
+        screen = QGuiApplication::screens().at(0)->availableGeometry();
+    }
+#else
+    const QRect screen = QApplication::desktop()->availableGeometry();
+#endif
     move(screen.center() - this->rect().center());
 
     setupShibLoginLink();

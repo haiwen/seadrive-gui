@@ -264,8 +264,14 @@ void SyncErrorsTableModel::updateErrors()
         }
 
         errors_[i] = errors[i];
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 8, 0))
+        QModelIndex start = index(i, 0);
+        QModelIndex stop = index(i, MAX_COLUMN - 1);
+#else
         QModelIndex start = QModelIndex().child(i, 0);
         QModelIndex stop = QModelIndex().child(i, MAX_COLUMN - 1);
+#endif
         emit dataChanged(start, stop);
     }
 }
@@ -308,7 +314,11 @@ QVariant SyncErrorsTableModel::data(const QModelIndex & index, int role) const
     int column = index.column();
 
     if (role == Qt::TextAlignmentRole)
+#if(QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+        return static_cast<Qt::Alignment::Int>(Qt::AlignLeft | Qt::AlignVCenter);
+#else
         return Qt::AlignLeft + Qt::AlignVCenter;
+#endif
 
     if (role == Qt::ToolTipRole)
         return tr("Double click to open the library");
@@ -363,7 +373,11 @@ QVariant SyncErrorsTableModel::headerData(int section,
     }
 
     if (role == Qt::TextAlignmentRole)
+#if(QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+        return static_cast<Qt::Alignment::Int>(Qt::AlignLeft | Qt::AlignVCenter);
+#else
         return Qt::AlignLeft + Qt::AlignVCenter;
+#endif
 
     if (role != Qt::DisplayRole)
         return QVariant();

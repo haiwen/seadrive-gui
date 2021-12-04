@@ -57,7 +57,7 @@ void AutoLoginService::onGetLoginTokenSuccess(const QString& token)
     QUrl url = req->account().getAbsoluteUrl("/client-login/");
     QString next_url = req->nextUrl();
 
-    QHash<QString, QString> params;
+    QMultiHash<QString, QString> params;
     params.insert("token", token);
     params.insert("next", req->nextUrl());
     url = includeQueryParams(url, params);
