@@ -337,7 +337,7 @@ bool WinInetHttpReqest::getCookiePlain(const char* cookie_name,
     success =
         InternetGetCookieExA(url, cookie_name, NULL, &len, kQueryCookieFlag, 0);
     if (!success) {
-        qWarning("failed to get cookie length of %s::%s, GLE=%lu\n", url,
+        qWarning("failed to get cookie length of the url: %s, the cookie name is: %s, GLE=%lu\n", url,
                  cookie_name, GetLastError());
         return false;
     }
