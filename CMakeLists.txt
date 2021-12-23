@@ -160,11 +160,6 @@ ENDIF()
 ###### BEGIN: QT configuration
 ####################
 
-# Qt 5.6.0 removes QtWebKit, we need to use QtWebEnigne. First we detect the
-# current qt version, then use proper name based on the version. However we
-# have to keep using QtWebKit on windows because QtWebEngine can't be
-# compiled in msys2/mingw (QtWebEnigne is based on chrome, which has to be
-# compiled with MSVC.)
 FIND_PROGRAM(qmake_executable NAMES qmake qmake.exe)
 EXECUTE_PROCESS(COMMAND
     bash -c "${qmake_executable} --version | grep -iE '^using qt version [0-9.]+' | awk '{print $4}'"
