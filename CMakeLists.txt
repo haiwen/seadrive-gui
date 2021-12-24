@@ -33,10 +33,8 @@ ENDIF()
 MESSAGE("Build type: ${CMAKE_BUILD_TYPE}")
 
 ## build in PIC mode
-IF (NOT WIN32)
-    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
-ENDIF()
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 
 ## Setup warnings ouput if enabled
 ## but don't warning on unsupported warnings
@@ -62,29 +60,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   endif()
 endif()
 
-IF (WIN32)
-    CONFIGURE_FILE(
-      ${CMAKE_SOURCE_DIR}/seadrive-gui.rc.in
-      ${CMAKE_BINARY_DIR}/seadrive-gui.rc
-    )
-    SET(EXTRA_LIBS ${EXTRA_LIBS} psapi ws2_32 shlwapi mpr crypt32)
-    SET(EXTRA_SOURCES ${EXTRA_SOURCES} ${CMAKE_BINARY_DIR}/seadrive-gui.rc)
-    IF (${CMAKE_BUILD_TYPE} MATCHES Release)
-      SET(GUI_TYPE WIN32)
-    ENDIF()
-    SET(platform_specific_moc_headers ${platform_specific_moc_headers} src/ext-handler.h src/ui/disk-letter-dialog.h )
-    SET(platform_specific_sources ${platform_specific_sources} src/ext-handler.cpp src/ui/disk-letter-dialog.cpp)
-
-    IF (BUILD_SPARKLE_SUPPORT)
-      IF(NOT EXISTS "${CMAKE_SOURCE_DIR}/WinSparkle.lib")
-        message(FATAL_ERROR "File ${CMAKE_SOURCE_DIR}/WinSparkle.lib not found in current directory. Please setup winsparkle correctly." )
-      ENDIF()
-      SET(SPARKLE_LIBS ${CMAKE_SOURCE_DIR}/WinSparkle.lib)
-      SET(platform_specific_moc_headers ${platform_specific_moc_headers} src/auto-update-service.h)
-      SET(platform_specific_sources ${platform_specific_sources} src/auto-update-service.cpp)
-    ENDIF()
-
-ELSEIF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "BSD")
+IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "BSD")
     INCLUDE_DIRECTORIES(${QT_QTDBUS_INCLUDE_DIR})
     LINK_DIRECTORIES(${QT_QTDBUS_LIBRARIES})
     SET(EXTRA_LIBS ${EXTRA_LIBS} ${QT_QTDBUS_LIBRARIES})
@@ -202,19 +178,11 @@ ENDIF()
 
 SET(QT_LUPDATE_EXECUTABLE ${Qt5_LUPDATE_EXECUTABLE})
 
-if (CYGWIN OR MINGW)
-    IF(QT_VERSION_MAJOR EQUAL 6)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++17")
-    ELSE()
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
-    ENDIF()
-else()
-    IF(QT_VERSION_MAJOR EQUAL 6)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
-    ELSE()
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-    ENDIF()
-endif()
+IF(QT_VERSION_MAJOR EQUAL 6)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+ELSE()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+ENDIF()
 
 # for OS X, we requires libc++ instead
 if (APPLE)
@@ -226,22 +194,6 @@ if (APPLE)
     ENDIF()
     SET(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
 endif()
-
-####################
-###### begin: kerbose sso
-####################
-IF (WIN32)
-  # kerbose sso specific source files for seadrive-gui
-  SET(platform_specific_moc_headers ${platform_specific_moc_headers} src/win-sso/auto-logon-dialog.h)
-  SET(platform_specific_sources ${platform_specific_sources}
-    src/win-sso/auto-logon-dialog.cpp
-    src/win-sso/win-http-request.cpp
-  )
-  SET(EXTRA_LIBS ${EXTRA_LIBS} -lwininet -lurlmon)
-ENDIF(WIN32)
-####################
-###### end: kerbose sso
-####################
 
 # MOC FILES
 SET(moc_headers
@@ -337,11 +289,11 @@ ENDIF()
 ###### BEGIN: pthread support is required explicitly on linux
 ####################
 
-IF(NOT WIN32 AND NOT APPLE)
+IF(NOT APPLE)
   SET(CMAKE_THREAD_PREFER_PTHREAD ON)
   INCLUDE(FindThreads)
   LINK_LIBRARIES(${CMAKE_THREAD_LIBS_INIT})
-ENDIF(NOT WIN32 AND NOT APPLE)
+ENDIF(NOT APPLE)
 
 ####################
 ###### BEGIN: other libraries configuration
@@ -515,13 +467,8 @@ LIST(APPEND utils_sources
     src/utils/stl.cpp
     src/utils/i18n-utils.cpp
     )
-IF (WIN32)
-    LIST(APPEND utils_sources
-        src/utils/process-win.cpp
-        src/utils/registry.cpp
-        src/utils/utils-win.cpp
-        )
-ELSEIF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "BSD")
+
+IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "BSD")
     LIST(APPEND utils_sources
         src/utils/process-linux.cpp
         )
@@ -612,7 +559,6 @@ ADD_CUSTOM_TARGET(update-ts DEPENDS ${SEADRIVE_TS_TARGETS})
 ###### start: freedesktop files
 ####################
 
-if(NOT WIN32)
 install(DIRECTORY
   ${CMAKE_SOURCE_DIR}/data/icons/16x16
   ${CMAKE_SOURCE_DIR}/data/icons/22x22
@@ -623,7 +569,6 @@ install(DIRECTORY
   ${CMAKE_SOURCE_DIR}/data/icons/scalable
   DESTINATION share/icons/hicolor
 )
-
 install(FILES
   ${CMAKE_SOURCE_DIR}/data/seadrive.desktop
   DESTINATION share/applications
@@ -634,7 +579,6 @@ install(FILES
   DESTINATION share/pixmaps
 )
 
-endif()
 
 ####################
 ###### end: freedesktop files

@@ -62,14 +62,11 @@ void initBreakpad()
 
 void setupHDPIFix()
 {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 1, 0)
     // enable builtin retina mode
     // http://blog.qt.digia.com/blog/2013/04/25/retina-display-support-for-mac-os-ios-and-x11/
     // https://qt.gitorious.org/qt/qtbase/source/a3cb057c3d5c9ed2c12fb7542065c3d667be38b7:src/gui/image/qicon.cpp#L1028-1043
     qApp->setAttribute(Qt::AA_UseHighDpiPixmaps);
-#endif
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
   #if defined(Q_OS_WIN32)
     if (!utils::win::fixQtHDPINonIntegerScaling()) {
         qApp->setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -79,7 +76,6 @@ void setupHDPIFix()
     // See http://blog.qt.io/blog/2016/01/26/high-dpi-support-in-qt-5-6/
     qApp->setAttribute(Qt::AA_EnableHighDpiScaling);
   #endif
-#endif
 }
 
 void setupSettingDomain()

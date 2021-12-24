@@ -3,12 +3,7 @@
 #include <QHash>
 #include <QObject>
 #include <QApplication>
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QRegularExpression>
-#else
-#include <QRegExp>
-#endif
-
 #include <QStringList>
 
 #include "utils/utils.h"
@@ -46,7 +41,6 @@ QString translateLine(const QString line)
     QString operations = ((QStringList)getVerbsMap()->keys()).join("|");
     QString pattern = QString("(%1) \"(.*)\"\\s?(and ([0-9]+) more (files|directories))?").arg(operations);
 
-#if(QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     QRegularExpression regex(pattern);
     QRegularExpressionMatch match;
     int index = 0;
@@ -60,19 +54,6 @@ QString translateLine(const QString line)
     QString has_more = match.captured(3);
     QString n_more = match.captured(4);
     QString more_type = match.captured(5);
-#else
-    QRegExp regex(pattern);
-
-    if (regex.indexIn(line) < 0) {
-        return line;
-    }
-
-    QString op = regex.cap(1);
-    QString file_name = regex.cap(2);
-    QString has_more = regex.cap(3);
-    QString n_more = regex.cap(4);
-    QString more_type = regex.cap(5);
-#endif
 
     QString op_trans = getVerbsMap()->value(op, op);
 
@@ -107,7 +88,6 @@ translateCommitDesc(const QString& input)
     if (value.startsWith("Reverted library")) {
         return value.replace("Reverted library to status at", QObject::tr("Reverted library to status at"));
     } else if (value.startsWith("Reverted file")) {
-#if(QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         QRegularExpression regex("Reverted file \"(.*)\" to status at (.*)");
         QRegularExpressionMatch match;
         int index = 0;
@@ -118,15 +98,6 @@ translateCommitDesc(const QString& input)
             QString time = match.captured(2);
             return QObject::tr("Reverted file \"%1\" to status at %2.").arg(name).arg(time);
         }
-#else
-        QRegExp regex("Reverted file \"(.*)\" to status at (.*)");
-
-        if (regex.indexIn(value) >= 0) {
-            QString name = regex.cap(1);
-            QString time = regex.cap(2);
-            return QObject::tr("Reverted file \"%1\" to status at %2.").arg(name).arg(time);
-        }
-#endif
 
     } else if (value.startsWith("Recovered deleted directory")) {
         return value.replace("Recovered deleted directory", QObject::tr("Recovered deleted directory"));

@@ -93,11 +93,9 @@ void myLogHandlerDebug(QtMsgType type, const QMessageLogContext &context, const 
     case QtDebugMsg:
         g_debug("%s (%s:%u)\n", localMsg.constData(), context.file, context.line);
         break;
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
     case QtInfoMsg:
         g_info("%s (%s:%u)\n", localMsg.constData(), context.file, context.line);
         break;
-#endif
     case QtWarningMsg:
         g_warning("%s (%s:%u)\n", localMsg.constData(), context.file, context.line);
         break;
@@ -111,11 +109,9 @@ void myLogHandlerDebug(QtMsgType type, const QMessageLogContext &context, const 
     case QtDebugMsg:
         g_debug("%s\n", localMsg.constData());
         break;
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
     case QtInfoMsg:
         g_info("%s\n", localMsg.constData());
         break;
-#endif
     case QtWarningMsg:
         g_warning("%s\n", localMsg.constData());
         break;
@@ -135,11 +131,9 @@ void myLogHandler(QtMsgType type, const QMessageLogContext &context, const QStri
     QByteArray localMsg = msg.toLocal8Bit();
     switch (type) {
 #ifdef QT_MESSAGELOGCONTEXT
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
     case QtInfoMsg:
         g_info("%s (%s:%u)\n", localMsg.constData(), context.file, context.line);
         break;
-#endif
     case QtWarningMsg:
         g_warning("%s (%s:%u)\n", localMsg.constData(), context.file, context.line);
         break;
@@ -150,11 +144,9 @@ void myLogHandler(QtMsgType type, const QMessageLogContext &context, const QStri
         g_critical("%s (%s:%u)\n", localMsg.constData(), context.file, context.line);
         abort();
 #else // QT_MESSAGELOGCONTEXT
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
     case QtInfoMsg:
         g_info("%s\n", localMsg.constData());
         break;
-#endif
     case QtWarningMsg:
         g_warning("%s\n", localMsg.constData());
         break;

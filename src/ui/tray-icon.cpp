@@ -2,11 +2,7 @@
 
 #include <QtGlobal>
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QtWidgets>
-#else
-#include <QtGui>
-#endif
 #include <QApplication>
 #include <QDesktopServices>
 #include <QSet>
@@ -320,11 +316,7 @@ void SeafileTrayIcon::createGlobalMenuBar()
     global_menubar_->setNativeMenuBar(true);
     qApp->setAttribute(Qt::AA_DontUseNativeMenuBar, false);
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 2, 0))
     global_menu_->setAsDockMenu(); // available after qt5.2.0
-#else
-    qt_mac_set_dock_menu(global_menu_); // deprecated in latest qt
-#endif
     // create QMenuBar that has no parent, so we can share the global menubar
 
 #endif // Q_OS_MAC

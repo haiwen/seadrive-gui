@@ -6,9 +6,7 @@
 
 #include <QDateTime>
 #include <QMutexLocker>
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QRegularExpression>
-#endif
 
 #include "account-mgr.h"
 #include "seadrive-gui.h"
@@ -686,11 +684,7 @@ const QString AccountManager::genSyncRootName(const Account& account)
     }
 
     // Delete windows reserved characters
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     QRegularExpression rx("[<>:\"/\\\\|?*]");
-#else
-    QRegExp rx("[<>:\"/\\\\|?*]");
-#endif
     sync_root_name = sync_root_name.remove(rx);
 
     if (sync_root_name.size() > 8) {

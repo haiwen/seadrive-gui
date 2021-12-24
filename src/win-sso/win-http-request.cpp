@@ -104,17 +104,9 @@ bool WinInetHttpReqest::listCookies(QStringList* cookies)
     qDebug("cookie of %s = %s\n\n", url, buf);
 
     QString str = QString::fromUtf8(buf).trimmed();
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
     QStringList sections = str.split(";", Qt::SkipEmptyParts);
-#else
-    QStringList sections = str.split(";", QString::SkipEmptyParts);
-#endif
     foreach (const QString& section, sections) {
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
         QStringList parts = section.trimmed().split("=", Qt::SkipEmptyParts);
-#else
-        QStringList parts = section.trimmed().split("=", QString::SkipEmptyParts);
-#endif
         if (parts.size() > 1) {
             cookies->push_back(parts[0].trimmed());
         }
@@ -373,11 +365,7 @@ bool WinInetHttpReqest::getCookie(const char* cookie_name,
     // if (getCookieProtected(cookie_name, &val) || getCookiePlain(cookie_name,
     // &val)) {
     if (getCookiePlain(cookie_name, &val)) {
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
         QStringList parts = val.split("=", Qt::SkipEmptyParts);
-#else
-        QStringList parts = val.split("=", QString::SkipEmptyParts);
-#endif
         if (parts.size() != 2) {
             return false;
         }

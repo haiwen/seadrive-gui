@@ -272,13 +272,8 @@ void EncryptedReposTableModel::updateEncryptRepoList()
             continue;
         }
         enc_repo_infos_[i] = enc_repo_infos[i];
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 8, 0))
         QModelIndex start = index(i, 0);
         QModelIndex stop = index(i, MAX_COLUMN - 1);
-#else
-        QModelIndex start = QModelIndex().child(i, 0);
-        QModelIndex stop = QModelIndex().child(i, MAX_COLUMN - 1);
-#endif
         emit dataChanged(start, stop);
     }
 }
