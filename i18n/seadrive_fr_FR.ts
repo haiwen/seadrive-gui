@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="fr_FR" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="fr_FR">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -406,11 +406,11 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     </message>
     <message>
         <source>Libraries are ready</source>
-        <translation type="unfinished"/>
+        <translation>Les bibliothèques sont prêtes</translation>
     </message>
     <message>
         <source>All libraries are loaded and ready to use.</source>
-        <translation type="unfinished"/>
+        <translation>Toutes les bibliothèques sont chargées et prêtes à être utilisées.</translation>
     </message>
 </context>
 <context>
@@ -692,14 +692,6 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
         <translation>Choisissez une lettre pour le disque %1</translation>
     </message>
     <message>
-        <source>No permission to sync</source>
-        <translation>Vous n&apos;avez pas la permission de synchroniser</translation>
-    </message>
-    <message>
-        <source>No permission to write</source>
-        <translation>Vous n&apos;avez pas la permission d&apos;écrire</translation>
-    </message>
-    <message>
         <source>Update to file %1 denied by folder permission setting</source>
         <translation>La mise à jour du fichier %1 est impossible dû aux paramètres de permission du dossier.</translation>
     </message>
@@ -725,10 +717,18 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     </message>
     <message>
         <source>Library is too large to sync.</source>
-        <translation type="unfinished"/>
+        <translation>La bibliothèque est trop grande pour être synchronisée.</translation>
     </message>
     <message>
         <source>You can only move files/folders within a library or from one library to another library</source>
+        <translation>Vous ne pouvez déplacer des fichiers/dossiers qu&apos;au sein d&apos;une bibliothèque ou d&apos;une bibliothèque à une autre.</translation>
+    </message>
+    <message>
+        <source>Syncing is denied by cloud-only permission settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do not have write permission to the library</source>
         <translation type="unfinished"/>
     </message>
 </context>

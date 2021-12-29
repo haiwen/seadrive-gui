@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="es_AR" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="es_AR">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -693,14 +693,6 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
         <translation>Escoja la letra de disco para %1</translation>
     </message>
     <message>
-        <source>No permission to sync</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>No permission to write</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Update to file %1 denied by folder permission setting</source>
         <translation type="unfinished"/>
     </message>
@@ -730,6 +722,14 @@ Por favor haga click en el botón &quot;Finalizar&quot; para abrir la carpeta %1
     </message>
     <message>
         <source>You can only move files/folders within a library or from one library to another library</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Syncing is denied by cloud-only permission settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do not have write permission to the library</source>
         <translation type="unfinished"/>
     </message>
 </context>

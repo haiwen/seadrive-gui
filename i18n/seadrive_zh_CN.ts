@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="zh_CN">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -693,14 +693,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>为 %1 选择盘符</translation>
     </message>
     <message>
-        <source>No permission to sync</source>
-        <translation>没有权限同步</translation>
-    </message>
-    <message>
-        <source>No permission to write</source>
-        <translation>没有写入权限</translation>
-    </message>
-    <message>
         <source>Update to file %1 denied by folder permission setting</source>
         <translation>文件夹权限设置拒绝更新文件 ％1</translation>
     </message>
@@ -731,6 +723,14 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>You can only move files/folders within a library or from one library to another library</source>
         <translation>您只能将文件、文件夹在一个资料库内移动，或者从一个资料库移动到另一个资料库。</translation>
+    </message>
+    <message>
+        <source>Syncing is denied by cloud-only permission settings</source>
+        <translation>设置了仅云端访问的权限导致无法同步</translation>
+    </message>
+    <message>
+        <source>Do not have write permission to the library</source>
+        <translation>对资料库没有写入权限</translation>
     </message>
 </context>
 <context>

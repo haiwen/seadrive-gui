@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ko_KR" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ko_KR">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -693,14 +693,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>%1의 디스크 문자를 선택하세요</translation>
     </message>
     <message>
-        <source>No permission to sync</source>
-        <translation>동기화 권한 없음</translation>
-    </message>
-    <message>
-        <source>No permission to write</source>
-        <translation>기록 권한 없음</translation>
-    </message>
-    <message>
         <source>Update to file %1 denied by folder permission setting</source>
         <translation>폴더 권한 설정에 따라 %1 파일 업데이트를 거절했습니다</translation>
     </message>
@@ -730,6 +722,14 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>You can only move files/folders within a library or from one library to another library</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Syncing is denied by cloud-only permission settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do not have write permission to the library</source>
         <translation type="unfinished"/>
     </message>
 </context>

@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="sv" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="sv">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -693,14 +693,6 @@ Vänligen klicka på &quot;Klart&quot; knappen för att öppna %1 mappen.</trans
         <translation>Välj diskbokstav för %1</translation>
     </message>
     <message>
-        <source>No permission to sync</source>
-        <translation>Inga rättigheter för att synka</translation>
-    </message>
-    <message>
-        <source>No permission to write</source>
-        <translation>Inga rättigheter för att skriva</translation>
-    </message>
-    <message>
         <source>Update to file %1 denied by folder permission setting</source>
         <translation>Uppdatering av fil %1 nekad av mapprättighetersinställning</translation>
     </message>
@@ -730,6 +722,14 @@ Vänligen klicka på &quot;Klart&quot; knappen för att öppna %1 mappen.</trans
     </message>
     <message>
         <source>You can only move files/folders within a library or from one library to another library</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Syncing is denied by cloud-only permission settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do not have write permission to the library</source>
         <translation type="unfinished"/>
     </message>
 </context>
