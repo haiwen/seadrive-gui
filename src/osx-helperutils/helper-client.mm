@@ -87,7 +87,7 @@ static bool hasFuseMounts() {
     mount.start("mount");
     mount.waitForFinished();
     QString info(mount.readAllStandardOutput());
-    return info.contains("@osxufse");
+    return info.contains("@seadrivefs");
 };
 
 
