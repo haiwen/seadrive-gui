@@ -305,8 +305,8 @@
     <QtModules>core;gui;network;qml;webchannel;webengine;webenginewidgets;websockets;widgets</QtModules>
   </PropertyGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <QtInstall>Qt6.2.1-64bit</QtInstall>
-    <QtModules>core;network;gui;widgets;webenginewidgets;core5compat;webenginecore;</QtModules>
+    <QtInstall>Qt5.15.1-64bit</QtInstall>
+    <QtModules>core;network;gui;widgets;webengine;webenginewidgets</QtModules>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="QtSettings">
     <QtInstall>Qt 5.13.1-64bit</QtInstall>

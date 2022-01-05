@@ -117,7 +117,8 @@ void AutoLogonDialog::startAutoLogon()
 
     QMultiHash<QString, QString> params = ::getSeafileLoginParams(
         gui->settingsManager()->getComputerName(), "krb5_");
-    params["from_desktop"] = "true";
+    params.insert("from_desktop", "true");
+
 
     WinInetHttpReqest request(::includeQueryParams(sso_url, params));
     WinInetHttpResponse response;
