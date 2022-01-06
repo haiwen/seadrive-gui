@@ -20,9 +20,8 @@
 #include <QDesktopServices>
 #include <QHostInfo>
 #include <jansson.h>
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QUrlQuery>
-#endif
+#include <QStandardPaths>
 
 #include "utils/utils-mac.h"
 #include "utils/utils-win.h"
@@ -139,12 +138,9 @@ bool getSeadriveRoot(QString *seadrive_root)
 #endif
 
 QString defaultDownloadDir() {
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     static QStringList list = QStandardPaths::standardLocations(QStandardPaths::DownloadLocation);
     if (!list.empty())
         return list.front();
-#endif
-    // qt4 don't have QStandardPaths, use glib's as fallback
     return QString::fromUtf8(g_get_user_special_dir(G_USER_DIRECTORY_DOWNLOAD));
 }
 
@@ -709,8 +705,8 @@ QString dumpCipher(const QSslCipher &cipher)
     s += "Key Exchange:    " + cipher.keyExchangeMethod() + "\n";
     s += "Cipher Name:     " + cipher.name() + "\n";
     s += "Protocol:        " +  cipher.protocolString() + "\n";
-    s += "Supported Bits:  " + QString(cipher.supportedBits()) + "\n";
-    s += "Used Bits:       " + QString(cipher.usedBits()) + "\n";
+    s += "Supported Bits:  " + QString::number(cipher.supportedBits()) + "\n";
+    s += "Used Bits:       " + QString::number(cipher.usedBits()) + "\n";
     return s;
 }
 
@@ -720,34 +716,7 @@ QString dumpCertificate(const QSslCertificate &cert)
       return "\n-\n";
 
     QString s = "\n";
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     s += cert.toText();
-#else
-    QString s_none = QObject::tr("<Not Part of Certificate>");
-    #define CERTIFICATE_STR(x) ( ((x) == "" ) ? s_none : (x) )
-
-    s += "Certificate:\n";
-    s += "\nIssued To:\n";
-    s += "CommonName(CN):             " + CERTIFICATE_STR(cert.subjectInfo(QSslCertificate::CommonName)) + "\n";
-    s += "Organization(O):            " + CERTIFICATE_STR(cert.subjectInfo(QSslCertificate::Organization)) + "\n";
-    s += "OrganizationalUnitName(OU): " + CERTIFICATE_STR(cert.subjectInfo(QSslCertificate::OrganizationalUnitName)) + "\n";
-    s += "Serial Number:              " + dumpHexPresentation(cert.serialNumber()) + "\n";
-
-    s += "\nIssued By:\n";
-    s += "CommonName(CN):             " + CERTIFICATE_STR(cert.issuerInfo(QSslCertificate::CommonName)) + "\n";
-    s += "Organization(O):            " + CERTIFICATE_STR(cert.issuerInfo(QSslCertificate::Organization)) + "\n";
-    s += "OrganizationalUnitName(OU): " + CERTIFICATE_STR(cert.issuerInfo(QSslCertificate::OrganizationalUnitName)) + "\n";
-
-    s += "\nPeriod Of Validity\n";
-    s += "Begins On:    " + cert.effectiveDate().toString() + "\n";
-    s += "Expires On:   " + cert.expiryDate().toString() + "\n";
-    s += "IsValid:      " + (cert.isValid() ? QString("Yes") : QString("No")) + "\n";
-
-    s += "\nFingerprints\n";
-    s += "SHA1 Fingerprint:\n" + dumpCertificateFingerprint(cert, QCryptographicHash::Sha1) + "\n";
-    s += "MD5 Fingerprint:\n" + dumpCertificateFingerprint(cert, QCryptographicHash::Md5) + "\n";
-#endif
-
     s += "\n\n";
     s += cert.toPem();
 
@@ -790,11 +759,12 @@ QUrl includeQueryParams(const QUrl& url,
                         const QMultiHash<QString, QString>& params)
 {
     QUrl u(url);
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     QUrlQuery query;
-    QHashIterator<QString, QString > i(params);
-    while (i.hasNext()) {
-        i.next();
+#if ((QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)) && (QT_VERSION <= QT_VERSION_CHECK(6, 0, 0)))
+    QHashIterator<QString, QString> i(params);
+#elif (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+    QMultiHash<QString, QString>::const_iterator i;
+    for (i = params.constBegin(); i != params.constEnd(); ++i) {
         query.addQueryItem(QUrl::toPercentEncoding(i.key()),
                            QUrl::toPercentEncoding(i.value()));
     }
@@ -812,7 +782,6 @@ QUrl includeQueryParams(const QUrl& url,
 
 QByteArray buildFormData(const QHash<QString, QString>& params)
 {
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
     QUrlQuery query;
     Q_FOREACH (const QString& key, params.keys()) {
         QString value = params[key];
@@ -821,15 +790,6 @@ QByteArray buildFormData(const QHash<QString, QString>& params)
 
     }
     return query.query(QUrl::FullyEncoded).toUtf8();
-#else
-    QUrl u;
-    Q_FOREACH (const QString& key, params.keys()) {
-        QString value = params[key];
-        u.addEncodedQueryItem(QUrl::toPercentEncoding(key),
-                              QUrl::toPercentEncoding(value));
-    }
-    return u.encodedQuery();
-#endif
 }
 
 QString translateTransferRate(int rate)
@@ -847,7 +807,6 @@ QString translateTransferRate(int rate)
         }
     }
     else {
-        display_rate = KBps;
         unit = "kB/s";
         display_rate = QString::number(int(KBps));
     }

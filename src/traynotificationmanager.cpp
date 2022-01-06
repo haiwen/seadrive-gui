@@ -3,8 +3,10 @@
 TrayNotificationManager::TrayNotificationManager(QObject *parent)
   : notificationWidgets(new QList<TrayNotificationWidget*>()), QObject(parent)
 {
-    QDesktopWidget* desktopWidget = QApplication::desktop();
-    QRect clientRect = desktopWidget->availableGeometry();
+    QRect clientRect;
+    if (!QGuiApplication::screens().isEmpty()) {
+        clientRect = QGuiApplication::screens().at(0)->availableGeometry();
+    }
     m_maxTrayNotificationWidgets = 4;
     m_width = 320;
     m_height = 150;

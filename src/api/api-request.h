@@ -13,7 +13,6 @@
 #include <QMultiHash>
 
 class SeafileApiClient;
-class QSslError;
 class ApiError;
 
 /**

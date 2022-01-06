@@ -1,9 +1,5 @@
 #include <QtGlobal>
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QtWidgets>
-#else
-#include <QtGui>
-#endif
 #include <glib.h>
 #include <QTimer>
 
@@ -119,9 +115,10 @@ void AutoLogonDialog::startAutoLogon()
              sso_url.toString().toUtf8().data(),
              source.toUtf8().data());
 
-    QHash<QString, QString> params = ::getSeafileLoginParams(
+    QMultiHash<QString, QString> params = ::getSeafileLoginParams(
         gui->settingsManager()->getComputerName(), "krb5_");
-    params["from_desktop"] = "true";
+    params.insert("from_desktop", "true");
+
 
     WinInetHttpReqest request(::includeQueryParams(sso_url, params));
     WinInetHttpResponse response;

@@ -1,11 +1,6 @@
 #include <QtGlobal>
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QtWidgets>
-#else
-#include <QtGui>
-#endif
-
 #include <QIcon>
 #include <QMessageBox>
 #include <QMainWindow>
@@ -42,7 +37,11 @@ UninstallHelperDialog::UninstallHelperDialog(QWidget *parent)
     loadQss("qt-mac.css") || loadQss(":/qt-mac.css");
 #endif
 
-    const QRect screen = QApplication::desktop()->screenGeometry();
+    QRect screen;
+    if (!QGuiApplication::screens().isEmpty()) {
+        screen = QGuiApplication::screens().at(0)->availableGeometry();
+    }
+
     move(screen.center() - this->rect().center());
 
     connect(mYesBtn, SIGNAL(clicked()),

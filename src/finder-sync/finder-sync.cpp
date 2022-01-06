@@ -1,6 +1,7 @@
 #include <QStringList>
 #include <QDir>
 #include <QFileInfo>
+#include <QStringRef>
 #include <QProcess>
 #include <QDebug>
 #include "finder-sync/finder-sync.h"

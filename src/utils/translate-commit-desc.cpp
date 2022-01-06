@@ -3,7 +3,7 @@
 #include <QHash>
 #include <QObject>
 #include <QApplication>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QStringList>
 
 #include "utils/utils.h"
@@ -41,17 +41,19 @@ QString translateLine(const QString line)
     QString operations = ((QStringList)getVerbsMap()->keys()).join("|");
     QString pattern = QString("(%1) \"(.*)\"\\s?(and ([0-9]+) more (files|directories))?").arg(operations);
 
-    QRegExp regex(pattern);
+    QRegularExpression regex(pattern);
+    QRegularExpressionMatch match;
+    int index = 0;
 
-    if (regex.indexIn(line) < 0) {
+    match = regex.match(line);
+    if (!match.hasMatch()) {
         return line;
     }
-
-    QString op = regex.cap(1);
-    QString file_name = regex.cap(2);
-    QString has_more = regex.cap(3);
-    QString n_more = regex.cap(4);
-    QString more_type = regex.cap(5);
+    QString op = match.captured(1);
+    QString file_name = match.captured(2);
+    QString has_more = match.captured(3);
+    QString n_more = match.captured(4);
+    QString more_type = match.captured(5);
 
     QString op_trans = getVerbsMap()->value(op, op);
 
@@ -86,11 +88,14 @@ translateCommitDesc(const QString& input)
     if (value.startsWith("Reverted library")) {
         return value.replace("Reverted library to status at", QObject::tr("Reverted library to status at"));
     } else if (value.startsWith("Reverted file")) {
-        QRegExp regex("Reverted file \"(.*)\" to status at (.*)");
+        QRegularExpression regex("Reverted file \"(.*)\" to status at (.*)");
+        QRegularExpressionMatch match;
+        int index = 0;
 
-        if (regex.indexIn(value) >= 0) {
-            QString name = regex.cap(1);
-            QString time = regex.cap(2);
+        match = regex.match(value);
+        if (match.hasMatch()) {
+            QString name = match.captured(1);
+            QString time = match.captured(2);
             return QObject::tr("Reverted file \"%1\" to status at %2.").arg(name).arg(time);
         }
 

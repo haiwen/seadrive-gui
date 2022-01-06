@@ -67,8 +67,7 @@ bool isWeakCipher(const QString& cipher_name)
 void disableWeakCiphers()
 {
     QSslConfiguration configuration = QSslConfiguration::defaultConfiguration();
-    const QList<QSslCipher> ciphers = QSslSocket::supportedCiphers();
-
+    const QList<QSslCipher> ciphers = QSslConfiguration::supportedCiphers();
     QList<QSslCipher> new_ciphers;
     Q_FOREACH(const QSslCipher &cipher, ciphers)
     {
@@ -108,9 +107,10 @@ void loadUserCaCertificate()
     }
 
     // remove duplicates
-    certificates = certificates.toSet().toList();
+    certificates = QSet<QSslCertificate>(certificates.begin(), certificates.end()).values();
 
-    QSslSocket::setDefaultCaCertificates(certificates);
+    QSslConfiguration configuration = QSslConfiguration::defaultConfiguration();
+    configuration.setCaCertificates(certificates);
 }
 #endif
 } // anonymous namespace

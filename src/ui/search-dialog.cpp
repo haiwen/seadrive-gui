@@ -684,7 +684,11 @@ QVariant SearchItemsTableModel::headerData(int section,
     }
 
     if (role == Qt::TextAlignmentRole) {
+#if(QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+        return static_cast<Qt::Alignment::Int>(Qt::AlignLeft | Qt::AlignVCenter);
+#else
         return Qt::AlignLeft + Qt::AlignVCenter;
+#endif
     }
 
     if (role == Qt::DisplayRole) {

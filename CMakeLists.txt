@@ -33,10 +33,8 @@ ENDIF()
 MESSAGE("Build type: ${CMAKE_BUILD_TYPE}")
 
 ## build in PIC mode
-IF (NOT WIN32)
-    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
-ENDIF()
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 
 ## Setup warnings ouput if enabled
 ## but don't warning on unsupported warnings
@@ -62,29 +60,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   endif()
 endif()
 
-IF (WIN32)
-    CONFIGURE_FILE(
-      ${CMAKE_SOURCE_DIR}/seadrive-gui.rc.in
-      ${CMAKE_BINARY_DIR}/seadrive-gui.rc
-    )
-    SET(EXTRA_LIBS ${EXTRA_LIBS} psapi ws2_32 shlwapi mpr crypt32)
-    SET(EXTRA_SOURCES ${EXTRA_SOURCES} ${CMAKE_BINARY_DIR}/seadrive-gui.rc)
-    IF (${CMAKE_BUILD_TYPE} MATCHES Release)
-      SET(GUI_TYPE WIN32)
-    ENDIF()
-    SET(platform_specific_moc_headers ${platform_specific_moc_headers} src/ext-handler.h src/ui/disk-letter-dialog.h )
-    SET(platform_specific_sources ${platform_specific_sources} src/ext-handler.cpp src/ui/disk-letter-dialog.cpp)
-
-    IF (BUILD_SPARKLE_SUPPORT)
-      IF(NOT EXISTS "${CMAKE_SOURCE_DIR}/WinSparkle.lib")
-        message(FATAL_ERROR "File ${CMAKE_SOURCE_DIR}/WinSparkle.lib not found in current directory. Please setup winsparkle correctly." )
-      ENDIF()
-      SET(SPARKLE_LIBS ${CMAKE_SOURCE_DIR}/WinSparkle.lib)
-      SET(platform_specific_moc_headers ${platform_specific_moc_headers} src/auto-update-service.h)
-      SET(platform_specific_sources ${platform_specific_sources} src/auto-update-service.cpp)
-    ENDIF()
-
-ELSEIF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "BSD")
+IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "BSD")
     INCLUDE_DIRECTORIES(${QT_QTDBUS_INCLUDE_DIR})
     LINK_DIRECTORIES(${QT_QTDBUS_LIBRARIES})
     SET(EXTRA_LIBS ${EXTRA_LIBS} ${QT_QTDBUS_LIBRARIES})
@@ -159,19 +135,20 @@ ENDIF()
 ####################
 ###### BEGIN: QT configuration
 ####################
-SET(QT_VERSION_MAJOR 5)
 
-# Qt 5.6.0 removes QtWebKit, we need to use QtWebEnigne. First we detect the
-# current qt version, then use proper name based on the version. However we
-# have to keep using QtWebKit on windows because QtWebEngine can't be
-# compiled in msys2/mingw (QtWebEnigne is based on chrome, which has to be
-# compiled with MSVC.)
 FIND_PROGRAM(qmake_executable NAMES qmake qmake.exe)
 EXECUTE_PROCESS(COMMAND
     bash -c "${qmake_executable} --version | grep -iE '^using qt version [0-9.]+' | awk '{print $4}'"
     OUTPUT_VARIABLE DETECTED_QT_VERSION
     OUTPUT_STRIP_TRAILING_WHITESPACE)
-MESSAGE("qt5 version: ${DETECTED_QT_VERSION}")
+MESSAGE("Qt version: ${DETECTED_QT_VERSION}")
+
+EXECUTE_PROCESS(COMMAND
+    bash -c "qmake --version|grep -iE '^using qt version [0-9]'|awk '{print $4}'|grep -iE '^[0-9]'|awk -F . '{print $1}'"
+    OUTPUT_VARIABLE QT_VERSION_MAJOR
+    OUTPUT_STRIP_TRAILING_WHITESPACE)
+MESSAGE("QT_VERSION_MAJOR: ${QT_VERSION_MAJOR}")
+
 IF(USE_QT_WEBKIT)
     ADD_DEFINITIONS(-DSEAFILE_USE_WEBKIT)
     SET(WEBKIT_NAME "WebKit")
@@ -183,45 +160,40 @@ ELSE()
     SET(SHIB_EXTRA_HEADER "src/shib/shib-helper.h")
 ENDIF()
 
-SET(USE_QT_LIBRARIES
-    Core Gui Widgets LinguistTools Network Test
-    )
+IF(QT_VERSION_MAJOR EQUAL 6)
+    SET(USE_QT_LIBRARIES Core Gui Widgets LinguistTools Network Test Core5Compat WebEngineCore WebEngineWidgets)
+ELSE()
+    SET(USE_QT_LIBRARIES Core Gui Widgets LinguistTools Network Test)
+ENDIF()
 
 IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     SET(USE_QT_LIBRARIES ${USE_QT_LIBRARIES} "DBus")
 ENDIF()
 
-FIND_PACKAGE(Qt5 REQUIRED ${USE_QT_LIBRARIES})
+IF(QT_VERSION_MAJOR EQUAL 6)
+    FIND_PACKAGE(Qt6 COMPONENTS ${USE_QT_LIBRARIES} REQUIRED)
+ELSE()
+    FIND_PACKAGE(Qt5 REQUIRED ${USE_QT_LIBRARIES})
+ENDIF()
+
 SET(QT_LUPDATE_EXECUTABLE ${Qt5_LUPDATE_EXECUTABLE})
 
-if (CYGWIN OR MINGW)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
-else()
+IF(QT_VERSION_MAJOR EQUAL 6)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+ELSE()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-endif()
+ENDIF()
 
 # for OS X, we requires libc++ instead
 if (APPLE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
-    SET(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++11")
+    IF(QT_VERSION_MAJOR EQUAL 6)
+        SET(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++17")
+    ELSE()
+        SET(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++11")
+    ENDIF()
     SET(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
 endif()
-
-####################
-###### begin: kerbose sso
-####################
-IF (WIN32)
-  # kerbose sso specific source files for seadrive-gui
-  SET(platform_specific_moc_headers ${platform_specific_moc_headers} src/win-sso/auto-logon-dialog.h)
-  SET(platform_specific_sources ${platform_specific_sources}
-    src/win-sso/auto-logon-dialog.cpp
-    src/win-sso/win-http-request.cpp
-  )
-  SET(EXTRA_LIBS ${EXTRA_LIBS} -lwininet -lurlmon)
-ENDIF(WIN32)
-####################
-###### end: kerbose sso
-####################
 
 # MOC FILES
 SET(moc_headers
@@ -270,7 +242,11 @@ SET(moc_headers
   ${SHIB_EXTRA_HEADER}
   ${platform_specific_moc_headers}
 )
-QT5_WRAP_CPP(moc_output ${moc_headers})
+IF(QT_VERSION_MAJOR EQUAL 6)
+    QT6_WRAP_CPP(moc_output ${moc_headers})
+ELSE()
+    QT5_WRAP_CPP(moc_output ${moc_headers})
+ENDIF()
 
 SET(ui_files
   ui/uninstall-helper-dialog.ui
@@ -281,14 +257,26 @@ SET(ui_files
   ui/about-dialog.ui
   ui/disk-letter-dialog.ui
 )
-QT5_WRAP_UI(ui_output ${ui_files})
+IF(QT_VERSION_MAJOR EQUAL 6)
+    QT6_WRAP_UI(ui_output ${ui_files})
+ELSE()
+    QT5_WRAP_UI(ui_output ${ui_files})
+ENDIF()
 
 # resources files
-QT5_ADD_RESOURCES(
-  resources_ouput
-  seadrive-gui.qrc
-  third_party/QtAwesome/QtAwesome.qrc
-)
+IF(QT_VERSION_MAJOR EQUAL 6)
+  QT6_ADD_RESOURCES(
+    resources_ouput
+    seadrive-gui.qrc
+    third_party/QtAwesome/QtAwesome.qrc
+  )
+ELSE()
+  QT5_ADD_RESOURCES(
+    resources_ouput
+    seadrive-gui.qrc
+    third_party/QtAwesome/QtAwesome.qrc
+  )
+ENDIF()
 
 # MESSAGE("moc output: ${moc_output}")
 # MESSAGE("ui output: ${ui_output}")
@@ -301,11 +289,11 @@ QT5_ADD_RESOURCES(
 ###### BEGIN: pthread support is required explicitly on linux
 ####################
 
-IF(NOT WIN32 AND NOT APPLE)
+IF(NOT APPLE)
   SET(CMAKE_THREAD_PREFER_PTHREAD ON)
   INCLUDE(FindThreads)
   LINK_LIBRARIES(${CMAKE_THREAD_LIBS_INIT})
-ENDIF(NOT WIN32 AND NOT APPLE)
+ENDIF(NOT APPLE)
 
 ####################
 ###### BEGIN: other libraries configuration
@@ -400,7 +388,11 @@ INCLUDE_DIRECTORIES(
 
 FOREACH(USE_QT_LIBRARY ${USE_QT_LIBRARIES})
 INCLUDE_DIRECTORIES(
-${Qt5${USE_QT_LIBRARY}_INCLUDE_DIRS}
+IF(QT_VERSION_MAJOR EQUAL 6)
+    ${Qt6${USE_QT_LIBRARY}_INCLUDE_DIRS}
+ELSE()
+    ${Qt5${USE_QT_LIBRARY}_INCLUDE_DIRS}
+ENDIF()
 )
 ENDFOREACH()
 
@@ -441,10 +433,18 @@ FUNCTION(ADD_SC_LIBRARY name)
       "MOC_HEADERS;UI_FILES;DEPENDS;LINK_LIBS"
       ${ARGN})
     IF(ARG_MOC_HEADERS)
-        QT5_WRAP_CPP(MOC_OUTPUT ${ARG_MOC_HEADERS})
+        IF(QT_VERSION_MAJOR EQUAL 6)
+            QT6_WRAP_CPP(MOC_OUTPUT ${ARG_MOC_HEADERS})
+        ELSE()
+            QT5_WRAP_CPP(MOC_OUTPUT ${ARG_MOC_HEADERS})
+        ENDIF()
     ENDIF()
     IF(ARG_UI_FILES)
-        QT5_WRAP_UI(UI_OUTPUT ${ARG_UI_FILES})
+        IF(QT_VERSION_MAJOR EQUAL 6)
+            QT6_WRAP_UI(UI_OUTPUT ${ARG_UI_FILES})
+        ELSE()
+            QT5_WRAP_UI(UI_OUTPUT ${ARG_UI_FILES})
+        ENDIF()
     ENDIF()
 
     ADD_LIBRARY(${name} STATIC ${ARG_UNPARSED_ARGUMENTS}
@@ -467,13 +467,8 @@ LIST(APPEND utils_sources
     src/utils/stl.cpp
     src/utils/i18n-utils.cpp
     )
-IF (WIN32)
-    LIST(APPEND utils_sources
-        src/utils/process-win.cpp
-        src/utils/registry.cpp
-        src/utils/utils-win.cpp
-        )
-ELSEIF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "BSD")
+
+IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "BSD")
     LIST(APPEND utils_sources
         src/utils/process-linux.cpp
         )
@@ -548,7 +543,11 @@ FOREACH(LANGUAGE ${LANGUAGES})
 
 ENDFOREACH(LANGUAGE ${LANGUAGES})
 
-QT5_ADD_TRANSLATION(qm_files ${LANGUAGE_TS_FILES})
+IF(QT_VERSION_MAJOR EQUAL 6)
+    QT6_ADD_TRANSLATION(qm_files ${LANGUAGE_TS_FILES})
+ELSE()
+    QT5_ADD_TRANSLATION(qm_files ${LANGUAGE_TS_FILES})
+ENDIF()
 
 ADD_CUSTOM_TARGET(update-ts DEPENDS ${SEADRIVE_TS_TARGETS})
 
@@ -560,7 +559,6 @@ ADD_CUSTOM_TARGET(update-ts DEPENDS ${SEADRIVE_TS_TARGETS})
 ###### start: freedesktop files
 ####################
 
-if(NOT WIN32)
 install(DIRECTORY
   ${CMAKE_SOURCE_DIR}/data/icons/16x16
   ${CMAKE_SOURCE_DIR}/data/icons/22x22
@@ -571,7 +569,6 @@ install(DIRECTORY
   ${CMAKE_SOURCE_DIR}/data/icons/scalable
   DESTINATION share/icons/hicolor
 )
-
 install(FILES
   ${CMAKE_SOURCE_DIR}/data/seadrive.desktop
   DESTINATION share/applications
@@ -582,7 +579,6 @@ install(FILES
   DESTINATION share/pixmaps
 )
 
-endif()
 
 ####################
 ###### end: freedesktop files
@@ -613,15 +609,25 @@ TARGET_LINK_LIBRARIES(seadrive-gui
   ${EXTRA_LIBS}
 )
 
-QT5_USE_MODULES(seadrive-gui Core Gui Widgets Network)
-QT5_USE_MODULES(seadrive-gui ${WEBKIT_NAME} ${WEBKIT_WIDGETS_NAME})
+IF(QT_VERSION_MAJOR EQUAL 6)
+    FIND_PACKAGE(Qt6 COMPONENTS Core Gui Widgets Network ${WEBKIT_WIDGETS_NAME} ${WEBENGINE_CORE}  REQUIRED)
+    TARGET_LINK_LIBRARIES(seadrive-gui Qt6::Core Qt6::Gui Qt6::Widgets Qt6::Network Qt6::${WEBKIT_WIDGETS_NAME} Qt6::${WEBENGINE_CORE} Qt6::Core5Compat)
+
+ELSE()
+    QT5_USE_MODULES(seadrive-gui Core Gui Widgets Network)
+    QT5_USE_MODULES(seadrive-gui ${WEBKIT_NAME} ${WEBKIT_WIDGETS_NAME})
+ENDIF()
 
 ## QtBus
 IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "BSD")
-  TARGET_LINK_LIBRARIES(seadrive-gui
-    ${QT_QTDBUS_LIBRARIES}
-  )
-  QT5_USE_MODULES(seadrive-gui ${USE_QT_LIBRARIES})
+IF(QT_VERSION_MAJOR EQUAL 6)
+    FIND_PACKAGE(Qt6 COMPONENTS DBus REQUIRED)
+    TARGET_LINK_LIBRARIES(seadrive-gui PRIVATE Qt6::DBus)
+ELSE()
+    TARGET_LINK_LIBRARIES(seadrive-gui ${QT_QTDBUS_LIBRARIES})
+    QT5_USE_MODULES(seadrive-gui ${USE_QT_LIBRARY})
+ENDIF()
+
 ENDIF()
 
 ### Xcode-related, build as a osx bundle

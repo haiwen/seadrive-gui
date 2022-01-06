@@ -274,7 +274,7 @@ bool SeafileApiClient::handleHttpRedirect()
         // XXX: Special case for rename/move file api, which returns 301 on
         // success. We need to distinguish that from a normal 301 redirect.
         // (In contrast, Rename/move dir api returns 200 on success).
-        if (redirect_url.path().contains(QRegExp("/api2/repos/[^/]+/file/"))) {
+        if (redirect_url.path().contains(QRegularExpression("/api2/repos/[^/]+/file/"))) {
             QString old_name = getQueryValue(reply_->url(), "p");
             QString new_name = getQueryValue(redirect_url, "p");
             // Only treat it as a rename file success when old and new are different

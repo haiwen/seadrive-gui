@@ -108,9 +108,12 @@ LoginRequest::LoginRequest(const QUrl& serverAddr,
     setFormParam("username", username);
     setFormParam("password", password);
 
-    QHash<QString, QString> params = ::getSeafileLoginParams(computer_name);
+    QMultiHash<QString, QString> params = ::getSeafileLoginParams(computer_name);
     foreach (const QString& key, params.keys()) {
-        setFormParam(key, params[key]);
+        QStringList values = params.values(key);
+        foreach(const QString& value, values) {
+            setFormParam(key, value);
+        }
     }
 }
 

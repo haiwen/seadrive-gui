@@ -1,10 +1,6 @@
 #include <QtGlobal>
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QtWidgets>
-#else
-#include <QtGui>
-#endif
 #include <QtNetwork>
 #include <QInputDialog>
 #include <QStringList>
@@ -85,7 +81,7 @@ LoginDialog::LoginDialog(QWidget *parent) : QDialog(parent)
         mServerAddr->addItems(getUsedServerAddresses());
         mServerAddr->clearEditText();
     }
-    mServerAddr->setAutoCompletion(false);
+    mServerAddr->setCompleter(nullptr);
 
     QString computerName = gui->settingsManager()->getComputerName();
 
@@ -95,7 +91,10 @@ LoginDialog::LoginDialog(QWidget *parent) : QDialog(parent)
 
     connect(mSubmitBtn, SIGNAL(clicked()), this, SLOT(doLogin()));
 
-    const QRect screen = QApplication::desktop()->screenGeometry();
+    QRect screen;
+    if (!QGuiApplication::screens().isEmpty()) {
+        screen = QGuiApplication::screens().at(0)->availableGeometry();
+    }
     move(screen.center() - this->rect().center());
 
     setupShibLoginLink();

@@ -6,6 +6,7 @@
 
 #include <QDateTime>
 #include <QMutexLocker>
+#include <QRegularExpression>
 
 #include "account-mgr.h"
 #include "seadrive-gui.h"
@@ -683,7 +684,7 @@ const QString AccountManager::genSyncRootName(const Account& account)
     }
 
     // Delete windows reserved characters
-    QRegExp rx("[<>:\"/\\\\|?*]");
+    QRegularExpression rx("[<>:\"/\\\\|?*]");
     sync_root_name = sync_root_name.remove(rx);
 
     if (sync_root_name.size() > 8) {

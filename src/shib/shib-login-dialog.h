@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QUrl>
 #include <QNetworkCookieJar>
+#include <QSslError>
 #if !defined(SEAFILE_USE_WEBKIT)
 #include <QWebEngineProfile>
 #include <QWebEnginePage>
@@ -19,7 +20,6 @@ class QWebView;
 class QWebEngineView;
 #endif
 
-class QSslError;
 class QNetworkReply;
 class QLineEdit;
 class ApiError;
