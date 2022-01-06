@@ -138,9 +138,9 @@ QString SyncError::syncErrorIdToErrorStr(int error_id, const QString& path)
     case SYNC_ERROR_ID_WRITE_LOCAL_DATA:
         return QObject::tr("Failed to write local data");
     case SYNC_ERROR_ID_PERM_NOT_SYNCABLE:
-        return QObject::tr("No permission to sync");
+        return QObject::tr("Syncing is denied by cloud-only permission settings");
     case SYNC_ERROR_ID_NO_WRITE_PERMISSION:
-        return QObject::tr("No permission to write");
+        return QObject::tr("Do not have write permission to the library");
     case SYNC_ERROR_ID_FOLDER_PERM_DENIED:
         return QObject::tr("Update to file %1 denied by folder permission setting").arg(file);
     case SYNC_ERROR_ID_PATH_END_SPACE_PERIOD:

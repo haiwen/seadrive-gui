@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="cs_CZ" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="cs_CZ">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -151,15 +151,15 @@
     <name>FinderSyncHost</name>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
+        <translation>Soubor &quot;%1&quot; je uzamčený od %2</translation>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Nepodařilo se získat informaci o zámku souboru „%1“</translation>
     </message>
     <message>
         <source>Failed to get upload link for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Nepodařilo se získat odkaz na nahrání pro soubor „%1“</translation>
     </message>
 </context>
 <context>
@@ -407,11 +407,11 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>Libraries are ready</source>
-        <translation type="unfinished"/>
+        <translation>Knihovny jsou připraveny</translation>
     </message>
     <message>
         <source>All libraries are loaded and ready to use.</source>
-        <translation type="unfinished"/>
+        <translation>Všechny knihovny jsou načtené a připravené k použití.</translation>
     </message>
 </context>
 <context>
@@ -693,14 +693,6 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
         <translation>Vyberte písmeno disku pro %1</translation>
     </message>
     <message>
-        <source>No permission to sync</source>
-        <translation>Nemáš oprávnění k synchronizaci</translation>
-    </message>
-    <message>
-        <source>No permission to write</source>
-        <translation>Nemáš oprávnění k zápisu</translation>
-    </message>
-    <message>
         <source>Update to file %1 denied by folder permission setting</source>
         <translation>Aktualizace souboru %1 je zakázaná kvůli oprávnění na složce</translation>
     </message>
@@ -722,14 +714,22 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>%1 is not added to a library and will not be uploaded</source>
-        <translation type="unfinished"/>
+        <translation>%1 není přidáno do knihovny nebude nahráno</translation>
     </message>
     <message>
         <source>Library is too large to sync.</source>
-        <translation type="unfinished"/>
+        <translation>Knihovna je příliš velká na to, aby šla synchronizovat.</translation>
     </message>
     <message>
         <source>You can only move files/folders within a library or from one library to another library</source>
+        <translation>Soubory/složky je možné přesouvat pouze v rámci knihovny nebo z jedné knihovny do jiné</translation>
+    </message>
+    <message>
+        <source>Syncing is denied by cloud-only permission settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do not have write permission to the library</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -816,7 +816,7 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>Failed to create seadrive cache directory</source>
-        <translation type="unfinished"/>
+        <translation>Nepodařilo se vytvořit složku s mezipamětí pro seadrive</translation>
     </message>
 </context>
 <context>
@@ -1248,19 +1248,19 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>Password(At least 8 characters)</source>
-        <translation type="unfinished"/>
+        <translation>Heslo (alespoň 8 znaků)</translation>
     </message>
     <message>
         <source>Show password</source>
-        <translation type="unfinished"/>
+        <translation>Zobrazit heslo</translation>
     </message>
     <message>
         <source>Expire days</source>
-        <translation type="unfinished"/>
+        <translation>Za kolik dnů skončit platnost</translation>
     </message>
     <message>
         <source>Generate link</source>
-        <translation type="unfinished"/>
+        <translation>Vytvořit odkaz</translation>
     </message>
 </context>
 <context>
@@ -1373,19 +1373,19 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     <name>UploadLinkDialog</name>
     <message>
         <source>Upload Link</source>
-        <translation type="unfinished"/>
+        <translation>Odkaz na nahrání</translation>
     </message>
     <message>
         <source>Upload link:</source>
-        <translation type="unfinished"/>
+        <translation>Odkaz na nahrání:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Zkopírovat do schránky</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
 </context>
 </TS>
