@@ -57,7 +57,7 @@
     </dict>
     <!-- Always update this and CFBundleVersion in osxhelper/Info.plist together-->
 	<key>DriveHelperVersion</key>
-	<string>0.1.1</string>
+	<string>0.1.2</string>
     <!-- For Sparkle Framework -->
 	<key>SUFeedURL</key>
 	<string>https://www.seafile.com/api/client-updates/seadrive-client-mac/appcast.xml</string>
