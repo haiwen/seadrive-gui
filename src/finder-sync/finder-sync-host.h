@@ -28,6 +28,7 @@ private slots:
     void doShareLink(const QString &path);
     void doInternalLink(const QString &path);
     void onShareLinkGenerated(const QString& link);
+    void onShareLinkGeneratedFailed(const ApiError& error);
     void onLockFileSuccess();
     void doShowFileHistory(const QString& path);
     void doDownloadFile(const QString& path);
