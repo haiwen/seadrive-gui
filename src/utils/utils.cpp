@@ -760,7 +760,7 @@ QUrl includeQueryParams(const QUrl& url,
 {
     QUrl u(url);
     QUrlQuery query;
-#if ((QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)) && (QT_VERSION <= QT_VERSION_CHECK(6, 0, 0)))
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     QHashIterator<QString, QString> i(params);
     Q_FOREACH (const QString& key, params.keys()) {
         QList<QString> values = params.values(key);
