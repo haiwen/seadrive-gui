@@ -760,23 +760,23 @@ QUrl includeQueryParams(const QUrl& url,
 {
     QUrl u(url);
     QUrlQuery query;
-#if ((QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)) && (QT_VERSION <= QT_VERSION_CHECK(6, 0, 0)))
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     QHashIterator<QString, QString> i(params);
-#elif (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
-    QMultiHash<QString, QString>::const_iterator i;
-    for (i = params.constBegin(); i != params.constEnd(); ++i) {
-        query.addQueryItem(QUrl::toPercentEncoding(i.key()),
-                           QUrl::toPercentEncoding(i.value()));
-    }
-    u.setQuery(query);
-#else
     Q_FOREACH (const QString& key, params.keys()) {
         QList<QString> values = params.values(key);
         for (int i = 0; i < values.size(); ++i) {
             query.addQueryItem(QUrl::toPercentEncoding(key),
                                QUrl::toPercentEncoding(values.at(i)));
         }
+    }
+#elif (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+    QMultiHash<QString, QString>::const_iterator i;
+    for (i = params.constBegin(); i != params.constEnd(); ++i) {
+        query.addQueryItem(QUrl::toPercentEncoding(i.key()),
+                           QUrl::toPercentEncoding(i.value()));
+    }
 #endif
+    u.setQuery(query);
     return u;
 }
 

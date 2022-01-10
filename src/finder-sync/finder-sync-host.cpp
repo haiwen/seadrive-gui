@@ -249,6 +249,8 @@ void FinderSyncHost::doShareLink(const QString &path) {
 
     connect(get_shared_link_req_.get(), SIGNAL(success(const QString &)), this,
             SLOT(onShareLinkGenerated(const QString &)));
+    connect(get_shared_link_req_.get(), SIGNAL(failed(const ApiError &)), this,
+            SLOT(onShareLinkGeneratedFailed(const ApiError &)));
 
     get_shared_link_req_->send();
 }
@@ -287,6 +289,12 @@ void FinderSyncHost::onGetSmartLinkSuccess(const QString& smart_link)
 
 void FinderSyncHost::onGetSmartLinkFailed(const ApiError& error)
 {
+    int http_error_code =  error.httpErrorCode();
+    if (http_error_code == 403) {
+        gui->warningBox(tr("No permissions to create a shared link"));
+    } else {
+        gui->warningBox(tr("failed get smart link %1").arg(error.toString()));
+    }
     qWarning("get smart_link failed %s\n", error.toString().toUtf8().data());
 }
 
@@ -321,6 +329,16 @@ void FinderSyncHost::onShareLinkGenerated(const QString &link)
     dialog->show();
     dialog->raise();
     dialog->activateWindow();
+}
+
+void FinderSyncHost::onShareLinkGeneratedFailed(const ApiError& error)
+{
+    int http_error_code = error.httpErrorCode();
+    if (http_error_code == 403) {
+        gui->warningBox(tr("No permissions to create a shared link"));
+    } else {
+        gui->warningBox(tr("failed to get share link %1").arg(error.toString()));
+    }
 }
 
 void FinderSyncHost::onLockFileSuccess()

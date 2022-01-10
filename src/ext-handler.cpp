@@ -320,6 +320,9 @@ void SeafileExtensionHandler::generateShareLink(const QString& repo_id,
 
         connect(req, SIGNAL(success(const QString&)),
                 this, SLOT(onShareLinkGenerated(const QString&)));
+
+        connect(req, SIGNAL(failed(const ApiError&)),
+                this, SLOT(onShareLinkGeneratedFailed(const ApiError&)));
         req->send();
     }
 }
@@ -338,6 +341,13 @@ void SeafileExtensionHandler::onGetSmartLinkSuccess(const QString& smart_link)
 void SeafileExtensionHandler::onGetSmartLinkFailed(const ApiError& error)
 {
     qWarning("get smart_link failed %s\n", error.toString().toUtf8().data());
+
+    int http_error_code =  error.httpErrorCode();
+    if (http_error_code == 403) {
+        gui->warningBox(tr("No permissions to create a shared link"));
+    } else {
+        gui->warningBox(tr("failed get smart link %1").arg(error.toString()));
+    }
 }
 
 void SeafileExtensionHandler::lockFile(const QString& repo_id,
@@ -404,6 +414,15 @@ void SeafileExtensionHandler::onShareLinkGenerated(const QString& link)
     dialog->show();
     dialog->raise();
     dialog->activateWindow();
+}
+
+void SeafileExtensionHandler::onShareLinkGeneratedFailed(const ApiError& error) {
+    int http_error_code = error.httpErrorCode();
+    if (http_error_code == 403) {
+        gui->warningBox(tr("No permissions to create a shared link"));
+    } else {
+        gui->messageBox(tr("Failed to get shared_link %1\n").arg(error.toString()));
+    }
 }
 
 void SeafileExtensionHandler::onLockFileSuccess()
