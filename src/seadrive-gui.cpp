@@ -492,8 +492,9 @@ void SeadriveGui::onDaemonStarted()
     finderSyncListenerStart();
 #endif
 #if defined(Q_OS_MAC)
-    ThumbnailService::instance()->start();
-    qlgenListenerStart();
+// Disable qlgen
+//    ThumbnailService::instance()->start();
+//    qlgenListenerStart();
 #endif
 }
 

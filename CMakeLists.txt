@@ -107,7 +107,6 @@ IF(APPLE)
     SET(platform_specific_moc_headers ${platform_specific_moc_headers}
       src/finder-sync/finder-sync-host.h
       src/osx-helperutils/helper-client.h
-      src/qlgen/qlgen-handler.h
       )
     SET(platform_specific_sources ${platform_specific_sources}
         src/finder-sync/finder-sync.cpp
@@ -115,19 +114,12 @@ IF(APPLE)
         src/finder-sync/finder-sync-host.cpp
         src/osx-helperutils/osx-helperutils.mm
         src/osx-helperutils/helper-client.mm
-        src/qlgen/qlgen-listener.mm
-        src/qlgen/qlgen-handler.cpp
-        qlgen/src/NSDictionary+SFJSON.m
         )
     SET_SOURCE_FILES_PROPERTIES(src/finder-sync/finder-sync-listener.mm
         PROPERTIES COMPILE_FLAGS -fobjc-arc)
     SET_SOURCE_FILES_PROPERTIES(src/osx-helperutils/osx-helperutils.mm
         PROPERTIES COMPILE_FLAGS -fobjc-arc)
     SET_SOURCE_FILES_PROPERTIES(src/osx-helperutils/helper-client.mm
-        PROPERTIES COMPILE_FLAGS -fobjc-arc)
-    SET_SOURCE_FILES_PROPERTIES(src/qlgen/qlgen-listener.mm
-        PROPERTIES COMPILE_FLAGS -fobjc-arc)
-    SET_SOURCE_FILES_PROPERTIES(qlgen/src/NSDictionary+SFJSON.m
         PROPERTIES COMPILE_FLAGS -fobjc-arc)
 ENDIF()
 
@@ -209,7 +201,6 @@ SET(moc_headers
   src/network-mgr.h
   src/remote-wipe-service.h
   src/account-info-service.h
-  src/qlgen/thumbnail-service.h
   src/rpc/rpc-client.h
   src/rpc/rpc-server.h
   src/seadrive-gui.h
@@ -338,7 +329,6 @@ SET(seadrive_gui_sources
   src/network-mgr.cpp
   src/remote-wipe-service.cpp
   src/account-info-service.cpp
-  src/qlgen/thumbnail-service.cpp
 
   src/rpc/rpc-client.cpp
   src/rpc/rpc-server.cpp
