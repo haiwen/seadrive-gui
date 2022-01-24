@@ -212,23 +212,29 @@ QStringList DaemonManager::collectSeaDriveArgs()
 #if defined(Q_OS_MAC)
         diskUtilUnmount();
         SettingsManager *mgr = gui->settingsManager();
-        fuse_opts = gui->mountDir();
+        QString mount_dir = gui->mountDir();
+        args << mount_dir;
 #if 0
         if (mgr->getSearchEnabled())
             fuse_opts += QString(" -o volname=%1,allow_other,local").arg(getBrand());
         else
             fuse_opts += QString(" -o volname=%1,noappledouble").arg(getBrand());
 #endif
-        fuse_opts += QString(" -o volname=%1,auto_xattr").arg(getBrand());
+        args << "-o";
+        QString mount_options = QString("volname=%1,auto_xattr").arg(getBrand());
+        args << mount_options;
 
 #elif defined(Q_OS_LINUX)
         QStringList umount_arguments;
         umount_arguments << "-u" << gui->mountDir();
         QProcess::execute("fusermount", umount_arguments);
-        fuse_opts = gui->mountDir();
+        QString mount_dir = gui->mountDir();
+        args << mount_dir;
 #endif
+    } else {
+        args << fuse_opts.split(" ");
     }
-    args << fuse_opts.split(" ");
+
 #endif
 
     auto stream = qWarning() << "starting seadrive daemon:" << kSeadriveExecutable;
