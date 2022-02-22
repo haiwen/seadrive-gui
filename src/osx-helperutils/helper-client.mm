@@ -21,11 +21,11 @@
 #error this file must be built with ARC support
 #endif
 
-#define KEXT_LOCATION @"/Library/Filesystems/seadrivefs.fs"
-#define KEXT_ID @"com.seafile.seadrivefs"
+#define KEXT_LOCATION @"/Library/Filesystems/macfuse.fs"
+#define KEXT_ID @"io.macfuse.filesystems.macfuse"
 
 #define MACOSX_ADMIN_GROUP_NAME "admin"
-#define SEADRIVEFS_SYSCTL_TUNABLES_ADMIN "vfs.generic.seadrivefs.tunables.admin_group"
+#define MACFUSE_SYSCTL_TUNABLES_ADMIN "vfs.generic.macfuse.tunables.admin_group"
 
 static MPXPCClient *xpc_client_ = nullptr;
 
@@ -87,7 +87,7 @@ static bool hasFuseMounts() {
     mount.start("mount");
     mount.waitForFinished();
     QString info(mount.readAllStandardOutput());
-    return info.contains("@seadrivefs");
+    return info.contains("@osxufse");
 };
 
 
@@ -157,7 +157,7 @@ static QString getBundledExtVersion()
 {
     QString bundled_ext_dir =
         QString::fromNSString([NSBundle.mainBundle.resourcePath
-            stringByAppendingPathComponent:@"seadrivefs.fs"]);
+            stringByAppendingPathComponent:@"macfuse.fs"]);
 
     QString versions_plist =
         ::pathJoin(bundled_ext_dir, "Contents", "version.plist");
@@ -197,8 +197,8 @@ bool HelperClient::needInstallKext()
         int current_set_gid;
         size_t len = sizeof(current_set_gid);
         int admin_gid = admin_group->gr_gid;
-        if (sysctlbyname(SEADRIVEFS_SYSCTL_TUNABLES_ADMIN, &current_set_gid, &len, NULL, 0) != 0 || current_set_gid != admin_gid) {
-            qWarning("need to reinstall the kext because seadrivefs admin_group not set yet");
+        if (sysctlbyname(MACFUSE_SYSCTL_TUNABLES_ADMIN, &current_set_gid, &len, NULL, 0) != 0 || current_set_gid != admin_gid) {
+            qWarning("need to reinstall the kext because macfuse admin_group not set yet");
             return true;
         }
     }
@@ -216,33 +216,33 @@ bool HelperClient::installKext(bool *require_user_approval)
     ensureConnected();
 
     NSString *source = [NSBundle.mainBundle.resourcePath
-        stringByAppendingPathComponent:@"seadrivefs.fs"];
-    NSString *destination = @"/Library/Filesystems/seadrivefs.fs";
+        stringByAppendingPathComponent:@"macfuse.fs"];
+    NSString *destination = @"/Library/Filesystems/macfuse.fs";
     // TODO: Use proper path by checking current system version, using this
     // table:
-    // /Library/Filesystems/seadrivefs.fs/Contents/Extensions/10.9:   directory
-    // /Library/Filesystems/seadrivefs.fs/Contents/Extensions/10.10:  symbolic link
+    // /Library/Filesystems/macfuse.fs/Contents/Extensions/10.9:   directory
+    // /Library/Filesystems/macfuse.fs/Contents/Extensions/10.10:  symbolic link
     // to 10.9
-    // /Library/Filesystems/seadrivefs.fs/Contents/Extensions/10.11:  directory
-    // /Library/Filesystems/seadrivefs.fs/Contents/Extensions/10.12:  directory
-    // /Library/Filesystems/seadrivefs.fs/Contents/Extensions/10.13:  symbolic link
+    // /Library/Filesystems/macfuse.fs/Contents/Extensions/10.11:  directory
+    // /Library/Filesystems/macfuse.fs/Contents/Extensions/10.12:  directory
+    // /Library/Filesystems/macfuse.fs/Contents/Extensions/10.13:  symbolic link
     // to 10.12
-    // /Library/Filesystems/seadrivefs.fs/Contents/Extensions/10.14:  symbolic link
+    // /Library/Filesystems/macfuse.fs/Contents/Extensions/10.14:  symbolic link
     // to 10.12
-    // /Library/Filesystems/seadrivefs.fs/Contents/Extensions/10.15:  symbolic link
+    // /Library/Filesystems/macfuse.fs/Contents/Extensions/10.15:  symbolic link
     // to 10.12
-    // /Library/Filesystems/seadrivefs.fs/Contents/Extensions/10.16:  symbolic link
+    // /Library/Filesystems/macfuse.fs/Contents/Extensions/10.16:  symbolic link
     // to 11
-    // /Library/Filesystems/seadrivefs.fs/Contents/Extensions/11:     directory
-    // /Library/Filesystems/seadrivefs.fs/Contents/Extensions/12:     symbolic link
+    // /Library/Filesystems/macfuse.fs/Contents/Extensions/11:     directory
+    // /Library/Filesystems/macfuse.fs/Contents/Extensions/12:     symbolic link
     // to 11
     NSString *kextPath;
     if (utils::mac::isAtLeastSystemVersion(10, 16, 0)) {
-        kextPath = @"/Library/Filesystems/seadrivefs.fs/Contents/Extensions/"
-                         @"11/seadrivefs.kext";
+        kextPath = @"/Library/Filesystems/macfuse.fs/Contents/Extensions/"
+                         @"11/macfuse.kext";
     } else {
-        kextPath = @"/Library/Filesystems/seadrivefs.fs/Contents/Extensions/"
-                         @"10.12/seadrivefs.kext";
+        kextPath = @"/Library/Filesystems/macfuse.fs/Contents/Extensions/"
+                         @"10.12/macfuse.kext";
     }
     NSDictionary *params = @{
         @"source" : source,
