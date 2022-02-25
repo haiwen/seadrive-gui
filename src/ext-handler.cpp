@@ -346,7 +346,7 @@ void SeafileExtensionHandler::onGetSmartLinkFailed(const ApiError& error)
     if (http_error_code == 403) {
         gui->warningBox(tr("No permissions to create a shared link"));
     } else {
-        gui->warningBox(tr("failed get smart link %1").arg(error.toString()));
+        gui->warningBox(tr("failed get internal link %1").arg(error.toString()));
     }
 }
 
@@ -421,7 +421,7 @@ void SeafileExtensionHandler::onShareLinkGeneratedFailed(const ApiError& error) 
     if (http_error_code == 403) {
         gui->warningBox(tr("No permissions to create a shared link"));
     } else {
-        gui->messageBox(tr("Failed to get shared_link %1\n").arg(error.toString()));
+        gui->messageBox(tr("Failed to get share link %1\n").arg(error.toString()));
     }
 }
 

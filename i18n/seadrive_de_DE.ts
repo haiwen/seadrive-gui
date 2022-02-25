@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="de_DE">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="de_DE">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -160,6 +162,18 @@
     <message>
         <source>Failed to get upload link for file &quot;%1&quot;</source>
         <translation>Für die Datei &quot;%1&quot; konnte kein Upload-Link erstellt werden.</translation>
+    </message>
+    <message>
+        <source>No permissions to create a shared link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>failed to get share link %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>failed get internal link %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -407,11 +421,11 @@ Klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translation>
     </message>
     <message>
         <source>Libraries are ready</source>
-        <translation type="unfinished"/>
+        <translation>Bibliotheken stehen bereit</translation>
     </message>
     <message>
         <source>All libraries are loaded and ready to use.</source>
-        <translation type="unfinished"/>
+        <translation>Alle Bibliotheken sind geladen und können verwendet werden.</translation>
     </message>
 </context>
 <context>
@@ -637,10 +651,6 @@ Klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translation>
         <translation>vor %1 Minuten</translation>
     </message>
     <message>
-        <source>&lt;Not Part of Certificate&gt;</source>
-        <translation>&lt;Nicht Teil des Zertifikates&gt;</translation>
-    </message>
-    <message>
         <source>Folder</source>
         <translation>Ordner</translation>
     </message>
@@ -726,11 +736,11 @@ Klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translation>
     </message>
     <message>
         <source>Syncing is denied by cloud-only permission settings</source>
-        <translation type="unfinished"/>
+        <translation>Synchronisieren ist nicht möglich, solange die Zugriffsrechte auf nur-online beschränkt sind</translation>
     </message>
     <message>
         <source>Do not have write permission to the library</source>
-        <translation type="unfinished"/>
+        <translation>Keine Schreibrechte für die Bibliothek</translation>
     </message>
 </context>
 <context>
@@ -817,6 +827,42 @@ Klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translation>
     <message>
         <source>Failed to create seadrive cache directory</source>
         <translation>Die Erstellung des Caching-Orders ist fehlgeschlagen.</translation>
+    </message>
+</context>
+<context>
+    <name>SeafileExtensionHandler</name>
+    <message>
+        <source>Failed to get upload link information for file &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No permissions to create a shared link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>failed get internal link %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to lock file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to unlock file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation type="unfinished">Die Datei &quot;%1&quot; ist durch %2 gesperrt.</translation>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation type="unfinished">Für die Datei &quot;%1&quot; konnten keine Informationen zur Sperrung gefunden werden.</translation>
+    </message>
+    <message>
+        <source>Failed to get share link %1
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

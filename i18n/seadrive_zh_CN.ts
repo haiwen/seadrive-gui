@@ -161,6 +161,18 @@
         <source>Failed to get upload link for file &quot;%1&quot;</source>
         <translation>获取文件 &quot;%1&quot; 的上传链接失败</translation>
     </message>
+    <message>
+        <source>No permissions to create a shared link</source>
+        <translation>没有权限创建共享链接</translation>
+    </message>
+    <message>
+        <source>failed to get share link %1</source>
+        <translation>获取共享链接失败 %1</translation>
+    </message>
+    <message>
+        <source>failed get internal link %1</source>
+        <translation>获取内部链接失败 %1</translation>
+    </message>
 </context>
 <context>
     <name>InitSyncDialog</name>
@@ -637,10 +649,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>%1 分钟前</translation>
     </message>
     <message>
-        <source>&lt;Not Part of Certificate&gt;</source>
-        <translation>&lt;不包含这部分信息&gt;</translation>
-    </message>
-    <message>
         <source>Folder</source>
         <translation>文件夹</translation>
     </message>
@@ -817,6 +825,43 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Failed to create seadrive cache directory</source>
         <translation>创建缓存目录失败</translation>
+    </message>
+</context>
+<context>
+    <name>SeafileExtensionHandler</name>
+    <message>
+        <source>Failed to get upload link information for file &quot;%1&quot;</source>
+        <translation>获取文件 “ %1 ” 的上传链接信息失败</translation>
+    </message>
+    <message>
+        <source>No permissions to create a shared link</source>
+        <translation>没有权限创建共享链接</translation>
+    </message>
+    <message>
+        <source>failed get internal link %1</source>
+        <translation>获取内部链接失败 %1</translation>
+    </message>
+    <message>
+        <source>Failed to lock file</source>
+        <translation>锁定文件失败</translation>
+    </message>
+    <message>
+        <source>Failed to unlock file</source>
+        <translation>解锁文件失败</translation>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation>文件 “ %1 ” 被 %2 锁定</translation>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation>获取文件 “ %1 ” 的锁定信息失败</translation>
+    </message>
+    <message>
+        <source>Failed to get share link %1
+</source>
+        <translation>获取共享链接失败 %1
+</translation>
     </message>
 </context>
 <context>
