@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="fr_FR">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="fr_FR">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -160,6 +162,18 @@
     <message>
         <source>Failed to get upload link for file &quot;%1&quot;</source>
         <translation>Impossible de récupérer le lien de téléversement du fichier &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <source>No permissions to create a shared link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>failed to get share link %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>failed get internal link %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -636,10 +650,6 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
         <translation>Il y a %1 minutes</translation>
     </message>
     <message>
-        <source>&lt;Not Part of Certificate&gt;</source>
-        <translation>&lt;Not Part of Certificate&gt;</translation>
-    </message>
-    <message>
         <source>Folder</source>
         <translation>Dossier</translation>
     </message>
@@ -725,11 +735,11 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     </message>
     <message>
         <source>Syncing is denied by cloud-only permission settings</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Do not have write permission to the library</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -816,6 +826,42 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     <message>
         <source>Failed to create seadrive cache directory</source>
         <translation>Impossible de créer le répertoire de cache de SeaDrive.</translation>
+    </message>
+</context>
+<context>
+    <name>SeafileExtensionHandler</name>
+    <message>
+        <source>Failed to get upload link information for file &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No permissions to create a shared link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>failed get internal link %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to lock file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to unlock file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation type="unfinished">Le fichier &quot;%1&quot; est verrouillé par %2</translation>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation type="unfinished">Impossible de récupérer les informations sur le verrouillage du fichier &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <source>Failed to get share link %1
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1056,7 +1102,7 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     </message>
     <message>
         <source>System Proxy</source>
-        <translation>Proxy système </translation>
+        <translation>Proxy système&#xa0;</translation>
     </message>
     <message>
         <source>enabled search</source>

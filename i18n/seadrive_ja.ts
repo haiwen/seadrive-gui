@@ -1,9 +1,11 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ja">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="ja">
 <context>
     <name>AboutDialog</name>
     <message>
         <source>About %1</source>
-        <translation>アバウト %1</translation>
+        <translation>about %1</translation>
     </message>
     <message>
         <source>&lt;h4&gt;Seafile Drive Client %2&lt;/h4&gt;</source>
@@ -15,15 +17,15 @@
     </message>
     <message>
         <source>About</source>
-        <translation>アバウト</translation>
+        <translation>SeaDriveについて</translation>
     </message>
     <message>
         <source>Check For Updates</source>
-        <translation>アップデートを確認</translation>
+        <translation>アップデートの確認</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>よし</translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -41,14 +43,14 @@
     </message>
     <message>
         <source>%1 exited unexpectedly</source>
-        <translation>予想外に %1</translation>
+        <translation>予期せず終了しました %1</translation>
     </message>
 </context>
 <context>
     <name>DiskLetterDialog</name>
     <message>
         <source>Choose the disk letter</source>
-        <translation>ディスク文字の選択</translation>
+        <translation>ドライブ文字の選択</translation>
     </message>
     <message>
         <source>Your files would appear in a dedicated disk in your computer. Please choose the letter:</source>
@@ -56,7 +58,7 @@
     </message>
     <message>
         <source>OK</source>
-        <translation>よし</translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -128,7 +130,7 @@
     </message>
     <message>
         <source>Document    </source>
-        <translation>資料</translation>
+        <translation>ドキュメント</translation>
     </message>
     <message>
         <source>Image    </source>
@@ -151,15 +153,27 @@
     <name>FinderSyncHost</name>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
+        <translation>ファイル &quot;％1&quot; は ％2 によってロックされています</translation>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>ファイル &quot;％1&quot; のロック情報を取得できませんでした</translation>
     </message>
     <message>
         <source>Failed to get upload link for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>ファイル &quot;％1&quot; のアップロードリンクを取得できませんでした</translation>
+    </message>
+    <message>
+        <source>No permissions to create a shared link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>failed to get share link %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>failed get internal link %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -170,7 +184,7 @@
     </message>
     <message>
         <source>%1 is fetching the files list, please wait</source>
-        <translation>%1 はファイルリストをフェッチしています。しばらくお待ちください</translation>
+        <translation>%1 はファイルリストを取得しています。しばらくお待ちください</translation>
     </message>
     <message>
         <source>%1 has dowloaded your files list.
@@ -179,7 +193,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Dialog</source>
-        <translation>対話</translation>
+        <translation>ダイアログ</translation>
     </message>
     <message>
         <source>logo</source>
@@ -227,7 +241,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The ssl certificate of this server is not trusted, proceed anyway?</source>
-        <translation>&lt;b&gt;警告：&lt;/b&gt; このサーバーのSSL証明書は信頼されていません、とにかく続行しますか？</translation>
+        <translation>&lt;b&gt;警告：&lt;/b&gt; このサーバーのSSL証明書は信頼されていません、このまま続行しますか？</translation>
     </message>
     <message>
         <source>Please enter the server address</source>
@@ -235,7 +249,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>%1 is not a valid server address</source>
-        <translation>%1 が有効なサーバアドレスでない</translation>
+        <translation>%1 は有効なサーバアドレスではありません</translation>
     </message>
     <message>
         <source>Please enter the username</source>
@@ -406,11 +420,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Libraries are ready</source>
-        <translation type="unfinished"/>
+        <translation>ライブラリの準備ができました</translation>
     </message>
     <message>
         <source>All libraries are loaded and ready to use.</source>
-        <translation type="unfinished"/>
+        <translation>すべてのライブラリがロードされ、すぐに使用できます。</translation>
     </message>
 </context>
 <context>
@@ -537,11 +551,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Deleted</source>
-        <translation>削除</translation>
+        <translation>完全削除</translation>
     </message>
     <message>
         <source>Removed</source>
-        <translation>移除</translation>
+        <translation>削除</translation>
     </message>
     <message>
         <source>Modified</source>
@@ -549,7 +563,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Renamed</source>
-        <translation>改名</translation>
+        <translation>名前変更</translation>
     </message>
     <message>
         <source>Added or modified</source>
@@ -569,7 +583,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Renamed directory</source>
-        <translation>改名ディレクトリ</translation>
+        <translation>ディレクトリ名変更</translation>
     </message>
     <message>
         <source>Moved directory</source>
@@ -634,10 +648,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>%1 minutes ago</source>
         <translation>%1分前</translation>
-    </message>
-    <message>
-        <source>&lt;Not Part of Certificate&gt;</source>
-        <translation>&lt;Not Part of Certificate&gt;</translation>
     </message>
     <message>
         <source>Folder</source>
@@ -713,23 +723,23 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>%1 is not added to a library and will not be uploaded</source>
-        <translation type="unfinished"/>
+        <translation>％1はライブラリに追加されず、アップロードされません</translation>
     </message>
     <message>
         <source>Library is too large to sync.</source>
-        <translation type="unfinished"/>
+        <translation>ライブラリが大きすぎて同期できません。</translation>
     </message>
     <message>
         <source>You can only move files/folders within a library or from one library to another library</source>
-        <translation type="unfinished"/>
+        <translation>ライブラリ内またはあるライブラリから別のライブラリにのみファイル/フォルダを移動できます</translation>
     </message>
     <message>
         <source>Syncing is denied by cloud-only permission settings</source>
-        <translation type="unfinished"/>
+        <translation>クラウドのみの権限設定により同期が拒否されました</translation>
     </message>
     <message>
         <source>Do not have write permission to the library</source>
-        <translation type="unfinished"/>
+        <translation>ライブラリへの書き込み権限がありません</translation>
     </message>
 </context>
 <context>
@@ -743,7 +753,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <name>SeadriveGui</name>
     <message>
         <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
-        <translation>システム環境設定で%1カーネル拡張を手動で承認する必要があります。 [よし]をクリックして、システム設定ダイアログを開きます。 その後、%1 を再起動してください。</translation>
+        <translation>システム環境設定で、%1カーネル拡張を手動で承認する必要があります。OKをクリックして、システム環境設定ダイアログを開きます。その後、%1 を再立ち上げてください。</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to install kernel driver</source>
@@ -763,7 +773,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>OK</source>
-        <translation>よし</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -815,7 +825,43 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Failed to create seadrive cache directory</source>
-        <translation type="unfinished"/>
+        <translation>seadriveキャッシュディレクトリの作成に失敗しました</translation>
+    </message>
+</context>
+<context>
+    <name>SeafileExtensionHandler</name>
+    <message>
+        <source>Failed to get upload link information for file &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No permissions to create a shared link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>failed get internal link %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to lock file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to unlock file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation type="unfinished">ファイル &quot;％1&quot; は ％2 によってロックされています</translation>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation type="unfinished">ファイル &quot;％1&quot; のロック情報を取得できませんでした</translation>
+    </message>
+    <message>
+        <source>Failed to get share link %1
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -834,7 +880,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>OK</source>
-        <translation>よし</translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -936,11 +982,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Up %1, Down %2</source>
-        <translation>上 %1 、下 %2</translation>
+        <translation>Up %1 , Down %2</translation>
     </message>
     <message>
         <source>About %1</source>
-        <translation>アバウト %1</translation>
+        <translation>about %1</translation>
     </message>
     <message>
         <source>Transfer progress</source>
@@ -1080,7 +1126,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>You have changed disk letter. Restart to apply it?</source>
-        <translation>ディスク文字を変更しました。 再起動して適用しますか？</translation>
+        <translation>ドライブ文字を変更しました。 再起動して適用しますか？</translation>
     </message>
     <message>
         <source>language</source>
@@ -1108,7 +1154,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Notify when libraries are synchronized</source>
-        <translation>ライブラリが同期されたときに通知</translation>
+        <translation>ライブラリが同期されたときに通知する</translation>
     </message>
     <message>
         <source>Enable sync temporary files of MSOffice/Libreoffice</source>
@@ -1247,19 +1293,19 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Password(At least 8 characters)</source>
-        <translation type="unfinished"/>
+        <translation>パスワード（8文字以上）</translation>
     </message>
     <message>
         <source>Show password</source>
-        <translation type="unfinished"/>
+        <translation>パスワードを表示</translation>
     </message>
     <message>
         <source>Expire days</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Generate link</source>
-        <translation type="unfinished"/>
+        <translation>リンクの生成</translation>
     </message>
 </context>
 <context>
@@ -1353,7 +1399,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Dialog</source>
-        <translation>問答</translation>
+        <translation>ダイアログ</translation>
     </message>
     <message>
         <source>text</source>
@@ -1372,19 +1418,19 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <name>UploadLinkDialog</name>
     <message>
         <source>Upload Link</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Upload link:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>クリップボードにコピー</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
 </context>
 </TS>

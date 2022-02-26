@@ -293,7 +293,7 @@ void FinderSyncHost::onGetSmartLinkFailed(const ApiError& error)
     if (http_error_code == 403) {
         gui->warningBox(tr("No permissions to create a shared link"));
     } else {
-        gui->warningBox(tr("failed get smart link %1").arg(error.toString()));
+        gui->warningBox(tr("failed get internal link %1").arg(error.toString()));
     }
     qWarning("get smart_link failed %s\n", error.toString().toUtf8().data());
 }
@@ -413,7 +413,7 @@ void FinderSyncHost::doShowFileLockedBy(const QString &path)
     if (!account.isValid()) {
         return;
     }
-    
+
     QString repo_id;
     QString path_in_repo;
     if (!lookUpFileInformation(path, &repo_id, &path_in_repo)) {

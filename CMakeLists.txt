@@ -480,7 +480,7 @@ SET(SC_LIBS utils)
 ###### start: translations
 ####################
 
-SET(SEAFILE_TRANSLATE_SOURCES ${seadrive_gui_sources} ${utils_sources} ${moc_output} ${ui_output})
+SET(SEAFILE_TRANSLATE_SOURCES ${seadrive_gui_sources} ${utils_sources} ${moc_output} ${ui_output} "src/ext-handler.cpp")
 SET(LANGUAGES
   ca
   de_DE

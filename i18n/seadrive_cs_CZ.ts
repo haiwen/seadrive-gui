@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="cs_CZ">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="cs_CZ">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -160,6 +162,18 @@
     <message>
         <source>Failed to get upload link for file &quot;%1&quot;</source>
         <translation>Nepodařilo se získat odkaz na nahrání pro soubor „%1“</translation>
+    </message>
+    <message>
+        <source>No permissions to create a shared link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>failed to get share link %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>failed get internal link %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -637,10 +651,6 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
         <translation>před %1 minutami</translation>
     </message>
     <message>
-        <source>&lt;Not Part of Certificate&gt;</source>
-        <translation>&lt;Not Part of Certificate&gt;</translation>
-    </message>
-    <message>
         <source>Folder</source>
         <translation>Adresář</translation>
     </message>
@@ -726,11 +736,11 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>Syncing is denied by cloud-only permission settings</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Do not have write permission to the library</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -817,6 +827,42 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     <message>
         <source>Failed to create seadrive cache directory</source>
         <translation>Nepodařilo se vytvořit složku s mezipamětí pro seadrive</translation>
+    </message>
+</context>
+<context>
+    <name>SeafileExtensionHandler</name>
+    <message>
+        <source>Failed to get upload link information for file &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No permissions to create a shared link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>failed get internal link %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to lock file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to unlock file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; is locked by %2</source>
+        <translation type="unfinished">Soubor &quot;%1&quot; je uzamčený od %2</translation>
+    </message>
+    <message>
+        <source>Failed to get lock information for file &quot;%1&quot;</source>
+        <translation type="unfinished">Nepodařilo se získat informaci o zámku souboru „%1“</translation>
+    </message>
+    <message>
+        <source>Failed to get share link %1
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
