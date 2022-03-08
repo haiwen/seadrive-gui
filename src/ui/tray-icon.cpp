@@ -738,23 +738,10 @@ void SeafileTrayIcon::logoutAccount()
     Account account = qvariant_cast<Account>(action->data());
     Q_ASSERT(account.isValid());
 
-
-    QMessageBox::StandardButton ret = gui->yesNoCancelBox(
-        tr("Do you want to remove the local cache?"),
-        nullptr,
-        QMessageBox::Cancel);
-
-    bool remove_cache;
-    if (ret == QMessageBox::Cancel) {
-        return;
-    } else {
-        remove_cache = ret == QMessageBox::Yes;
-    }
-
     qWarning() << "trying to log out account" << account;
 
     // logout Account
-    LogoutDeviceRequest *req = new LogoutDeviceRequest(account, remove_cache);
+    LogoutDeviceRequest *req = new LogoutDeviceRequest(account, false);
     connect(req, SIGNAL(success()),
             this, SLOT(onLogoutDeviceRequestSuccess()));
     connect(req, SIGNAL(failed(const ApiError&)),
@@ -796,7 +783,7 @@ void SeafileTrayIcon::deleteAccount()
         return;
     }
 
-    if (!gui->rpcClient()->deleteAccount(account, true)) {
+    if (!gui->rpcClient()->deleteAccount(account, false)) {
         gui->warningBox(tr("Failed to delete account"));
         return;
     }
