@@ -1,9 +1,5 @@
-extern "C" {
-
 #include <searpc-client.h>
 #include <searpc-named-pipe-transport.h>
-
-}
 
 #include <QtDebug>
 #include <QMutexLocker>

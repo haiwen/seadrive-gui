@@ -7,11 +7,9 @@
 #include <QUrlQuery>
 #include <QVariant>
 
-extern "C" {
 #include <searpc-client.h>
 
 #include <searpc.h>
-}
 
 #include "account.h"
 #include "open-local-helper.h"

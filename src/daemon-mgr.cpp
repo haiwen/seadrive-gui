@@ -1,7 +1,5 @@
-extern "C" {
 #include <searpc-client.h>
 #include <searpc-named-pipe-transport.h>
-}
 
 #if defined(_MSC_VER)
 #include <windows.h>
