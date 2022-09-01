@@ -21,6 +21,9 @@ public:
     ~DaemonManager();
     void startSeadriveDaemon();
     void doUnmount();
+#if defined(Q_OS_MAC)
+    QString fileProviderDir() const;
+#endif
     QString currentCacheDir() const { return current_cache_dir_; }
 
 public slots:
