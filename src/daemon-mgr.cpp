@@ -84,8 +84,7 @@ const char *stateToStr(int state)
 
 DaemonManager::DaemonManager()
     : seadrive_daemon_(nullptr),
-      searpc_pipe_client_(nullptr),
-      unmounted_(false)
+      searpc_pipe_client_(nullptr)
 {
     current_state_ = DAEMON_INIT;
     conn_daemon_timer_ = new QTimer(this);
@@ -217,7 +216,6 @@ QStringList DaemonManager::collectSeaDriveArgs()
     QString fuse_opts = qgetenv("SEADRIVE_FUSE_OPTS");
     if (fuse_opts.isEmpty()) {
 #if defined(Q_OS_MAC)
-        diskUtilUnmount();
         SettingsManager *mgr = gui->settingsManager();
         QString mount_dir = gui->mountDir();
         args << mount_dir;
@@ -335,34 +333,6 @@ void DaemonManager::stopAllDaemon()
     }
 }
 
-void DaemonManager::doUnmount() {
-    if (unmounted_) {
-        return;
-    }
-    unmounted_ = true;
-    if (gui->rpcClient() && gui->rpcClient()->isConnected()) {
-        qWarning("Unmounting before exit");
-        gui->rpcClient()->unmount();
-    } else {
-        qWarning("Not unmounting because rpc client not ready.");
-    }
-
-    diskUtilUnmount();
-}
-
-void DaemonManager::diskUtilUnmount() {
-#if defined(Q_OS_MAC)
-    QStringList diskutil_args;
-    // Programs like MS word would prevent the disk from unmounting,
-    // so we have to use "force" here
-    diskutil_args << "unmount" << "force" << gui->mountDir();
-    if (QProcess::execute("diskutil", diskutil_args) != 0) {
-        qWarning("failed to run \"diskutil umount %s\"", toCStr(gui->mountDir()));
-    } else {
-        qWarning("diskutil umounted successfully");
-    }
-#endif
-}
 
 void DaemonManager::onDaemonFinished(int exit_code, QProcess::ExitStatus exit_status)
 {

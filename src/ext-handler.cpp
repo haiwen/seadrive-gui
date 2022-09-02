@@ -796,7 +796,7 @@ bool ExtCommandsHandler::parseRepoFileInfo(const QString& path,
     }
 
     QMutexLocker locker(&rpc_client_mutex_);
-    if (!rpc_client_->getRepoIdByPath(path_concat(category, repo), p_repo_id)) {
+    if (!rpc_client_->getRepoIdByPath("", "", path_concat(category, repo), p_repo_id)) {
         qWarning() << "failed to get the repo id for " << path;
         return false;
     }

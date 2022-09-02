@@ -221,12 +221,6 @@ uint32_t FinderSyncHost::getFileStatus(const QString &path)
         return SYNC_STATUS_NONE;
     }
 
-    if (rpc_client_->getRepoFileStatus(path_concat(category, repo), path_in_repo, &status) != 0) {
-        return PathStatus::SYNC_STATUS_NONE;
-    }
-
-    // printf("path = %s, status = %s\n", toCStr(path), toCStr(status));
-
     return getPathStatusFromString(status);
 }
 
@@ -359,7 +353,7 @@ bool FinderSyncHost::lookUpFileInformation(const QString &path,
         return false;
     }
 
-    return rpc_client_->getRepoIdByPath(path_concat(category, repo), ptr_repo_id);
+    return rpc_client_->getRepoIdByPath("", "", path_concat(category, repo), ptr_repo_id);
 }
 
 void FinderSyncHost::doShowFileHistory(const QString &path)

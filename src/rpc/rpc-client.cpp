@@ -295,34 +295,6 @@ int SeafileRpcClient::setRepoToken(const QString &repo_id,
     return ret;
 }
 
-int SeafileRpcClient::getRepoFileStatus(const QString& repo_uname,
-                                        const QString& path_in_repo,
-                                        QString *status)
-{
-    GError *error = NULL;
-    char *ret = searpc_client_call__string (
-        seadrive_rpc_client_,
-        "seafile_get_path_sync_status",
-        &error, 2,
-        "string", toCStr(repo_uname),
-        "string", toCStr(path_in_repo));
-    if (error) {
-        qWarning("failed to get path status for %s/%s: %s\n",
-                 toCStr(repo_uname),
-                 toCStr(path_in_repo),
-                 error->message);
-        g_error_free(error);
-        return -1;
-    }
-
-    *status = ret;
-
-    // printf ("status for %s/%s = %s\n", toCStr(repo_uname), toCStr(path_in_repo), ret);
-
-    g_free (ret);
-    return 0;
-}
-
 #if defined(Q_OS_WIN32)
 bool SeafileRpcClient::getRepoFileLockStatus(const QString& repo_id,
                                              const QString& path_in_repo,
@@ -546,7 +518,9 @@ bool SeafileRpcClient::logoutAccount(const Account& account, bool remove_cache)
     return true;
 }
 
-bool SeafileRpcClient::getRepoIdByPath(const QString &repo_uname,
+bool SeafileRpcClient::getRepoIdByPath(const QString &server,
+                                       const QString &username,
+                                       const QString &repo_uname,
                                        QString *repo_id)
 {
     GError *error = NULL;
@@ -554,6 +528,8 @@ bool SeafileRpcClient::getRepoIdByPath(const QString &repo_uname,
         seadrive_rpc_client_,
         "seafile_get_repo_id_by_uname",
         &error, 1,
+        "string", toCStr(server),
+        "string", toCStr(username),
         "string", toCStr(repo_uname));
     if (error) {
         qWarning("failed to get repo id of %s: %s\n",
@@ -638,26 +614,6 @@ bool SeafileRpcClient::getGlobalSyncStatus(json_t **ret_obj)
     }
 
     *ret_obj = ret;
-
-    return true;
-}
-
-bool SeafileRpcClient::unmount()
-{
-    GError *error = NULL;
-    int ret = searpc_client_call__int (
-        seadrive_rpc_client_,
-        "seafile_unmount",
-        &error, 0);
-    if (error || ret != 0) {
-        // The unmount rpc would case seadrive daemon to exit, so the rpc would always fail.
-        qDebug("failed to unmount : %s\n",
-               (error && error->message) ? error->message : "");
-        if (error) {
-            g_error_free(error);
-        }
-        return false;
-    }
 
     return true;
 }

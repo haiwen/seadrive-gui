@@ -250,10 +250,6 @@ SeadriveGui::SeadriveGui(bool dev_mode)
 
 SeadriveGui::~SeadriveGui()
 {
-    // Must unmount before rpc client is destroyed.
-    if (!dev_mode_) {
-        daemon_mgr_->doUnmount();
-    }
 #ifdef HAVE_SPARKLE_SUPPORT
     AutoUpdateService::instance()->stop();
 #endif
@@ -531,10 +527,6 @@ void SeadriveGui::restartApp()
     }
 
     in_exit_ = true;
-
-    if (!dev_mode_) {
-        daemon_mgr_->doUnmount();
-    }
 
     QStringList args = QApplication::arguments();
 

@@ -140,7 +140,7 @@ bool QLGenHandler::lookUpFileInformation(const QString &path,
     }
 
     QMutexLocker lock(&rpc_client_mutex_);
-    return rpc_client_->getRepoIdByPath(path_concat(category, repo), ptr_repo_id);
+    return rpc_client_->getRepoIdByPath("", "", path_concat(category, repo), ptr_repo_id);
 }
 
 
