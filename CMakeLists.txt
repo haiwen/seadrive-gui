@@ -95,7 +95,8 @@ ELSEIF (APPLE)
     MARK_AS_ADVANCED (SM_LIBRARY)
     FIND_LIBRARY(IOKit_LIBRARY IOKit)
     FIND_LIBRARY(MPMessagePack_LIBRARY MPMessagePack PATHS ${CMAKE_SOURCE_DIR}/third_party)
-    SET(EXTRA_LIBS ${EXTRA_LIBS} ${COCOA_LIBRARY} ${Sec_LIBRARY} ${SM_LIBRARY} ${IOKit_LIBRARY} ${MPMessagePack_LIBRARY}
+    FIND_LIBRARY(FileProvider_LIBRARY FileProvider)
+    SET(EXTRA_LIBS ${EXTRA_LIBS} ${COCOA_LIBRARY} ${Sec_LIBRARY} ${SM_LIBRARY} ${IOKit_LIBRARY} ${MPMessagePack_LIBRARY} ${FileProvider_LIBRARY}
       # load all members from static objc libs like MPMessagePack because it has
       # objc class category
       "-ObjC"
@@ -205,6 +206,7 @@ SET(moc_headers
   src/rpc/rpc-server.h
   src/seadrive-gui.h
   src/settings-mgr.h
+  src/file-provider-mgr.h
 
   src/traynotificationwidget.h
   src/traynotificationmanager.h
@@ -329,6 +331,7 @@ SET(seadrive_gui_sources
   src/network-mgr.cpp
   src/remote-wipe-service.cpp
   src/account-info-service.cpp
+  src/file-provider-mgr.cpp
 
   src/rpc/rpc-client.cpp
   src/rpc/rpc-server.cpp

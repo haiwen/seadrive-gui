@@ -685,7 +685,7 @@ void SeafileTrayIcon::onLogoutDeviceRequestSuccess()
             tr("Failed to logout account %1").arg(account.toString()));
     }
 #else
-    if (!gui->rpcClient()->deleteAccount(account, req->shouldRemoveCache())) {
+    if (!gui->rpcClient()->deleteAccount(account)) {
         gui->warningBox(
             tr("Failed to remove local cache of account %1").arg(account.toString()));
     }
@@ -708,7 +708,7 @@ void SeafileTrayIcon::deleteAccount()
         return;
     }
 
-    if (!gui->rpcClient()->deleteAccount(account, false)) {
+    if (!gui->rpcClient()->deleteAccount(account)) {
         gui->warningBox(tr("Failed to delete account"));
         return;
     }

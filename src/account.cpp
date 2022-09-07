@@ -15,3 +15,11 @@ QString Account::getSignature() const
 
     return ::md5(serverUrl.host() + username).left(7);
 }
+
+QString Account::domainID() const {
+    if (!isValid()) {
+        return "";
+    }
+
+    return ::md5(serverUrl.url() + username);
+}

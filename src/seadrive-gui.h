@@ -18,6 +18,7 @@ class SettingsDialog;
 class CertsManager;
 class MessagePoller;
 class AboutDialog;
+class FileProviderManager;
 
 /**
  * The central class of seafile-client
@@ -88,6 +89,8 @@ public:
 
     MessagePoller * messagePoller() { return message_poller_; }
 
+    FileProviderManager *fileProviderManager() { return file_provider_mgr_; }
+
     // CertsManager *certsManager() { return certs_mgr_; }
 
     bool started() { return started_; }
@@ -126,6 +129,8 @@ private:
     AboutDialog *about_dlg_;
 
     MessagePoller *message_poller_;
+
+    FileProviderManager *file_provider_mgr_;
 
     // SettingsDialog *settings_dialog_;
 

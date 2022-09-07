@@ -142,6 +142,8 @@ public:
             .arg(username)
             .arg(token.mid(0, 7));
     }
+
+    QString domainID() const;
 };
 
 // Add converter so we can do things like:

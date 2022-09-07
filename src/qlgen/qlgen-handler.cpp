@@ -133,6 +133,11 @@ bool QLGenHandler::lookUpFileInformation(const QString &path,
                                          QString *ptr_repo_id,
                                            QString *ptr_path_in_repo)
 {
+    const Account& account = gui->accountManager()->currentAccount();
+    if (!account.isValid()) {
+        return false;
+    }
+
     QString repo;
     QString category;
     if (!getRepoAndRelativePath(path, &repo, ptr_path_in_repo, &category)) {
@@ -140,7 +145,10 @@ bool QLGenHandler::lookUpFileInformation(const QString &path,
     }
 
     QMutexLocker lock(&rpc_client_mutex_);
-    return rpc_client_->getRepoIdByPath("", "", path_concat(category, repo), ptr_repo_id);
+    return rpc_client_->getRepoIdByPath(account.serverUrl.url(),
+                                        account.username,
+                                        path_concat(category, repo),
+                                        ptr_repo_id);
 }
 
 

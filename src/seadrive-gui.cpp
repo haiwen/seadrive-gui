@@ -31,6 +31,7 @@
 #include "message-poller.h"
 #include "remote-wipe-service.h"
 #include "account-info-service.h"
+#include "file-provider-mgr.h"
 #ifdef HAVE_FINDER_SYNC_SUPPORT
 #include "finder-sync/finder-sync-listener.h"
 #include "qlgen/qlgen-listener.h"
@@ -245,6 +246,7 @@ SeadriveGui::SeadriveGui(bool dev_mode)
     settings_dlg_ = new SettingsDialog();
     about_dlg_ = new AboutDialog();
     message_poller_ = new MessagePoller();
+    file_provider_mgr_ = new FileProviderManager();
     connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onAboutToQuit()));
 }
 
@@ -254,11 +256,17 @@ SeadriveGui::~SeadriveGui()
     AutoUpdateService::instance()->stop();
 #endif
 
+    const Account &account = account_mgr_->currentAccount();
+    if (account.isValid()) {
+        rpc_client_->deleteAccount(account);
+    }
+
     delete tray_icon_;
     delete daemon_mgr_;
     delete rpc_client_;
     delete account_mgr_;
     delete message_poller_;
+    delete file_provider_mgr_;
 }
 
 void SeadriveGui::start()
@@ -370,6 +378,11 @@ void SeadriveGui::start()
 
 #endif
 
+#if defined(Q_OS_MAC)
+    file_provider_mgr_->start();
+    onDaemonStarted();
+#else
+
     connect(daemon_mgr_, SIGNAL(daemonStarted()),
             this, SLOT(onDaemonStarted()));
     connect(daemon_mgr_, SIGNAL(daemonRestarted()),
@@ -384,6 +397,8 @@ void SeadriveGui::start()
     arguments << "/add_rule" << cache_path << "/default";
 
     QProcess::execute(program, arguments);
+#endif
+
 #endif
 }
 
@@ -400,7 +415,7 @@ void SeadriveGui::onDaemonRestarted()
     qDebug("setting account when daemon is restarted");
     const Account &account = account_mgr_->currentAccount();
     if (account.isValid()) {
-        rpc_client_->switchAccount(account);
+        rpc_client_->addAccount(account);
     }
 }
 

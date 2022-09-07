@@ -99,7 +99,7 @@ void RemoteWipeService::onRequestFailed(const ApiError& error)
     // but we only handle this error here to avoid complicate code since it is
     // general enough.
     if (error.type() == ApiError::HTTP_ERROR && error.httpErrorCode() == 401) {
-        askDaemonDeleteAccount(false);
+        askDaemonDeleteAccount();
         gui->warningBox(tr("Authorization expired, please re-login"));
         gui->accountManager()->invalidateCurrentLogin();
         return;
@@ -120,10 +120,10 @@ void RemoteWipeService::sendAuthPing(bool force)
     sendAuthPing();
 }
 
-void RemoteWipeService::askDaemonDeleteAccount(bool remove_cache)
+void RemoteWipeService::askDaemonDeleteAccount()
 {
     const Account& account = gui->accountManager()->currentAccount();
-    if (!gui->rpcClient()->deleteAccount(account, remove_cache)) {
+    if (!gui->rpcClient()->deleteAccount(account)) {
         qWarning() << "Failed to remove local cache of account" << account;
     }
 }
@@ -131,7 +131,7 @@ void RemoteWipeService::askDaemonDeleteAccount(bool remove_cache)
 void RemoteWipeService::wipeLocalFiles()
 {
     qWarning("Got a remote wipe request, wiping local cache");
-    askDaemonDeleteAccount(true);
+    askDaemonDeleteAccount();
     gui->accountManager()->clearAccountToken(gui->accountManager()->currentAccount());
     wipe_in_progress_ = false;
 }

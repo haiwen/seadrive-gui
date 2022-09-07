@@ -35,7 +35,7 @@ private slots:
 private:
     RemoteWipeService(QObject *parent=0);
     void wipeLocalFiles();
-    void askDaemonDeleteAccount(bool remove_cache);
+    void askDaemonDeleteAccount();
 
     QTimer *refresh_timer_;
     AuthPingRequest *auth_ping_req_;

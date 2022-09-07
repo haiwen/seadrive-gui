@@ -143,6 +143,7 @@ private:
     QHash<QString, Account> accounts_cache_;
 
     struct sqlite3 *db;
+    Account previous_account_;
     std::vector<Account> accounts_;
 
 #if defined(_MSC_VER)

@@ -21,6 +21,7 @@
 #include "shib/shib-login-dialog.h"
 #include "settings-mgr.h"
 #include "account-info-service.h"
+#include "file-provider-mgr.h"
 
 #if defined (Q_OS_WIN32)
 #include "win-sso/auto-logon-dialog.h"
@@ -459,7 +460,19 @@ void AccountManager::validateAndUseAccount(const Account& account)
         sync_root_name_= genSyncRootName(current_account);
         qWarning("generated sync root name is : %s", toCStr(sync_root_name_));
 #endif
-        gui->rpcClient()->switchAccount(account);
+
+        QMutexLocker locker(&accounts_mutex_);
+        if (previous_account_ != account) {
+            if (previous_account_.isValid()) {
+                gui->rpcClient()->deleteAccount(previous_account_);
+            }
+
+#if defined(Q_OS_MAC)
+            gui->fileProviderManager()->registerDomain(account);
+#endif
+            gui->rpcClient()->addAccount(account);
+            previous_account_ = account;
+        }
     }
 }
 
@@ -572,7 +585,18 @@ void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo 
     qWarning("generated sync root name is : %s", toCStr(sync_root_name_));
 #endif
 
-    gui->rpcClient()->switchAccount(account, info.proEdition);
+    QMutexLocker locker(&accounts_mutex_);
+    if (previous_account_ != account) {
+        if (previous_account_.isValid()) {
+            gui->rpcClient()->deleteAccount(previous_account_);
+        }
+
+#if defined(Q_OS_MAC)
+        gui->fileProviderManager()->registerDomain(account);
+#endif
+        gui->rpcClient()->addAccount(account);
+        previous_account_ = account;
+    }
 
     bool changed = account.serverInfo != info;
     if (!changed)

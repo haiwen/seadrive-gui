@@ -97,14 +97,10 @@ DaemonManager::DaemonManager()
 }
 
 DaemonManager::~DaemonManager() {
+#if !defined(Q_OS_MAC)
     stopAllDaemon();
-}
-
-#if defined(Q_OS_MAC)
-QString DaemonManager::fileProviderDir() const {
-    return QDir::home().absoluteFilePath("Library/Containers/com.seafileltd.seadrive.fileprovider/Data/Documents");
-}
 #endif
+}
 
 void DaemonManager::restartSeadriveDaemon()
 {
@@ -138,9 +134,6 @@ void DaemonManager::startSeadriveDaemon()
 #endif
     searpc_pipe_client_ = searpc_create_named_pipe_client(
         utils::win::getLocalPipeName(kSeadriveSockName).c_str());
-#elif defined(Q_OS_MAC)
-    searpc_pipe_client_ = searpc_create_named_pipe_client(
-            toCStr(QDir(fileProviderDir()).filePath(kSeadriveSockName)));
 #else
     searpc_pipe_client_ = searpc_create_named_pipe_client(
         toCStr(QDir(current_cache_dir_).filePath(kSeadriveSockName)));

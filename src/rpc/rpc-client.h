@@ -79,11 +79,10 @@ public:
                            const QString &key,
                            const QString &value);
 
-    bool switchAccount(const Account& account);
-    bool switchAccount(const Account& account, bool ispro);
+    bool addAccount(const Account& account);
 
     bool logoutAccount(const Account& account, bool remove_cache);
-    bool deleteAccount(const Account& account, bool remove_cache);
+    bool deleteAccount(const Account& account);
 
     bool getRepoIdByPath(const QString& server,
                          const QString& username,

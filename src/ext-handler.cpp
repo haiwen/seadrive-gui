@@ -788,6 +788,12 @@ bool ExtCommandsHandler::parseRepoFileInfo(const QString& path,
                                                QString *p_repo_id,
                                                QString *p_path_in_repo)
 {
+    const Account& account = gui->accountManager()->currentAccount();
+    if (!account.isValid()) {
+        qWarning() << "failed to get a valid account";
+        return false;
+    }
+
     QString category;
     QString repo;
     if (!getRepoAndRelativePath(path, &repo, p_path_in_repo, &category)) {
@@ -796,7 +802,10 @@ bool ExtCommandsHandler::parseRepoFileInfo(const QString& path,
     }
 
     QMutexLocker locker(&rpc_client_mutex_);
-    if (!rpc_client_->getRepoIdByPath("", "", path_concat(category, repo), p_repo_id)) {
+    if (!rpc_client_->getRepoIdByPath(account.serverUrl.url(),
+                                      account.username,
+                                      path_concat(category, repo),
+                                      p_repo_id)) {
         qWarning() << "failed to get the repo id for " << path;
         return false;
     }
