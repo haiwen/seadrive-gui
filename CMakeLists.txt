@@ -82,6 +82,7 @@ ELSEIF (APPLE)
 
     SET(platform_specific_sources ${platform_specific_sources} src/application.cpp)
     SET(platform_specific_moc_headers ${platform_specific_moc_headers} src/application.h)
+    SET(platform_specific_sources ${platform_specific_sources} src/file-provider/file-provider.mm)
     ## Enforce ARC for this file, since ARC is only supported after the objc
     ## runtime changes in os x 10.10
     SET_SOURCE_FILES_PROPERTIES(src/utils/utils-mac.mm
@@ -91,37 +92,8 @@ ELSEIF (APPLE)
     MARK_AS_ADVANCED (COCOA_LIBRARY)
     FIND_LIBRARY(Sec_LIBRARY Security)
     MARK_AS_ADVANCED (Sec_LIBRARY)
-    FIND_LIBRARY(SM_LIBRARY ServiceManagement)
-    MARK_AS_ADVANCED (SM_LIBRARY)
-    FIND_LIBRARY(IOKit_LIBRARY IOKit)
-    FIND_LIBRARY(MPMessagePack_LIBRARY MPMessagePack PATHS ${CMAKE_SOURCE_DIR}/third_party)
     FIND_LIBRARY(FileProvider_LIBRARY FileProvider)
-    SET(EXTRA_LIBS ${EXTRA_LIBS} ${COCOA_LIBRARY} ${Sec_LIBRARY} ${SM_LIBRARY} ${IOKit_LIBRARY} ${MPMessagePack_LIBRARY} ${FileProvider_LIBRARY}
-      # load all members from static objc libs like MPMessagePack because it has
-      # objc class category
-      "-ObjC"
-      )
-ENDIF()
-
-IF(APPLE)
-    ADD_DEFINITIONS(-DHAVE_FINDER_SYNC_SUPPORT)
-    SET(platform_specific_moc_headers ${platform_specific_moc_headers}
-      src/finder-sync/finder-sync-host.h
-      src/osx-helperutils/helper-client.h
-      )
-    SET(platform_specific_sources ${platform_specific_sources}
-        src/finder-sync/finder-sync.cpp
-        src/finder-sync/finder-sync-listener.mm
-        src/finder-sync/finder-sync-host.cpp
-        src/osx-helperutils/osx-helperutils.mm
-        src/osx-helperutils/helper-client.mm
-        )
-    SET_SOURCE_FILES_PROPERTIES(src/finder-sync/finder-sync-listener.mm
-        PROPERTIES COMPILE_FLAGS -fobjc-arc)
-    SET_SOURCE_FILES_PROPERTIES(src/osx-helperutils/osx-helperutils.mm
-        PROPERTIES COMPILE_FLAGS -fobjc-arc)
-    SET_SOURCE_FILES_PROPERTIES(src/osx-helperutils/helper-client.mm
-        PROPERTIES COMPILE_FLAGS -fobjc-arc)
+    SET(EXTRA_LIBS ${EXTRA_LIBS} ${COCOA_LIBRARY} ${Sec_LIBRARY} ${FileProvider_LIBRARY})
 ENDIF()
 
 

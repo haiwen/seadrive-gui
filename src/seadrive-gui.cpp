@@ -32,11 +32,6 @@
 #include "remote-wipe-service.h"
 #include "account-info-service.h"
 #include "file-provider-mgr.h"
-#ifdef HAVE_FINDER_SYNC_SUPPORT
-#include "finder-sync/finder-sync-listener.h"
-#include "qlgen/qlgen-listener.h"
-#include "qlgen/thumbnail-service.h"
-#endif
 
 #if defined(Q_OS_WIN32)
 #include "utils/registry.h"
@@ -55,7 +50,6 @@
 
 #if defined(Q_OS_MAC)
 #include "utils/utils-mac.h"
-#include "osx-helperutils/osx-helperutils.h"
 #endif
 
 #include "seadrive-gui.h"
@@ -277,31 +271,6 @@ void SeadriveGui::start()
         return;
     }
 
-#if defined(Q_OS_MAC)
-#ifdef XCODE_APP
-    bool require_user_approval = false;
-    if (!installHelperAndKext(&require_user_approval)) {
-        if (require_user_approval) {
-            qWarning("the kext requires user approval");
-
-            messageBox(
-                tr("You need to approve %1 kernel extension manually in the "
-                   "system preferences. Click OK to open the system "
-                   "preferences dialog. Please re-launch %1 after that.").arg(getBrand()));
-
-            // Open the system preferences for the user and exit.
-            QStringList args;
-            args << "x-apple.systempreferences:com.apple.preference.security?General";
-            QProcess::execute("open", args);
-            QCoreApplication::exit(1);
-        } else {
-            errorAndExit(tr("Failed to initialize: failed to install kernel driver"));
-        }
-        return;
-    }
-#endif
-#endif
-
     qDebug("client id is %s", toCStr(getUniqueClientId()));
 
     account_mgr_->start();
@@ -497,16 +466,6 @@ void SeadriveGui::onDaemonStarted()
         AutoUpdateService::instance()->start();
     }
 #endif // HAVE_SPARKLE_SUPPORT
-
-
-#ifdef HAVE_FINDER_SYNC_SUPPORT
-    finderSyncListenerStart();
-#endif
-#if defined(Q_OS_MAC)
-// Disable qlgen
-//    ThumbnailService::instance()->start();
-//    qlgenListenerStart();
-#endif
 }
 
 void SeadriveGui::onAboutToQuit()

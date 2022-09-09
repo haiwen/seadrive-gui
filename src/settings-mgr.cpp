@@ -16,10 +16,6 @@
 #include "utils/registry.h"
 #endif
 
-#ifdef HAVE_FINDER_SYNC_SUPPORT
-#include "finder-sync/finder-sync.h"
-#endif
-
 #include "settings-mgr.h"
 
 namespace
@@ -41,9 +37,6 @@ const char *kSeadriveRoot = "seadriveRoot";
 const char *kSettingsGroup = "Settings";
 const char *kComputerName = "computerName";
 const char *kCacheDir = "cacheDir";
-#ifdef HAVE_FINDER_SYNC_SUPPORT
-const char *kFinderSync = "finderSync";
-#endif // HAVE_FINDER_SYNC_SUPPORT
 const char *kLastShibUrl = "lastShiburl";
 
 const char *kUseProxy = "use_proxy";
@@ -155,17 +148,6 @@ void SettingsManager::loadSettings()
     applyProxySettings();
 
     autoStart_ = get_seafile_auto_start();
-
-#ifdef HAVE_FINDER_SYNC_SUPPORT
-    // try to do a reinstall, or we may use findersync somewhere else
-    // this action won't stop findersync if running already
-    FinderSyncExtensionHelper::reinstall();
-
-    // try to sync finder sync extension settings with the actual settings
-    // i.e. enabling the finder sync if the setting is true
-    setFinderSyncExtension(getFinderSyncExtension());
-#endif // HAVE_FINDER_SYNC_SUPPORT
-
 
 #ifdef Q_OS_WIN32
     RegElement reg(HKEY_CURRENT_USER, softwareSeaDrive(), "ShellExtDisabled",
@@ -555,40 +537,6 @@ void SettingsManager::setLastShibUrl(const QString &url)
     settings.setValue(kLastShibUrl, url);
     settings.endGroup();
 }
-
-#ifdef HAVE_FINDER_SYNC_SUPPORT
-bool SettingsManager::getFinderSyncExtension() const
-{
-    QSettings settings;
-    bool enabled;
-
-    settings.beginGroup(kSettingsGroup);
-    enabled = settings.value(kFinderSync, true).toBool();
-    settings.endGroup();
-
-    return enabled;
-}
-bool SettingsManager::getFinderSyncExtensionAvailable() const
-{
-    return FinderSyncExtensionHelper::isInstalled();
-}
-void SettingsManager::setFinderSyncExtension(bool enabled)
-{
-    QSettings settings;
-
-    settings.beginGroup(kSettingsGroup);
-    settings.setValue(kFinderSync, enabled);
-    settings.endGroup();
-
-    // if setting operation fails
-    if (!getFinderSyncExtensionAvailable()) {
-        qWarning("Unable to find FinderSync Extension");
-    } else if (enabled != FinderSyncExtensionHelper::isEnabled() &&
-               !FinderSyncExtensionHelper::setEnable(enabled)) {
-        qWarning("Unable to enable FinderSync Extension");
-    }
-}
-#endif // HAVE_FINDER_SYNC_SUPPORT
 
 #ifdef Q_OS_WIN32
 void SettingsManager::setShellExtensionEnabled(bool enabled)

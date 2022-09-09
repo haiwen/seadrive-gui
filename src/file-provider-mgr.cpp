@@ -6,7 +6,7 @@
 #include <QStringList>
 
 #include "account.h"
-#include "finder-sync/finder-sync-listener.h"
+#include "file-provider/file-provider.h"
 
 namespace {
     const char *settingsGroup = "file-provider";

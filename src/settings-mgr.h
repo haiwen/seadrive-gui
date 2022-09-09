@@ -94,12 +94,6 @@ public:
     QString getLastShibUrl();
     void setLastShibUrl(const QString& url);
 
-#ifdef HAVE_FINDER_SYNC_SUPPORT
-    bool getFinderSyncExtension() const;
-    bool getFinderSyncExtensionAvailable() const;
-    void setFinderSyncExtension(bool enabled);
-#endif // HAVE_FINDER_SYNC_SUPPORT
-
 #ifdef Q_OS_WIN32
     void setShellExtensionEnabled(bool enabled);
     bool shellExtensionEnabled() const { return shell_ext_enabled_; }

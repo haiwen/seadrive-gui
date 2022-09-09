@@ -120,11 +120,6 @@ void SettingsDialog::updateSettings()
 
     mgr->setHttpSyncCertVerifyDisabled(mDisableVerifyHttpSyncCert->checkState() == Qt::Checked);
 
-#ifdef HAVE_FINDER_SYNC_SUPPORT
-    if(mFinderSyncCheckBox->isEnabled())
-        mgr->setFinderSyncExtension(mFinderSyncCheckBox->checkState() == Qt::Checked);
-#endif
-
 #ifdef Q_OS_WIN32
     mgr->setShellExtensionEnabled(mShellExtCheckBox->checkState() == Qt::Checked);
 #endif
@@ -255,18 +250,6 @@ void SettingsDialog::showEvent(QShowEvent *event)
     mAutoStartCheckBox->setCheckState(state);
 #if !defined(Q_OS_WIN32) && !defined(Q_OS_MAC)
     mAutoStartCheckBox->hide();
-#endif
-
-#ifdef HAVE_FINDER_SYNC_SUPPORT
-    if (mgr->getFinderSyncExtensionAvailable()) {
-        mFinderSyncCheckBox->setEnabled(true);
-        state = mgr->getFinderSyncExtension() ? Qt::Checked : Qt::Unchecked;
-        mFinderSyncCheckBox->setCheckState(state);
-    } else {
-        mFinderSyncCheckBox->setEnabled(false);
-    }
-#else
-    mFinderSyncCheckBox->hide();
 #endif
 
     mLanguageComboBox->setCurrentIndex(I18NHelper::getInstance()->preferredLanguage());
