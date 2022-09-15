@@ -6,13 +6,15 @@
 #include <QStringList>
 
 #include "account.h"
+#include "seadrive-gui.h"
 #include "file-provider/file-provider.h"
 
 namespace {
-    const char *settingsGroup = "file-provider";
+    const char *kDomainGroup = "domains";
+    const char *kDomainSettings = "domain.ini";
 
-    const char *dummyDomainID = "dummy";
-    const char *dummyDomainName = "seadrive";
+    const char *kDummyDomainID = "dummy";
+    const char *kDummyDomainName = "seadrive";
 }
 
 FileProviderManager::FileProviderManager() {
@@ -33,32 +35,48 @@ void FileProviderManager::start() {
 #endif
 }
 
-void FileProviderManager::registerDomain(const Account account) {
+bool FileProviderManager::registerDomain(const Account account) {
 #if defined(Q_OS_MAC)
     if (!account.isValid()) {
-        return;
+        return false;
     }
 
     QString id = account.domainID();
     QString name = displayName(account);
-    fileProviderAddDomain(id.toUtf8().constData(), name.toUtf8().constData(), false);
+    QString filename = QDir(gui->seadriveDir()).filePath(kDomainSettings);
 
-    QThread::sleep(2);
+    QSettings settings(filename, QSettings::IniFormat);
+    settings.beginGroup(kDomainGroup);
+    if (!settings.value(id, false).toBool()) {
+        settings.setValue(id, true);
+        settings.sync();
+
+        return fileProviderAddDomain(id.toUtf8().constData(), name.toUtf8().constData(), false);
+    }
 #endif
+
+    return true;
 }
 
 QString FileProviderManager::displayName(const Account account) {
-    return account.username;
+    return account.username + "(" + account.domainID().left(4) + ")";
 }
 
 void FileProviderManager::addDummyDomain() {
-    QString id(dummyDomainID), name(dummyDomainName);
-    fileProviderAddDomain(id.toUtf8().constData(), name.toUtf8().constData(), true);
+    QString id(kDummyDomainID), name(kDummyDomainName);
+    QString filename = QDir(gui->seadriveDir()).filePath(kDomainSettings);
 
-    QThread::sleep(6);
+    QSettings settings(filename, QSettings::IniFormat);
+    settings.beginGroup(kDomainGroup);
+    if (!settings.value(id, false).toBool()) {
+        settings.setValue(id, true);
+        settings.sync();
+
+        fileProviderAddDomain(id.toUtf8().constData(), name.toUtf8().constData(), true);
+    }
 }
 
 void FileProviderManager::removeDummyDomain() {
-    QString id(dummyDomainID);
+    QString id(kDummyDomainID);
     fileProviderRemoveDomain(id.toUtf8().constData());
 }

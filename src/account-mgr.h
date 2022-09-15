@@ -56,33 +56,25 @@ public:
      * Account operations
      */
 
-    // Use the given account. This account would also be persisted to
-    // the accounts db.
-    void setCurrentAccount(const Account& account);
+    void enableAccount(const Account& account);
+    void disableAccount(const Account& account);
 
     // Remove the account. Used when user removes an account from the
     // account menu.
     int removeAccount(const Account& account);
 
     // Use the account if it's valid, otherwise require a re-login.
-    void validateAndUseAccount(const Account& account);
-
-    // Called when API returns 401 and we need to re-login current
-    // account.
-    void invalidateCurrentLogin();
+    void validateAndUseAccounts();
 
     // Update AccountInfo (e.g. nick name, quota etc.) for the given
     // account.
     void updateAccountInfo(const Account& account, const AccountInfo& info);
 
-    // Trigger server info refresh for all accounts when client
-    // starts.
-    void updateServerInfoForAllAccounts();
-
     /**
      * Accessors
      */
     const std::vector<Account>& accounts() const;
+    const QVector<Account> activeAccounts() const;
 # if defined(_MSC_VER)
     const std::vector<SyncRootInfo>& getSyncRootInfos() const;
 #endif
@@ -120,8 +112,6 @@ private slots:
     void serverInfoSuccess(const Account &account, const ServerInfo &info);
     void serverInfoFailed(const ApiError&);
 
-    void onAccountsChanged();
-
 private:
     Q_DISABLE_COPY(AccountManager)
 
@@ -140,8 +130,6 @@ private:
     void updateSyncRootInfo(SyncRootInfo& sync_root_info);
 #endif
 
-    QHash<QString, Account> accounts_cache_;
-
     struct sqlite3 *db;
     Account previous_account_;
     std::vector<Account> accounts_;
@@ -152,9 +140,6 @@ private:
 
     QString sync_root_name_;
 #endif
-
-    QMutex accounts_mutex_;
-    QMutex accounts_cache_mutex_;
 };
 
 #endif  // _SEAF_ACCOUNT_MGR_H

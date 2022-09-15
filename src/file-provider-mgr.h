@@ -16,7 +16,7 @@ public:
     QString workingDir();
     void start();
 
-    void registerDomain(const Account account);
+    bool registerDomain(const Account account);
 
 private:
     QString displayName(const Account account);

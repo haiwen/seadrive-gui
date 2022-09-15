@@ -183,12 +183,8 @@ bool debugEnabledInDebugFlagFile()
 #ifdef Q_OS_MAC
 void writeCABundleForCurl()
 {
-    QString current_cache_dir;
-    if (!gui->settingsManager()->getCacheDir(&current_cache_dir)){
-        current_cache_dir = QDir(gui->seadriveDataDir()).absolutePath();
-
-    }
-    QString ca_bundle_path = pathJoin(current_cache_dir, "ca-bundle.pem");
+    QString dir = gui->fileProviderManager()->workingDir();
+    QString ca_bundle_path = pathJoin(dir, "ca-bundle.pem");
     QFile bundle(ca_bundle_path);
     if (bundle.exists()) {
         bundle.remove();
@@ -250,9 +246,9 @@ SeadriveGui::~SeadriveGui()
     AutoUpdateService::instance()->stop();
 #endif
 
-    const Account &account = account_mgr_->currentAccount();
-    if (account.isValid()) {
-        rpc_client_->deleteAccount(account);
+    auto accounts = account_mgr_->activeAccounts();
+    for (int i = 0; i < accounts.size(); i++) {
+        rpc_client_->deleteAccount(accounts.at(i));
     }
 
     delete tray_icon_;
@@ -288,9 +284,12 @@ void SeadriveGui::start()
 
     // Load system proxy information. This must be done before we start seadrive
     // daemon.
+    QUrl url;
+    if (!account_mgr_->accounts().empty()) {
+        url = account_mgr_->accounts().front().serverUrl;
+    }
     settings_mgr_->writeSystemProxyInfo(
-        account_mgr_->currentAccount().serverUrl,
-        QDir(seadriveDataDir()).filePath("system-proxy.txt"));
+        url, QDir(seadriveDataDir()).filePath("system-proxy.txt"));
 
 #if defined(__MINGW32__)
     QString disk_letter;
@@ -382,9 +381,10 @@ void SeadriveGui::onDaemonRestarted()
     rpc_client_->connectDaemon();
 
     qDebug("setting account when daemon is restarted");
-    const Account &account = account_mgr_->currentAccount();
-    if (account.isValid()) {
-        rpc_client_->addAccount(account);
+
+    auto accounts = account_mgr_->activeAccounts();
+    for (int i = 0; i <  accounts.size(); i++) {
+        rpc_client_->addAccount(accounts.at(i));
     }
 }
 
@@ -412,7 +412,7 @@ void SeadriveGui::onDaemonStarted()
                 settingsManager()->setComputerName(computer_name);
             if (!username.isEmpty() && !token.isEmpty() && !url.isEmpty()) {
                 Account account(url, username, token);
-                account_mgr_->setCurrentAccount(account);
+                account_mgr_->enableAccount(account);
                 break;
             }
 
@@ -433,23 +433,19 @@ void SeadriveGui::onDaemonStarted()
             }
         } while (0);
     } else {
-        if (!account_mgr_->accounts().empty()) {
-            const Account &account = account_mgr_->accounts()[0];
-            account_mgr_->validateAndUseAccount(account);
-        }
+        account_mgr_->validateAndUseAccounts();
     }
 
     tray_icon_->start();
     tray_icon_->setState(SeafileTrayIcon::STATE_DAEMON_UP);
     message_poller_->start();
 
-    // Set the device id to the daemon so it can use it when generating commits.
-    // The "client_name" is not set here, but updated each time we call
-    // switch_account rpc.
     QString value;
     if (rpc_client_->seafileGetConfig("client_id", &value) < 0 ||
         value.isEmpty() || value != getUniqueClientId()) {
         rpc_client_->seafileSetConfig("client_id", getUniqueClientId());
+        gui->rpcClient()->seafileSetConfig(
+            "client_name", gui->settingsManager()->getComputerName());
     }
 
     RemoteWipeService::instance()->start();

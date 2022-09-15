@@ -222,7 +222,6 @@ int AccountManager::start()
     loadSyncRootInfo();
 #endif
 
-    connect(this, SIGNAL(accountsChanged()), this, SLOT(onAccountsChanged()));
     return 0;
 }
 
@@ -320,26 +319,18 @@ const std::vector<Account>& AccountManager::loadAccounts()
     return accounts_;
 }
 
-void AccountManager::setCurrentAccount(const Account& account)
-{
-    Q_ASSERT(account.isValid());
-
-    qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
+void AccountManager::enableAccount(const Account& account) {
     Account new_account = account;
-    new_account.lastVisited = timestamp;
-    {
-        QMutexLocker lock(&accounts_mutex_);
-        size_t i;
-        for (i = 0; i < accounts_.size(); i++) {
-            if (accounts_[i] == account) {
-                accounts_.erase(accounts_.begin() + i);
-                break;
-            }
-        }
-        accounts_.insert(accounts_.begin(), new_account);
-    }
+    new_account.lastVisited = QDateTime::currentMSecsSinceEpoch();
 
-    fetchAccountInfoFromServer(account);
+    size_t i;
+    for (i = 0; i < accounts_.size(); i++) {
+        if (accounts_[i] == account) {
+            accounts_.erase(accounts_.begin() + i);
+            break;
+        }
+    }
+    accounts_.insert(accounts_.begin(), new_account);
 
     char *zql = sqlite3_mprintf(
         "REPLACE INTO Accounts(url, username, token, lastVisited, isShibboleth, AutomaticLogin, isKerberos)"
@@ -351,7 +342,7 @@ void AccountManager::setCurrentAccount(const Account& account)
         // token
         new_account.token.toUtf8().data(),
         // lastVisited
-        QString::number(timestamp).toUtf8().data(),
+        QString::number(new_account.lastVisited).toUtf8().data(),
         // isShibboleth
         QString::number(new_account.isShibboleth).toUtf8().data(),
         // isAutomaticLogin
@@ -361,10 +352,16 @@ void AccountManager::setCurrentAccount(const Account& account)
     sqlite_query_exec(db, zql);
     sqlite3_free(zql);
 
-    gui->rpcClient()->seafileSetConfig(
-        "client_name", gui->settingsManager()->getComputerName());
+    fetchAccountInfoFromServer(account);
 
     emit accountsChanged();
+}
+
+void AccountManager::disableAccount(const Account& account) {
+    if (!account.isValid()) {
+        return;
+    }
+    clearAccountToken(account);
 }
 
 int AccountManager::removeAccount(const Account& account)
@@ -378,25 +375,26 @@ int AccountManager::removeAccount(const Account& account)
     sqlite_query_exec(db, zql);
     sqlite3_free(zql);
 
-    bool need_switch_account = currentAccount() == account;
+    accounts_.erase(
+        std::remove(accounts_.begin(), accounts_.end(), account),
+        accounts_.end());
 
-    {
-        QMutexLocker lock(&accounts_mutex_);
-        accounts_.erase(
-            std::remove(accounts_.begin(), accounts_.end(), account),
-            accounts_.end());
-    }
+    if (accounts().empty()) {
+        LoginDialog login_dialog;
+        login_dialog.exec();
 
-    if (need_switch_account) {
-        if (!accounts_.empty()) {
-            validateAndUseAccount(accounts_[0]);
+        emit accountsChanged();
+    } else if (activeAccounts().empty()) {
+        const Account &account = accounts().front();
+
+        if (!account.isAutomaticLogin && account.lastVisited < gui->startupTime()) {
+            clearAccountToken(account, true);
         } else {
-            LoginDialog login_dialog;
-            login_dialog.exec();
+            reloginAccount(account);
         }
-    }
 
-    emit accountsChanged();
+        emit accountsChanged();
+    }
 
     return 0;
 }
@@ -444,35 +442,35 @@ bool AccountManager::accountExists(const QUrl& url, const QString& username) con
     return false;
 }
 
-void AccountManager::validateAndUseAccount(const Account& account)
-{
-    if (!account.isAutomaticLogin && account.lastVisited < gui->startupTime()) {
-        clearAccountToken(account, true);
-    } else if (!account.isValid()) {
-        reloginAccount(account);
-    } else {
-        setCurrentAccount(account);
-    // If the account is an old account, the account
-    // information has been updated at this time so
-    // you can calculate the SyncRoot and then call the switch account.
+void AccountManager::validateAndUseAccounts() {
+    if (accounts().empty()) {
+        return;
+    }
+
+    if (activeAccounts().empty()) {
+        const Account &account = accounts().front();
+
+        if (!account.isAutomaticLogin && account.lastVisited < gui->startupTime()) {
+            clearAccountToken(account, true);
+        } else {
+            reloginAccount(account);
+        }
+
+        return;
+    }
+
+    auto accounts = activeAccounts();
+    for (int i = 0; i < accounts.size(); i++) {
+        enableAccount(accounts.at(i));
+
+        // If the account is an old account, the account
+        // information has been updated at this time so
+        // you can calculate the SyncRoot and then call the switch account.
 #if defined(_MSC_VER)
         const Account& current_account = currentAccount();
         sync_root_name_= genSyncRootName(current_account);
         qWarning("generated sync root name is : %s", toCStr(sync_root_name_));
 #endif
-
-        QMutexLocker locker(&accounts_mutex_);
-        if (previous_account_ != account) {
-            if (previous_account_.isValid()) {
-                gui->rpcClient()->deleteAccount(previous_account_);
-            }
-
-#if defined(Q_OS_MAC)
-            gui->fileProviderManager()->registerDomain(account);
-#endif
-            gui->rpcClient()->addAccount(account);
-            previous_account_ = account;
-        }
     }
 }
 
@@ -498,12 +496,6 @@ Account AccountManager::getAccountBySignature(const QString& account_sig) const
     }
 
     return Account();
-}
-
-void AccountManager::updateServerInfoForAllAccounts()
-{
-    for (size_t i = 0; i < accounts_.size(); i++)
-        updateAccountServerInfo(accounts_[i]);
 }
 
 void AccountManager::fetchAccountInfoFromServer(const Account& account)
@@ -579,24 +571,17 @@ void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo 
     // gui->rpcClient()->setServerProperty(
     //     url.toString(), "is_pro", account.isPro() ? "true" : "false");
 
+#if defined(Q_OS_MAC)
+    gui->fileProviderManager()->registerDomain(account);
+#endif
+
 #if defined(_MSC_VER)
     const Account& current_account = currentAccount();
     sync_root_name_= genSyncRootName(current_account);
     qWarning("generated sync root name is : %s", toCStr(sync_root_name_));
 #endif
 
-    QMutexLocker locker(&accounts_mutex_);
-    if (previous_account_ != account) {
-        if (previous_account_.isValid()) {
-            gui->rpcClient()->deleteAccount(previous_account_);
-        }
-
-#if defined(Q_OS_MAC)
-        gui->fileProviderManager()->registerDomain(account);
-#endif
-        gui->rpcClient()->addAccount(account);
-        previous_account_ = account;
-    }
+    gui->rpcClient()->addAccount(account);
 
     bool changed = account.serverInfo != info;
     if (!changed)
@@ -763,25 +748,6 @@ const QString AccountManager::genSyncRootName(const Account& account)
 
 #endif
 
-void AccountManager::onAccountsChanged()
-{
-    QMutexLocker cache_lock(&accounts_cache_mutex_);
-    accounts_cache_.clear();
-}
-
-void AccountManager::invalidateCurrentLogin()
-{
-    // make sure we have accounts there
-    if (!hasAccount())
-        return;
-    const Account &account = accounts_.front();
-    // if the token is already invalidated, ignore
-    if (account.token.isEmpty())
-        return;
-
-    clearAccountToken(account);
-}
-
 void AccountManager::reloginAccount(const Account &account)
 {
     bool accepted;
@@ -807,6 +773,16 @@ void AccountManager::reloginAccount(const Account &account)
 const std::vector<Account>& AccountManager::accounts() const
 {
     return accounts_;
+}
+
+const QVector<Account> AccountManager::activeAccounts() const {
+    QVector<Account> accounts;
+    for (size_t i = 0; i < accounts_.size(); i++) {
+        if (!accounts_.at(i).token.isEmpty()) {
+            accounts.push_back(accounts_.at(i));
+        }
+    }
+    return accounts;
 }
 
 #if defined(_MSC_VER)

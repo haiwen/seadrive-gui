@@ -675,12 +675,12 @@ void SettingsManager::checkSystemProxy()
         return;
     }
 
-    const Account &account = gui->accountManager()->currentAccount();
-    if (!account.isValid()) {
+    if (gui->accountManager()->activeAccounts().empty()) {
         return;
     }
+    QUrl url = gui->accountManager()->activeAccounts().front().serverUrl;
 
-    SystemProxyPoller *poller = new SystemProxyPoller(account.serverUrl);
+    SystemProxyPoller *poller = new SystemProxyPoller(url);
     connect(poller, SIGNAL(systemProxyPolled(const QNetworkProxy &)), this,
             SLOT(onSystemProxyPolled(const QNetworkProxy &)));
 

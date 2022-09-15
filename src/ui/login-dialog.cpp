@@ -207,7 +207,7 @@ bool LoginDialog::validateInputs()
         if (serverAddr.endsWith("/")) {
             serverAddr = serverAddr.left(serverAddr.size() - 1);
         }
-        
+
         url = QUrl(serverAddr, QUrl::StrictMode);
         if (!url.isValid()) {
             showWarning(tr("%1 is not a valid server address").arg(serverAddr));
@@ -294,7 +294,7 @@ void LoginDialog::onFetchAccountInfoSuccess(const AccountInfo& info)
     account.isAutomaticLogin =
         mAutomaticLogin->checkState() == Qt::Checked;
 
-    gui->accountManager()->setCurrentAccount(account);
+    gui->accountManager()->enableAccount(account);
     gui->accountManager()->updateAccountInfo(account, info);
     accept();
     InitSyncDialog *dlg = new InitSyncDialog(account);

@@ -124,7 +124,7 @@ void ShibLoginDialog::onNewCookieCreated(const QUrl& url, const QNetworkCookie& 
         }
         cookie_seen_ = true;
 
-        gui->accountManager()->setCurrentAccount(account);
+        gui->accountManager()->enableAccount(account);
         accept();
         InitSyncDialog *dlg = new InitSyncDialog(account);
         dlg->ensureVisible();
