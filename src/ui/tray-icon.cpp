@@ -189,7 +189,6 @@ void SeafileTrayIcon::createContextMenu()
 void SeafileTrayIcon::prepareContextMenu()
 {
     const std::vector<Account>& accounts = gui->accountManager()->accounts();
-    Account current_account = gui->accountManager()->currentAccount();
 
     if (global_sync_error_.isValid()) {
         global_sync_error_action_->setVisible(true);
@@ -213,25 +212,21 @@ void SeafileTrayIcon::prepareContextMenu()
                 text += ", " + tr("not logged in");
             }
             QMenu *submenu = new QMenu(text, account_menu_);
-            if (i == 0) {
+            if (account.isValid()) {
                 submenu->setIcon(QIcon(":/images/account-checked.png"));
             } else {
                 submenu->setIcon(QIcon(":/images/account-else.png"));
             }
 
-            if (account.isValid()) {
-                QAction *logout_action = new QAction(this);
-                logout_action->setIcon(QIcon(":/images/logout.png"));
-                logout_action->setIconVisibleInMenu(true);
-                logout_action->setData(QVariant::fromValue(account));
-                connect(logout_action, SIGNAL(triggered()), this, SLOT(logoutAccount()));
-                logout_action->setText(tr("Logout"));
-                submenu->addAction(logout_action);
-
-                if (account != gui->accountManager()->currentAccount()) {
-                    logout_action->setDisabled(true);
-                }
-
+            QAction *logout_action = new QAction(this);
+            logout_action->setIcon(QIcon(":/images/logout.png"));
+            logout_action->setIconVisibleInMenu(true);
+            logout_action->setData(QVariant::fromValue(account));
+            connect(logout_action, SIGNAL(triggered()), this, SLOT(logoutAccount()));
+            logout_action->setText(tr("Logout"));
+            submenu->addAction(logout_action);
+            if (!account.isValid()) {
+                logout_action->setDisabled(true);
             }
 
             QAction *delete_account_action = new QAction(tr("Delete"), this);
@@ -240,10 +235,6 @@ void SeafileTrayIcon::prepareContextMenu()
             delete_account_action->setData(QVariant::fromValue(account));
             connect(delete_account_action, SIGNAL(triggered()), this, SLOT(deleteAccount()));
             submenu->addAction(delete_account_action);
-
-            if (account != gui->accountManager()->currentAccount()) {
-                delete_account_action->setDisabled(true);
-            }
 
             account_menu_->addMenu(submenu);
         }

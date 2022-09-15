@@ -630,7 +630,7 @@ void AccountManager::clearAccountToken(const Account& account,
     sqlite_query_exec(db, zql);
     sqlite3_free(zql);
 
-    if (force_relogin || account == currentAccount()) {
+    if (force_relogin) {
         reloginAccount(account);
     } else {
         emit accountsChanged();

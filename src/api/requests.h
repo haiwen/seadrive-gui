@@ -984,6 +984,7 @@ class AuthPingRequest: public SeafileApiRequest
     Q_OBJECT
 public:
     explicit AuthPingRequest(const Account& account);
+    const Account& account() const { return account_; }
 protected slots:
     void requestSuccess(QNetworkReply& reply);
 signals:
@@ -991,6 +992,7 @@ signals:
 
 private:
     Q_DISABLE_COPY(AuthPingRequest)
+    Account account_;
 };
 
 class GetSmartLinkRequest : public SeafileApiRequest

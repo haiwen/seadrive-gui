@@ -59,7 +59,11 @@ bool FileProviderManager::registerDomain(const Account account) {
 }
 
 QString FileProviderManager::displayName(const Account account) {
-    return account.username + "(" + account.domainID().left(4) + ")";
+    QString name = account.accountInfo.name;
+    if (name.isEmpty()) {
+        name = account.username;
+    }
+    return name + "(" + account.serverUrl.host() + ")";
 }
 
 void FileProviderManager::addDummyDomain() {

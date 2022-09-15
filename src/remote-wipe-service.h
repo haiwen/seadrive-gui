@@ -17,9 +17,7 @@ class RemoteWipeService: public QObject
     Q_OBJECT
 public:
     ~RemoteWipeService();
-
     void start();
-    void sendAuthPing(bool force);
 
 public slots:
     void sendAuthPing();
@@ -34,14 +32,12 @@ private slots:
 
 private:
     RemoteWipeService(QObject *parent=0);
-    void wipeLocalFiles();
+    void wipeLocalFiles(const Account& account);
     void askDaemonDeleteAccount(const Account& account);
 
     QTimer *refresh_timer_;
-    AuthPingRequest *auth_ping_req_;
-    bool in_refresh_;
 
-    bool wipe_in_progress_;
+    int active_request_count_;
 };
 
 #endif // SEADRIVE_GUI_REMOTE_WIPE_SERVICE_H_

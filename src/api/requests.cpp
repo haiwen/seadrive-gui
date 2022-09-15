@@ -1512,7 +1512,8 @@ void LockFileRequest::requestSuccess(QNetworkReply& reply)
 AuthPingRequest::AuthPingRequest(const Account &account)
     : SeafileApiRequest(account.getAbsoluteUrl(kAuthPingURL),
                         SeafileApiRequest::METHOD_GET,
-                        account.token)
+                        account.token),
+      account_(account)
 {
 }
 
@@ -1662,4 +1663,3 @@ void GetUploadLinkRequest::requestSuccess(QNetworkReply& reply)
     QString upload_link = dict["link"].toString();
     emit success(upload_link);
 }
-
