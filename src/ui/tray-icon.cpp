@@ -27,6 +27,7 @@
 #include "seadrive-gui.h"
 #include "account-mgr.h"
 #include "rpc/rpc-client.h"
+#include "file-provider-mgr.h"
 
 #include "tray-icon.h"
 
@@ -218,16 +219,18 @@ void SeafileTrayIcon::prepareContextMenu()
                 submenu->setIcon(QIcon(":/images/account-else.png"));
             }
 
-            QAction *logout_action = new QAction(this);
-            logout_action->setIcon(QIcon(":/images/logout.png"));
-            logout_action->setIconVisibleInMenu(true);
-            logout_action->setData(QVariant::fromValue(account));
-            connect(logout_action, SIGNAL(triggered()), this, SLOT(logoutAccount()));
-            logout_action->setText(tr("Logout"));
-            submenu->addAction(logout_action);
-            if (!account.isValid()) {
-                logout_action->setDisabled(true);
+            QAction *logout_login_action = new QAction(this);
+            logout_login_action->setIcon(QIcon(":/images/logout.png"));
+            logout_login_action->setIconVisibleInMenu(true);
+            logout_login_action->setData(QVariant::fromValue(account));
+            if (account.isValid()) {
+                logout_login_action->setText(tr("Logout"));
+                connect(logout_login_action, SIGNAL(triggered()), this, SLOT(logoutAccount()));
+            } else {
+                logout_login_action->setText(tr("Login"));
+                connect(logout_login_action, SIGNAL(triggered()), this, SLOT(loginAccount()));
             }
+            submenu->addAction(logout_login_action);
 
             QAction *delete_account_action = new QAction(tr("Delete"), this);
             delete_account_action->setIcon(QIcon(":/images/delete-account.png"));
@@ -686,6 +689,18 @@ void SeafileTrayIcon::onLogoutDeviceRequestSuccess()
     req->deleteLater();
 }
 
+void SeafileTrayIcon::loginAccount()
+{
+    QAction *action = qobject_cast<QAction*>(sender());
+    if (!action)
+        return;
+    Account account = qvariant_cast<Account>(action->data());
+
+    qWarning() << "trying to log in account" << account.username;
+
+    gui->accountManager()->reloginAccount(account);
+}
+
 void SeafileTrayIcon::deleteAccount()
 {
     QAction *action = qobject_cast<QAction*>(sender());
@@ -705,6 +720,10 @@ void SeafileTrayIcon::deleteAccount()
     }
 
     gui->accountManager()->removeAccount(account);
+
+#if defined(Q_OS_MAC)
+    gui->fileProviderManager()->unregisterDomain(account);
+#endif
 }
 
 void SeafileTrayIcon::setTransferRate(qint64 up_rate, qint64 down_rate)

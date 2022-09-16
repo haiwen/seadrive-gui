@@ -37,10 +37,6 @@ void FileProviderManager::start() {
 
 bool FileProviderManager::registerDomain(const Account account) {
 #if defined(Q_OS_MAC)
-    if (!account.isValid()) {
-        return false;
-    }
-
     QString id = account.domainID();
     QString name = displayName(account);
     QString filename = QDir(gui->seadriveDir()).filePath(kDomainSettings);
@@ -52,6 +48,25 @@ bool FileProviderManager::registerDomain(const Account account) {
         settings.sync();
 
         return fileProviderAddDomain(id.toUtf8().constData(), name.toUtf8().constData(), false);
+    }
+#endif
+
+    return true;
+}
+
+bool FileProviderManager::unregisterDomain(const Account account) {
+#if defined(Q_OS_MAC)
+    QString id = account.domainID();
+    QString name = displayName(account);
+    QString filename = QDir(gui->seadriveDir()).filePath(kDomainSettings);
+
+    QSettings settings(filename, QSettings::IniFormat);
+    settings.beginGroup(kDomainGroup);
+    if (settings.value(id, false).toBool()) {
+        settings.setValue(id, false);
+        settings.sync();
+
+        return fileProviderRemoveDomain(id.toUtf8().constData());
     }
 #endif
 

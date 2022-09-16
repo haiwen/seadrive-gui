@@ -79,12 +79,11 @@ void InitSyncDialog::finish()
     ensureVisible();
 
     QString msg =
-        tr("%1 has dowloaded your files list.\n"
-           "Please click the \"Finish\" button to open %1 folder.").arg(getBrand());
+        tr("%1 has dowloaded your files list.").arg(getBrand());
     setStatusText(msg);
     setStatusIcon(":/images/ok-48.png");
 
-    connect(mFinishBtn, SIGNAL(clicked()), this, SLOT(openMountPointAndCloseDialog()));
+    connect(mFinishBtn, SIGNAL(clicked()), this, SLOT(accept()));
     mFinishBtn->setVisible(true);
 }
 

@@ -87,6 +87,7 @@ private slots:
 
     void logoutAccount();
     void onLogoutDeviceRequestSuccess();
+    void loginAccount();
 
     void deleteAccount();
 
