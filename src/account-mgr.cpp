@@ -384,16 +384,6 @@ int AccountManager::removeAccount(const Account& account)
         login_dialog.exec();
 
         emit accountsChanged();
-    } else if (activeAccounts().empty()) {
-        const Account &account = accounts().front();
-
-        if (!account.isAutomaticLogin && account.lastVisited < gui->startupTime()) {
-            clearAccountToken(account, true);
-        } else {
-            reloginAccount(account);
-        }
-
-        emit accountsChanged();
     }
 
     return 0;

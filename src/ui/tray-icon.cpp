@@ -219,6 +219,7 @@ void SeafileTrayIcon::prepareContextMenu()
                 submenu->setIcon(QIcon(":/images/account-else.png"));
             }
 
+#if defined(Q_OS_WIN32)
             QAction *logout_login_action = new QAction(this);
             logout_login_action->setIcon(QIcon(":/images/logout.png"));
             logout_login_action->setIconVisibleInMenu(true);
@@ -231,6 +232,7 @@ void SeafileTrayIcon::prepareContextMenu()
                 connect(logout_login_action, SIGNAL(triggered()), this, SLOT(loginAccount()));
             }
             submenu->addAction(logout_login_action);
+#endif
 
             QAction *delete_account_action = new QAction(tr("Delete"), this);
             delete_account_action->setIcon(QIcon(":/images/delete-account.png"));

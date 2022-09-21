@@ -17,7 +17,7 @@ IF (NOT (${CMAKE_BUILD_TYPE} MATCHES Release))
 ENDIF()
 
 IF (APPLE AND NOT CMAKE_OSX_DEPLOYMENT_TARGET)
-  SET(CMAKE_OSX_DEPLOYMENT_TARGET "10.9")
+  SET(CMAKE_OSX_DEPLOYMENT_TARGET "11.0")
 ENDIF()
 
 option(BUILD_ENABLE_WARNINGS "Enable compiler warnings." ON)
@@ -80,9 +80,13 @@ ELSEIF (APPLE)
         SET(EXTRA_LIBS ${EXTRA_LIBS} ${SPARKLE_FRAMEWORK})
     ENDIF()
 
-    SET(platform_specific_sources ${platform_specific_sources} src/application.cpp)
-    SET(platform_specific_moc_headers ${platform_specific_moc_headers} src/application.h)
-    SET(platform_specific_sources ${platform_specific_sources} src/file-provider/file-provider.mm)
+    SET(platform_specific_sources ${platform_specific_sources}
+      src/application.cpp
+      src/file-provider-mgr.cpp
+      src/file-provider/file-provider.mm)
+    SET(platform_specific_moc_headers ${platform_specific_moc_headers}
+      src/application.h
+      src/file-provider-mgr.h)
     ## Enforce ARC for this file, since ARC is only supported after the objc
     ## runtime changes in os x 10.10
     SET_SOURCE_FILES_PROPERTIES(src/utils/utils-mac.mm
@@ -178,7 +182,6 @@ SET(moc_headers
   src/rpc/rpc-server.h
   src/seadrive-gui.h
   src/settings-mgr.h
-  src/file-provider-mgr.h
 
   src/traynotificationwidget.h
   src/traynotificationmanager.h
@@ -303,7 +306,6 @@ SET(seadrive_gui_sources
   src/network-mgr.cpp
   src/remote-wipe-service.cpp
   src/account-info-service.cpp
-  src/file-provider-mgr.cpp
 
   src/rpc/rpc-client.cpp
   src/rpc/rpc-server.cpp

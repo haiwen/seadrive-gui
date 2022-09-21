@@ -56,7 +56,7 @@ void SeafileRpcClient::connectDaemon()
             utils::win::getLocalPipeName(kSeadriveSockName).c_str());
 #elif defined(Q_OS_MAC)
         pipe_client = searpc_create_named_pipe_client(
-            toCStr(QDir(gui->fileProviderManager()->workingDir()).filePath(kSeadriveSockName)));
+            toCStr(QDir(gui->seadriveDir()).filePath(kSeadriveSockName)));
 #else
         pipe_client = searpc_create_named_pipe_client(
             toCStr(QDir(gui->daemonManager()->currentCacheDir()).filePath(kSeadriveSockName)));
@@ -433,19 +433,17 @@ bool SeafileRpcClient::deleteAccount(const Account& account)
     return true;
 }
 
-bool SeafileRpcClient::logoutAccount(const Account& account, bool remove_cache)
+bool SeafileRpcClient::logoutAccount(const Account& account)
 {
     GError *error = NULL;
     searpc_client_call__int(seadrive_rpc_client_,
                             "seafile_logout_account",
                             &error,
-                            3,
+                            2,
                             "string",
                             toCStr(account.serverUrl.toString()),
                             "string",
-                            toCStr(account.username),
-                            "int",
-                            remove_cache ? 1 : 0);
+                            toCStr(account.username));
     if (error) {
         qWarning() << "Unable to logout account" << account << ":"
                    << (error->message ? error->message : "");

@@ -49,7 +49,9 @@
 namespace {
 
 const char *kSeafileClientBrand = "SeaDrive";
-#if defined(Q_OS_WIN32)
+#if defined(Q_OS_MAC)
+const char *kSeadriveConfDir = "Library/Containers/com.seafile.seadrive.fileprovider/Data/Documents";
+#elif defined(Q_OS_WIN32)
 const char *kSeadriveConfDir = "seadrive";
 #else
 const char *kSeadriveConfDir = ".seadrive";

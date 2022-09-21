@@ -56,14 +56,16 @@ public:
      * Account operations
      */
 
+    // Save the account state after being logged in.
     void enableAccount(const Account& account);
+    // Save the account state after being logged out.
     void disableAccount(const Account& account);
 
     // Remove the account. Used when user removes an account from the
     // account menu.
     int removeAccount(const Account& account);
 
-    // Use the account if it's valid, otherwise require a re-login.
+    // Use all valid accounts, or re-login if no valid account.
     void validateAndUseAccounts();
 
     // Update AccountInfo (e.g. nick name, quota etc.) for the given
@@ -131,7 +133,6 @@ private:
 #endif
 
     struct sqlite3 *db;
-    Account previous_account_;
     std::vector<Account> accounts_;
 
 #if defined(_MSC_VER)

@@ -56,7 +56,9 @@
 
 namespace {
 
-#if defined(Q_OS_WIN32)
+#if defined(Q_OS_MAC)
+    const char *kSeadriveDirName = "Library/Containers/com.seafile.seadrive.fileprovider/Data/Documents";
+#elif defined(Q_OS_WIN32)
     const char *kPreconfigureCacheDirectory = "PreconfigureCacheDirectory";
     const char *kSeadriveDirName = "seadrive";
 #else
@@ -183,7 +185,7 @@ bool debugEnabledInDebugFlagFile()
 #ifdef Q_OS_MAC
 void writeCABundleForCurl()
 {
-    QString dir = gui->fileProviderManager()->workingDir();
+    QString dir = gui->seadriveDir();
     QString ca_bundle_path = pathJoin(dir, "ca-bundle.pem");
     QFile bundle(ca_bundle_path);
     if (bundle.exists()) {
@@ -236,7 +238,11 @@ SeadriveGui::SeadriveGui(bool dev_mode)
     settings_dlg_ = new SettingsDialog();
     about_dlg_ = new AboutDialog();
     message_poller_ = new MessagePoller();
+
+#if defined(Q_OS_MAC)
     file_provider_mgr_ = new FileProviderManager();
+#endif
+
     connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onAboutToQuit()));
 }
 
@@ -246,17 +252,23 @@ SeadriveGui::~SeadriveGui()
     AutoUpdateService::instance()->stop();
 #endif
 
+#if defined(Q_OS_MAC)
     auto accounts = account_mgr_->activeAccounts();
     for (int i = 0; i < accounts.size(); i++) {
-        rpc_client_->deleteAccount(accounts.at(i));
+        rpc_client_->logoutAccount(accounts.at(i));
     }
+#endif
 
     delete tray_icon_;
     delete daemon_mgr_;
     delete rpc_client_;
     delete account_mgr_;
     delete message_poller_;
+
+#if defined(Q_OS_MAC)
     delete file_provider_mgr_;
+#endif
+
 }
 
 void SeadriveGui::start()
@@ -349,15 +361,16 @@ void SeadriveGui::start()
 #if defined(Q_OS_MAC)
     file_provider_mgr_->start();
     onDaemonStarted();
-#else
+#endif
 
+#if defined(Q_OS_WIN32)
     connect(daemon_mgr_, SIGNAL(daemonStarted()),
             this, SLOT(onDaemonStarted()));
     connect(daemon_mgr_, SIGNAL(daemonRestarted()),
             this, SLOT(onDaemonRestarted()));
     daemon_mgr_->startSeadriveDaemon();
 
-#if defined(Q_OS_WIN32) && defined(__MINGW32__)
+#if defined(__MINGW32__)
     QString program = "csmcmd.exe";
     QStringList arguments;
     // Exclude the file-cache folder from being indexed by windows search.

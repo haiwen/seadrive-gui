@@ -1,6 +1,10 @@
 #ifndef SEAFILE_CLIENT_FILE_PROVIDER_H_
 #define SEAFILE_CLIENT_FILE_PROVIDER_H_
 
+#include <QStringList>
+
+bool fileProviderGetDomains(QStringList *list);
+
 bool fileProviderAddDomain(const char *domain_id, const char *display_name, bool hidden);
 
 bool fileProviderRemoveDomain(const char *domain_id);

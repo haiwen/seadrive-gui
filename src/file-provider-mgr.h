@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QStringList>
 
 class Account;
 
@@ -13,7 +14,6 @@ public:
     FileProviderManager();
     ~FileProviderManager();
 
-    QString workingDir();
     void start();
 
     bool registerDomain(const Account account);
@@ -24,6 +24,8 @@ private:
 
     void addDummyDomain();
     void removeDummyDomain();
+
+    QStringList domain_ids_;
 };
 
 #endif // SEAFILE_CLIENT_FILE_PROVIDER_MANAGER_H
