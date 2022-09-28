@@ -7,8 +7,8 @@
 #include "file-provider/file-provider.h"
 
 namespace {
-    const char *kDummyDomainID = "dummy";
-    const char *kDummyDomainName = "seadrive";
+    const char *kDummyDomainID = "seadrive-dummy-id";
+    const char *kDummyDomainName = "seadrive-dummy-name";
 }
 
 FileProviderManager::FileProviderManager() {
