@@ -84,7 +84,7 @@ public:
     bool hasAccount() const;
     bool accountExists(const QUrl& url, const QString& username) const;
 
-    Account getAccountByHostAndUsername(const QString& host,
+    Account getAccountByUrlAndUsername(const QString& host,
                                         const QString& username) const;
 
     Account getAccountBySignature(const QString& account_sig) const;

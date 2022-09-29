@@ -13,12 +13,15 @@
 #include "utils/utils.h"
 #include "rpc/rpc-client.h"
 #include "seadrive-gui.h"
+#include "account-mgr.h"
 
 
 namespace {
 
 enum {
     COLUMN_REPO_NAME = 0,
+    COLUMN_REPO_SERVER,
+    COLUMN_REPO_USERNAME,
     COLUMN_IS_SET_PASSWORD,
     MAX_COLUMN,
 };
@@ -28,13 +31,18 @@ enum {
     INDEX_TABLE_VIEW
 };
 
-const int kDefaultColumnWidth = 120;
+const int kDefaultColumnWidth = 60;
 const int kDefaultColumnHeight = 40;
 
-const int kRepoNameColumnWidth = 100;
-const int kRepoStatus = 30;
+const int kRepoNameColumnWidth = 50;
+const int kRepoServerColumnWidth = 80;
+const int kRepoUsernameColumnWidth = 50;
+const int kRepoStatus = 20;
 
-const int kDefaultColumnSum = kRepoNameColumnWidth + kRepoStatus;
+const int kDefaultColumnSum = kRepoNameColumnWidth +
+                              kRepoServerColumnWidth +
+                              kRepoUsernameColumnWidth +
+                              kRepoStatus;
 
 const int kUpdateErrorsIntervalMsecs = 3000;
 
@@ -48,6 +56,8 @@ EncryptedRepoInfo EncryptedRepoInfo::fromJSON(const json_t *root) {
 
     enc_repo_info.repo_id = json.getString("repo_id");
     enc_repo_info.repo_name = json.getString("repo_display_name");
+    enc_repo_info.repo_server = json.getString("server");
+    enc_repo_info.repo_username = json.getString("username");
     enc_repo_info.is_password_set  = json.getBool("is_passwd_set");
     return enc_repo_info;
 }
@@ -239,6 +249,8 @@ void EncryptedReposTableView::onClickSyncAction()
 EncryptedReposTableModel::EncryptedReposTableModel(QObject *parent)
         : QAbstractTableModel(parent),
           repo_name_column_width_(kRepoNameColumnWidth),
+          repo_server_column_width_(kRepoServerColumnWidth),
+          repo_username_column_width_(kRepoUsernameColumnWidth),
           repo_status_column_width_(kRepoStatus)
 {
     update_timer_ = new QTimer(this);
@@ -310,9 +322,11 @@ int EncryptedReposTableModel::columnCount(const QModelIndex& parent) const
 void EncryptedReposTableModel::onResize(const QSize &size)
 {
     int extra_width = size.width() - kDefaultColumnSum;
-    int extra_width_per_column = extra_width / 3;
+    int extra_width_per_column = extra_width / MAX_COLUMN;
 
     repo_name_column_width_ = kRepoNameColumnWidth + extra_width_per_column;
+    repo_server_column_width_ = kRepoServerColumnWidth + extra_width_per_column;
+    repo_username_column_width_ = kRepoUsernameColumnWidth + extra_width_per_column;
     repo_status_column_width_ = kRepoStatus + extra_width_per_column;
 
     if (enc_repo_infos_.empty())
@@ -348,6 +362,12 @@ QVariant EncryptedReposTableModel::data(const QModelIndex & index, int role) con
             case COLUMN_REPO_NAME:
                 w = repo_name_column_width_;
                 break;
+            case COLUMN_REPO_SERVER:
+                w = repo_server_column_width_;
+                break;
+            case COLUMN_REPO_USERNAME:
+                w = repo_username_column_width_;
+                break;
             case COLUMN_IS_SET_PASSWORD:
                 w = repo_status_column_width_;
                 break;
@@ -365,6 +385,16 @@ QVariant EncryptedReposTableModel::data(const QModelIndex & index, int role) con
 
     if (column == COLUMN_REPO_NAME) {
         return enc_repo_info.repo_name ;
+    } else if (column == COLUMN_REPO_SERVER) {
+        return enc_repo_info.repo_server;
+    } else if (column == COLUMN_REPO_USERNAME) {
+        auto account = gui->accountManager()->getAccountByUrlAndUsername(
+                            enc_repo_info.repo_server, enc_repo_info.repo_username);
+        QString name = account.accountInfo.name;
+        if (name.isEmpty()) {
+            name = enc_repo_info.repo_username;
+        }
+        return name;
     } else if (column == COLUMN_IS_SET_PASSWORD && role == Qt::DecorationRole) {
         if (enc_repo_info.is_password_set) {
             return QIcon(":/images/sync/done.png");
@@ -395,6 +425,10 @@ QVariant EncryptedReposTableModel::headerData(int section,
 
     if (section == COLUMN_REPO_NAME) {
         return tr("Library");
+    } else if (section == COLUMN_REPO_SERVER) {
+        return tr("Server");
+    } else if (section == COLUMN_REPO_USERNAME) {
+        return tr("Username");
     } else if (section == COLUMN_IS_SET_PASSWORD) {
         return tr("Sync status");
     }

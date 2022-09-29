@@ -13,6 +13,8 @@ class EncryptedRepoInfo {
 public:
     QString repo_id;
     QString repo_name;
+    QString repo_server;
+    QString repo_username;
     bool is_password_set;
 
     bool operator==(const EncryptedRepoInfo& info) const {
@@ -104,6 +106,8 @@ private:
     QList<EncryptedRepoInfo> enc_repo_infos_;
     SeafileRpcClient *rpc_client_;
     int repo_name_column_width_;
+    int repo_server_column_width_;
+    int repo_username_column_width_;
     int repo_status_column_width_;
 };
 
