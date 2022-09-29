@@ -79,6 +79,12 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
     mCacheLabel->setText(tr("Cache directory:"));
 #endif
 
+#if defined(Q_OS_MAC)
+    mCacheLabel->hide();
+    mShowCacheDir->hide();
+    mSelectBtn->hide();
+#endif
+
     mSpotlightCheckBox->setText(tr("Enable search in finder"));
 
     // The range of mProxyPort is set to (0, 65535) in the ui file, so we

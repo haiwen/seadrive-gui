@@ -11,17 +11,20 @@
 #include "utils/utils.h"
 #include "utils/paint-utils.h"
 #include "utils/file-utils.h"
+#include "account-mgr.h"
 
 namespace
 {
 enum {
     FILE_COLUMN_PATH = 0,
+    FILE_COLUMN_SERVER,
+    FILE_COLUMN_USERNAME,
     FILE_COLUMN_PROGRESS,
     FILE_COLUMN_SIZE,
     FILE_MAX_COLUMN,
 };
 
-const int kNameColumnWidth = 300;
+const int kNameColumnWidth = 200;
 const int kDefaultColumnWidth = 100;
 const int kDefaultColumnHeight = 40;
 
@@ -126,7 +129,7 @@ QSize TransferItemsHeadView::sectionSizeFromContents(int index) const
         (TransferItemsTableModel*)(table->sourceModel());
 
     if (model) {
-        size.setWidth(index == FILE_COLUMN_PATH ? model->nameColumnWidth()
+        size.setWidth(index < FILE_COLUMN_PROGRESS ? model->nameColumnWidth()
                                                 : kDefaultColumnWidth);
     }
 
@@ -244,6 +247,18 @@ QVariant TransferItemsTableModel::transferringData(
             if (column == FILE_COLUMN_PATH) {
                 return getBaseName(transferring_info->file_path);
             }
+            else if (column == FILE_COLUMN_SERVER) {
+                return transferring_info->server;
+            }
+            else if (column == FILE_COLUMN_USERNAME) {
+                auto account = gui->accountManager()->getAccountByUrlAndUsername(
+                                    transferring_info->server, transferring_info->username);
+                QString name = account.accountInfo.name;
+                if (name.isEmpty()) {
+                    name = transferring_info->username;
+                }
+                return name;
+            }
             else if (column == FILE_COLUMN_PROGRESS) {
                 return readableFileSize(transferring_info->transferred_bytes);
             }
@@ -251,7 +266,21 @@ QVariant TransferItemsTableModel::transferringData(
                 return readableFileSize(transferring_info->total_bytes);
             }
         } else if (role == Qt::ToolTipRole) {
-            return normalizedPath(transferring_info->file_path);
+            if (column == FILE_COLUMN_SERVER) {
+                return transferring_info->server;
+            }
+            else if (column == FILE_COLUMN_USERNAME) {
+                return transferring_info->username;
+            }
+            else if (column == FILE_COLUMN_PROGRESS) {
+                return transferring_info->transferred_bytes;
+            }
+            else if (column == FILE_COLUMN_SIZE) {
+                return transferring_info->total_bytes;
+            }
+            else {
+                return normalizedPath(transferring_info->file_path);
+            }
         }
     }
 
@@ -284,6 +313,18 @@ QVariant TransferItemsTableModel::transferredData(
             if (column == FILE_COLUMN_PATH) {
                 return getBaseName(transferred_info->file_path);
             }
+            else if (column == FILE_COLUMN_SERVER) {
+                return transferred_info->server;
+            }
+            else if (column == FILE_COLUMN_USERNAME) {
+                auto account = gui->accountManager()->getAccountByUrlAndUsername(
+                                    transferred_info->server, transferred_info->username);
+                QString name = account.accountInfo.name;
+                if (name.isEmpty()) {
+                    name = transferred_info->username;
+                }
+                return name;
+            }
             else if (column == FILE_COLUMN_PROGRESS) {
                 return QString(tr("finished"));
             }
@@ -291,7 +332,15 @@ QVariant TransferItemsTableModel::transferredData(
                 return QVariant();
             }
         } else if (role == Qt::ToolTipRole) {
-            return normalizedPath(transferred_info->file_path);
+            if (column == FILE_COLUMN_SERVER) {
+                return transferred_info->server;
+            }
+            else if (column == FILE_COLUMN_USERNAME) {
+                return transferred_info->username;
+            }
+            else {
+                return normalizedPath(transferred_info->file_path);
+            }
         }
     }
 
@@ -315,7 +364,9 @@ QVariant TransferItemsTableModel::data(
 
     if (role == Qt::SizeHintRole) {
         QSize qsize(0, kDefaultColumnHeight);
-        if (column == FILE_COLUMN_PATH) {
+        if (column == FILE_COLUMN_PATH ||
+            column == FILE_COLUMN_SERVER ||
+            column == FILE_COLUMN_USERNAME) {
             qsize.setWidth(name_column_width_);
         } else {
             qsize.setWidth(kDefaultColumnWidth);
@@ -343,6 +394,12 @@ QVariant TransferItemsTableModel::headerData(int section,
     if (role == Qt::DisplayRole) {
         if (section == FILE_COLUMN_PATH) {
             return tr("Name");
+        }
+        else if (section == FILE_COLUMN_SERVER) {
+            return tr("Server");
+        }
+        else if (section == FILE_COLUMN_USERNAME) {
+            return tr("Username");
         }
         else if (section == FILE_COLUMN_PROGRESS) {
             return tr("Progress");
@@ -375,11 +432,11 @@ const TransferringInfo* TransferItemsTableModel::itemAt(int row) const
 
 void TransferItemsTableModel::onResize(const QSize& size)
 {
-    name_column_width_ = size.width() - kDefaultColumnWidth * (FILE_MAX_COLUMN - 1);
+    name_column_width_ = (size.width() - kDefaultColumnWidth * 2) / 3;
     if (rowCount() == 0)
         return;
     emit dataChanged(index(0, FILE_COLUMN_PATH),
-                     index(rowCount()-1 , FILE_COLUMN_PATH));
+                     index(rowCount()-1 , FILE_COLUMN_USERNAME));
 }
 
 void TransferItemsTableModel::updateTransferringInfo()
@@ -443,6 +500,8 @@ void TransferItemDelegate::paint(QPainter *painter,
 
     switch (index.column()) {
     case FILE_COLUMN_PATH:
+    case FILE_COLUMN_SERVER:
+    case FILE_COLUMN_USERNAME:
     {
         QPoint text_pos(kMarginLeft, kMarginTop);
         text_pos += option_rect.topLeft();

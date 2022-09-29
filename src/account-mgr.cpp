@@ -464,11 +464,11 @@ void AccountManager::validateAndUseAccounts() {
     }
 }
 
-Account AccountManager::getAccountByHostAndUsername(const QString& host,
+Account AccountManager::getAccountByUrlAndUsername(const QString& url,
                                                     const QString& username) const
 {
     for (size_t i = 0; i < accounts_.size(); i++) {
-        if (accounts_[i].serverUrl.host() == host
+        if (accounts_[i].serverUrl.toString() == url
             && accounts_[i].username == username) {
             return accounts_[i];
         }

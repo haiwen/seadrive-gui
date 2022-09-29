@@ -38,6 +38,10 @@ void getTransferringListFromJSON(
         TransferringInfo transferring_info;
         transferring_info.file_path =
             dict.value("file_path").toString();
+        transferring_info.server =
+            dict.value("server").toString();
+        transferring_info.username =
+            dict.value("username").toString();
         transferring_info.transferred_bytes =
             dict.value(transferred_name.toUtf8().data()).toULongLong();
         transferring_info.total_bytes =
@@ -61,12 +65,19 @@ void getTransferredListFromJSON(
     json_t* transferred_array = json_object_get(
         json, json_object_name.toUtf8().data());
 
-    int array_size = json_array_size(transferred_array);
-    for (int i = 0; i < array_size; i++) {
-        const char* name = json_string_value(
-            json_array_get(transferred_array, i));
+    json_t* transferred_object;
+    json_error_t error;
+    size_t index;
+    json_array_foreach(transferred_array, index, transferred_object) {
+        QMap<QString, QVariant> dict =
+            mapFromJSON(transferred_object, &error);
         TransferredInfo transferred_info;
-        transferred_info.file_path = QString::fromUtf8(name);
+        transferred_info.file_path =
+            dict.value("file_path").toString();
+        transferred_info.server =
+            dict.value("server").toString();
+        transferred_info.username =
+            dict.value("username").toString();
         list->push_back(transferred_info);
     }
 }
