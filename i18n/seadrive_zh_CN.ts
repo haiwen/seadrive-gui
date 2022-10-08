@@ -96,6 +96,14 @@
         <source>Sync status</source>
         <translation>同步状态</translation>
     </message>
+    <message>
+        <source>Server</source>
+        <translation>服务器</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>用户名</translation>
+    </message>
 </context>
 <context>
     <name>EncryptedReposTableView</name>
@@ -148,33 +156,6 @@
     </message>
 </context>
 <context>
-    <name>FinderSyncHost</name>
-    <message>
-        <source>File &quot;%1&quot; is locked by %2</source>
-        <translation>文件 &quot;%1&quot; 被 %2 锁定</translation>
-    </message>
-    <message>
-        <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation>获取文件 &quot;%1&quot; 的锁定信息失败</translation>
-    </message>
-    <message>
-        <source>Failed to get upload link for file &quot;%1&quot;</source>
-        <translation>获取文件 &quot;%1&quot; 的上传链接失败</translation>
-    </message>
-    <message>
-        <source>No permissions to create a shared link</source>
-        <translation>没有权限创建共享链接</translation>
-    </message>
-    <message>
-        <source>failed to get share link %1</source>
-        <translation>获取共享链接失败 %1</translation>
-    </message>
-    <message>
-        <source>failed get internal link %1</source>
-        <translation>获取内部链接失败 %1</translation>
-    </message>
-</context>
-<context>
     <name>InitSyncDialog</name>
     <message>
         <source>Download files list</source>
@@ -183,12 +164,6 @@
     <message>
         <source>%1 is fetching the files list, please wait</source>
         <translation>%1 正在获取文件列表, 请稍候</translation>
-    </message>
-    <message>
-        <source>%1 has dowloaded your files list.
-Please click the &quot;Finish&quot; button to open %1 folder.</source>
-        <translation>%1 已经完成文件列表获取。
-请点击“完成”按钮来打开 %1 文件夹。</translation>
     </message>
     <message>
         <source>Dialog</source>
@@ -205,6 +180,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Finish</source>
         <translation>完成</translation>
+    </message>
+    <message>
+        <source>%1 has dowloaded your files list.</source>
+        <translation>%1 已经完成文件列表获取。</translation>
     </message>
 </context>
 <context>
@@ -751,14 +730,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SeadriveGui</name>
     <message>
-        <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
-        <translation>您需要在系统偏好设置中手动批准 %1 内核扩展。 点击“确定”以打开系统偏好设置对话框。 请在此之后重新启动 %1。</translation>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to install kernel driver</source>
-        <translation>初始化失败：安装内核驱动失败</translation>
-    </message>
-    <message>
         <source>Faild to choose a disk letter</source>
         <translation>选择盘符失败</translation>
     </message>
@@ -897,24 +868,12 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>退出(&amp;Q)</translation>
     </message>
     <message>
-        <source>Search files</source>
-        <translation>搜索文件</translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
     <message>
         <source>Show file sync errors</source>
         <translation>查看文件同步错误</translation>
-    </message>
-    <message>
-        <source>Open %1 &amp;folder</source>
-        <translation>打开 %1 文件夹(&amp;F)</translation>
-    </message>
-    <message>
-        <source>open %1 folder</source>
-        <translation>打开 %1 文件夹</translation>
     </message>
     <message>
         <source>Open &amp;logs folder</source>
@@ -941,10 +900,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>未登录</translation>
     </message>
     <message>
-        <source>Choose</source>
-        <translation>选择</translation>
-    </message>
-    <message>
         <source>Logout</source>
         <translation>登出</translation>
     </message>
@@ -963,10 +918,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
         <translation>&lt;h2&gt;Seafile Drive 客户端 %2&lt;/h2&gt;</translation>
-    </message>
-    <message>
-        <source>Do you want to remove the local cache?</source>
-        <translation>是否删除本地缓存？</translation>
     </message>
     <message>
         <source>Failed to remove local cache of account %1</source>
@@ -1007,6 +958,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Failed to logout account %1</source>
         <translation>登出账号 %1 失败</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation>登录</translation>
     </message>
 </context>
 <context>
@@ -1171,10 +1126,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Basic</source>
         <translation>基本</translation>
-    </message>
-    <message>
-        <source>Enable FinderSync Extension</source>
-        <translation>启用 Finder 的扩展</translation>
     </message>
     <message>
         <source>Enable Explorer Extension</source>
@@ -1366,6 +1317,14 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Size</source>
         <translation>大小</translation>
+    </message>
+    <message>
+        <source>Server</source>
+        <translation>服务器</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>用户名</translation>
     </message>
 </context>
 <context>

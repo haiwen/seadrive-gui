@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ja">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ja">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -98,6 +96,14 @@
         <source>Sync status</source>
         <translation>同期ステータス</translation>
     </message>
+    <message>
+        <source>Server</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EncryptedReposTableView</name>
@@ -150,33 +156,6 @@
     </message>
 </context>
 <context>
-    <name>FinderSyncHost</name>
-    <message>
-        <source>File &quot;%1&quot; is locked by %2</source>
-        <translation>ファイル &quot;％1&quot; は ％2 によってロックされています</translation>
-    </message>
-    <message>
-        <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation>ファイル &quot;％1&quot; のロック情報を取得できませんでした</translation>
-    </message>
-    <message>
-        <source>Failed to get upload link for file &quot;%1&quot;</source>
-        <translation>ファイル &quot;％1&quot; のアップロードリンクを取得できませんでした</translation>
-    </message>
-    <message>
-        <source>No permissions to create a shared link</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>failed to get share link %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>failed get internal link %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>InitSyncDialog</name>
     <message>
         <source>Download files list</source>
@@ -185,11 +164,6 @@
     <message>
         <source>%1 is fetching the files list, please wait</source>
         <translation>%1 はファイルリストを取得しています。しばらくお待ちください</translation>
-    </message>
-    <message>
-        <source>%1 has dowloaded your files list.
-Please click the &quot;Finish&quot; button to open %1 folder.</source>
-        <translation>%1 がファイルリストをダウンロードしました。 「完了」ボタンをクリックして、%1 フォルダを開いてください。</translation>
     </message>
     <message>
         <source>Dialog</source>
@@ -206,6 +180,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Finish</source>
         <translation>終了</translation>
+    </message>
+    <message>
+        <source>%1 has dowloaded your files list.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -752,14 +730,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 <context>
     <name>SeadriveGui</name>
     <message>
-        <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
-        <translation>システム環境設定で、%1カーネル拡張を手動で承認する必要があります。OKをクリックして、システム環境設定ダイアログを開きます。その後、%1 を再立ち上げてください。</translation>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to install kernel driver</source>
-        <translation>初期化に失敗しました：カーネルドライバーのインストールに失敗しました</translation>
-    </message>
-    <message>
         <source>Faild to choose a disk letter</source>
         <translation>ディスク文字の選択に失敗しました</translation>
     </message>
@@ -832,36 +802,36 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <name>SeafileExtensionHandler</name>
     <message>
         <source>Failed to get upload link information for file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No permissions to create a shared link</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>failed get internal link %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to lock file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to unlock file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished">ファイル &quot;％1&quot; は ％2 によってロックされています</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished">ファイル &quot;％1&quot; のロック情報を取得できませんでした</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to get share link %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -897,10 +867,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>終了(&amp;Q)</translation>
     </message>
     <message>
-        <source>Search files</source>
-        <translation>ファイル検索</translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translation>設定</translation>
     </message>
@@ -909,24 +875,16 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>ファイル同期エラーを表示する</translation>
     </message>
     <message>
-        <source>Open %1 &amp;folder</source>
-        <translation>オープン %1 フォルダ(&amp;F)</translation>
-    </message>
-    <message>
-        <source>open %1 folder</source>
-        <translation>オープン %1 フォルダ</translation>
-    </message>
-    <message>
         <source>Open &amp;logs folder</source>
-        <translation>オープンログフォルダ(&amp;L)</translation>
+        <translation>ログフォルダ(&amp;L) を開く</translation>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation>アバウト(&amp;A)</translation>
+        <translation>SeaDriveについて(&amp;A)</translation>
     </message>
     <message>
         <source>Show the application&apos;s About box</source>
-        <translation>アプリケーションのバージョン情報ボックスを表示する</translation>
+        <translation>アプリケーションのバージョン情報を表示する</translation>
     </message>
     <message>
         <source>&amp;Online help</source>
@@ -939,10 +897,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>not logged in</source>
         <translation>ログインしていない</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translation>選択...</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -963,10 +917,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
         <translation>&lt;h2&gt;Seafileドライブクライアント％2&lt;/h2&gt;</translation>
-    </message>
-    <message>
-        <source>Do you want to remove the local cache?</source>
-        <translation>ローカルキャッシュを削除しますか？</translation>
     </message>
     <message>
         <source>Failed to remove local cache of account %1</source>
@@ -1007,6 +957,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Failed to logout account %1</source>
         <translation>アカウント %1 のログアウトに失敗しました</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1063,7 +1017,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>&amp;Show in folder</source>
-        <translation>フォルダで見て(&amp;S)</translation>
+        <translation>フォルダーに表示する(&amp;S)</translation>
     </message>
     <message>
         <source>File not found, maybe not synchorized yet</source>
@@ -1173,10 +1127,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>基本</translation>
     </message>
     <message>
-        <source>Enable FinderSync Extension</source>
-        <translation>ファインダー同期拡張を有効</translation>
-    </message>
-    <message>
         <source>Enable Explorer Extension</source>
         <translation>エクスプローラ拡張を有効</translation>
     </message>
@@ -1242,7 +1192,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Proxy server requires a password</source>
-        <translation>プロクシパスワードを入力してください。</translation>
+        <translation>プロキシパスワードを入力してください。</translation>
     </message>
     <message>
         <source>Network</source>
@@ -1301,7 +1251,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Expire days</source>
-        <translation type="unfinished"></translation>
+        <translation>有効期限</translation>
     </message>
     <message>
         <source>Generate link</source>
@@ -1367,6 +1317,14 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>Size</source>
         <translation>サイズ</translation>
     </message>
+    <message>
+        <source>Server</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>TransferProgressDialog</name>
@@ -1418,11 +1376,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <name>UploadLinkDialog</name>
     <message>
         <source>Upload Link</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Upload link:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Copy to clipboard</source>
