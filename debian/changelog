@@ -1,3 +1,8 @@
+seadrive-gui (3.0.0) unstable; urgency=low
+
+  * new upstream release
+
+ -- Jonathan Xu <jonathan.xu@seafile.com>  Sat, 08 Oct 2022 14:28:37 +0800
 seadrive-gui (2.0.23) unstable; urgency=low
 
   * new upstream release
