@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="cs_CZ">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="cs_CZ">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -98,6 +96,14 @@
         <source>Sync status</source>
         <translation>Status synchronizace</translation>
     </message>
+    <message>
+        <source>Server</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EncryptedReposTableView</name>
@@ -150,33 +156,6 @@
     </message>
 </context>
 <context>
-    <name>FinderSyncHost</name>
-    <message>
-        <source>File &quot;%1&quot; is locked by %2</source>
-        <translation>Soubor &quot;%1&quot; je uzamčený od %2</translation>
-    </message>
-    <message>
-        <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation>Nepodařilo se získat informaci o zámku souboru „%1“</translation>
-    </message>
-    <message>
-        <source>Failed to get upload link for file &quot;%1&quot;</source>
-        <translation>Nepodařilo se získat odkaz na nahrání pro soubor „%1“</translation>
-    </message>
-    <message>
-        <source>No permissions to create a shared link</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>failed to get share link %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>failed get internal link %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>InitSyncDialog</name>
     <message>
         <source>Download files list</source>
@@ -185,12 +164,6 @@
     <message>
         <source>%1 is fetching the files list, please wait</source>
         <translation>%1 stahuje seznam souborů, prosím čekejte</translation>
-    </message>
-    <message>
-        <source>%1 has dowloaded your files list.
-Please click the &quot;Finish&quot; button to open %1 folder.</source>
-        <translation>%1 stáhl váš seznam souborů.
-Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation>
     </message>
     <message>
         <source>Dialog</source>
@@ -207,6 +180,10 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     <message>
         <source>Finish</source>
         <translation>Dokončit</translation>
+    </message>
+    <message>
+        <source>%1 has dowloaded your files list.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -736,11 +713,11 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     </message>
     <message>
         <source>Syncing is denied by cloud-only permission settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Do not have write permission to the library</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -752,14 +729,6 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
 </context>
 <context>
     <name>SeadriveGui</name>
-    <message>
-        <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
-        <translation>Musíš povolit výjimku kernelu %1 manuálně v systémovém nastavení. Klikni na OK pro otevření dialogu systémového nastavení. Spusť potom prosím znovu %1.</translation>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to install kernel driver</source>
-        <translation>Chyba při inicializaci: nepovedlo se nainstalovat ovladač kernelu</translation>
-    </message>
     <message>
         <source>Faild to choose a disk letter</source>
         <translation>Při volbě písmene disku nastala chyba</translation>
@@ -833,36 +802,36 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     <name>SeafileExtensionHandler</name>
     <message>
         <source>Failed to get upload link information for file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No permissions to create a shared link</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>failed get internal link %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to lock file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to unlock file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished">Soubor &quot;%1&quot; je uzamčený od %2</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished">Nepodařilo se získat informaci o zámku souboru „%1“</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to get share link %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -898,24 +867,12 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
         <translation>&amp;Ukončit</translation>
     </message>
     <message>
-        <source>Search files</source>
-        <translation>Vyhledat soubory</translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translation>Nastavení</translation>
     </message>
     <message>
         <source>Show file sync errors</source>
         <translation>Zobrazit chyby synchronizace</translation>
-    </message>
-    <message>
-        <source>Open %1 &amp;folder</source>
-        <translation>Otevřít adresář %1</translation>
-    </message>
-    <message>
-        <source>open %1 folder</source>
-        <translation>otevřít adresář %1</translation>
     </message>
     <message>
         <source>Open &amp;logs folder</source>
@@ -942,10 +899,6 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
         <translation>nepřihlášen</translation>
     </message>
     <message>
-        <source>Choose</source>
-        <translation>Vybrat</translation>
-    </message>
-    <message>
         <source>Logout</source>
         <translation>Odhlásit</translation>
     </message>
@@ -964,10 +917,6 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     <message>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
         <translation>&lt;h2&gt;Seafile Drive Klient %2&lt;/h2&gt;</translation>
-    </message>
-    <message>
-        <source>Do you want to remove the local cache?</source>
-        <translation>Chcete odstranit místní mezipaměť?</translation>
     </message>
     <message>
         <source>Failed to remove local cache of account %1</source>
@@ -1008,6 +957,10 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     <message>
         <source>Failed to logout account %1</source>
         <translation>Nepodařilo se odhlásit z %1 účtu</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1172,10 +1125,6 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     <message>
         <source>Basic</source>
         <translation>Základní</translation>
-    </message>
-    <message>
-        <source>Enable FinderSync Extension</source>
-        <translation>Povolit rozšíření FinderSync</translation>
     </message>
     <message>
         <source>Enable Explorer Extension</source>
@@ -1367,6 +1316,14 @@ Prosím klikněte na tlačítko Dokončit pro otevření složky %1</translation
     <message>
         <source>Size</source>
         <translation>Velikost</translation>
+    </message>
+    <message>
+        <source>Server</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

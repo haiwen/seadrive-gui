@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ko_KR">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ko_KR">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -98,6 +96,14 @@
         <source>Sync status</source>
         <translation>동기화 상태</translation>
     </message>
+    <message>
+        <source>Server</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EncryptedReposTableView</name>
@@ -150,33 +156,6 @@
     </message>
 </context>
 <context>
-    <name>FinderSyncHost</name>
-    <message>
-        <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to get upload link for file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No permissions to create a shared link</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>failed to get share link %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>failed get internal link %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>InitSyncDialog</name>
     <message>
         <source>Download files list</source>
@@ -185,12 +164,6 @@
     <message>
         <source>%1 is fetching the files list, please wait</source>
         <translation>%1에서 파일 목록을 가져오고 있습니다. 기다리세요.</translation>
-    </message>
-    <message>
-        <source>%1 has dowloaded your files list.
-Please click the &quot;Finish&quot; button to open %1 folder.</source>
-        <translation>%1에서 파일 목록을 다운로드했습니다.
-%1 폴더를 열려면 &quot;완료&quot; 단추를 누르세요.</translation>
     </message>
     <message>
         <source>Dialog</source>
@@ -207,6 +180,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Finish</source>
         <translation>완료</translation>
+    </message>
+    <message>
+        <source>%1 has dowloaded your files list.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -421,11 +398,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Libraries are ready</source>
-        <translation type="unfinished"></translation>
+        <translation>라이브러리를 준비했습니다</translation>
     </message>
     <message>
         <source>All libraries are loaded and ready to use.</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 라이브러리를 불러왔고 활용할 준비가 끝났습니다.</translation>
     </message>
 </context>
 <context>
@@ -716,31 +693,31 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Created or updated a file %1 in a non-writable library or folder</source>
-        <translation type="unfinished"></translation>
+        <translation>기록 불가 라이브러리 또는 폴더에 %1 파일을 만들거나 업로드했습니다</translation>
     </message>
     <message>
         <source>Concurrent updates to file %1. File is saved as conflict file</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 파일을 동시에 업데이트했습니다. 파일을 겹침 저장 파일로 저장했습니다</translation>
     </message>
     <message>
         <source>%1 is not added to a library and will not be uploaded</source>
-        <translation type="unfinished"></translation>
+        <translation>%1을(를) 라이브러리에 추가하지 않아 업로드하지 않습니다</translation>
     </message>
     <message>
         <source>Library is too large to sync.</source>
-        <translation type="unfinished"></translation>
+        <translation>라이브러리가 동기화하기에 너무 큽니다.</translation>
     </message>
     <message>
         <source>You can only move files/folders within a library or from one library to another library</source>
-        <translation type="unfinished"></translation>
+        <translation>파일 또는 폴더 이동은 라이브러리 내부 또는 다른 라이브러리로만 가능합니다.</translation>
     </message>
     <message>
         <source>Syncing is denied by cloud-only permission settings</source>
-        <translation type="unfinished"></translation>
+        <translation>클라우드 전용 권한 설정으로 동기화가 막혔습니다</translation>
     </message>
     <message>
         <source>Do not have write permission to the library</source>
-        <translation type="unfinished"></translation>
+        <translation>라이브러리 쓰기 권한이 없습니다</translation>
     </message>
 </context>
 <context>
@@ -752,14 +729,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
 </context>
 <context>
     <name>SeadriveGui</name>
-    <message>
-        <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
-        <translation>시스템 기본 설정에서 %1 커널 확장 기능을 직접 허용해야 합니다. 확인을 누르면 시스템 기본 설정 대화상자가 뜹니다. 이후 %1을(를) 다시 실행해주십시오.</translation>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to install kernel driver</source>
-        <translation>초기화 실패: 커널 드라이버 설치에 실패했습니다</translation>
-    </message>
     <message>
         <source>Faild to choose a disk letter</source>
         <translation>디스크 문자 선택에 실패했습니다</translation>
@@ -810,59 +779,60 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Faild to choose a cache directory</source>
-        <translation type="unfinished"></translation>
+        <translation>캐싱할 라이브러리 선택에 실패했습니다</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create %1 folder</source>
-        <translation type="unfinished"></translation>
+        <translation>초기화 실패: %1 폴더 만들기에 실패했습니다</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create %1 logs folder</source>
-        <translation type="unfinished"></translation>
+        <translation>초기화 실패: %1 로그 폴더 만들기에 실패했습니다</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create %1 data folder</source>
-        <translation type="unfinished"></translation>
+        <translation>초기화 실패: %1 데이터 폴더 만들기에 실패했습니다</translation>
     </message>
     <message>
         <source>Failed to create seadrive cache directory</source>
-        <translation type="unfinished"></translation>
+        <translation>SeaDrive 캐시 디렉터리 만들기에 실패했습니다</translation>
     </message>
 </context>
 <context>
     <name>SeafileExtensionHandler</name>
     <message>
         <source>Failed to get upload link information for file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; 파일 업로드 링크 정보 가져오기에 실패했습니다</translation>
     </message>
     <message>
         <source>No permissions to create a shared link</source>
-        <translation type="unfinished"></translation>
+        <translation>공유 링크를 만들 권한이 없습니다</translation>
     </message>
     <message>
         <source>failed get internal link %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 내부 링크 가져오기에 실패했습니다</translation>
     </message>
     <message>
         <source>Failed to lock file</source>
-        <translation type="unfinished"></translation>
+        <translation>파일 잠금에 실패했습니다</translation>
     </message>
     <message>
         <source>Failed to unlock file</source>
-        <translation type="unfinished"></translation>
+        <translation>파일 잠금 해제에 실패했습니다</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%2 사용자가 &quot;%1&quot; 파일을 잠궜습니다</translation>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; 파일의 잠금 정보 가져오기에 실패했습니다</translation>
     </message>
     <message>
         <source>Failed to get share link %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>%1 공유 링크 가져오기에 실패했습니다
+</translation>
     </message>
 </context>
 <context>
@@ -888,7 +858,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <name>SeafileRpcClient</name>
     <message>
         <source>internal error: failed to connect to %1 daemon</source>
-        <translation type="unfinished"></translation>
+        <translation>내부 오류: %1 데몬 연결에 실패했습니다</translation>
     </message>
 </context>
 <context>
@@ -898,24 +868,12 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>끝내기(&amp;Q)</translation>
     </message>
     <message>
-        <source>Search files</source>
-        <translation>파일 검색</translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translation>설정</translation>
     </message>
     <message>
         <source>Show file sync errors</source>
         <translation>파일 동기화 오류 표시</translation>
-    </message>
-    <message>
-        <source>Open %1 &amp;folder</source>
-        <translation>%1 폴더 열기(&amp;F)</translation>
-    </message>
-    <message>
-        <source>open %1 folder</source>
-        <translation>%1  폴더 열기</translation>
     </message>
     <message>
         <source>Open &amp;logs folder</source>
@@ -942,10 +900,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>로그인하지 않음</translation>
     </message>
     <message>
-        <source>Choose</source>
-        <translation>선택</translation>
-    </message>
-    <message>
         <source>Logout</source>
         <translation>로그아웃</translation>
     </message>
@@ -964,10 +918,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
         <translation>&lt;h2&gt;Seafile 드라이브 클라이언트 %2&lt;/h2&gt;</translation>
-    </message>
-    <message>
-        <source>Do you want to remove the local cache?</source>
-        <translation>로컬 캐시를 제거할까요?</translation>
     </message>
     <message>
         <source>Failed to remove local cache of account %1</source>
@@ -1003,11 +953,15 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Show encrypted libraries</source>
-        <translation type="unfinished"></translation>
+        <translation>암호화 라이브러리 표시</translation>
     </message>
     <message>
         <source>Failed to logout account %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 계정 로그아웃에 실패했습니다</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1174,10 +1128,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>기본</translation>
     </message>
     <message>
-        <source>Enable FinderSync Extension</source>
-        <translation>FinderSync 확장 기능 활성화</translation>
-    </message>
-    <message>
         <source>Enable Explorer Extension</source>
         <translation>Explorer 확장 기능 활성화</translation>
     </message>
@@ -1263,15 +1213,15 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>You have changed language, Restart to apply it?</source>
-        <translation type="unfinished"></translation>
+        <translation>언어를 바꿨습니다. 다시 시작해서 적용할까요?</translation>
     </message>
     <message>
         <source>You have changed cache directory. Restart to apply it?</source>
-        <translation type="unfinished"></translation>
+        <translation>캐시 디렉터리를 바꿨습니다. 다시 시작해서 적용할까요?</translation>
     </message>
     <message>
         <source>You have changed %1 cache folder. Restart to apply it?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 캐시 폴더를 바꿨습니다. 다시 시작해서 적용할까요?</translation>
     </message>
 </context>
 <context>
@@ -1294,19 +1244,19 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Password(At least 8 characters)</source>
-        <translation type="unfinished"></translation>
+        <translation>암호(최소 8문자)</translation>
     </message>
     <message>
         <source>Show password</source>
-        <translation type="unfinished"></translation>
+        <translation>암호 표시</translation>
     </message>
     <message>
         <source>Expire days</source>
-        <translation type="unfinished"></translation>
+        <translation>유효 일수</translation>
     </message>
     <message>
         <source>Generate link</source>
-        <translation type="unfinished"></translation>
+        <translation>링크 만들기</translation>
     </message>
 </context>
 <context>
@@ -1368,6 +1318,14 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>Size</source>
         <translation>용량</translation>
     </message>
+    <message>
+        <source>Server</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>TransferProgressDialog</name>
@@ -1388,50 +1346,50 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <name>UninstallHelperDialog</name>
     <message>
         <source>Uninstall %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 설치 제거</translation>
     </message>
     <message>
         <source>Do you want to remove the %1 account information?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 계정 정보를 제거할까요?</translation>
     </message>
     <message>
         <source>Removing account information...</source>
-        <translation type="unfinished"></translation>
+        <translation>계정 정보 제거중...</translation>
     </message>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished">대화상자</translation>
+        <translation>대화상자</translation>
     </message>
     <message>
         <source>text</source>
-        <translation type="unfinished"></translation>
+        <translation>텍스트</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished">예</translation>
+        <translation>예</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished">아니요</translation>
+        <translation>아니요</translation>
     </message>
 </context>
 <context>
     <name>UploadLinkDialog</name>
     <message>
         <source>Upload Link</source>
-        <translation type="unfinished"></translation>
+        <translation>업로드 링크</translation>
     </message>
     <message>
         <source>Upload link:</source>
-        <translation type="unfinished"></translation>
+        <translation>업로드 링크:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation type="unfinished">클립보드로 복사</translation>
+        <translation>클립보드로 복사</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">확인</translation>
+        <translation>확인</translation>
     </message>
 </context>
 </TS>
