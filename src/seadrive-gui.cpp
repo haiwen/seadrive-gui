@@ -742,7 +742,7 @@ QString SeadriveGui::readPreconfigureExpandedString(const QString& key, const QS
 
 QString SeadriveGui::seadriveDir() const
 {
-    return QDir::home().absoluteFilePath(kSeadriveDirName);
+    return kSeadriveDirName;
 }
 
 QString SeadriveGui::seadriveDataDir() const

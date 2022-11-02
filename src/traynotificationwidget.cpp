@@ -9,8 +9,7 @@ TrayNotificationWidget::TrayNotificationWidget(QPixmap pixmapIcon, QString heade
             Qt::Tool |
         #endif
             Qt::FramelessWindowHint |
-            Qt::WindowSystemMenuHint |
-            Qt::WindowStaysOnTopHint
+            Qt::WindowSystemMenuHint
         );
     setAttribute(Qt::WA_NoSystemBackground, true);
     // set the parent widget's background to translucent

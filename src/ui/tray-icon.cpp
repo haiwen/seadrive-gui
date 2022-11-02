@@ -722,10 +722,6 @@ void SeafileTrayIcon::deleteAccount()
     }
 
     gui->accountManager()->removeAccount(account);
-
-#if defined(Q_OS_MAC)
-    gui->fileProviderManager()->unregisterDomain(account);
-#endif
 }
 
 void SeafileTrayIcon::setTransferRate(qint64 up_rate, qint64 down_rate)

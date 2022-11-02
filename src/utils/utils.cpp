@@ -111,7 +111,7 @@ bool getOpenApplicationFromXdgUtils(const QString &mime, QString *application)
 
 
 QString seadriveDir() {
-    return QDir::home().absoluteFilePath(kSeadriveConfDir);
+    return kSeadriveConfDir;
 }
 
 QString seadriveDataDir() {

@@ -69,8 +69,8 @@ public:
     void validateAndUseAccounts();
 
     // Update AccountInfo (e.g. nick name, quota etc.) for the given
-    // account.
-    void updateAccountInfo(const Account& account, const AccountInfo& info);
+    // account, and return the updated account.
+    const Account updateAccountInfo(const Account& account, const AccountInfo& info);
 
     /**
      * Accessors
@@ -84,8 +84,8 @@ public:
     bool hasAccount() const;
     bool accountExists(const QUrl& url, const QString& username) const;
 
-    Account getAccountByUrlAndUsername(const QString& host,
-                                        const QString& username) const;
+    Account getAccountByUrlAndUsername(const QString& url,
+                                       const QString& username) const;
 
     Account getAccountBySignature(const QString& account_sig) const;
 
@@ -131,6 +131,7 @@ private:
 #if defined(_MSC_VER)
     void updateSyncRootInfo(SyncRootInfo& sync_root_info);
 #endif
+    Account getAccount(const QString& url, const QString& username) const;
 
     struct sqlite3 *db;
     std::vector<Account> accounts_;
