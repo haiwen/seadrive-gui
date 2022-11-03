@@ -6,7 +6,7 @@
 	<dict>
 		<key>Resources/License.rtf</key>
 		<data>
-		x6c37K72BlICVZ9LMOEiRsvpmY0=
+		Mwjz7gi9MLysLbm8GlJWeXvLVII=
 		</data>
 		<key>Resources/Volume.icns</key>
 		<data>
@@ -14,11 +14,11 @@
 		</data>
 		<key>Resources/load_macfuse</key>
 		<data>
-		+oCVQNAF09meox0KF1MOk2tnFPM=
+		pYhJMUs/VDlvT1unEHgtAhLUDqc=
 		</data>
 		<key>Resources/mount_macfuse</key>
 		<data>
-		IpWNsmkwGgImf+4wlWdr6zUMxWw=
+		Y3npWoW69XIX3BqFRmKluDogOFc=
 		</data>
 		<key>Resources/uninstall_macfuse.app/Contents/Info.plist</key>
 		<data>
@@ -26,7 +26,7 @@
 		</data>
 		<key>Resources/uninstall_macfuse.app/Contents/MacOS/applet</key>
 		<data>
-		QPmkRaPlY0GdcqMOlp65Eu2OU1o=
+		77obSORQYmwQ9LaOPe5szciFUvo=
 		</data>
 		<key>Resources/uninstall_macfuse.app/Contents/PkgInfo</key>
 		<data>
@@ -82,7 +82,7 @@
 		</data>
 		<key>version.plist</key>
 		<data>
-		HBgw6MToOUF0CyMoL09UfCdrF9Q=
+		fvVT6//ts6VLccQKcj4UgwmV3lQ=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -96,22 +96,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			BBDdNiHymHgxJvZ/Phf8NCTZN/c=
+			7NsVb1dPwPHN2RRM5UhvQnP0CRk=
 			</data>
 			<key>hash2</key>
 			<data>
-			LTsCeEPeGv4+FsOTTnp6kB+TSzmvNAaUDBt9M7J90Cs=
+			iLI7Mpc5QLEiUxq0E/vdcq/rTcTscYEEb7DsBwzUTyE=
 			</data>
 		</dict>
 		<key>Extensions/10.11/macfuse.kext/Contents/MacOS/macfuse</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			doD5jsg6/yuKlHXW/mNM66rnq5o=
+			NNtrYCqZrODokDVQg+MvOFwCD4E=
 			</data>
 			<key>hash2</key>
 			<data>
-			Vfg1NNfqulVjz8nweTFM3Wqa1cPv/hSdnTITBGKXWYM=
+			vfFP6JXnUaMuaIZcUoQ8eM3Zs2UzwowwXhpnY2ePKQc=
 			</data>
 		</dict>
 		<key>Extensions/10.11/macfuse.kext/Contents/_CodeSignature/CodeResources</key>
@@ -129,22 +129,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			70kPD1x4mHZ1nhJ79+2jZpj1DdI=
+			dhMFW7vgN2UpqCarp/GbxvEdCz8=
 			</data>
 			<key>hash2</key>
 			<data>
-			tQzrT+WD6/3QMJMWMjdvbm7vTkAUUWZwSuaBb2Gj3zs=
+			k4QKtmHNw59Jz0CD1V0INwVsyZfSXitvzsuo177VL8c=
 			</data>
 		</dict>
 		<key>Extensions/10.12/macfuse.kext/Contents/MacOS/macfuse</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			rRCZX5EP/kshG5+BnaxCOfVLeH4=
+			jup8JCvVvVXgmKk7+yII+Yi85H4=
 			</data>
 			<key>hash2</key>
 			<data>
-			uOmYO0kpVopJ0nYk1d1vSUsnIUJ6VScjpzG+8bJ8hEw=
+			B3unX/TF0vOs2SImCgczWH/RkLYKb6CpkL6FRRt6DQE=
 			</data>
 		</dict>
 		<key>Extensions/10.12/macfuse.kext/Contents/_CodeSignature/CodeResources</key>
@@ -182,22 +182,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			DvxM7a/mhiRGONVChLwgDwnR5to=
+			hbFUivUWxWr/6kC7dN0jmhvVxFs=
 			</data>
 			<key>hash2</key>
 			<data>
-			YnNrsn/TmPoVe5bdY8nVIHOC6TwukwZKa3UuNuWXars=
+			hI2ccR21BpICnNEkv7YM/0V1PEx74A9+DxkdZ2el7VA=
 			</data>
 		</dict>
 		<key>Extensions/10.9/macfuse.kext/Contents/MacOS/macfuse</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			PCEwUop07La4jIGGNuVHlyxZbGs=
+			qY/+/AF53il6AfmXi/viJEAxP1c=
 			</data>
 			<key>hash2</key>
 			<data>
-			qA8FKuVobdkR/Hstxp91rglaqudJZRXeZ4jACUluJLc=
+			uDDQi9UZTN0lJfeDI80GCR9qo9QONFkKl+hbWYT23ZA=
 			</data>
 		</dict>
 		<key>Extensions/10.9/macfuse.kext/Contents/_CodeSignature/CodeResources</key>
@@ -215,22 +215,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Od0vhHGm823jD0RPMwC2ktxu4Og=
+			fwcW6EvRCsj++PBty/ENhYxP+mM=
 			</data>
 			<key>hash2</key>
 			<data>
-			7ueTJAf87UaRUl77MXut73HDOpP7JcIT2INsWaNHPNs=
+			Bvy6tsX49CPV/8bUTxfaX+S/7lpOSHSURCPp7JUrOu0=
 			</data>
 		</dict>
 		<key>Extensions/11/macfuse.kext/Contents/MacOS/macfuse</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			OBFX3SaMhfNT2V8sLIFZeom8Y7o=
+			/tfsQMZMaqRZK+peoq3ZCmlEWDY=
 			</data>
 			<key>hash2</key>
 			<data>
-			vPFuYK9j1Faj16dMPVYDtq/NgH59zirOsVgfzvQERv4=
+			MRXB7YzYJliPTLM31t66XxyACC4uzAGYXobnDFLezmo=
 			</data>
 		</dict>
 		<key>Extensions/11/macfuse.kext/Contents/_CodeSignature/CodeResources</key>
@@ -249,15 +249,20 @@
 			<key>symlink</key>
 			<string>11</string>
 		</dict>
+		<key>Extensions/13</key>
+		<dict>
+			<key>symlink</key>
+			<string>11</string>
+		</dict>
 		<key>Resources/License.rtf</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			x6c37K72BlICVZ9LMOEiRsvpmY0=
+			Mwjz7gi9MLysLbm8GlJWeXvLVII=
 			</data>
 			<key>hash2</key>
 			<data>
-			zlB84aa6oRTB16StPYMpFR/mqP2gBchvPQcMEKHWSr4=
+			en08fQDSfDm0bSJ5en3MvW9P8H4TLwR01QUw67d2Bf4=
 			</data>
 		</dict>
 		<key>Resources/Volume.icns</key>
@@ -275,22 +280,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			+oCVQNAF09meox0KF1MOk2tnFPM=
+			pYhJMUs/VDlvT1unEHgtAhLUDqc=
 			</data>
 			<key>hash2</key>
 			<data>
-			pKx5kQzJVXDgnb72JwLdDqfT6ie+1qycfwIqKqYrpyc=
+			MhBaDswE7QMTXI7SjsuVUaYBShtBnDBWRwKmTKkh9Bc=
 			</data>
 		</dict>
 		<key>Resources/mount_macfuse</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			IpWNsmkwGgImf+4wlWdr6zUMxWw=
+			Y3npWoW69XIX3BqFRmKluDogOFc=
 			</data>
 			<key>hash2</key>
 			<data>
-			5SuP5PjC8bqBh3uFfRHT/KPu1OhXVmJBHKcDjQUjElY=
+			clEtqbKk9EspUhJI10sxA4aZlRJkl8IYf360tANvlD0=
 			</data>
 		</dict>
 		<key>Resources/uninstall_macfuse.app/Contents/Info.plist</key>
@@ -308,11 +313,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			QPmkRaPlY0GdcqMOlp65Eu2OU1o=
+			77obSORQYmwQ9LaOPe5szciFUvo=
 			</data>
 			<key>hash2</key>
 			<data>
-			sGxMD7KCyciR+18E04ZyOcp1Gy/CsdA7PrhDCnRA4pY=
+			fMvYZ+SPjtMwLjTb0whWlpXFrIu5sj61D0OrfH8LRns=
 			</data>
 		</dict>
 		<key>Resources/uninstall_macfuse.app/Contents/PkgInfo</key>
@@ -462,11 +467,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			HBgw6MToOUF0CyMoL09UfCdrF9Q=
+			fvVT6//ts6VLccQKcj4UgwmV3lQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			24HwDayYINjc8z1Spn9AYRiIcCbdE9kTxeTFbi25WzQ=
+			ej2rEPBNfsWNsBNGanpU7ltP4h7Z3E+057wGCxi+yAw=
 			</data>
 		</dict>
 	</dict>
