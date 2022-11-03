@@ -236,6 +236,8 @@ bool HelperClient::installKext(bool *require_user_approval)
     // /Library/Filesystems/macfuse.fs/Contents/Extensions/11:     directory
     // /Library/Filesystems/macfuse.fs/Contents/Extensions/12:     symbolic link
     // to 11
+    // /Library/Filesystems/macfuse.fs/Contents/Extensions/13:     symbolic link
+    // to 11
     NSString *kextPath;
     if (utils::mac::isAtLeastSystemVersion(10, 16, 0)) {
         kextPath = @"/Library/Filesystems/macfuse.fs/Contents/Extensions/"
