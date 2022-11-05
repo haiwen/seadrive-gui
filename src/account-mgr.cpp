@@ -362,6 +362,10 @@ void AccountManager::disableAccount(const Account& account) {
         return;
     }
     clearAccountToken(account);
+
+#if defined(Q_OS_MAC)
+    gui->fileProviderManager()->unregisterDomain(account);
+#endif
 }
 
 int AccountManager::removeAccount(const Account& account)
@@ -378,6 +382,10 @@ int AccountManager::removeAccount(const Account& account)
     accounts_.erase(
         std::remove(accounts_.begin(), accounts_.end(), account),
         accounts_.end());
+
+#if defined(Q_OS_MAC)
+    gui->fileProviderManager()->unregisterDomain(account);
+#endif
 
     if (accounts().empty()) {
         LoginDialog login_dialog;
@@ -465,16 +473,19 @@ void AccountManager::validateAndUseAccounts() {
 }
 
 Account AccountManager::getAccountByUrlAndUsername(const QString& url,
-                                                    const QString& username) const
+                                                   const QString& username) const
 {
-    for (size_t i = 0; i < accounts_.size(); i++) {
-        if (accounts_[i].serverUrl.toString() == url
-            && accounts_[i].username == username) {
-            return accounts_[i];
-        }
+    Account account = getAccount(url, username);
+    if (account.isValid()) {
+        return account;
     }
 
-    return Account();
+    // Fix the case when the url loses or adds the "/" suffix.
+    if (url.endsWith("/")) {
+        return getAccount(url.chopped(1), username);
+    } else {
+        return getAccount(url + "/", username);
+    }
 }
 
 Account AccountManager::getAccountBySignature(const QString& account_sig) const
@@ -508,8 +519,8 @@ void AccountManager::updateAccountServerInfo(const Account& account)
     request->send();
 }
 
-void AccountManager::updateAccountInfo(const Account& account,
-                                       const AccountInfo& info)
+const Account AccountManager::updateAccountInfo(const Account& account,
+                                                const AccountInfo& info)
 {
     setServerInfoKeyValue(db, account, kTotalStorage,
                           QString::number(info.totalStorage));
@@ -522,16 +533,23 @@ void AccountManager::updateAccountInfo(const Account& account,
         if (accounts_[i] == account) {
             accounts_[i].accountInfo = info;
             emit accountInfoUpdated(accounts_[i]);
-            break;
+            return accounts_[i];
         }
     }
+
+    return Account();
 }
 
 
 void::AccountManager::slotUpdateAccountInfoSucess(const AccountInfo& info)
 {
     FetchAccountInfoRequest* req = (FetchAccountInfoRequest*)(sender());
-    updateAccountInfo(req->account(), info);
+    const Account account = updateAccountInfo(req->account(), info);
+#if defined(Q_OS_MAC)
+    if (account.isValid()) {
+        gui->fileProviderManager()->registerDomain(account);
+    }
+#endif
     updateAccountServerInfo(req->account());
 
     req->deleteLater();
@@ -561,9 +579,6 @@ void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo 
     // gui->rpcClient()->setServerProperty(
     //     url.toString(), "is_pro", account.isPro() ? "true" : "false");
 
-#if defined(Q_OS_MAC)
-    gui->fileProviderManager()->registerDomain(account);
-#endif
 
 #if defined(_MSC_VER)
     const Account& current_account = currentAccount();
@@ -773,6 +788,16 @@ const QVector<Account> AccountManager::activeAccounts() const {
         }
     }
     return accounts;
+}
+
+Account AccountManager::getAccount(const QString& url, const QString& username) const {
+    for (size_t i = 0; i < accounts_.size(); i++) {
+        if (accounts_.at(i).serverUrl.toString() == url &&
+            accounts_.at(i).username == username) {
+            return accounts_[i];
+        }
+    }
+    return Account();
 }
 
 #if defined(_MSC_VER)

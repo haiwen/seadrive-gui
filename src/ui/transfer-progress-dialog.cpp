@@ -62,8 +62,7 @@ TransferProgressDialog::TransferProgressDialog(QWidget *parent)
 {
     setWindowTitle(tr("Transfer Progress"));
     setWindowIcon(QIcon(":/images/seafile.png"));
-    setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
-                   Qt::WindowStaysOnTopHint);
+    setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint));
 
     setMinimumSize(QSize(600, 371));
 
@@ -253,11 +252,7 @@ QVariant TransferItemsTableModel::transferringData(
             else if (column == FILE_COLUMN_USERNAME) {
                 auto account = gui->accountManager()->getAccountByUrlAndUsername(
                                     transferring_info->server, transferring_info->username);
-                QString name = account.accountInfo.name;
-                if (name.isEmpty()) {
-                    name = transferring_info->username;
-                }
-                return name;
+                return account.accountInfo.name;
             }
             else if (column == FILE_COLUMN_PROGRESS) {
                 return readableFileSize(transferring_info->transferred_bytes);
@@ -319,11 +314,7 @@ QVariant TransferItemsTableModel::transferredData(
             else if (column == FILE_COLUMN_USERNAME) {
                 auto account = gui->accountManager()->getAccountByUrlAndUsername(
                                     transferred_info->server, transferred_info->username);
-                QString name = account.accountInfo.name;
-                if (name.isEmpty()) {
-                    name = transferred_info->username;
-                }
-                return name;
+                return account.accountInfo.name;
             }
             else if (column == FILE_COLUMN_PROGRESS) {
                 return QString(tr("finished"));
@@ -355,24 +346,11 @@ QVariant TransferItemsTableModel::data(
     }
 
     if (role != Qt::DisplayRole &&
-        role != Qt::SizeHintRole &&
         role != Qt::ToolTipRole) {
         return QVariant();
     }
 
     const uint column = index.column();
-
-    if (role == Qt::SizeHintRole) {
-        QSize qsize(0, kDefaultColumnHeight);
-        if (column == FILE_COLUMN_PATH ||
-            column == FILE_COLUMN_SERVER ||
-            column == FILE_COLUMN_USERNAME) {
-            qsize.setWidth(name_column_width_);
-        } else {
-            qsize.setWidth(kDefaultColumnWidth);
-        }
-        return qsize;
-    }
 
     if (isTransferringRow(index)) {
         return transferringData(index, role);
@@ -495,7 +473,6 @@ void TransferItemDelegate::paint(QPainter *painter,
         painter->fillRect(option_rect, kItemBackgroundColor);
     painter->restore();
 
-    QSize size = model->data(index, Qt::SizeHintRole).value<QSize>();
     QString text = model->data(index, Qt::DisplayRole).value<QString>();
 
     switch (index.column()) {
@@ -503,6 +480,7 @@ void TransferItemDelegate::paint(QPainter *painter,
     case FILE_COLUMN_SERVER:
     case FILE_COLUMN_USERNAME:
     {
+        QSize size = option_rect.size() - QSize(kMarginLeft * 2, kMarginTop * 2);
         QPoint text_pos(kMarginLeft, kMarginTop);
         text_pos += option_rect.topLeft();
         QRect text_rect(text_pos, size);
@@ -513,13 +491,14 @@ void TransferItemDelegate::paint(QPainter *painter,
         painter->setFont(font);
         painter->drawText(text_rect,
                           Qt::AlignLeft | Qt::AlignVCenter | Qt::TextSingleLine,
-                          fitTextToWidth(text, option.font, text_rect.width() - 20));
+                          fitTextToWidth(text, option.font, text_rect.width() - 5));
         painter->restore();
 
         break;
     }
     case FILE_COLUMN_SIZE:
     {
+        QSize size(kDefaultColumnWidth, kDefaultColumnHeight);
         QPoint text_pos(kMarginLeft, kMarginTop);
         text_pos += option_rect.topLeft();
         QRect text_rect(text_pos, size);
@@ -537,6 +516,7 @@ void TransferItemDelegate::paint(QPainter *painter,
     }
     case FILE_COLUMN_PROGRESS:
     {
+        QSize size(kDefaultColumnWidth, kDefaultColumnHeight);
         if (!model->isTransferringRow(index)) {
             QPoint text_pos(kMarginLeft, kMarginTop);
             text_pos += option_rect.topLeft();

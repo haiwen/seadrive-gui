@@ -54,8 +54,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
     setupUi(this);
     setWindowTitle(tr("Settings"));
     setWindowIcon(QIcon(":/images/seafile.png"));
-    setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
-                   Qt::WindowStaysOnTopHint);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
 
     mAutoStartCheckBox->setText(

@@ -26,8 +26,7 @@ DiskLetterDialog::DiskLetterDialog(QWidget *parent)
     mLogo->setPixmap(QPixmap(":/images/seafile-32.png"));
     setWindowTitle(i18n::getDiskLetterDialogTitle());
     setWindowIcon(QIcon(":/images/seafile.png"));
-    setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
-                   Qt::WindowStaysOnTopHint);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     mDiskLetter->clear();
 

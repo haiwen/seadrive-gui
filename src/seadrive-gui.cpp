@@ -57,7 +57,7 @@
 namespace {
 
 #if defined(Q_OS_MAC)
-    const char *kSeadriveDirName = "Library/Containers/com.seafile.seadrive.fileprovider/Data/Documents";
+    const char *kSeadriveDirName = "Library/Containers/com.seafile.seadrive.fprovider/Data/Documents";
 #elif defined(Q_OS_WIN32)
     const char *kPreconfigureCacheDirectory = "PreconfigureCacheDirectory";
     const char *kSeadriveDirName = "seadrive";
@@ -742,7 +742,7 @@ QString SeadriveGui::readPreconfigureExpandedString(const QString& key, const QS
 
 QString SeadriveGui::seadriveDir() const
 {
-    return QDir::home().absoluteFilePath(kSeadriveDirName);
+    return kSeadriveDirName;
 }
 
 QString SeadriveGui::seadriveDataDir() const

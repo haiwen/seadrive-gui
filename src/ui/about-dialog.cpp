@@ -19,8 +19,7 @@ AboutDialog::AboutDialog(QWidget *parent)
     setupUi(this);
     setWindowTitle(tr("About %1").arg(getBrand()));
     setWindowIcon(QIcon(":/images/seafile.png"));
-    setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
-                   Qt::WindowStaysOnTopHint);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     version_text_ = tr("<h4>Seafile Drive Client %2</h4>")
 	               .arg(STRINGIZE(SEADRIVE_GUI_VERSION))

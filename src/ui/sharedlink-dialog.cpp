@@ -17,8 +17,7 @@ SharedLinkDialog::SharedLinkDialog(const QString& link, const QString &repo_id,
 {
     setWindowTitle(tr("Share Link"));
     setWindowIcon(QIcon(":/images/seafile.png"));
-    setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
-                   Qt::WindowStaysOnTopHint);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     QVBoxLayout *layout = new QVBoxLayout;
 
     QLabel *password_label = new QLabel(tr("Password(At least 8 characters)"));
@@ -159,4 +158,3 @@ void SharedLinkDialog::slotShowPasswordCheckBoxClicked(int state)
     }
     password_editor_ -> setEchoMode(QLineEdit::Password);
 }
-
