@@ -5,6 +5,8 @@
 #include <QString>
 #include <QStringList>
 
+#include "file-provider/file-provider.h"
+
 class Account;
 
 class FileProviderManager : public QObject {
@@ -22,10 +24,10 @@ public:
 private:
     QString displayName(const Account account);
 
-    void addDummyDomain();
+    void addDummyDomain(bool hidden);
     void removeDummyDomain();
 
-    QStringList domain_ids_;
+    QMap<QString, Domain> domains_;
 };
 
 #endif // SEAFILE_CLIENT_FILE_PROVIDER_MANAGER_H

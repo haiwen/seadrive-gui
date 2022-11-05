@@ -253,9 +253,11 @@ SeadriveGui::~SeadriveGui()
 #endif
 
 #if defined(Q_OS_MAC)
-    auto accounts = account_mgr_->activeAccounts();
-    for (int i = 0; i < accounts.size(); i++) {
-        rpc_client_->logoutAccount(accounts.at(i));
+    if (rpc_client_->isConnected()) {
+        auto accounts = account_mgr_->activeAccounts();
+        for (int i = 0; i < accounts.size(); i++) {
+            rpc_client_->logoutAccount(accounts.at(i));
+        }
     }
 #endif
 
@@ -358,11 +360,6 @@ void SeadriveGui::start()
 
 #endif
 
-#if defined(Q_OS_MAC)
-    file_provider_mgr_->start();
-    onDaemonStarted();
-#endif
-
 #if defined(Q_OS_WIN32)
     connect(daemon_mgr_, SIGNAL(daemonStarted()),
             this, SLOT(onDaemonStarted()));
@@ -380,6 +377,9 @@ void SeadriveGui::start()
     QProcess::execute(program, arguments);
 #endif
 
+#elif defined(Q_OS_MAC)
+    file_provider_mgr_->start();
+    onDaemonStarted();
 #endif
 }
 

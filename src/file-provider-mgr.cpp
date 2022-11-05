@@ -1,10 +1,9 @@
 #include "file-provider-mgr.h"
 
-#include <QDir>
+#include <QTimer>
 
 #include "account.h"
 #include "seadrive-gui.h"
-#include "file-provider/file-provider.h"
 
 namespace {
     const char *kDummyDomainID = "seadrive-dummy-id";
@@ -20,23 +19,38 @@ FileProviderManager::~FileProviderManager() {
 }
 
 void FileProviderManager::start() {
-    fileProviderGetDomains(&domain_ids_);
+    fileProviderListDomains(&domains_);
 
-    // The seadrive daemon program is loaded by operating system as a plugin on
-    // macOS. There must be an associated domain, otherwise the plugin won't be
-    // loaded. As we require the seadrive daemon being started before adding
-    // the first account, a dummy domain is created here to help.
-    addDummyDomain();
+    if (!domains_.contains(kDummyDomainID)) {
+        addDummyDomain(true);
+        fileProviderListDomains(&domains_);
+    }
+
+    if (!domains_[kDummyDomainID].userEnabled) {
+        // fileProviderAskUserToEnable() function requires at least one
+        // non-hidden domain, so we set the dummy domain to be non-hidden, then
+        // set it back again.
+        addDummyDomain(false);
+        fileProviderAskUserToEnable();
+        QTimer::singleShot(1000, this, [&]() {
+            addDummyDomain(true);
+        });
+    }
 }
 
 bool FileProviderManager::registerDomain(const Account account) {
     QString id = account.domainID();
     QString name = displayName(account);
 
-    if (!domain_ids_.contains(id)) {
-        return fileProviderAddDomain(id.toUtf8().constData(), name.toUtf8().constData(), false);
+    if (domains_.contains(id)) {
+        return true;
     }
 
+    if (!fileProviderAddDomain(id, name)) {
+        return false;
+    }
+
+    fileProviderListDomains(&domains_);
     return true;
 }
 
@@ -44,7 +58,12 @@ bool FileProviderManager::unregisterDomain(const Account account) {
     QString id = account.domainID();
     QString name = displayName(account);
 
-    return fileProviderRemoveDomain(id.toUtf8().constData());
+    if (!fileProviderRemoveDomain(id, name)) {
+        return false;
+    }
+
+    fileProviderListDomains(&domains_);
+    return true;
 }
 
 QString FileProviderManager::displayName(const Account account) {
@@ -55,16 +74,12 @@ QString FileProviderManager::displayName(const Account account) {
     return name + "(" + account.serverUrl.host() + ")";
 }
 
-void FileProviderManager::addDummyDomain() {
-    QString id(kDummyDomainID), name(kDummyDomainName);
-
-    if (!domain_ids_.contains(id)) {
-        fileProviderAddDomain(id.toUtf8().constData(), name.toUtf8().constData(), true);
-    }
+void FileProviderManager::addDummyDomain(bool hidden) {
+    fileProviderAddDomain(kDummyDomainID, kDummyDomainName, hidden);
+    fileProviderListDomains(&domains_);
 }
 
 void FileProviderManager::removeDummyDomain() {
-    QString id(kDummyDomainID);
-
-    fileProviderRemoveDomain(id.toUtf8().constData());
+    fileProviderRemoveDomain(kDummyDomainID, kDummyDomainName);
+    fileProviderListDomains(&domains_);
 }
