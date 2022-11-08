@@ -362,10 +362,6 @@ void AccountManager::disableAccount(const Account& account) {
         return;
     }
     clearAccountToken(account);
-
-#if defined(Q_OS_MAC)
-    gui->fileProviderManager()->unregisterDomain(account);
-#endif
 }
 
 int AccountManager::removeAccount(const Account& account)
@@ -382,10 +378,6 @@ int AccountManager::removeAccount(const Account& account)
     accounts_.erase(
         std::remove(accounts_.begin(), accounts_.end(), account),
         accounts_.end());
-
-#if defined(Q_OS_MAC)
-    gui->fileProviderManager()->unregisterDomain(account);
-#endif
 
     if (accounts().empty()) {
         LoginDialog login_dialog;

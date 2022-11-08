@@ -17,6 +17,8 @@ public:
     void start();
 
     bool registerDomain(const Account account);
+    // Unregisting a domain will be handled by the daemon program. (rpc.seafile_delete_account)
+    // We leave this method here for completeness.
     bool unregisterDomain(const Account account);
 
 private:
