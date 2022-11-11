@@ -1,114 +1,96 @@
 #include "file-provider.h"
 
 #include <QDebug>
+#include <QMutex>
+#include <QWaitCondition>
+
+#import <FinderSync/FinderSync.h>
 #import <FileProvider/FileProvider.h>
 
-bool fileProviderGetDomains(QStringList *list) {
-    __block int result = 0;
-    NSLock *lock = [[NSLock alloc] init];
-    qInfo() << "[File Provider] get domains";
-    [NSFileProviderManager getDomainsWithCompletionHandler:
-        ^(NSArray<NSFileProviderDomain *> *domains, NSError *error) {
-            if (error != nil) {
-                qWarning() << "[File Provider] failed to get domains:" << error;
-                [lock lock];
-                result = 2;
-                [lock unlock];
-                return;
-            }
-
-            qInfo() << "[File Provider] succeed to get domains";
-            for (int i = 0; i < [domains count]; i++) {
-                NSFileProviderDomain *domain = [domains objectAtIndex:i];
-                list->append([domain.identifier UTF8String]);
-            }
-            [lock lock];
-            result = 1;
-            [lock unlock];
-        }
-    ];
-
-    int r = 0;
-    while (true) {
-        [NSThread sleepForTimeInterval: 1];
-
-        [lock lock];
-        r = result;
-        [lock unlock];
-        if (r) {
-            break;
-        }
-    }
-
-    return r == 1;
+void fileProviderAskUserToEnable() {
+    [FIFinderSyncController showExtensionManagementInterface];
 }
 
-bool fileProviderAddDomain(const char *domain_id, const char *display_name, bool hidden) {
-    NSString *id = [NSString stringWithUTF8String:domain_id];
-    NSString *name = [NSString stringWithUTF8String:display_name];
-    NSFileProviderDomain *domain = [[NSFileProviderDomain alloc] initWithIdentifier:id displayName:name];
+bool fileProviderListDomains(QMap<QString, Domain> *domains) {
+    qInfo() << "[File Provider] Listing domains";
+
+    bool success = false;
+    QMutex mutex;
+    QWaitCondition condition;
+
+    [NSFileProviderManager getDomainsWithCompletionHandler:[&](NSArray<NSFileProviderDomain *> *nsdomains, NSError *error) {
+        if (error != nil) {
+            qWarning() << "[File Provider] Error listing domains:" << error;
+            return;
+        }
+
+        domains->clear();
+        for (NSFileProviderDomain *nsdomain in nsdomains) {
+            Domain domain;
+            domain.identifier = QString::fromNSString(nsdomain.identifier);
+            domain.userEnabled = nsdomain.userEnabled;
+
+            domains->insert(domain.identifier, domain);
+        }
+
+        success = true;
+        condition.wakeOne();
+    }];
+
+    mutex.lock();
+    condition.wait(&mutex);
+    mutex.unlock();
+
+    return success;
+}
+
+bool fileProviderAddDomain(const QString domain_id, const QString display_name, bool hidden) {
+    qInfo() << "[File Provider] Adding domain" << domain_id << display_name;
+
+    bool success = false;
+    QMutex mutex;
+    QWaitCondition condition;
+
+    NSFileProviderDomain *domain = [[NSFileProviderDomain alloc] initWithIdentifier:domain_id.toNSString() displayName:display_name.toNSString()];
     domain.hidden = hidden;
-
-    __block int result = 0;
-    NSLock *lock = [[NSLock alloc] init];
-    qInfo() << "[File Provider] add domain: id =" << domain_id << ", name =" << display_name;
-    [NSFileProviderManager addDomain:domain completionHandler:^(NSError *error) {
-        [lock lock];
+    [NSFileProviderManager addDomain:domain completionHandler:[&](NSError *error) {
         if (error != nil) {
-            qWarning() << "[File Provider] failed to add domain:" << error;
-            result = 2;
-        } else {
-            qInfo() << "[File Provider] succeed to add domain";
-            result = 1;
+            qWarning() << "[File Provider] Error adding domain:" << error;
+            return;
         }
-        [lock unlock];
+
+        success = true;
+        condition.wakeOne();
     }];
 
-    int r = 0;
-    while (true) {
-        [NSThread sleepForTimeInterval: 1];
+    mutex.lock();
+    condition.wait(&mutex);
+    mutex.unlock();
 
-        [lock lock];
-        r = result;
-        [lock unlock];
-        if (r) {
-            break;
-        }
-    }
-
-    return r == 1;
+    return success;
 }
 
-bool fileProviderRemoveDomain(const char *domain_id) {
-    NSString *id = [NSString stringWithUTF8String:domain_id];
-    NSFileProviderDomain *domain = [[NSFileProviderDomain alloc] initWithIdentifier:id displayName:@""];
+bool fileProviderRemoveDomain(const QString domain_id, const QString display_name) {
+    qInfo() << "[File Provider] Removing domain" << domain_id << display_name;
 
-    __block int result = 0;
-    NSLock *lock = [[NSLock alloc] init];
-    qInfo() << "[File Provider] remove domain: id =" << domain_id;
-    [NSFileProviderManager removeDomain:domain completionHandler:^(NSError *error) {
-        [lock lock];
+    bool success = false;
+    QMutex mutex;
+    QWaitCondition condition;
+
+    NSFileProviderDomain *domain = [[NSFileProviderDomain alloc] initWithIdentifier:domain_id.toNSString() displayName:display_name.toNSString()];
+    [NSFileProviderManager removeDomain:domain completionHandler:[&](NSError *error) {
         if (error != nil) {
-            qWarning() << "[File Provider] failed to remove domain:" << error;
-            result = 2;
-        } else {
-            qInfo() << "[File Provider] succeed to remove domain";
-            result = 1;
+            qWarning() << "[File Provider] Error removing domain:" << error;
+            return;
         }
-        [lock unlock];
+
+        success = true;
+        condition.wakeOne();
     }];
 
-    int r = 0;
-    while (true) {
-        [NSThread sleepForTimeInterval: 1];
+    mutex.lock();
+    condition.wait(&mutex);
+    mutex.unlock();
 
-        [lock lock];
-        r = result;
-        [lock unlock];
-        if (r) {
-            break;
-        }
-    }
-
-    return r == 1;
+    return success;
 }

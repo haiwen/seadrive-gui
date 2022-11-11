@@ -65,6 +65,8 @@ namespace {
     const char *kSeadriveDirName = ".seadrive";
 #endif
 
+const int kConnectDaemonIntervalMsec = 2000;
+
 enum DEBUG_LEVEL {
   DEBUG = 0,
   WARNING
@@ -252,13 +254,6 @@ SeadriveGui::~SeadriveGui()
     AutoUpdateService::instance()->stop();
 #endif
 
-#if defined(Q_OS_MAC)
-    auto accounts = account_mgr_->activeAccounts();
-    for (int i = 0; i < accounts.size(); i++) {
-        rpc_client_->logoutAccount(accounts.at(i));
-    }
-#endif
-
     delete tray_icon_;
     delete daemon_mgr_;
     delete rpc_client_;
@@ -358,12 +353,9 @@ void SeadriveGui::start()
 
 #endif
 
-#if defined(Q_OS_MAC)
-    file_provider_mgr_->start();
-    onDaemonStarted();
-#endif
-
 #if defined(Q_OS_WIN32)
+    loginAccounts();
+
     connect(daemon_mgr_, SIGNAL(daemonStarted()),
             this, SLOT(onDaemonStarted()));
     connect(daemon_mgr_, SIGNAL(daemonRestarted()),
@@ -380,34 +372,21 @@ void SeadriveGui::start()
     QProcess::execute(program, arguments);
 #endif
 
+#elif defined(Q_OS_MAC)
+    loginAccounts();
+
+    // The life cycle of seadrive daemon is managed by OS on mac, the
+    // seadrive-gui has to wait until connect succeed.
+    connect(&connect_daemon_timer_, SIGNAL(timeout()),
+            this, SLOT(connectDaemon()));
+    connect_daemon_timer_.start(kConnectDaemonIntervalMsec);
 #endif
+
 }
 
-void SeadriveGui::onDaemonRestarted()
+void SeadriveGui::loginAccounts()
 {
-    qDebug("reviving rpc client when daemon is restarted");
-    if (rpc_client_) {
-        delete rpc_client_;
-    }
-
-    rpc_client_ = new SeafileRpcClient();
-    rpc_client_->connectDaemon();
-
-    qDebug("setting account when daemon is restarted");
-
-    auto accounts = account_mgr_->activeAccounts();
-    for (int i = 0; i <  accounts.size(); i++) {
-        rpc_client_->addAccount(accounts.at(i));
-    }
-}
-
-void SeadriveGui::onDaemonStarted()
-{
-    rpc_client_->connectDaemon();
-    //
-    // load proxy settings (important)
-    //
-    settings_mgr_->loadSettings();
+    tray_icon_->show();
 
     if (first_use_ || account_mgr_->accounts().size() == 0) {
         do {
@@ -448,9 +427,58 @@ void SeadriveGui::onDaemonStarted()
     } else {
         account_mgr_->validateAndUseAccounts();
     }
+}
+
+void SeadriveGui::logoutAccounts()
+{
+    if (!rpc_client_->isConnected()) {
+        return;
+    }
+
+    auto accounts = account_mgr_->activeAccounts();
+    for (int i = 0; i < accounts.size(); i++) {
+        rpc_client_->logoutAccount(accounts.at(i));
+    }
+}
+
+void SeadriveGui::connectDaemon() {
+    if (!rpc_client_->tryConnectDaemon()) {
+        return;
+    }
+
+    connect_daemon_timer_.stop();
+    onDaemonStarted();
+}
+
+void SeadriveGui::onDaemonRestarted()
+{
+    qDebug("reviving rpc client when daemon is restarted");
+    if (rpc_client_) {
+        delete rpc_client_;
+    }
+
+    rpc_client_ = new SeafileRpcClient();
+    rpc_client_->connectDaemon();
+
+    qDebug("setting account when daemon is restarted");
+
+    auto accounts = account_mgr_->activeAccounts();
+    for (int i = 0; i <  accounts.size(); i++) {
+        rpc_client_->addAccount(accounts.at(i));
+    }
+}
+
+void SeadriveGui::onDaemonStarted()
+{
+    // The addAccount() RPC should be invoked after an account being logged in.
+    // When launching seadrive-gui, the login event may be raised before the
+    // daemon started. For that reason, we queue all account updating events,
+    // and begin processing here.
+    connect(account_mgr_, SIGNAL(accountMQUpdated()),
+            this, SLOT(updateAccountToDaemon()));
+    updateAccountToDaemon();
 
     tray_icon_->start();
-    tray_icon_->setState(SeafileTrayIcon::STATE_DAEMON_UP);
     message_poller_->start();
 
     QString value;
@@ -464,7 +492,6 @@ void SeadriveGui::onDaemonStarted()
     RemoteWipeService::instance()->start();
     AccountInfoService::instance()->start();
 
-
 #if defined(_MSC_VER)
     SeafileExtensionHandler::instance()->start();
     RegElement::installCustomUrlHandler();
@@ -477,9 +504,25 @@ void SeadriveGui::onDaemonStarted()
 #endif // HAVE_SPARKLE_SUPPORT
 }
 
+void SeadriveGui::updateAccountToDaemon()
+{
+    while (!account_mgr_->messages.isEmpty()) {
+        auto msg = account_mgr_->messages.dequeue();
+
+        if (msg.type == AccountAdded) {
+            rpc_client_->addAccount(msg.account);
+        } else if (msg.type == AccountRemoved) {
+            rpc_client_->deleteAccount(msg.account);
+            file_provider_mgr_->unregisterDomain(msg.account);
+        }
+    }
+}
+
 void SeadriveGui::onAboutToQuit()
 {
     tray_icon_->hide();
+
+    logoutAccounts();
 }
 
 // stop the main event loop and return to the main function

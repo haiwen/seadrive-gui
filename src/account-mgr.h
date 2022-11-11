@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QHash>
 #include <QMutex>
+#include <QQueue>
 
 #include "account.h"
 
@@ -14,6 +15,15 @@ struct sqlite3_stmt;
 class ApiError;
 class SeafileRpcClient;
 
+typedef enum {
+    AccountAdded = 0,
+    AccountRemoved,
+} MessageType;
+
+struct AccountMessage {
+    MessageType type;
+    Account account;
+};
 
 #if defined(_MSC_VER)
 class SyncRootInfo {
@@ -95,6 +105,8 @@ public:
     const QString getSyncRootName() { return sync_root_name_; }
 #endif
 
+    QQueue<AccountMessage> messages;
+
 public slots:
     void reloginAccount(const Account &account);
 
@@ -103,9 +115,7 @@ signals:
      * Account added/removed/switched.
      */
     void accountsChanged();
-    void accountRequireRelogin(const Account& account);
-
-    void requireAddAccount();
+    void accountMQUpdated();
     void accountInfoUpdated(const Account& account);
 
 private slots:

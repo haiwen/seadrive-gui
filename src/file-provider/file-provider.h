@@ -1,12 +1,19 @@
 #ifndef SEAFILE_CLIENT_FILE_PROVIDER_H_
 #define SEAFILE_CLIENT_FILE_PROVIDER_H_
 
-#include <QStringList>
+#include <QMap>
 
-bool fileProviderGetDomains(QStringList *list);
+struct Domain {
+    QString identifier;
+    bool userEnabled;
+};
 
-bool fileProviderAddDomain(const char *domain_id, const char *display_name, bool hidden);
+void fileProviderAskUserToEnable();
 
-bool fileProviderRemoveDomain(const char *domain_id);
+bool fileProviderListDomains(QMap<QString, Domain> *domains);
+
+bool fileProviderAddDomain(const QString domain_id, const QString display_name, bool hidden = false);
+
+bool fileProviderRemoveDomain(const QString domain_id, const QString display_name = "");
 
 #endif // SEAFILE_CLIENT_FILE_PROVIDER_H_
