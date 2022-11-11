@@ -353,6 +353,9 @@ void SeadriveGui::start()
 
 #endif
 
+    settings_mgr_->loadProxySettings();
+    settings_mgr_->applyProxySettings();
+
 #if defined(Q_OS_WIN32)
     loginAccounts();
 
@@ -480,6 +483,7 @@ void SeadriveGui::onDaemonStarted()
 
     tray_icon_->start();
     message_poller_->start();
+    settings_mgr_->writeProxySettingsToDaemon(settings_mgr_->getProxy());
 
     QString value;
     if (rpc_client_->seafileGetConfig("client_id", &value) < 0 ||

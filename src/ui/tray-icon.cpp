@@ -114,7 +114,6 @@ void SeafileTrayIcon::start()
     global_sync_error_action_->setEnabled(true);
     show_sync_errors_action_->setEnabled(true);
     show_enc_repos_action_->setEnabled(true);
-    settings_action_->setEnabled(true);
 
     setState(STATE_DAEMON_UP);
 
@@ -168,7 +167,6 @@ void SeafileTrayIcon::createContextMenu()
     global_sync_error_action_->setEnabled(false);
     show_sync_errors_action_->setEnabled(false);
     show_enc_repos_action_->setEnabled(false);
-    settings_action_->setEnabled(false);
 
     context_menu_ = new QMenu(NULL);
     context_menu_->addAction(transfer_rate_display_action_);
