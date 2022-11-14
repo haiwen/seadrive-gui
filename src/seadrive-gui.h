@@ -117,7 +117,7 @@ private:
 
     void loginAccounts();
 
-    void logoutAccounts();
+    void logoutAccountsFromDaemon();
 
     bool dev_mode_;
 

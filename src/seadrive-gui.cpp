@@ -9,9 +9,7 @@
 #include <QCoreApplication>
 #include <QMessageBox>
 #include <QHostInfo>
-#if defined(_MSC_VER)
 #include <QCryptoGraphicHash>
-#endif
 
 #include <errno.h>
 #include <glib.h>
@@ -38,18 +36,15 @@
 #include "utils/utils-win.h"
 #include "ext-handler.h"
 #include "ui/disk-letter-dialog.h"
-#endif
-
-#if defined(_MSC_VER)
 #include "ui/seadrive-root-dialog.h"
-#endif
-
-#ifdef HAVE_SPARKLE_SUPPORT
-#include "auto-update-service.h"
 #endif
 
 #if defined(Q_OS_MAC)
 #include "utils/utils-mac.h"
+#endif
+
+#ifdef HAVE_SPARKLE_SUPPORT
+#include "auto-update-service.h"
 #endif
 
 #include "seadrive-gui.h"
@@ -276,8 +271,6 @@ void SeadriveGui::start()
 
     qDebug("client id is %s", toCStr(getUniqueClientId()));
 
-    account_mgr_->start();
-
     // auto update rpc server start
     SeaDriveRpcServer::instance()->start();
 
@@ -285,9 +278,7 @@ void SeadriveGui::start()
 
     qWarning("seadrive gui started");
 
-#if defined(Q_OS_MAC)
-    writeCABundleForCurl();
-#endif
+    account_mgr_->start();
 
     // Load system proxy information. This must be done before we start seadrive
     // daemon.
@@ -298,22 +289,7 @@ void SeadriveGui::start()
     settings_mgr_->writeSystemProxyInfo(
         url, QDir(seadriveDataDir()).filePath("system-proxy.txt"));
 
-#if defined(__MINGW32__)
-    QString disk_letter;
-    if (settings_mgr_->getDiskLetter(&disk_letter)) {
-        disk_letter_ = disk_letter;
-    } else {
-        qWarning("disk letter not set, asking the user for it");
-        DiskLetterDialog dialog;
-        if (dialog.exec() != QDialog::Accepted) {
-            errorAndExit(tr("Faild to choose a disk letter"));
-            return;
-        }
-        disk_letter_ = dialog.diskLetter();
-        settings_mgr_->setDiskLetter(disk_letter_);
-    }
-    qWarning("Using disk letter %s", toCStr(disk_letter_));
-#elif defined(_MSC_VER)
+#if defined(Q_OS_WIN32)
     QString preconfig_cache_dir = gui->readPreconfigureExpandedString(kPreconfigureCacheDirectory);
     if (!preconfig_cache_dir.isEmpty()) {
         QString prev_seadrive_root;
@@ -351,12 +327,9 @@ void SeadriveGui::start()
     settings_mgr_->setSeadriveRoot(seadrive_root_);
     qWarning("Using cache directory: %s", toCStr(seadrive_root_));
 
-#endif
-
     settings_mgr_->loadProxySettings();
     settings_mgr_->applyProxySettings();
 
-#if defined(Q_OS_WIN32)
     loginAccounts();
 
     connect(daemon_mgr_, SIGNAL(daemonStarted()),
@@ -365,17 +338,12 @@ void SeadriveGui::start()
             this, SLOT(onDaemonRestarted()));
     daemon_mgr_->startSeadriveDaemon();
 
-#if defined(__MINGW32__)
-    QString program = "csmcmd.exe";
-    QStringList arguments;
-    // Exclude the file-cache folder from being indexed by windows search.
-    QString cache_path = QDir::toNativeSeparators(seadriveDataDir() + "/file-cache/*");
-    arguments << "/add_rule" << cache_path << "/default";
-
-    QProcess::execute(program, arguments);
-#endif
-
 #elif defined(Q_OS_MAC)
+    writeCABundleForCurl();
+
+    settings_mgr_->loadProxySettings();
+    settings_mgr_->applyProxySettings();
+
     loginAccounts();
 
     // The life cycle of seadrive daemon is managed by OS on mac, the
@@ -384,7 +352,6 @@ void SeadriveGui::start()
             this, SLOT(connectDaemon()));
     connect_daemon_timer_.start(kConnectDaemonIntervalMsec);
 #endif
-
 }
 
 void SeadriveGui::loginAccounts()
@@ -432,7 +399,7 @@ void SeadriveGui::loginAccounts()
     }
 }
 
-void SeadriveGui::logoutAccounts()
+void SeadriveGui::logoutAccountsFromDaemon()
 {
     if (!rpc_client_->isConnected()) {
         return;
@@ -517,7 +484,6 @@ void SeadriveGui::updateAccountToDaemon()
             rpc_client_->addAccount(msg.account);
         } else if (msg.type == AccountRemoved) {
             rpc_client_->deleteAccount(msg.account);
-            file_provider_mgr_->unregisterDomain(msg.account);
         }
     }
 }
@@ -526,7 +492,7 @@ void SeadriveGui::onAboutToQuit()
 {
     tray_icon_->hide();
 
-    logoutAccounts();
+    logoutAccountsFromDaemon();
 }
 
 // stop the main event loop and return to the main function
@@ -594,15 +560,6 @@ bool SeadriveGui::initLog()
         errorAndExit(tr("Failed to initialize: failed to create %1 data folder").arg(getBrand()));
         return false;
     }
-
-    // On linux we must unmount the mount point dir before trying to create it,
-    // otherwise checkdir_with_mkdir would think it doesn't exist and try to
-    // create it, but the creation operation would fail.
-#if defined(Q_OS_LINUX)
-        QStringList umount_arguments;
-        umount_arguments << "-u" << mountDir();
-        QProcess::execute("fusermount", umount_arguments);
-#endif
 
 #if !defined(Q_OS_WIN32)
     if (checkdir_with_mkdir(toCStr(gui->mountDir())) < 0) {
@@ -804,9 +761,7 @@ QString SeadriveGui::logsDir() const
 
 QString SeadriveGui::mountDir() const
 {
-#if defined(__MINGW32__)
-    return disk_letter_;
-#elif defined(_MSC_VER)
+#if defined(Q_OS_WIN32)
     QString sync_root_name = gui->accountManager()->getSyncRootName();
     if (sync_root_name.isEmpty()) {
         qWarning("get sync root name is empty.");
