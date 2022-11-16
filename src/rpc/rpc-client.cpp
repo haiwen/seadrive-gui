@@ -77,6 +77,35 @@ void SeafileRpcClient::connectDaemon()
         pipe_client, kSeadriveRpcService);
 }
 
+bool SeafileRpcClient::tryConnectDaemon() {
+    SearpcNamedPipeClient *pipe_client;
+
+#if defined(Q_OS_WIN32)
+    pipe_client = searpc_create_named_pipe_client(
+        utils::win::getLocalPipeName(kSeadriveSockName).c_str());
+#elif defined(Q_OS_MAC)
+    pipe_client = searpc_create_named_pipe_client(
+        toCStr(QDir(gui->seadriveDir()).filePath(kSeadriveSockName)));
+#else
+    pipe_client = searpc_create_named_pipe_client(
+        toCStr(QDir(gui->daemonManager()->currentCacheDir()).filePath(kSeadriveSockName)));
+#endif
+    if (!pipe_client) {
+        return false;
+    }
+
+    if (searpc_named_pipe_client_connect(pipe_client) < 0) {
+        g_free(pipe_client);
+        return false;
+    }
+
+    seadrive_rpc_client_ = searpc_client_with_named_pipe_transport(
+        pipe_client, kSeadriveRpcService);
+    connected_ = true;
+
+    return true;
+}
+
 int SeafileRpcClient::seafileGetConfig(const QString &key, QString *value)
 {
     GError *error = NULL;

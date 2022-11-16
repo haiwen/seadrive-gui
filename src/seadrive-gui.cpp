@@ -9,9 +9,7 @@
 #include <QCoreApplication>
 #include <QMessageBox>
 #include <QHostInfo>
-#if defined(_MSC_VER)
 #include <QCryptoGraphicHash>
-#endif
 
 #include <errno.h>
 #include <glib.h>
@@ -38,18 +36,15 @@
 #include "utils/utils-win.h"
 #include "ext-handler.h"
 #include "ui/disk-letter-dialog.h"
-#endif
-
-#if defined(_MSC_VER)
 #include "ui/seadrive-root-dialog.h"
-#endif
-
-#ifdef HAVE_SPARKLE_SUPPORT
-#include "auto-update-service.h"
 #endif
 
 #if defined(Q_OS_MAC)
 #include "utils/utils-mac.h"
+#endif
+
+#ifdef HAVE_SPARKLE_SUPPORT
+#include "auto-update-service.h"
 #endif
 
 #include "seadrive-gui.h"
@@ -64,6 +59,8 @@ namespace {
 #else
     const char *kSeadriveDirName = ".seadrive";
 #endif
+
+const int kConnectDaemonIntervalMsec = 2000;
 
 enum DEBUG_LEVEL {
   DEBUG = 0,
@@ -252,13 +249,6 @@ SeadriveGui::~SeadriveGui()
     AutoUpdateService::instance()->stop();
 #endif
 
-#if defined(Q_OS_MAC)
-    auto accounts = account_mgr_->activeAccounts();
-    for (int i = 0; i < accounts.size(); i++) {
-        rpc_client_->logoutAccount(accounts.at(i));
-    }
-#endif
-
     delete tray_icon_;
     delete daemon_mgr_;
     delete rpc_client_;
@@ -281,8 +271,6 @@ void SeadriveGui::start()
 
     qDebug("client id is %s", toCStr(getUniqueClientId()));
 
-    account_mgr_->start();
-
     // auto update rpc server start
     SeaDriveRpcServer::instance()->start();
 
@@ -290,9 +278,7 @@ void SeadriveGui::start()
 
     qWarning("seadrive gui started");
 
-#if defined(Q_OS_MAC)
-    writeCABundleForCurl();
-#endif
+    account_mgr_->start();
 
     // Load system proxy information. This must be done before we start seadrive
     // daemon.
@@ -303,22 +289,7 @@ void SeadriveGui::start()
     settings_mgr_->writeSystemProxyInfo(
         url, QDir(seadriveDataDir()).filePath("system-proxy.txt"));
 
-#if defined(__MINGW32__)
-    QString disk_letter;
-    if (settings_mgr_->getDiskLetter(&disk_letter)) {
-        disk_letter_ = disk_letter;
-    } else {
-        qWarning("disk letter not set, asking the user for it");
-        DiskLetterDialog dialog;
-        if (dialog.exec() != QDialog::Accepted) {
-            errorAndExit(tr("Faild to choose a disk letter"));
-            return;
-        }
-        disk_letter_ = dialog.diskLetter();
-        settings_mgr_->setDiskLetter(disk_letter_);
-    }
-    qWarning("Using disk letter %s", toCStr(disk_letter_));
-#elif defined(_MSC_VER)
+#if defined(Q_OS_WIN32)
     QString preconfig_cache_dir = gui->readPreconfigureExpandedString(kPreconfigureCacheDirectory);
     if (!preconfig_cache_dir.isEmpty()) {
         QString prev_seadrive_root;
@@ -356,58 +327,36 @@ void SeadriveGui::start()
     settings_mgr_->setSeadriveRoot(seadrive_root_);
     qWarning("Using cache directory: %s", toCStr(seadrive_root_));
 
-#endif
+    settings_mgr_->loadProxySettings();
+    settings_mgr_->applyProxySettings();
 
-#if defined(Q_OS_MAC)
-    file_provider_mgr_->start();
-    onDaemonStarted();
-#endif
+    loginAccounts();
 
-#if defined(Q_OS_WIN32)
     connect(daemon_mgr_, SIGNAL(daemonStarted()),
             this, SLOT(onDaemonStarted()));
     connect(daemon_mgr_, SIGNAL(daemonRestarted()),
             this, SLOT(onDaemonRestarted()));
     daemon_mgr_->startSeadriveDaemon();
 
-#if defined(__MINGW32__)
-    QString program = "csmcmd.exe";
-    QStringList arguments;
-    // Exclude the file-cache folder from being indexed by windows search.
-    QString cache_path = QDir::toNativeSeparators(seadriveDataDir() + "/file-cache/*");
-    arguments << "/add_rule" << cache_path << "/default";
+#elif defined(Q_OS_MAC)
+    writeCABundleForCurl();
 
-    QProcess::execute(program, arguments);
-#endif
+    settings_mgr_->loadProxySettings();
+    settings_mgr_->applyProxySettings();
 
+    loginAccounts();
+
+    // The life cycle of seadrive daemon is managed by OS on mac, the
+    // seadrive-gui has to wait until connect succeed.
+    connect(&connect_daemon_timer_, SIGNAL(timeout()),
+            this, SLOT(connectDaemon()));
+    connect_daemon_timer_.start(kConnectDaemonIntervalMsec);
 #endif
 }
 
-void SeadriveGui::onDaemonRestarted()
+void SeadriveGui::loginAccounts()
 {
-    qDebug("reviving rpc client when daemon is restarted");
-    if (rpc_client_) {
-        delete rpc_client_;
-    }
-
-    rpc_client_ = new SeafileRpcClient();
-    rpc_client_->connectDaemon();
-
-    qDebug("setting account when daemon is restarted");
-
-    auto accounts = account_mgr_->activeAccounts();
-    for (int i = 0; i <  accounts.size(); i++) {
-        rpc_client_->addAccount(accounts.at(i));
-    }
-}
-
-void SeadriveGui::onDaemonStarted()
-{
-    rpc_client_->connectDaemon();
-    //
-    // load proxy settings (important)
-    //
-    settings_mgr_->loadSettings();
+    tray_icon_->show();
 
     if (first_use_ || account_mgr_->accounts().size() == 0) {
         do {
@@ -448,10 +397,60 @@ void SeadriveGui::onDaemonStarted()
     } else {
         account_mgr_->validateAndUseAccounts();
     }
+}
+
+void SeadriveGui::logoutAccountsFromDaemon()
+{
+    if (!rpc_client_->isConnected()) {
+        return;
+    }
+
+    auto accounts = account_mgr_->activeAccounts();
+    for (int i = 0; i < accounts.size(); i++) {
+        rpc_client_->logoutAccount(accounts.at(i));
+    }
+}
+
+void SeadriveGui::connectDaemon() {
+    if (!rpc_client_->tryConnectDaemon()) {
+        return;
+    }
+
+    connect_daemon_timer_.stop();
+    onDaemonStarted();
+}
+
+void SeadriveGui::onDaemonRestarted()
+{
+    qDebug("reviving rpc client when daemon is restarted");
+    if (rpc_client_) {
+        delete rpc_client_;
+    }
+
+    rpc_client_ = new SeafileRpcClient();
+    rpc_client_->connectDaemon();
+
+    qDebug("setting account when daemon is restarted");
+
+    auto accounts = account_mgr_->activeAccounts();
+    for (int i = 0; i <  accounts.size(); i++) {
+        rpc_client_->addAccount(accounts.at(i));
+    }
+}
+
+void SeadriveGui::onDaemonStarted()
+{
+    // The addAccount() RPC should be invoked after an account being logged in.
+    // When launching seadrive-gui, the login event may be raised before the
+    // daemon started. For that reason, we queue all account updating events,
+    // and begin processing here.
+    connect(account_mgr_, SIGNAL(accountMQUpdated()),
+            this, SLOT(updateAccountToDaemon()));
+    updateAccountToDaemon();
 
     tray_icon_->start();
-    tray_icon_->setState(SeafileTrayIcon::STATE_DAEMON_UP);
     message_poller_->start();
+    settings_mgr_->writeProxySettingsToDaemon(settings_mgr_->getProxy());
 
     QString value;
     if (rpc_client_->seafileGetConfig("client_id", &value) < 0 ||
@@ -463,7 +462,6 @@ void SeadriveGui::onDaemonStarted()
 
     RemoteWipeService::instance()->start();
     AccountInfoService::instance()->start();
-
 
 #if defined(_MSC_VER)
     SeafileExtensionHandler::instance()->start();
@@ -477,9 +475,24 @@ void SeadriveGui::onDaemonStarted()
 #endif // HAVE_SPARKLE_SUPPORT
 }
 
+void SeadriveGui::updateAccountToDaemon()
+{
+    while (!account_mgr_->messages.isEmpty()) {
+        auto msg = account_mgr_->messages.dequeue();
+
+        if (msg.type == AccountAdded) {
+            rpc_client_->addAccount(msg.account);
+        } else if (msg.type == AccountRemoved) {
+            rpc_client_->deleteAccount(msg.account);
+        }
+    }
+}
+
 void SeadriveGui::onAboutToQuit()
 {
     tray_icon_->hide();
+
+    logoutAccountsFromDaemon();
 }
 
 // stop the main event loop and return to the main function
@@ -547,15 +560,6 @@ bool SeadriveGui::initLog()
         errorAndExit(tr("Failed to initialize: failed to create %1 data folder").arg(getBrand()));
         return false;
     }
-
-    // On linux we must unmount the mount point dir before trying to create it,
-    // otherwise checkdir_with_mkdir would think it doesn't exist and try to
-    // create it, but the creation operation would fail.
-#if defined(Q_OS_LINUX)
-        QStringList umount_arguments;
-        umount_arguments << "-u" << mountDir();
-        QProcess::execute("fusermount", umount_arguments);
-#endif
 
 #if !defined(Q_OS_WIN32)
     if (checkdir_with_mkdir(toCStr(gui->mountDir())) < 0) {
@@ -757,9 +761,7 @@ QString SeadriveGui::logsDir() const
 
 QString SeadriveGui::mountDir() const
 {
-#if defined(__MINGW32__)
-    return disk_letter_;
-#elif defined(_MSC_VER)
+#if defined(Q_OS_WIN32)
     QString sync_root_name = gui->accountManager()->getSyncRootName();
     if (sync_root_name.isEmpty()) {
         qWarning("get sync root name is empty.");

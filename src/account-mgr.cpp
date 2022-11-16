@@ -13,7 +13,6 @@
 #include "utils/utils.h"
 #include "api/api-error.h"
 #include "api/requests.h"
-#include "rpc/rpc-client.h"
 #include "ui/login-dialog.h"
 #if defined(_MSC_VER)
 #include "utils/file-utils.h"
@@ -379,6 +378,13 @@ int AccountManager::removeAccount(const Account& account)
         std::remove(accounts_.begin(), accounts_.end(), account),
         accounts_.end());
 
+    AccountMessage msg;
+    msg.type = AccountRemoved;
+    msg.account = account;
+    messages.enqueue(msg);
+
+    emit accountMQUpdated();
+
     if (accounts().empty()) {
         LoginDialog login_dialog;
         login_dialog.exec();
@@ -547,6 +553,12 @@ void::AccountManager::slotUpdateAccountInfoSucess(const AccountInfo& info)
     req->deleteLater();
     req = NULL;
 
+    AccountMessage msg;
+    msg.type = AccountAdded;
+    msg.account = account;
+    messages.enqueue(msg);
+
+    emit accountMQUpdated();
 }
 
 void AccountManager::slotUpdateAccountInfoFailed()
@@ -568,8 +580,6 @@ void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo 
 
     QUrl url(account.serverUrl);
     url.setPath("/");
-    // gui->rpcClient()->setServerProperty(
-    //     url.toString(), "is_pro", account.isPro() ? "true" : "false");
 
 
 #if defined(_MSC_VER)
@@ -577,8 +587,6 @@ void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo 
     sync_root_name_= genSyncRootName(current_account);
     qWarning("generated sync root name is : %s", toCStr(sync_root_name_));
 #endif
-
-    gui->rpcClient()->addAccount(account);
 
     bool changed = account.serverInfo != info;
     if (!changed)

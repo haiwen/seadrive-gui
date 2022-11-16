@@ -180,29 +180,10 @@ QStringList DaemonManager::collectSeaDriveArgs()
     }
 
 #if defined(Q_OS_WIN32)
-#if defined(__MINGW32__)
-    QString drive_letter = QString(qgetenv("SEADRIVE_LETTER")).trimmed().toUpper().remove(":").remove("/");
-    qDebug("SEADRIVE_LETTER = %s", qgetenv("SEADRIVE_LETTER").data());
-    if (!drive_letter.isEmpty()) {
-        if (drive_letter.length() != 1 || drive_letter < QString("A") || drive_letter > QString("Z")) {
-            qWarning() << "invalid SEADRIVE_LETTER '" << drive_letter << "'";
-            drive_letter = "S";
-        }
-    } else {
-        drive_letter = gui->mountDir();
-    }
-    if (!drive_letter.endsWith(":")) {
-        drive_letter += ":";
-    }
-    args << drive_letter;
-#elif defined (_MSC_VER)
-
     QString seadrive_root = gui->seadriveRoot();
     QString sync_root_path = QDir::toNativeSeparators(seadrive_root);
 
     args << sync_root_path;
-#endif
-
 #else
     args << "-f";
 

@@ -5,6 +5,7 @@
 #include <QVariant>
 #include <QMessageBox>
 #include <QProcess>
+#include <QTimer>
 
 #include "rpc/rpc-server.h"
 
@@ -101,9 +102,11 @@ public slots:
     void start();
 
 private slots:
+    void connectDaemon();
     void onAboutToQuit();
     void onDaemonStarted();
     void onDaemonRestarted();
+    void updateAccountToDaemon();
 
 private:
     Q_DISABLE_COPY(SeadriveGui)
@@ -111,6 +114,10 @@ private:
     bool initLog();
 
     bool loadQss(const QString& path);
+
+    void loginAccounts();
+
+    void logoutAccountsFromDaemon();
 
     bool dev_mode_;
 
@@ -152,6 +159,8 @@ private:
 #endif // _MSC_VER
 
     qint64 startup_time_;
+
+    QTimer connect_daemon_timer_;
 };
 
 /**

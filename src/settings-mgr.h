@@ -54,6 +54,8 @@ public:
     SettingsManager();
 
     void loadSettings();
+    void loadProxySettings();
+    void applyProxySettings();
 
     bool notify() { return bubbleNotifycation_; }
     bool autoStart() { return autoStart_; }
@@ -115,6 +117,8 @@ public:
     // Write the system proxy information, to be read by seadrive daemon.
     void writeSystemProxyInfo(const QUrl& url, const QString& file_path);
 
+    void writeProxySettingsToDaemon(const SeafileProxy& proxy);
+
 private slots:
     void checkSystemProxy();
     void onSystemProxyPolled(const QNetworkProxy& proxy);
@@ -122,9 +126,7 @@ private slots:
 private:
     Q_DISABLE_COPY(SettingsManager)
 
-    void loadProxySettings();
-    void applyProxySettings();
-    void writeProxySettingsToDaemon(const SeafileProxy& proxy);
+    void writeProxySettings(const SeafileProxy& proxy);
     void writeProxyDetailsToDaemon(const SeafileProxy& proxy);
 
     bool auto_sync_;

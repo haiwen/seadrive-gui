@@ -77,7 +77,7 @@ SeafileTrayIcon::SeafileTrayIcon(QObject *parent)
       transfer_progress_dialog_(nullptr),
       enc_repo_dialog_(nullptr)
 {
-    setState(STATE_DAEMON_UP);
+    setState(STATE_DAEMON_DOWN);
     rotate_timer_ = new QTimer(this);
     connect(rotate_timer_, SIGNAL(timeout()), this, SLOT(rotateTrayIcon()));
 
@@ -109,7 +109,14 @@ SeafileTrayIcon::SeafileTrayIcon(QObject *parent)
 
 void SeafileTrayIcon::start()
 {
-    show();
+    transfer_rate_display_action_->setEnabled(true);
+    transfer_progress_action_->setEnabled(true);
+    global_sync_error_action_->setEnabled(true);
+    show_sync_errors_action_->setEnabled(true);
+    show_enc_repos_action_->setEnabled(true);
+
+    setState(STATE_DAEMON_UP);
+
     refresh_timer_->start(kRefreshInterval);
 #if defined(Q_OS_MAC)
     utils::mac::set_darkmode_watcher(&darkmodeWatcher);
@@ -119,7 +126,7 @@ void SeafileTrayIcon::start()
 void SeafileTrayIcon::createActions()
 {
     // The text would be set at the menu open time.
-    transfer_rate_display_action_ = new QAction("", this);
+    transfer_rate_display_action_ = new QAction(tr("Starting ..."), this);
 
     transfer_progress_action_ = new QAction(tr("Transfer progress"), this);
     connect(transfer_progress_action_, SIGNAL(triggered()), this, SLOT(showTransferProgressDialog()));
@@ -155,9 +162,11 @@ void SeafileTrayIcon::createActions()
 
 void SeafileTrayIcon::createContextMenu()
 {
-    // help_menu_ = new QMenu(tr("Help"), NULL);
-    // help_menu_->addAction(about_action_);
-    // help_menu_->addAction(open_help_action_);
+    transfer_rate_display_action_->setEnabled(false);
+    transfer_progress_action_->setEnabled(false);
+    global_sync_error_action_->setEnabled(false);
+    show_sync_errors_action_->setEnabled(false);
+    show_enc_repos_action_->setEnabled(false);
 
     context_menu_ = new QMenu(NULL);
     context_menu_->addAction(transfer_rate_display_action_);
@@ -434,7 +443,7 @@ QIcon SeafileTrayIcon::stateToIcon(TrayState state)
         icon_name = ":/images/mac/daemon_up";
         break;
     case STATE_DAEMON_DOWN:
-        icon_name = ":/images/mac/daemon_down.png";
+        icon_name = ":/images/mac/daemon_down";
         break;
     case STATE_DAEMON_AUTOSYNC_DISABLED:
         icon_name = ":/images/mac/seafile_auto_sync_disabled";
@@ -713,11 +722,6 @@ void SeafileTrayIcon::deleteAccount()
     QString question = tr("Are you sure to remove account from \"%1\"?").arg(account.serverUrl.toString());
 
     if (!gui->yesOrNoBox(question, nullptr, false)) {
-        return;
-    }
-
-    if (!gui->rpcClient()->deleteAccount(account)) {
-        gui->warningBox(tr("Failed to delete account"));
         return;
     }
 

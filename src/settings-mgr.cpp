@@ -158,61 +158,15 @@ void SettingsManager::loadSettings()
 
 void SettingsManager::loadProxySettings()
 {
+    QSettings settings;
+    settings.beginGroup(kSettingsGroup);
+
     SeafileProxy proxy;
-
-    QString use_proxy;
-    gui->rpcClient()->seafileGetConfig(kUseProxy, &use_proxy);
-    if (use_proxy != "true") {
-        return;
-    }
-    QString use_system_proxy;
-    gui->rpcClient()->seafileGetConfig(kUseSystemProxy, &use_system_proxy);
-    if (use_system_proxy == "true") {
-        current_proxy_.type = SystemProxy;
-        return;
-    }
-
-    QString proxy_type;
-    QString proxy_host;
-    int proxy_port;
-    QString proxy_username;
-    QString proxy_password;
-
-    if (gui->rpcClient()->seafileGetConfig(kProxyAddr, &proxy_host) <
-        0) {
-        return;
-    }
-    if (gui->rpcClient()->seafileGetConfigInt(kProxyPort, &proxy_port) <
-        0) {
-        return;
-    }
-    if (gui->rpcClient()->seafileGetConfig(kProxyType, &proxy_type) <
-        0) {
-        return;
-    }
-    if (proxy_type == "http") {
-        if (gui->rpcClient()->seafileGetConfig(kProxyUsername,
-                                                      &proxy_username) < 0) {
-            return;
-        }
-        if (gui->rpcClient()->seafileGetConfig(kProxyPassword,
-                                                      &proxy_password) < 0) {
-            return;
-        }
-        proxy.type = HttpProxy;
-        proxy.host = proxy_host;
-        proxy.port = proxy_port;
-        proxy.username = proxy_username;
-        proxy.password = proxy_password;
-
-    } else if (proxy_type == "socks") {
-        proxy.type = SocksProxy;
-        proxy.host = proxy_host;
-        proxy.port = proxy_port;
-    } else if (!proxy_type.isEmpty()) {
-        qWarning("Unsupported proxy_type %s", proxy_type.toUtf8().data());
-        return;
-    }
+    proxy.type = static_cast<ProxyType>(settings.value(kProxyType, 0).toInt());
+    proxy.host = settings.value(kProxyAddr, "").toString();
+    proxy.port = settings.value(kProxyPort, 0).toInt();
+    proxy.username = settings.value(kProxyUsername, "").toString();
+    proxy.password = settings.value(kProxyPassword, "").toString();
 
     current_proxy_ = proxy;
 }
@@ -413,7 +367,10 @@ void SettingsManager::setProxy(const SeafileProxy &proxy)
     }
     current_proxy_ = proxy;
 
-    writeProxySettingsToDaemon(proxy);
+    writeProxySettings(proxy);
+    if (gui->rpcClient()->isConnected()) {
+        writeProxySettingsToDaemon(proxy);
+    }
     applyProxySettings();
 }
 
@@ -439,6 +396,20 @@ void SettingsManager::applyProxySettings()
     QNetworkProxy proxy;
     getProxy(&proxy);
     NetworkManager::instance()->applyProxy(proxy);
+}
+
+void SettingsManager::writeProxySettings(const SeafileProxy &proxy)
+{
+    QSettings settings;
+    settings.beginGroup(kSettingsGroup);
+
+    settings.setValue(kProxyType, static_cast<int>(proxy.type));
+    settings.setValue(kProxyAddr, proxy.host);
+    settings.setValue(kProxyPort, proxy.port);
+    settings.setValue(kProxyUsername, proxy.username);
+    settings.setValue(kProxyPassword, proxy.password);
+
+    settings.sync();
 }
 
 void SettingsManager::writeProxySettingsToDaemon(const SeafileProxy &proxy)

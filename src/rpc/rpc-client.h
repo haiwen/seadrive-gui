@@ -32,6 +32,7 @@ public:
     SeafileRpcClient();
     ~SeafileRpcClient();
     void connectDaemon();
+    bool tryConnectDaemon();
 
     bool isConnected() const { return connected_; }
 

@@ -3,7 +3,9 @@
 
 #include <QObject>
 #include <QString>
-#include <QStringList>
+#include <QMap>
+
+#include "file-provider/file-provider.h"
 
 class Account;
 
@@ -14,20 +16,13 @@ public:
     FileProviderManager();
     ~FileProviderManager();
 
-    void start();
-
     bool registerDomain(const Account account);
-    // Unregisting a domain will be handled by the daemon program. (rpc.seafile_delete_account)
-    // We leave this method here for completeness.
     bool unregisterDomain(const Account account);
 
 private:
     QString displayName(const Account account);
 
-    void addDummyDomain();
-    void removeDummyDomain();
-
-    QStringList domain_ids_;
+    QMap<QString, Domain> domains_;
 };
 
 #endif // SEAFILE_CLIENT_FILE_PROVIDER_MANAGER_H
