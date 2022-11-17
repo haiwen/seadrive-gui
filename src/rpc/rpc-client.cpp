@@ -18,6 +18,7 @@
 #include "utils/utils-win.h"
 #include "daemon-mgr.h"
 #include "file-provider-mgr.h"
+#include "i18n.h"
 
 namespace {
 
@@ -416,11 +417,21 @@ bool SeafileRpcClient::addAccount(const Account& account)
     if (serverAddr.endsWith("/")) {
         serverAddr = serverAddr.left(serverAddr.size() - 1);
     }
+    QString language;
+    if (I18NHelper::getInstance()->isTargetLanguage("zh_cn")) {
+        language = "zh_cn";
+    } else if (I18NHelper::getInstance()->isTargetLanguage("de_de")) {
+        language = "de_de";
+    } else if (I18NHelper::getInstance()->isTargetLanguage("fr_fr")) {
+        language = "fr_fr";
+    } else {
+        language = "en_us";
+    }
 
     searpc_client_call__int(seadrive_rpc_client_,
                             "seafile_add_account",
                             &error,
-                            5,
+                            6,
                             "string",
                             toCStr(serverAddr),
                             "string",
@@ -429,6 +440,8 @@ bool SeafileRpcClient::addAccount(const Account& account)
                             toCStr(account.token),
                             "string",
                             toCStr(account.domainID()),
+                            "string",
+                            toCStr(language),
                             "int",
                             account.isPro() ? 1 : 0);
     if (error) {
@@ -437,7 +450,7 @@ bool SeafileRpcClient::addAccount(const Account& account)
         g_error_free(error);
         return false;
     }
-    qWarning() << "Add account" << account;
+    qWarning() << "Add account" << account << language;
     return true;
 }
 
