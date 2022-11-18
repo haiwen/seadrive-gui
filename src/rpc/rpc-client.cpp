@@ -18,6 +18,7 @@
 #include "utils/utils-win.h"
 #include "daemon-mgr.h"
 #include "file-provider-mgr.h"
+#include "i18n.h"
 
 namespace {
 
@@ -409,7 +410,8 @@ bool SeafileRpcClient::setServerProperty(const QString &url,
     return true;
 }
 
-bool SeafileRpcClient::addAccount(const Account& account)
+#if defined(Q_OS_WIN32)
+bool SeafileRpcClient::addAccount(const Account& account, QString sync_root, QString name)
 {
     GError *error = NULL;
     QString serverAddr = account.serverUrl.toString();
@@ -417,20 +419,14 @@ bool SeafileRpcClient::addAccount(const Account& account)
         serverAddr = serverAddr.left(serverAddr.size() - 1);
     }
 
-    searpc_client_call__int(seadrive_rpc_client_,
-                            "seafile_add_account",
-                            &error,
-                            5,
-                            "string",
-                            toCStr(serverAddr),
-                            "string",
-                            toCStr(account.username),
-                            "string",
-                            toCStr(account.token),
-                            "string",
-                            toCStr(account.domainID()),
-                            "int",
-                            account.isPro() ? 1 : 0);
+    searpc_client_call__int(seadrive_rpc_client_, "seafile_add_account", &error,
+                            6,
+                            "string", toCStr(serverAddr),
+                            "string", toCStr(account.username),
+                            "string", toCStr(account.token),
+                            "string", toCStr(sync_root),
+                            "string", toCStr(name),
+                            "int", account.isPro() ? 1 : 0);
     if (error) {
         qWarning() << "Unable to add account" << account << ":"
                    << (error->message ? error->message : "");
@@ -438,8 +434,47 @@ bool SeafileRpcClient::addAccount(const Account& account)
         return false;
     }
     qWarning() << "Add account" << account;
+
     return true;
 }
+#elif defined(Q_OS_MAC)
+bool SeafileRpcClient::addAccount(const Account& account)
+{
+    GError *error = NULL;
+    QString serverAddr = account.serverUrl.toString();
+    if (serverAddr.endsWith("/")) {
+        serverAddr = serverAddr.left(serverAddr.size() - 1);
+    }
+    QString language;
+    if (I18NHelper::getInstance()->isTargetLanguage("zh_cn")) {
+        language = "zh_cn";
+    } else if (I18NHelper::getInstance()->isTargetLanguage("de_de")) {
+        language = "de_de";
+    } else if (I18NHelper::getInstance()->isTargetLanguage("fr_fr")) {
+        language = "fr_fr";
+    } else {
+        language = "en_us";
+    }
+
+    searpc_client_call__int(seadrive_rpc_client_, "seafile_add_account", &error,
+                            6,
+                            "string", toCStr(serverAddr),
+                            "string", toCStr(account.username),
+                            "string", toCStr(account.token),
+                            "string", toCStr(account.domainID()),
+                            "string", toCStr(language),
+                            "int", account.isPro() ? 1 : 0);
+    if (error) {
+        qWarning() << "Unable to add account" << account << ":"
+                   << (error->message ? error->message : "");
+        g_error_free(error);
+        return false;
+    }
+    qWarning() << "Add account" << account << language;
+
+    return true;
+}
+#endif
 
 bool SeafileRpcClient::deleteAccount(const Account& account)
 {
