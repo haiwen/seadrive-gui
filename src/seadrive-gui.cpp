@@ -382,7 +382,7 @@ void SeadriveGui::loginAccounts()
                 break;
 
             if (!is_use_kerberos_login) {
-                // A bug that changed default button styles is fixed here by
+                // A bug that changes default button styles is fixed here by
                 // delaying the dialog 10ms.
                 QTimer::singleShot(10, tray_icon_, SLOT(showLoginDialog()));
             } else {
