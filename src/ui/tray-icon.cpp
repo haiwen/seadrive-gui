@@ -795,9 +795,13 @@ void SeafileTrayIcon::showTransferProgressDialog()
         transfer_progress_dialog_ = new TransferProgressDialog();
     }
 
-    transfer_progress_dialog_->show();
-    transfer_progress_dialog_->raise();
-    transfer_progress_dialog_->activateWindow();
+    // A bug that changes default button styles is fixed here by
+    // delaying the dialog 10ms.
+    QTimer::singleShot(10, this, [&] {
+        transfer_progress_dialog_->show();
+        transfer_progress_dialog_->raise();
+        transfer_progress_dialog_->activateWindow();
+    });
 }
 
 void SeafileTrayIcon::showEncRepoDialog() {
