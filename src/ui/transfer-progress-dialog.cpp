@@ -66,12 +66,15 @@ TransferProgressDialog::TransferProgressDialog(QWidget *parent)
 
     setMinimumSize(QSize(600, 371));
 
-    QVBoxLayout* vlayout = new QVBoxLayout;
-    vlayout->setContentsMargins(0, 0, 0, 0);
+    auto upload_tab = new TransferTab(UPLOAD);
+    auto download_tab = new TransferTab(DOWNLOAD);
 
     tab_widget_ = new QTabWidget;
-    tab_widget_->addTab(new TransferTab(UPLOAD), tr("Upload"));
-    tab_widget_->addTab(new TransferTab(DOWNLOAD), tr("Download"));
+    tab_widget_->addTab(upload_tab, tr("Upload"));
+    tab_widget_->addTab(download_tab, tr("Download"));
+
+    QVBoxLayout* vlayout = new QVBoxLayout;
+    vlayout->setContentsMargins(0, 0, 0, 0);
     vlayout->addWidget(tab_widget_);
 
     setLayout(vlayout);

@@ -13,7 +13,6 @@
 #include "utils/utils.h"
 #include "api/api-error.h"
 #include "api/requests.h"
-#include "ui/login-dialog.h"
 #if defined(_MSC_VER)
 #include "utils/file-utils.h"
 #endif
@@ -21,6 +20,7 @@
 #include "settings-mgr.h"
 #include "account-info-service.h"
 #include "file-provider-mgr.h"
+#include "ui/tray-icon.h"
 
 #if defined (Q_OS_WIN32)
 #include "win-sso/auto-logon-dialog.h"
@@ -386,10 +386,7 @@ int AccountManager::removeAccount(const Account& account)
     emit accountMQUpdated();
 
     if (accounts().empty()) {
-        LoginDialog login_dialog;
-        login_dialog.exec();
-
-        emit accountsChanged();
+        gui->trayIcon()->showLoginDialog();
     }
 
     return 0;
@@ -755,24 +752,21 @@ const QString AccountManager::genSyncRootName(const Account& account)
 
 void AccountManager::reloginAccount(const Account &account)
 {
-    bool accepted;
-    do {
-        if (account.isShibboleth) {
-            ShibLoginDialog shib_dialog(account.serverUrl, gui->settingsManager()->getComputerName());
-            accepted = shib_dialog.exec() == QDialog::Accepted;
-            break;
-        }
+    if (account.isShibboleth) {
+        ShibLoginDialog shib_dialog(account.serverUrl, gui->settingsManager()->getComputerName());
+        shib_dialog.exec();
+        return;
+    }
+
 #if defined(Q_OS_WIN32)
-        if (account.isKerberos) {
-            AutoLogonDialog dialog;
-            accepted = dialog.exec() == QDialog::Accepted;
-            break;
-        }
+    if (account.isKerberos) {
+        AutoLogonDialog dialog;
+        dialog.exec();
+        return;
+    }
 #endif
-        LoginDialog dialog;
-        dialog.initFromAccount(account);
-        accepted = dialog.exec() == QDialog::Accepted;
-    } while (0);
+
+    gui->trayIcon()->showLoginDialog(account);
 }
 
 const std::vector<Account>& AccountManager::accounts() const

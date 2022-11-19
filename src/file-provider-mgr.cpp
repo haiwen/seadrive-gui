@@ -4,7 +4,7 @@
 #include "seadrive-gui.h"
 
 FileProviderManager::FileProviderManager() {
-    fileProviderListDomains(&domains_);
+
 }
 
 FileProviderManager::~FileProviderManager() {
@@ -15,6 +15,7 @@ bool FileProviderManager::registerDomain(const Account account) {
     QString id = account.domainID();
     QString name = displayName(account);
 
+    fileProviderListDomains(&domains_);
     if (domains_.contains(id)) {
         return true;
     }
@@ -23,7 +24,6 @@ bool FileProviderManager::registerDomain(const Account account) {
         return false;
     }
 
-    fileProviderListDomains(&domains_);
     return true;
 }
 
@@ -35,7 +35,6 @@ bool FileProviderManager::unregisterDomain(const Account account) {
         return false;
     }
 
-    fileProviderListDomains(&domains_);
     return true;
 }
 

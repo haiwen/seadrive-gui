@@ -795,9 +795,11 @@ void SeafileTrayIcon::showTransferProgressDialog()
         transfer_progress_dialog_ = new TransferProgressDialog();
     }
 
-    transfer_progress_dialog_->show();
-    transfer_progress_dialog_->raise();
-    transfer_progress_dialog_->activateWindow();
+    QTimer::singleShot(10, this, [&] {
+        transfer_progress_dialog_->show();
+        transfer_progress_dialog_->raise();
+        transfer_progress_dialog_->activateWindow();
+    });
 }
 
 void SeafileTrayIcon::showEncRepoDialog() {
