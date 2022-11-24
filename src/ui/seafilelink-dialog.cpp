@@ -19,8 +19,7 @@ SeafileLinkDialog::SeafileLinkDialog(const QString& smart_link, QWidget *parent)
 {
     setWindowTitle(tr("%1 Internal Link").arg(getBrand()));
     setWindowIcon(QIcon(":/images/seafile.png"));
-    setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
-                   Qt::WindowStaysOnTopHint);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
 //    {
 //        QString fixed_path = path.startsWith("/") ? path : "/" + path;

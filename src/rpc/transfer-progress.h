@@ -12,12 +12,16 @@ enum TransferType {
 
 struct TransferringInfo {
     QString file_path;
+    QString server;
+    QString username;
     quint64 transferred_bytes;
     quint64 total_bytes;
 };
 
 struct TransferredInfo {
     QString file_path;
+    QString server;
+    QString username;
     // quint64 total_bytes = 0;
 };
 

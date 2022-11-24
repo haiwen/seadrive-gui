@@ -27,6 +27,7 @@
 #include "seadrive-gui.h"
 #include "account-mgr.h"
 #include "rpc/rpc-client.h"
+#include "file-provider-mgr.h"
 
 #include "tray-icon.h"
 
@@ -74,10 +75,9 @@ SeafileTrayIcon::SeafileTrayIcon(QObject *parent)
       down_rate_(0),
       sync_errors_dialog_(nullptr),
       transfer_progress_dialog_(nullptr),
-      enc_repo_dialog_(nullptr),
-      search_dialog_(nullptr)
+      enc_repo_dialog_(nullptr)
 {
-    setState(STATE_DAEMON_UP);
+    setState(STATE_DAEMON_DOWN);
     rotate_timer_ = new QTimer(this);
     connect(rotate_timer_, SIGNAL(timeout()), this, SLOT(rotateTrayIcon()));
 
@@ -109,20 +109,24 @@ SeafileTrayIcon::SeafileTrayIcon(QObject *parent)
 
 void SeafileTrayIcon::start()
 {
-    show();
+    transfer_rate_display_action_->setEnabled(true);
+    transfer_progress_action_->setEnabled(true);
+    global_sync_error_action_->setEnabled(true);
+    show_sync_errors_action_->setEnabled(true);
+    show_enc_repos_action_->setEnabled(true);
+
+    setState(STATE_DAEMON_UP);
+
     refresh_timer_->start(kRefreshInterval);
 #if defined(Q_OS_MAC)
     utils::mac::set_darkmode_watcher(&darkmodeWatcher);
 #endif
-    AccountManager* account_mgr = gui->accountManager();
-    connect(account_mgr, SIGNAL(accountsChanged()), this,
-            SLOT(onAccountChanged()));
 }
 
 void SeafileTrayIcon::createActions()
 {
     // The text would be set at the menu open time.
-    transfer_rate_display_action_ = new QAction("", this);
+    transfer_rate_display_action_ = new QAction(tr("Starting ..."), this);
 
     transfer_progress_action_ = new QAction(tr("Transfer progress"), this);
     connect(transfer_progress_action_, SIGNAL(triggered()), this, SLOT(showTransferProgressDialog()));
@@ -133,8 +137,6 @@ void SeafileTrayIcon::createActions()
     quit_action_ = new QAction(tr("&Quit"), this);
     connect(quit_action_, SIGNAL(triggered()), this, SLOT(quitSeafile()));
 
-    search_action_ = new QAction(tr("Search files"), this);
-    connect(search_action_, SIGNAL(triggered()), this, SLOT(showSearchDialog()));
 
     settings_action_ = new QAction(tr("Settings"), this);
     connect(settings_action_, SIGNAL(triggered()), this, SLOT(showSettingsWindow()));
@@ -143,10 +145,6 @@ void SeafileTrayIcon::createActions()
     connect(show_sync_errors_action_, SIGNAL(triggered()), this, SLOT(showSyncErrorsDialog()));
 
     global_sync_error_action_ = new QAction("", this);
-
-    open_seafile_folder_action_ = new QAction(tr("Open %1 &folder").arg(getBrand()), this);
-    open_seafile_folder_action_->setStatusTip(tr("open %1 folder").arg(getBrand()));
-    connect(open_seafile_folder_action_, SIGNAL(triggered()), this, SLOT(openSeafileFolder()));
 
     open_log_directory_action_ = new QAction(tr("Open &logs folder"), this);
     open_log_directory_action_->setStatusTip(tr("open %1 log folder").arg(getBrand()));
@@ -164,9 +162,11 @@ void SeafileTrayIcon::createActions()
 
 void SeafileTrayIcon::createContextMenu()
 {
-    // help_menu_ = new QMenu(tr("Help"), NULL);
-    // help_menu_->addAction(about_action_);
-    // help_menu_->addAction(open_help_action_);
+    transfer_rate_display_action_->setEnabled(false);
+    transfer_progress_action_->setEnabled(false);
+    global_sync_error_action_->setEnabled(false);
+    show_sync_errors_action_->setEnabled(false);
+    show_enc_repos_action_->setEnabled(false);
 
     context_menu_ = new QMenu(NULL);
     context_menu_->addAction(transfer_rate_display_action_);
@@ -178,9 +178,7 @@ void SeafileTrayIcon::createContextMenu()
     context_menu_->addAction(show_enc_repos_action_);
     context_menu_->addSeparator();
 
-    context_menu_->addAction(open_seafile_folder_action_);
     context_menu_->addAction(open_log_directory_action_);
-    context_menu_->addAction(search_action_);
     context_menu_->addAction(settings_action_);
 
     context_menu_->addSeparator();
@@ -201,8 +199,6 @@ void SeafileTrayIcon::createContextMenu()
 void SeafileTrayIcon::prepareContextMenu()
 {
     const std::vector<Account>& accounts = gui->accountManager()->accounts();
-    Account current_account = gui->accountManager()->currentAccount();
-    search_action_->setVisible(current_account.isPro());
 
     if (global_sync_error_.isValid()) {
         global_sync_error_action_->setVisible(true);
@@ -226,46 +222,26 @@ void SeafileTrayIcon::prepareContextMenu()
                 text += ", " + tr("not logged in");
             }
             QMenu *submenu = new QMenu(text, account_menu_);
-            if (i == 0) {
+            if (account.isValid()) {
                 submenu->setIcon(QIcon(":/images/account-checked.png"));
             } else {
                 submenu->setIcon(QIcon(":/images/account-else.png"));
             }
 
-            QAction *submenu_action = submenu->menuAction();
-            submenu_action->setData(QVariant::fromValue(account));
-            connect(submenu_action, SIGNAL(triggered()), this, SLOT(onAccountItemClicked()));
-
-            QAction *action = new QAction(tr("Choose"), submenu);
-            action->setIcon(QIcon(":/images/account-checked.png"));
-            action->setIconVisibleInMenu(true);
-            action->setData(QVariant::fromValue(account));
-            connect(action, SIGNAL(triggered()), this, SLOT(onAccountItemClicked()));
-
-            submenu->addAction(action);
-            submenu->setDefaultAction(action);
-
-            // QAction *account_settings_action = new QAction(tr("Account settings"), this);
-            // account_settings_action->setIcon(QIcon(":/images/account-settings.png"));
-            // account_settings_action->setIconVisibleInMenu(true);
-            // account_settings_action->setData(QVariant::fromValue(account));
-            // connect(account_settings_action, SIGNAL(triggered()), this, SLOT(editAccountSettings()));
-            // submenu->addAction(account_settings_action);
-
+#if defined(Q_OS_WIN32)
+            QAction *logout_login_action = new QAction(this);
+            logout_login_action->setIcon(QIcon(":/images/logout.png"));
+            logout_login_action->setIconVisibleInMenu(true);
+            logout_login_action->setData(QVariant::fromValue(account));
             if (account.isValid()) {
-                QAction *logout_action = new QAction(this);
-                logout_action->setIcon(QIcon(":/images/logout.png"));
-                logout_action->setIconVisibleInMenu(true);
-                logout_action->setData(QVariant::fromValue(account));
-                connect(logout_action, SIGNAL(triggered()), this, SLOT(logoutAccount()));
-                logout_action->setText(tr("Logout"));
-                submenu->addAction(logout_action);
-
-                if (account != gui->accountManager()->currentAccount()) {
-                    logout_action->setDisabled(true);
-                }
-
+                logout_login_action->setText(tr("Logout"));
+                connect(logout_login_action, SIGNAL(triggered()), this, SLOT(logoutAccount()));
+            } else {
+                logout_login_action->setText(tr("Login"));
+                connect(logout_login_action, SIGNAL(triggered()), this, SLOT(loginAccount()));
             }
+            submenu->addAction(logout_login_action);
+#endif
 
             QAction *delete_account_action = new QAction(tr("Delete"), this);
             delete_account_action->setIcon(QIcon(":/images/delete-account.png"));
@@ -273,10 +249,6 @@ void SeafileTrayIcon::prepareContextMenu()
             delete_account_action->setData(QVariant::fromValue(account));
             connect(delete_account_action, SIGNAL(triggered()), this, SLOT(deleteAccount()));
             submenu->addAction(delete_account_action);
-
-            if (account != gui->accountManager()->currentAccount()) {
-                delete_account_action->setDisabled(true);
-            }
 
             account_menu_->addMenu(submenu);
         }
@@ -305,7 +277,6 @@ void SeafileTrayIcon::createGlobalMenuBar()
 #ifdef Q_OS_MAC
     // create qmenu used in menubar and docker menu
     global_menu_ = new QMenu(tr("File"));
-    global_menu_->addAction(open_seafile_folder_action_);
     global_menu_->addAction(open_log_directory_action_);
     global_menu_->addSeparator();
 
@@ -472,7 +443,7 @@ QIcon SeafileTrayIcon::stateToIcon(TrayState state)
         icon_name = ":/images/mac/daemon_up";
         break;
     case STATE_DAEMON_DOWN:
-        icon_name = ":/images/mac/daemon_down.png";
+        icon_name = ":/images/mac/daemon_down";
         break;
     case STATE_DAEMON_AUTOSYNC_DISABLED:
         icon_name = ":/images/mac/seafile_auto_sync_disabled";
@@ -563,29 +534,6 @@ void SeafileTrayIcon::showSettingsWindow()
     gui->settingsDialog()->show();
     gui->settingsDialog()->raise();
     gui->settingsDialog()->activateWindow();
-}
-
-void SeafileTrayIcon::showSearchDialog()
-{
-    if (search_dialog_ == nullptr) {
-        search_dialog_ = new SearchDialog(gui->accountManager()->currentAccount());
-    }
-
-    search_dialog_->show();
-    search_dialog_->raise();
-    search_dialog_->activateWindow();
-    connect(search_dialog_, SIGNAL(aboutClose()), this, SLOT(clearDialog()));
-}
-
-void SeafileTrayIcon::clearDialog()
-{
-    search_dialog_ = nullptr;
-}
-
-void SeafileTrayIcon::onAccountChanged()
-{
-    if (search_dialog_ != nullptr)
-        search_dialog_->close();
 }
 
 void SeafileTrayIcon::showLoginDialog()
@@ -712,24 +660,6 @@ void SeafileTrayIcon::onLoginDialogClosed()
     login_dlg_ = nullptr;
 }
 
-// Switch to the clicked account in the account menu
-void SeafileTrayIcon::onAccountItemClicked()
-{
-    QAction *action = (QAction *)(sender());
-    Account account = qvariant_cast<Account>(action->data());
-
-    Account current_account = gui->accountManager()->currentAccount();
-
-    gui->accountManager()->validateAndUseAccount(account);
-    if (account.isValid() && account != current_account) {
-        // TODO: What if the last InitSyncDialog is not finished yet?
-        InitSyncDialog *dlg = new InitSyncDialog(account);
-        dlg->show();
-        dlg->raise();
-        dlg->activateWindow();
-    }
-}
-
 void SeafileTrayIcon::logoutAccount()
 {
     QAction *action = qobject_cast<QAction*>(sender());
@@ -760,7 +690,7 @@ void SeafileTrayIcon::onLogoutDeviceRequestSuccess()
             tr("Failed to logout account %1").arg(account.toString()));
     }
 #else
-    if (!gui->rpcClient()->deleteAccount(account, req->shouldRemoveCache())) {
+    if (!gui->rpcClient()->deleteAccount(account)) {
         gui->warningBox(
             tr("Failed to remove local cache of account %1").arg(account.toString()));
     }
@@ -768,6 +698,18 @@ void SeafileTrayIcon::onLogoutDeviceRequestSuccess()
 
     gui->accountManager()->clearAccountToken(account);
     req->deleteLater();
+}
+
+void SeafileTrayIcon::loginAccount()
+{
+    QAction *action = qobject_cast<QAction*>(sender());
+    if (!action)
+        return;
+    Account account = qvariant_cast<Account>(action->data());
+
+    qWarning() << "trying to log in account" << account.username;
+
+    gui->accountManager()->reloginAccount(account);
 }
 
 void SeafileTrayIcon::deleteAccount()
@@ -780,11 +722,6 @@ void SeafileTrayIcon::deleteAccount()
     QString question = tr("Are you sure to remove account from \"%1\"?").arg(account.serverUrl.toString());
 
     if (!gui->yesOrNoBox(question, nullptr, false)) {
-        return;
-    }
-
-    if (!gui->rpcClient()->deleteAccount(account, false)) {
-        gui->warningBox(tr("Failed to delete account"));
         return;
     }
 
@@ -858,9 +795,13 @@ void SeafileTrayIcon::showTransferProgressDialog()
         transfer_progress_dialog_ = new TransferProgressDialog();
     }
 
-    transfer_progress_dialog_->show();
-    transfer_progress_dialog_->raise();
-    transfer_progress_dialog_->activateWindow();
+    // A bug that changes default button styles is fixed here by
+    // delaying the dialog 10ms.
+    QTimer::singleShot(10, this, [&] {
+        transfer_progress_dialog_->show();
+        transfer_progress_dialog_->raise();
+        transfer_progress_dialog_->activateWindow();
+    });
 }
 
 void SeafileTrayIcon::showEncRepoDialog() {

@@ -161,6 +161,14 @@ void handleCommandLineOption(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
     srand(time(NULL));
+
+    // On Mac, we use the file provider container directory as the default data
+    // location. The container directory path is too deep that it exceeds the
+    // limit of unix domain socket path in libsearpc. So we set the current
+    // working directory to the home and uses relative path to access the data
+    // location.
+    QDir::setCurrent(QDir::homePath());
+
 #if defined(Q_OS_MAC)
     Application app(argc, argv);
 #else

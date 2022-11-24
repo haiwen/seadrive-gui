@@ -13,14 +13,14 @@
 #include "utils/utils.h"
 #include "api/api-error.h"
 #include "api/requests.h"
-#include "rpc/rpc-client.h"
-#include "ui/login-dialog.h"
 #if defined(_MSC_VER)
 #include "utils/file-utils.h"
 #endif
 #include "shib/shib-login-dialog.h"
 #include "settings-mgr.h"
 #include "account-info-service.h"
+#include "file-provider-mgr.h"
+#include "ui/tray-icon.h"
 
 #if defined (Q_OS_WIN32)
 #include "win-sso/auto-logon-dialog.h"
@@ -221,7 +221,6 @@ int AccountManager::start()
     loadSyncRootInfo();
 #endif
 
-    connect(this, SIGNAL(accountsChanged()), this, SLOT(onAccountsChanged()));
     return 0;
 }
 
@@ -319,26 +318,18 @@ const std::vector<Account>& AccountManager::loadAccounts()
     return accounts_;
 }
 
-void AccountManager::setCurrentAccount(const Account& account)
-{
-    Q_ASSERT(account.isValid());
-
-    qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
+void AccountManager::enableAccount(const Account& account) {
     Account new_account = account;
-    new_account.lastVisited = timestamp;
-    {
-        QMutexLocker lock(&accounts_mutex_);
-        size_t i;
-        for (i = 0; i < accounts_.size(); i++) {
-            if (accounts_[i] == account) {
-                accounts_.erase(accounts_.begin() + i);
-                break;
-            }
-        }
-        accounts_.insert(accounts_.begin(), new_account);
-    }
+    new_account.lastVisited = QDateTime::currentMSecsSinceEpoch();
 
-    fetchAccountInfoFromServer(account);
+    size_t i;
+    for (i = 0; i < accounts_.size(); i++) {
+        if (accounts_[i] == account) {
+            accounts_.erase(accounts_.begin() + i);
+            break;
+        }
+    }
+    accounts_.insert(accounts_.begin(), new_account);
 
     char *zql = sqlite3_mprintf(
         "REPLACE INTO Accounts(url, username, token, lastVisited, isShibboleth, AutomaticLogin, isKerberos)"
@@ -350,7 +341,7 @@ void AccountManager::setCurrentAccount(const Account& account)
         // token
         new_account.token.toUtf8().data(),
         // lastVisited
-        QString::number(timestamp).toUtf8().data(),
+        QString::number(new_account.lastVisited).toUtf8().data(),
         // isShibboleth
         QString::number(new_account.isShibboleth).toUtf8().data(),
         // isAutomaticLogin
@@ -360,10 +351,16 @@ void AccountManager::setCurrentAccount(const Account& account)
     sqlite_query_exec(db, zql);
     sqlite3_free(zql);
 
-    gui->rpcClient()->seafileSetConfig(
-        "client_name", gui->settingsManager()->getComputerName());
+    fetchAccountInfoFromServer(account);
 
     emit accountsChanged();
+}
+
+void AccountManager::disableAccount(const Account& account) {
+    if (!account.isValid()) {
+        return;
+    }
+    clearAccountToken(account);
 }
 
 int AccountManager::removeAccount(const Account& account)
@@ -377,25 +374,20 @@ int AccountManager::removeAccount(const Account& account)
     sqlite_query_exec(db, zql);
     sqlite3_free(zql);
 
-    bool need_switch_account = currentAccount() == account;
+    accounts_.erase(
+        std::remove(accounts_.begin(), accounts_.end(), account),
+        accounts_.end());
 
-    {
-        QMutexLocker lock(&accounts_mutex_);
-        accounts_.erase(
-            std::remove(accounts_.begin(), accounts_.end(), account),
-            accounts_.end());
+    AccountMessage msg;
+    msg.type = AccountRemoved;
+    msg.account = account;
+    messages.enqueue(msg);
+
+    emit accountMQUpdated();
+
+    if (accounts().empty()) {
+        gui->trayIcon()->showLoginDialog();
     }
-
-    if (need_switch_account) {
-        if (!accounts_.empty()) {
-            validateAndUseAccount(accounts_[0]);
-        } else {
-            LoginDialog login_dialog;
-            login_dialog.exec();
-        }
-    }
-
-    emit accountsChanged();
 
     return 0;
 }
@@ -443,37 +435,52 @@ bool AccountManager::accountExists(const QUrl& url, const QString& username) con
     return false;
 }
 
-void AccountManager::validateAndUseAccount(const Account& account)
-{
-    if (!account.isAutomaticLogin && account.lastVisited < gui->startupTime()) {
-        clearAccountToken(account, true);
-    } else if (!account.isValid()) {
-        reloginAccount(account);
-    } else {
-        setCurrentAccount(account);
-    // If the account is an old account, the account
-    // information has been updated at this time so
-    // you can calculate the SyncRoot and then call the switch account.
+void AccountManager::validateAndUseAccounts() {
+    if (accounts().empty()) {
+        return;
+    }
+
+    if (activeAccounts().empty()) {
+        const Account &account = accounts().front();
+
+        if (!account.isAutomaticLogin && account.lastVisited < gui->startupTime()) {
+            clearAccountToken(account, true);
+        } else {
+            reloginAccount(account);
+        }
+
+        return;
+    }
+
+    auto accounts = activeAccounts();
+    for (int i = 0; i < accounts.size(); i++) {
+        enableAccount(accounts.at(i));
+
+        // If the account is an old account, the account
+        // information has been updated at this time so
+        // you can calculate the SyncRoot and then call the switch account.
 #if defined(_MSC_VER)
         const Account& current_account = currentAccount();
         sync_root_name_= genSyncRootName(current_account);
         qWarning("generated sync root name is : %s", toCStr(sync_root_name_));
 #endif
-        gui->rpcClient()->switchAccount(account);
     }
 }
 
-Account AccountManager::getAccountByHostAndUsername(const QString& host,
-                                                    const QString& username) const
+Account AccountManager::getAccountByUrlAndUsername(const QString& url,
+                                                   const QString& username) const
 {
-    for (size_t i = 0; i < accounts_.size(); i++) {
-        if (accounts_[i].serverUrl.host() == host
-            && accounts_[i].username == username) {
-            return accounts_[i];
-        }
+    Account account = getAccount(url, username);
+    if (account.isValid()) {
+        return account;
     }
 
-    return Account();
+    // Fix the case when the url loses or adds the "/" suffix.
+    if (url.endsWith("/")) {
+        return getAccount(url.chopped(1), username);
+    } else {
+        return getAccount(url + "/", username);
+    }
 }
 
 Account AccountManager::getAccountBySignature(const QString& account_sig) const
@@ -485,12 +492,6 @@ Account AccountManager::getAccountBySignature(const QString& account_sig) const
     }
 
     return Account();
-}
-
-void AccountManager::updateServerInfoForAllAccounts()
-{
-    for (size_t i = 0; i < accounts_.size(); i++)
-        updateAccountServerInfo(accounts_[i]);
 }
 
 void AccountManager::fetchAccountInfoFromServer(const Account& account)
@@ -513,8 +514,8 @@ void AccountManager::updateAccountServerInfo(const Account& account)
     request->send();
 }
 
-void AccountManager::updateAccountInfo(const Account& account,
-                                       const AccountInfo& info)
+const Account AccountManager::updateAccountInfo(const Account& account,
+                                                const AccountInfo& info)
 {
     setServerInfoKeyValue(db, account, kTotalStorage,
                           QString::number(info.totalStorage));
@@ -527,21 +528,34 @@ void AccountManager::updateAccountInfo(const Account& account,
         if (accounts_[i] == account) {
             accounts_[i].accountInfo = info;
             emit accountInfoUpdated(accounts_[i]);
-            break;
+            return accounts_[i];
         }
     }
+
+    return Account();
 }
 
 
 void::AccountManager::slotUpdateAccountInfoSucess(const AccountInfo& info)
 {
     FetchAccountInfoRequest* req = (FetchAccountInfoRequest*)(sender());
-    updateAccountInfo(req->account(), info);
+    const Account account = updateAccountInfo(req->account(), info);
+#if defined(Q_OS_MAC)
+    if (account.isValid()) {
+        gui->fileProviderManager()->registerDomain(account);
+    }
+#endif
     updateAccountServerInfo(req->account());
 
     req->deleteLater();
     req = NULL;
 
+    AccountMessage msg;
+    msg.type = AccountAdded;
+    msg.account = account;
+    messages.enqueue(msg);
+
+    emit accountMQUpdated();
 }
 
 void AccountManager::slotUpdateAccountInfoFailed()
@@ -563,16 +577,13 @@ void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo 
 
     QUrl url(account.serverUrl);
     url.setPath("/");
-    // gui->rpcClient()->setServerProperty(
-    //     url.toString(), "is_pro", account.isPro() ? "true" : "false");
+
 
 #if defined(_MSC_VER)
     const Account& current_account = currentAccount();
     sync_root_name_= genSyncRootName(current_account);
     qWarning("generated sync root name is : %s", toCStr(sync_root_name_));
 #endif
-
-    gui->rpcClient()->switchAccount(account, info.proEdition);
 
     bool changed = account.serverInfo != info;
     if (!changed)
@@ -621,7 +632,7 @@ void AccountManager::clearAccountToken(const Account& account,
     sqlite_query_exec(db, zql);
     sqlite3_free(zql);
 
-    if (force_relogin || account == currentAccount()) {
+    if (force_relogin) {
         reloginAccount(account);
     } else {
         emit accountsChanged();
@@ -739,50 +750,48 @@ const QString AccountManager::genSyncRootName(const Account& account)
 
 #endif
 
-void AccountManager::onAccountsChanged()
-{
-    QMutexLocker cache_lock(&accounts_cache_mutex_);
-    accounts_cache_.clear();
-}
-
-void AccountManager::invalidateCurrentLogin()
-{
-    // make sure we have accounts there
-    if (!hasAccount())
-        return;
-    const Account &account = accounts_.front();
-    // if the token is already invalidated, ignore
-    if (account.token.isEmpty())
-        return;
-
-    clearAccountToken(account);
-}
-
 void AccountManager::reloginAccount(const Account &account)
 {
-    bool accepted;
-    do {
-        if (account.isShibboleth) {
-            ShibLoginDialog shib_dialog(account.serverUrl, gui->settingsManager()->getComputerName());
-            accepted = shib_dialog.exec() == QDialog::Accepted;
-            break;
-        }
+    if (account.isShibboleth) {
+        ShibLoginDialog shib_dialog(account.serverUrl, gui->settingsManager()->getComputerName());
+        shib_dialog.exec();
+        return;
+    }
+
 #if defined(Q_OS_WIN32)
-        if (account.isKerberos) {
-            AutoLogonDialog dialog;
-            accepted = dialog.exec() == QDialog::Accepted;
-            break;
-        }
+    if (account.isKerberos) {
+        AutoLogonDialog dialog;
+        dialog.exec();
+        return;
+    }
 #endif
-        LoginDialog dialog;
-        dialog.initFromAccount(account);
-        accepted = dialog.exec() == QDialog::Accepted;
-    } while (0);
+
+    gui->trayIcon()->showLoginDialog(account);
 }
 
 const std::vector<Account>& AccountManager::accounts() const
 {
     return accounts_;
+}
+
+const QVector<Account> AccountManager::activeAccounts() const {
+    QVector<Account> accounts;
+    for (size_t i = 0; i < accounts_.size(); i++) {
+        if (!accounts_.at(i).token.isEmpty()) {
+            accounts.push_back(accounts_.at(i));
+        }
+    }
+    return accounts;
+}
+
+Account AccountManager::getAccount(const QString& url, const QString& username) const {
+    for (size_t i = 0; i < accounts_.size(); i++) {
+        if (accounts_.at(i).serverUrl.toString() == url &&
+            accounts_.at(i).username == username) {
+            return accounts_[i];
+        }
+    }
+    return Account();
 }
 
 #if defined(_MSC_VER)

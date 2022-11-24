@@ -67,15 +67,12 @@ public:
 
 public slots:
     void showSettingsWindow();
-    void showSearchDialog();
     void showLoginDialog();
     void showLoginDialog(const Account& account);
     void showAboutDialog();
     void onLoginDialogClosed();
 
 private slots:
-    void onAccountChanged();
-    void clearDialog();
     void quitSeafile();
     void onActivated(QSystemTrayIcon::ActivationReason);
     void prepareContextMenu();
@@ -88,10 +85,9 @@ private slots:
     void about();
     void checkTrayIconMessageQueue();
 
-    void onAccountItemClicked();
-
     void logoutAccount();
     void onLogoutDeviceRequestSuccess();
+    void loginAccount();
 
     void deleteAccount();
 
@@ -123,10 +119,8 @@ private:
 
     // Actions for tray icon menu
     QAction *quit_action_;
-    QAction *search_action_;
     QAction *settings_action_;
     QAction *login_action_;
-    QAction *open_seafile_folder_action_;
     QAction *open_log_directory_action_;
     QAction *show_sync_errors_action_;
     QAction *global_sync_error_action_;
@@ -178,7 +172,6 @@ private:
     SyncErrorsDialog *sync_errors_dialog_;
     TransferProgressDialog * transfer_progress_dialog_;
     EncryptedReposDialog *enc_repo_dialog_;
-    SearchDialog *search_dialog_;
 
 };
 

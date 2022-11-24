@@ -5,6 +5,7 @@
 #include <QVariant>
 #include <QMessageBox>
 #include <QProcess>
+#include <QTimer>
 
 #include "rpc/rpc-server.h"
 
@@ -18,6 +19,7 @@ class SettingsDialog;
 class CertsManager;
 class MessagePoller;
 class AboutDialog;
+class FileProviderManager;
 
 /**
  * The central class of seafile-client
@@ -88,6 +90,8 @@ public:
 
     MessagePoller * messagePoller() { return message_poller_; }
 
+    FileProviderManager *fileProviderManager() { return file_provider_mgr_; }
+
     // CertsManager *certsManager() { return certs_mgr_; }
 
     bool started() { return started_; }
@@ -98,9 +102,11 @@ public slots:
     void start();
 
 private slots:
+    void connectDaemon();
     void onAboutToQuit();
     void onDaemonStarted();
     void onDaemonRestarted();
+    void updateAccountToDaemon();
 
 private:
     Q_DISABLE_COPY(SeadriveGui)
@@ -108,6 +114,10 @@ private:
     bool initLog();
 
     bool loadQss(const QString& path);
+
+    void loginAccounts();
+
+    void logoutAccountsFromDaemon();
 
     bool dev_mode_;
 
@@ -126,6 +136,8 @@ private:
     AboutDialog *about_dlg_;
 
     MessagePoller *message_poller_;
+
+    FileProviderManager *file_provider_mgr_;
 
     // SettingsDialog *settings_dialog_;
 
@@ -147,6 +159,8 @@ private:
 #endif // _MSC_VER
 
     qint64 startup_time_;
+
+    QTimer connect_daemon_timer_;
 };
 
 /**

@@ -32,6 +32,7 @@ public:
     SeafileRpcClient();
     ~SeafileRpcClient();
     void connectDaemon();
+    bool tryConnectDaemon();
 
     bool isConnected() const { return connected_; }
 
@@ -63,10 +64,6 @@ public:
     int setRepoToken(const QString &repo_id,
                      const QString& token);
 
-    int getRepoFileStatus(const QString& repo_uname,
-                          const QString& path_in_repo,
-                          QString *status);
-
 #if defined(Q_OS_WIN32)
     bool getRepoFileLockStatus(const QString& repo_id,
                                const QString& path_in_repo,
@@ -83,13 +80,16 @@ public:
                            const QString &key,
                            const QString &value);
 
-    bool switchAccount(const Account& account);
-    bool switchAccount(const Account& account, bool ispro);
+    bool addAccount(const Account& account);
 
-    bool logoutAccount(const Account& account, bool remove_cache);
-    bool deleteAccount(const Account& account, bool remove_cache);
+    bool logoutAccount(const Account& account);
+    bool deleteAccount(const Account& account);
 
-    bool getRepoIdByPath(const QString& repo_uname, QString *repo_id);
+    bool getRepoIdByPath(const QString& server,
+                         const QString& username,
+                         const QString& repo_uname,
+                         QString *repo_id);
+
     bool getRepoUnameById(const QString& repo_id, QString *repo_uname);
 
     bool getSyncNotification(json_t **ret);
@@ -97,8 +97,6 @@ public:
     bool getGlobalSyncStatus(json_t **ret);
 
     bool getSeaDriveEvents(json_t **ret_obj);
-
-    bool unmount();
 
     bool setCacheCleanIntervalMinutes(int interval);
 
@@ -112,7 +110,7 @@ public:
 
     bool cachePath(const QString& repo_id,
                    const QString& path_in_repo);
-                   
+
     bool isFileCached(const QString& repo_id,
                       const QString& path_in_repo);
 

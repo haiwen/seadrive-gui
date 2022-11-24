@@ -145,7 +145,7 @@ void AutoLogonDialog::startAutoLogon()
 
     qDebug("adding new autologon account, token is %s",
            account.token.toUtf8().data());
-    gui->accountManager()->setCurrentAccount(account);
+    gui->accountManager()->enableAccount(account);
     accept();
 }
 

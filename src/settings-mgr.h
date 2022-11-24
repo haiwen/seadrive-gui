@@ -54,6 +54,8 @@ public:
     SettingsManager();
 
     void loadSettings();
+    void loadProxySettings();
+    void applyProxySettings();
 
     bool notify() { return bubbleNotifycation_; }
     bool autoStart() { return autoStart_; }
@@ -94,12 +96,6 @@ public:
     QString getLastShibUrl();
     void setLastShibUrl(const QString& url);
 
-#ifdef HAVE_FINDER_SYNC_SUPPORT
-    bool getFinderSyncExtension() const;
-    bool getFinderSyncExtensionAvailable() const;
-    void setFinderSyncExtension(bool enabled);
-#endif // HAVE_FINDER_SYNC_SUPPORT
-
 #ifdef Q_OS_WIN32
     void setShellExtensionEnabled(bool enabled);
     bool shellExtensionEnabled() const { return shell_ext_enabled_; }
@@ -121,6 +117,8 @@ public:
     // Write the system proxy information, to be read by seadrive daemon.
     void writeSystemProxyInfo(const QUrl& url, const QString& file_path);
 
+    void writeProxySettingsToDaemon(const SeafileProxy& proxy);
+
 private slots:
     void checkSystemProxy();
     void onSystemProxyPolled(const QNetworkProxy& proxy);
@@ -128,9 +126,7 @@ private slots:
 private:
     Q_DISABLE_COPY(SettingsManager)
 
-    void loadProxySettings();
-    void applyProxySettings();
-    void writeProxySettingsToDaemon(const SeafileProxy& proxy);
+    void writeProxySettings(const SeafileProxy& proxy);
     void writeProxyDetailsToDaemon(const SeafileProxy& proxy);
 
     bool auto_sync_;

@@ -37,7 +37,10 @@ QString getAppletRpcPipePath()
 #else
     QString current_cache_dir;
     if (!gui->settingsManager()->getCacheDir(&current_cache_dir)) {
-        current_cache_dir = QDir(gui->seadriveDataDir()).absolutePath();
+        current_cache_dir = gui->seadriveDataDir();
+    }
+    if (QDir::isAbsolutePath(current_cache_dir)) {
+        current_cache_dir = QDir::home().relativeFilePath(current_cache_dir);
     }
     QString socket_path = pathJoin(current_cache_dir,kSeaDriveSockName);
     return socket_path;

@@ -19,7 +19,6 @@
 
 namespace {
 
-const char *kDefaultServerAddr1 = "https://seacloud.cc";
 const char *kUsedServerAddresses = "UsedServerAddresses";
 const char *const kPreconfigureServerAddr = "PreconfigureServerAddr";
 const char *const kPreconfigureServerAddrOnly = "PreconfigureServerAddrOnly";
@@ -37,9 +36,6 @@ QStringList getUsedServerAddresses()
     QString preconfigure_addr = gui->readPreconfigureExpandedString(kPreconfigureServerAddr);
     if (!preconfigure_addr.isEmpty() && !retval.contains(preconfigure_addr)) {
         retval.push_back(preconfigure_addr);
-    }
-    if (!retval.contains(kDefaultServerAddr1)) {
-        retval.push_back(kDefaultServerAddr1);
     }
     return retval;
 }
@@ -63,8 +59,7 @@ LoginDialog::LoginDialog(QWidget *parent) : QDialog(parent)
     setupUi(this);
     setWindowTitle(tr("Add an account"));
     setWindowIcon(QIcon(":/images/seafile.png"));
-    setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
-                   Qt::WindowStaysOnTopHint);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     request_ = NULL;
     account_info_req_ = NULL;
@@ -207,7 +202,7 @@ bool LoginDialog::validateInputs()
         if (serverAddr.endsWith("/")) {
             serverAddr = serverAddr.left(serverAddr.size() - 1);
         }
-        
+
         url = QUrl(serverAddr, QUrl::StrictMode);
         if (!url.isValid()) {
             showWarning(tr("%1 is not a valid server address").arg(serverAddr));
@@ -294,7 +289,7 @@ void LoginDialog::onFetchAccountInfoSuccess(const AccountInfo& info)
     account.isAutomaticLogin =
         mAutomaticLogin->checkState() == Qt::Checked;
 
-    gui->accountManager()->setCurrentAccount(account);
+    gui->accountManager()->enableAccount(account);
     gui->accountManager()->updateAccountInfo(account, info);
     accept();
     InitSyncDialog *dlg = new InitSyncDialog(account);

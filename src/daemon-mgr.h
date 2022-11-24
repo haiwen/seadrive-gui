@@ -20,7 +20,6 @@ public:
     DaemonManager();
     ~DaemonManager();
     void startSeadriveDaemon();
-    void doUnmount();
     QString currentCacheDir() const { return current_cache_dir_; }
 
 public slots:
@@ -46,7 +45,6 @@ private:
     void stopAllDaemon();
     void scheduleRestartDaemon();
     void transitionState(int new_state);
-    void diskUtilUnmount();
 
     QTimer *conn_daemon_timer_;
     QProcess *seadrive_daemon_;
@@ -56,7 +54,6 @@ private:
     bool first_start_;
     int restart_retried_;
     _SearpcNamedPipeClient *searpc_pipe_client_;
-    bool unmounted_;
     QString current_cache_dir_;
 
 };

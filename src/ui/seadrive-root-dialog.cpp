@@ -19,8 +19,7 @@ SeaDriveRootDialog::SeaDriveRootDialog(QWidget *parent)
     mTitle->setText(tr("Choose %1 Cache Folder ").arg(getBrand()));
     setWindowTitle(tr("Choose %1 Cache Folder").arg(getBrand()));
     setWindowIcon(QIcon(":/images/seafile.png"));
-    setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
-                   Qt::WindowStaysOnTopHint);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     mCacheDirLineEdit->setText(pathJoin(QDir::homePath(), kSeadriveRootFolderName));
 
     connect(mOkBtn, SIGNAL(clicked()), this, SLOT(onOkBtnClicked()));

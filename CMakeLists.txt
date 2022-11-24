@@ -2,9 +2,9 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8.9)
 
 PROJECT(seadrive-gui)
 
-SET(SEADRIVE_GUI_VERSION_MAJOR 2)
+SET(SEADRIVE_GUI_VERSION_MAJOR 3)
 SET(SEADRIVE_GUI_VERSION_MINOR 0)
-SET(SEADRIVE_GUI_VERSION_PATCH 24)
+SET(SEADRIVE_GUI_VERSION_PATCH 0)
 SET(PROJECT_VERSION "${SEADRIVE_GUI_VERSION_MAJOR}.${SEADRIVE_GUI_VERSION_MINOR}.${SEADRIVE_GUI_VERSION_PATCH}")
 ADD_DEFINITIONS(-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_26)
 ADD_DEFINITIONS(-DSEADRIVE_GUI_VERSION=${PROJECT_VERSION})
@@ -17,7 +17,7 @@ IF (NOT (${CMAKE_BUILD_TYPE} MATCHES Release))
 ENDIF()
 
 IF (APPLE AND NOT CMAKE_OSX_DEPLOYMENT_TARGET)
-  SET(CMAKE_OSX_DEPLOYMENT_TARGET "10.9")
+  SET(CMAKE_OSX_DEPLOYMENT_TARGET "11.0")
 ENDIF()
 
 option(BUILD_ENABLE_WARNINGS "Enable compiler warnings." ON)
@@ -80,8 +80,13 @@ ELSEIF (APPLE)
         SET(EXTRA_LIBS ${EXTRA_LIBS} ${SPARKLE_FRAMEWORK})
     ENDIF()
 
-    SET(platform_specific_sources ${platform_specific_sources} src/application.cpp)
-    SET(platform_specific_moc_headers ${platform_specific_moc_headers} src/application.h)
+    SET(platform_specific_sources ${platform_specific_sources}
+      src/application.cpp
+      src/file-provider-mgr.cpp
+      src/file-provider/file-provider.mm)
+    SET(platform_specific_moc_headers ${platform_specific_moc_headers}
+      src/application.h
+      src/file-provider-mgr.h)
     ## Enforce ARC for this file, since ARC is only supported after the objc
     ## runtime changes in os x 10.10
     SET_SOURCE_FILES_PROPERTIES(src/utils/utils-mac.mm
@@ -91,36 +96,9 @@ ELSEIF (APPLE)
     MARK_AS_ADVANCED (COCOA_LIBRARY)
     FIND_LIBRARY(Sec_LIBRARY Security)
     MARK_AS_ADVANCED (Sec_LIBRARY)
-    FIND_LIBRARY(SM_LIBRARY ServiceManagement)
-    MARK_AS_ADVANCED (SM_LIBRARY)
-    FIND_LIBRARY(IOKit_LIBRARY IOKit)
-    FIND_LIBRARY(MPMessagePack_LIBRARY MPMessagePack PATHS ${CMAKE_SOURCE_DIR}/third_party)
-    SET(EXTRA_LIBS ${EXTRA_LIBS} ${COCOA_LIBRARY} ${Sec_LIBRARY} ${SM_LIBRARY} ${IOKit_LIBRARY} ${MPMessagePack_LIBRARY}
-      # load all members from static objc libs like MPMessagePack because it has
-      # objc class category
-      "-ObjC"
-      )
-ENDIF()
-
-IF(APPLE)
-    ADD_DEFINITIONS(-DHAVE_FINDER_SYNC_SUPPORT)
-    SET(platform_specific_moc_headers ${platform_specific_moc_headers}
-      src/finder-sync/finder-sync-host.h
-      src/osx-helperutils/helper-client.h
-      )
-    SET(platform_specific_sources ${platform_specific_sources}
-        src/finder-sync/finder-sync.cpp
-        src/finder-sync/finder-sync-listener.mm
-        src/finder-sync/finder-sync-host.cpp
-        src/osx-helperutils/osx-helperutils.mm
-        src/osx-helperutils/helper-client.mm
-        )
-    SET_SOURCE_FILES_PROPERTIES(src/finder-sync/finder-sync-listener.mm
-        PROPERTIES COMPILE_FLAGS -fobjc-arc)
-    SET_SOURCE_FILES_PROPERTIES(src/osx-helperutils/osx-helperutils.mm
-        PROPERTIES COMPILE_FLAGS -fobjc-arc)
-    SET_SOURCE_FILES_PROPERTIES(src/osx-helperutils/helper-client.mm
-        PROPERTIES COMPILE_FLAGS -fobjc-arc)
+    FIND_LIBRARY(FinderSync_LIBRARY FinderSync)
+    FIND_LIBRARY(FileProvider_LIBRARY FileProvider)
+    SET(EXTRA_LIBS ${EXTRA_LIBS} ${COCOA_LIBRARY} ${Sec_LIBRARY} ${FinderSync_LIBRARY} ${FileProvider_LIBRARY})
 ENDIF()
 
 
@@ -627,16 +605,11 @@ IF(CMAKE_GENERATOR STREQUAL Xcode)
     MACOSX_BUNDLE true
     MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist
   )
-  FIND_PROGRAM(seadrive seadrive)
   SET(RESOURCES_DIR ${CMAKE_CURRENT_BINARY_DIR}/\${CONFIGURATION}/seadrive-gui.app/Contents/Resources)
   ADD_CUSTOM_COMMAND(TARGET seadrive-gui
       POST_BUILD
       COMMAND ${CMAKE_COMMAND} -E make_directory ${RESOURCES_DIR}
-      # We rename the icon because: when we have both the program "seadrive" and
-      # the icon "seadrive.icns" in "Resources" dir, the icon won't be able to
-      # be displayed as the bundle icon.
-      COMMAND ${CMAKE_COMMAND} -E copy seadrive.icns ${RESOURCES_DIR}/seadrive-icon.icns
-      COMMAND ${CMAKE_COMMAND} -E copy ${seadrive} ${RESOURCES_DIR}/.
+      COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/seadrive.icns ${RESOURCES_DIR}/seadrive-icon.icns
   )
   SET(CMAKE_XCODE_ATTRIBUTE_GCC_GENERATE_DEBUGGING_SYMBOLS "YES")
   SET(CMAKE_XCODE_ATTRIBUTE_DEBUG_INFORMATION_FORMAT "dwarf-with-dsym")

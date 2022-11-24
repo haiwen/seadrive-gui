@@ -9,8 +9,7 @@ UploadLinkDialog::UploadLinkDialog(const QString &text, QWidget *parent)
 {
     setWindowTitle(tr("Upload Link"));
     setWindowIcon(QIcon(":/images/seafile.png"));
-    setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
-                   Qt::WindowStaysOnTopHint);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     QVBoxLayout *layout = new QVBoxLayout;
 
     QLabel *label = new QLabel(tr("Upload link:"));
@@ -60,4 +59,3 @@ void UploadLinkDialog::onCopyText()
     utils::mac::copyTextToPasteboard(editor_->text());
 #endif
 }
-

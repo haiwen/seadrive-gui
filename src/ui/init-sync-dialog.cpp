@@ -25,8 +25,7 @@ InitSyncDialog::InitSyncDialog(const Account &account, QWidget *parent)
     mLogo->setPixmap(QPixmap(":/images/seafile-32.png"));
     setWindowTitle(tr("Download files list"));
     setWindowIcon(QIcon(":/images/seafile.png"));
-    setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
-                   Qt::WindowStaysOnTopHint);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     waiting_text_ = tr("%1 is fetching the files list, please wait").arg(getBrand());
     dots_ = 0;
@@ -79,12 +78,11 @@ void InitSyncDialog::finish()
     ensureVisible();
 
     QString msg =
-        tr("%1 has dowloaded your files list.\n"
-           "Please click the \"Finish\" button to open %1 folder.").arg(getBrand());
+        tr("%1 has dowloaded your files list.").arg(getBrand());
     setStatusText(msg);
     setStatusIcon(":/images/ok-48.png");
 
-    connect(mFinishBtn, SIGNAL(clicked()), this, SLOT(openMountPointAndCloseDialog()));
+    connect(mFinishBtn, SIGNAL(clicked()), this, SLOT(accept()));
     mFinishBtn->setVisible(true);
 }
 

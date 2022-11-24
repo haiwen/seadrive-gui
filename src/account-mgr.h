@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QHash>
 #include <QMutex>
+#include <QQueue>
 
 #include "account.h"
 
@@ -14,6 +15,15 @@ struct sqlite3_stmt;
 class ApiError;
 class SeafileRpcClient;
 
+typedef enum {
+    AccountAdded = 0,
+    AccountRemoved,
+} MessageType;
+
+struct AccountMessage {
+    MessageType type;
+    Account account;
+};
 
 #if defined(_MSC_VER)
 class SyncRootInfo {
@@ -56,33 +66,27 @@ public:
      * Account operations
      */
 
-    // Use the given account. This account would also be persisted to
-    // the accounts db.
-    void setCurrentAccount(const Account& account);
+    // Save the account state after being logged in.
+    void enableAccount(const Account& account);
+    // Save the account state after being logged out.
+    void disableAccount(const Account& account);
 
     // Remove the account. Used when user removes an account from the
     // account menu.
     int removeAccount(const Account& account);
 
-    // Use the account if it's valid, otherwise require a re-login.
-    void validateAndUseAccount(const Account& account);
-
-    // Called when API returns 401 and we need to re-login current
-    // account.
-    void invalidateCurrentLogin();
+    // Use all valid accounts, or re-login if no valid account.
+    void validateAndUseAccounts();
 
     // Update AccountInfo (e.g. nick name, quota etc.) for the given
-    // account.
-    void updateAccountInfo(const Account& account, const AccountInfo& info);
-
-    // Trigger server info refresh for all accounts when client
-    // starts.
-    void updateServerInfoForAllAccounts();
+    // account, and return the updated account.
+    const Account updateAccountInfo(const Account& account, const AccountInfo& info);
 
     /**
      * Accessors
      */
     const std::vector<Account>& accounts() const;
+    const QVector<Account> activeAccounts() const;
 # if defined(_MSC_VER)
     const std::vector<SyncRootInfo>& getSyncRootInfos() const;
 #endif
@@ -90,8 +94,8 @@ public:
     bool hasAccount() const;
     bool accountExists(const QUrl& url, const QString& username) const;
 
-    Account getAccountByHostAndUsername(const QString& host,
-                                        const QString& username) const;
+    Account getAccountByUrlAndUsername(const QString& url,
+                                       const QString& username) const;
 
     Account getAccountBySignature(const QString& account_sig) const;
 
@@ -101,6 +105,11 @@ public:
     const QString getSyncRootName() { return sync_root_name_; }
 #endif
 
+    // messages serves as a simple asynchronous queue between account
+    // adding/removing events and rpc calls to daemon. One should enqueue
+    // the message first, and then emit the accountMQUpdated() signal.
+    QQueue<AccountMessage> messages;
+
 public slots:
     void reloginAccount(const Account &account);
 
@@ -109,9 +118,7 @@ signals:
      * Account added/removed/switched.
      */
     void accountsChanged();
-    void accountRequireRelogin(const Account& account);
-
-    void requireAddAccount();
+    void accountMQUpdated();
     void accountInfoUpdated(const Account& account);
 
 private slots:
@@ -119,8 +126,6 @@ private slots:
     void slotUpdateAccountInfoFailed();
     void serverInfoSuccess(const Account &account, const ServerInfo &info);
     void serverInfoFailed(const ApiError&);
-
-    void onAccountsChanged();
 
 private:
     Q_DISABLE_COPY(AccountManager)
@@ -139,8 +144,7 @@ private:
 #if defined(_MSC_VER)
     void updateSyncRootInfo(SyncRootInfo& sync_root_info);
 #endif
-
-    QHash<QString, Account> accounts_cache_;
+    Account getAccount(const QString& url, const QString& username) const;
 
     struct sqlite3 *db;
     std::vector<Account> accounts_;
@@ -151,9 +155,6 @@ private:
 
     QString sync_root_name_;
 #endif
-
-    QMutex accounts_mutex_;
-    QMutex accounts_cache_mutex_;
 };
 
 #endif  // _SEAF_ACCOUNT_MGR_H

@@ -17,7 +17,8 @@
 #include "rpc-client.h"
 #include "utils/utils-win.h"
 #include "daemon-mgr.h"
-
+#include "file-provider-mgr.h"
+#include "i18n.h"
 
 namespace {
 
@@ -54,6 +55,9 @@ void SeafileRpcClient::connectDaemon()
 #if defined(Q_OS_WIN32)
         pipe_client = searpc_create_named_pipe_client(
             utils::win::getLocalPipeName(kSeadriveSockName).c_str());
+#elif defined(Q_OS_MAC)
+        pipe_client = searpc_create_named_pipe_client(
+            toCStr(QDir(gui->seadriveDir()).filePath(kSeadriveSockName)));
 #else
         pipe_client = searpc_create_named_pipe_client(
             toCStr(QDir(gui->daemonManager()->currentCacheDir()).filePath(kSeadriveSockName)));
@@ -72,6 +76,35 @@ void SeafileRpcClient::connectDaemon()
     connected_ = true;
     seadrive_rpc_client_ = searpc_client_with_named_pipe_transport(
         pipe_client, kSeadriveRpcService);
+}
+
+bool SeafileRpcClient::tryConnectDaemon() {
+    SearpcNamedPipeClient *pipe_client;
+
+#if defined(Q_OS_WIN32)
+    pipe_client = searpc_create_named_pipe_client(
+        utils::win::getLocalPipeName(kSeadriveSockName).c_str());
+#elif defined(Q_OS_MAC)
+    pipe_client = searpc_create_named_pipe_client(
+        toCStr(QDir(gui->seadriveDir()).filePath(kSeadriveSockName)));
+#else
+    pipe_client = searpc_create_named_pipe_client(
+        toCStr(QDir(gui->daemonManager()->currentCacheDir()).filePath(kSeadriveSockName)));
+#endif
+    if (!pipe_client) {
+        return false;
+    }
+
+    if (searpc_named_pipe_client_connect(pipe_client) < 0) {
+        g_free(pipe_client);
+        return false;
+    }
+
+    seadrive_rpc_client_ = searpc_client_with_named_pipe_transport(
+        pipe_client, kSeadriveRpcService);
+    connected_ = true;
+
+    return true;
 }
 
 int SeafileRpcClient::seafileGetConfig(const QString &key, QString *value)
@@ -292,34 +325,6 @@ int SeafileRpcClient::setRepoToken(const QString &repo_id,
     return ret;
 }
 
-int SeafileRpcClient::getRepoFileStatus(const QString& repo_uname,
-                                        const QString& path_in_repo,
-                                        QString *status)
-{
-    GError *error = NULL;
-    char *ret = searpc_client_call__string (
-        seadrive_rpc_client_,
-        "seafile_get_path_sync_status",
-        &error, 2,
-        "string", toCStr(repo_uname),
-        "string", toCStr(path_in_repo));
-    if (error) {
-        qWarning("failed to get path status for %s/%s: %s\n",
-                 toCStr(repo_uname),
-                 toCStr(path_in_repo),
-                 error->message);
-        g_error_free(error);
-        return -1;
-    }
-
-    *status = ret;
-
-    // printf ("status for %s/%s = %s\n", toCStr(repo_uname), toCStr(path_in_repo), ret);
-
-    g_free (ret);
-    return 0;
-}
-
 #if defined(Q_OS_WIN32)
 bool SeafileRpcClient::getRepoFileLockStatus(const QString& repo_id,
                                              const QString& path_in_repo,
@@ -405,8 +410,8 @@ bool SeafileRpcClient::setServerProperty(const QString &url,
     return true;
 }
 
-
-bool SeafileRpcClient::switchAccount(const Account& account)
+#if defined(Q_OS_WIN32)
+bool SeafileRpcClient::addAccount(const Account& account, QString sync_root, QString name)
 {
     GError *error = NULL;
     QString serverAddr = account.serverUrl.toString();
@@ -414,102 +419,74 @@ bool SeafileRpcClient::switchAccount(const Account& account)
         serverAddr = serverAddr.left(serverAddr.size() - 1);
     }
 
-    QString email_addr = account.username;
-    int pos = email_addr.indexOf("@");
-    QString nickname = account.accountInfo.name;
-    QString name = nickname.isEmpty() ? email_addr.left(pos) : nickname;
-
-    searpc_client_call__int(seadrive_rpc_client_,
-                            "seafile_switch_account",
-                            &error,
-#if defined(_MSC_VER)
+    searpc_client_call__int(seadrive_rpc_client_, "seafile_add_account", &error,
                             6,
-#else
-                            4,
-#endif
-                            "string",
-                            toCStr(serverAddr),
-                            "string",
-                            toCStr(account.username),
-                            "string",
-                            toCStr(account.token),
-#if defined(_MSC_VER)
-                            "string",
-                            toCStr(QDir::toNativeSeparators(gui->mountDir())),
-                            "string",
-                            toCStr(name),
-#endif
-                            "int",
-                            account.isPro() ? 1 : 0);
+                            "string", toCStr(serverAddr),
+                            "string", toCStr(account.username),
+                            "string", toCStr(account.token),
+                            "string", toCStr(sync_root),
+                            "string", toCStr(name),
+                            "int", account.isPro() ? 1 : 0);
     if (error) {
-        qWarning() << "Unable to switch to account" << account << ":"
+        qWarning() << "Unable to add account" << account << ":"
                    << (error->message ? error->message : "");
         g_error_free(error);
         return false;
     }
-    qWarning() << "Switched to account" << account;
+    qWarning() << "Add account" << account;
+
     return true;
 }
-
-bool SeafileRpcClient::switchAccount(const Account& account, bool ispro)
+#elif defined(Q_OS_MAC)
+bool SeafileRpcClient::addAccount(const Account& account)
 {
     GError *error = NULL;
     QString serverAddr = account.serverUrl.toString();
     if (serverAddr.endsWith("/")) {
         serverAddr = serverAddr.left(serverAddr.size() - 1);
     }
+    QString language;
+    if (I18NHelper::getInstance()->isTargetLanguage("zh_cn")) {
+        language = "zh_cn";
+    } else if (I18NHelper::getInstance()->isTargetLanguage("de_de")) {
+        language = "de_de";
+    } else if (I18NHelper::getInstance()->isTargetLanguage("fr_fr")) {
+        language = "fr_fr";
+    } else {
+        language = "en_us";
+    }
 
-
-    QString email_addr = account.username;
-    int pos = email_addr.indexOf("@");
-    QString nickname = account.accountInfo.name;
-    QString name = nickname.isEmpty() ? email_addr.left(pos) : nickname;
-
-    searpc_client_call__int(seadrive_rpc_client_,
-                            "seafile_switch_account",
-                            &error,
-#if defined(_MSC_VER)
+    searpc_client_call__int(seadrive_rpc_client_, "seafile_add_account", &error,
                             6,
-#else
-                            4,
-#endif
-                            "string",
-                            toCStr(serverAddr),
-                            "string",
-                            toCStr(account.username),
-                            "string",
-                            toCStr(account.token),
-#if defined(_MSC_VER)
-                            "string",
-                            toCStr(QDir::toNativeSeparators(gui->mountDir())),
-                            "string",
-                            toCStr(name),
-#endif
-                            "int",
-                            ispro ? 1 : 0);
+                            "string", toCStr(serverAddr),
+                            "string", toCStr(account.username),
+                            "string", toCStr(account.token),
+                            "string", toCStr(account.domainID()),
+                            "string", toCStr(language),
+                            "int", account.isPro() ? 1 : 0);
     if (error) {
-        qWarning() << "Unable to switch to account" << account << ":"
+        qWarning() << "Unable to add account" << account << ":"
                    << (error->message ? error->message : "");
         g_error_free(error);
         return false;
     }
-    qWarning() << "Switched to account" << account;
+    qWarning() << "Add account" << account << language;
+
     return true;
 }
+#endif
 
-bool SeafileRpcClient::deleteAccount(const Account& account, bool remove_cache)
+bool SeafileRpcClient::deleteAccount(const Account& account)
 {
     GError *error = NULL;
     searpc_client_call__int(seadrive_rpc_client_,
                             "seafile_delete_account",
                             &error,
-                            3,
+                            2,
                             "string",
                             toCStr(account.serverUrl.toString()),
                             "string",
-                            toCStr(account.username),
-                            "int",
-                            remove_cache ? 1 : 0);
+                            toCStr(account.username));
     if (error) {
         qWarning() << "Unable to delete account" << account << ":"
                    << (error->message ? error->message : "");
@@ -520,19 +497,17 @@ bool SeafileRpcClient::deleteAccount(const Account& account, bool remove_cache)
     return true;
 }
 
-bool SeafileRpcClient::logoutAccount(const Account& account, bool remove_cache)
+bool SeafileRpcClient::logoutAccount(const Account& account)
 {
     GError *error = NULL;
     searpc_client_call__int(seadrive_rpc_client_,
                             "seafile_logout_account",
                             &error,
-                            3,
+                            2,
                             "string",
                             toCStr(account.serverUrl.toString()),
                             "string",
-                            toCStr(account.username),
-                            "int",
-                            remove_cache ? 1 : 0);
+                            toCStr(account.username));
     if (error) {
         qWarning() << "Unable to logout account" << account << ":"
                    << (error->message ? error->message : "");
@@ -543,14 +518,18 @@ bool SeafileRpcClient::logoutAccount(const Account& account, bool remove_cache)
     return true;
 }
 
-bool SeafileRpcClient::getRepoIdByPath(const QString &repo_uname,
+bool SeafileRpcClient::getRepoIdByPath(const QString &server,
+                                       const QString &username,
+                                       const QString &repo_uname,
                                        QString *repo_id)
 {
     GError *error = NULL;
     char *ret = searpc_client_call__string (
         seadrive_rpc_client_,
         "seafile_get_repo_id_by_uname",
-        &error, 1,
+        &error, 3,
+        "string", toCStr(server),
+        "string", toCStr(username),
         "string", toCStr(repo_uname));
     if (error) {
         qWarning("failed to get repo id of %s: %s\n",
@@ -635,26 +614,6 @@ bool SeafileRpcClient::getGlobalSyncStatus(json_t **ret_obj)
     }
 
     *ret_obj = ret;
-
-    return true;
-}
-
-bool SeafileRpcClient::unmount()
-{
-    GError *error = NULL;
-    int ret = searpc_client_call__int (
-        seadrive_rpc_client_,
-        "seafile_unmount",
-        &error, 0);
-    if (error || ret != 0) {
-        // The unmount rpc would case seadrive daemon to exit, so the rpc would always fail.
-        qDebug("failed to unmount : %s\n",
-               (error && error->message) ? error->message : "");
-        if (error) {
-            g_error_free(error);
-        }
-        return false;
-    }
 
     return true;
 }

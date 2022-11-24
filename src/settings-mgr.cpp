@@ -16,10 +16,6 @@
 #include "utils/registry.h"
 #endif
 
-#ifdef HAVE_FINDER_SYNC_SUPPORT
-#include "finder-sync/finder-sync.h"
-#endif
-
 #include "settings-mgr.h"
 
 namespace
@@ -41,9 +37,6 @@ const char *kSeadriveRoot = "seadriveRoot";
 const char *kSettingsGroup = "Settings";
 const char *kComputerName = "computerName";
 const char *kCacheDir = "cacheDir";
-#ifdef HAVE_FINDER_SYNC_SUPPORT
-const char *kFinderSync = "finderSync";
-#endif // HAVE_FINDER_SYNC_SUPPORT
 const char *kLastShibUrl = "lastShiburl";
 
 const char *kUseProxy = "use_proxy";
@@ -156,17 +149,6 @@ void SettingsManager::loadSettings()
 
     autoStart_ = get_seafile_auto_start();
 
-#ifdef HAVE_FINDER_SYNC_SUPPORT
-    // try to do a reinstall, or we may use findersync somewhere else
-    // this action won't stop findersync if running already
-    FinderSyncExtensionHelper::reinstall();
-
-    // try to sync finder sync extension settings with the actual settings
-    // i.e. enabling the finder sync if the setting is true
-    setFinderSyncExtension(getFinderSyncExtension());
-#endif // HAVE_FINDER_SYNC_SUPPORT
-
-
 #ifdef Q_OS_WIN32
     RegElement reg(HKEY_CURRENT_USER, softwareSeaDrive(), "ShellExtDisabled",
                    "");
@@ -176,61 +158,15 @@ void SettingsManager::loadSettings()
 
 void SettingsManager::loadProxySettings()
 {
+    QSettings settings;
+    settings.beginGroup(kSettingsGroup);
+
     SeafileProxy proxy;
-
-    QString use_proxy;
-    gui->rpcClient()->seafileGetConfig(kUseProxy, &use_proxy);
-    if (use_proxy != "true") {
-        return;
-    }
-    QString use_system_proxy;
-    gui->rpcClient()->seafileGetConfig(kUseSystemProxy, &use_system_proxy);
-    if (use_system_proxy == "true") {
-        current_proxy_.type = SystemProxy;
-        return;
-    }
-
-    QString proxy_type;
-    QString proxy_host;
-    int proxy_port;
-    QString proxy_username;
-    QString proxy_password;
-
-    if (gui->rpcClient()->seafileGetConfig(kProxyAddr, &proxy_host) <
-        0) {
-        return;
-    }
-    if (gui->rpcClient()->seafileGetConfigInt(kProxyPort, &proxy_port) <
-        0) {
-        return;
-    }
-    if (gui->rpcClient()->seafileGetConfig(kProxyType, &proxy_type) <
-        0) {
-        return;
-    }
-    if (proxy_type == "http") {
-        if (gui->rpcClient()->seafileGetConfig(kProxyUsername,
-                                                      &proxy_username) < 0) {
-            return;
-        }
-        if (gui->rpcClient()->seafileGetConfig(kProxyPassword,
-                                                      &proxy_password) < 0) {
-            return;
-        }
-        proxy.type = HttpProxy;
-        proxy.host = proxy_host;
-        proxy.port = proxy_port;
-        proxy.username = proxy_username;
-        proxy.password = proxy_password;
-
-    } else if (proxy_type == "socks") {
-        proxy.type = SocksProxy;
-        proxy.host = proxy_host;
-        proxy.port = proxy_port;
-    } else if (!proxy_type.isEmpty()) {
-        qWarning("Unsupported proxy_type %s", proxy_type.toUtf8().data());
-        return;
-    }
+    proxy.type = static_cast<ProxyType>(settings.value(kProxyType, 0).toInt());
+    proxy.host = settings.value(kProxyAddr, "").toString();
+    proxy.port = settings.value(kProxyPort, 0).toInt();
+    proxy.username = settings.value(kProxyUsername, "").toString();
+    proxy.password = settings.value(kProxyPassword, "").toString();
 
     current_proxy_ = proxy;
 }
@@ -431,7 +367,10 @@ void SettingsManager::setProxy(const SeafileProxy &proxy)
     }
     current_proxy_ = proxy;
 
-    writeProxySettingsToDaemon(proxy);
+    writeProxySettings(proxy);
+    if (gui->rpcClient()->isConnected()) {
+        writeProxySettingsToDaemon(proxy);
+    }
     applyProxySettings();
 }
 
@@ -457,6 +396,20 @@ void SettingsManager::applyProxySettings()
     QNetworkProxy proxy;
     getProxy(&proxy);
     NetworkManager::instance()->applyProxy(proxy);
+}
+
+void SettingsManager::writeProxySettings(const SeafileProxy &proxy)
+{
+    QSettings settings;
+    settings.beginGroup(kSettingsGroup);
+
+    settings.setValue(kProxyType, static_cast<int>(proxy.type));
+    settings.setValue(kProxyAddr, proxy.host);
+    settings.setValue(kProxyPort, proxy.port);
+    settings.setValue(kProxyUsername, proxy.username);
+    settings.setValue(kProxyPassword, proxy.password);
+
+    settings.sync();
 }
 
 void SettingsManager::writeProxySettingsToDaemon(const SeafileProxy &proxy)
@@ -555,40 +508,6 @@ void SettingsManager::setLastShibUrl(const QString &url)
     settings.setValue(kLastShibUrl, url);
     settings.endGroup();
 }
-
-#ifdef HAVE_FINDER_SYNC_SUPPORT
-bool SettingsManager::getFinderSyncExtension() const
-{
-    QSettings settings;
-    bool enabled;
-
-    settings.beginGroup(kSettingsGroup);
-    enabled = settings.value(kFinderSync, true).toBool();
-    settings.endGroup();
-
-    return enabled;
-}
-bool SettingsManager::getFinderSyncExtensionAvailable() const
-{
-    return FinderSyncExtensionHelper::isInstalled();
-}
-void SettingsManager::setFinderSyncExtension(bool enabled)
-{
-    QSettings settings;
-
-    settings.beginGroup(kSettingsGroup);
-    settings.setValue(kFinderSync, enabled);
-    settings.endGroup();
-
-    // if setting operation fails
-    if (!getFinderSyncExtensionAvailable()) {
-        qWarning("Unable to find FinderSync Extension");
-    } else if (enabled != FinderSyncExtensionHelper::isEnabled() &&
-               !FinderSyncExtensionHelper::setEnable(enabled)) {
-        qWarning("Unable to enable FinderSync Extension");
-    }
-}
-#endif // HAVE_FINDER_SYNC_SUPPORT
 
 #ifdef Q_OS_WIN32
 void SettingsManager::setShellExtensionEnabled(bool enabled)
@@ -727,12 +646,12 @@ void SettingsManager::checkSystemProxy()
         return;
     }
 
-    const Account &account = gui->accountManager()->currentAccount();
-    if (!account.isValid()) {
+    if (gui->accountManager()->activeAccounts().empty()) {
         return;
     }
+    QUrl url = gui->accountManager()->activeAccounts().front().serverUrl;
 
-    SystemProxyPoller *poller = new SystemProxyPoller(account.serverUrl);
+    SystemProxyPoller *poller = new SystemProxyPoller(url);
     connect(poller, SIGNAL(systemProxyPolled(const QNetworkProxy &)), this,
             SLOT(onSystemProxyPolled(const QNetworkProxy &)));
 

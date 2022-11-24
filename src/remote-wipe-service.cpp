@@ -21,9 +21,7 @@ SINGLETON_IMPL(RemoteWipeService)
 
 RemoteWipeService::RemoteWipeService(QObject *parent)
     : QObject(parent),
-      auth_ping_req_(nullptr),
-      in_refresh_(false),
-      wipe_in_progress_(false)
+      active_request_count_(0)
 {
     refresh_timer_ = new QTimer(this);
     connect(refresh_timer_, SIGNAL(timeout()), this, SLOT(sendAuthPing()));
@@ -32,9 +30,6 @@ RemoteWipeService::RemoteWipeService(QObject *parent)
 RemoteWipeService::~RemoteWipeService()
 {
     refresh_timer_->stop();
-    if (auth_ping_req_) {
-        auth_ping_req_->deleteLater();
-    }
 }
 
 void RemoteWipeService::start()
@@ -48,48 +43,38 @@ void RemoteWipeService::start()
 
 void RemoteWipeService::onAccountChanged()
 {
-    sendAuthPing(true);
+    sendAuthPing();
 }
 
 void RemoteWipeService::sendAuthPing()
 {
-    if (in_refresh_) {
+    if (active_request_count_ != 0) {
         return;
     }
 
     qDebug("checking auth status...");
 
-    const Account& account = gui->accountManager()->currentAccount();
-    if (!account.isValid()) {
-        return;
+    auto accounts = gui->accountManager()->activeAccounts();
+    active_request_count_ = accounts.size();
+
+    for (int i = 0; i < accounts.size(); i++) {
+        auto auth_ping_req = new AuthPingRequest(accounts.at(i));
+        connect(auth_ping_req, SIGNAL(success()),
+                this, SLOT(onRequestSuccess()));
+        connect(auth_ping_req, SIGNAL(failed(const ApiError&)),
+                this, SLOT(onRequestFailed(const ApiError&)));
+        auth_ping_req->send();
     }
-
-    in_refresh_ = true;
-
-    if (auth_ping_req_) {
-        auth_ping_req_->deleteLater();
-    }
-    auth_ping_req_ = new AuthPingRequest(account);
-
-    connect(auth_ping_req_, SIGNAL(success()),
-            this, SLOT(onRequestSuccess()));
-    connect(auth_ping_req_, SIGNAL(failed(const ApiError&)),
-            this, SLOT(onRequestFailed(const ApiError&)));
-
-    auth_ping_req_->send();
 }
 
 void RemoteWipeService::onRequestFailed(const ApiError& error)
 {
-    in_refresh_ = false;
+    auto req = (AuthPingRequest *)(sender());
+    req->deleteLater();
 
-    if (auth_ping_req_->reply()->hasRawHeader("X-Seafile-Wiped")) {
-        qWarning ("current device is marked to be remote wiped\n");
-        if (!wipe_in_progress_) {
-            wipe_in_progress_ = true;
-            // Wipe the local cache and ask the user to relogin.
-            wipeLocalFiles();
-        }
+    if (req->reply()->hasRawHeader("X-Seafile-Wiped")) {
+        wipeLocalFiles(req->account());
+        active_request_count_--;
         return;
     }
 
@@ -99,39 +84,34 @@ void RemoteWipeService::onRequestFailed(const ApiError& error)
     // but we only handle this error here to avoid complicate code since it is
     // general enough.
     if (error.type() == ApiError::HTTP_ERROR && error.httpErrorCode() == 401) {
-        askDaemonDeleteAccount(false);
+        askDaemonDeleteAccount(req->account());
         gui->warningBox(tr("Authorization expired, please re-login"));
-        gui->accountManager()->invalidateCurrentLogin();
+        gui->accountManager()->disableAccount(req->account());
+        active_request_count_--;
         return;
     }
+
+    active_request_count_--;
 }
 
 void RemoteWipeService::onRequestSuccess()
 {
-    in_refresh_ = false;
+    auto req = (AuthPingRequest *)(sender());
+    req->deleteLater();
+
+    active_request_count_--;
 }
 
-void RemoteWipeService::sendAuthPing(bool force)
+void RemoteWipeService::askDaemonDeleteAccount(const Account& account)
 {
-    if (force) {
-        in_refresh_ = false;
-    }
-
-    sendAuthPing();
-}
-
-void RemoteWipeService::askDaemonDeleteAccount(bool remove_cache)
-{
-    const Account& account = gui->accountManager()->currentAccount();
-    if (!gui->rpcClient()->deleteAccount(account, remove_cache)) {
+    if (!gui->rpcClient()->deleteAccount(account)) {
         qWarning() << "Failed to remove local cache of account" << account;
     }
 }
 
-void RemoteWipeService::wipeLocalFiles()
+void RemoteWipeService::wipeLocalFiles(const Account &account)
 {
     qWarning("Got a remote wipe request, wiping local cache");
-    askDaemonDeleteAccount(true);
-    gui->accountManager()->clearAccountToken(gui->accountManager()->currentAccount());
-    wipe_in_progress_ = false;
+    askDaemonDeleteAccount(account);
+    gui->accountManager()->clearAccountToken(account);
 }

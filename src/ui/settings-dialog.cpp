@@ -12,6 +12,7 @@
 #include "settings-mgr.h"
 #include "api/requests.h"
 #include "settings-dialog.h"
+#include "rpc/rpc-client.h"
 #if defined(_MSC_VER)
 #include "utils/registry.h"
 #endif
@@ -54,8 +55,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
     setupUi(this);
     setWindowTitle(tr("Settings"));
     setWindowIcon(QIcon(":/images/seafile.png"));
-    setWindowFlags((windowFlags() & ~Qt::WindowContextHelpButtonHint) |
-                   Qt::WindowStaysOnTopHint);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
 
     mAutoStartCheckBox->setText(
@@ -77,6 +77,12 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
     mShowCacheDir->setText(current_cache_dir_);
     mShowCacheDir->setReadOnly(true);
     mCacheLabel->setText(tr("Cache directory:"));
+#endif
+
+#if defined(Q_OS_MAC)
+    mCacheLabel->hide();
+    mShowCacheDir->hide();
+    mSelectBtn->hide();
 #endif
 
     mSpotlightCheckBox->setText(tr("Enable search in finder"));
@@ -110,111 +116,103 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
 void SettingsDialog::updateSettings()
 {
     SettingsManager *mgr = gui->settingsManager();
+    bool language_changed = false;
+    bool seadrive_root_changed = false;
+    bool cache_dir_changed = false;
+    bool diskLetter_changed = false;
+    bool current_access_changed = false;
+    QString spotlight_updated;
 
-    mgr->setNotify(mNotifyCheckBox->checkState() == Qt::Checked);
-    mgr->setAutoStart(mAutoStartCheckBox->checkState() == Qt::Checked);
-    mgr->setSyncExtraTempFile(mSyncExtraTempFileCheckBox->checkState() == Qt::Checked);
+    if (mBasicTab->isEnabled()) {
+        mgr->setNotify(mNotifyCheckBox->checkState() == Qt::Checked);
+        mgr->setAutoStart(mAutoStartCheckBox->checkState() == Qt::Checked);
+        mgr->setSyncExtraTempFile(mSyncExtraTempFileCheckBox->checkState() == Qt::Checked);
 
-    mgr->setMaxDownloadRatio(mDownloadSpinBox->value());
-    mgr->setMaxUploadRatio(mUploadSpinBox->value());
+        mgr->setMaxDownloadRatio(mDownloadSpinBox->value());
+        mgr->setMaxUploadRatio(mUploadSpinBox->value());
 
-    mgr->setHttpSyncCertVerifyDisabled(mDisableVerifyHttpSyncCert->checkState() == Qt::Checked);
+        mgr->setHttpSyncCertVerifyDisabled(mDisableVerifyHttpSyncCert->checkState() == Qt::Checked);
 
-#ifdef HAVE_FINDER_SYNC_SUPPORT
-    if(mFinderSyncCheckBox->isEnabled())
-        mgr->setFinderSyncExtension(mFinderSyncCheckBox->checkState() == Qt::Checked);
-#endif
+        if ((mSpotlightCheckBox->checkState() == Qt::Checked) != mgr->getSearchEnabled()) {
+            mgr->setSearchEnabled(mSpotlightCheckBox->checkState() == Qt::Checked);
+            spotlight_updated = mSpotlightCheckBox->checkState() == Qt::Checked
+                                ? tr("enabled search")
+                                : tr("disabled search");
+        }
 
 #ifdef Q_OS_WIN32
-    mgr->setShellExtensionEnabled(mShellExtCheckBox->checkState() == Qt::Checked);
+        mgr->setShellExtensionEnabled(mShellExtCheckBox->checkState() == Qt::Checked);
+        if (!preferred_disk_letter_.contains(mDiskLetter->currentText())) {
+            mgr->setDiskLetter(mDiskLetter->currentText() + ":");
+            diskLetter_changed = true;
+        }
 #endif
+
+#ifdef HAVE_SPARKLE_SUPPORT
+        if (AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
+            bool enabled = mCheckLatestVersionBox->checkState() == Qt::Checked;
+            AutoUpdateService::instance()->setAutoUpdateEnabled(enabled);
+        }
+#endif
+    }
+
+    if (mAdvancedTab->isEnabled()) {
+        mgr->setCacheCleanIntervalMinutes(mCacheCleanInterval->value());
+        mgr->setCacheSizeLimitGB(mCacheSizeLimit->value());
+#if defined(Q_OS_WIN32)
+        bool current_access = mCurrentAccess->checkState() == Qt::Checked;
+        if (current_session_access_ != current_access) {
+            current_session_access_ = current_access;
+            mgr->setCurrentUserAccess(current_access);
+            current_access_changed = true;
+        }
+#endif
+
+#if defined(_MSC_VER)
+        if (mShowCacheDir->text() != current_seadrive_root_ ) {
+            seadrive_root_changed = true;
+            mgr->setSeadriveRoot(mShowCacheDir->text());
+        }
+        RegElement::removeIconRegItem();
+#else
+        if (mShowCacheDir->text() != current_cache_dir_) {
+            cache_dir_changed = true;
+            mgr->setCacheDir(mShowCacheDir->text());
+        }
+#endif
+    }
+
+    if (mLanguageComboBox->currentIndex() != I18NHelper::getInstance()->preferredLanguage()) {
+        I18NHelper::getInstance()->setPreferredLanguage(mLanguageComboBox->currentIndex());
+        language_changed = true;
+    }
 
     updateProxySettings();
 
-    mgr->setCacheCleanIntervalMinutes(mCacheCleanInterval->value());
-    mgr->setCacheSizeLimitGB(mCacheSizeLimit->value());
-
-#ifdef HAVE_SPARKLE_SUPPORT
-    if (AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
-        bool enabled = mCheckLatestVersionBox->checkState() == Qt::Checked;
-        AutoUpdateService::instance()->setAutoUpdateEnabled(enabled);
-    }
-#endif
-
-    bool language_changed = false;
-    QString msg;
-    if (mLanguageComboBox->currentIndex() != I18NHelper::getInstance()->preferredLanguage()) {
-        language_changed = true;
-        I18NHelper::getInstance()->setPreferredLanguage(mLanguageComboBox->currentIndex());
-        msg = tr("language");
-    }
-
-    if(language_changed && gui->yesOrNoBox
-            (tr("You have changed language, Restart to apply it?"), this, true)) {
+    if (language_changed && gui->yesOrNoBox(
+        tr("You have changed language, Restart to apply it?"), this, true)) {
         gui->restartApp();
     }
-
-
-#if defined(_MSC_VER)
-
-    bool seadrive_root_changed = false;
-    if (mShowCacheDir->text() != current_seadrive_root_ ) {
-        seadrive_root_changed = true;
-        mgr->setSeadriveRoot(mShowCacheDir->text());
-    }
-
-
-    RegElement::removeIconRegItem();
-    if (seadrive_root_changed && gui->yesOrNoBox(tr("You have changed %1 cache folder. Restart to apply it?").arg(getBrand()), this, true)) {
+    if (seadrive_root_changed && gui->yesOrNoBox(
+        tr("You have changed %1 cache folder. Restart to apply it?").arg(getBrand()), this, true)) {
         gui->restartApp();
     }
-#else
-    bool cache_dir_changed = false;
-    if (mShowCacheDir->text() != current_cache_dir_) {
-        cache_dir_changed = true;
-        mgr->setCacheDir(mShowCacheDir->text());
-    }
-
-    if (cache_dir_changed && gui->yesOrNoBox
-            (tr("You have changed cache directory. Restart to apply it?"), this, true)) {
+    if (cache_dir_changed && gui->yesOrNoBox(
+        tr("You have changed cache directory. Restart to apply it?"), this, true)) {
         gui->restartApp();
     }
-#endif
-
-    bool enable_spotlight = false;
-    if ((mSpotlightCheckBox->checkState() == Qt::Checked) != mgr->getSearchEnabled()) {
-        enable_spotlight = true;
-        mgr->setSearchEnabled(mSpotlightCheckBox->checkState() == Qt::Checked);
-        msg = mSpotlightCheckBox->checkState() == Qt::Checked ? tr("enabled search") : tr("disabled search");
-    }
-
-    if ((enable_spotlight) && gui->yesOrNoBox
-            (tr("You have %1. Restart to apply it?").arg(msg), this, true)) {
+    if (!spotlight_updated.isEmpty() && gui->yesOrNoBox(
+        tr("You have %1. Restart to apply it?").arg(spotlight_updated), this, true)) {
         gui->restartApp();
     }
-
-//     // if (proxy_changed && gui->yesOrNoBox(tr("You have changed proxy settings. Restart to apply it?"), this, true))
-//     //     gui->restartApp();
-
-#ifdef Q_OS_WIN32
-    bool diskLetter_changed = false;
-    if (!preferred_disk_letter_.contains(mDiskLetter->currentText())) {
-        diskLetter_changed = true;
-        mgr->setDiskLetter(mDiskLetter->currentText() + ":");
-    }
-
-    if (diskLetter_changed && gui->yesOrNoBox(tr("You have changed disk letter. Restart to apply it?"), this, true))
+    if (diskLetter_changed && gui->yesOrNoBox(
+        tr("You have changed disk letter. Restart to apply it?"), this, true)) {
         gui->restartApp();
-
-    bool current_access = mCurrentAccess->checkState() == Qt::Checked;
-    if (current_session_access_ != current_access) {
-        mgr->setCurrentUserAccess(current_access);
-        current_session_access_ = current_access;
-        if  (gui->yesOrNoBox(tr("You have changed drive access option. Restart to apply it?"), this, true)) {
-            gui->restartApp();
-        }
     }
-#endif // Q_OS_WIN32
+    if (current_access_changed && gui->yesOrNoBox(
+        tr("You have changed drive access option. Restart to apply it?"), this, true)) {
+        gui->restartApp();
+    }
 }
 
 void SettingsDialog::closeEvent(QCloseEvent *event)
@@ -230,75 +228,107 @@ void SettingsDialog::closeEvent(QCloseEvent *event)
 
 void SettingsDialog::showEvent(QShowEvent *event)
 {
+    bool isDaemonUp = gui->rpcClient()->isConnected();
     SettingsManager *mgr = gui->settingsManager();
-    mgr->loadSettings();
 
-    Qt::CheckState state;
-
-    state = mgr->syncExtraTempFile() ? Qt::Checked : Qt::Unchecked;
-    mSyncExtraTempFileCheckBox->setCheckState(state);
-
-    state = mgr->httpSyncCertVerifyDisabled() ? Qt::Checked : Qt::Unchecked;
-    mDisableVerifyHttpSyncCert->setCheckState(state);
-
-#if 0
-#if defined(Q_OS_MAC)
-    state = mgr->getSearchEnabled() ? Qt::Checked : Qt::Unchecked;;
-    mSpotlightCheckBox->setCheckState(state);
-#else
-    mSpotlightCheckBox->hide();
-#endif
-#endif
-
-    // currently supports windows only
-    state = mgr->autoStart() ? Qt::Checked : Qt::Unchecked;
-    mAutoStartCheckBox->setCheckState(state);
-#if !defined(Q_OS_WIN32) && !defined(Q_OS_MAC)
-    mAutoStartCheckBox->hide();
-#endif
-
-#ifdef HAVE_FINDER_SYNC_SUPPORT
-    if (mgr->getFinderSyncExtensionAvailable()) {
-        mFinderSyncCheckBox->setEnabled(true);
-        state = mgr->getFinderSyncExtension() ? Qt::Checked : Qt::Unchecked;
-        mFinderSyncCheckBox->setCheckState(state);
+    if (isDaemonUp) {
+        mBasicTab->setDisabled(false);
+        mAdvancedTab->setDisabled(false);
     } else {
-        mFinderSyncCheckBox->setEnabled(false);
+        mBasicTab->setDisabled(true);
+        mAdvancedTab->setDisabled(true);
     }
-#else
-    mFinderSyncCheckBox->hide();
+
+    if (isDaemonUp) {
+        mgr->loadSettings();
+
+        Qt::CheckState state;
+
+        state = mgr->syncExtraTempFile() ? Qt::Checked : Qt::Unchecked;
+        mSyncExtraTempFileCheckBox->setCheckState(state);
+
+        state = mgr->httpSyncCertVerifyDisabled() ? Qt::Checked : Qt::Unchecked;
+        mDisableVerifyHttpSyncCert->setCheckState(state);
+
+        // currently supports windows only
+        state = mgr->autoStart() ? Qt::Checked : Qt::Unchecked;
+        mAutoStartCheckBox->setCheckState(state);
+#if !defined(Q_OS_WIN32) && !defined(Q_OS_MAC)
+        mAutoStartCheckBox->hide();
 #endif
+
+#if defined(Q_OS_WIN32)
+        state = mgr->shellExtensionEnabled() ? Qt::Checked : Qt::Unchecked;
+        mShellExtCheckBox->setCheckState(state);
+#else
+        mShellExtCheckBox->hide();
+#endif
+        state = mgr->notify() ? Qt::Checked : Qt::Unchecked;
+        mNotifyCheckBox->setCheckState(state);
+
+        int ratio;
+        ratio = mgr->maxDownloadRatio();
+        mDownloadSpinBox->setValue(ratio);
+        ratio = mgr->maxUploadRatio();
+        mUploadSpinBox->setValue(ratio);
+
+        int value;
+        value = mgr->getCacheCleanIntervalMinutes();
+        mCacheCleanInterval->setValue(value);
+        value = mgr->getCacheSizeLimitGB();
+        mCacheSizeLimit->setValue(value);
+
+#ifdef HAVE_SPARKLE_SUPPORT
+        if (AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
+            state = AutoUpdateService::instance()->autoUpdateEnabled() ? Qt::Checked : Qt::Unchecked;
+            mCheckLatestVersionBox->setCheckState(state);
+        }
+#endif
+
+#ifdef Q_OS_WIN32
+        QStringList letters = utils::win::getAvailableDiskLetters();
+        if (!mgr->getDiskLetter(&preferred_disk_letter_)) {
+            preferred_disk_letter_ = gui->mountDir();
+        }
+        preferred_disk_letter_ = preferred_disk_letter_.at(0);
+        insertDiskLetter(&letters, gui->mountDir().at(0));
+
+        mDiskLetter->clear();
+        int i = 0;
+        foreach (const QString& letter, letters) {
+            mDiskLetter->addItem(letter);
+            if (preferred_disk_letter_.contains(letter)) {
+                mDiskLetter->setCurrentIndex(i);
+            }
+            i++;
+        }
+
+        current_session_access_  = mgr->currentUserAccess();
+        state = current_session_access_ ? Qt::Checked : Qt::Unchecked;
+        mCurrentAccess->setCheckState(state);
+#ifdef _MSC_VER
+        mDiskLetterLabel->setVisible(false);
+        mDiskLetter->setVisible(false);
+        mCurrentAccess->setVisible(false);
+#endif
+#else
+        mDiskLetterLabel->setVisible(false);
+        mDiskLetter->setVisible(false);
+        mCurrentAccess->setVisible(false);
+#endif // Q_OS_WIN32
+
+#if defined(_MSC_VER)
+        if (!mgr->getSeadriveRoot(&current_seadrive_root_)) {
+            current_seadrive_root_ = gui->seadriveRoot();
+        }
+        mShowCacheDir->setText(current_seadrive_root_);
+        mShowCacheDir->setReadOnly(true);
+#endif
+    }
 
     mLanguageComboBox->setCurrentIndex(I18NHelper::getInstance()->preferredLanguage());
 
-#if defined(Q_OS_WIN32)
-    state = mgr->shellExtensionEnabled() ? Qt::Checked : Qt::Unchecked;
-    mShellExtCheckBox->setCheckState(state);
-#else
-    mShellExtCheckBox->hide();
-#endif
-    state = mgr->notify() ? Qt::Checked : Qt::Unchecked;
-    mNotifyCheckBox->setCheckState(state);
-
-    int ratio;
-    ratio = mgr->maxDownloadRatio();
-    mDownloadSpinBox->setValue(ratio);
-    ratio = mgr->maxUploadRatio();
-    mUploadSpinBox->setValue(ratio);
-
-    int value;
-    value = mgr->getCacheCleanIntervalMinutes();
-    mCacheCleanInterval->setValue(value);
-    value = mgr->getCacheSizeLimitGB();
-    mCacheSizeLimit->setValue(value);
-
-#ifdef HAVE_SPARKLE_SUPPORT
-    if (AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
-        state = AutoUpdateService::instance()->autoUpdateEnabled() ? Qt::Checked : Qt::Unchecked;
-        mCheckLatestVersionBox->setCheckState(state);
-    }
-#endif
-
+    mgr->loadProxySettings();
     SettingsManager::SeafileProxy proxy = mgr->getProxy();
     showHideControlsBasedOnCurrentProxyType(proxy.type);
     mProxyMethodComboBox->setCurrentIndex(proxy.type);
@@ -309,48 +339,7 @@ void SettingsDialog::showEvent(QShowEvent *event)
     if (!proxy.username.isEmpty())
         mProxyRequirePassword->setChecked(true);
 
-//     mLanguageComboBox->setCurrentIndex(I18NHelper::getInstance()->preferredLanguage());
-
-#ifdef Q_OS_WIN32
-    QStringList letters = utils::win::getAvailableDiskLetters();
-    if (!mgr->getDiskLetter(&preferred_disk_letter_)) {
-        preferred_disk_letter_ = gui->mountDir();
-    }
-    preferred_disk_letter_ = preferred_disk_letter_.at(0);
-    insertDiskLetter(&letters, gui->mountDir().at(0));
-
-    mDiskLetter->clear();
-    int i = 0;
-    foreach (const QString& letter, letters) {
-        mDiskLetter->addItem(letter);
-        if (preferred_disk_letter_.contains(letter)) {
-            mDiskLetter->setCurrentIndex(i);
-        }
-        i++;
-    }
-
-    current_session_access_  = mgr->currentUserAccess();
-    state = current_session_access_ ? Qt::Checked : Qt::Unchecked;
-    mCurrentAccess->setCheckState(state);
-#ifdef _MSC_VER
-    mDiskLetterLabel->setVisible(false);
-    mDiskLetter->setVisible(false);
-    mCurrentAccess->setVisible(false);
-#endif
-#else
-    mDiskLetterLabel->setVisible(false);
-    mDiskLetter->setVisible(false);
-    mCurrentAccess->setVisible(false);
-#endif // Q_OS_WIN32
-
     QDialog::showEvent(event);
-#if defined(_MSC_VER)
-    if (!mgr->getSeadriveRoot(&current_seadrive_root_)) {
-        current_seadrive_root_ = gui->seadriveRoot();
-    }
-    mShowCacheDir->setText(current_seadrive_root_);
-    mShowCacheDir->setReadOnly(true);
-#endif
 }
 
 void SettingsDialog::proxyRequirePasswordChanged(int state)

@@ -32,19 +32,16 @@ void AccountInfoService::stop()
 
 void AccountInfoService::refresh()
 {
-    const Account account = gui->accountManager()->currentAccount();
-    if (!account.isValid()) {
-        return;
+    auto accounts = gui->accountManager()->activeAccounts();
+    for (int i = 0; i < accounts.size(); i++) {
+        FetchAccountInfoRequest* fetch_account_info_request = new FetchAccountInfoRequest(accounts.at(i));
+        connect(fetch_account_info_request, SIGNAL(success(const AccountInfo&)), this,
+                SLOT(onFetchAccountInfoSuccess(const AccountInfo&)));
+        connect(fetch_account_info_request, SIGNAL(failed(const ApiError&)), this,
+                SLOT(onFetchAccountInfoFailed()));
+        fetch_account_info_request->send();
     }
-
-    FetchAccountInfoRequest* fetch_account_info_request = new FetchAccountInfoRequest(account);
-    connect(fetch_account_info_request, SIGNAL(success(const AccountInfo&)), this,
-            SLOT(onFetchAccountInfoSuccess(const AccountInfo&)));
-    connect(fetch_account_info_request, SIGNAL(failed(const ApiError&)), this,
-            SLOT(onFetchAccountInfoFailed()));
-    fetch_account_info_request->send();
 }
-
 
 void AccountInfoService::onFetchAccountInfoSuccess(const AccountInfo& info)
 {
