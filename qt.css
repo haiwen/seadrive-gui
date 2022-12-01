@@ -353,7 +353,6 @@ FileBrowserDialog QWidget#mHeader QPushButton {
     margin-left: 4px;
 }
 
-SearchDialog QToolBar#topBar,
 FileBrowserDialog QToolBar#topBar {
     border: 0;
     border-bottom: 1px solid #d0d0d0;

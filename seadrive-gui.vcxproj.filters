@@ -187,9 +187,6 @@
     <ClCompile Include="src\ui\search-bar.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
-    <ClCompile Include="src\ui\search-dialog.cpp">
-      <Filter>Source Files\ui</Filter>
-    </ClCompile>
     <ClCompile Include="src\ui\settings-dialog.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
@@ -420,9 +417,6 @@
       <Filter>Header Files\ui</Filter>
     </QtMoc>
     <QtMoc Include="src\ui\search-bar.h">
-      <Filter>Header Files\ui</Filter>
-    </QtMoc>
-    <QtMoc Include="src\ui\search-dialog.h">
       <Filter>Header Files\ui</Filter>
     </QtMoc>
     <QtMoc Include="src\ui\settings-dialog.h">

@@ -193,7 +193,6 @@ SET(moc_headers
   src/ui/login-dialog.h
   src/ui/seafilelink-dialog.h
   src/ui/search-bar.h
-  src/ui/search-dialog.h
   src/ui/settings-dialog.h
   src/ui/sharedlink-dialog.h
   src/ui/uploadlink-dialog.h
@@ -327,7 +326,6 @@ SET(seadrive_gui_sources
   src/ui/login-dialog.cpp
   src/ui/seafilelink-dialog.cpp
   src/ui/search-bar.cpp
-  src/ui/search-dialog.cpp
   src/ui/settings-dialog.cpp
   src/ui/sharedlink-dialog.cpp
   src/ui/uploadlink-dialog.cpp

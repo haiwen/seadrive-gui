@@ -18,7 +18,6 @@ class LoginDialog;
 class TrayNotificationManager;
 class SyncErrorsDialog;
 class TransferProgressDialog;
-class SearchDialog;
 class EncryptedReposDialog;
 
 

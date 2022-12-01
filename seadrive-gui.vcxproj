@@ -70,7 +70,6 @@
     <ClCompile Include="src\ui\seadrive-root-dialog.cpp" />
     <ClCompile Include="src\ui\seafilelink-dialog.cpp" />
     <ClCompile Include="src\ui\search-bar.cpp" />
-    <ClCompile Include="src\ui\search-dialog.cpp" />
     <ClCompile Include="src\ui\settings-dialog.cpp" />
     <ClCompile Include="src\ui\sharedlink-dialog.cpp" />
     <ClCompile Include="src\ui\sync-errors-dialog.cpp" />
@@ -156,7 +155,6 @@
     <QtMoc Include="src\ui\sync-errors-dialog.h" />
     <QtMoc Include="src\ui\sharedlink-dialog.h" />
     <QtMoc Include="src\ui\settings-dialog.h" />
-    <QtMoc Include="src\ui\search-dialog.h" />
     <QtMoc Include="src\ui\search-bar.h" />
     <QtMoc Include="src\ui\seafilelink-dialog.h" />
     <QtMoc Include="src\ui\login-dialog.h" />

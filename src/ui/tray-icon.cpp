@@ -21,7 +21,6 @@
 #include "src/ui/encrypted-repos-dialog.h"
 #include "src/ui/sync-errors-dialog.h"
 #include "src/ui/transfer-progress-dialog.h"
-#include "src/ui/search-dialog.h"
 #include "api/api-error.h"
 #include "api/requests.h"
 #include "seadrive-gui.h"
