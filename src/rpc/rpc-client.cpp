@@ -476,17 +476,14 @@ bool SeafileRpcClient::addAccount(const Account& account)
 }
 #endif
 
-bool SeafileRpcClient::deleteAccount(const Account& account)
+bool SeafileRpcClient::deleteAccount(const Account& account, bool remove_cache)
 {
     GError *error = NULL;
-    searpc_client_call__int(seadrive_rpc_client_,
-                            "seafile_delete_account",
-                            &error,
-                            2,
-                            "string",
-                            toCStr(account.serverUrl.toString()),
-                            "string",
-                            toCStr(account.username));
+    searpc_client_call__int(seadrive_rpc_client_, "seafile_delete_account", &error,
+                            3,
+                            "string", toCStr(account.serverUrl.toString()),
+                            "string", toCStr(account.username),
+                            "int", remove_cache ? 1 : 0);
     if (error) {
         qWarning() << "Unable to delete account" << account << ":"
                    << (error->message ? error->message : "");
