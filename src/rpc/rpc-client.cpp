@@ -411,7 +411,7 @@ bool SeafileRpcClient::setServerProperty(const QString &url,
 }
 
 #if defined(Q_OS_WIN32)
-bool SeafileRpcClient::addAccount(const Account& account, QString sync_root, QString name)
+bool SeafileRpcClient::addAccount(const Account& account)
 {
     GError *error = NULL;
     QString serverAddr = account.serverUrl.toString();
@@ -424,8 +424,8 @@ bool SeafileRpcClient::addAccount(const Account& account, QString sync_root, QSt
                             "string", toCStr(serverAddr),
                             "string", toCStr(account.username),
                             "string", toCStr(account.token),
-                            "string", toCStr(sync_root),
-                            "string", toCStr(name),
+                            "string", toCStr(QDir::toNativeSeparators(account.syncRoot)),
+                            "string", toCStr(account.accountInfo.name),
                             "int", account.isPro() ? 1 : 0);
     if (error) {
         qWarning() << "Unable to add account" << account << ":"

@@ -519,7 +519,7 @@ void SeafileTrayIcon::openHelp()
 
 void SeafileTrayIcon::openSeafileFolder()
 {
-    QDesktopServices::openUrl(QUrl::fromLocalFile(gui->mountDir()));
+    QDesktopServices::openUrl(QUrl::fromLocalFile(gui->seadriveRoot()));
 }
 
 void SeafileTrayIcon::openLogDirectory()
@@ -684,7 +684,7 @@ void SeafileTrayIcon::onLogoutDeviceRequestSuccess()
     const Account& account = req->account();
 
 #if defined(_MSC_VER)
-    if (!gui->rpcClient()->logoutAccount(account, req->shouldRemoveCache())) {
+    if (!gui->rpcClient()->logoutAccount(account)) {
         gui->warningBox(
             tr("Failed to logout account %1").arg(account.toString()));
     }

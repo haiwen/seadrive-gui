@@ -441,6 +441,10 @@ void SeadriveGui::onDaemonRestarted()
 
 void SeadriveGui::onDaemonStarted()
 {
+#if defined(Q_OS_WIN32)
+    rpc_client_->connectDaemon();
+#endif
+
     // The addAccount() RPC should be invoked after an account being logged in.
     // When launching seadrive-gui, the login event may be raised before the
     // daemon started. For that reason, we queue all account updating events,
@@ -561,13 +565,6 @@ bool SeadriveGui::initLog()
         errorAndExit(tr("Failed to initialize: failed to create %1 data folder").arg(getBrand()));
         return false;
     }
-
-#if !defined(Q_OS_WIN32)
-    if (checkdir_with_mkdir(toCStr(gui->mountDir())) < 0) {
-        errorAndExit(tr("Failed to initialize: failed to create seadrive mount folder"));
-        return false;
-    }
-#endif
 
     if (applet_log_init(toCStr(seadrive_dir.absolutePath())) < 0) {
         errorAndExit(tr("Failed to initialize log: %1").arg(g_strerror(errno)));

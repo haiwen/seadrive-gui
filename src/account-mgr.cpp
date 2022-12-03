@@ -455,15 +455,6 @@ void AccountManager::validateAndUseAccounts() {
     auto accounts = activeAccounts();
     for (int i = 0; i < accounts.size(); i++) {
         enableAccount(accounts.at(i));
-
-        // If the account is an old account, the account
-        // information has been updated at this time so
-        // you can calculate the SyncRoot and then call the switch account.
-#if defined(_MSC_VER)
-        const Account& current_account = currentAccount();
-        sync_root_name_= genSyncRootName(current_account);
-        qWarning("generated sync root name is : %s", toCStr(sync_root_name_));
-#endif
     }
 }
 
@@ -539,8 +530,12 @@ const Account AccountManager::updateAccountInfo(const Account& account,
 void::AccountManager::slotUpdateAccountInfoSucess(const AccountInfo& info)
 {
     FetchAccountInfoRequest* req = (FetchAccountInfoRequest*)(sender());
-    const Account account = updateAccountInfo(req->account(), info);
-#if defined(Q_OS_MAC)
+    Account account = updateAccountInfo(req->account(), info);
+#if defined(Q_OS_WIN32)
+    if (account.isValid()) {
+        setAccountSyncRoot(&account);
+    }
+#elif defined(Q_OS_MAC)
     if (account.isValid()) {
         gui->fileProviderManager()->registerDomain(account);
     }
@@ -578,17 +573,9 @@ void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo 
     QUrl url(account.serverUrl);
     url.setPath("/");
 
-
-#if defined(_MSC_VER)
-    const Account& current_account = currentAccount();
-    sync_root_name_= genSyncRootName(current_account);
-    qWarning("generated sync root name is : %s", toCStr(sync_root_name_));
-#endif
-
     bool changed = account.serverInfo != info;
     if (!changed)
         return;
-
 
     for (size_t i = 0; i < accounts_.size(); i++) {
         if (accounts_[i] == account) {
@@ -748,6 +735,19 @@ const QString AccountManager::genSyncRootName(const Account& account)
     return new_sync_root_name;
 }
 
+void AccountManager::setAccountSyncRoot(Account *account)
+{
+    auto name = genSyncRootName(*account);
+    QString sync_root = ::pathJoin(gui->seadriveRoot(), name);
+    account->syncRoot = sync_root;
+
+    for (size_t i = 0; i < accounts_.size(); i++) {
+        if (accounts_.at(i) == *account) {
+            accounts_[i].syncRoot = sync_root;
+            break;
+        }
+    }
+}
 #endif
 
 void AccountManager::reloginAccount(const Account &account)
@@ -793,13 +793,6 @@ Account AccountManager::getAccount(const QString& url, const QString& username) 
     }
     return Account();
 }
-
-#if defined(_MSC_VER)
-const std::vector<SyncRootInfo>& AccountManager::getSyncRootInfos() const
-{
-    return sync_root_infos_;
-}
-#endif
 
 bool AccountManager::hasAccount() const {
     return !accounts_.empty();

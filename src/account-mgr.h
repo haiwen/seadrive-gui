@@ -87,9 +87,6 @@ public:
      */
     const std::vector<Account>& accounts() const;
     const QVector<Account> activeAccounts() const;
-# if defined(_MSC_VER)
-    const std::vector<SyncRootInfo>& getSyncRootInfos() const;
-#endif
     const Account currentAccount() const;
     bool hasAccount() const;
     bool accountExists(const QUrl& url, const QString& username) const;
@@ -136,6 +133,7 @@ private:
     static bool loadSyncRootInfoCB(struct sqlite3_stmt *stmt, void *data);
     const QString getOldSyncRootDir(const Account& account);
     const QString genSyncRootName(const Account& account);
+    void setAccountSyncRoot(Account *account);
 #endif
     static bool loadAccountsCB(struct sqlite3_stmt *stmt, void *data);
     static bool loadServerInfoCB(struct sqlite3_stmt *stmt, void *data);
