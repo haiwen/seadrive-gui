@@ -291,9 +291,10 @@ void LoginDialog::onFetchAccountInfoSuccess(const AccountInfo& info)
 
     gui->accountManager()->enableAccount(account);
     gui->accountManager()->updateAccountInfo(account, info);
+
+    gui->initSyncDialog()->prepare(account);
+
     accept();
-    InitSyncDialog *dlg = new InitSyncDialog(account);
-    dlg->ensureVisible();
 }
 
 void LoginDialog::onHttpError(int code)

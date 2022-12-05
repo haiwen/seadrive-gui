@@ -13,9 +13,11 @@ class InitSyncDialog : public QDialog,
                        public Ui::InitSyncDialog
 {
     Q_OBJECT
+
 public:
-    InitSyncDialog(const Account& account, QWidget *parent=0);
-    void ensureVisible();
+    InitSyncDialog();
+    void prepare(const Account& account);
+    void start();
 
 private slots:
     void closeEvent(QCloseEvent *event);
@@ -28,6 +30,7 @@ private:
 
     void setStatusText(const QString& status);
     void setStatusIcon(const QString& path);
+    void ensureVisible();
     void finish();
     void fail(const QString& reason);
 
@@ -35,7 +38,9 @@ private:
 
     QTimer *check_download_timer_;
 
+    bool prepared_;
     bool finished_;
+    bool poller_connected_;
 
     QString waiting_text_;
     int dots_;

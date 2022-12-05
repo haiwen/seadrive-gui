@@ -21,6 +21,7 @@ bool fileProviderListDomains(QMap<QString, Domain> *domains) {
     [NSFileProviderManager getDomainsWithCompletionHandler:[&](NSArray<NSFileProviderDomain *> *nsdomains, NSError *error) {
         if (error != nil) {
             qWarning() << "[File Provider] Error listing domains:" << error;
+            condition.wakeOne();
             return;
         }
 
@@ -56,6 +57,7 @@ bool fileProviderAddDomain(const QString domain_id, const QString display_name, 
     [NSFileProviderManager addDomain:domain completionHandler:[&](NSError *error) {
         if (error != nil) {
             qWarning() << "[File Provider] Error adding domain:" << error;
+            condition.wakeOne();
             return;
         }
 
@@ -81,6 +83,7 @@ bool fileProviderRemoveDomain(const QString domain_id, const QString display_nam
     [NSFileProviderManager removeDomain:domain completionHandler:[&](NSError *error) {
         if (error != nil) {
             qWarning() << "[File Provider] Error removing domain:" << error;
+            condition.wakeOne();
             return;
         }
 

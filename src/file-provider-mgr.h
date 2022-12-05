@@ -19,6 +19,8 @@ public:
     bool registerDomain(const Account account);
     bool unregisterDomain(const Account account);
 
+    void askUserToEnable();
+
 private:
     QString displayName(const Account account);
 
