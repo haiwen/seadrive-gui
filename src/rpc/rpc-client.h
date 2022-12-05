@@ -83,7 +83,7 @@ public:
     bool addAccount(const Account& account);
 
     bool logoutAccount(const Account& account);
-    bool deleteAccount(const Account& account);
+    bool deleteAccount(const Account& account, bool remove_cache);
 
     bool getRepoIdByPath(const QString& server,
                          const QString& username,
