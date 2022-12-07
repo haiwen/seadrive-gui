@@ -1,13 +1,19 @@
 #ifndef SEAFILE_CLIENT_FILE_BROWSER_SHAREDLINK_DIALOG_H
 #define SEAFILE_CLIENT_FILE_BROWSER_SHAREDLINK_DIALOG_H
+
 #include <QDialog>
 
+#include "account.h"
+
 class QLineEdit;
+
 class SharedLinkDialog : public QDialog
 {
     Q_OBJECT
+
 public:
     SharedLinkDialog(const QString &link,
+                     const Account &account,
                      const QString &repo_id,
                      const QString &path_in_repo,
                      QWidget *parent);
@@ -22,6 +28,7 @@ private slots:
 
 private:
     QString text_;
+    const Account account_;
     const QString repo_id_;
     const QString path_in_repo_;
 

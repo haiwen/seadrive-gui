@@ -20,9 +20,11 @@ AutoLoginService::AutoLoginService(QObject *parent)
 {
 }
 
-void AutoLoginService::startAutoLogin(const QString& next_url)
+void AutoLoginService::startAutoLogin(const QString& server,
+                                      const QString& username,
+                                      const QString& next_url)
 {
-    const Account account = gui->accountManager()->currentAccount();
+    auto account = gui->accountManager()->getAccountByUrlAndUsername(server, username);
     QUrl absolute_url = QUrl(next_url).isRelative()
                             ? account.getAbsoluteUrl(next_url)
                             : next_url;

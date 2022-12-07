@@ -805,7 +805,3 @@ Account AccountManager::getAccount(const QString& url, const QString& username) 
 bool AccountManager::hasAccount() const {
     return !accounts_.empty();
 }
-
-const Account AccountManager::currentAccount() const {
-    return hasAccount() ? accounts_[0] : Account();
-}

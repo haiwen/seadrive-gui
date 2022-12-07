@@ -11,13 +11,12 @@
 
 #include <searpc.h>
 
-#include "account.h"
 #include "open-local-helper.h"
 #include "utils/utils.h"
 #include "utils/file-utils.h"
 #include "seadrive-gui.h"
 #include "rpc/rpc-client.h"
-
+#include "account-mgr.h"
 
 namespace {
 

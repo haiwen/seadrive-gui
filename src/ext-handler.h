@@ -42,7 +42,7 @@ private slots:
     void privateShare(const QString& repo_id,
                       const QString& path_in_repo,
                       bool to_group);
-    void openUrlWithAutoLogin(const QUrl& url);
+    void openUrlWithAutoLogin(const QString& server, const QString& username, const QUrl& url);
     void onGetSmartLinkSuccess(const QString& smart_link);
     void onGetSmartLinkFailed(const ApiError& error);
     void getUploadLink(const QString& repo, const QString& path_in_repo);
@@ -82,7 +82,7 @@ signals:
     void privateShare(const QString& repo_id,
                       const QString& path_in_repo,
                       bool to_group);
-    void openUrlWithAutoLogin(const QUrl& url);
+    void openUrlWithAutoLogin(const QString& server, const QString& username, const QUrl& url);
     void showLockedBy(const QString& repo, const QString& path_in_repo);
     void getUploadLink(const QString& repo_id, const QString& path_in_repo);
 
@@ -119,7 +119,7 @@ signals:
     void privateShare(const QString& repo_id,
                       const QString& path_in_repo,
                       bool to_group);
-    void openUrlWithAutoLogin(const QUrl& url);
+    void openUrlWithAutoLogin(const QString& server, const QString& username, const QUrl& url);
     void showLockedBy(const QString& repo, const QString& path_in_repo);
     void getUploadLink(const QString& repo_id, const QString& path_in_repo);
 
@@ -141,6 +141,7 @@ private:
     void handleGetUploadLink(const QStringList& args);
 
     bool parseRepoFileInfo(const QString& path,
+                           Account *account,
                            QString *repo_id,
                            QString *path_in_repo);
 };

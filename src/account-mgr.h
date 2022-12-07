@@ -88,7 +88,6 @@ public:
      */
     const std::vector<Account>& accounts() const;
     const QVector<Account> activeAccounts() const;
-    const Account currentAccount() const;
     bool hasAccount() const;
     bool accountExists(const QUrl& url, const QString& username) const;
 

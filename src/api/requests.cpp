@@ -1274,7 +1274,7 @@ GetSharedLinkRequest::GetSharedLinkRequest(const Account &account,
                                            const QString &path)
     : SeafileApiRequest(
           account.getAbsoluteUrl(QString(kGetFileSharedLinkUrl).arg(repo_id).arg(path)),
-          SeafileApiRequest::METHOD_GET, account.token), repo_id_(repo_id), repo_path_(path)
+          SeafileApiRequest::METHOD_GET, account.token), account_(account), repo_id_(repo_id), repo_path_(path)
 {
 }
 

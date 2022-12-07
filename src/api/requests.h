@@ -816,6 +816,7 @@ public:
                          const QString &repo_id,
                          const QString &path);
 
+    const Account getAccount() {return account_;}
     const QString getRepoId() {return repo_id_;}
     const QString getRepoPath() {return repo_path_;}
 
@@ -828,6 +829,7 @@ protected slots:
 private:
     Q_DISABLE_COPY(GetSharedLinkRequest)
     CreateSharedLinkRequest* create_shared_link_req_;
+    const Account account_;
     const QString repo_id_;
     const QString repo_path_;
 };
