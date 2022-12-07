@@ -67,9 +67,6 @@ public:
     // Get the seadrive logs dir. The "logs" subfolder of seadrive dir.
     QString logsDir() const;
 
-    // Get the seadrive mount dir, $HOME/SeaDrive
-    QString mountDir() const;
-
 #if defined(_MSC_VER)
     QString seadriveRoot() const;
 #endif

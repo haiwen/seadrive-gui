@@ -14,6 +14,7 @@
 #include "rpc/rpc-client.h"
 #include "rpc/sync-error.h"
 #include "sync-errors-dialog.h"
+#include "account-mgr.h"
 
 namespace {
 
@@ -207,17 +208,35 @@ void SyncErrorsTableView::onItemDoubleClicked(const QModelIndex& index)
     SyncError error = model->errorAt(index.row());
 
     // printf("error repo id is %s\n", error.repo_id.toUtf8().data());
-    QString path_to_open;
-    if (!error.repo_id.isEmpty()) {
-        QString repo_uname;
-        if (gui->rpcClient()->getRepoUnameById(error.repo_id, &repo_uname)) {
-            path_to_open = ::pathJoin(gui->mountDir(), repo_uname);
-        }
-    }
+    QString path_to_open = findLocalPathFromError(error);
     if (path_to_open.isEmpty() || !QFileInfo(path_to_open).exists()) {
-        path_to_open = gui->mountDir();
+        path_to_open = gui->seadriveRoot();
     }
     QDesktopServices::openUrl(QUrl::fromLocalFile(path_to_open));
+}
+
+QString SyncErrorsTableView::findLocalPathFromError(const SyncError& error)
+{
+    if (error.repo_id.isEmpty()) {
+        return "";
+    }
+
+    QString repo_uname;
+    if (!gui->rpcClient()->getRepoUnameById(error.repo_id, &repo_uname)) {
+        return "";
+    }
+
+    json_t *ret_obj = nullptr;
+    if (!gui->rpcClient()->getAccountByRepoId(error.repo_id, &ret_obj)) {
+        return "";
+    }
+
+    Account account = gui->accountManager()->getAccountFromJson(ret_obj);
+    if (account.syncRoot.isEmpty()) {
+        return "";
+    }
+
+    return ::pathJoin(account.syncRoot, repo_uname);
 }
 
 SyncErrorsTableModel::SyncErrorsTableModel(QObject *parent)

@@ -92,6 +92,8 @@ public:
 
     bool getRepoUnameById(const QString& repo_id, QString *repo_uname);
 
+    bool getAccountByRepoId(const QString& repo_id, json_t **ret_obj);
+
     bool getSyncNotification(json_t **ret);
 
     bool getGlobalSyncStatus(json_t **ret);

@@ -124,7 +124,16 @@ bool parseFilePath(const QString &path,
 {
     // The path of the file in relative to the mount point.
     // It is like "My Libraries/Documents"
-    QString relative_path = path.mid(gui->mountDir().length() + 1);
+    QString relative_path;
+
+    auto accounts = gui->accountManager()->activeAccounts();
+    for (auto account : accounts) {
+        auto root = QDir::cleanPath(account.syncRoot) + "/";
+        if (path.startsWith(root)) {
+            relative_path = path.mid(root.length());
+            break;
+        }
+    }
 
     if (relative_path.isEmpty()) {
         return false;
@@ -674,34 +683,23 @@ QString ExtCommandsHandler::handleListRepos(const QStringList& args)
         return "";
     }
 
-    const Account& account = gui->accountManager()->currentAccount();
-    if (!account.isValid()) {
-        qWarning("handleListRepos: account is not valid");
-        return "";
-    }
-
-    QDir mount_point(gui->mountDir());
-    // qWarning() << "listing directory " << gui->mountDir();
-    QStringList subdirs = mount_point.entryList(
-        QStringList(), QDir::Dirs | QDir::NoDot | QDir::NoDotDot);
-
     QStringList fullpaths;
-    QString internal_link_supported = account.isAtLeastVersion(6, 3, 0)
-            ? "internal-link-supported"
-            : "internal-link-unsupported";
-    fullpaths << internal_link_supported;
+    fullpaths << "internal-link-supported";
 
-    // if use seadrive 2.x, need pass seadrive root to seafile-ext
-#if defined(_MSC_VER)
-    fullpaths << gui->mountDir();
-#endif
-    foreach (const QString &subdir, subdirs) {
-        QStringList repos =
-            QDir(pathJoin(gui->mountDir(), subdir))
-                .entryList(QStringList(),
-                           QDir::Dirs | QDir::NoDot | QDir::NoDotDot);
-        foreach (const QString &r, repos) {
-            fullpaths << pathJoin(gui->mountDir(), subdir, r);
+    auto accounts = gui->accountManager()->activeAccounts();
+    for (auto account : accounts) {
+        fullpaths << account.syncRoot;
+
+        auto subdirs = QDir(account.syncRoot).entryList(
+            QStringList(), QDir::Dirs | QDir::NoDot | QDir::NoDotDot);
+
+        for (auto subdir : subdirs) {
+            auto repos = QDir(pathJoin(account.syncRoot, subdir)).entryList(
+                QStringList(), QDir::Dirs | QDir::NoDot | QDir::NoDotDot);
+
+            for (auto repo : repos) {
+                fullpaths << pathJoin(account.syncRoot, subdir, repo);
+            }
         }
     }
 

@@ -648,9 +648,6 @@ void SeafileTrayIcon::onMessageClicked()
     if (gui->messagePoller()->lastEventType() == "file-download.start") {
         showTransferProgressDialog();
         transfer_progress_dialog_->showDownloadTab();
-    } else if (gui->messagePoller()->lastEventType() == "file-download.done") {
-        QString path = ::pathJoin(gui->mountDir(), ::getParentPath(gui->messagePoller()->lastEventPath()));
-        QDesktopServices::openUrl(QUrl::fromLocalFile(path));
     }
 }
 

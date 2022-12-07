@@ -2,6 +2,7 @@
 #define _SEAF_ACCOUNT_MGR_H
 
 #include <vector>
+#include <jansson.h>
 
 #include <QObject>
 #include <QHash>
@@ -95,6 +96,8 @@ public:
                                        const QString& username) const;
 
     Account getAccountBySignature(const QString& account_sig) const;
+
+    Account getAccountFromJson(json_t *ret_obj) const;
 
     void clearAccountToken(const Account& account,
                            bool force_relogin=false);

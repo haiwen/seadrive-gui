@@ -757,21 +757,6 @@ QString SeadriveGui::logsDir() const
     return QDir(seadriveDir()).filePath("logs");
 }
 
-QString SeadriveGui::mountDir() const
-{
-#if defined(Q_OS_WIN32)
-    QString sync_root_name = gui->accountManager()->getSyncRootName();
-    if (sync_root_name.isEmpty()) {
-        qWarning("get sync root name is empty.");
-    }
-
-    QString sync_root = ::pathJoin(seadriveRoot(), sync_root_name);
-    return sync_root;
-#else
-    return QDir::home().absoluteFilePath(getBrand());
-#endif
-}
-
 #if defined(_MSC_VER)
 QString SeadriveGui::seadriveRoot() const
 {

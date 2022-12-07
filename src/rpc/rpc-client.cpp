@@ -569,6 +569,24 @@ bool SeafileRpcClient::getRepoUnameById(const QString &repo_id,
     return true;
 }
 
+bool SeafileRpcClient::getAccountByRepoId(const QString& repo_id, json_t **ret_obj)
+{
+    GError *error = NULL;
+    json_t *ret = searpc_client_call__json(seadrive_rpc_client_, "seafile_get_account_by_repo_id", &error,
+                                           1,
+                                           "string", toCStr(repo_id));
+    if (error) {
+        qWarning("failed to get account by repo id: %s\n",
+                 error->message ? error->message : "");
+        g_error_free(error);
+        return false;
+    } else if (!ret) {
+        return false;
+    }
+
+    *ret_obj = ret;
+    return true;
+}
 
 bool SeafileRpcClient::getSyncNotification(json_t **ret_obj)
 {

@@ -21,6 +21,7 @@
 #include "account-info-service.h"
 #include "file-provider-mgr.h"
 #include "ui/tray-icon.h"
+#include "utils/json-utils.h"
 
 #if defined (Q_OS_WIN32)
 #include "win-sso/auto-logon-dialog.h"
@@ -483,6 +484,13 @@ Account AccountManager::getAccountBySignature(const QString& account_sig) const
     }
 
     return Account();
+}
+
+Account AccountManager::getAccountFromJson(json_t *ret_obj) const
+{
+    Json json(ret_obj);
+    return getAccountByUrlAndUsername(json.getString("server"),
+                                      json.getString("username"));
 }
 
 void AccountManager::fetchAccountInfoFromServer(const Account& account)

@@ -288,10 +288,10 @@ void SettingsDialog::showEvent(QShowEvent *event)
 #ifdef Q_OS_WIN32
         QStringList letters = utils::win::getAvailableDiskLetters();
         if (!mgr->getDiskLetter(&preferred_disk_letter_)) {
-            preferred_disk_letter_ = gui->mountDir();
+            preferred_disk_letter_ = gui->seadriveRoot();
         }
         preferred_disk_letter_ = preferred_disk_letter_.at(0);
-        insertDiskLetter(&letters, gui->mountDir().at(0));
+        insertDiskLetter(&letters, gui->seadriveRoot().at(0));
 
         mDiskLetter->clear();
         int i = 0;
