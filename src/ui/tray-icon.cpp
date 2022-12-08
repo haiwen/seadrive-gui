@@ -197,7 +197,7 @@ void SeafileTrayIcon::createContextMenu()
 
 void SeafileTrayIcon::prepareContextMenu()
 {
-    const std::vector<Account>& accounts = gui->accountManager()->accounts();
+    auto accounts = gui->accountManager()->allAccounts();
 
     if (global_sync_error_.isValid()) {
         global_sync_error_action_->setVisible(true);

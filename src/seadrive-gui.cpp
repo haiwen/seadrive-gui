@@ -283,8 +283,8 @@ void SeadriveGui::start()
     // Load system proxy information. This must be done before we start seadrive
     // daemon.
     QUrl url;
-    if (!account_mgr_->accounts().empty()) {
-        url = account_mgr_->accounts().front().serverUrl;
+    if (!account_mgr_->allAccounts().empty()) {
+        url = account_mgr_->allAccounts().front().serverUrl;
     }
     settings_mgr_->writeSystemProxyInfo(
         url, QDir(seadriveDataDir()).filePath("system-proxy.txt"));
@@ -358,7 +358,7 @@ void SeadriveGui::loginAccounts()
 {
     tray_icon_->show();
 
-    if (first_use_ || account_mgr_->accounts().size() == 0) {
+    if (first_use_ || account_mgr_->allAccounts().size() == 0) {
         do {
             QString username = readPreconfigureExpandedString(kPreconfigureUsername);
             QString token = readPreconfigureExpandedString(kPreconfigureUserToken);

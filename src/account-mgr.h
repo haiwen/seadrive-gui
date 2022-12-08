@@ -61,7 +61,7 @@ public:
     void loadSyncRootInfo();
 #endif
     // Load the accounts from local db when client starts.
-    const std::vector<Account>& loadAccounts();
+    void loadAccounts();
 
     /**
      * Account operations
@@ -86,7 +86,7 @@ public:
     /**
      * Accessors
      */
-    const std::vector<Account>& accounts() const;
+    const QVector<Account> allAccounts() const;
     const QVector<Account> activeAccounts() const;
     bool hasAccount() const;
     bool accountExists(const QUrl& url, const QString& username) const;
@@ -147,7 +147,11 @@ private:
     Account getAccount(const QString& url, const QString& username) const;
 
     struct sqlite3 *db;
-    std::vector<Account> accounts_;
+
+    // accounts_ will be accessed by multiple threads, thus it should be protected by the accounts_mutex_.
+    // For read access, one should use the allAccounts() method.
+    mutable QMutex accounts_mutex_;
+    QVector<Account> accounts_;
 
 #if defined(_MSC_VER)
     // Store All sync root information
