@@ -29,6 +29,7 @@ const char *kSeafileProtocolHostOpenFile = "openfile";
 
 void openLocalFile(QString& repo_id, QString& path_in_repo)
 {
+#if defined(Q_OS_WIN32)
     QString repo_name;
     if (!gui->rpcClient()->getRepoUnameById(repo_id, &repo_name)) {
         qWarning("failed to get repo uname by %s", toCStr(repo_id));
@@ -54,7 +55,7 @@ void openLocalFile(QString& repo_id, QString& path_in_repo)
         return;
     }
     QDesktopServices::openUrl(QUrl::fromLocalFile(path_to_open));
-    return;
+#endif
 }
 
 OpenLocalHelper* OpenLocalHelper::singleton_ = NULL;

@@ -79,7 +79,6 @@ private slots:
     void refreshTrayIcon();
     void refreshTrayIconToolTip();
     void openHelp();
-    void openSeafileFolder();
     void openLogDirectory();
     void about();
     void checkTrayIconMessageQueue();

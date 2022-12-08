@@ -208,15 +208,18 @@ void SyncErrorsTableView::onItemDoubleClicked(const QModelIndex& index)
     SyncError error = model->errorAt(index.row());
 
     // printf("error repo id is %s\n", error.repo_id.toUtf8().data());
+#if defined(Q_OS_WIN32)
     QString path_to_open = findLocalPathFromError(error);
     if (path_to_open.isEmpty() || !QFileInfo(path_to_open).exists()) {
         path_to_open = gui->seadriveRoot();
     }
     QDesktopServices::openUrl(QUrl::fromLocalFile(path_to_open));
+#endif
 }
 
 QString SyncErrorsTableView::findLocalPathFromError(const SyncError& error)
 {
+#if defined(Q_OS_WIN32)
     if (error.repo_id.isEmpty()) {
         return "";
     }
@@ -237,6 +240,7 @@ QString SyncErrorsTableView::findLocalPathFromError(const SyncError& error)
     }
 
     return ::pathJoin(account.syncRoot, repo_uname);
+#endif
 }
 
 SyncErrorsTableModel::SyncErrorsTableModel(QObject *parent)
