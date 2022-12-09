@@ -16,30 +16,27 @@ class InitSyncDialog : public QDialog,
 
 public:
     InitSyncDialog();
-    void prepare(const Account& account);
-    void start();
+
+    void newAccountLoggedIn();
+    void launch();
 
 private slots:
-    void closeEvent(QCloseEvent *event);
     void checkDownloadProgress();
     void openMountPointAndCloseDialog();
     void onFSLoaded();
+    void closeEvent(QCloseEvent *event);
 
 private:
     Q_DISABLE_COPY(InitSyncDialog)
 
+    void finish();
     void setStatusText(const QString& status);
     void setStatusIcon(const QString& path);
     void ensureVisible();
-    void finish();
-    void fail(const QString& reason);
-
-    Account account_;
 
     QTimer *check_download_timer_;
 
-    bool prepared_;
-    bool finished_;
+    bool ready_to_sync_;
     bool poller_connected_;
 
     QString waiting_text_;

@@ -3,12 +3,12 @@
 #include <QTimer>
 #include <QCloseEvent>
 
-#include "rpc/rpc-client.h"
-#include "seadrive-gui.h"
-#include "utils/utils.h"
-#include "message-poller.h"
-
 #include "init-sync-dialog.h"
+
+#include "seadrive-gui.h"
+#include "message-poller.h"
+#include "ui/tray-icon.h"
+#include "utils/utils.h"
 
 namespace
 {
@@ -19,7 +19,7 @@ const char* kExplorerPath = "c:/windows/explorer.exe";
 
 
 InitSyncDialog::InitSyncDialog()
-    : QDialog(), prepared_(false), finished_(false), poller_connected_(false)
+    : QDialog(), ready_to_sync_(false), poller_connected_(false)
 {
     setupUi(this);
     mLogo->setPixmap(QPixmap(":/images/seafile-32.png"));
@@ -27,23 +27,21 @@ InitSyncDialog::InitSyncDialog()
     setWindowIcon(QIcon(":/images/seafile.png"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
+    connect(mFinishBtn, SIGNAL(clicked()), this, SLOT(hide()));
     connect(mRunInBackgroundBtn, SIGNAL(clicked()), this, SLOT(hide()));
 
     check_download_timer_ = new QTimer(this);
     connect(check_download_timer_, SIGNAL(timeout()), this, SLOT(checkDownloadProgress()));
-
 }
 
-void InitSyncDialog::prepare(const Account& account)
+void InitSyncDialog::newAccountLoggedIn()
 {
-    prepared_ = true;
-    finished_ = false;
-    account_ = account;
+    ready_to_sync_ = true;
 }
 
-void InitSyncDialog::start()
+void InitSyncDialog::launch()
 {
-    if (!prepared_) {
+    if (!ready_to_sync_) {
         return;
     }
 
@@ -52,6 +50,8 @@ void InitSyncDialog::start()
                 this, SLOT(onFSLoaded()));
         poller_connected_ = true;
     }
+
+    gui->trayIcon()->setLoginActionEnabled(false);
 
     waiting_text_ = tr("%1 is fetching the files list, please wait").arg(getBrand());
     setStatusText(waiting_text_);
@@ -90,36 +90,18 @@ void InitSyncDialog::openMountPointAndCloseDialog()
 
 void InitSyncDialog::finish()
 {
-    prepared_ = false;
-    finished_ = true;
+    ready_to_sync_ = false;
 
-    setAttribute(Qt::WA_DeleteOnClose);
-    mRunInBackgroundBtn->setVisible(false);
+    gui->trayIcon()->setLoginActionEnabled(true);
 
-    ensureVisible();
-
-    QString msg =
-        tr("%1 has dowloaded your files list.").arg(getBrand());
+    QString msg = tr("%1 has dowloaded your files list.").arg(getBrand());
     setStatusText(msg);
     setStatusIcon(":/images/ok-48.png");
 
-    connect(mFinishBtn, SIGNAL(clicked()), this, SLOT(hide()));
     mFinishBtn->setVisible(true);
-}
-
-void InitSyncDialog::fail(const QString &reason)
-{
-    prepared_ = false;
-    finished_ = true;
-    setAttribute(Qt::WA_DeleteOnClose);
     mRunInBackgroundBtn->setVisible(false);
 
     ensureVisible();
-
-    setStatusText(reason);
-
-    connect(mFinishBtn, SIGNAL(clicked()), this, SLOT(hide()));
-    mFinishBtn->setVisible(true);
 }
 
 void InitSyncDialog::setStatusText(const QString &status)
