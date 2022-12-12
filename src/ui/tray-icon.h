@@ -64,6 +64,7 @@ public:
     void setSyncErrors(const QList<SyncError> errors);
     QList<SyncError> syncErrors() const { return sync_errors_; }
 
+    void setLoginActionEnabled(bool enabled);
 
 public slots:
     void showSettingsWindow();
@@ -134,6 +135,7 @@ private:
     int nth_trayicon_;
     int rotate_counter_;
     bool auto_sync_;
+    bool enable_login_action_;
 
     TrayState state_;
 

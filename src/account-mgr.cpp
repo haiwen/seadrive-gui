@@ -543,6 +543,7 @@ void::AccountManager::slotUpdateAccountInfoSucess(const AccountInfo& info)
 #if defined(Q_OS_MAC)
     if (account.isValid()) {
         gui->fileProviderManager()->registerDomain(account);
+        gui->fileProviderManager()->askUserToEnable();
     }
 #endif
     updateAccountServerInfo(req->account());

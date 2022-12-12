@@ -75,7 +75,8 @@ SeafileTrayIcon::SeafileTrayIcon(QObject *parent)
       down_rate_(0),
       sync_errors_dialog_(nullptr),
       transfer_progress_dialog_(nullptr),
-      enc_repo_dialog_(nullptr)
+      enc_repo_dialog_(nullptr),
+      enable_login_action_(true)
 {
     setState(STATE_DAEMON_DOWN);
     rotate_timer_ = new QTimer(this);
@@ -259,6 +260,7 @@ void SeafileTrayIcon::prepareContextMenu()
     login_action_ = new QAction(tr("Add an account"), this);
     login_action_->setIcon(QIcon(":/images/add-account.png"));
     login_action_->setIconVisibleInMenu(true);
+    login_action_->setEnabled(enable_login_action_);
     connect(login_action_, SIGNAL(triggered()), this, SLOT(showLoginDialog()));
     account_menu_->addAction(login_action_);
 #if defined(Q_OS_WIN32)
@@ -774,6 +776,11 @@ void SeafileTrayIcon::setStateWithSyncErrors()
     } else {
         setState(STATE_DAEMON_UP);
     }
+}
+
+void SeafileTrayIcon::setLoginActionEnabled(bool enabled)
+{
+    enable_login_action_ = enabled;
 }
 
 void SeafileTrayIcon::showSyncErrorsDialog()

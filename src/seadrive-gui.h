@@ -19,6 +19,7 @@ class SettingsDialog;
 class CertsManager;
 class MessagePoller;
 class AboutDialog;
+class InitSyncDialog;
 class FileProviderManager;
 
 /**
@@ -90,6 +91,8 @@ public:
 
     MessagePoller * messagePoller() { return message_poller_; }
 
+    InitSyncDialog *initSyncDialog() { return init_sync_dlg_; }
+
     FileProviderManager *fileProviderManager() { return file_provider_mgr_; }
 
     // CertsManager *certsManager() { return certs_mgr_; }
@@ -136,6 +139,8 @@ private:
     AboutDialog *about_dlg_;
 
     MessagePoller *message_poller_;
+
+    InitSyncDialog *init_sync_dlg_;
 
     FileProviderManager *file_provider_mgr_;
 

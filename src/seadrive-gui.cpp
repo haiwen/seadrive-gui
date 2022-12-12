@@ -22,6 +22,7 @@
 #include "win-sso/auto-logon-dialog.h"
 #include "ui/settings-dialog.h"
 #include "ui/about-dialog.h"
+#include "ui/init-sync-dialog.h"
 #include "daemon-mgr.h"
 #include "rpc/rpc-client.h"
 #include "account-mgr.h"
@@ -235,6 +236,7 @@ SeadriveGui::SeadriveGui(bool dev_mode)
     settings_dlg_ = new SettingsDialog();
     about_dlg_ = new AboutDialog();
     message_poller_ = new MessagePoller();
+    init_sync_dlg_ = new InitSyncDialog();
 
 #if defined(Q_OS_MAC)
     file_provider_mgr_ = new FileProviderManager();
@@ -482,7 +484,9 @@ void SeadriveGui::updateAccountToDaemon()
         auto msg = account_mgr_->messages.dequeue();
 
         if (msg.type == AccountAdded) {
-            rpc_client_->addAccount(msg.account);
+            if (rpc_client_->addAccount(msg.account)) {
+                init_sync_dlg_->launch();
+            }
         } else if (msg.type == AccountRemoved) {
             rpc_client_->deleteAccount(msg.account, false);
         }

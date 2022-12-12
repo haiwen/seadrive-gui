@@ -3,12 +3,12 @@
 #include <QTimer>
 #include <QCloseEvent>
 
-#include "rpc/rpc-client.h"
-#include "seadrive-gui.h"
-#include "utils/utils.h"
-#include "message-poller.h"
-
 #include "init-sync-dialog.h"
+
+#include "seadrive-gui.h"
+#include "message-poller.h"
+#include "ui/tray-icon.h"
+#include "utils/utils.h"
 
 namespace
 {
@@ -18,8 +18,8 @@ const char* kExplorerPath = "c:/windows/explorer.exe";
 } // namespace
 
 
-InitSyncDialog::InitSyncDialog(const Account &account, QWidget *parent)
-    : QDialog(parent), account_(account), finished_(false)
+InitSyncDialog::InitSyncDialog()
+    : QDialog(), ready_to_sync_(false), poller_connected_(false)
 {
     setupUi(this);
     mLogo->setPixmap(QPixmap(":/images/seafile-32.png"));
@@ -27,23 +27,43 @@ InitSyncDialog::InitSyncDialog(const Account &account, QWidget *parent)
     setWindowIcon(QIcon(":/images/seafile.png"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-    waiting_text_ = tr("%1 is fetching the files list, please wait").arg(getBrand());
-    dots_ = 0;
-    mStatusText->setText(waiting_text_);
-
-    setStatusIcon(":/images/download-48.png");
-
-    mFinishBtn->setVisible(false);
-
+    connect(mFinishBtn, SIGNAL(clicked()), this, SLOT(hide()));
     connect(mRunInBackgroundBtn, SIGNAL(clicked()), this, SLOT(hide()));
-    mRunInBackgroundBtn->setVisible(true);
 
     check_download_timer_ = new QTimer(this);
     connect(check_download_timer_, SIGNAL(timeout()), this, SLOT(checkDownloadProgress()));
+}
+
+void InitSyncDialog::newAccountLoggedIn()
+{
+    ready_to_sync_ = true;
+}
+
+void InitSyncDialog::launch()
+{
+    if (!ready_to_sync_) {
+        return;
+    }
+
+    if (!poller_connected_) {
+        connect(gui->messagePoller(), SIGNAL(seadriveFSLoaded()),
+                this, SLOT(onFSLoaded()));
+        poller_connected_ = true;
+    }
+
+    gui->trayIcon()->setLoginActionEnabled(false);
+
+    waiting_text_ = tr("%1 is fetching the files list, please wait").arg(getBrand());
+    setStatusText(waiting_text_);
+    setStatusIcon(":/images/download-48.png");
+
+    mFinishBtn->setVisible(false);
+    mRunInBackgroundBtn->setVisible(true);
+
+    dots_ = 0;
     check_download_timer_->start(kCheckDownloadInterval);
 
-    connect(gui->messagePoller(), SIGNAL(seadriveFSLoaded()),
-            this, SLOT(onFSLoaded()));
+    ensureVisible();
 }
 
 void InitSyncDialog::checkDownloadProgress()
@@ -70,34 +90,18 @@ void InitSyncDialog::openMountPointAndCloseDialog()
 
 void InitSyncDialog::finish()
 {
-    finished_ = true;
+    ready_to_sync_ = false;
 
-    setAttribute(Qt::WA_DeleteOnClose);
-    mRunInBackgroundBtn->setVisible(false);
+    gui->trayIcon()->setLoginActionEnabled(true);
 
-    ensureVisible();
-
-    QString msg =
-        tr("%1 has dowloaded your files list.").arg(getBrand());
+    QString msg = tr("%1 has dowloaded your files list.").arg(getBrand());
     setStatusText(msg);
     setStatusIcon(":/images/ok-48.png");
 
-    connect(mFinishBtn, SIGNAL(clicked()), this, SLOT(accept()));
     mFinishBtn->setVisible(true);
-}
-
-void InitSyncDialog::fail(const QString &reason)
-{
-    finished_ = true;
-    setAttribute(Qt::WA_DeleteOnClose);
     mRunInBackgroundBtn->setVisible(false);
 
     ensureVisible();
-
-    setStatusText(reason);
-    mFinishBtn->setVisible(true);
-
-    connect(mFinishBtn, SIGNAL(clicked()), this, SLOT(reject()));
 }
 
 void InitSyncDialog::setStatusText(const QString &status)
@@ -119,12 +123,6 @@ void InitSyncDialog::ensureVisible()
 
 void InitSyncDialog::closeEvent(QCloseEvent *event)
 {
-    if (!finished_) {
-        event->ignore();
-        hide();
-    } else {
-        // We only set WA_DeleteOnClose when the dialog is ready to be closed.
-        setAttribute(Qt::WA_DeleteOnClose);
-        QDialog::closeEvent(event);
-    }
+    event->ignore();
+    hide();
 }
