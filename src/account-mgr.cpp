@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <algorithm>
 
+#include <QSettings>
 #include <QDateTime>
 #include <QMutexLocker>
 #include <QRegularExpression>
@@ -35,6 +36,7 @@ const char *kCustomLogoKeyName = "custom-logo";
 const char *kTotalStorage = "storage.total";
 const char *kUsedStorage = "storage.used";
 const char *kNickname = "name";
+const char *kSavedLogins = "saved-logins";
 
 bool getShibbolethColumnInfoCallBack(sqlite3_stmt *stmt, void *data)
 {
@@ -654,6 +656,21 @@ void AccountManager::clearAccountToken(const Account& account,
     } else {
         emit accountsChanged();
     }
+}
+
+bool AccountManager::firstLogin(const Account& account)
+{
+    QSettings settings;
+    settings.beginGroup(kSavedLogins);
+
+    if (!settings.value(account.domainID()).isNull()) {
+        return false;
+    }
+
+    settings.setValue(account.domainID(), true);
+    settings.sync();
+
+    return true;
 }
 
 #if defined(_MSC_VER)

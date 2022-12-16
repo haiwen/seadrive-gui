@@ -101,6 +101,8 @@ public:
     void clearAccountToken(const Account& account,
                            bool force_relogin=false);
 
+    bool firstLogin(const Account& account);
+
     // messages serves as a simple asynchronous queue between account
     // adding/removing events and rpc calls to daemon. One should enqueue
     // the message first, and then emit the accountMQUpdated() signal.
