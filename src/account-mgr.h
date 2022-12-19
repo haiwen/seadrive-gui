@@ -100,9 +100,6 @@ public:
 
     void clearAccountToken(const Account& account,
                            bool force_relogin=false);
-#if defined(_MSC_VER)
-    const QString getSyncRootName() { return sync_root_name_; }
-#endif
 
     // messages serves as a simple asynchronous queue between account
     // adding/removing events and rpc calls to daemon. One should enqueue
@@ -156,8 +153,6 @@ private:
 #if defined(_MSC_VER)
     // Store All sync root information
     std::vector<SyncRootInfo> sync_root_infos_;
-
-    QString sync_root_name_;
 #endif
 };
 

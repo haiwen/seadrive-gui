@@ -223,7 +223,6 @@ SET(ui_files
   ui/login-dialog.ui
   ui/settings-dialog.ui
   ui/about-dialog.ui
-  ui/disk-letter-dialog.ui
 )
 IF(QT_VERSION_MAJOR EQUAL 6)
     QT6_WRAP_UI(ui_output ${ui_files})

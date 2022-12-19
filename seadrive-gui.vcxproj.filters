@@ -166,9 +166,6 @@
     <ClCompile Include="src\ui\about-dialog.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
-    <ClCompile Include="src\ui\disk-letter-dialog.cpp">
-      <Filter>Source Files\ui</Filter>
-    </ClCompile>
     <ClCompile Include="src\ui\filter-menu.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
@@ -398,9 +395,6 @@
     <QtMoc Include="src\ui\about-dialog.h">
       <Filter>Header Files\ui</Filter>
     </QtMoc>
-    <QtMoc Include="src\ui\disk-letter-dialog.h">
-      <Filter>Header Files\ui</Filter>
-    </QtMoc>
     <QtMoc Include="src\ui\filter-menu.h">
       <Filter>Header Files\ui</Filter>
     </QtMoc>
@@ -500,9 +494,6 @@
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="ui\about-dialog.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="ui\disk-letter-dialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ui\filter-menu.ui">

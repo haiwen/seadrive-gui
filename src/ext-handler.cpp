@@ -190,17 +190,6 @@ bool getRepoAndRelativePath(const QString &path,
     return !repo->isEmpty();
 }
 
-bool getCategoryFromPath(const QString& path, QString *category)
-{
-    Account account;
-    QString repo;
-    QString path_in_repo;
-    if (!parseFilePath(path, &account, &repo, &path_in_repo, category)) {
-        return false;
-    }
-    return !category->isEmpty() && repo.isEmpty();
-}
-
 inline QString path_concat(const QString& s1, const QString& s2)
 {
     return QString("%1/%2").arg(s1).arg(s2);

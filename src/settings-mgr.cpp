@@ -23,9 +23,6 @@ namespace
 const char *kCheckLatestVersion = "checkLatestVersion";
 const char *kEnableSearch = "enableSearch";
 const char *kBehaviorGroup = "Behavior";
-#ifdef Q_OS_WIN32
-const char *kDiskLetter = "diskLetter";
-#endif
 
 #if defined(_MSC_VER)
 const char *kSeadriveRoot = "seadriveRoot";
@@ -101,7 +98,6 @@ SettingsManager::SettingsManager()
       maxDownloadRatio_(0),
       maxUploadRatio_(0),
       verify_http_sync_cert_disabled_(false),
-      current_session_access_(false),
       current_proxy_(SeafileProxy()),
       cache_clean_limit_minutes_(10),
       cache_size_limit_gb_(10)
@@ -131,10 +127,6 @@ void SettingsManager::loadSettings()
     if (gui->rpcClient()->seafileGetConfig("disable_verify_certificate",
                                                   &str) >= 0)
         verify_http_sync_cert_disabled_ = (str == "true") ? true : false;
-
-    if (gui->rpcClient()->seafileGetConfig("current_session_access",
-                                                  &str) >= 0)
-        current_session_access_ = (str == "true") ? true : false;
 
     if (gui->rpcClient()->getCacheSizeLimitGB(&value)) {
         cache_size_limit_gb_ = qMax(1, value);
@@ -456,17 +448,6 @@ void SettingsManager::setHttpSyncCertVerifyDisabled(bool disabled)
     }
 }
 
-void SettingsManager::setCurrentUserAccess(bool disabled)
-{
-    if (current_session_access_ != disabled) {
-        if (gui->rpcClient()->seafileSetConfig(
-                "current_session_access", disabled ? "true" : "false") < 0) {
-            return;
-        }
-        current_session_access_ = disabled;
-    }
-}
-
 QString SettingsManager::getComputerName()
 {
     QSettings settings;
@@ -524,31 +505,6 @@ void SettingsManager::setShellExtensionEnabled(bool enabled)
         reg2.add();
     }
 }
-
-bool SettingsManager::getDiskLetter(QString *disk_letter)
-{
-    QSettings settings;
-
-    settings.beginGroup(kSettingsGroup);
-    if (!settings.contains(kDiskLetter)) {
-        return false;
-    }
-
-    *disk_letter = settings.value(kDiskLetter, true).toString();
-    settings.endGroup();
-
-    return true;
-}
-
-void SettingsManager::setDiskLetter(const QString& disk_letter)
-{
-    QSettings settings;
-
-    settings.beginGroup(kSettingsGroup);
-    settings.setValue(kDiskLetter, disk_letter);
-    settings.endGroup();
-}
-
 
 #endif // Q_OS_WIN32
 

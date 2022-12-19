@@ -81,9 +81,6 @@ public:
     void setHttpSyncCertVerifyDisabled(bool disabled);
     bool httpSyncCertVerifyDisabled() const { return verify_http_sync_cert_disabled_; }
 
-    void setCurrentUserAccess(bool disabled);
-    bool currentUserAccess() const { return current_session_access_; }
-
     QString getComputerName();
     void setComputerName(const QString& computerName);
 
@@ -99,9 +96,6 @@ public:
 #ifdef Q_OS_WIN32
     void setShellExtensionEnabled(bool enabled);
     bool shellExtensionEnabled() const { return shell_ext_enabled_; }
-
-    bool getDiskLetter(QString *disk_letter);
-    void setDiskLetter(const QString& disk_letter);
 #endif // Q_OS_WIN32
 
 #if defined(_MSC_VER)
@@ -136,7 +130,6 @@ private:
     unsigned int maxDownloadRatio_;
     unsigned int maxUploadRatio_;
     bool verify_http_sync_cert_disabled_;
-    bool current_session_access_;
     bool shell_ext_enabled_;
 
     // proxy settings

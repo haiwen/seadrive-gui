@@ -35,7 +35,6 @@
 #include "utils/registry.h"
 #include "utils/utils-win.h"
 #include "ext-handler.h"
-#include "ui/disk-letter-dialog.h"
 #include "ui/seadrive-root-dialog.h"
 #endif
 
