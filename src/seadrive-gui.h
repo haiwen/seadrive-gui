@@ -67,7 +67,7 @@ public:
     // Get the seadrive logs dir. The "logs" subfolder of seadrive dir.
     QString logsDir() const;
 
-#if defined(_MSC_VER)
+#if defined(Q_OS_WIN32)
     QString seadriveRoot() const;
 #endif
 
@@ -99,11 +99,17 @@ public slots:
     void start();
 
 private slots:
-    void connectDaemon();
     void onAboutToQuit();
     void onDaemonStarted();
-    void onDaemonRestarted();
     void updateAccountToDaemon();
+
+#if defined(Q_OS_WIN32)
+    void onDaemonRestarted();
+#endif
+
+#if defined(Q_OS_MAC)
+    void connectDaemon();
+#endif
 
 private:
     Q_DISABLE_COPY(SeadriveGui)
@@ -114,7 +120,9 @@ private:
 
     void loginAccounts();
 
+#if defined(Q_OS_MAC)
     void logoutAccountsFromDaemon();
+#endif
 
     bool dev_mode_;
 

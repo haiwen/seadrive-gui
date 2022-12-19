@@ -399,45 +399,6 @@ void SeadriveGui::loginAccounts()
     }
 }
 
-void SeadriveGui::logoutAccountsFromDaemon()
-{
-    if (!rpc_client_->isConnected()) {
-        return;
-    }
-
-    auto accounts = account_mgr_->activeAccounts();
-    for (int i = 0; i < accounts.size(); i++) {
-        rpc_client_->logoutAccount(accounts.at(i));
-    }
-}
-
-void SeadriveGui::connectDaemon() {
-    if (!rpc_client_->tryConnectDaemon()) {
-        return;
-    }
-
-    connect_daemon_timer_.stop();
-    onDaemonStarted();
-}
-
-void SeadriveGui::onDaemonRestarted()
-{
-    qDebug("reviving rpc client when daemon is restarted");
-    if (rpc_client_) {
-        delete rpc_client_;
-    }
-
-    rpc_client_ = new SeafileRpcClient();
-    rpc_client_->connectDaemon();
-
-    qDebug("setting account when daemon is restarted");
-
-    auto accounts = account_mgr_->activeAccounts();
-    for (int i = 0; i <  accounts.size(); i++) {
-        rpc_client_->addAccount(accounts.at(i));
-    }
-}
-
 void SeadriveGui::onDaemonStarted()
 {
 #if defined(Q_OS_WIN32)
@@ -492,11 +453,56 @@ void SeadriveGui::updateAccountToDaemon()
     }
 }
 
+#if defined(Q_OS_WIN32)
+void SeadriveGui::onDaemonRestarted()
+{
+    qDebug("reviving rpc client when daemon is restarted");
+    if (rpc_client_) {
+        delete rpc_client_;
+    }
+
+    rpc_client_ = new SeafileRpcClient();
+    rpc_client_->connectDaemon();
+
+    qDebug("setting account when daemon is restarted");
+
+    auto accounts = account_mgr_->activeAccounts();
+    for (int i = 0; i <  accounts.size(); i++) {
+        rpc_client_->addAccount(accounts.at(i));
+    }
+}
+#endif
+
+#if defined(Q_OS_MAC)
+void SeadriveGui::connectDaemon() {
+    if (!rpc_client_->tryConnectDaemon()) {
+        return;
+    }
+
+    connect_daemon_timer_.stop();
+    onDaemonStarted();
+}
+
+void SeadriveGui::logoutAccountsFromDaemon()
+{
+    if (!rpc_client_->isConnected()) {
+        return;
+    }
+
+    auto accounts = account_mgr_->activeAccounts();
+    for (int i = 0; i < accounts.size(); i++) {
+        rpc_client_->logoutAccount(accounts.at(i));
+    }
+}
+#endif
+
 void SeadriveGui::onAboutToQuit()
 {
     tray_icon_->hide();
 
+#if defined(Q_OS_MAC)
     logoutAccountsFromDaemon();
+#endif
 }
 
 // stop the main event loop and return to the main function
@@ -756,7 +762,7 @@ QString SeadriveGui::logsDir() const
     return QDir(seadriveDir()).filePath("logs");
 }
 
-#if defined(_MSC_VER)
+#if defined(Q_OS_WIN32)
 QString SeadriveGui::seadriveRoot() const
 {
     return seadrive_root_;

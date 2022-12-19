@@ -10,6 +10,7 @@
 
 #include "QtAwesome.h"
 
+#include "account.h"
 #include "utils/utils.h"
 #include "utils/process.h"
 #include "seadrive-gui.h"
@@ -161,6 +162,8 @@ void handleCommandLineOption(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
     srand(time(NULL));
+
+    qRegisterMetaType<Account>();
 
     // On Mac, we use the file provider container directory as the default data
     // location. The container directory path is too deep that it exceeds the

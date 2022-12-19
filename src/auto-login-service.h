@@ -6,6 +6,7 @@
 
 #include "utils/singleton.h"
 
+class Account;
 class ApiError;
 
 class AutoLoginService : public QObject {
@@ -16,8 +17,7 @@ public:
     // Get a auto login token from server, and then open the "next_url" after login
 
 public slots:
-    void startAutoLogin(const QString& server,
-                        const QString& username,
+    void startAutoLogin(const Account& account,
                         const QString& next_url);
 
 private slots:
