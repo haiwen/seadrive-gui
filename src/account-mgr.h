@@ -132,7 +132,7 @@ private:
     static bool loadSyncRootInfoCB(struct sqlite3_stmt *stmt, void *data);
     const QString getOldSyncRootDir(const Account& account);
     const QString genSyncRootName(const Account& account);
-    void setAccountSyncRoot(Account *account);
+    void setAccountSyncRoot(Account &account);
 #endif
     static bool loadAccountsCB(struct sqlite3_stmt *stmt, void *data);
     static bool loadServerInfoCB(struct sqlite3_stmt *stmt, void *data);

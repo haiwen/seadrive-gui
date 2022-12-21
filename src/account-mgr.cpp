@@ -556,7 +556,8 @@ void::AccountManager::slotUpdateAccountInfoSucess(const AccountInfo& info)
     Account account = updateAccountInfo(req->account(), info);
 #if defined(Q_OS_WIN32)
     if (account.isValid()) {
-        setAccountSyncRoot(&account);
+        // setAccountSyncRoot will update the syncRoot in account variable, so subsequent methods (e.g. addAccount()) can get the sync root.
+        setAccountSyncRoot(account);
     }
 #elif defined(Q_OS_MAC)
     if (account.isValid()) {
@@ -763,15 +764,17 @@ const QString AccountManager::genSyncRootName(const Account& account)
     return new_sync_root_name;
 }
 
-void AccountManager::setAccountSyncRoot(Account *account)
+void AccountManager::setAccountSyncRoot(Account &account)
 {
-    auto name = genSyncRootName(*account);
+    auto name = genSyncRootName(account);
     QString sync_root = ::pathJoin(gui->seadriveRoot(), name);
-    account->syncRoot = sync_root;
+
+    // The sync_root is also updated to the account argument, to avoid another looking up from accounts_ member.
+    account.syncRoot = sync_root;
 
     QMutexLocker locker(&accounts_mutex_);
     for (size_t i = 0; i < accounts_.size(); i++) {
-        if (accounts_.at(i) == *account) {
+        if (accounts_.at(i) == account) {
             accounts_[i].syncRoot = sync_root;
             break;
         }
