@@ -21,6 +21,7 @@
 #include "account-info-service.h"
 #include "file-provider-mgr.h"
 #include "ui/tray-icon.h"
+#include "utils/json-utils.h"
 
 #if defined (Q_OS_WIN32)
 #include "win-sso/auto-logon-dialog.h"
@@ -114,7 +115,7 @@ bool compareAccount(const Account& a, const Account& b)
 }
 
 struct UserData {
-    std::vector<Account> *accounts;
+    QVector<Account> *accounts;
     struct sqlite3 *db;
 };
 
@@ -301,10 +302,12 @@ void AccountManager::loadSyncRootInfo()
 }
 #endif
 
-const std::vector<Account>& AccountManager::loadAccounts()
+void AccountManager::loadAccounts()
 {
     const char *sql = "SELECT url, username, token, lastVisited, isShibboleth, AutomaticLogin, isKerberos "
                       "FROM Accounts ORDER BY lastVisited DESC";
+
+    QMutexLocker locker(&accounts_mutex_);
     accounts_.clear();
     UserData userdata;
     userdata.accounts = &accounts_;
@@ -314,22 +317,22 @@ const std::vector<Account>& AccountManager::loadAccounts()
     std::stable_sort(accounts_.begin(), accounts_.end(), compareAccount);
 
     qWarning("loaded %d accounts", (int)accounts_.size());
-
-    return accounts_;
 }
 
 void AccountManager::enableAccount(const Account& account) {
     Account new_account = account;
     new_account.lastVisited = QDateTime::currentMSecsSinceEpoch();
 
-    size_t i;
-    for (i = 0; i < accounts_.size(); i++) {
-        if (accounts_[i] == account) {
-            accounts_.erase(accounts_.begin() + i);
-            break;
+    {
+        QMutexLocker locker(&accounts_mutex_);
+        for (size_t i = 0; i < accounts_.size(); i++) {
+            if (accounts_[i] == account) {
+                accounts_.erase(accounts_.begin() + i);
+                break;
+            }
         }
+        accounts_.insert(accounts_.begin(), new_account);
     }
-    accounts_.insert(accounts_.begin(), new_account);
 
     char *zql = sqlite3_mprintf(
         "REPLACE INTO Accounts(url, username, token, lastVisited, isShibboleth, AutomaticLogin, isKerberos)"
@@ -374,9 +377,12 @@ int AccountManager::removeAccount(const Account& account)
     sqlite_query_exec(db, zql);
     sqlite3_free(zql);
 
-    accounts_.erase(
-        std::remove(accounts_.begin(), accounts_.end(), account),
-        accounts_.end());
+    {
+        QMutexLocker locker(&accounts_mutex_);
+        accounts_.erase(
+            std::remove(accounts_.begin(), accounts_.end(), account),
+            accounts_.end());
+    }
 
     AccountMessage msg;
     msg.type = AccountRemoved;
@@ -385,7 +391,7 @@ int AccountManager::removeAccount(const Account& account)
 
     emit accountMQUpdated();
 
-    if (accounts().empty()) {
+    if (allAccounts().empty()) {
         gui->trayIcon()->showLoginDialog();
     }
 
@@ -426,8 +432,10 @@ void AccountManager::updateSyncRootInfo(SyncRootInfo& sync_root_info)
 
 bool AccountManager::accountExists(const QUrl& url, const QString& username) const
 {
-    for (size_t i = 0; i < accounts_.size(); i++) {
-        if (accounts_[i].serverUrl == url && accounts_[i].username == username) {
+    auto accounts = allAccounts();
+    for (size_t i = 0; i < accounts.size(); i++) {
+        if (accounts.at(i).serverUrl == url &&
+            accounts.at(i).username == username) {
             return true;
         }
     }
@@ -436,12 +444,12 @@ bool AccountManager::accountExists(const QUrl& url, const QString& username) con
 }
 
 void AccountManager::validateAndUseAccounts() {
-    if (accounts().empty()) {
+    if (allAccounts().empty()) {
         return;
     }
 
     if (activeAccounts().empty()) {
-        const Account &account = accounts().front();
+        const Account &account = allAccounts().front();
 
         if (!account.isAutomaticLogin && account.lastVisited < gui->startupTime()) {
             clearAccountToken(account, true);
@@ -455,15 +463,6 @@ void AccountManager::validateAndUseAccounts() {
     auto accounts = activeAccounts();
     for (int i = 0; i < accounts.size(); i++) {
         enableAccount(accounts.at(i));
-
-        // If the account is an old account, the account
-        // information has been updated at this time so
-        // you can calculate the SyncRoot and then call the switch account.
-#if defined(_MSC_VER)
-        const Account& current_account = currentAccount();
-        sync_root_name_= genSyncRootName(current_account);
-        qWarning("generated sync root name is : %s", toCStr(sync_root_name_));
-#endif
     }
 }
 
@@ -485,13 +484,20 @@ Account AccountManager::getAccountByUrlAndUsername(const QString& url,
 
 Account AccountManager::getAccountBySignature(const QString& account_sig) const
 {
-    for (size_t i = 0; i < accounts_.size(); i++) {
-        if (accounts_[i].getSignature() == account_sig) {
-            return accounts_[i];
+    auto accounts = allAccounts();
+    for (size_t i = 0; i < accounts.size(); i++) {
+        if (accounts.at(i).getSignature() == account_sig) {
+            return accounts.at(i);
         }
     }
-
     return Account();
+}
+
+Account AccountManager::getAccountFromJson(json_t *ret_obj) const
+{
+    Json json(ret_obj);
+    return getAccountByUrlAndUsername(json.getString("server"),
+                                      json.getString("username"));
 }
 
 void AccountManager::fetchAccountInfoFromServer(const Account& account)
@@ -524,23 +530,36 @@ const Account AccountManager::updateAccountInfo(const Account& account,
     setServerInfoKeyValue(db, account, kNickname,
                           info.name);
 
-    for (size_t i = 0; i < accounts_.size(); i++) {
-        if (accounts_[i] == account) {
-            accounts_[i].accountInfo = info;
-            emit accountInfoUpdated(accounts_[i]);
-            return accounts_[i];
+
+    Account updated_account;
+    {
+        QMutexLocker locker(&accounts_mutex_);
+        for (size_t i = 0; i < accounts_.size(); i++) {
+            if (accounts_[i] == account) {
+                accounts_[i].accountInfo = info;
+                updated_account = accounts_[i];
+            }
         }
     }
 
-    return Account();
+    if (updated_account.isValid()) {
+        emit accountInfoUpdated(updated_account);
+    }
+
+    return updated_account;
 }
 
 
 void::AccountManager::slotUpdateAccountInfoSucess(const AccountInfo& info)
 {
     FetchAccountInfoRequest* req = (FetchAccountInfoRequest*)(sender());
-    const Account account = updateAccountInfo(req->account(), info);
-#if defined(Q_OS_MAC)
+    Account account = updateAccountInfo(req->account(), info);
+#if defined(Q_OS_WIN32)
+    if (account.isValid()) {
+        // setAccountSyncRoot will update the syncRoot in account variable, so subsequent methods (e.g. addAccount()) can get the sync root.
+        setAccountSyncRoot(account);
+    }
+#elif defined(Q_OS_MAC)
     if (account.isValid()) {
         gui->fileProviderManager()->registerDomain(account);
         gui->fileProviderManager()->askUserToEnable();
@@ -579,27 +598,21 @@ void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo 
     QUrl url(account.serverUrl);
     url.setPath("/");
 
-
-#if defined(_MSC_VER)
-    const Account& current_account = currentAccount();
-    sync_root_name_= genSyncRootName(current_account);
-    qWarning("generated sync root name is : %s", toCStr(sync_root_name_));
-#endif
-
     bool changed = account.serverInfo != info;
     if (!changed)
         return;
 
-
-    for (size_t i = 0; i < accounts_.size(); i++) {
-        if (accounts_[i] == account) {
-            accounts_[i].serverInfo = info;
-            if (i == 0)
-                emit accountsChanged();
-            break;
+    {
+        QMutexLocker locker(&accounts_mutex_);
+        for (size_t i = 0; i < accounts_.size(); i++) {
+            if (accounts_[i] == account) {
+                accounts_[i].serverInfo = info;
+                break;
+            }
         }
     }
 
+    emit accountsChanged();
 }
 
 void AccountManager::serverInfoFailed(const ApiError &error)
@@ -613,10 +626,13 @@ void AccountManager::serverInfoFailed(const ApiError &error)
 void AccountManager::clearAccountToken(const Account& account,
                                        bool force_relogin)
 {
-    for (size_t i = 0; i < accounts_.size(); i++) {
-        if (accounts_[i] == account) {
-            accounts_[i].token = "";
-            break;
+    {
+        QMutexLocker locker(&accounts_mutex_);
+        for (size_t i = 0; i < accounts_.size(); i++) {
+            if (accounts_[i] == account) {
+                accounts_[i].token = "";
+                break;
+            }
         }
     }
 
@@ -749,6 +765,22 @@ const QString AccountManager::genSyncRootName(const Account& account)
     return new_sync_root_name;
 }
 
+void AccountManager::setAccountSyncRoot(Account &account)
+{
+    auto name = genSyncRootName(account);
+    QString sync_root = ::pathJoin(gui->seadriveRoot(), name);
+
+    // The sync_root is also updated to the account argument, to avoid another looking up from accounts_ member.
+    account.syncRoot = sync_root;
+
+    QMutexLocker locker(&accounts_mutex_);
+    for (size_t i = 0; i < accounts_.size(); i++) {
+        if (accounts_.at(i) == account) {
+            accounts_[i].syncRoot = sync_root;
+            break;
+        }
+    }
+}
 #endif
 
 void AccountManager::reloginAccount(const Account &account)
@@ -770,42 +802,34 @@ void AccountManager::reloginAccount(const Account &account)
     gui->trayIcon()->showLoginDialog(account);
 }
 
-const std::vector<Account>& AccountManager::accounts() const
+const QVector<Account> AccountManager::allAccounts() const
 {
+    QMutexLocker locker(&accounts_mutex_);
     return accounts_;
 }
 
 const QVector<Account> AccountManager::activeAccounts() const {
-    QVector<Account> accounts;
-    for (size_t i = 0; i < accounts_.size(); i++) {
-        if (!accounts_.at(i).token.isEmpty()) {
-            accounts.push_back(accounts_.at(i));
+    auto accounts = allAccounts();
+    QVector<Account> active_accounts;
+    for (size_t i = 0; i < accounts.size(); i++) {
+        if (!accounts.at(i).token.isEmpty()) {
+            active_accounts.push_back(accounts.at(i));
         }
     }
-    return accounts;
+    return active_accounts;
 }
 
 Account AccountManager::getAccount(const QString& url, const QString& username) const {
-    for (size_t i = 0; i < accounts_.size(); i++) {
-        if (accounts_.at(i).serverUrl.toString() == url &&
-            accounts_.at(i).username == username) {
-            return accounts_[i];
+    auto accounts = allAccounts();
+    for (size_t i = 0; i < accounts.size(); i++) {
+        if (accounts.at(i).serverUrl.toString() == url &&
+            accounts.at(i).username == username) {
+            return accounts.at(i);
         }
     }
     return Account();
 }
 
-#if defined(_MSC_VER)
-const std::vector<SyncRootInfo>& AccountManager::getSyncRootInfos() const
-{
-    return sync_root_infos_;
-}
-#endif
-
 bool AccountManager::hasAccount() const {
-    return !accounts_.empty();
-}
-
-const Account AccountManager::currentAccount() const {
-    return hasAccount() ? accounts_[0] : Account();
+    return !allAccounts().empty();
 }

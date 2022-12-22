@@ -25,32 +25,10 @@ namespace {
 
 const char *kSettingsGroupForSettingsDialog = "SettingsDialog";
 
-
-#ifdef Q_OS_WIN32
-// Insert the current disk letter into the proper position of the available disk
-// letters list.
-void insertDiskLetter(QStringList* letters, QString letter_to_insert)
-{
-    if (letters->contains(letter_to_insert)) {
-        return;
-    }
-    QStringList new_letters;
-    int i = 0;
-    foreach (const QString &letter, *letters) {
-        if (letter > letter_to_insert) {
-            break;
-        }
-        i++;
-    }
-    letters->insert(i, letter_to_insert);
-}
-#endif
-
 } // namespace
 
 SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
-    current_cache_dir_(QString()),
-    current_session_access_(false)
+    current_cache_dir_(QString())
 {
     setupUi(this);
     setWindowTitle(tr("Settings"));
@@ -119,8 +97,6 @@ void SettingsDialog::updateSettings()
     bool language_changed = false;
     bool seadrive_root_changed = false;
     bool cache_dir_changed = false;
-    bool diskLetter_changed = false;
-    bool current_access_changed = false;
     QString spotlight_updated;
 
     if (mBasicTab->isEnabled()) {
@@ -142,10 +118,6 @@ void SettingsDialog::updateSettings()
 
 #ifdef Q_OS_WIN32
         mgr->setShellExtensionEnabled(mShellExtCheckBox->checkState() == Qt::Checked);
-        if (!preferred_disk_letter_.contains(mDiskLetter->currentText())) {
-            mgr->setDiskLetter(mDiskLetter->currentText() + ":");
-            diskLetter_changed = true;
-        }
 #endif
 
 #ifdef HAVE_SPARKLE_SUPPORT
@@ -159,14 +131,6 @@ void SettingsDialog::updateSettings()
     if (mAdvancedTab->isEnabled()) {
         mgr->setCacheCleanIntervalMinutes(mCacheCleanInterval->value());
         mgr->setCacheSizeLimitGB(mCacheSizeLimit->value());
-#if defined(Q_OS_WIN32)
-        bool current_access = mCurrentAccess->checkState() == Qt::Checked;
-        if (current_session_access_ != current_access) {
-            current_session_access_ = current_access;
-            mgr->setCurrentUserAccess(current_access);
-            current_access_changed = true;
-        }
-#endif
 
 #if defined(_MSC_VER)
         if (mShowCacheDir->text() != current_seadrive_root_ ) {
@@ -203,14 +167,6 @@ void SettingsDialog::updateSettings()
     }
     if (!spotlight_updated.isEmpty() && gui->yesOrNoBox(
         tr("You have %1. Restart to apply it?").arg(spotlight_updated), this, true)) {
-        gui->restartApp();
-    }
-    if (diskLetter_changed && gui->yesOrNoBox(
-        tr("You have changed disk letter. Restart to apply it?"), this, true)) {
-        gui->restartApp();
-    }
-    if (current_access_changed && gui->yesOrNoBox(
-        tr("You have changed drive access option. Restart to apply it?"), this, true)) {
         gui->restartApp();
     }
 }
@@ -284,38 +240,6 @@ void SettingsDialog::showEvent(QShowEvent *event)
             mCheckLatestVersionBox->setCheckState(state);
         }
 #endif
-
-#ifdef Q_OS_WIN32
-        QStringList letters = utils::win::getAvailableDiskLetters();
-        if (!mgr->getDiskLetter(&preferred_disk_letter_)) {
-            preferred_disk_letter_ = gui->mountDir();
-        }
-        preferred_disk_letter_ = preferred_disk_letter_.at(0);
-        insertDiskLetter(&letters, gui->mountDir().at(0));
-
-        mDiskLetter->clear();
-        int i = 0;
-        foreach (const QString& letter, letters) {
-            mDiskLetter->addItem(letter);
-            if (preferred_disk_letter_.contains(letter)) {
-                mDiskLetter->setCurrentIndex(i);
-            }
-            i++;
-        }
-
-        current_session_access_  = mgr->currentUserAccess();
-        state = current_session_access_ ? Qt::Checked : Qt::Unchecked;
-        mCurrentAccess->setCheckState(state);
-#ifdef _MSC_VER
-        mDiskLetterLabel->setVisible(false);
-        mDiskLetter->setVisible(false);
-        mCurrentAccess->setVisible(false);
-#endif
-#else
-        mDiskLetterLabel->setVisible(false);
-        mDiskLetter->setVisible(false);
-        mCurrentAccess->setVisible(false);
-#endif // Q_OS_WIN32
 
 #if defined(_MSC_VER)
         if (!mgr->getSeadriveRoot(&current_seadrive_root_)) {

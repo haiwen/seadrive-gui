@@ -24,6 +24,9 @@ public:
     QUrl serverUrl;
     QString username;
     QString token;
+#if defined(Q_OS_WIN32)
+    QString syncRoot;
+#endif
     qint64 lastVisited;
     bool isShibboleth;
     bool isAutomaticLogin;
@@ -53,6 +56,9 @@ public:
         serverUrl(rhs.serverUrl),
         username(rhs.username),
         token(rhs.token),
+#if defined(Q_OS_WIN32)
+        syncRoot(rhs.syncRoot),
+#endif
         lastVisited(rhs.lastVisited),
         isShibboleth(rhs.isShibboleth),
         isAutomaticLogin(rhs.isAutomaticLogin),
@@ -66,6 +72,9 @@ public:
         serverUrl = rhs.serverUrl;
         username = rhs.username;
         token = rhs.token;
+#if defined(Q_OS_WIN32)
+        syncRoot = rhs.syncRoot;
+#endif
         lastVisited = rhs.lastVisited;
         isShibboleth = rhs.isShibboleth;
         isAutomaticLogin = rhs.isAutomaticLogin;

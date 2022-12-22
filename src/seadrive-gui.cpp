@@ -36,7 +36,6 @@
 #include "utils/registry.h"
 #include "utils/utils-win.h"
 #include "ext-handler.h"
-#include "ui/disk-letter-dialog.h"
 #include "ui/seadrive-root-dialog.h"
 #endif
 
@@ -285,8 +284,8 @@ void SeadriveGui::start()
     // Load system proxy information. This must be done before we start seadrive
     // daemon.
     QUrl url;
-    if (!account_mgr_->accounts().empty()) {
-        url = account_mgr_->accounts().front().serverUrl;
+    if (!account_mgr_->allAccounts().empty()) {
+        url = account_mgr_->allAccounts().front().serverUrl;
     }
     settings_mgr_->writeSystemProxyInfo(
         url, QDir(seadriveDataDir()).filePath("system-proxy.txt"));
@@ -360,7 +359,7 @@ void SeadriveGui::loginAccounts()
 {
     tray_icon_->show();
 
-    if (first_use_ || account_mgr_->accounts().size() == 0) {
+    if (first_use_ || account_mgr_->allAccounts().size() == 0) {
         do {
             QString username = readPreconfigureExpandedString(kPreconfigureUsername);
             QString token = readPreconfigureExpandedString(kPreconfigureUserToken);
@@ -402,47 +401,12 @@ void SeadriveGui::loginAccounts()
     }
 }
 
-void SeadriveGui::logoutAccountsFromDaemon()
-{
-    if (!rpc_client_->isConnected()) {
-        return;
-    }
-
-    auto accounts = account_mgr_->activeAccounts();
-    for (int i = 0; i < accounts.size(); i++) {
-        rpc_client_->logoutAccount(accounts.at(i));
-    }
-}
-
-void SeadriveGui::connectDaemon() {
-    if (!rpc_client_->tryConnectDaemon()) {
-        return;
-    }
-
-    connect_daemon_timer_.stop();
-    onDaemonStarted();
-}
-
-void SeadriveGui::onDaemonRestarted()
-{
-    qDebug("reviving rpc client when daemon is restarted");
-    if (rpc_client_) {
-        delete rpc_client_;
-    }
-
-    rpc_client_ = new SeafileRpcClient();
-    rpc_client_->connectDaemon();
-
-    qDebug("setting account when daemon is restarted");
-
-    auto accounts = account_mgr_->activeAccounts();
-    for (int i = 0; i <  accounts.size(); i++) {
-        rpc_client_->addAccount(accounts.at(i));
-    }
-}
-
 void SeadriveGui::onDaemonStarted()
 {
+#if defined(Q_OS_WIN32)
+    rpc_client_->connectDaemon();
+#endif
+
     // The addAccount() RPC should be invoked after an account being logged in.
     // When launching seadrive-gui, the login event may be raised before the
     // daemon started. For that reason, we queue all account updating events,
@@ -493,11 +457,56 @@ void SeadriveGui::updateAccountToDaemon()
     }
 }
 
+#if defined(Q_OS_WIN32)
+void SeadriveGui::onDaemonRestarted()
+{
+    qDebug("reviving rpc client when daemon is restarted");
+    if (rpc_client_) {
+        delete rpc_client_;
+    }
+
+    rpc_client_ = new SeafileRpcClient();
+    rpc_client_->connectDaemon();
+
+    qDebug("setting account when daemon is restarted");
+
+    auto accounts = account_mgr_->activeAccounts();
+    for (int i = 0; i <  accounts.size(); i++) {
+        rpc_client_->addAccount(accounts.at(i));
+    }
+}
+#endif
+
+#if defined(Q_OS_MAC)
+void SeadriveGui::connectDaemon() {
+    if (!rpc_client_->tryConnectDaemon()) {
+        return;
+    }
+
+    connect_daemon_timer_.stop();
+    onDaemonStarted();
+}
+
+void SeadriveGui::logoutAccountsFromDaemon()
+{
+    if (!rpc_client_->isConnected()) {
+        return;
+    }
+
+    auto accounts = account_mgr_->activeAccounts();
+    for (int i = 0; i < accounts.size(); i++) {
+        rpc_client_->logoutAccount(accounts.at(i));
+    }
+}
+#endif
+
 void SeadriveGui::onAboutToQuit()
 {
     tray_icon_->hide();
 
+#if defined(Q_OS_MAC)
     logoutAccountsFromDaemon();
+#endif
 }
 
 // stop the main event loop and return to the main function
@@ -565,13 +574,6 @@ bool SeadriveGui::initLog()
         errorAndExit(tr("Failed to initialize: failed to create %1 data folder").arg(getBrand()));
         return false;
     }
-
-#if !defined(Q_OS_WIN32)
-    if (checkdir_with_mkdir(toCStr(gui->mountDir())) < 0) {
-        errorAndExit(tr("Failed to initialize: failed to create seadrive mount folder"));
-        return false;
-    }
-#endif
 
     if (applet_log_init(toCStr(seadrive_dir.absolutePath())) < 0) {
         errorAndExit(tr("Failed to initialize log: %1").arg(g_strerror(errno)));
@@ -764,22 +766,7 @@ QString SeadriveGui::logsDir() const
     return QDir(seadriveDir()).filePath("logs");
 }
 
-QString SeadriveGui::mountDir() const
-{
 #if defined(Q_OS_WIN32)
-    QString sync_root_name = gui->accountManager()->getSyncRootName();
-    if (sync_root_name.isEmpty()) {
-        qWarning("get sync root name is empty.");
-    }
-
-    QString sync_root = ::pathJoin(seadriveRoot(), sync_root_name);
-    return sync_root;
-#else
-    return QDir::home().absoluteFilePath(getBrand());
-#endif
-}
-
-#if defined(_MSC_VER)
 QString SeadriveGui::seadriveRoot() const
 {
     return seadrive_root_;

@@ -18,7 +18,6 @@ class LoginDialog;
 class TrayNotificationManager;
 class SyncErrorsDialog;
 class TransferProgressDialog;
-class SearchDialog;
 class EncryptedReposDialog;
 
 
@@ -81,7 +80,6 @@ private slots:
     void refreshTrayIcon();
     void refreshTrayIconToolTip();
     void openHelp();
-    void openSeafileFolder();
     void openLogDirectory();
     void about();
     void checkTrayIconMessageQueue();

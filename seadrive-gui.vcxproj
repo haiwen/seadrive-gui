@@ -61,7 +61,6 @@
     <ClCompile Include="src\traynotificationmanager.cpp" />
     <ClCompile Include="src\traynotificationwidget.cpp" />
     <ClCompile Include="src\ui\about-dialog.cpp" />
-    <ClCompile Include="src\ui\disk-letter-dialog.cpp" />
     <ClCompile Include="src\ui\encrypted-repos-dialog.cpp" />
     <ClCompile Include="src\ui\filter-menu.cpp" />
     <ClCompile Include="src\ui\init-sync-dialog.cpp" />
@@ -70,7 +69,6 @@
     <ClCompile Include="src\ui\seadrive-root-dialog.cpp" />
     <ClCompile Include="src\ui\seafilelink-dialog.cpp" />
     <ClCompile Include="src\ui\search-bar.cpp" />
-    <ClCompile Include="src\ui\search-dialog.cpp" />
     <ClCompile Include="src\ui\settings-dialog.cpp" />
     <ClCompile Include="src\ui\sharedlink-dialog.cpp" />
     <ClCompile Include="src\ui\sync-errors-dialog.cpp" />
@@ -156,14 +154,12 @@
     <QtMoc Include="src\ui\sync-errors-dialog.h" />
     <QtMoc Include="src\ui\sharedlink-dialog.h" />
     <QtMoc Include="src\ui\settings-dialog.h" />
-    <QtMoc Include="src\ui\search-dialog.h" />
     <QtMoc Include="src\ui\search-bar.h" />
     <QtMoc Include="src\ui\seafilelink-dialog.h" />
     <QtMoc Include="src\ui\login-dialog.h" />
     <QtMoc Include="src\ui\loading-view.h" />
     <QtMoc Include="src\ui\init-sync-dialog.h" />
     <QtMoc Include="src\ui\filter-menu.h" />
-    <QtMoc Include="src\ui\disk-letter-dialog.h" />
     <QtMoc Include="src\ui\about-dialog.h" />
     <QtMoc Include="src\shib\shib-login-dialog.h" />
     <QtMoc Include="src\shib\shib-helper.h" />
@@ -174,7 +170,6 @@
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="ui\about-dialog.ui" />
-    <QtUic Include="ui\disk-letter-dialog.ui" />
     <QtUic Include="ui\filter-menu.ui" />
     <QtUic Include="ui\init-sync-dialog.ui" />
     <QtUic Include="ui\login-dialog.ui" />

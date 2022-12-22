@@ -21,7 +21,6 @@
 #include "src/ui/encrypted-repos-dialog.h"
 #include "src/ui/sync-errors-dialog.h"
 #include "src/ui/transfer-progress-dialog.h"
-#include "src/ui/search-dialog.h"
 #include "api/api-error.h"
 #include "api/requests.h"
 #include "seadrive-gui.h"
@@ -199,7 +198,7 @@ void SeafileTrayIcon::createContextMenu()
 
 void SeafileTrayIcon::prepareContextMenu()
 {
-    const std::vector<Account>& accounts = gui->accountManager()->accounts();
+    auto accounts = gui->accountManager()->allAccounts();
 
     if (global_sync_error_.isValid()) {
         global_sync_error_action_->setVisible(true);
@@ -520,11 +519,6 @@ void SeafileTrayIcon::openHelp()
     QDesktopServices::openUrl(QUrl(url));
 }
 
-void SeafileTrayIcon::openSeafileFolder()
-{
-    QDesktopServices::openUrl(QUrl::fromLocalFile(gui->mountDir()));
-}
-
 void SeafileTrayIcon::openLogDirectory()
 {
     QString log_path = QDir(gui->seadriveDir()).absoluteFilePath("logs");
@@ -572,7 +566,7 @@ void SeafileTrayIcon::onActivated(QSystemTrayIcon::ActivationReason reason)
 #if !defined(Q_OS_MAC)
     switch(reason) {
     case QSystemTrayIcon::Trigger: // single click
-        openSeafileFolder();
+        QDesktopServices::openUrl(QUrl::fromLocalFile(gui->seadriveRoot()));
     case QSystemTrayIcon::MiddleClick:
     case QSystemTrayIcon::DoubleClick:
         // showMainWindow();
@@ -651,9 +645,6 @@ void SeafileTrayIcon::onMessageClicked()
     if (gui->messagePoller()->lastEventType() == "file-download.start") {
         showTransferProgressDialog();
         transfer_progress_dialog_->showDownloadTab();
-    } else if (gui->messagePoller()->lastEventType() == "file-download.done") {
-        QString path = ::pathJoin(gui->mountDir(), ::getParentPath(gui->messagePoller()->lastEventPath()));
-        QDesktopServices::openUrl(QUrl::fromLocalFile(path));
     }
 }
 
@@ -687,7 +678,7 @@ void SeafileTrayIcon::onLogoutDeviceRequestSuccess()
     const Account& account = req->account();
 
 #if defined(_MSC_VER)
-    if (!gui->rpcClient()->logoutAccount(account, req->shouldRemoveCache())) {
+    if (!gui->rpcClient()->logoutAccount(account)) {
         gui->warningBox(
             tr("Failed to logout account %1").arg(account.toString()));
     }

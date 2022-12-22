@@ -32,24 +32,27 @@ private slots:
     void onShareLinkGeneratedFailed(const ApiError& error);
     void onLockFileSuccess();
     void onLockFileFailed(const ApiError& error);
-    void generateShareLink(const QString& repo_id,
+    void generateShareLink(const Account& account,
+                           const QString& repo_id,
                            const QString& path_in_repo,
                            bool is_file,
                            bool internal);
-    void lockFile(const QString& repo_id,
+    void lockFile(const Account& account,
+                  const QString& repo_id,
                   const QString& path_in_repo,
                   bool lock);
-    void privateShare(const QString& repo_id,
+    void privateShare(const Account& account,
+                      const QString& repo_id,
                       const QString& path_in_repo,
                       bool to_group);
-    void openUrlWithAutoLogin(const QUrl& url);
+    void openUrlWithAutoLogin(const Account& account, const QUrl& url);
     void onGetSmartLinkSuccess(const QString& smart_link);
     void onGetSmartLinkFailed(const ApiError& error);
-    void getUploadLink(const QString& repo, const QString& path_in_repo);
+    void getUploadLink(const Account& account, const QString& repo, const QString& path_in_repo);
     void onGetUploadLinkSuccess(const QString &upload_link);
     void onGetUploadLinkFailed(const ApiError& error);
 
-    void showLockedBy(const QString& repo, const QString& path_in_repo);
+    void showLockedBy(const Account& account, const QString& repo, const QString& path_in_repo);
     void onGetFileLockInfoSuccess(bool found, const QString &owner);
     void onGetFileLockInfoFailed(const ApiError& error);
 
@@ -72,19 +75,22 @@ public:
     void run();
 
 signals:
-    void generateShareLink(const QString& repo_id,
+    void generateShareLink(const Account& account,
+                           const QString& repo_id,
                            const QString& path_in_repo,
                            bool is_file,
                            bool internal);
-    void lockFile(const QString& repo_id,
+    void lockFile(const Account& account,
+                  const QString& repo_id,
                   const QString& path_in_repo,
                   bool lock);
-    void privateShare(const QString& repo_id,
+    void privateShare(const Account& account,
+                      const QString& repo_id,
                       const QString& path_in_repo,
                       bool to_group);
-    void openUrlWithAutoLogin(const QUrl& url);
-    void showLockedBy(const QString& repo, const QString& path_in_repo);
-    void getUploadLink(const QString& repo_id, const QString& path_in_repo);
+    void openUrlWithAutoLogin(const Account& account, const QUrl& url);
+    void showLockedBy(const Account& account, const QString& repo, const QString& path_in_repo);
+    void getUploadLink(const Account& account, const QString& repo_id, const QString& path_in_repo);
 
 private:
     void servePipeInNewThread(HANDLE pipe);
@@ -109,19 +115,22 @@ public:
     void run();
 
 signals:
-    void generateShareLink(const QString& repo_id,
+    void generateShareLink(const Account& account,
+                           const QString& repo_id,
                            const QString& path_in_repo,
                            bool is_file,
                            bool internal);
-    void lockFile(const QString& repo_id,
+    void lockFile(const Account& account,
+                  const QString& repo_id,
                   const QString& path_in_repo,
                   bool lock);
-    void privateShare(const QString& repo_id,
+    void privateShare(const Account& account,
+                      const QString& repo_id,
                       const QString& path_in_repo,
                       bool to_group);
-    void openUrlWithAutoLogin(const QUrl& url);
-    void showLockedBy(const QString& repo, const QString& path_in_repo);
-    void getUploadLink(const QString& repo_id, const QString& path_in_repo);
+    void openUrlWithAutoLogin(const Account& account, const QUrl& url);
+    void showLockedBy(const Account& account, const QString& repo, const QString& path_in_repo);
+    void getUploadLink(const Account& account, const QString& repo_id, const QString& path_in_repo);
 
 private:
     HANDLE pipe_;
@@ -141,6 +150,7 @@ private:
     void handleGetUploadLink(const QStringList& args);
 
     bool parseRepoFileInfo(const QString& path,
+                           Account *account,
                            QString *repo_id,
                            QString *path_in_repo);
 };

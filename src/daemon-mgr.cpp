@@ -47,7 +47,6 @@ const int kDaemonRestartMaxRetries = 10;
 const char *kSeadriveSockName = "\\\\.\\pipe\\seadrive_";
 const char *kSeadriveExecutable = "seadrive.exe";
 const int kDLLMissingErrorCode = -1073741515;
-const char *kOnlyCurrentSessionAccess = "OnlyCurrentSessionAccess";
 #else
 const char *kSeadriveSockName = "seadrive.sock";
 const char *kSeadriveExecutable = "seadrive";
@@ -160,15 +159,6 @@ QStringList DaemonManager::collectSeaDriveArgs()
 {
     QStringList args;
 
-#if defined(Q_OS_WIN32)
-     QString only_current_session_access = gui->readPreconfigureExpandedString(kOnlyCurrentSessionAccess);
-     bool current_access = only_current_session_access == "1";
-     if (current_access) {
-        qWarning("enable only current seesion access");
-        args << "-u";
-     }
-#endif
-
     args << "-d" << current_cache_dir_;
     args << "-l" << QDir(gui->logsDir()).absoluteFilePath("seadrive.log");
     if (I18NHelper::getInstance()->isTargetLanguage("zh_CN")) {
@@ -184,36 +174,6 @@ QStringList DaemonManager::collectSeaDriveArgs()
     QString sync_root_path = QDir::toNativeSeparators(seadrive_root);
 
     args << sync_root_path;
-#else
-    args << "-f";
-
-    QString fuse_opts = qgetenv("SEADRIVE_FUSE_OPTS");
-    if (fuse_opts.isEmpty()) {
-#if defined(Q_OS_MAC)
-        SettingsManager *mgr = gui->settingsManager();
-        QString mount_dir = gui->mountDir();
-        args << mount_dir;
-#if 0
-        if (mgr->getSearchEnabled())
-            fuse_opts += QString(" -o volname=%1,allow_other,local").arg(getBrand());
-        else
-            fuse_opts += QString(" -o volname=%1,noappledouble").arg(getBrand());
-#endif
-        args << "-o";
-        QString mount_options = QString("volname=%1,auto_xattr").arg(getBrand());
-        args << mount_options;
-
-#elif defined(Q_OS_LINUX)
-        QStringList umount_arguments;
-        umount_arguments << "-u" << gui->mountDir();
-        QProcess::execute("fusermount", umount_arguments);
-        QString mount_dir = gui->mountDir();
-        args << mount_dir;
-#endif
-    } else {
-        args << fuse_opts.split(" ");
-    }
-
 #endif
 
     auto stream = qWarning() << "starting seadrive daemon:" << kSeadriveExecutable;
@@ -264,15 +224,6 @@ void DaemonManager::checkDaemonReady()
         } else {
             emit daemonRestarted();
         }
-#if defined(Q_OS_MAC)
-        if (!utils::mac::addFinderFavoriteDir(gui->mountDir())) {
-            qWarning("failed to add mount dir to Finder favorites");
-        }
-        // We must wait seadrive volume is mounted, i.e. when seadrive
-        // daemon becomes ready, before we turn on spotlight on the
-        // seadrive volume.
-        utils::mac::enableSpotlightOnVolume(gui->mountDir());
-#endif
         return;
     }
 

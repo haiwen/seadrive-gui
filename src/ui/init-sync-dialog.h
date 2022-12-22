@@ -22,7 +22,6 @@ public:
 
 private slots:
     void checkDownloadProgress();
-    void openMountPointAndCloseDialog();
     void onFSLoaded();
     void closeEvent(QCloseEvent *event);
 

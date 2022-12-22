@@ -3,17 +3,17 @@
 #include <QtGlobal>
 #include <QtWidgets>
 #include "utils/utils-mac.h"
-#include "account.h"
 #include "account-mgr.h"
 #include "seadrive-gui.h"
 #include "api/requests.h"
 
 
-SharedLinkDialog::SharedLinkDialog(const QString& link, const QString &repo_id,
+SharedLinkDialog::SharedLinkDialog(const QString &link,
+                                   const Account &account,
+                                   const QString &repo_id,
                                    const QString &path_in_repo,
                                    QWidget *parent)
-  : text_(link), repo_id_(repo_id),
-    path_in_repo_(path_in_repo)
+  : text_(link), account_(account), repo_id_(repo_id), path_in_repo_(path_in_repo)
 {
     setWindowTitle(tr("Share Link"));
     setWindowIcon(QIcon(":/images/seafile.png"));
@@ -118,15 +118,10 @@ void SharedLinkDialog::onDownloadStateChanged(int state)
 
 void SharedLinkDialog::slotGenSharedLink()
 {
-    const Account account = gui->accountManager()->currentAccount();
-    if (!account.isValid()) {
-        return;
-    }
-
     QString password = password_editor_->text();
     QString expire_days = expire_days_editor_->text();
 
-    CreateSharedLinkRequest *req = new CreateSharedLinkRequest(account, repo_id_, path_in_repo_, password, expire_days);
+    CreateSharedLinkRequest *req = new CreateSharedLinkRequest(account_, repo_id_, path_in_repo_, password, expire_days);
 
     connect(req, &CreateSharedLinkRequest::success,
             this, &SharedLinkDialog::slotGetSharedLink);

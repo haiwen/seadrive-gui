@@ -82,12 +82,6 @@ void InitSyncDialog::onFSLoaded()
     finish();
 }
 
-void InitSyncDialog::openMountPointAndCloseDialog()
-{
-    QDesktopServices::openUrl(QUrl::fromLocalFile(gui->mountDir()));
-    accept();
-}
-
 void InitSyncDialog::finish()
 {
     ready_to_sync_ = false;

@@ -11,13 +11,12 @@
 
 #include <searpc.h>
 
-#include "account.h"
 #include "open-local-helper.h"
 #include "utils/utils.h"
 #include "utils/file-utils.h"
 #include "seadrive-gui.h"
 #include "rpc/rpc-client.h"
-
+#include "account-mgr.h"
 
 namespace {
 
@@ -30,19 +29,33 @@ const char *kSeafileProtocolHostOpenFile = "openfile";
 
 void openLocalFile(QString& repo_id, QString& path_in_repo)
 {
+#if defined(Q_OS_WIN32)
     QString repo_name;
     if (!gui->rpcClient()->getRepoUnameById(repo_id, &repo_name)) {
         qWarning("failed to get repo uname by %s", toCStr(repo_id));
         return;
     }
-    QString path_to_open = ::pathJoin(gui->mountDir(), repo_name, path_in_repo);
+
+    json_t *ret_obj = nullptr;
+    if (!gui->rpcClient()->getAccountByRepoId(repo_id, &ret_obj)) {
+        qWarning("failed to get account by repo id %s", toCStr(repo_id));
+        return;
+    }
+
+    Account account = gui->accountManager()->getAccountFromJson(ret_obj);
+    if (account.syncRoot.isEmpty()) {
+        qWarning("failed to get account from json");
+        return;
+    }
+
+    QString path_to_open = ::pathJoin(account.syncRoot, repo_name, path_in_repo);
     QFileInfo fi(path_to_open);
     if (!fi.exists()) {
         qWarning("the file or directory %s not exists ", toCStr(path_to_open));
         return;
     }
     QDesktopServices::openUrl(QUrl::fromLocalFile(path_to_open));
-    return;
+#endif
 }
 
 OpenLocalHelper* OpenLocalHelper::singleton_ = NULL;

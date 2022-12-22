@@ -118,13 +118,24 @@ std::string formatErrorMessage()
 }
 
 bool parseFilePath(const QString &path,
+                   Account *account,
                    QString *repo,
                    QString *path_in_repo,
                    QString *category_out)
 {
     // The path of the file in relative to the mount point.
     // It is like "My Libraries/Documents"
-    QString relative_path = path.mid(gui->mountDir().length() + 1);
+    QString relative_path;
+
+    auto accounts = gui->accountManager()->activeAccounts();
+    for (auto a : accounts) {
+        auto root = QDir::cleanPath(a.syncRoot) + "/";
+        if (path.startsWith(root)) {
+            relative_path = path.mid(root.length());
+            *account = a;
+            break;
+        }
+    }
 
     if (relative_path.isEmpty()) {
         return false;
@@ -166,28 +177,6 @@ bool parseFilePath(const QString &path,
     return true;
 }
 
-// If `category_out` is non-null, repo and path_in_repo would not be used.
-bool getRepoAndRelativePath(const QString &path,
-                            QString *repo,
-                            QString *path_in_repo,
-                            QString *category=nullptr)
-{
-    if (!parseFilePath(path, repo, path_in_repo, category)) {
-        return false;
-    }
-    return !repo->isEmpty();
-}
-
-bool getCategoryFromPath(const QString& path, QString *category)
-{
-    QString repo;
-    QString path_in_repo;
-    if (!parseFilePath(path, &repo, &path_in_repo, category)) {
-        return false;
-    }
-    return !category->isEmpty() && repo.isEmpty();
-}
-
 inline QString path_concat(const QString& s1, const QString& s2)
 {
     return QString("%1/%2").arg(s1).arg(s2);
@@ -206,20 +195,20 @@ SeafileExtensionHandler::SeafileExtensionHandler()
 {
     listener_thread_ = new ExtConnectionListenerThread;
 
-    connect(listener_thread_, SIGNAL(generateShareLink(const QString&, const QString&, bool, bool)),
-            this, SLOT(generateShareLink(const QString&, const QString&, bool, bool)));
+    connect(listener_thread_, SIGNAL(generateShareLink(const Account&, const QString&, const QString&, bool, bool)),
+            this, SLOT(generateShareLink(const Account&, const QString&, const QString&, bool, bool)));
 
-    connect(listener_thread_, SIGNAL(lockFile(const QString&, const QString&, bool)),
-            this, SLOT(lockFile(const QString&, const QString&, bool)));
+    connect(listener_thread_, SIGNAL(lockFile(const Account&, const QString&, const QString&, bool)),
+            this, SLOT(lockFile(const Account&, const QString&, const QString&, bool)));
 
-    connect(listener_thread_, SIGNAL(privateShare(const QString&, const QString&, bool)),
-            this, SLOT(privateShare(const QString&, const QString&, bool)));
+    connect(listener_thread_, SIGNAL(privateShare(const Account&, const QString&, const QString&, bool)),
+            this, SLOT(privateShare(const Account&, const QString&, const QString&, bool)));
 
-    connect(listener_thread_, SIGNAL(openUrlWithAutoLogin(const QUrl&)),
-            this, SLOT(openUrlWithAutoLogin(const QUrl&)));
+    connect(listener_thread_, SIGNAL(openUrlWithAutoLogin(const Account&, const QUrl&)),
+            this, SLOT(openUrlWithAutoLogin(const Account&, const QUrl&)));
 
-    connect(listener_thread_, SIGNAL(showLockedBy(const QString&, const QString&)),
-            this, SLOT(showLockedBy(const QString&, const QString&)));
+    connect(listener_thread_, SIGNAL(showLockedBy(const Account&, const QString&, const QString&)),
+            this, SLOT(showLockedBy(const Account&, const QString&, const QString&)));
 
     connect(listener_thread_, &ExtConnectionListenerThread::getUploadLink,
             this, &SeafileExtensionHandler::getUploadLink);
@@ -255,14 +244,8 @@ void SeafileExtensionHandler::stop()
     }
 }
 
-void SeafileExtensionHandler::getUploadLink(const QString& repo_id, const QString& path_in_repo)
+void SeafileExtensionHandler::getUploadLink(const Account& account, const QString& repo_id, const QString& path_in_repo)
 {
-    const Account account =
-            gui->accountManager()->currentAccount();
-    if (!account.isValid()) {
-        return;
-    }
-
     GetUploadLinkRequest *req = new GetUploadLinkRequest(
             account, repo_id, "/" + path_in_repo);
     connect(req, &GetUploadLinkRequest::success,
@@ -270,7 +253,6 @@ void SeafileExtensionHandler::getUploadLink(const QString& repo_id, const QStrin
     connect(req, &GetUploadLinkRequest::failed,
             this,&SeafileExtensionHandler::onGetUploadLinkFailed);
     req->send();
-
 }
 
 void SeafileExtensionHandler::onGetUploadLinkSuccess(const QString& upload_link)
@@ -290,17 +272,12 @@ void SeafileExtensionHandler::onGetUploadLinkFailed(const ApiError& error)
     req->deleteLater();
 }
 
-void SeafileExtensionHandler::generateShareLink(const QString& repo_id,
+void SeafileExtensionHandler::generateShareLink(const Account& account,
+                                                const QString& repo_id,
                                                 const QString& path_in_repo,
                                                 bool is_file,
                                                 bool internal)
 {
-    // qDebug("path_in_repo: %s", path_in_repo.toUtf8().data());
-    const Account account = gui->accountManager()->currentAccount();
-    if (!account.isValid()) {
-        return;
-    }
-
     if (internal) {
         QString path = path_in_repo;
         if (!is_file && !path.endsWith("/")) {
@@ -350,63 +327,15 @@ void SeafileExtensionHandler::onGetSmartLinkFailed(const ApiError& error)
     }
 }
 
-void SeafileExtensionHandler::lockFile(const QString& repo_id,
-                                       const QString& path_in_repo,
-                                       bool lock)
-{
-    // qDebug("path_in_repo: %s", path_in_repo.toUtf8().data());
-    const Account account = gui->accountManager()->currentAccount();
-    if (!account.isValid()) {
-        return;
-    }
-
-    LockFileRequest *req = new LockFileRequest(
-        account, repo_id, path_in_repo, lock);
-
-    connect(req, SIGNAL(success()),
-            this, SLOT(onLockFileSuccess()));
-    connect(req, SIGNAL(failed(const ApiError&)),
-            this, SLOT(onLockFileFailed(const ApiError&)));
-
-    req->send();
-}
-
-void SeafileExtensionHandler::privateShare(const QString& repo_id,
-                                           const QString& path_in_repo,
-                                           bool to_group)
-{
-    const Account account = gui->accountManager()->currentAccount();
-    if (!account.isValid()) {
-        qWarning("no account found for repo %12s", repo_id.toUtf8().data());
-        return;
-    }
-
-    // TODO: add back private share dialog from seafile-client
-
-    // LocalRepo repo;
-    // gui->rpcClient()->getLocalRepo(repo_id, &repo);
-    // PrivateShareDialog *dialog = new PrivateShareDialog(account, repo_id, repo.name,
-    //                                                     path_in_repo, to_group,
-    //                                                     NULL);
-
-    // dialog->setAttribute(Qt::WA_DeleteOnClose);
-    // dialog->show();
-    // dialog->raise();
-    // dialog->activateWindow();
-}
-
-void SeafileExtensionHandler::openUrlWithAutoLogin(const QUrl& url)
-{
-    AutoLoginService::instance()->startAutoLogin(url.toString());
-}
-
 void SeafileExtensionHandler::onShareLinkGenerated(const QString& link)
 {
     GetSharedLinkRequest *req = qobject_cast<GetSharedLinkRequest *>(sender());
+    const Account account = req->getAccount();
     const QString repo_id = req->getRepoId();
     const QString repo_path = req->getRepoPath();
 
     SharedLinkDialog *dialog = new SharedLinkDialog(link,
+                                                    account,
                                                     repo_id,
                                                     repo_path,
                                                     NULL);
@@ -423,6 +352,22 @@ void SeafileExtensionHandler::onShareLinkGeneratedFailed(const ApiError& error) 
     } else {
         gui->messageBox(tr("Failed to get share link %1\n").arg(error.toString()));
     }
+}
+
+void SeafileExtensionHandler::lockFile(const Account& account,
+                                       const QString& repo_id,
+                                       const QString& path_in_repo,
+                                       bool lock)
+{
+    LockFileRequest *req = new LockFileRequest(
+        account, repo_id, path_in_repo, lock);
+
+    connect(req, SIGNAL(success()),
+            this, SLOT(onLockFileSuccess()));
+    connect(req, SIGNAL(failed(const ApiError&)),
+            this, SLOT(onLockFileFailed(const ApiError&)));
+
+    req->send();
 }
 
 void SeafileExtensionHandler::onLockFileSuccess()
@@ -444,16 +389,33 @@ void SeafileExtensionHandler::onLockFileFailed(const ApiError& error)
     gui->warningBox(QString("%1: %2").arg(str, error.toString()));
 }
 
-void SeafileExtensionHandler::showLockedBy(const QString& repo_id, const QString& path_in_repo)
+void SeafileExtensionHandler::privateShare(const Account& account,
+                                           const QString& repo_id,
+                                           const QString& path_in_repo,
+                                           bool to_group)
 {
-    // qWarning("SeafileExtensionHandler::showLockedBy is called for %s %s\n",
-    //          toCStr(repo_id),
-    //          toCStr(path_in_repo));
-    const Account account = gui->accountManager()->currentAccount();
-    if (!account.isValid()) {
-        return;
-    }
+    // TODO: add back private share dialog from seafile-client
 
+    // LocalRepo repo;
+    // gui->rpcClient()->getLocalRepo(repo_id, &repo);
+    // PrivateShareDialog *dialog = new PrivateShareDialog(account, repo_id, repo.name,
+    //                                                     path_in_repo, to_group,
+    //                                                     NULL);
+
+    // dialog->setAttribute(Qt::WA_DeleteOnClose);
+    // dialog->show();
+    // dialog->raise();
+    // dialog->activateWindow();
+}
+
+void SeafileExtensionHandler::openUrlWithAutoLogin(const Account& account,
+                                                   const QUrl& url)
+{
+    AutoLoginService::instance()->startAutoLogin(account, url.toString());
+}
+
+void SeafileExtensionHandler::showLockedBy(const Account& account, const QString& repo_id, const QString& path_in_repo)
+{
     GetFileLockInfoRequest *req = new GetFileLockInfoRequest(
         account, repo_id, QString("/").append(path_in_repo));
 
@@ -534,16 +496,16 @@ void ExtConnectionListenerThread::servePipeInNewThread(HANDLE pipe)
 {
     ExtCommandsHandler *t = new ExtCommandsHandler(pipe);
 
-    connect(t, SIGNAL(generateShareLink(const QString&, const QString&, bool, bool)),
-            this, SIGNAL(generateShareLink(const QString&, const QString&, bool, bool)));
-    connect(t, SIGNAL(lockFile(const QString&, const QString&, bool)),
-            this, SIGNAL(lockFile(const QString&, const QString&, bool)));
-    connect(t, SIGNAL(privateShare(const QString&, const QString&, bool)),
-            this, SIGNAL(privateShare(const QString&, const QString&, bool)));
-    connect(t, SIGNAL(openUrlWithAutoLogin(const QUrl&)),
-            this, SIGNAL(openUrlWithAutoLogin(const QUrl&)));
-    connect(t, SIGNAL(showLockedBy(const QString&, const QString&)),
-            this, SIGNAL(showLockedBy(const QString&, const QString&)));
+    connect(t, SIGNAL(generateShareLink(const Account&, const QString&, const QString&, bool, bool)),
+            this, SIGNAL(generateShareLink(const Account&, const QString&, const QString&, bool, bool)));
+    connect(t, SIGNAL(lockFile(const Account&, const QString&, const QString&, bool)),
+            this, SIGNAL(lockFile(const Account&, const QString&, const QString&, bool)));
+    connect(t, SIGNAL(privateShare(const Account&, const QString&, const QString&, bool)),
+            this, SIGNAL(privateShare(const Account&, const QString&, const QString&, bool)));
+    connect(t, SIGNAL(openUrlWithAutoLogin(const Account&, const QUrl&)),
+            this, SIGNAL(openUrlWithAutoLogin(const Account&, const QUrl&)));
+    connect(t, SIGNAL(showLockedBy(const Account&, const QString&, const QString&)),
+            this, SIGNAL(showLockedBy(const Account&, const QString&, const QString&)));
     connect(t, &ExtCommandsHandler::getUploadLink,
             this, &ExtConnectionListenerThread::getUploadLink);
     t->start();
@@ -656,13 +618,14 @@ void ExtCommandsHandler::handleGenShareLink(const QStringList& args, bool intern
         return;
     }
 
+    Account account;
     QString path = args[0];
     QString repo_id, path_in_repo;
-    if (!parseRepoFileInfo(path, &repo_id, &path_in_repo)) {
+    if (!parseRepoFileInfo(path, &account, &repo_id, &path_in_repo)) {
         return;
     }
     bool is_file = QFileInfo(path).isFile();
-    emit generateShareLink(repo_id, path_in_repo, is_file, internal);
+    emit generateShareLink(account, repo_id, path_in_repo, is_file, internal);
 
     return;
 }
@@ -674,34 +637,23 @@ QString ExtCommandsHandler::handleListRepos(const QStringList& args)
         return "";
     }
 
-    const Account& account = gui->accountManager()->currentAccount();
-    if (!account.isValid()) {
-        qWarning("handleListRepos: account is not valid");
-        return "";
-    }
-
-    QDir mount_point(gui->mountDir());
-    // qWarning() << "listing directory " << gui->mountDir();
-    QStringList subdirs = mount_point.entryList(
-        QStringList(), QDir::Dirs | QDir::NoDot | QDir::NoDotDot);
-
     QStringList fullpaths;
-    QString internal_link_supported = account.isAtLeastVersion(6, 3, 0)
-            ? "internal-link-supported"
-            : "internal-link-unsupported";
-    fullpaths << internal_link_supported;
+    fullpaths << "internal-link-supported";
 
-    // if use seadrive 2.x, need pass seadrive root to seafile-ext
-#if defined(_MSC_VER)
-    fullpaths << gui->mountDir();
-#endif
-    foreach (const QString &subdir, subdirs) {
-        QStringList repos =
-            QDir(pathJoin(gui->mountDir(), subdir))
-                .entryList(QStringList(),
-                           QDir::Dirs | QDir::NoDot | QDir::NoDotDot);
-        foreach (const QString &r, repos) {
-            fullpaths << pathJoin(gui->mountDir(), subdir, r);
+    auto accounts = gui->accountManager()->activeAccounts();
+    for (auto account : accounts) {
+        fullpaths << account.syncRoot;
+
+        auto subdirs = QDir(account.syncRoot).entryList(
+            QStringList(), QDir::Dirs | QDir::NoDot | QDir::NoDotDot);
+
+        for (auto subdir : subdirs) {
+            auto repos = QDir(pathJoin(account.syncRoot, subdir)).entryList(
+                QStringList(), QDir::Dirs | QDir::NoDot | QDir::NoDotDot);
+
+            for (auto repo : repos) {
+                fullpaths << pathJoin(account.syncRoot, subdir, repo);
+            }
         }
     }
 
@@ -714,13 +666,14 @@ void ExtCommandsHandler::handleGetUploadLink(const QStringList& args)
         return;
     }
     QString path = normalizedPath(args[0]);
+    Account account;
     QString repo_id, path_in_repo;
 
-    if (!parseRepoFileInfo(path, &repo_id, &path_in_repo)) {
+    if (!parseRepoFileInfo(path, &account, &repo_id, &path_in_repo)) {
         return;
     }
 
-    emit getUploadLink(repo_id, path_in_repo);
+    emit getUploadLink(account, repo_id, path_in_repo);
 }
 
 QString ExtCommandsHandler::handleGetFileLockStatus(const QStringList& args)
@@ -730,8 +683,9 @@ QString ExtCommandsHandler::handleGetFileLockStatus(const QStringList& args)
     }
     QString path = args[0];
 
+    Account account;
     QString repo_id, path_in_repo;
-    if (!parseRepoFileInfo(path, &repo_id, &path_in_repo)) {
+    if (!parseRepoFileInfo(path, &account, &repo_id, &path_in_repo)) {
         return"";
     }
 
@@ -771,8 +725,9 @@ void ExtCommandsHandler::handleLockFile(const QStringList& args, bool lock)
     }
 
     QString path = args[0];
+    Account account;
     QString repo_id, path_in_repo;
-    if (!parseRepoFileInfo(path, &repo_id, &path_in_repo)) {
+    if (!parseRepoFileInfo(path, &account, &repo_id, &path_in_repo)) {
         return;
     }
 
@@ -781,29 +736,27 @@ void ExtCommandsHandler::handleLockFile(const QStringList& args, bool lock)
         qWarning() << "failed to lock file " << path;
         return;
     }
-    emit lockFile(repo_id, path_in_repo, lock);
+    emit lockFile(account, repo_id, path_in_repo, lock);
 }
 
 bool ExtCommandsHandler::parseRepoFileInfo(const QString& path,
+                                               Account *p_account,
                                                QString *p_repo_id,
                                                QString *p_path_in_repo)
 {
-    const Account& account = gui->accountManager()->currentAccount();
-    if (!account.isValid()) {
-        qWarning() << "failed to get a valid account";
+    QString repo;
+    QString category;
+    if (!parseFilePath(path, p_account, &repo, p_path_in_repo, &category)) {
+        qWarning() << "failed to parse file path:" << path;
         return false;
     }
-
-    QString category;
-    QString repo;
-    if (!getRepoAndRelativePath(path, &repo, p_path_in_repo, &category)) {
-        qWarning() << "failed to getRepoAndRelativePath for " << path;
+    if (repo.isEmpty()) {
         return false;
     }
 
     QMutexLocker locker(&rpc_client_mutex_);
-    if (!rpc_client_->getRepoIdByPath(account.serverUrl.url(),
-                                      account.username,
+    if (!rpc_client_->getRepoIdByPath(p_account->serverUrl.url(),
+                                      p_account->username,
                                       path_concat(category, repo),
                                       p_repo_id)) {
         qWarning() << "failed to get the repo id for " << path;
@@ -826,11 +779,12 @@ void ExtCommandsHandler::handlePrivateShare(const QStringList& args,
         return;
     }
 
+    Account account;
     QString repo_id, path_in_repo;
-    if (!parseRepoFileInfo(path, &repo_id, &path_in_repo)) {
+    if (!parseRepoFileInfo(path, &account, &repo_id, &path_in_repo)) {
         return;
     }
-    emit privateShare(repo_id, path_in_repo, to_group);
+    emit privateShare(account, repo_id, path_in_repo, to_group);
 }
 
 void ExtCommandsHandler::handleShowHistory(const QStringList& args)
@@ -844,14 +798,15 @@ void ExtCommandsHandler::handleShowHistory(const QStringList& args)
                  path.toUtf8().data());
         return;
     }
+    Account account;
     QString repo_id, path_in_repo;
-    if (!parseRepoFileInfo(path, &repo_id, &path_in_repo)) {
+    if (!parseRepoFileInfo(path, &account, &repo_id, &path_in_repo)) {
         return;
     }
 
     QUrl url = "/repo/file_revisions/" + repo_id + "/";
     url = ::includeQueryParams(url, {{"p", path_in_repo}});
-    emit openUrlWithAutoLogin(url);
+    emit openUrlWithAutoLogin(account, url);
 }
 
 void ExtCommandsHandler::handleDownload(const QStringList& args)
@@ -860,8 +815,9 @@ void ExtCommandsHandler::handleDownload(const QStringList& args)
         return;
     }
     QString path = normalizedPath(args[0]);
+    Account account;
     QString repo_id, path_in_repo;
-    if (!parseRepoFileInfo(path, &repo_id, &path_in_repo)) {
+    if (!parseRepoFileInfo(path, &account, &repo_id, &path_in_repo)) {
         return;
     }
 
@@ -881,10 +837,11 @@ void ExtCommandsHandler::handleShowLockedBy(const QStringList& args)
         return;
     }
 
+    Account account;
     QString repo_id, path_in_repo;
-    if (!parseRepoFileInfo(path, &repo_id, &path_in_repo)) {
+    if (!parseRepoFileInfo(path, &account, &repo_id, &path_in_repo)) {
         return;
     }
     // qWarning("emitting showLockedBy\n");
-    emit showLockedBy(repo_id, path_in_repo);
+    emit showLockedBy(account, repo_id, path_in_repo);
 }

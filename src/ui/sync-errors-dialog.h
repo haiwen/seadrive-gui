@@ -60,6 +60,7 @@ private slots:
 private:
     void createContextMenu();
     void prepareContextMenu(const SyncError& error);
+    QString findLocalPathFromError(const SyncError& error);
 
 private:
     QMenu *context_menu_;

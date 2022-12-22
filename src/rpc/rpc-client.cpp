@@ -411,7 +411,7 @@ bool SeafileRpcClient::setServerProperty(const QString &url,
 }
 
 #if defined(Q_OS_WIN32)
-bool SeafileRpcClient::addAccount(const Account& account, QString sync_root, QString name)
+bool SeafileRpcClient::addAccount(const Account& account)
 {
     GError *error = NULL;
     QString serverAddr = account.serverUrl.toString();
@@ -424,8 +424,8 @@ bool SeafileRpcClient::addAccount(const Account& account, QString sync_root, QSt
                             "string", toCStr(serverAddr),
                             "string", toCStr(account.username),
                             "string", toCStr(account.token),
-                            "string", toCStr(sync_root),
-                            "string", toCStr(name),
+                            "string", toCStr(QDir::toNativeSeparators(account.syncRoot)),
+                            "string", toCStr(account.accountInfo.name),
                             "int", account.isPro() ? 1 : 0);
     if (error) {
         qWarning() << "Unable to add account" << account << ":"
@@ -569,6 +569,24 @@ bool SeafileRpcClient::getRepoUnameById(const QString &repo_id,
     return true;
 }
 
+bool SeafileRpcClient::getAccountByRepoId(const QString& repo_id, json_t **ret_obj)
+{
+    GError *error = NULL;
+    json_t *ret = searpc_client_call__json(seadrive_rpc_client_, "seafile_get_account_by_repo_id", &error,
+                                           1,
+                                           "string", toCStr(repo_id));
+    if (error) {
+        qWarning("failed to get account by repo id: %s\n",
+                 error->message ? error->message : "");
+        g_error_free(error);
+        return false;
+    } else if (!ret) {
+        return false;
+    }
+
+    *ret_obj = ret;
+    return true;
+}
 
 bool SeafileRpcClient::getSyncNotification(json_t **ret_obj)
 {
