@@ -292,6 +292,8 @@ void LoginDialog::onFetchAccountInfoSuccess(const AccountInfo& info)
     gui->accountManager()->enableAccount(account);
     gui->accountManager()->updateAccountInfo(account, info);
 
+    gui->initSyncDialog()->markNewLogin();
+
     accept();
 }
 

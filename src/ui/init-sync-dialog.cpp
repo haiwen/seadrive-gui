@@ -19,7 +19,7 @@ const char* kExplorerPath = "c:/windows/explorer.exe";
 
 
 InitSyncDialog::InitSyncDialog()
-    : QDialog(), poller_connected_(false)
+    : QDialog(), new_login_(false), poller_connected_(false)
 {
     setupUi(this);
     mLogo->setPixmap(QPixmap(":/images/seafile-32.png"));
@@ -34,10 +34,18 @@ InitSyncDialog::InitSyncDialog()
     connect(check_download_timer_, SIGNAL(timeout()), this, SLOT(checkDownloadProgress()));
 }
 
+void InitSyncDialog::markNewLogin()
+{
+    new_login_ = true;
+}
+
+bool InitSyncDialog::hasNewLogin()
+{
+    return new_login_;
+}
 
 void InitSyncDialog::launch()
 {
-
     if (!poller_connected_) {
         connect(gui->messagePoller(), SIGNAL(seadriveFSLoaded()),
                 this, SLOT(onFSLoaded()));
@@ -77,6 +85,8 @@ void InitSyncDialog::onFSLoaded()
 
 void InitSyncDialog::finish()
 {
+    new_login_ = false;
+
     gui->trayIcon()->setLoginActionEnabled(true);
 
     QString msg = tr("%1 has dowloaded your files list.").arg(getBrand());

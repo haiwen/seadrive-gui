@@ -452,8 +452,8 @@ void SeadriveGui::updateAccountToDaemon()
                 continue;
             }
 
-            // The init_sync_dlg only shows at the first time when the account login.
-            if (account_mgr_->firstLogin(msg.account)) {
+            // The init sync dlg only launches when there is a new logged in account.
+            if (init_sync_dlg_->hasNewLogin()) {
                 init_sync_dlg_->launch();
             }
 

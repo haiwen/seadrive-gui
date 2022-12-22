@@ -17,6 +17,8 @@ class InitSyncDialog : public QDialog,
 public:
     InitSyncDialog();
 
+    void markNewLogin();
+    bool hasNewLogin();
     void launch();
 
 private slots:
@@ -34,6 +36,7 @@ private:
 
     QTimer *check_download_timer_;
 
+    bool new_login_;
     bool poller_connected_;
 
     QString waiting_text_;
