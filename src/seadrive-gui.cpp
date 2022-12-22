@@ -448,9 +448,15 @@ void SeadriveGui::updateAccountToDaemon()
         auto msg = account_mgr_->messages.dequeue();
 
         if (msg.type == AccountAdded) {
-            if (rpc_client_->addAccount(msg.account)) {
+            if (!rpc_client_->addAccount(msg.account)) {
+                continue;
+            }
+
+            // The init sync dlg only launches when there is a new logged in account.
+            if (init_sync_dlg_->hasNewLogin()) {
                 init_sync_dlg_->launch();
             }
+
         } else if (msg.type == AccountRemoved) {
             rpc_client_->deleteAccount(msg.account, false);
         }
