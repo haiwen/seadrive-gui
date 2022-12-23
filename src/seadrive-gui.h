@@ -110,9 +110,7 @@ private slots:
     void onDaemonRestarted();
 #endif
 
-#if defined(Q_OS_MAC)
     void connectDaemon();
-#endif
 
 private:
     Q_DISABLE_COPY(SeadriveGui)
