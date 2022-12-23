@@ -111,7 +111,8 @@ SettingsManager::SettingsManager()
       current_session_access_(false),
       current_proxy_(SeafileProxy()),
       cache_clean_limit_minutes_(10),
-      cache_size_limit_gb_(10)
+      cache_size_limit_gb_(10),
+      delete_confirm_threshold_(500)
 {
     check_system_proxy_timer_ = new QTimer(this);
     connect(check_system_proxy_timer_, SIGNAL(timeout()), this, SLOT(checkSystemProxy()));
@@ -149,6 +150,11 @@ void SettingsManager::loadSettings()
 
     if (gui->rpcClient()->getCacheCleanIntervalMinutes(&value)) {
         cache_clean_limit_minutes_ = qMax(1, value);
+    }
+
+    if (gui->rpcClient()->seafileGetConfigInt("delete_confirm_threshold",
+                                              &value) >= 0) {
+        delete_confirm_threshold_ = value;
     }
 
     loadProxySettings();
@@ -511,6 +517,17 @@ void SettingsManager::setCurrentUserAccess(bool disabled)
             return;
         }
         current_session_access_ = disabled;
+    }
+}
+
+void SettingsManager::setDeleteConfirmThreshold(int value)
+{
+    if (delete_confirm_threshold_ != value) {
+        if (gui->rpcClient()->seafileSetConfigInt(
+                "delete_confirm_threshold", value) < 0) {
+            return;
+        }
+        delete_confirm_threshold_ = value;
     }
 }
 

@@ -908,3 +908,21 @@ bool SeafileRpcClient::unCachePath(const QString& repo_id, const QString& path_i
         return ret == 0;
     }
 }
+
+bool SeafileRpcClient::addDelConfirmation(const QString& confirmation_id, bool resync)
+{
+    GError *error = NULL;
+    int ret = searpc_client_call__int(seadrive_rpc_client_,
+                            "seafile_add_del_confirmation",
+                            &error,
+                            2,
+                            "string", toCStr(confirmation_id),
+                            "int", resync ? 1 : 0);
+    if (error) {
+        qWarning("failed to add del confirmation: %s\n", error->message);
+        g_error_free(error);
+        return false;
+    }
+
+    return ret == 0;
+}

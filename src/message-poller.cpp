@@ -1,5 +1,6 @@
 #include <QTimer>
 #include <QDateTime>
+#include <QRegularExpression>
 
 #include "utils/utils.h"
 #include "utils/translate-commit-desc.h"
@@ -238,6 +239,22 @@ void MessagePoller::processNotification(const SyncNotification& notification)
             "",
             "",
             QSystemTrayIcon::Information);
+    } else if (notification.type == "del_confirmation") {
+        QString msg = tr("Confirm to bulk delete files in library \"%1\" ?")
+                          .arg(notification.repo_name.trimmed());
+
+        QRegularExpression re("Deleted \"(.+)\" and (.+) more files.");
+        auto match = re.match(notification.delete_files.trimmed());
+        if (match.hasMatch()) {
+            msg += tr("\n(deleted \"%1\" and %2 more files.)")
+                       .arg(match.captured(1)).arg(match.captured(2));
+        }
+
+        if (gui->yesOrCancelBox(msg, nullptr, false)) {
+            rpc_client_->addDelConfirmation(notification.confirmation_id, false);
+        } else {
+            rpc_client_->addDelConfirmation(notification.confirmation_id, true);
+        }
     } else {
         qWarning ("Unknown message %s\n", notification.type.toUtf8().data());
     }
@@ -294,6 +311,10 @@ SyncNotification SyncNotification::fromJson(const json_t *root)
         notification.move.src_path = json.getString("srcpath");
         notification.move.dst_path = json.getString("dstpath");
         notification.move.type = notification.type.split(".").last();
+    } else if (notification.type == "del_confirmation") {
+        notification.repo_name = json.getString("repo_name");
+        notification.confirmation_id = json.getString("confirmation_id");
+        notification.delete_files = json.getString("delete_files");
     } else {
         notification.repo_id = json.getString("repo_id");
         notification.repo_name = json.getString("repo_name");

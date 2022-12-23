@@ -134,6 +134,8 @@ void SettingsDialog::updateSettings()
     mgr->setCacheCleanIntervalMinutes(mCacheCleanInterval->value());
     mgr->setCacheSizeLimitGB(mCacheSizeLimit->value());
 
+    mgr->setDeleteConfirmThreshold(mDeleteConfirmSpinBox->value());
+
 #ifdef HAVE_SPARKLE_SUPPORT
     if (AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
         bool enabled = mCheckLatestVersionBox->checkState() == Qt::Checked;
@@ -291,6 +293,9 @@ void SettingsDialog::showEvent(QShowEvent *event)
     mCacheCleanInterval->setValue(value);
     value = mgr->getCacheSizeLimitGB();
     mCacheSizeLimit->setValue(value);
+
+    value = mgr->deleteConfirmThreshold();
+    mDeleteConfirmSpinBox->setValue(value);
 
 #ifdef HAVE_SPARKLE_SUPPORT
     if (AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
