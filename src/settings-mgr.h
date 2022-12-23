@@ -81,6 +81,9 @@ public:
     void setHttpSyncCertVerifyDisabled(bool disabled);
     bool httpSyncCertVerifyDisabled() const { return verify_http_sync_cert_disabled_; }
 
+    void setDeleteConfirmThreshold(int value);
+    int deleteConfirmThreshold() { return delete_confirm_threshold_; }
+
     QString getComputerName();
     void setComputerName(const QString& computerName);
 
@@ -138,6 +141,8 @@ private:
 
     int cache_clean_limit_minutes_;
     int cache_size_limit_gb_;
+
+    int delete_confirm_threshold_;
 
     QTimer *check_system_proxy_timer_;
 };

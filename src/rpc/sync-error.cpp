@@ -64,6 +64,7 @@ QList<SyncError> SyncError::listFromJSON(const json_t *json)
 #define SYNC_ERROR_ID_UPDATE_NOT_IN_REPO        25
 #define SYNC_ERROR_ID_LIBRARY_TOO_LARGE         26
 #define SYNC_ERROR_ID_MOVE_NOT_IN_REPO          27
+#define SYNC_ERROR_ID_DEL_CONFIRMATION_PENDING  28
 
 #define SYNC_ERROR_ID_GENERAL_ERROR             100
 
@@ -159,6 +160,8 @@ QString SyncError::syncErrorIdToErrorStr(int error_id, const QString& path)
     case SYNC_ERROR_ID_MOVE_NOT_IN_REPO:
         return QObject::tr("You can only move files/folders within a library or from one library to another library");
 #endif
+    case SYNC_ERROR_ID_DEL_CONFIRMATION_PENDING:
+        return QObject::tr("Waiting for confirmation to delete files");
     case SYNC_ERROR_ID_GENERAL_ERROR:
     default:
         return QObject::tr("Unknown error");
