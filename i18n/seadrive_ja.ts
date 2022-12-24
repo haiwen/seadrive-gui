@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ja">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ja">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -153,27 +151,27 @@
     <name>FinderSyncHost</name>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation>ファイル &quot;％1&quot; は ％2 によってロックされています</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation>ファイル &quot;％1&quot; のロック情報を取得できませんでした</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to get upload link for file &quot;%1&quot;</source>
-        <translation>ファイル &quot;％1&quot; のアップロードリンクを取得できませんでした</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No permissions to create a shared link</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>failed to get share link %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>failed get internal link %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -189,7 +187,7 @@
     <message>
         <source>%1 has dowloaded your files list.
 Please click the &quot;Finish&quot; button to open %1 folder.</source>
-        <translation>%1 がファイルリストをダウンロードしました。 「完了」ボタンをクリックして、%1 フォルダを開いてください。</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Dialog</source>
@@ -425,6 +423,15 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>All libraries are loaded and ready to use.</source>
         <translation>すべてのライブラリがロードされ、すぐに使用できます。</translation>
+    </message>
+    <message>
+        <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>
+(deleted &quot;%1&quot; and %2 more files.)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -741,6 +748,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>Do not have write permission to the library</source>
         <translation>ライブラリへの書き込み権限がありません</translation>
     </message>
+    <message>
+        <source>Waiting for confirmation to delete files</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -753,11 +764,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <name>SeadriveGui</name>
     <message>
         <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
-        <translation>システム環境設定で、%1カーネル拡張を手動で承認する必要があります。OKをクリックして、システム環境設定ダイアログを開きます。その後、%1 を再立ち上げてください。</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to initialize: failed to install kernel driver</source>
-        <translation>初期化に失敗しました：カーネルドライバーのインストールに失敗しました</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Faild to choose a disk letter</source>
@@ -832,36 +843,36 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <name>SeafileExtensionHandler</name>
     <message>
         <source>Failed to get upload link information for file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No permissions to create a shared link</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>failed get internal link %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to lock file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to unlock file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished">ファイル &quot;％1&quot; は ％2 によってロックされています</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished">ファイル &quot;％1&quot; のロック情報を取得できませんでした</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to get share link %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -898,7 +909,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Search files</source>
-        <translation>ファイル検索</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Settings</source>
@@ -910,23 +921,23 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Open %1 &amp;folder</source>
-        <translation>オープン %1 フォルダ(&amp;F)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>open %1 folder</source>
-        <translation>オープン %1 フォルダ</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Open &amp;logs folder</source>
-        <translation>オープンログフォルダ(&amp;L)</translation>
+        <translation>ログフォルダ(&amp;L) を開く</translation>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation>アバウト(&amp;A)</translation>
+        <translation>SeaDriveについて(&amp;A)</translation>
     </message>
     <message>
         <source>Show the application&apos;s About box</source>
-        <translation>アプリケーションのバージョン情報ボックスを表示する</translation>
+        <translation>アプリケーションのバージョン情報を表示する</translation>
     </message>
     <message>
         <source>&amp;Online help</source>
@@ -942,7 +953,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>選択...</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Logout</source>
@@ -963,10 +974,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
         <translation>&lt;h2&gt;Seafileドライブクライアント％2&lt;/h2&gt;</translation>
-    </message>
-    <message>
-        <source>Do you want to remove the local cache?</source>
-        <translation>ローカルキャッシュを削除しますか？</translation>
     </message>
     <message>
         <source>Failed to remove local cache of account %1</source>
@@ -1063,7 +1070,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>&amp;Show in folder</source>
-        <translation>フォルダで見て(&amp;S)</translation>
+        <translation>フォルダーに表示する(&amp;S)</translation>
     </message>
     <message>
         <source>File not found, maybe not synchorized yet</source>
@@ -1174,7 +1181,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Enable FinderSync Extension</source>
-        <translation>ファインダー同期拡張を有効</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Enable Explorer Extension</source>
@@ -1242,7 +1249,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Proxy server requires a password</source>
-        <translation>プロクシパスワードを入力してください。</translation>
+        <translation>プロキシパスワードを入力してください。</translation>
     </message>
     <message>
         <source>Network</source>
@@ -1271,6 +1278,14 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>You have changed %1 cache folder. Restart to apply it?</source>
         <translation>%1 キャッシュフォルダを変更しました。 再起動して適用しますか？</translation>
+    </message>
+    <message>
+        <source>Confirm before bulk deleting files more than</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>0</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1301,7 +1316,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Expire days</source>
-        <translation type="unfinished"></translation>
+        <translation>有効期限</translation>
     </message>
     <message>
         <source>Generate link</source>
@@ -1418,11 +1433,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <name>UploadLinkDialog</name>
     <message>
         <source>Upload Link</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Upload link:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Copy to clipboard</source>

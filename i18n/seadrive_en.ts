@@ -425,6 +425,15 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>All libraries are loaded and ready to use.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+(deleted &quot;%1&quot; and %2 more files.)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -740,6 +749,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>Do not have write permission to the library</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Waiting for confirmation to delete files</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -961,10 +974,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Do you want to remove the local cache?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1269,6 +1278,14 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>You have changed %1 cache folder. Restart to apply it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm before bulk deleting files more than</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

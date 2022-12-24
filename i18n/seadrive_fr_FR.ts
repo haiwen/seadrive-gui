@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="fr_FR">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="fr_FR">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -153,27 +151,27 @@
     <name>FinderSyncHost</name>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation>Le fichier &quot;%1&quot; est verrouillé par %2</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation>Impossible de récupérer les informations sur le verrouillage du fichier &quot;%1&quot;</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to get upload link for file &quot;%1&quot;</source>
-        <translation>Impossible de récupérer le lien de téléversement du fichier &quot;%1&quot;</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No permissions to create a shared link</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>failed to get share link %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>failed get internal link %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -189,8 +187,7 @@
     <message>
         <source>%1 has dowloaded your files list.
 Please click the &quot;Finish&quot; button to open %1 folder.</source>
-        <translation>%1 a téléchargé votre liste de fichiers.
-Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Dialog</source>
@@ -425,6 +422,15 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     <message>
         <source>All libraries are loaded and ready to use.</source>
         <translation>Toutes les bibliothèques sont chargées et prêtes à être utilisées.</translation>
+    </message>
+    <message>
+        <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>
+(deleted &quot;%1&quot; and %2 more files.)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -735,11 +741,15 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     </message>
     <message>
         <source>Syncing is denied by cloud-only permission settings</source>
-        <translation type="unfinished"></translation>
+        <translation>La synchronisation est refusée par les paramètres d&apos;autorisation en nuage-uniquement.</translation>
     </message>
     <message>
         <source>Do not have write permission to the library</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous n&apos;avez pas le droit d&apos;écriture dans la bibliothèque</translation>
+    </message>
+    <message>
+        <source>Waiting for confirmation to delete files</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -753,11 +763,11 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     <name>SeadriveGui</name>
     <message>
         <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
-        <translation>Vous devez approuver manuellement %1 les extensions noyau dans les préférences du système. Cliquez sur OK pour ouvrir la boîte de dialogue des préférences du système. Veuillez par la suite relancer %1 </translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to initialize: failed to install kernel driver</source>
-        <translation>Impossible d&apos;initialiser : impossible d&apos;installer le pilote noyau</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Faild to choose a disk letter</source>
@@ -832,36 +842,37 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     <name>SeafileExtensionHandler</name>
     <message>
         <source>Failed to get upload link information for file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de récupérer les informations du lien d&apos;envoi du fichier &quot;%1&quot;</translation>
     </message>
     <message>
         <source>No permissions to create a shared link</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucune autorisation pour créer un lien partagé</translation>
     </message>
     <message>
         <source>failed get internal link %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;obtenir le lien interne %1</translation>
     </message>
     <message>
         <source>Failed to lock file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de verrouiller le fichier.</translation>
     </message>
     <message>
         <source>Failed to unlock file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de déverrouiller le fichier.</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished">Le fichier &quot;%1&quot; est verrouillé par %2</translation>
+        <translation>Le fichier &quot;%1&quot; est verrouillé par %2</translation>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished">Impossible de récupérer les informations sur le verrouillage du fichier &quot;%1&quot;</translation>
+        <translation>Impossible de récupérer les informations de verrouillage du fichier &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Failed to get share link %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;obtenir le lien de partage %1
+</translation>
     </message>
 </context>
 <context>
@@ -898,7 +909,7 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     </message>
     <message>
         <source>Search files</source>
-        <translation>Rechercher des fichiers</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Settings</source>
@@ -910,11 +921,11 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     </message>
     <message>
         <source>Open %1 &amp;folder</source>
-        <translation>Ouvrir le &amp;dossier %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>open %1 folder</source>
-        <translation>Ouvrir le dossier %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Open &amp;logs folder</source>
@@ -942,7 +953,7 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choisir</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Logout</source>
@@ -963,10 +974,6 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     <message>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
         <translation>&lt;h2&gt;Client Seafile Drive %2&lt;/h2&gt;</translation>
-    </message>
-    <message>
-        <source>Do you want to remove the local cache?</source>
-        <translation>Voulez-vous supprimer le cache local ?</translation>
     </message>
     <message>
         <source>Failed to remove local cache of account %1</source>
@@ -1102,7 +1109,7 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     </message>
     <message>
         <source>System Proxy</source>
-        <translation>Proxy système&#xa0;</translation>
+        <translation>Proxy système </translation>
     </message>
     <message>
         <source>enabled search</source>
@@ -1174,7 +1181,7 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     </message>
     <message>
         <source>Enable FinderSync Extension</source>
-        <translation>Activer l&apos;extension FinderSync</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Enable Explorer Extension</source>
@@ -1271,6 +1278,14 @@ Veuillez cliquer sur le bouton &quot;Terminer&quot; pour ouvrir le dossier de %1
     <message>
         <source>You have changed %1 cache folder. Restart to apply it?</source>
         <translation>Vous avez modifié le dossier de cache %1. Redémarrez pour appliquer ?</translation>
+    </message>
+    <message>
+        <source>Confirm before bulk deleting files more than</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>0</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
