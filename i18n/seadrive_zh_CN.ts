@@ -151,15 +151,15 @@
     <name>FinderSyncHost</name>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation>文件 &quot;%1&quot; 被 %2 锁定</translation>
+        <translation>文件 “%1” 被 %2 锁定</translation>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation>获取文件 &quot;%1&quot; 的锁定信息失败</translation>
+        <translation>获取文件 “%1” 的锁定信息失败</translation>
     </message>
     <message>
         <source>Failed to get upload link for file &quot;%1&quot;</source>
-        <translation>获取文件 &quot;%1&quot; 的上传链接失败</translation>
+        <translation>获取文件 “%1” 的上传链接失败</translation>
     </message>
     <message>
         <source>No permissions to create a shared link</source>
@@ -188,7 +188,7 @@
         <source>%1 has dowloaded your files list.
 Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>%1 已经完成文件列表获取。
-请点击“完成”按钮来打开 %1 文件夹。</translation>
+请点击 “完成” 按钮来打开 %1 文件夹。</translation>
     </message>
     <message>
         <source>Dialog</source>
@@ -424,6 +424,16 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>All libraries are loaded and ready to use.</source>
         <translation>所有资料库已加载完毕并可以使用</translation>
+    </message>
+    <message>
+        <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
+        <translation>确认删除 “%1” 资料库里的文件？</translation>
+    </message>
+    <message>
+        <source>
+(deleted &quot;%1&quot; and %2 more files.)</source>
+        <translation>
+（删除了 “%1” 以及其它 %2 个文件）</translation>
     </message>
 </context>
 <context>
@@ -740,6 +750,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <source>Do not have write permission to the library</source>
         <translation>对资料库没有写入权限</translation>
     </message>
+    <message>
+        <source>Waiting for confirmation to delete files</source>
+        <translation>等待确认文件删除操作</translation>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -910,7 +924,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Open %1 &amp;folder</source>
-        <translation>打开 %1 文件夹(&amp;F)</translation>
+        <translation>打开 %1 文件夹</translation>
     </message>
     <message>
         <source>open %1 folder</source>
@@ -963,10 +977,6 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
         <translation>&lt;h2&gt;Seafile Drive 客户端 %2&lt;/h2&gt;</translation>
-    </message>
-    <message>
-        <source>Do you want to remove the local cache?</source>
-        <translation>是否删除本地缓存？</translation>
     </message>
     <message>
         <source>Failed to remove local cache of account %1</source>
@@ -1271,6 +1281,14 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>You have changed %1 cache folder. Restart to apply it?</source>
         <translation>你已经修改了 %1 缓存文件夹失败。重启应用使其生效</translation>
+    </message>
+    <message>
+        <source>Confirm before bulk deleting files more than</source>
+        <translation>提示确认操作，当删除的文件数大于</translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation>0</translation>
     </message>
 </context>
 <context>

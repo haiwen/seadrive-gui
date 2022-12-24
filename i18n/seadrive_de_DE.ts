@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="de_DE">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="de_DE">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -153,27 +151,27 @@
     <name>FinderSyncHost</name>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation>Die Datei &quot;%1&quot; ist durch %2 gesperrt.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation>Für die Datei &quot;%1&quot; konnten keine Informationen zur Sperrung gefunden werden.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to get upload link for file &quot;%1&quot;</source>
-        <translation>Für die Datei &quot;%1&quot; konnte kein Upload-Link erstellt werden.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No permissions to create a shared link</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>failed to get share link %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>failed get internal link %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -189,8 +187,7 @@
     <message>
         <source>%1 has dowloaded your files list.
 Please click the &quot;Finish&quot; button to open %1 folder.</source>
-        <translation>%1 hat die Dateiliste erfolgreich heruntergeladen.
-Klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Dialog</source>
@@ -426,6 +423,15 @@ Klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translation>
     <message>
         <source>All libraries are loaded and ready to use.</source>
         <translation>Alle Bibliotheken sind geladen und können verwendet werden.</translation>
+    </message>
+    <message>
+        <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>
+(deleted &quot;%1&quot; and %2 more files.)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -742,6 +748,10 @@ Klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translation>
         <source>Do not have write permission to the library</source>
         <translation>Keine Schreibrechte für die Bibliothek</translation>
     </message>
+    <message>
+        <source>Waiting for confirmation to delete files</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -754,11 +764,11 @@ Klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translation>
     <name>SeadriveGui</name>
     <message>
         <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
-        <translation>Sie müssen die %1  Kernel-Erweiterung manuell in den Systemeinstellungen bestätigen. Klicken Sie OK, um die Systemeinstellungen zu öffnen. Danach starten Sie %1 bitte neu.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to initialize: failed to install kernel driver</source>
-        <translation>Initialisieren nicht möglich: Der Kerneltreiber konnte nicht installiert werden</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Faild to choose a disk letter</source>
@@ -833,36 +843,36 @@ Klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translation>
     <name>SeafileExtensionHandler</name>
     <message>
         <source>Failed to get upload link information for file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No permissions to create a shared link</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>failed get internal link %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to lock file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to unlock file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished">Die Datei &quot;%1&quot; ist durch %2 gesperrt.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished">Für die Datei &quot;%1&quot; konnten keine Informationen zur Sperrung gefunden werden.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to get share link %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -899,7 +909,7 @@ Klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translation>
     </message>
     <message>
         <source>Search files</source>
-        <translation>Dateien durchsuchen</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Settings</source>
@@ -911,11 +921,11 @@ Klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translation>
     </message>
     <message>
         <source>Open %1 &amp;folder</source>
-        <translation>öffne %1-Ordner</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>open %1 folder</source>
-        <translation>öffne %1 Ordner</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Open &amp;logs folder</source>
@@ -943,7 +953,7 @@ Klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Wähle</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Logout</source>
@@ -964,10 +974,6 @@ Klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translation>
     <message>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
         <translation>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</translation>
-    </message>
-    <message>
-        <source>Do you want to remove the local cache?</source>
-        <translation>Möchten Sie den lokalen Cache löschen?</translation>
     </message>
     <message>
         <source>Failed to remove local cache of account %1</source>
@@ -1175,7 +1181,7 @@ Klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translation>
     </message>
     <message>
         <source>Enable FinderSync Extension</source>
-        <translation>Finder-Erweiterung aktivieren</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Enable Explorer Extension</source>
@@ -1272,6 +1278,14 @@ Klicken Sie auf &quot;Fertig&quot;, um den %1 Ordner zu öffnen.</translation>
     <message>
         <source>You have changed %1 cache folder. Restart to apply it?</source>
         <translation>Sie haben den Ordner für den %1 Zwischenspeicher geändert. Möchten Sie das jetzt aktivieren mit einem Neustart?</translation>
+    </message>
+    <message>
+        <source>Confirm before bulk deleting files more than</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>0</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
