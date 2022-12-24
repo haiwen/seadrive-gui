@@ -16,6 +16,8 @@ struct SyncNotification {
     QString commit_id;
     QString parent_commit_id;
     QString commit_desc;
+    QString confirmation_id;
+    QString delete_files;
     int error_id;
     QString error;
     QString error_path;
