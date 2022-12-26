@@ -430,10 +430,8 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
         <translation>确认删除 “%1” 资料库里的文件？</translation>
     </message>
     <message>
-        <source>
-(deleted &quot;%1&quot; and %2 more files.)</source>
-        <translation>
-（删除了 “%1” 以及其它 %2 个文件）</translation>
+        <source>Deleted &quot;%1&quot; and %2 more files.</source>
+        <translation>删除了 “%1” 以及其它 %2 个文件</translation>
     </message>
 </context>
 <context>
@@ -839,6 +837,10 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <message>
         <source>Failed to create seadrive cache directory</source>
         <translation>创建缓存目录失败</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>设置</translation>
     </message>
 </context>
 <context>
