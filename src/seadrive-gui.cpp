@@ -731,6 +731,41 @@ bool SeadriveGui::detailedYesOrNoBox(const QString& msg, const QString& detailed
     return msgBox.exec() == QMessageBox::Yes;
 }
 
+bool SeadriveGui::bulkDeletingMessageBox(const QString& text, const QString& info)
+{
+    QMessageBox box(nullptr);
+
+    box.setText(text);
+    box.setInformativeText(info);
+    box.setIcon(QMessageBox::Question);
+
+    // Disable the close button
+    box.setWindowFlags((box.windowFlags() & ~Qt::WindowCloseButtonHint) | Qt::CustomizeWindowHint);
+
+    auto yesButton = box.addButton(tr("Yes"), QMessageBox::YesRole);
+    auto noButton = box.addButton(tr("No"), QMessageBox::NoRole);
+    auto settingsButton = box.addButton(tr("Settings"), QMessageBox::NoRole);
+    box.setDefaultButton(noButton);
+
+    box.exec();
+
+    if (box.clickedButton() == yesButton) {
+        return true;
+    } else if (box.clickedButton() == noButton) {
+        return false;
+    } else if (box.clickedButton() == settingsButton) {
+        settings_dlg_->setCurrentTab(1);
+
+        settings_dlg_->show();
+        settings_dlg_->raise();
+        settings_dlg_->activateWindow();
+
+        return false;
+    }
+
+    return false;
+}
+
 QVariant SeadriveGui::readPreconfigureEntry(const QString& key, const QVariant& default_value)
 {
 #ifdef Q_OS_WIN32

@@ -240,17 +240,18 @@ void MessagePoller::processNotification(const SyncNotification& notification)
             "",
             QSystemTrayIcon::Information);
     } else if (notification.type == "del_confirmation") {
-        QString msg = tr("Confirm to bulk delete files in library \"%1\" ?")
-                          .arg(notification.repo_name.trimmed());
-
+        QString text;
         QRegularExpression re("Deleted \"(.+)\" and (.+) more files.");
         auto match = re.match(notification.delete_files.trimmed());
         if (match.hasMatch()) {
-            msg += tr("\n(deleted \"%1\" and %2 more files.)")
-                       .arg(match.captured(1)).arg(match.captured(2));
+            text = tr("Deleted \"%1\" and %2 more files.")
+                      .arg(match.captured(1)).arg(match.captured(2));
         }
 
-        if (gui->yesOrCancelBox(msg, nullptr, false)) {
+        QString info = tr("Confirm to bulk delete files in library \"%1\" ?")
+                          .arg(notification.repo_name.trimmed());
+
+        if (gui->bulkDeletingMessageBox(text, info)) {
             rpc_client_->addDelConfirmation(notification.confirmation_id, false);
         } else {
             rpc_client_->addDelConfirmation(notification.confirmation_id, true);
