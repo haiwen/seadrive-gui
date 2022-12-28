@@ -111,7 +111,9 @@ private slots:
     void onDaemonRestarted();
 #endif
 
+#ifndef Q_OS_WIN32
     void connectDaemon();
+#endif
 
 private:
     Q_DISABLE_COPY(SeadriveGui)

@@ -228,21 +228,6 @@ void SeafileTrayIcon::prepareContextMenu()
                 submenu->setIcon(QIcon(":/images/account-else.png"));
             }
 
-#if defined(Q_OS_WIN32)
-            QAction *logout_login_action = new QAction(this);
-            logout_login_action->setIcon(QIcon(":/images/logout.png"));
-            logout_login_action->setIconVisibleInMenu(true);
-            logout_login_action->setData(QVariant::fromValue(account));
-            if (account.isValid()) {
-                logout_login_action->setText(tr("Logout"));
-                connect(logout_login_action, SIGNAL(triggered()), this, SLOT(logoutAccount()));
-            } else {
-                logout_login_action->setText(tr("Login"));
-                connect(logout_login_action, SIGNAL(triggered()), this, SLOT(loginAccount()));
-            }
-            submenu->addAction(logout_login_action);
-#endif
-
             QAction *delete_account_action = new QAction(tr("Delete"), this);
             delete_account_action->setIcon(QIcon(":/images/delete-account.png"));
             delete_account_action->setIconVisibleInMenu(true);
@@ -651,58 +636,6 @@ void SeafileTrayIcon::onMessageClicked()
 void SeafileTrayIcon::onLoginDialogClosed()
 {
     login_dlg_ = nullptr;
-}
-
-void SeafileTrayIcon::logoutAccount()
-{
-    QAction *action = qobject_cast<QAction*>(sender());
-    if (!action)
-        return;
-    Account account = qvariant_cast<Account>(action->data());
-    Q_ASSERT(account.isValid());
-
-    qWarning() << "trying to log out account" << account;
-
-    // logout Account
-    LogoutDeviceRequest *req = new LogoutDeviceRequest(account, false);
-    connect(req, SIGNAL(success()),
-            this, SLOT(onLogoutDeviceRequestSuccess()));
-    connect(req, SIGNAL(failed(const ApiError&)),
-            this, SLOT(onLogoutDeviceRequestSuccess()));
-    req->send();
-}
-
-void SeafileTrayIcon::onLogoutDeviceRequestSuccess()
-{
-    LogoutDeviceRequest *req = (LogoutDeviceRequest *)QObject::sender();
-    const Account& account = req->account();
-
-#if defined(_MSC_VER)
-    if (!gui->rpcClient()->logoutAccount(account)) {
-        gui->warningBox(
-            tr("Failed to logout account %1").arg(account.toString()));
-    }
-#else
-    if (!gui->rpcClient()->deleteAccount(account, req->shouldRemoveCache())) {
-        gui->warningBox(
-            tr("Failed to remove local cache of account %1").arg(account.toString()));
-    }
-#endif
-
-    gui->accountManager()->clearAccountToken(account);
-    req->deleteLater();
-}
-
-void SeafileTrayIcon::loginAccount()
-{
-    QAction *action = qobject_cast<QAction*>(sender());
-    if (!action)
-        return;
-    Account account = qvariant_cast<Account>(action->data());
-
-    qWarning() << "trying to log in account" << account.username;
-
-    gui->accountManager()->reloginAccount(account);
 }
 
 void SeafileTrayIcon::deleteAccount()
