@@ -84,10 +84,6 @@ private slots:
     void about();
     void checkTrayIconMessageQueue();
 
-    void logoutAccount();
-    void onLogoutDeviceRequestSuccess();
-    void loginAccount();
-
     void deleteAccount();
 
     // only used on windows

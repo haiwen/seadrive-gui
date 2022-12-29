@@ -484,7 +484,8 @@ void SeadriveGui::onDaemonRestarted()
 #endif
 
 #if defined(Q_OS_MAC)
-void SeadriveGui::connectDaemon() {
+void SeadriveGui::connectDaemon()
+{
     if (!rpc_client_->tryConnectDaemon()) {
         return;
     }
