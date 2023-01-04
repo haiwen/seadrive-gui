@@ -45,21 +45,6 @@
     </message>
 </context>
 <context>
-    <name>DiskLetterDialog</name>
-    <message>
-        <source>Choose the disk letter</source>
-        <translation>Wybierz literę dysku</translation>
-    </message>
-    <message>
-        <source>Your files would appear in a dedicated disk in your computer. Please choose the letter:</source>
-        <translation>Twoje pliki pojawią się na dedykowanym dysku w Twoim komputerze. Proszę wybrać literę:</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-</context>
-<context>
     <name>EncryptedReposDialog</name>
     <message>
         <source>Encrypted Libraries</source>
@@ -121,6 +106,13 @@
     </message>
     <message>
         <source>Enter library password to sync</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>FileProviderManager</name>
+    <message>
+        <source>%1 will ask permissions to enable Finder plugin.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -385,10 +377,6 @@
         <translation>Nie udało się utworzyć pliku &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>You can&apos;t create files in the %1 drive directly</source>
-        <translation>Nie możesz tworzyć plików bezpośrednio w stacji %1</translation>
-    </message>
-    <message>
         <source>Failed to delete folder</source>
         <translation>Nie udało się usunąć folderu</translation>
     </message>
@@ -402,6 +390,18 @@
     </message>
     <message>
         <source>All libraries are loaded and ready to use.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deleted &quot;%1&quot; and %2 more files.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can&apos;t create files in the mount folder directly</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -719,6 +719,10 @@
         <source>Do not have write permission to the library</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Waiting for confirmation to delete files</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -729,14 +733,6 @@
 </context>
 <context>
     <name>SeadriveGui</name>
-    <message>
-        <source>Faild to choose a disk letter</source>
-        <translation>Nie udało się wybrać litery dysku</translation>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to create seadrive mount folder</source>
-        <translation>Błąd inicjalizacji: nie udało się stworzyć folderu montowania seadrive</translation>
-    </message>
     <message>
         <source>Failed to initialize log: %1</source>
         <translation>Nie udało się zainicjalizować logu: %1</translation>
@@ -795,6 +791,10 @@
     </message>
     <message>
         <source>Failed to create seadrive cache directory</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Settings</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -899,10 +899,6 @@
         <translation>niezalogowany</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translation>Wyloguj</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation>Usuń</translation>
     </message>
@@ -919,16 +915,8 @@
         <translation>&lt;h2&gt;Klient Dysku Seafile %2&lt;/h2&gt;</translation>
     </message>
     <message>
-        <source>Failed to remove local cache of account %1</source>
-        <translation>Nie udało się usunąć lokalnej pamięci podręcznej dla konta %1</translation>
-    </message>
-    <message>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
         <translation>Czy na pewno chcesz usunąć konto z &quot;%1&quot;?</translation>
-    </message>
-    <message>
-        <source>Failed to delete account</source>
-        <translation>Nie udało się usunąć konta</translation>
     </message>
     <message>
         <source>Up %1, Down %2</source>
@@ -955,72 +943,7 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Failed to logout account %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Login</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>SearchDialog</name>
-    <message>
-        <source>Search files</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>All file types</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Custom file type</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>retry</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to search&lt;br/&gt;Please %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>No result found</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>SearchItemsTableModel</name>
-    <message>
-        <source>Name</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Last Modified</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Kind</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>SearchItemsTableView</name>
-    <message>
-        <source>&amp;Open the file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&amp;Show in folder</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>File not found, maybe not synchorized yet</source>
+        <source>Starting ...</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1071,19 +994,7 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>You have changed drive access option. Restart to apply it?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Please choose the cache folder</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>You have changed disk letter. Restart to apply it?</source>
-        <translation>Zmieniłeś literę dysku. Zrestartować, aby wprowadzić zmiany?</translation>
-    </message>
-    <message>
-        <source>language</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1135,16 +1046,8 @@
         <translation>Sprawdzaj aktualizacje automatycznie</translation>
     </message>
     <message>
-        <source>Disk letter (need restart): </source>
-        <translation>Litera dysku (wymaga restartu):</translation>
-    </message>
-    <message>
         <source>Do not verify server certificate in HTTPS syncing</source>
         <translation>Nie weryfikuj certyfikatu serwera podczas synchronizacji przez HTTPS</translation>
-    </message>
-    <message>
-        <source>Only allow current user to access the drive</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cache clean interval (in minutes):</source>
@@ -1220,6 +1123,14 @@
     </message>
     <message>
         <source>You have changed %1 cache folder. Restart to apply it?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm before bulk deleting files more than</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>0</source>
         <translation type="unfinished"/>
     </message>
 </context>

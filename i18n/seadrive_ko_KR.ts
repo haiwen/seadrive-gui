@@ -45,21 +45,6 @@
     </message>
 </context>
 <context>
-    <name>DiskLetterDialog</name>
-    <message>
-        <source>Choose the disk letter</source>
-        <translation>디스크 문자를 선택하세요</translation>
-    </message>
-    <message>
-        <source>Your files would appear in a dedicated disk in your computer. Please choose the letter:</source>
-        <translation>파일이 컴퓨터 디스크에서 사용중인 것 같습니다. 문자를 선택하세요:</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>확인</translation>
-    </message>
-</context>
-<context>
     <name>EncryptedReposDialog</name>
     <message>
         <source>Encrypted Libraries</source>
@@ -122,6 +107,13 @@
     <message>
         <source>Enter library password to sync</source>
         <translation>동기화 라이브러리 암호를 입력하세요</translation>
+    </message>
+</context>
+<context>
+    <name>FileProviderManager</name>
+    <message>
+        <source>%1 will ask permissions to enable Finder plugin.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -385,10 +377,6 @@
         <translation>&quot;%1&quot; 파일 만들기에 실패했습니다</translation>
     </message>
     <message>
-        <source>You can&apos;t create files in the %1 drive directly</source>
-        <translation>%1 드라이브에 직접 파일을 만들 수 없습니다</translation>
-    </message>
-    <message>
         <source>Failed to delete folder</source>
         <translation>폴더 삭제에 실패했습니다</translation>
     </message>
@@ -403,6 +391,18 @@
     <message>
         <source>All libraries are loaded and ready to use.</source>
         <translation>모든 라이브러리를 불러왔고 활용할 준비가 끝났습니다.</translation>
+    </message>
+    <message>
+        <source>Deleted &quot;%1&quot; and %2 more files.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can&apos;t create files in the mount folder directly</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -719,6 +719,10 @@
         <source>Do not have write permission to the library</source>
         <translation>라이브러리 쓰기 권한이 없습니다</translation>
     </message>
+    <message>
+        <source>Waiting for confirmation to delete files</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -729,14 +733,6 @@
 </context>
 <context>
     <name>SeadriveGui</name>
-    <message>
-        <source>Faild to choose a disk letter</source>
-        <translation>디스크 문자 선택에 실패했습니다</translation>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to create seadrive mount folder</source>
-        <translation>초기화 실패: Seadrive 마운트 폴더 만들기에 실패했습니다</translation>
-    </message>
     <message>
         <source>Failed to initialize log: %1</source>
         <translation>로그 초기화 실패: %1</translation>
@@ -796,6 +792,10 @@
     <message>
         <source>Failed to create seadrive cache directory</source>
         <translation>SeaDrive 캐시 디렉터리 만들기에 실패했습니다</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -900,10 +900,6 @@
         <translation>로그인하지 않음</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translation>로그아웃</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation>삭제</translation>
     </message>
@@ -920,16 +916,8 @@
         <translation>&lt;h2&gt;Seafile 드라이브 클라이언트 %2&lt;/h2&gt;</translation>
     </message>
     <message>
-        <source>Failed to remove local cache of account %1</source>
-        <translation>%1 계정 로컬 캐시 제거에 실패했습니다</translation>
-    </message>
-    <message>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
         <translation>정말로 &quot;%1&quot;의 계정을 제거할까요?</translation>
-    </message>
-    <message>
-        <source>Failed to delete account</source>
-        <translation>계정 삭제에 실패했습니다</translation>
     </message>
     <message>
         <source>Up %1, Down %2</source>
@@ -956,73 +944,8 @@
         <translation>암호화 라이브러리 표시</translation>
     </message>
     <message>
-        <source>Failed to logout account %1</source>
-        <translation>%1 계정 로그아웃에 실패했습니다</translation>
-    </message>
-    <message>
-        <source>Login</source>
+        <source>Starting ...</source>
         <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>SearchDialog</name>
-    <message>
-        <source>Search files</source>
-        <translation>파일 검색</translation>
-    </message>
-    <message>
-        <source>All file types</source>
-        <translation>모든 파일 형식</translation>
-    </message>
-    <message>
-        <source>Custom file type</source>
-        <translation>개별 파일 형식</translation>
-    </message>
-    <message>
-        <source>retry</source>
-        <translation>다시 시도</translation>
-    </message>
-    <message>
-        <source>Failed to search&lt;br/&gt;Please %1</source>
-        <translation>검색 실패&lt;br/&gt;%1 하십시오</translation>
-    </message>
-    <message>
-        <source>No result found</source>
-        <translation>결과가 없습니다</translation>
-    </message>
-</context>
-<context>
-    <name>SearchItemsTableModel</name>
-    <message>
-        <source>Name</source>
-        <translation>이름</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation>크기</translation>
-    </message>
-    <message>
-        <source>Last Modified</source>
-        <translation>최종 수정</translation>
-    </message>
-    <message>
-        <source>Kind</source>
-        <translation>종류</translation>
-    </message>
-</context>
-<context>
-    <name>SearchItemsTableView</name>
-    <message>
-        <source>&amp;Open the file</source>
-        <translation>파일 열기(&amp;O)</translation>
-    </message>
-    <message>
-        <source>&amp;Show in folder</source>
-        <translation>폴더에 표시(&amp;S)</translation>
-    </message>
-    <message>
-        <source>File not found, maybe not synchorized yet</source>
-        <translation>파일이 없습니다. 동기화 하지 않았을 수도 있습니다</translation>
     </message>
 </context>
 <context>
@@ -1072,20 +995,8 @@
         <translation>%1 했습니다. 다시 시작해서 적용할까요?</translation>
     </message>
     <message>
-        <source>You have changed drive access option. Restart to apply it?</source>
-        <translation>드라이브 접근 옵션을 바꾸었습니다. 다시 시작해서 적용할까요?</translation>
-    </message>
-    <message>
         <source>Please choose the cache folder</source>
         <translation>캐시 폴더를 선택하십시오</translation>
-    </message>
-    <message>
-        <source>You have changed disk letter. Restart to apply it?</source>
-        <translation>디스크 문자를 바꿨습니다. 다시 시작해서 적용할까요?</translation>
-    </message>
-    <message>
-        <source>language</source>
-        <translation>언어</translation>
     </message>
     <message>
         <source>The proxy host address can&apos;t be empty</source>
@@ -1136,16 +1047,8 @@
         <translation>업데이트 자동 확인</translation>
     </message>
     <message>
-        <source>Disk letter (need restart): </source>
-        <translation>디스크 문자(다시 시작해야 함):</translation>
-    </message>
-    <message>
         <source>Do not verify server certificate in HTTPS syncing</source>
         <translation>HTTPS 동기화시 서버 인증서 검증하지 않음</translation>
-    </message>
-    <message>
-        <source>Only allow current user to access the drive</source>
-        <translation>현재 사용자만 드라이브에 접근 허용</translation>
     </message>
     <message>
         <source>Cache clean interval (in minutes):</source>
@@ -1222,6 +1125,14 @@
     <message>
         <source>You have changed %1 cache folder. Restart to apply it?</source>
         <translation>%1 캐시 폴더를 바꿨습니다. 다시 시작해서 적용할까요?</translation>
+    </message>
+    <message>
+        <source>Confirm before bulk deleting files more than</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>0</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

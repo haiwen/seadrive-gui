@@ -45,21 +45,6 @@
     </message>
 </context>
 <context>
-    <name>DiskLetterDialog</name>
-    <message>
-        <source>Choose the disk letter</source>
-        <translation>Choisissez une lettre pour le disque</translation>
-    </message>
-    <message>
-        <source>Your files would appear in a dedicated disk in your computer. Please choose the letter:</source>
-        <translation>Vos fichiers apparaitront dans un disque dédié sur votre ordinateur. Veuillez choisir une lettre :</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>Ok</translation>
-    </message>
-</context>
-<context>
     <name>EncryptedReposDialog</name>
     <message>
         <source>Encrypted Libraries</source>
@@ -122,6 +107,13 @@
     <message>
         <source>Enter library password to sync</source>
         <translation>Saisir le mot de passe de la bibliothèque pour synchroniser</translation>
+    </message>
+</context>
+<context>
+    <name>FileProviderManager</name>
+    <message>
+        <source>%1 will ask permissions to enable Finder plugin.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -384,10 +376,6 @@
         <translation>Échec de la création du fichier &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>You can&apos;t create files in the %1 drive directly</source>
-        <translation>Vous ne pouvez créer des fichiers sur le disque %1 directement</translation>
-    </message>
-    <message>
         <source>Failed to delete folder</source>
         <translation>Échec de la suppression du dossier</translation>
     </message>
@@ -402,6 +390,18 @@
     <message>
         <source>All libraries are loaded and ready to use.</source>
         <translation>Toutes les bibliothèques sont chargées et prêtes à être utilisées.</translation>
+    </message>
+    <message>
+        <source>Deleted &quot;%1&quot; and %2 more files.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can&apos;t create files in the mount folder directly</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -718,6 +718,10 @@
         <source>Do not have write permission to the library</source>
         <translation>Vous n&apos;avez pas le droit d&apos;écriture dans la bibliothèque</translation>
     </message>
+    <message>
+        <source>Waiting for confirmation to delete files</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -728,14 +732,6 @@
 </context>
 <context>
     <name>SeadriveGui</name>
-    <message>
-        <source>Faild to choose a disk letter</source>
-        <translation>Échec du choix de la lettre du disque</translation>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to create seadrive mount folder</source>
-        <translation>Impossible d&apos;initialiser : échec lors de la création du dossier de montage Seadrive</translation>
-    </message>
     <message>
         <source>Failed to initialize log: %1</source>
         <translation>Impossible d&apos;initialiser log : %1</translation>
@@ -795,6 +791,10 @@
     <message>
         <source>Failed to create seadrive cache directory</source>
         <translation>Impossible de créer le répertoire de cache de SeaDrive.</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -899,10 +899,6 @@
         <translation>Non connecté</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translation>Déconnecter</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation>Supprimer</translation>
     </message>
@@ -919,16 +915,8 @@
         <translation>&lt;h2&gt;Client Seafile Drive %2&lt;/h2&gt;</translation>
     </message>
     <message>
-        <source>Failed to remove local cache of account %1</source>
-        <translation>Échec lors de la suprression du cache du compte %1</translation>
-    </message>
-    <message>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
         <translation>Êtes-vous certain de vouloir supprimer le compte &quot;%1&quot; ?</translation>
-    </message>
-    <message>
-        <source>Failed to delete account</source>
-        <translation>Échec de la suppression du compte</translation>
     </message>
     <message>
         <source>Up %1, Down %2</source>
@@ -955,73 +943,8 @@
         <translation>Voir les bibliothèques chiffrées</translation>
     </message>
     <message>
-        <source>Failed to logout account %1</source>
-        <translation>Échec de déconnexion du compte %1</translation>
-    </message>
-    <message>
-        <source>Login</source>
+        <source>Starting ...</source>
         <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>SearchDialog</name>
-    <message>
-        <source>Search files</source>
-        <translation>Rechercher des fichiers</translation>
-    </message>
-    <message>
-        <source>All file types</source>
-        <translation>Tous types de fichiers</translation>
-    </message>
-    <message>
-        <source>Custom file type</source>
-        <translation>Type de fichier personnalisé</translation>
-    </message>
-    <message>
-        <source>retry</source>
-        <translation>Réessayer</translation>
-    </message>
-    <message>
-        <source>Failed to search&lt;br/&gt;Please %1</source>
-        <translation>Échec de la recherche &lt;br/&gt; Essayez %1</translation>
-    </message>
-    <message>
-        <source>No result found</source>
-        <translation>Aucun résultat</translation>
-    </message>
-</context>
-<context>
-    <name>SearchItemsTableModel</name>
-    <message>
-        <source>Name</source>
-        <translation>Nom</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation>Taille</translation>
-    </message>
-    <message>
-        <source>Last Modified</source>
-        <translation>Dernière modification</translation>
-    </message>
-    <message>
-        <source>Kind</source>
-        <translation>Genre</translation>
-    </message>
-</context>
-<context>
-    <name>SearchItemsTableView</name>
-    <message>
-        <source>&amp;Open the file</source>
-        <translation>&amp;Ouvrir le fichier</translation>
-    </message>
-    <message>
-        <source>&amp;Show in folder</source>
-        <translation>&amp;Afficher dans le dossier</translation>
-    </message>
-    <message>
-        <source>File not found, maybe not synchorized yet</source>
-        <translation>Fichier non trouvé, peut-être qu&apos;il n&apos;est pas encore synchronisé.</translation>
     </message>
 </context>
 <context>
@@ -1071,20 +994,8 @@
         <translation>Vous avez %1. Redémarrer pour l&apos;appliquer ?</translation>
     </message>
     <message>
-        <source>You have changed drive access option. Restart to apply it?</source>
-        <translation>Vous avez modifié l&apos;option d&apos;accès au lecteur. Redémarrer pour appliquer ?</translation>
-    </message>
-    <message>
         <source>Please choose the cache folder</source>
         <translation>Veuillez choisir le répertoire du cache</translation>
-    </message>
-    <message>
-        <source>You have changed disk letter. Restart to apply it?</source>
-        <translation>Vous avez modifié la lettre du disque. Redémarrer pour appliquer ?</translation>
-    </message>
-    <message>
-        <source>language</source>
-        <translation>Langue</translation>
     </message>
     <message>
         <source>The proxy host address can&apos;t be empty</source>
@@ -1135,16 +1046,8 @@
         <translation>Vérifier les mises à jour automatiquement</translation>
     </message>
     <message>
-        <source>Disk letter (need restart): </source>
-        <translation>Lettre du disque (redémarrage requis) :</translation>
-    </message>
-    <message>
         <source>Do not verify server certificate in HTTPS syncing</source>
         <translation>Ne pas vérifier le certificat serveur lors de la synchronisation en HTTPS</translation>
-    </message>
-    <message>
-        <source>Only allow current user to access the drive</source>
-        <translation>Autoriser seulement l&apos;utilisateur courant à accéder au lecteur</translation>
     </message>
     <message>
         <source>Cache clean interval (in minutes):</source>
@@ -1221,6 +1124,14 @@
     <message>
         <source>You have changed %1 cache folder. Restart to apply it?</source>
         <translation>Vous avez modifié le dossier de cache %1. Redémarrez pour appliquer ?</translation>
+    </message>
+    <message>
+        <source>Confirm before bulk deleting files more than</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>0</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
