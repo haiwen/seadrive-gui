@@ -45,21 +45,6 @@
     </message>
 </context>
 <context>
-    <name>DiskLetterDialog</name>
-    <message>
-        <source>Choose the disk letter</source>
-        <translation>选择盘符</translation>
-    </message>
-    <message>
-        <source>Your files would appear in a dedicated disk in your computer. Please choose the letter:</source>
-        <translation>您的文件将出现在您的电脑里的一个专用磁盘中，请选择盘符：</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>确定</translation>
-    </message>
-</context>
-<context>
     <name>EncryptedReposDialog</name>
     <message>
         <source>Encrypted Libraries</source>
@@ -122,6 +107,13 @@
     <message>
         <source>Enter library password to sync</source>
         <translation>输入资料库密码同步加密资料库</translation>
+    </message>
+</context>
+<context>
+    <name>FileProviderManager</name>
+    <message>
+        <source>%1 will ask permissions to enable Finder plugin.</source>
+        <translation>%1 将请求系统权限，用以启用“访达”扩展。</translation>
     </message>
 </context>
 <context>
@@ -385,10 +377,6 @@
         <translation>创建文件 “%1” 时失败</translation>
     </message>
     <message>
-        <source>You can&apos;t create files in the %1 drive directly</source>
-        <translation>你不能直接在 %1 盘创建文件</translation>
-    </message>
-    <message>
         <source>Failed to delete folder</source>
         <translation>删除目录时出错</translation>
     </message>
@@ -403,6 +391,18 @@
     <message>
         <source>All libraries are loaded and ready to use.</source>
         <translation>所有资料库已加载完毕并可以使用</translation>
+    </message>
+    <message>
+        <source>Deleted &quot;%1&quot; and %2 more files.</source>
+        <translation>删除了 “%1” 以及其它 %2 个文件</translation>
+    </message>
+    <message>
+        <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
+        <translation>确认删除 “%1” 资料库中的文件？</translation>
+    </message>
+    <message>
+        <source>You can&apos;t create files in the mount folder directly</source>
+        <translation>无法在顶层目录下创建文件</translation>
     </message>
 </context>
 <context>
@@ -719,6 +719,10 @@
         <source>Do not have write permission to the library</source>
         <translation>对资料库没有写入权限</translation>
     </message>
+    <message>
+        <source>Waiting for confirmation to delete files</source>
+        <translation>等待确认文件删除操作</translation>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -729,14 +733,6 @@
 </context>
 <context>
     <name>SeadriveGui</name>
-    <message>
-        <source>Faild to choose a disk letter</source>
-        <translation>选择盘符失败</translation>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to create seadrive mount folder</source>
-        <translation>初始化失败: 创建 seadrive 挂载文件夹时出错</translation>
-    </message>
     <message>
         <source>Failed to initialize log: %1</source>
         <translation>初始化日志时出错: %1</translation>
@@ -796,6 +792,10 @@
     <message>
         <source>Failed to create seadrive cache directory</source>
         <translation>创建缓存目录失败</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>设置</translation>
     </message>
 </context>
 <context>
@@ -900,10 +900,6 @@
         <translation>未登录</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translation>登出</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
@@ -920,16 +916,8 @@
         <translation>&lt;h2&gt;Seafile Drive 客户端 %2&lt;/h2&gt;</translation>
     </message>
     <message>
-        <source>Failed to remove local cache of account %1</source>
-        <translation>删除帐户 %1 的本地缓存失败</translation>
-    </message>
-    <message>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
         <translation>是否删除帐户 %1 ？</translation>
-    </message>
-    <message>
-        <source>Failed to delete account</source>
-        <translation>删除帐户失败</translation>
     </message>
     <message>
         <source>Up %1, Down %2</source>
@@ -956,73 +944,8 @@
         <translation>显示加密资料库</translation>
     </message>
     <message>
-        <source>Failed to logout account %1</source>
-        <translation>登出账号 %1 失败</translation>
-    </message>
-    <message>
-        <source>Login</source>
-        <translation>登录</translation>
-    </message>
-</context>
-<context>
-    <name>SearchDialog</name>
-    <message>
-        <source>Search files</source>
-        <translation>搜索文件</translation>
-    </message>
-    <message>
-        <source>All file types</source>
-        <translation>所有文件类型</translation>
-    </message>
-    <message>
-        <source>Custom file type</source>
-        <translation>自定义文件类型</translation>
-    </message>
-    <message>
-        <source>retry</source>
-        <translation>重试</translation>
-    </message>
-    <message>
-        <source>Failed to search&lt;br/&gt;Please %1</source>
-        <translation>搜索失败&lt;br/&gt;请 %1</translation>
-    </message>
-    <message>
-        <source>No result found</source>
-        <translation>没有搜索结果</translation>
-    </message>
-</context>
-<context>
-    <name>SearchItemsTableModel</name>
-    <message>
-        <source>Name</source>
-        <translation>文件名</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation>大小</translation>
-    </message>
-    <message>
-        <source>Last Modified</source>
-        <translation>修改时间</translation>
-    </message>
-    <message>
-        <source>Kind</source>
-        <translation>类型</translation>
-    </message>
-</context>
-<context>
-    <name>SearchItemsTableView</name>
-    <message>
-        <source>&amp;Open the file</source>
-        <translation>打开文件</translation>
-    </message>
-    <message>
-        <source>&amp;Show in folder</source>
-        <translation>打开目录</translation>
-    </message>
-    <message>
-        <source>File not found, maybe not synchorized yet</source>
-        <translation>文件没有发现，可能还未同步</translation>
+        <source>Starting ...</source>
+        <translation>正在启动 ...</translation>
     </message>
 </context>
 <context>
@@ -1072,20 +995,8 @@
         <translation>您已经 %1。现在重启来生效吗？</translation>
     </message>
     <message>
-        <source>You have changed drive access option. Restart to apply it?</source>
-        <translation>您已经更改了虚拟磁盘的访问选项。现在重启来生效吗？</translation>
-    </message>
-    <message>
         <source>Please choose the cache folder</source>
         <translation>请选择缓存目录</translation>
-    </message>
-    <message>
-        <source>You have changed disk letter. Restart to apply it?</source>
-        <translation>您已经更改了盘符。现在重启来生效吗？</translation>
-    </message>
-    <message>
-        <source>language</source>
-        <translation>语言</translation>
     </message>
     <message>
         <source>The proxy host address can&apos;t be empty</source>
@@ -1136,16 +1047,8 @@
         <translation>自动检查更新</translation>
     </message>
     <message>
-        <source>Disk letter (need restart): </source>
-        <translation>盘符 (需要重启)</translation>
-    </message>
-    <message>
         <source>Do not verify server certificate in HTTPS syncing</source>
         <translation>HTTPS 同步过程中不验证服务器证书</translation>
-    </message>
-    <message>
-        <source>Only allow current user to access the drive</source>
-        <translation>仅允许当前用户访问虚拟磁盘</translation>
     </message>
     <message>
         <source>Cache clean interval (in minutes):</source>
@@ -1222,6 +1125,14 @@
     <message>
         <source>You have changed %1 cache folder. Restart to apply it?</source>
         <translation>你已经修改了 %1 缓存文件夹失败。重启应用使其生效</translation>
+    </message>
+    <message>
+        <source>Confirm before bulk deleting files more than</source>
+        <translation>提示确认操作，当删除的文件数大于</translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation>0</translation>
     </message>
 </context>
 <context>

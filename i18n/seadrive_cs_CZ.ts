@@ -45,21 +45,6 @@
     </message>
 </context>
 <context>
-    <name>DiskLetterDialog</name>
-    <message>
-        <source>Choose the disk letter</source>
-        <translation>Vyberte písmeno disku</translation>
-    </message>
-    <message>
-        <source>Your files would appear in a dedicated disk in your computer. Please choose the letter:</source>
-        <translation>Tvé soubory se objeví ve vyhrazeném disku v tomto počítači. Vyber si prosím písmeno jednotky:</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-</context>
-<context>
     <name>EncryptedReposDialog</name>
     <message>
         <source>Encrypted Libraries</source>
@@ -122,6 +107,13 @@
     <message>
         <source>Enter library password to sync</source>
         <translation>Zadej heslo ke knihovně pro synchronizaci</translation>
+    </message>
+</context>
+<context>
+    <name>FileProviderManager</name>
+    <message>
+        <source>%1 will ask permissions to enable Finder plugin.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -385,10 +377,6 @@
         <translation>Chyba při vytvoření souboru &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>You can&apos;t create files in the %1 drive directly</source>
-        <translation>Nemůžeš vytvářet soubory v kořenu jednotky %1</translation>
-    </message>
-    <message>
         <source>Failed to delete folder</source>
         <translation>Chyba při mazaní složky souborů</translation>
     </message>
@@ -403,6 +391,18 @@
     <message>
         <source>All libraries are loaded and ready to use.</source>
         <translation>Všechny knihovny jsou načtené a připravené k použití.</translation>
+    </message>
+    <message>
+        <source>Deleted &quot;%1&quot; and %2 more files.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can&apos;t create files in the mount folder directly</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -719,6 +719,10 @@
         <source>Do not have write permission to the library</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Waiting for confirmation to delete files</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -729,14 +733,6 @@
 </context>
 <context>
     <name>SeadriveGui</name>
-    <message>
-        <source>Faild to choose a disk letter</source>
-        <translation>Při volbě písmene disku nastala chyba</translation>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to create seadrive mount folder</source>
-        <translation>Spuštění neproběhlo: nepodařilo se vytvořit adresář pro seadrive mount</translation>
-    </message>
     <message>
         <source>Failed to initialize log: %1</source>
         <translation>Log se nepodařilo spustit: %1</translation>
@@ -796,6 +792,10 @@
     <message>
         <source>Failed to create seadrive cache directory</source>
         <translation>Nepodařilo se vytvořit složku s mezipamětí pro seadrive</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -899,10 +899,6 @@
         <translation>nepřihlášen</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translation>Odhlásit</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation>Smazat</translation>
     </message>
@@ -919,16 +915,8 @@
         <translation>&lt;h2&gt;Seafile Drive Klient %2&lt;/h2&gt;</translation>
     </message>
     <message>
-        <source>Failed to remove local cache of account %1</source>
-        <translation>Místní paměť účtu %1 se nepodařilo odstranít</translation>
-    </message>
-    <message>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
         <translation>Skutečně si přejete odstranit účet z &quot;%1&quot;?</translation>
-    </message>
-    <message>
-        <source>Failed to delete account</source>
-        <translation>Účet se nepodařilo odstranit</translation>
     </message>
     <message>
         <source>Up %1, Down %2</source>
@@ -955,73 +943,8 @@
         <translation>Zobrazit šifrované knihovny</translation>
     </message>
     <message>
-        <source>Failed to logout account %1</source>
-        <translation>Nepodařilo se odhlásit z %1 účtu</translation>
-    </message>
-    <message>
-        <source>Login</source>
+        <source>Starting ...</source>
         <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>SearchDialog</name>
-    <message>
-        <source>Search files</source>
-        <translation>Vyhledat soubory</translation>
-    </message>
-    <message>
-        <source>All file types</source>
-        <translation>Všechny typy souborů</translation>
-    </message>
-    <message>
-        <source>Custom file type</source>
-        <translation>Vlastní typ souboru</translation>
-    </message>
-    <message>
-        <source>retry</source>
-        <translation>opakovat</translation>
-    </message>
-    <message>
-        <source>Failed to search&lt;br/&gt;Please %1</source>
-        <translation>Nepovedlo se vyhledat&lt;br/&gt;Prosím %1</translation>
-    </message>
-    <message>
-        <source>No result found</source>
-        <translation>Výsledek nenalezen</translation>
-    </message>
-</context>
-<context>
-    <name>SearchItemsTableModel</name>
-    <message>
-        <source>Name</source>
-        <translation>Název</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation>Velikost</translation>
-    </message>
-    <message>
-        <source>Last Modified</source>
-        <translation>Naposledy upraveno</translation>
-    </message>
-    <message>
-        <source>Kind</source>
-        <translation>Typ</translation>
-    </message>
-</context>
-<context>
-    <name>SearchItemsTableView</name>
-    <message>
-        <source>&amp;Open the file</source>
-        <translation>&amp;Otevřít soubor</translation>
-    </message>
-    <message>
-        <source>&amp;Show in folder</source>
-        <translation>&amp;Zobrazit ve složce</translation>
-    </message>
-    <message>
-        <source>File not found, maybe not synchorized yet</source>
-        <translation>Soubor nenalezen, možná ještě nebyl synchronizován</translation>
     </message>
 </context>
 <context>
@@ -1071,20 +994,8 @@
         <translation>Máš %1. Restartovat pro aplikování ?</translation>
     </message>
     <message>
-        <source>You have changed drive access option. Restart to apply it?</source>
-        <translation>Změnil jsi nastavení pro přístup k jednotce. Restart pro aplikování ?</translation>
-    </message>
-    <message>
         <source>Please choose the cache folder</source>
         <translation>Vyber prosím složku mezipaměti</translation>
-    </message>
-    <message>
-        <source>You have changed disk letter. Restart to apply it?</source>
-        <translation>Byla provedena změna písmena disku. Restartovat pro použití?</translation>
-    </message>
-    <message>
-        <source>language</source>
-        <translation>jazyk</translation>
     </message>
     <message>
         <source>The proxy host address can&apos;t be empty</source>
@@ -1135,16 +1046,8 @@
         <translation>Kontrolovat aktualizace automaticky</translation>
     </message>
     <message>
-        <source>Disk letter (need restart): </source>
-        <translation>Písmeno disku (potřebuje restart)</translation>
-    </message>
-    <message>
         <source>Do not verify server certificate in HTTPS syncing</source>
         <translation>Neověřovat certifikát při HTTPS synchronizaci</translation>
-    </message>
-    <message>
-        <source>Only allow current user to access the drive</source>
-        <translation>Povolí pouze aktuálnímu uživateli přistupovat k jednotce</translation>
     </message>
     <message>
         <source>Cache clean interval (in minutes):</source>
@@ -1221,6 +1124,14 @@
     <message>
         <source>You have changed %1 cache folder. Restart to apply it?</source>
         <translation>Změnili jste složku pro mezipaměť %1. Restartovat aplikaci pro uplatnění?</translation>
+    </message>
+    <message>
+        <source>Confirm before bulk deleting files more than</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>0</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

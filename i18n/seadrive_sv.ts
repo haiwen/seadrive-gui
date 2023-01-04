@@ -45,21 +45,6 @@
     </message>
 </context>
 <context>
-    <name>DiskLetterDialog</name>
-    <message>
-        <source>Choose the disk letter</source>
-        <translation>Välj diskens bokstav</translation>
-    </message>
-    <message>
-        <source>Your files would appear in a dedicated disk in your computer. Please choose the letter:</source>
-        <translation>Dina filer kommer visas som en dedikerad disk på din dator. Vänligen ange en bokstav:</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-</context>
-<context>
     <name>EncryptedReposDialog</name>
     <message>
         <source>Encrypted Libraries</source>
@@ -122,6 +107,13 @@
     <message>
         <source>Enter library password to sync</source>
         <translation>Ange katalogslösenord för att synka</translation>
+    </message>
+</context>
+<context>
+    <name>FileProviderManager</name>
+    <message>
+        <source>%1 will ask permissions to enable Finder plugin.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -385,10 +377,6 @@
         <translation>Misslyckades att skapa filen &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>You can&apos;t create files in the %1 drive directly</source>
-        <translation>Du kan inte skapa filer direkt på %1 disken</translation>
-    </message>
-    <message>
         <source>Failed to delete folder</source>
         <translation>Misslyckades ta bort mapp</translation>
     </message>
@@ -402,6 +390,18 @@
     </message>
     <message>
         <source>All libraries are loaded and ready to use.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deleted &quot;%1&quot; and %2 more files.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can&apos;t create files in the mount folder directly</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -719,6 +719,10 @@
         <source>Do not have write permission to the library</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Waiting for confirmation to delete files</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -729,14 +733,6 @@
 </context>
 <context>
     <name>SeadriveGui</name>
-    <message>
-        <source>Faild to choose a disk letter</source>
-        <translation>Misslyckades välja en diskbokstav</translation>
-    </message>
-    <message>
-        <source>Failed to initialize: failed to create seadrive mount folder</source>
-        <translation>Misslyckades att initiera: misslyckades att skapa seadrive monteringsmapp</translation>
-    </message>
     <message>
         <source>Failed to initialize log: %1</source>
         <translation>Misslyckades att initiera logg: %1</translation>
@@ -795,6 +791,10 @@
     </message>
     <message>
         <source>Failed to create seadrive cache directory</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Settings</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -899,10 +899,6 @@
         <translation>inte inloggad</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translation>Logga ut</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation>Ta bort</translation>
     </message>
@@ -919,16 +915,8 @@
         <translation>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</translation>
     </message>
     <message>
-        <source>Failed to remove local cache of account %1</source>
-        <translation>Misslyckades att ta bort den lokala cachen för konto %1</translation>
-    </message>
-    <message>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
         <translation>Är du säker på att du vill ta bort konto från &quot;%1&quot;?</translation>
-    </message>
-    <message>
-        <source>Failed to delete account</source>
-        <translation>Misslyckades ta bort konto</translation>
     </message>
     <message>
         <source>Up %1, Down %2</source>
@@ -955,73 +943,8 @@
         <translation>Visa krypterade kataloger</translation>
     </message>
     <message>
-        <source>Failed to logout account %1</source>
-        <translation>Misslyckades att logga ut konto %1</translation>
-    </message>
-    <message>
-        <source>Login</source>
+        <source>Starting ...</source>
         <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>SearchDialog</name>
-    <message>
-        <source>Search files</source>
-        <translation>Sök filer</translation>
-    </message>
-    <message>
-        <source>All file types</source>
-        <translation>Alla filtyper</translation>
-    </message>
-    <message>
-        <source>Custom file type</source>
-        <translation>Egen filtyp</translation>
-    </message>
-    <message>
-        <source>retry</source>
-        <translation>prova igen</translation>
-    </message>
-    <message>
-        <source>Failed to search&lt;br/&gt;Please %1</source>
-        <translation>Misslyckades att söka &lt;br/&gt;Vänligen %1</translation>
-    </message>
-    <message>
-        <source>No result found</source>
-        <translation>Inga resultat funna</translation>
-    </message>
-</context>
-<context>
-    <name>SearchItemsTableModel</name>
-    <message>
-        <source>Name</source>
-        <translation>Namn</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation>Storlek</translation>
-    </message>
-    <message>
-        <source>Last Modified</source>
-        <translation>Senast Ändrad</translation>
-    </message>
-    <message>
-        <source>Kind</source>
-        <translation>Snäll</translation>
-    </message>
-</context>
-<context>
-    <name>SearchItemsTableView</name>
-    <message>
-        <source>&amp;Open the file</source>
-        <translation>&amp;Open filen</translation>
-    </message>
-    <message>
-        <source>&amp;Show in folder</source>
-        <translation>%Show i mappen</translation>
-    </message>
-    <message>
-        <source>File not found, maybe not synchorized yet</source>
-        <translation>Filen ej funnen, kanske inte synkroniserad ännu</translation>
     </message>
 </context>
 <context>
@@ -1071,20 +994,8 @@
         <translation>Du har %1. Starta om för att applicera den?</translation>
     </message>
     <message>
-        <source>You have changed drive access option. Restart to apply it?</source>
-        <translation>Du har ändrat diskaccess inställning. Starta om för att applicera den?</translation>
-    </message>
-    <message>
         <source>Please choose the cache folder</source>
         <translation>Vänligen välj cache-mappen</translation>
-    </message>
-    <message>
-        <source>You have changed disk letter. Restart to apply it?</source>
-        <translation>Du har ändrat diskbokstav. Starta om för att applicera den?</translation>
-    </message>
-    <message>
-        <source>language</source>
-        <translation>språk</translation>
     </message>
     <message>
         <source>The proxy host address can&apos;t be empty</source>
@@ -1135,16 +1046,8 @@
         <translation>Kontrollera efter uppdateringar automatiskt</translation>
     </message>
     <message>
-        <source>Disk letter (need restart): </source>
-        <translation>Diskbokstav (kräver omstart):</translation>
-    </message>
-    <message>
         <source>Do not verify server certificate in HTTPS syncing</source>
         <translation>Verifiera inte servercertifikatet i HTTPS synkronisering</translation>
-    </message>
-    <message>
-        <source>Only allow current user to access the drive</source>
-        <translation>Tillåt endast nuvarande användare att ansluta till disken</translation>
     </message>
     <message>
         <source>Cache clean interval (in minutes):</source>
@@ -1221,6 +1124,14 @@
     <message>
         <source>You have changed %1 cache folder. Restart to apply it?</source>
         <translation>Du har ändrat %1 cachemapp. Starta om för att applicera?</translation>
+    </message>
+    <message>
+        <source>Confirm before bulk deleting files more than</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>0</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
