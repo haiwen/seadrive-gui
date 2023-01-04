@@ -9,7 +9,7 @@
 #include <QCoreApplication>
 #include <QMessageBox>
 #include <QHostInfo>
-#include <QCryptoGraphicHash>
+#include <QCryptographicHash>
 
 #include <errno.h>
 #include <glib.h>
