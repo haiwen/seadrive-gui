@@ -458,7 +458,11 @@ void SeadriveGui::updateAccountToDaemon()
             }
 
         } else if (msg.type == AccountRemoved) {
+#ifdef Q_OS_WIN32
             rpc_client_->deleteAccount(msg.account, false);
+#else
+            rpc_client_->deleteAccount(msg.account, true);
+#endif
         }
     }
 }
