@@ -553,29 +553,11 @@ const Account AccountManager::updateAccountInfo(const Account& account,
 void::AccountManager::slotUpdateAccountInfoSucess(const AccountInfo& info)
 {
     FetchAccountInfoRequest* req = (FetchAccountInfoRequest*)(sender());
-    Account account = updateAccountInfo(req->account(), info);
-#if defined(Q_OS_WIN32)
-    if (account.isValid()) {
-        // setAccountSyncRoot will update the syncRoot in account variable, so subsequent methods (e.g. addAccount()) can get the sync root.
-        setAccountSyncRoot(account);
-    }
-#elif defined(Q_OS_MAC)
-    if (account.isValid()) {
-        gui->fileProviderManager()->registerDomain(account);
-        gui->fileProviderManager()->askUserToEnable();
-    }
-#endif
+    updateAccountInfo(req->account(), info);
     updateAccountServerInfo(req->account());
 
     req->deleteLater();
     req = NULL;
-
-    AccountMessage msg;
-    msg.type = AccountAdded;
-    msg.account = account;
-    messages.enqueue(msg);
-
-    emit accountMQUpdated();
 }
 
 void AccountManager::slotUpdateAccountInfoFailed()
@@ -595,23 +577,40 @@ void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo 
     setServerInfoKeyValue(db, account, kCustomLogoKeyName, info.customLogo);
     setServerInfoKeyValue(db, account, kCustomBrandKeyName, info.customBrand);
 
-    QUrl url(account.serverUrl);
-    url.setPath("/");
-
     bool changed = account.serverInfo != info;
     if (!changed)
         return;
 
+    Account updated_account;
     {
         QMutexLocker locker(&accounts_mutex_);
         for (size_t i = 0; i < accounts_.size(); i++) {
             if (accounts_[i] == account) {
                 accounts_[i].serverInfo = info;
+                updated_account = accounts_[i];
                 break;
             }
         }
     }
 
+#if defined(Q_OS_WIN32)
+    if (updated_account.isValid()) {
+        // setAccountSyncRoot will update the syncRoot in account variable, so subsequent methods (e.g. addAccount()) can get the sync root.
+        setAccountSyncRoot(updated_account);
+    }
+#elif defined(Q_OS_MAC)
+    if (updated_account.isValid()) {
+        gui->fileProviderManager()->registerDomain(updated_account);
+        gui->fileProviderManager()->askUserToEnable();
+    }
+#endif
+
+    AccountMessage msg;
+    msg.type = AccountAdded;
+    msg.account = updated_account;
+    messages.enqueue(msg);
+
+    emit accountMQUpdated();
     emit accountsChanged();
 }
 
