@@ -52,7 +52,7 @@
 namespace {
 
 #if defined(Q_OS_MAC)
-    const char *kSeadriveDirName = "Library/Containers/com.seafile.seadrive.fprovider/Data/Documents";
+    const char *kSeadriveDirName = "Library/Containers/com.seafile.seadrive.fprovider/Data/Documents/data";
 #elif defined(Q_OS_WIN32)
     const char *kPreconfigureCacheDirectory = "PreconfigureCacheDirectory";
     const char *kSeadriveDirName = "seadrive";
