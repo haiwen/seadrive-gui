@@ -50,7 +50,7 @@ namespace {
 
 const char *kSeafileClientBrand = "SeaDrive";
 #if defined(Q_OS_MAC)
-const char *kSeadriveConfDir = "Library/Containers/com.seafile.seadrive.fprovider/Data/Documents/data";
+const char *kSeadriveConfDir = "Library/Containers/com.seafile.seadrive.fprovider/Data/Documents";
 #elif defined(Q_OS_WIN32)
 const char *kSeadriveConfDir = "seadrive";
 #else
@@ -118,7 +118,7 @@ QString seadriveDataDir() {
     return QDir(seadriveDir()).filePath("data");
 }
 
-QString defaultSeadriveLogDir() {
+QString seadriveLogDir() {
     return QDir(seadriveDir()).filePath("logs");
 }
 

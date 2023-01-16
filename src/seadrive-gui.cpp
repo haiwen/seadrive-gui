@@ -51,13 +51,8 @@
 
 namespace {
 
-#if defined(Q_OS_MAC)
-    const char *kSeadriveDirName = "Library/Containers/com.seafile.seadrive.fprovider/Data/Documents/data";
-#elif defined(Q_OS_WIN32)
+#ifdef Q_OS_WIN32
     const char *kPreconfigureCacheDirectory = "PreconfigureCacheDirectory";
-    const char *kSeadriveDirName = "seadrive";
-#else
-    const char *kSeadriveDirName = ".seadrive";
 #endif
 
 const int kConnectDaemonIntervalMsec = 2000;
@@ -182,7 +177,7 @@ bool debugEnabledInDebugFlagFile()
 #ifdef Q_OS_MAC
 void writeCABundleForCurl()
 {
-    QString dir = gui->seadriveDir();
+    QString dir = seadriveDataDir();
     QString ca_bundle_path = pathJoin(dir, "ca-bundle.pem");
     QFile bundle(ca_bundle_path);
     if (bundle.exists()) {
@@ -577,7 +572,7 @@ bool SeadriveGui::initLog()
         errorAndExit(tr("Failed to initialize: failed to create %1 folder").arg(getBrand()));
         return false;
     }
-    if (checkdir_with_mkdir(toCStr(logsDir())) < 0) {
+    if (checkdir_with_mkdir(toCStr(seadriveLogDir())) < 0) {
         errorAndExit(tr("Failed to initialize: failed to create %1 logs folder").arg(getBrand()));
         return false;
     }
@@ -795,21 +790,6 @@ QString SeadriveGui::readPreconfigureExpandedString(const QString& key, const QS
     if (retval.isNull() || retval.type() != QVariant::String)
         return QString();
     return expandVars(retval.toString());
-}
-
-QString SeadriveGui::seadriveDir() const
-{
-    return kSeadriveDirName;
-}
-
-QString SeadriveGui::seadriveDataDir() const
-{
-    return QDir(seadriveDir()).filePath("data");
-}
-
-QString SeadriveGui::logsDir() const
-{
-    return QDir(seadriveDir()).filePath("logs");
 }
 
 #if defined(Q_OS_WIN32)

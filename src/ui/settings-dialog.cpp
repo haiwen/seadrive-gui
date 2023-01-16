@@ -51,7 +51,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
     SettingsManager mgr;
 #if !defined(_MSC_VER)
     if (!mgr.getCacheDir(&current_cache_dir_))
-        current_cache_dir_ = QDir(gui->seadriveDataDir()).absolutePath();
+        current_cache_dir_ = QDir(seadriveDataDir()).absolutePath();
     mShowCacheDir->setText(current_cache_dir_);
     mShowCacheDir->setReadOnly(true);
     mCacheLabel->setText(tr("Cache directory:"));

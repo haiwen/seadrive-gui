@@ -154,7 +154,7 @@ int AccountManager::start()
     const char *errmsg;
     const char *sql;
 
-    QString db_path = QDir(gui->seadriveDir()).filePath("accounts.db");
+    QString db_path = QDir(seadriveDir()).filePath("accounts.db");
     if (sqlite3_open (toCStr(db_path), &db)) {
         errmsg = sqlite3_errmsg (db);
         qCritical("failed to open account database %s: %s",
@@ -325,7 +325,7 @@ void AccountManager::enableAccount(const Account& account) {
 
     {
         QMutexLocker locker(&accounts_mutex_);
-        for (size_t i = 0; i < accounts_.size(); i++) {
+        for (int i = 0; i < accounts_.size(); i++) {
             if (accounts_[i] == account) {
                 accounts_.erase(accounts_.begin() + i);
                 break;
@@ -433,7 +433,7 @@ void AccountManager::updateSyncRootInfo(SyncRootInfo& sync_root_info)
 bool AccountManager::accountExists(const QUrl& url, const QString& username) const
 {
     auto accounts = allAccounts();
-    for (size_t i = 0; i < accounts.size(); i++) {
+    for (int i = 0; i < accounts.size(); i++) {
         if (accounts.at(i).serverUrl == url &&
             accounts.at(i).username == username) {
             return true;
@@ -485,7 +485,7 @@ Account AccountManager::getAccountByUrlAndUsername(const QString& url,
 Account AccountManager::getAccountBySignature(const QString& account_sig) const
 {
     auto accounts = allAccounts();
-    for (size_t i = 0; i < accounts.size(); i++) {
+    for (int i = 0; i < accounts.size(); i++) {
         if (accounts.at(i).getSignature() == account_sig) {
             return accounts.at(i);
         }
@@ -534,7 +534,7 @@ const Account AccountManager::updateAccountInfo(const Account& account,
     Account updated_account;
     {
         QMutexLocker locker(&accounts_mutex_);
-        for (size_t i = 0; i < accounts_.size(); i++) {
+        for (int i = 0; i < accounts_.size(); i++) {
             if (accounts_[i] == account) {
                 accounts_[i].accountInfo = info;
                 updated_account = accounts_[i];
@@ -577,14 +577,10 @@ void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo 
     setServerInfoKeyValue(db, account, kCustomLogoKeyName, info.customLogo);
     setServerInfoKeyValue(db, account, kCustomBrandKeyName, info.customBrand);
 
-    bool changed = account.serverInfo != info;
-    if (!changed)
-        return;
-
     Account updated_account;
     {
         QMutexLocker locker(&accounts_mutex_);
-        for (size_t i = 0; i < accounts_.size(); i++) {
+        for (int i = 0; i < accounts_.size(); i++) {
             if (accounts_[i] == account) {
                 accounts_[i].serverInfo = info;
                 updated_account = accounts_[i];
@@ -595,7 +591,7 @@ void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo 
 
 #if defined(Q_OS_WIN32)
     if (updated_account.isValid()) {
-        // setAccountSyncRoot will update the syncRoot in account variable, so subsequent methods (e.g. addAccount()) can get the sync root.
+        // setAccountSyncRoot will update the syncRoot in updated_account variable, so subsequent methods (e.g. addAccount()) can get the sync root.
         setAccountSyncRoot(updated_account);
     }
 #elif defined(Q_OS_MAC)
@@ -611,7 +607,11 @@ void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo 
     messages.enqueue(msg);
 
     emit accountMQUpdated();
-    emit accountsChanged();
+
+    bool changed = account.serverInfo != info;
+    if (changed) {
+        emit accountsChanged();
+    }
 }
 
 void AccountManager::serverInfoFailed(const ApiError &error)
@@ -627,7 +627,7 @@ void AccountManager::clearAccountToken(const Account& account,
 {
     {
         QMutexLocker locker(&accounts_mutex_);
-        for (size_t i = 0; i < accounts_.size(); i++) {
+        for (int i = 0; i < accounts_.size(); i++) {
             if (accounts_[i] == account) {
                 accounts_[i].token = "";
                 break;
@@ -810,7 +810,7 @@ const QVector<Account> AccountManager::allAccounts() const
 const QVector<Account> AccountManager::activeAccounts() const {
     auto accounts = allAccounts();
     QVector<Account> active_accounts;
-    for (size_t i = 0; i < accounts.size(); i++) {
+    for (int i = 0; i < accounts.size(); i++) {
         if (!accounts.at(i).token.isEmpty()) {
             active_accounts.push_back(accounts.at(i));
         }
@@ -820,7 +820,7 @@ const QVector<Account> AccountManager::activeAccounts() const {
 
 Account AccountManager::getAccount(const QString& url, const QString& username) const {
     auto accounts = allAccounts();
-    for (size_t i = 0; i < accounts.size(); i++) {
+    for (int i = 0; i < accounts.size(); i++) {
         if (accounts.at(i).serverUrl.toString() == url &&
             accounts.at(i).username == username) {
             return accounts.at(i);

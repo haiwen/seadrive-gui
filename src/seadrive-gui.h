@@ -60,15 +60,6 @@ public:
     // Accessors.
     bool isDevMode() const { return dev_mode_; }
 
-    // Get the seadrive folder. It's ~/seadrive on windows and ~/.seadrive on unix.
-    QString seadriveDir() const;
-
-    // Get the seadrive daemon data dir. The "data" subfolder of seadrive dir.
-    QString seadriveDataDir() const;
-
-    // Get the seadrive logs dir. The "logs" subfolder of seadrive dir.
-    QString logsDir() const;
-
 #if defined(Q_OS_WIN32)
     QString seadriveRoot() const;
 #endif
