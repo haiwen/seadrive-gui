@@ -118,7 +118,7 @@ void DaemonManager::startSeadriveDaemon()
     }
 
     if (!gui->settingsManager()->getCacheDir(&current_cache_dir_))
-        current_cache_dir_ = QDir(gui->seadriveDataDir()).absolutePath();
+        current_cache_dir_ = QDir(seadriveDataDir()).absolutePath();
 
 #if defined(Q_OS_WIN32)
 # if !defined(_MSC_VER)
@@ -160,7 +160,7 @@ QStringList DaemonManager::collectSeaDriveArgs()
     QStringList args;
 
     args << "-d" << current_cache_dir_;
-    args << "-l" << QDir(gui->logsDir()).absoluteFilePath("seadrive.log");
+    args << "-l" << QDir(seadriveLogDir()).absoluteFilePath("seadrive.log");
     if (I18NHelper::getInstance()->isTargetLanguage("zh_CN")) {
         args << "-L" << "zh_cn";
     } else if (I18NHelper::getInstance()->isTargetLanguage("de_de")) {

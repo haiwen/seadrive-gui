@@ -506,8 +506,8 @@ void SeafileTrayIcon::openHelp()
 
 void SeafileTrayIcon::openLogDirectory()
 {
-    QString log_path = QDir(gui->seadriveDir()).absoluteFilePath("logs");
-    QDesktopServices::openUrl(QUrl::fromLocalFile(log_path));
+    QString log_dir = QFileInfo(seadriveLogDir()).absoluteFilePath();
+    QDesktopServices::openUrl(QUrl::fromLocalFile(log_dir));
 }
 
 void SeafileTrayIcon::showSettingsWindow()

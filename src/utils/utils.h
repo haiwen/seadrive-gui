@@ -66,7 +66,7 @@ QString seadriveDir();
 
 QString seadriveDataDir();
 
-QString defaultSeadriveLogDir();
+QString seadriveLogDir();
 
 QString defaultDownloadDir();
 

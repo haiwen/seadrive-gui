@@ -57,7 +57,7 @@ void initBreakpad()
 #ifdef SEADRIVE_CLIENT_HAS_CRASH_REPORTER
     // if we have built with breakpad, load it in run time
     Breakpad::CrashHandler::instance()->Init(
-        QDir(defaultSeadriveLogDir()).absoluteFilePath("crash-gui"));
+        QDir(seadriveLogDir()).absoluteFilePath("crash-gui"));
 #endif
 }
 

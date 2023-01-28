@@ -91,15 +91,16 @@ void RemoveSeafileDataThread::run()
     QString seadrive_data_dir = seadriveDataDir();
     QString seadrive_dir = seadriveDir();
 
-#if defined(_MSC_VER)
+#ifdef Q_OS_WIN32
     do_seadrive_unregister_sync_root();
     RegElement::removeAllSyncRootManagerItem();
     RegElement::removeIconRegItem();
-#endif
-    delete_dir_recursively(seadrive_data_dir);
 
     QDir dir(seadrive_dir);
     dir.remove("accounts.db");
+#endif
+
+    delete_dir_recursively(seadrive_data_dir);
     SettingsManager::removeAllSettings();
     return;
 }
