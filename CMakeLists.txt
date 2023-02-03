@@ -607,6 +607,8 @@ IF(CMAKE_GENERATOR STREQUAL Xcode)
       POST_BUILD
       COMMAND ${CMAKE_COMMAND} -E make_directory ${RESOURCES_DIR}
       COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/seadrive.icns ${RESOURCES_DIR}/seadrive-icon.icns
+      COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/locked-by-me.icns ${RESOURCES_DIR}/locked-by-me.icns
+      COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/locked-by-user.icns ${RESOURCES_DIR}/locked-by-user.icns
   )
   SET(CMAKE_XCODE_ATTRIBUTE_GCC_GENERATE_DEBUGGING_SYMBOLS "YES")
   SET(CMAKE_XCODE_ATTRIBUTE_DEBUG_INFORMATION_FORMAT "dwarf-with-dsym")
