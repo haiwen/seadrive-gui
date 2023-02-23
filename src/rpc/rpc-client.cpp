@@ -411,6 +411,35 @@ bool SeafileRpcClient::setServerProperty(const QString &url,
 }
 
 #if defined(Q_OS_WIN32)
+const char *
+parseServerAddr (QString server)
+{
+    int start = -1;
+    int end = -1;
+    start=server.indexOf("https://", 0);
+    if (start < 0) {
+        start = server.indexOf("http://", 0);
+        if (start >= 0) {
+            start += 7;
+        }
+    } else {
+        start += 8;
+    }
+    if (start > 0) {
+        end = server.indexOf("/", start);
+        if (end < 0) {
+            end = server.length();
+        }
+    } else {
+        start = 0;
+        end = server.length();
+    }
+
+    QString mid = server.mid(start,end-start);
+
+    return toCStr(mid);
+}
+
 bool SeafileRpcClient::addAccount(const Account& account)
 {
     GError *error = NULL;
@@ -419,13 +448,15 @@ bool SeafileRpcClient::addAccount(const Account& account)
         serverAddr = serverAddr.left(serverAddr.size() - 1);
     }
 
+    const char *displayName = parseServerAddr(serverAddr);
+
     searpc_client_call__int(seadrive_rpc_client_, "seafile_add_account", &error,
                             6,
                             "string", toCStr(serverAddr),
                             "string", toCStr(account.username),
                             "string", toCStr(account.token),
                             "string", toCStr(QDir::toNativeSeparators(account.syncRoot)),
-                            "string", toCStr(serverAddr),
+                            "string", displayName,
                             "int", account.isPro() ? 1 : 0);
     if (error) {
         qWarning() << "Unable to add account" << account << ":"
