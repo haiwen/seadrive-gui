@@ -425,7 +425,7 @@ bool SeafileRpcClient::addAccount(const Account& account)
                             "string", toCStr(account.username),
                             "string", toCStr(account.token),
                             "string", toCStr(QDir::toNativeSeparators(account.syncRoot)),
-                            "string", toCStr(account.accountInfo.name),
+                            "string", toCStr(account.serverUrl.host()),
                             "int", account.isPro() ? 1 : 0);
     if (error) {
         qWarning() << "Unable to add account" << account << ":"
