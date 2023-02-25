@@ -97,6 +97,7 @@ private slots:
     void onAboutToQuit();
     void onDaemonStarted();
     void updateAccountToDaemon();
+    void onDaemonConnected();
 
 #if defined(Q_OS_WIN32)
     void onDaemonRestarted();

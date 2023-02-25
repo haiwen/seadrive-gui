@@ -82,6 +82,7 @@ MessagePoller::~MessagePoller()
 void MessagePoller::start()
 {
     rpc_client_->connectDaemon();
+    rpc_client_->checkDaemon();
     check_notification_timer_->start(kCheckNotificationIntervalMSecs);
     connect(gui->daemonManager(), SIGNAL(daemonDead()), this, SLOT(onDaemonDead()));
     connect(gui->daemonManager(), SIGNAL(daemonRestarted()), this, SLOT(onDaemonRestarted()));

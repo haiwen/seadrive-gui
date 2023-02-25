@@ -5,6 +5,7 @@
 
 #include <QObject>
 #include <QMutex>
+#include <QTimer>
 
 // Here we can't forward-declare type json_t because it is an anonymous typedef
 // struct, and unlike libsearpc we have no way to rewrite its definition to give
@@ -33,6 +34,7 @@ public:
     ~SeafileRpcClient();
     void connectDaemon();
     bool tryConnectDaemon();
+    void checkDaemon();
 
     bool isConnected() const { return connected_; }
 
@@ -131,6 +133,15 @@ public:
 
     bool addDelConfirmation(const QString& confirmation_id, bool resync);
 
+    QTimer check_daemon_timer_;
+    QMutex rpc_client_mutex_;
+
+signals:
+    void daemonConnected();
+
+private slots:
+    void checkDaemonAlive();
+
 private:
     Q_DISABLE_COPY(SeafileRpcClient)
 
@@ -139,6 +150,7 @@ private:
     _SearpcClient *seadrive_rpc_client_;
 
     bool connected_;
+    bool reconnect_;
 };
 
 #endif

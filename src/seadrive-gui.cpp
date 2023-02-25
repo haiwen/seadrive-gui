@@ -396,6 +396,11 @@ void SeadriveGui::loginAccounts()
     }
 }
 
+void SeadriveGui::onDaemonConnected()
+{
+    loginAccounts();
+}
+
 void SeadriveGui::onDaemonStarted()
 {
 #if defined(Q_OS_WIN32)
@@ -491,6 +496,8 @@ void SeadriveGui::connectDaemon()
 
     connect_daemon_timer_.stop();
     onDaemonStarted();
+    connect (rpc_client_, SIGNAL(daemonConnected()), this, SLOT(onDaemonConnected()));
+    rpc_client_->checkDaemon();
 }
 
 void SeadriveGui::logoutAccountsFromDaemon()

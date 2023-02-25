@@ -219,6 +219,7 @@ SeafileExtensionHandler::SeafileExtensionHandler()
 void SeafileExtensionHandler::start()
 {
     rpc_client_->connectDaemon();
+    rpc_client_->checkDaemon();
     listener_thread_->start();
     started_ = true;
 
