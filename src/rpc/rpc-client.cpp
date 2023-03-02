@@ -140,9 +140,11 @@ bool SeafileRpcClient::tryConnectDaemon(bool first) {
     seadrive_rpc_client_ = searpc_client_with_named_pipe_transport(
         pipe_client, kSeadriveRpcService);
     connected_ = true;
+#if defined(Q_OS_MAC)
     if (first) {
         checkDaemon ();
     }
+#endif
 
     return true;
 }
