@@ -33,8 +33,10 @@ public:
     SeafileRpcClient();
     ~SeafileRpcClient();
     void connectDaemon();
-    bool tryConnectDaemon();
+    bool tryConnectDaemon(bool first);
+#if defined(Q_OS_MAC)
     void checkDaemon();
+#endif
 
     bool isConnected() const { return connected_; }
 
@@ -134,13 +136,14 @@ public:
     bool addDelConfirmation(const QString& confirmation_id, bool resync);
 
     QTimer check_daemon_timer_;
-    QMutex rpc_client_mutex_;
 
 signals:
-    void daemonConnected();
+    void daemonRestarted();
 
 private slots:
+#if defined(Q_OS_MAC)
     void checkDaemonAlive();
+#endif
 
 private:
     Q_DISABLE_COPY(SeafileRpcClient)

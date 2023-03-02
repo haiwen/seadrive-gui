@@ -80,13 +80,10 @@ void SeafileRpcClient::connectDaemon()
         pipe_client, kSeadriveRpcService);
 }
 
+#if defined(Q_OS_MAC)
 void SeafileRpcClient::checkDaemonAlive()
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_ && !reconnect_) {
-        return;
-    }
     if (connected_) {
         char *ret = searpc_client_call__string (seadrive_rpc_client_,
                                                 "seafile_ping", &error, 0);
@@ -103,24 +100,22 @@ void SeafileRpcClient::checkDaemonAlive()
         seadrive_rpc_client_ = 0;
     }
     connected_ = false;
-    reconnect_ = true;
-    tryConnectDaemon ();
+    tryConnectDaemon (false);
     if (connected_) {
-        emit daemonConnected();
+        emit daemonRestarted();
     }
 }
 
 void SeafileRpcClient::checkDaemon() {
-#if defined(Q_OS_MAC)
     connect(&check_daemon_timer_, SIGNAL(timeout()),
             this, SLOT(checkDaemonAlive()));
     check_daemon_timer_.start(kCheckDaemonIntervalMsec);
-#endif
 
     return;
 }
+#endif
 
-bool SeafileRpcClient::tryConnectDaemon() {
+bool SeafileRpcClient::tryConnectDaemon(bool first) {
     SearpcNamedPipeClient *pipe_client;
 
 #if defined(Q_OS_WIN32)
@@ -145,7 +140,9 @@ bool SeafileRpcClient::tryConnectDaemon() {
     seadrive_rpc_client_ = searpc_client_with_named_pipe_transport(
         pipe_client, kSeadriveRpcService);
     connected_ = true;
-    reconnect_ = false;
+    if (first) {
+        checkDaemon ();
+    }
 
     return true;
 }
@@ -153,9 +150,6 @@ bool SeafileRpcClient::tryConnectDaemon() {
 int SeafileRpcClient::seafileGetConfig(const QString &key, QString *value)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return -1;
     char *ret = searpc_client_call__string (seadrive_rpc_client_,
                                             "seafile_get_config", &error,
                                             1, "string", toCStr(key));
@@ -173,9 +167,6 @@ int SeafileRpcClient::seafileGetConfig(const QString &key, QString *value)
 int SeafileRpcClient::seafileGetConfigInt(const QString &key, int *value)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return -1;
     *value = searpc_client_call__int (seadrive_rpc_client_,
                                       "seafile_get_config_int", &error,
                                       1, "string", toCStr(key));
@@ -192,9 +183,6 @@ int SeafileRpcClient::seafileSetConfig(const QString &key, const QString &value)
 {
     // printf ("set config: %s = %s\n", toCStr(key), toCStr(value));
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return -1;
     searpc_client_call__int (seadrive_rpc_client_,
                              "seafile_set_config", &error,
                              2, "string", toCStr(key),
@@ -220,9 +208,6 @@ int SeafileRpcClient::setDownloadRateLimit(int limit)
 int SeafileRpcClient::setRateLimit(bool upload, int limit)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return -1;
     const char *rpc = upload ? "seafile_set_upload_rate_limit" : "seafile_set_download_rate_limit";
     searpc_client_call__int (seadrive_rpc_client_,
                              rpc, &error,
@@ -238,9 +223,6 @@ int SeafileRpcClient::seafileSetConfigInt(const QString &key, int value)
 {
     // printf ("set config: %s = %d\n", toCStr(key), value);
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return -1;
     searpc_client_call__int (seadrive_rpc_client_,
                              "seafile_set_config_int", &error,
                              2, "string", toCStr(key),
@@ -255,9 +237,6 @@ int SeafileRpcClient::seafileSetConfigInt(const QString &key, int value)
 int SeafileRpcClient::getDownloadRate(int *rate)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return -1;
     int ret = searpc_client_call__int (seadrive_rpc_client_,
                                        "seafile_get_download_rate",
                                        &error, 0);
@@ -274,9 +253,6 @@ int SeafileRpcClient::getDownloadRate(int *rate)
 int SeafileRpcClient::getUploadRate(int *rate)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return -1;
     int ret = searpc_client_call__int (seadrive_rpc_client_,
                                        "seafile_get_upload_rate",
                                        &error, 0);
@@ -293,9 +269,6 @@ int SeafileRpcClient::getUploadRate(int *rate)
 bool SeafileRpcClient::getUploadProgress(json_t **ret_obj)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     json_t *ret = searpc_client_call__json (
         seadrive_rpc_client_,
         "seafile_get_upload_progress",
@@ -315,9 +288,6 @@ bool SeafileRpcClient::getUploadProgress(json_t **ret_obj)
 bool SeafileRpcClient::getDownloadProgress(json_t **ret_obj)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     json_t *ret = searpc_client_call__json (
         seadrive_rpc_client_,
         "seafile_get_download_progress",
@@ -339,9 +309,6 @@ int SeafileRpcClient::getRepoProperty(const QString &repo_id,
                                       QString *value)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return -1;
     char *ret = searpc_client_call__string (
         seadrive_rpc_client_,
         "seafile_get_repo_property",
@@ -364,9 +331,6 @@ int SeafileRpcClient::setRepoProperty(const QString &repo_id,
                                       const QString& value)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return -1;
     int ret = searpc_client_call__int (
         seadrive_rpc_client_,
         "seafile_set_repo_property",
@@ -387,9 +351,6 @@ int SeafileRpcClient::setRepoToken(const QString &repo_id,
                                    const QString& token)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return -1;
     int ret = searpc_client_call__int (
         seadrive_rpc_client_,
         "seafile_set_repo_token",
@@ -410,9 +371,6 @@ bool SeafileRpcClient::getRepoFileLockStatus(const QString& repo_id,
                                              int* status)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     *status = searpc_client_call__int(seadrive_rpc_client_, "seafile_get_path_lock_status",
                             &error, 2,
                             "string", toCStr(repo_id),
@@ -430,9 +388,6 @@ bool SeafileRpcClient::getRepoFileLockStatus(const QString& repo_id,
 int SeafileRpcClient::getCategorySyncStatus(const QString& category, QString *status)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return -1;
     char *ret = searpc_client_call__string (
         seadrive_rpc_client_,
         "seafile_get_category_sync_status",
@@ -459,9 +414,6 @@ int SeafileRpcClient::markFileLockState(const QString &repo_id,
                                         bool lock)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return -1;
     char *ret = searpc_client_call__string (
         seadrive_rpc_client_,
         lock ? "seafile_mark_file_locked" : "seafile_mark_file_unlocked",
@@ -486,9 +438,6 @@ bool SeafileRpcClient::setServerProperty(const QString &url,
     // printf("set server config: %s %s = %s\n", toCStr(url), toCStr(key),
     //        toCStr(value));
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     searpc_client_call__int(seadrive_rpc_client_, "seafile_set_server_property",
                             &error, 3, "string", toCStr(url), "string",
                             toCStr(key), "string", toCStr(value));
@@ -506,9 +455,6 @@ bool SeafileRpcClient::addAccount(const Account& account)
 {
     GError *error = NULL;
     QString serverAddr = account.serverUrl.toString();
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     if (serverAddr.endsWith("/")) {
         serverAddr = serverAddr.left(serverAddr.size() - 1);
     }
@@ -535,9 +481,6 @@ bool SeafileRpcClient::addAccount(const Account& account)
 bool SeafileRpcClient::addAccount(const Account& account)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false; 
     QString serverAddr = account.serverUrl.toString();
     if (serverAddr.endsWith("/")) {
         serverAddr = serverAddr.left(serverAddr.size() - 1);
@@ -576,9 +519,6 @@ bool SeafileRpcClient::addAccount(const Account& account)
 bool SeafileRpcClient::deleteAccount(const Account& account, bool remove_cache)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     searpc_client_call__int(seadrive_rpc_client_, "seafile_delete_account", &error,
                             3,
                             "string", toCStr(account.serverUrl.toString()),
@@ -597,9 +537,6 @@ bool SeafileRpcClient::deleteAccount(const Account& account, bool remove_cache)
 bool SeafileRpcClient::logoutAccount(const Account& account)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     searpc_client_call__int(seadrive_rpc_client_,
                             "seafile_logout_account",
                             &error,
@@ -624,9 +561,6 @@ bool SeafileRpcClient::getRepoIdByPath(const QString &server,
                                        QString *repo_id)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     char *ret = searpc_client_call__string (
         seadrive_rpc_client_,
         "seafile_get_repo_id_by_uname",
@@ -652,9 +586,6 @@ bool SeafileRpcClient::getRepoUnameById(const QString &repo_id,
                                         QString *repo_uname)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     char *ret = searpc_client_call__string (
         seadrive_rpc_client_,
         "seafile_get_repo_display_name_by_id",
@@ -681,9 +612,6 @@ bool SeafileRpcClient::getRepoUnameById(const QString &repo_id,
 bool SeafileRpcClient::getAccountByRepoId(const QString& repo_id, json_t **ret_obj)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     json_t *ret = searpc_client_call__json(seadrive_rpc_client_, "seafile_get_account_by_repo_id", &error,
                                            1,
                                            "string", toCStr(repo_id));
@@ -703,9 +631,6 @@ bool SeafileRpcClient::getAccountByRepoId(const QString& repo_id, json_t **ret_o
 bool SeafileRpcClient::getSyncNotification(json_t **ret_obj)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     json_t *ret = searpc_client_call__json (
         seadrive_rpc_client_,
         "seafile_get_sync_notification",
@@ -730,9 +655,6 @@ bool SeafileRpcClient::getSyncNotification(json_t **ret_obj)
 bool SeafileRpcClient::getGlobalSyncStatus(json_t **ret_obj)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     json_t *ret = searpc_client_call__json (
         seadrive_rpc_client_,
         "seafile_get_global_sync_status",
@@ -754,9 +676,6 @@ bool SeafileRpcClient::getGlobalSyncStatus(json_t **ret_obj)
 bool SeafileRpcClient::setCacheCleanIntervalMinutes(int interval)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     searpc_client_call__int (seadrive_rpc_client_,
                              "seafile_set_clean_cache_interval",
                              &error,
@@ -771,9 +690,6 @@ bool SeafileRpcClient::setCacheCleanIntervalMinutes(int interval)
 bool SeafileRpcClient::setCacheSizeLimitGB(int limit)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     gint64 limit_in_bytes = ((gint64)limit) * 1e9;
     searpc_client_call__int (seadrive_rpc_client_,
                              "seafile_set_cache_size_limit",
@@ -789,7 +705,6 @@ bool SeafileRpcClient::setCacheSizeLimitGB(int limit)
 bool SeafileRpcClient::getCacheCleanIntervalMinutes(int *value)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
     int ret = searpc_client_call__int (seadrive_rpc_client_,
                                        "seafile_get_clean_cache_interval",
                                        &error, 0);
@@ -806,9 +721,6 @@ bool SeafileRpcClient::getCacheCleanIntervalMinutes(int *value)
 bool SeafileRpcClient::getCacheSizeLimitGB(int *value)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     gint64 ret = searpc_client_call__int64 (seadrive_rpc_client_,
                                             "seafile_get_cache_size_limit",
                                             &error, 0);
@@ -825,9 +737,6 @@ bool SeafileRpcClient::getCacheSizeLimitGB(int *value)
 bool SeafileRpcClient::getSeaDriveEvents(json_t **ret_obj)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     json_t *ret = searpc_client_call__json (
         seadrive_rpc_client_,
         "seafile_get_events_notification",
@@ -850,9 +759,6 @@ bool SeafileRpcClient::getSeaDriveEvents(json_t **ret_obj)
 bool SeafileRpcClient::getSyncErrors(json_t **ret_obj)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     json_t *ret = searpc_client_call__json (
         seadrive_rpc_client_,
         "seafile_list_sync_errors",
@@ -878,9 +784,6 @@ bool SeafileRpcClient::cachePath(const QString& repo_id,
                                  const QString& path_in_repo)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     int ret = searpc_client_call__int (
         seadrive_rpc_client_,
         "seafile_cache_path",
@@ -905,9 +808,6 @@ bool SeafileRpcClient::isFileCached(const QString& repo_id,
                                     const QString& path_in_repo)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     int ret = searpc_client_call__int (
         seadrive_rpc_client_,
         "seafile_is_file_cached",
@@ -929,9 +829,6 @@ bool SeafileRpcClient::isFileCached(const QString& repo_id,
 bool SeafileRpcClient::getEncryptedRepoList(json_t **ret_obj)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     json_t *ret = searpc_client_call__json (
             seadrive_rpc_client_,
             "seafile_get_enc_repo_list",
@@ -954,9 +851,6 @@ bool SeafileRpcClient::setEncryptedRepoPassword(const QString& repo_id,
                                                 QString* error_message)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     int ret = searpc_client_call__int(
         seadrive_rpc_client_,
         "seafile_set_enc_repo_passwd",
@@ -977,9 +871,6 @@ bool SeafileRpcClient::setEncryptedRepoPassword(const QString& repo_id,
 bool SeafileRpcClient::clearEncryptedRepoPassword(const QString& repo_id)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     int ret = searpc_client_call__int(
         seadrive_rpc_client_,
         "seafile_clear_enc_repo_passwd",
@@ -998,9 +889,6 @@ bool SeafileRpcClient::clearEncryptedRepoPassword(const QString& repo_id)
 bool SeafileRpcClient::exitSeadriveDaemon()
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     int ret = searpc_client_call__int(seadrive_rpc_client_,
         "seafile_stop_process", &error,
         0);
@@ -1018,9 +906,6 @@ bool SeafileRpcClient::exitSeadriveDaemon()
 bool SeafileRpcClient::unCachePath(const QString& repo_id, const QString& path_in_repo)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     int ret = searpc_client_call__int (
         seadrive_rpc_client_,
         "seafile_uncache_path",
@@ -1041,9 +926,6 @@ bool SeafileRpcClient::unCachePath(const QString& repo_id, const QString& path_i
 bool SeafileRpcClient::addDelConfirmation(const QString& confirmation_id, bool resync)
 {
     GError *error = NULL;
-    QMutexLocker locker(&rpc_client_mutex_);
-    if (!connected_)
-        return false;
     int ret = searpc_client_call__int(seadrive_rpc_client_,
                             "seafile_add_del_confirmation",
                             &error,

@@ -396,11 +396,6 @@ void SeadriveGui::loginAccounts()
     }
 }
 
-void SeadriveGui::onDaemonConnected()
-{
-    loginAccounts();
-}
-
 void SeadriveGui::onDaemonStarted()
 {
 #if defined(Q_OS_WIN32)
@@ -416,6 +411,7 @@ void SeadriveGui::onDaemonStarted()
     updateAccountToDaemon();
 
     tray_icon_->start();
+    message_poller_->setRpcClient(rpc_client_);
     message_poller_->start();
     settings_mgr_->writeProxySettingsToDaemon(settings_mgr_->getProxy());
 
@@ -484,20 +480,30 @@ void SeadriveGui::onDaemonRestarted()
     for (int i = 0; i <  accounts.size(); i++) {
         rpc_client_->addAccount(accounts.at(i));
     }
+    message_poller_->setRpcClient (rpc_client_);
 }
 #endif
 
 #if defined(Q_OS_MAC)
+void SeadriveGui::onDaemonRestarted()
+{
+    qDebug("setting account when daemon is restarted");
+    auto accounts = account_mgr_->activeAccounts();
+    for (int i = 0; i <  accounts.size(); i++) {
+        rpc_client_->addAccount(accounts.at(i));
+    }
+    message_poller_->setRpcClient (rpc_client_);
+}
+
 void SeadriveGui::connectDaemon()
 {
-    if (!rpc_client_->tryConnectDaemon()) {
+    if (!rpc_client_->tryConnectDaemon(true)) {
         return;
     }
 
     connect_daemon_timer_.stop();
     onDaemonStarted();
-    connect (rpc_client_, SIGNAL(daemonConnected()), this, SLOT(onDaemonConnected()));
-    rpc_client_->checkDaemon();
+    connect (rpc_client_, SIGNAL(daemonRestarted()), this, SLOT(onDaemonRestarted()));
 }
 
 void SeadriveGui::logoutAccountsFromDaemon()
