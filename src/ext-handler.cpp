@@ -29,7 +29,7 @@
 #include "utils/utils-win.h"
 #include "auto-login-service.h"
 #include "ext-handler.h"
-#include "src/qlgen/thumbnail-service.h"
+#include "thumbnail-service.h"
 
 namespace {
 
