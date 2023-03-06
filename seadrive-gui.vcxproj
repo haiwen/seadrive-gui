@@ -58,6 +58,7 @@
     <ClCompile Include="src\seadrive-gui.cpp" />
     <ClCompile Include="src\settings-mgr.cpp" />
     <ClCompile Include="src\shib\shib-login-dialog.cpp" />
+    <ClCompile Include="src\thumbnail-service.cpp" />
     <ClCompile Include="src\traynotificationmanager.cpp" />
     <ClCompile Include="src\traynotificationwidget.cpp" />
     <ClCompile Include="src\ui\about-dialog.cpp" />
@@ -101,6 +102,7 @@
     <ClInclude Include="src\crash-handler.h" />
     <QtMoc Include="src\ui\uploadlink-dialog.h" />
     <QtMoc Include="src\open-local-helper.h" />
+    <QtMoc Include="src\thumbnail-service.h" />
     <ClInclude Include="third_party\WinSparkle-0.5.3\include\winsparkle-version.h" />
     <ClInclude Include="third_party\WinSparkle-0.5.3\include\winsparkle.h" />
     <QtMoc Include="src\api\requests.h" />

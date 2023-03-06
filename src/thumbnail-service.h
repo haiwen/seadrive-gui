@@ -22,6 +22,7 @@ struct ThumbnailRequest {
     static QAtomicInt idgen;
     // Each request has a unique id
     int id;
+    Account account;
     QString repo_id;
     QString path;
     int size;
@@ -88,7 +89,8 @@ public:
     // thumbnail would be saved in the last `file` pointer.
     //
     // **This method is supposed to be called from a worker thread.**
-    bool getThumbnail(const QString &repo_id,
+    bool getThumbnail(const Account &account,
+                      const QString &repo_id,
                       const QString &path,
                       int size,
                       int timeout_msecs,
@@ -100,7 +102,8 @@ private slots:
     void doCleanCache();
 
 private:
-    ThumbnailRequest newRequest(const QString &repo_id,
+    ThumbnailRequest newRequest(const Account &account,
+                                const QString &repo_id,
                                 const QString &path,
                                 int size);
     QString getCacheFilePath(const QString &repo_id,

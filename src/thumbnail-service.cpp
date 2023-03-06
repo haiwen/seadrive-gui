@@ -71,7 +71,8 @@ ThumbnailService::ThumbnailService()
             SLOT(onRequestFinished(const ThumbnailRequest &, bool)));
 }
 
-ThumbnailRequest ThumbnailService::newRequest(const QString &repo_id,
+ThumbnailRequest ThumbnailService::newRequest(const Account &account,
+                                              const QString &repo_id,
                                               const QString &path,
                                               int size)
 {
@@ -82,6 +83,7 @@ ThumbnailRequest ThumbnailService::newRequest(const QString &repo_id,
     // this function could be called from diffrent threads
     // concurrently.
     req.id = ThumbnailRequest::idgen.fetchAndAddOrdered(1);
+    req.account = account;
     req.repo_id = repo_id;
     req.path = path;
     req.size = size;
@@ -141,13 +143,14 @@ bool ThumbnailService::getThumbnailFromCache(const QString &repo_id,
 
 void ThumbnailService::start()
 {
-    thumbnails_dir_ = QDir(gui->seadriveDir()).filePath("thumbs");
+    thumbnails_dir_ = QDir(gui->seadriveRoot()).filePath("thumbs");
     checkdir_with_mkdir(toCStr(thumbnails_dir_));
     schedule_timer_->start(kScheduleIntervalSecs * 1000);
     cache_clean_timer_->start(kThumbCacheCleanIntervalSecs * 1000);
 }
 
-bool ThumbnailService::getThumbnail(const QString &repo_id,
+bool ThumbnailService::getThumbnail(const Account &account,
+                                    const QString &repo_id,
                                     const QString &path,
                                     int size,
                                     int timeout_msecs,
@@ -162,7 +165,7 @@ bool ThumbnailService::getThumbnail(const QString &repo_id,
 
     // TODO: handle the case when there is already a request for this
     // file+size
-    ThumbnailRequest request = newRequest(repo_id, path, size);
+    ThumbnailRequest request = newRequest(account, repo_id, path, size);
 
     enqueueRequest(request);
 
@@ -288,12 +291,11 @@ void ThumbnailDownloader::download(const ThumbnailRequest& request)
 {
     // printf("starting to download request %d\n", request.id);
     current_request_ = request;
-    const Account& account = gui->accountManager()->currentAccount();
-    if (!account.isValid()) {
+    if (!request.account.isValid()) {
         emit requestFinished(current_request_, false);
         return;
     }
-    api_request_.reset(new GetThumbnailRequest(account,
+    api_request_.reset(new GetThumbnailRequest(request.account,
                                                request.repo_id,
                                                request.path,
                                                request.size));
