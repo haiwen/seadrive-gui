@@ -47,6 +47,7 @@ public:
     ~MessagePoller();
 
     void start();
+    void setRpcClient(SeafileRpcClient *rpc_client);
     QString lastEventType() const { return last_event_type_; }
     QString lastEventPath() const { return last_event_path_; }
 

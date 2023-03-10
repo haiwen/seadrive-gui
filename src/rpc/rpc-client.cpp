@@ -26,6 +26,7 @@ namespace {
 const char *kSeadriveSockName = "\\\\.\\pipe\\seadrive_";
 #else
 const char *kSeadriveSockName = "seadrive.sock";
+const int kCheckDaemonIntervalMsec = 2000;
 #endif
 
 const char *kSeadriveRpcService = "seadrive-rpcserver";
@@ -78,7 +79,42 @@ void SeafileRpcClient::connectDaemon()
         pipe_client, kSeadriveRpcService);
 }
 
-bool SeafileRpcClient::tryConnectDaemon() {
+#if defined(Q_OS_MAC)
+void SeafileRpcClient::checkDaemonAlive()
+{
+    GError *error = NULL;
+    if (connected_) {
+        char *ret = searpc_client_call__string (seadrive_rpc_client_,
+                                                "seafile_ping", &error, 0);
+        g_free (ret);
+        if (!error) {
+            return;
+        }
+        g_error_free(error);
+    }
+
+    // try to reconnect seadrive daemon.
+    if (seadrive_rpc_client_) {
+        searpc_free_client_with_pipe_transport(seadrive_rpc_client_);
+        seadrive_rpc_client_ = 0;
+    }
+    connected_ = false;
+    tryConnectDaemon (false);
+    if (connected_) {
+        emit daemonRestarted();
+    }
+}
+
+void SeafileRpcClient::checkDaemon() {
+    connect(&check_daemon_timer_, SIGNAL(timeout()),
+            this, SLOT(checkDaemonAlive()));
+    check_daemon_timer_.start(kCheckDaemonIntervalMsec);
+
+    return;
+}
+#endif
+
+bool SeafileRpcClient::tryConnectDaemon(bool first) {
     SearpcNamedPipeClient *pipe_client;
 
 #if defined(Q_OS_WIN32)
@@ -103,6 +139,12 @@ bool SeafileRpcClient::tryConnectDaemon() {
     seadrive_rpc_client_ = searpc_client_with_named_pipe_transport(
         pipe_client, kSeadriveRpcService);
     connected_ = true;
+    // The rpc client will check whether the daemon is alive and reconnect by itself on macOS.
+#if defined(Q_OS_MAC)
+    if (first) {
+        checkDaemon ();
+    }
+#endif
 
     return true;
 }
@@ -848,10 +890,10 @@ bool SeafileRpcClient::clearEncryptedRepoPassword(const QString& repo_id)
 
 bool SeafileRpcClient::exitSeadriveDaemon()
 {
-   GError *error = NULL;
-   int ret = searpc_client_call__int(seadrive_rpc_client_,
-       "seafile_stop_process", &error,
-       0);
+    GError *error = NULL;
+    int ret = searpc_client_call__int(seadrive_rpc_client_,
+        "seafile_stop_process", &error,
+        0);
 
     if (error) {
         qWarning("failed to stop seadrive daemon process: %s\n", error->message);

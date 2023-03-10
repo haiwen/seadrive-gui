@@ -67,7 +67,6 @@ public:
 
 MessagePoller::MessagePoller(QObject *parent): QObject(parent)
 {
-    rpc_client_ = new SeafileRpcClient();
     check_notification_timer_ = new QTimer(this);
     connect(check_notification_timer_, SIGNAL(timeout()), this, SLOT(checkSeaDriveEvents()));
     connect(check_notification_timer_, SIGNAL(timeout()), this, SLOT(checkNotification()));
@@ -81,10 +80,16 @@ MessagePoller::~MessagePoller()
 
 void MessagePoller::start()
 {
-    rpc_client_->connectDaemon();
     check_notification_timer_->start(kCheckNotificationIntervalMSecs);
+#if defined(Q_OS_WIN32)
     connect(gui->daemonManager(), SIGNAL(daemonDead()), this, SLOT(onDaemonDead()));
     connect(gui->daemonManager(), SIGNAL(daemonRestarted()), this, SLOT(onDaemonRestarted()));
+#endif
+}
+
+void MessagePoller::setRpcClient(SeafileRpcClient *rpc_client)
+{
+    rpc_client_ = rpc_client;
 }
 
 void MessagePoller::onDaemonDead()
@@ -95,18 +100,15 @@ void MessagePoller::onDaemonDead()
 
 void MessagePoller::onDaemonRestarted()
 {
-    qDebug("reviving message poller when daemon is restarted");
-    if (rpc_client_) {
-        delete rpc_client_;
-    }
-    rpc_client_ = new SeafileRpcClient();
-    rpc_client_->connectDaemon();
     check_notification_timer_->start(kCheckNotificationIntervalMSecs);
 }
 
 void MessagePoller::checkSeaDriveEvents()
 {
     json_t *ret;
+    if (!rpc_client_->isConnected()) {
+        return;
+    }
     if (!rpc_client_->getSeaDriveEvents(&ret)) {
         return;
     }
@@ -119,6 +121,9 @@ void MessagePoller::checkSeaDriveEvents()
 void MessagePoller::checkNotification()
 {
     json_t *ret;
+    if (!rpc_client_->isConnected()) {
+        return;
+    }
     if (!rpc_client_->getSyncNotification(&ret)) {
         return;
     }
@@ -131,6 +136,9 @@ void MessagePoller::checkNotification()
 void MessagePoller::checkSyncStatus()
 {
     json_t *ret;
+    if (!rpc_client_->isConnected()) {
+        return;
+    }
     if (!rpc_client_->getGlobalSyncStatus(&ret)) {
         return;
     }
@@ -149,6 +157,9 @@ void MessagePoller::checkSyncStatus()
 void MessagePoller::checkSyncErrors()
 {
     json_t *ret;
+    if (!rpc_client_->isConnected()) {
+        return;
+    }
     if (!rpc_client_->getSyncErrors(&ret)) {
         gui->trayIcon()->setSyncErrors(QList<SyncError>());
         return;
