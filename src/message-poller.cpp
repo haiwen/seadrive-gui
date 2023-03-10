@@ -81,8 +81,10 @@ MessagePoller::~MessagePoller()
 void MessagePoller::start()
 {
     check_notification_timer_->start(kCheckNotificationIntervalMSecs);
+#if defined(Q_OS_WIN32)
     connect(gui->daemonManager(), SIGNAL(daemonDead()), this, SLOT(onDaemonDead()));
     connect(gui->daemonManager(), SIGNAL(daemonRestarted()), this, SLOT(onDaemonRestarted()));
+#endif
 }
 
 void MessagePoller::setRpcClient(SeafileRpcClient *rpc_client)

@@ -35,8 +35,7 @@ const char *kSeadriveRpcService = "seadrive-rpcserver";
 
 SeafileRpcClient::SeafileRpcClient()
     : seadrive_rpc_client_(0),
-      connected_(false),
-      reconnect_(false)
+      connected_(false)
 {
 }
 
@@ -140,6 +139,7 @@ bool SeafileRpcClient::tryConnectDaemon(bool first) {
     seadrive_rpc_client_ = searpc_client_with_named_pipe_transport(
         pipe_client, kSeadriveRpcService);
     connected_ = true;
+    // The rpc client will check whether the daemon is alive and reconnect by itself on macOS.
 #if defined(Q_OS_MAC)
     if (first) {
         checkDaemon ();

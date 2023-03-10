@@ -153,7 +153,6 @@ private:
     _SearpcClient *seadrive_rpc_client_;
 
     bool connected_;
-    bool reconnect_;
 };
 
 #endif

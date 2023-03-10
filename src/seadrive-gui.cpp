@@ -492,7 +492,6 @@ void SeadriveGui::onDaemonRestarted()
     for (int i = 0; i <  accounts.size(); i++) {
         rpc_client_->addAccount(accounts.at(i));
     }
-    message_poller_->setRpcClient (rpc_client_);
 }
 
 void SeadriveGui::connectDaemon()
