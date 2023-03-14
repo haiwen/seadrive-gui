@@ -135,15 +135,11 @@ public:
 
     bool addDelConfirmation(const QString& confirmation_id, bool resync);
 
-    QTimer check_daemon_timer_;
-
 signals:
     void daemonRestarted();
 
 private slots:
-#if defined(Q_OS_MAC)
     void checkDaemonAlive();
-#endif
 
 private:
     Q_DISABLE_COPY(SeafileRpcClient)
@@ -153,6 +149,8 @@ private:
     _SearpcClient *seadrive_rpc_client_;
 
     bool connected_;
+
+    QTimer *check_daemon_timer_;
 };
 
 #endif
