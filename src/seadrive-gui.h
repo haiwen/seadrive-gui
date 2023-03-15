@@ -161,6 +161,10 @@ private:
     qint64 startup_time_;
 
     QTimer connect_daemon_timer_;
+
+#if defined(Q_OS_MAC)
+    bool seadrive_started_;
+#endif
 };
 
 /**
