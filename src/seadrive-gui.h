@@ -163,7 +163,8 @@ private:
     QTimer connect_daemon_timer_;
 
 #if defined(Q_OS_MAC)
-    bool seadrive_started_;
+    bool notified_start_extension_;
+    int connect_daemon_retry_;
 #endif
 };
 

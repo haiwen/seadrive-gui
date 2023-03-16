@@ -234,7 +234,8 @@ SeadriveGui::SeadriveGui(bool dev_mode)
 
 #if defined(Q_OS_MAC)
     file_provider_mgr_ = new FileProviderManager();
-    seadrive_started_ = false;
+    notified_start_extension_ = false;
+    connect_daemon_retry_ = 0;
 #endif
 
     connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onAboutToQuit()));
@@ -498,9 +499,12 @@ void SeadriveGui::onDaemonRestarted()
 void SeadriveGui::connectDaemon()
 {
     if (!rpc_client_->tryConnectDaemon(true)) {
-        if (!seadrive_started_) {
-            seadrive_started_ = true;
-            messageBox(tr("You need to click on the seadrive entry in finder for the seadrive extension to start"));
+        if (!notified_start_extension_) {
+            if (connect_daemon_retry_ > 5) {
+                notified_start_extension_ = true;
+                messageBox(tr("To start %1 extension, you need to click the %2 entry in Finder").arg(getBrand()).arg(getBrand()));
+            }
+            connect_daemon_retry_++;
         }
         return;
     }
