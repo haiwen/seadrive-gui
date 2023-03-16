@@ -37,6 +37,10 @@ SeafileRpcClient::SeafileRpcClient()
     : seadrive_rpc_client_(0),
       connected_(false)
 {
+#if defined(Q_OS_MAC)
+    check_daemon_timer_ = new QTimer(this);
+    connect(check_daemon_timer_, SIGNAL(timeout()), this, SLOT(checkDaemonAlive()));
+#endif
 }
 
 SeafileRpcClient::~SeafileRpcClient()
@@ -79,9 +83,9 @@ void SeafileRpcClient::connectDaemon()
         pipe_client, kSeadriveRpcService);
 }
 
-#if defined(Q_OS_MAC)
 void SeafileRpcClient::checkDaemonAlive()
 {
+#if defined(Q_OS_MAC)
     GError *error = NULL;
     if (connected_) {
         char *ret = searpc_client_call__string (seadrive_rpc_client_,
@@ -103,12 +107,12 @@ void SeafileRpcClient::checkDaemonAlive()
     if (connected_) {
         emit daemonRestarted();
     }
+#endif
 }
 
+#if defined(Q_OS_MAC)
 void SeafileRpcClient::checkDaemon() {
-    connect(&check_daemon_timer_, SIGNAL(timeout()),
-            this, SLOT(checkDaemonAlive()));
-    check_daemon_timer_.start(kCheckDaemonIntervalMsec);
+    check_daemon_timer_->start(kCheckDaemonIntervalMsec);
 
     return;
 }
