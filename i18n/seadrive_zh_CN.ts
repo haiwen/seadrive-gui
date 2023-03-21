@@ -34,6 +34,37 @@
     </message>
 </context>
 <context>
+    <name>AutoLogonDialog</name>
+    <message>
+        <source>auto login</source>
+        <translation>自动登录</translation>
+    </message>
+    <message>
+        <source>auto logining, please wait a moment</source>
+        <translation>正在登录，请稍候</translation>
+    </message>
+    <message>
+        <source>Please input server address</source>
+        <translation>请输入服务器地址</translation>
+    </message>
+    <message>
+        <source>address</source>
+        <translation>地址</translation>
+    </message>
+    <message>
+        <source>Please enter the server address</source>
+        <translation>请输入服务器地址</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid server address</source>
+        <translation>%1 不是一个合法的服务器地址</translation>
+    </message>
+    <message>
+        <source>login failed</source>
+        <translation>登录失败</translation>
+    </message>
+</context>
+<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -279,7 +310,7 @@
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;例如： https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;例如：https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>or http://192.168.1.24:8000</source>
@@ -732,6 +763,41 @@
     </message>
 </context>
 <context>
+    <name>SeaDriveRootDialog</name>
+    <message>
+        <source>Choose SeaDrive Cache Folder</source>
+        <translation>选择 SeaDrive 缓存目录</translation>
+    </message>
+    <message>
+        <source>Your files will appear in a local cache folder. Please choose the folder:</source>
+        <translation>您的文件将出现在本地缓存目录中，请选择此目录：</translation>
+    </message>
+    <message>
+        <source>choose...</source>
+        <translation>选择</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>确定</translation>
+    </message>
+    <message>
+        <source>Choose %1 Cache Folder </source>
+        <translation>选择 %1 的缓存目录</translation>
+    </message>
+    <message>
+        <source>Choose %1 Cache Folder</source>
+        <translation>选择 %1 的缓存目录</translation>
+    </message>
+    <message>
+        <source>Please choose %1 cache folder</source>
+        <translation>请选择 %1 的缓存目录</translation>
+    </message>
+    <message>
+        <source>Create %1 folder failed!</source>
+        <translation>创建 %1 目录失败！</translation>
+    </message>
+</context>
+<context>
     <name>SeadriveGui</name>
     <message>
         <source>Failed to initialize log: %1</source>
@@ -796,6 +862,10 @@
     <message>
         <source>Settings</source>
         <translation>设置</translation>
+    </message>
+    <message>
+        <source>To start %1 extension, you need to click the %2 entry in Finder</source>
+        <translation>如需启动 %1 扩展，请点击“访达”里的 %2 项目</translation>
     </message>
 </context>
 <context>

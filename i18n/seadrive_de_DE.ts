@@ -34,6 +34,37 @@
     </message>
 </context>
 <context>
+    <name>AutoLogonDialog</name>
+    <message>
+        <source>auto login</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>auto logining, please wait a moment</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please input server address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please enter the server address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 is not a valid server address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>login failed</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -83,11 +114,11 @@
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"/>
+        <translation>Server</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"/>
+        <translation>Benutzername</translation>
     </message>
 </context>
 <context>
@@ -113,7 +144,7 @@
     <name>FileProviderManager</name>
     <message>
         <source>%1 will ask permissions to enable Finder plugin.</source>
-        <translation type="unfinished"/>
+        <translation>%1 wird um die Bestätigung der Aktivierung des Finder Plugins bitten.</translation>
     </message>
 </context>
 <context>
@@ -175,7 +206,7 @@
     </message>
     <message>
         <source>%1 has dowloaded your files list.</source>
-        <translation type="unfinished"/>
+        <translation>%1 hat Ihre Dateiliste heruntergeladen.</translation>
     </message>
 </context>
 <context>
@@ -279,7 +310,7 @@
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zum Beispiel: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>or http://192.168.1.24:8000</source>
@@ -394,15 +425,15 @@
     </message>
     <message>
         <source>Deleted &quot;%1&quot; and %2 more files.</source>
-        <translation type="unfinished"/>
+        <translation>Die Datei &quot;%1&quot; und %2 weitere Dateien wurden gelöscht.</translation>
     </message>
     <message>
         <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
-        <translation type="unfinished"/>
+        <translation>Bitte bestätigen Sie die Maschenlösung in Bibliothek &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>You can&apos;t create files in the mount folder directly</source>
-        <translation type="unfinished"/>
+        <translation>Sie können keine Dateien direkt im Mount-Ordner erstellen.</translation>
     </message>
 </context>
 <context>
@@ -721,7 +752,7 @@
     </message>
     <message>
         <source>Waiting for confirmation to delete files</source>
-        <translation type="unfinished"/>
+        <translation>Die Löschbestätigung wir abgewartet.</translation>
     </message>
 </context>
 <context>
@@ -729,6 +760,41 @@
     <message>
         <source>Authorization expired, please re-login</source>
         <translation>Die Sitzung ist abgelaufen. Melden Sie sich neu an.</translation>
+    </message>
+</context>
+<context>
+    <name>SeaDriveRootDialog</name>
+    <message>
+        <source>Choose SeaDrive Cache Folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your files will appear in a local cache folder. Please choose the folder:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>choose...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Choose %1 Cache Folder </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Choose %1 Cache Folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please choose %1 cache folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Create %1 folder failed!</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -795,6 +861,10 @@
     </message>
     <message>
         <source>Settings</source>
+        <translation>Einstellungen</translation>
+    </message>
+    <message>
+        <source>To start %1 extension, you need to click the %2 entry in Finder</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -802,36 +872,37 @@
     <name>SeafileExtensionHandler</name>
     <message>
         <source>Failed to get upload link information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Für die Datei &quot;%1&quot; konnten die Informationen zum Upload-Link nicht abgerufen werden.</translation>
     </message>
     <message>
         <source>No permissions to create a shared link</source>
-        <translation type="unfinished"/>
+        <translation>Sie haben nicht die Berechtigung für die Erstellung eines Freigabelinks.</translation>
     </message>
     <message>
         <source>failed get internal link %1</source>
-        <translation type="unfinished"/>
+        <translation>Der Abruf des internen Links %1 ist fehlgeschlagen.</translation>
     </message>
     <message>
         <source>Failed to lock file</source>
-        <translation type="unfinished"/>
+        <translation>Die Datei konnte nicht gesperrt werden.</translation>
     </message>
     <message>
         <source>Failed to unlock file</source>
-        <translation type="unfinished"/>
+        <translation>Die Datei konnte nicht entsperrt werden.</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
+        <translation>Datei &quot;%1&quot; ist durch %2 gesperrt.</translation>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Der Abruf der Sperrinformationen für Datei &quot;%1&quot; ist fehlgeschlagen.</translation>
     </message>
     <message>
         <source>Failed to get share link %1
 </source>
-        <translation type="unfinished"/>
+        <translation>Der Abruf des Freigabelinks %1 ist fehlgeschlagen.
+</translation>
     </message>
 </context>
 <context>
@@ -944,7 +1015,7 @@
     </message>
     <message>
         <source>Starting ...</source>
-        <translation type="unfinished"/>
+        <translation>Startet ...</translation>
     </message>
 </context>
 <context>
@@ -1127,11 +1198,11 @@
     </message>
     <message>
         <source>Confirm before bulk deleting files more than</source>
-        <translation type="unfinished"/>
+        <translation>Bitte bestätigen Sie die Massenlöschung von Dateien.</translation>
     </message>
     <message>
         <source>0</source>
-        <translation type="unfinished"/>
+        <translation>0</translation>
     </message>
 </context>
 <context>
@@ -1230,11 +1301,11 @@
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"/>
+        <translation>Server</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"/>
+        <translation>Benutzername</translation>
     </message>
 </context>
 <context>

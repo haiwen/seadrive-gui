@@ -34,6 +34,37 @@
     </message>
 </context>
 <context>
+    <name>AutoLogonDialog</name>
+    <message>
+        <source>auto login</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>auto logining, please wait a moment</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please input server address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please enter the server address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 is not a valid server address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>login failed</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -83,11 +114,11 @@
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"/>
+        <translation>Сервер</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"/>
+        <translation>Имя пользователя</translation>
     </message>
 </context>
 <context>
@@ -113,7 +144,7 @@
     <name>FileProviderManager</name>
     <message>
         <source>%1 will ask permissions to enable Finder plugin.</source>
-        <translation type="unfinished"/>
+        <translation>%1 запросит разрешения на включение плагина Finder.</translation>
     </message>
 </context>
 <context>
@@ -175,7 +206,7 @@
     </message>
     <message>
         <source>%1 has dowloaded your files list.</source>
-        <translation type="unfinished"/>
+        <translation>%1 скачал список файлов.</translation>
     </message>
 </context>
 <context>
@@ -279,7 +310,7 @@
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Например: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>or http://192.168.1.24:8000</source>
@@ -394,15 +425,15 @@
     </message>
     <message>
         <source>Deleted &quot;%1&quot; and %2 more files.</source>
-        <translation type="unfinished"/>
+        <translation>Удалено &quot;%1&quot; и еще %2 файлов.</translation>
     </message>
     <message>
         <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
-        <translation type="unfinished"/>
+        <translation>Подтвердить массовое удаление файлов в библиотеке &quot;%1&quot; ?</translation>
     </message>
     <message>
         <source>You can&apos;t create files in the mount folder directly</source>
-        <translation type="unfinished"/>
+        <translation>Вы не можете создавать файлы в папке монтирования напрямую</translation>
     </message>
 </context>
 <context>
@@ -721,7 +752,7 @@
     </message>
     <message>
         <source>Waiting for confirmation to delete files</source>
-        <translation type="unfinished"/>
+        <translation>Ожидание подтверждения удаления файлов</translation>
     </message>
 </context>
 <context>
@@ -729,6 +760,41 @@
     <message>
         <source>Authorization expired, please re-login</source>
         <translation>Авторизация истекла. Пожалуйста, войдите снова</translation>
+    </message>
+</context>
+<context>
+    <name>SeaDriveRootDialog</name>
+    <message>
+        <source>Choose SeaDrive Cache Folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your files will appear in a local cache folder. Please choose the folder:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>choose...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Choose %1 Cache Folder </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Choose %1 Cache Folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please choose %1 cache folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Create %1 folder failed!</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -795,6 +861,10 @@
     </message>
     <message>
         <source>Settings</source>
+        <translation>Настройки</translation>
+    </message>
+    <message>
+        <source>To start %1 extension, you need to click the %2 entry in Finder</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -946,7 +1016,7 @@
     </message>
     <message>
         <source>Starting ...</source>
-        <translation type="unfinished"/>
+        <translation>Запуск ...</translation>
     </message>
 </context>
 <context>
@@ -1129,11 +1199,11 @@
     </message>
     <message>
         <source>Confirm before bulk deleting files more than</source>
-        <translation type="unfinished"/>
+        <translation>Подтвердите перед массовым удалением файлов более</translation>
     </message>
     <message>
         <source>0</source>
-        <translation type="unfinished"/>
+        <translation>0</translation>
     </message>
 </context>
 <context>
@@ -1232,11 +1302,11 @@
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"/>
+        <translation>Сервер</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"/>
+        <translation>Имя пользователя</translation>
     </message>
 </context>
 <context>
