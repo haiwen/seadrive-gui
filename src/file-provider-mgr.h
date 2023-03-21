@@ -21,7 +21,7 @@ public:
 
     void askUserToEnable();
 
-    bool hasInvalidDomain();
+    bool hasEnabledDomains();
 
 private:
     QString displayName(const Account account);

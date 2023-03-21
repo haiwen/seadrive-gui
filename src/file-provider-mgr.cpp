@@ -40,22 +40,8 @@ bool FileProviderManager::unregisterDomain(const Account account) {
 }
 
 void FileProviderManager::askUserToEnable() {
-    if (!fileProviderListDomains(&domains_)) {
+    if (!hasEnabledDomains()) {
         return;
-    }
-
-    if (domains_.isEmpty()) {
-        return;
-    }
-
-    QMapIterator<QString, Domain> it(domains_);
-    while (it.hasNext()) {
-        it.next();
-        auto domain = it.value();
-
-        if (domain.userEnabled) {
-            return;
-        }
     }
 
     gui->messageBox(tr("%1 will ask permissions to enable Finder plugin.").arg(getBrand()));
@@ -63,7 +49,7 @@ void FileProviderManager::askUserToEnable() {
     fileProviderAskUserToEnable();
 }
 
-bool FileProviderManager::hasInvalidDomain() {
+bool FileProviderManager::hasEnabledDomains() {
     if (!fileProviderListDomains(&domains_)) {
         return false;
     }
