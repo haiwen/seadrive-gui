@@ -36,6 +36,37 @@
     </message>
 </context>
 <context>
+    <name>AutoLogonDialog</name>
+    <message>
+        <source>auto login</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>auto logining, please wait a moment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please input server address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please enter the server address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is not a valid server address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>login failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -733,6 +764,41 @@
     </message>
 </context>
 <context>
+    <name>SeaDriveRootDialog</name>
+    <message>
+        <source>Choose SeaDrive Cache Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your files will appear in a local cache folder. Please choose the folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>choose...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose %1 Cache Folder </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose %1 Cache Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please choose %1 cache folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create %1 folder failed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SeadriveGui</name>
     <message>
         <source>Failed to initialize log: %1</source>
@@ -796,6 +862,10 @@
     </message>
     <message>
         <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To start %1 extension, you need to click the %2 entry in Finder</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

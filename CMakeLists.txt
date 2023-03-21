@@ -455,7 +455,6 @@ SET(SC_LIBS utils)
 ###### start: translations
 ####################
 
-SET(SEAFILE_TRANSLATE_SOURCES ${seadrive_gui_sources} ${utils_sources} ${moc_output} ${ui_output} "src/ext-handler.cpp")
 SET(LANGUAGES
   ca
   de_DE
@@ -497,11 +496,9 @@ FOREACH(LANGUAGE ${LANGUAGES})
 
   SET(TS_TARGET "${LANGUAGE}_ts")
   ADD_CUSTOM_TARGET(${TS_TARGET}
-    COMMAND ${QT_LUPDATE_EXECUTABLE} ${SEAFILE_TRANSLATE_SOURCES}
+    COMMAND ${QT_LUPDATE_EXECUTABLE}
+        -locations none ${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/ui
         -ts "${PROJECT_SOURCE_DIR}/i18n/seadrive_${LANGUAGE}.ts"
-        -I "${PROJECT_SOURCE_DIR}/src"
-        -I  ${PROJECT_SOURCE_DIR}/src/win-sso
-        -locations none
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
 
   SET(SEADRIVE_TS_TARGETS ${SEADRIVE_TS_TARGETS} ${TS_TARGET})

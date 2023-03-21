@@ -34,6 +34,37 @@
     </message>
 </context>
 <context>
+    <name>AutoLogonDialog</name>
+    <message>
+        <source>auto login</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>auto logining, please wait a moment</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please input server address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please enter the server address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 is not a valid server address</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>login failed</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
@@ -83,11 +114,11 @@
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"/>
+        <translation>서버</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"/>
+        <translation>사용자 이름</translation>
     </message>
 </context>
 <context>
@@ -113,7 +144,7 @@
     <name>FileProviderManager</name>
     <message>
         <source>%1 will ask permissions to enable Finder plugin.</source>
-        <translation type="unfinished"/>
+        <translation>%1(에)서 파인더 플러그인 활성 권한을 요청합니다.</translation>
     </message>
 </context>
 <context>
@@ -175,7 +206,7 @@
     </message>
     <message>
         <source>%1 has dowloaded your files list.</source>
-        <translation type="unfinished"/>
+        <translation>%1(에)서 파일 목록을 다운로드했습니다.</translation>
     </message>
 </context>
 <context>
@@ -279,7 +310,7 @@
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;예: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>or http://192.168.1.24:8000</source>
@@ -394,15 +425,15 @@
     </message>
     <message>
         <source>Deleted &quot;%1&quot; and %2 more files.</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; 파일과 파일 %2개를 삭제했습니다.</translation>
     </message>
     <message>
         <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; 라이브러리의 여러 파일을 삭제할까요?</translation>
     </message>
     <message>
         <source>You can&apos;t create files in the mount folder directly</source>
-        <translation type="unfinished"/>
+        <translation>마운트 폴더에 직접 파일을 만들 수 없습니다</translation>
     </message>
 </context>
 <context>
@@ -721,7 +752,7 @@
     </message>
     <message>
         <source>Waiting for confirmation to delete files</source>
-        <translation type="unfinished"/>
+        <translation>파일 삭제 확인을 기다리는 중</translation>
     </message>
 </context>
 <context>
@@ -729,6 +760,41 @@
     <message>
         <source>Authorization expired, please re-login</source>
         <translation>인증 기한을 초과했습니다. 다시 로그인하세요</translation>
+    </message>
+</context>
+<context>
+    <name>SeaDriveRootDialog</name>
+    <message>
+        <source>Choose SeaDrive Cache Folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your files will appear in a local cache folder. Please choose the folder:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>choose...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Choose %1 Cache Folder </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Choose %1 Cache Folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please choose %1 cache folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Create %1 folder failed!</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -795,6 +861,10 @@
     </message>
     <message>
         <source>Settings</source>
+        <translation>설정</translation>
+    </message>
+    <message>
+        <source>To start %1 extension, you need to click the %2 entry in Finder</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -945,7 +1015,7 @@
     </message>
     <message>
         <source>Starting ...</source>
-        <translation type="unfinished"/>
+        <translation>시작하는 중 ...</translation>
     </message>
 </context>
 <context>
@@ -1128,11 +1198,11 @@
     </message>
     <message>
         <source>Confirm before bulk deleting files more than</source>
-        <translation type="unfinished"/>
+        <translation>다음 수보다 많은 여러 파일을 삭제하기 전 확인</translation>
     </message>
     <message>
         <source>0</source>
-        <translation type="unfinished"/>
+        <translation>0</translation>
     </message>
 </context>
 <context>
@@ -1231,11 +1301,11 @@
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"/>
+        <translation>서버</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"/>
+        <translation>사용자 이름</translation>
     </message>
 </context>
 <context>
