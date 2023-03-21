@@ -63,6 +63,30 @@ void FileProviderManager::askUserToEnable() {
     fileProviderAskUserToEnable();
 }
 
+bool FileProviderManager::hasEnabledDomains() {
+    if (!fileProviderListDomains(&domains_)) {
+        return false;
+    }
+
+    if (domains_.isEmpty()) {
+        return false;
+    }
+
+    bool found = false;
+    QMapIterator<QString, Domain> it(domains_);
+    while (it.hasNext()) {
+        it.next();
+        auto domain = it.value();
+
+        if (domain.userEnabled) {
+            found = true;
+            break;
+        }
+    }
+
+    return found;
+}
+
 QString FileProviderManager::displayName(const Account account) {
     QString name = account.accountInfo.name;
     if (name.isEmpty()) {

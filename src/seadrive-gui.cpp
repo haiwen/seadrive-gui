@@ -502,7 +502,8 @@ void SeadriveGui::connectDaemon()
         if (!notified_start_extension_) {
             if (connect_daemon_retry_ > 5) {
                 notified_start_extension_ = true;
-                messageBox(tr("To start %1 extension, you need to click the %2 entry in Finder").arg(getBrand()).arg(getBrand()));
+                if (file_provider_mgr_->hasEnabledDomains())
+                    messageBox(tr("To start %1 extension, you need to click the %2 entry in Finder").arg(getBrand()).arg(getBrand()));
             }
             connect_daemon_retry_++;
         }
