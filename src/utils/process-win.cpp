@@ -159,13 +159,15 @@ int count_process (const char *process_name_in)
 
         // if basename doesn't start with `\` or not mached
 #if defined (_MSC_VER)
-        if (*basename != '\\' ||
+        if (basename == nullptr ||
+            *basename != '\\' ||
             strnicmp(name, ++basename, length) != 0) {
             CloseHandle(hProcess);
             continue;
         }
 #else
-        if (*basename != '\\' ||
+        if (basename == nullptr ||
+            *basename != '\\' ||
             strncasecmp(name, ++basename, length) != 0) {
             CloseHandle(hProcess);
             continue;
