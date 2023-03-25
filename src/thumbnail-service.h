@@ -36,9 +36,7 @@ struct ThumbnailRequest {
 };
 
 
-// Responsible for fetching of thumbnails. It also handles:
-// 1. (TODO) fetching of multiple (up to max_slots) requests concurrently
-// 2. (TODO) retrying (up to 3 times, with back off) of failed requests
+// Responsible for fetching of thumbnails.
 class ThumbnailDownloader : public QObject
 {
     Q_OBJECT
@@ -71,9 +69,6 @@ struct ThumbnailWaiter;
 // Responsible for:
 //  * the scheduling of all pending requests
 //  * cache mgmt of the thumbnail files
-// TODO:
-//  * cancel all requests when account is switched
-//  * blacklist files whose thumbnail requests fail for too many times (they could be corrupted image files)
 class ThumbnailService : public QObject
 {
     Q_OBJECT

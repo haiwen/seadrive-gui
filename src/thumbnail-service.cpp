@@ -107,7 +107,6 @@ bool ThumbnailService::getThumbnailFromCache(const QString &repo_id,
                                              QString *file)
 {
     QString cached_file = getCacheFilePath(repo_id, path, size);
-    // printf ("cache file path = %s\n", toCStr(cached_file));
     QFileInfo finfo(cached_file);
     if (!finfo.exists()) {
         return false;
@@ -156,14 +155,11 @@ bool ThumbnailService::getThumbnail(const Account &account,
                                     int timeout_msecs,
                                     QString *file)
 {
-    // printf ("ThumbnailService::getThumbnail called\n");
-
     if (getThumbnailFromCache(repo_id, path, size, file)) {
         // Cache hit
         return true;
     }
 
-    // TODO: handle the case when there is already a request for this
     // file+size
     ThumbnailRequest request = newRequest(account, repo_id, path, size);
 
@@ -188,12 +184,9 @@ bool ThumbnailService::waitForRequest(const ThumbnailRequest& request, int timeo
     }
 
     bool ret = waiter->sem.tryAcquire(1, timeout_msecs);
-    // printf ("waiting for result\n");
     if (ret && waiter->success) {
         *file = getCacheFilePath(request.repo_id, request.path, request.size);
-        // *file = "/data/github/seadrive-gui/qlgen/test.jpg";
     }
-    // printf ("got result %s\n", ret ? "success" : "timeout");
     {
         QMutexLocker lock(&waiters_mutex_);
         waiters_.remove(request.id);
@@ -206,12 +199,6 @@ bool ThumbnailService::waitForRequest(const ThumbnailRequest& request, int timeo
 // the main thread to avoid using any locks for it.
 void ThumbnailService::doSchedule()
 {
-    // printf ("downloader has free slot: %s\n", downloader_->hasFreeSlot() ? "yes" : "no");
-    // printf ("total thumb requests in queue: %d\n", queue_.size());
-    // foreach (const ThumbnailRequest& t, queue_) {
-    //     printf ("queued thumb request: %s\n", toCStr(t.path));
-    // }
-
     if (!downloader_->hasFreeSlot()) {
         return;
     }
@@ -228,7 +215,6 @@ public:
     ThumbCacheCleaner(const QString& cache_dir) : cache_dir_(cache_dir) {};
 
     void run() {
-        // printf ("checking out dated cache files in %s\n", toCStr(cache_dir_));
         QDirIterator iterator(cache_dir_);
         QStringList files_to_delete;
         while (iterator.hasNext()) {
@@ -246,11 +232,6 @@ public:
             qDebug("[ThumbCacheCleaner] removing %d expired thumb cache", files_to_delete.size());
         }
         foreach (const QString& file_path, files_to_delete) {
-            // printf ("removing file %s\n", toCStr(file_path));
-
-            // TODO: there may be a race condition since the cleaner
-            // runs in a worker thread while we serve requets from
-            // SeariveQL in another thread.
             QFile(file_path).remove();
         }
     }
@@ -289,9 +270,9 @@ bool ThumbnailDownloader::hasFreeSlot() const
 
 void ThumbnailDownloader::download(const ThumbnailRequest& request)
 {
-    // printf("starting to download request %d\n", request.id);
     current_request_ = request;
-    if (!request.account.isValid()) {
+    const Account& account = request.account;
+    if (!account.isValid()) {
         emit requestFinished(current_request_, false);
         return;
     }
@@ -311,7 +292,6 @@ void ThumbnailDownloader::download(const ThumbnailRequest& request)
 void ThumbnailDownloader::onGetThumbnailSuccess(const QPixmap &thumbnail)
 {
     api_request_.reset(nullptr);
-    // TODO: Saving image to local file should be done in a worker thread!
     if (thumbnail.save(current_request_.cache_path)) {
         emit requestFinished(current_request_, true);
     } else {

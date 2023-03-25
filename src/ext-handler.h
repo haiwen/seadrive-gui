@@ -155,12 +155,9 @@ private:
                            QString *path_in_repo);
 
     bool isFileCached(const QString &path);
-    bool lookUpFileInformation(const QString &path,
-                               Account *account,
-                               QString *ptr_repo_id,
-                               QString *ptr_path_in_rpo);
-    void handlerFileStatus(QStringList &args, bool* is_cached);
-    QString handlerGetThumbnailFromServer(QStringList &args);
+    bool handleIsFileCached(QStringList &args);
+    QString handleGetMountPoint();
+    QString handleGetThumbnailFromServer(QStringList &args);
     bool fetchThumbnail(const QString &path, int size, QString *file);
 };
 
