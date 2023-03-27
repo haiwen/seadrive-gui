@@ -107,6 +107,11 @@ public:
 #endif
     bool getCacheDir(QString *current_cache_dir);
     void setCacheDir(const QString& current_cache_dir);
+
+#if defined(Q_OS_MAC)
+    bool getHideWindowsIncompatibilityPathMsg();
+    void setHideWindowsIncompatibilityPathMsg(bool enabled);
+#endif
 public:
 
     // Remove all settings from system when uninstall

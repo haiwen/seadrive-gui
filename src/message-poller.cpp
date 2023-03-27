@@ -185,6 +185,12 @@ void MessagePoller::processNotification(const SyncNotification& notification)
             notification.commit_id,
             notification.parent_commit_id);
     } else if (notification.type == "sync.error") {
+#if defined(Q_OS_MAC)
+        if (notification.error_id == SYNC_ERROR_ID_INVALID_PATH_ON_WINDOWS &&
+            gui->settingsManager()->getHideWindowsIncompatibilityPathMsg()) {
+            return;
+        }
+#endif
         QString path_in_title;
         if (!notification.repo_name.isEmpty()) {
             path_in_title = notification.repo_name;
