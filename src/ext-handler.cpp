@@ -558,8 +558,6 @@ void ExtCommandsHandler::run()
         } else if (cmd == "is-file-cached") {
             bool is_cached = handleIsFileCached(args);
             resp = is_cached ? "cached" : "uncached";
-        } else if (cmd == "get-mount-point") {
-            resp = handleGetMountPoint();
         } else if (cmd == "get-thumbnail-from-server") {
             resp = handleGetThumbnailFromServer(args);
         } else {
@@ -857,7 +855,7 @@ void ExtCommandsHandler::handleShowLockedBy(const QStringList& args)
 
 bool ExtCommandsHandler::handleIsFileCached(QStringList &args) {
     if (args.size() != 1) {
-        return ;
+        return false;
     }
 
     QString file_path = normalizedPath(args.first());
@@ -874,10 +872,6 @@ bool ExtCommandsHandler::isFileCached(const QString &path) {
 
     QMutexLocker lock(&rpc_client_mutex_);
     return rpc_client_->isFileCached(repo_id, path_in_repo);
-}
-
-QString ExtCommandsHandler::handleGetMountPoint() {
-    return gui->mountDir().toLower();
 }
 
 // Get thumbanil from server and return the cached thumbnail path
