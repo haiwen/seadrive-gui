@@ -43,6 +43,9 @@ const char *kProxyAddr = "proxy_addr";
 const char *kProxyPort = "proxy_port";
 const char *kProxyUsername = "proxy_username";
 const char *kProxyPassword = "proxy_password";
+#if defined(Q_OS_MAC)
+const char * kHideWindowsIncompatiblePathNotification = "hide_windows_incompatible_path_notification";
+#endif
 
 const int kCheckSystemProxyIntervalMSecs = 5 * 1000;
 
@@ -464,6 +467,22 @@ void SettingsManager::setDeleteConfirmThreshold(int value)
         delete_confirm_threshold_ = value;
     }
 }
+
+#if defined(Q_OS_MAC)
+bool SettingsManager::getHideWindowsIncompatibilityPathMsg()
+{
+    QString str;
+    gui->rpcClient()->seafileGetConfig(kHideWindowsIncompatiblePathNotification, &str);
+    return str == "true";
+}
+
+void SettingsManager::setHideWindowsIncompatibilityPathMsg(bool enabled)
+{
+    QString set_value = enabled == true ? "true" : "false";
+    gui->rpcClient()->seafileSetConfig(kHideWindowsIncompatiblePathNotification, set_value);
+    return;
+}
+#endif
 
 QString SettingsManager::getComputerName()
 {

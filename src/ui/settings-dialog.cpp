@@ -131,6 +131,9 @@ void SettingsDialog::updateSettings()
             AutoUpdateService::instance()->setAutoUpdateEnabled(enabled);
         }
 #endif
+#if defined(Q_OS_MAC)
+        mgr->setHideWindowsIncompatibilityPathMsg(mHideWindowsIncompatibilityCheckBox->checkState() == Qt::Checked);
+#endif
     }
 
     if (mAdvancedTab->isEnabled()) {
@@ -242,6 +245,13 @@ void SettingsDialog::showEvent(QShowEvent *event)
 
         value = mgr->deleteConfirmThreshold();
         mDeleteConfirmSpinBox->setValue(value);
+
+#if defined(Q_OS_MAC)
+        state = mgr->getHideWindowsIncompatibilityPathMsg() ? Qt::Checked : Qt::Unchecked;
+        mHideWindowsIncompatibilityCheckBox->setCheckState(state);
+#else
+        mHideWindowsIncompatibilityCheckBox->hide();
+#endif
 
 #ifdef HAVE_SPARKLE_SUPPORT
         if (AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
