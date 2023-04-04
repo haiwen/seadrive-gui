@@ -876,17 +876,23 @@ bool ExtCommandsHandler::isFileCached(const QString &path) {
 
 // Get thumbanil from server and return the cached thumbnail path
 QString ExtCommandsHandler::handleGetThumbnailFromServer(QStringList& args) {
-    if (args.size() != 1) {
+    if (args.size() != 2) {
         qWarning("invalid command args of get thumbnail");
-        return "Failed";
+        return "";
     }
 
     QString cached_thumbnail_path;
-    QString path = normalizedPath(args.first());
-    bool success = fetchThumbnail(path, 256, &cached_thumbnail_path);
+    QString path = normalizedPath(args[0]);
+    int size = args[1].toInt();
+    if (size <= 0) {
+        size = 64;
+    } else {
+        size = (size + 63) & (~63);
+    }
+    bool success = fetchThumbnail(path, size, &cached_thumbnail_path);
     if (!success) {
         qWarning("fetch thumbnail from server failed");
-        return "Failed";
+        return "";
     }
     return cached_thumbnail_path;
 }

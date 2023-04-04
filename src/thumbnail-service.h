@@ -81,9 +81,7 @@ public:
     // Get the thumbnail with the require size. Return immediately if
     // found in local cahce. Otherwise it would block waiting for the
     // api request to finish (or fail). The path to the fetched
-    // thumbnail would be saved in the last `file` pointer.
-    //
-    // **This method is supposed to be called from a worker thread.**
+    // thumbnail would be saved in the `file` pointer.
     bool getThumbnail(const Account &account,
                       const QString &repo_id,
                       const QString &path,

@@ -117,19 +117,18 @@ bool ThumbnailService::getThumbnailFromCache(const QString &repo_id,
     // 1) For a file, its thumbnail cache key has no information of
     //    the file id (a.k.a version). So we keep the cache very short
     //    to avoid stale thumbnails in case the file changes.
-    // 2) quicklookd itself also maintains a cache for all the
+    // 2) ThumbnailProvider maintains a cache for all the
     //    thumbnails, and it only re-request the thumbnail for a file
     //    when it detects a timestamp change for that file.
     //
-    //  You may ask: Now that quicklookd does the cache, is it still
-    //  necessary to have our own cache? The answer is YES. Because:
+    //  It is still necessary to have our own cache. Because:
     //  1) Sometimes the thumbnail api request could take too long so
-    //     the ql generator may time out waiting for our response. But
+    //     the extension may time out waiting for our response. But
     //     soon it may request the thumbnail again. In such case the
     //     cache would greatly speed it up.
     //  2) We have to save the thumbnail returned by the api to a
-    //     local file anyway - See genThumnail method in qlgen.mm,
-    //     especially the call to `QLThumbnailRequestSetImageAtURL`.
+    //     local file anyway.
+
     if (FileTimeComparator(finfo).isOlderThan(kThumbCacheValidSecs)) {
         return false;
     }
@@ -194,9 +193,9 @@ bool ThumbnailService::waitForRequest(const ThumbnailRequest& request, int timeo
     return ret;
 }
 
-// All requests are kick-started here in the main thread (as a
+// All requests are kick-started here in the ext handler thread (as a
 // callback of a timer). This way the downloader is only accessed from
-// the main thread to avoid using any locks for it.
+// the ext handler thread to avoid using any locks for it.
 void ThumbnailService::doSchedule()
 {
     if (!downloader_->hasFreeSlot()) {
