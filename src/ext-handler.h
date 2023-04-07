@@ -153,6 +153,12 @@ private:
                            Account *account,
                            QString *repo_id,
                            QString *path_in_repo);
+
+    bool isFileCached(const QString &path);
+    bool handleIsFileCached(QStringList &args);
+    QString handleGetMountPoint();
+    QString handleGetThumbnailFromServer(QStringList &args);
+    bool fetchThumbnail(const QString &path, int size, QString *file);
 };
 
 #endif // SEADRIVE_CLIENT_EXT_HANLDER_H

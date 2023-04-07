@@ -29,6 +29,7 @@
 #include "utils/utils-win.h"
 #include "auto-login-service.h"
 #include "ext-handler.h"
+#include "thumbnail-service.h"
 
 namespace {
 
@@ -554,6 +555,11 @@ void ExtCommandsHandler::run()
             handleGetUploadLink(args);
         } else if (cmd == "download") {
             handleDownload(args);
+        } else if (cmd == "is-file-cached") {
+            bool is_cached = handleIsFileCached(args);
+            resp = is_cached ? "cached" : "uncached";
+        } else if (cmd == "get-thumbnail-from-server") {
+            resp = handleGetThumbnailFromServer(args);
         } else {
             qWarning ("[ext] unknown request command: %s", cmd.toUtf8().data());
         }
@@ -844,4 +850,64 @@ void ExtCommandsHandler::handleShowLockedBy(const QStringList& args)
     }
     // qWarning("emitting showLockedBy\n");
     emit showLockedBy(account, repo_id, path_in_repo);
+}
+
+
+bool ExtCommandsHandler::handleIsFileCached(QStringList &args) {
+    if (args.size() != 1) {
+        return false;
+    }
+
+    QString file_path = normalizedPath(args.first());
+    return isFileCached(file_path);
+}
+
+bool ExtCommandsHandler::isFileCached(const QString &path) {
+    Account account;
+    QString repo_id, path_in_repo;
+    if (!parseRepoFileInfo(path, &account, &repo_id, &path_in_repo)) {
+        qWarning("[ext] invalid path %s", toCStr(path));
+        return false;
+    }
+
+    QMutexLocker lock(&rpc_client_mutex_);
+    return rpc_client_->isFileCached(repo_id, path_in_repo);
+}
+
+// Get thumbanil from server and return the cached thumbnail path
+QString ExtCommandsHandler::handleGetThumbnailFromServer(QStringList& args) {
+    if (args.size() != 2) {
+        qWarning("invalid command args of get thumbnail");
+        return "";
+    }
+
+    QString cached_thumbnail_path;
+    QString path = normalizedPath(args[0]);
+    int size = args[1].toInt();
+    if (size <= 0) {
+        size = 64;
+    } else {
+        size = (size + 63) & (~63);
+    }
+    bool success = fetchThumbnail(path, size, &cached_thumbnail_path);
+    if (!success) {
+        qWarning("fetch thumbnail from server failed");
+        return "";
+    }
+    return cached_thumbnail_path;
+}
+
+// Get thumbnail from server
+bool ExtCommandsHandler::fetchThumbnail(const QString &path, int size, QString *file) {
+    Account account;
+    QString repo_id, path_in_repo;
+    if (!parseRepoFileInfo(path, &account, &repo_id, &path_in_repo)) {
+        qWarning("[thumbnailHandler] invalid path %s", toCStr(path));
+        return false;
+    }
+
+    // set timeout to 300s to get thumbnail.
+    int timeout_msecs = 300000;
+    return ThumbnailService::instance()->getThumbnail(
+            account, repo_id, path_in_repo, size, timeout_msecs, file);
 }
