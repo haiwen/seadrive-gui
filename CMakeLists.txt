@@ -155,6 +155,7 @@ SET(moc_headers
   src/auto-login-service.h
   src/daemon-mgr.h
   src/message-poller.h
+  src/sync-command.h
   src/network-mgr.h
   src/remote-wipe-service.h
   src/account-info-service.h
@@ -281,6 +282,7 @@ SET(seadrive_gui_sources
   src/daemon-mgr.cpp
   src/main.cpp
   src/message-poller.cpp
+  src/sync-command.cpp
   src/network-mgr.cpp
   src/remote-wipe-service.cpp
   src/account-info-service.cpp

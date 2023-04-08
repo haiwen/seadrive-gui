@@ -8,16 +8,20 @@ class QTimer;
 
 class SeafileRpcClient;
 class SeaDriveEvent;
+class SyncCommand;
 
 struct SyncNotification {
     QString type;
     QString repo_id;
     QString repo_name;
+    QString repo_path;
     QString commit_id;
     QString parent_commit_id;
     QString commit_desc;
     QString confirmation_id;
     QString delete_files;
+    QString domain_id;
+    bool is_dir;
     int error_id;
     QString error;
     QString error_path;
@@ -69,6 +73,7 @@ private:
     void processNotification(const SyncNotification& notification);
 
     SeafileRpcClient *rpc_client_;
+    SyncCommand *sync_command_;
 
     QTimer *check_notification_timer_;
     QString last_event_type_;

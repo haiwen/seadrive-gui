@@ -500,6 +500,17 @@ Account AccountManager::getAccountFromJson(json_t *ret_obj) const
                                       json.getString("username"));
 }
 
+Account AccountManager::getAccountByDomainID (const QString& domain_id) const
+{
+    auto accounts = allAccounts();
+    for (int i = 0; i < accounts.size(); i++) {
+        if (accounts.at(i).domainID() == domain_id) {
+            return accounts.at(i);
+        }
+    }
+    return Account();
+}
+
 void AccountManager::fetchAccountInfoFromServer(const Account& account)
 {
     FetchAccountInfoRequest* fetch_account_info_request = new FetchAccountInfoRequest(account);
