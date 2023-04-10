@@ -273,6 +273,18 @@ void MessagePoller::processNotification(const SyncNotification& notification)
         } else {
             rpc_client_->addDelConfirmation(notification.confirmation_id, true);
         }
+    } else if (notification.type == "del_repo_confirmation") {
+        QString text;
+        text = tr("Deleted library \"%1\"").arg(notification.repo_name.trimmed());
+
+        QString info = tr("Confirm to delete library \"%1\" ?")
+                          .arg(notification.repo_name.trimmed());
+
+        if (gui->bulkDeletingMessageBox(text, info)) {
+            rpc_client_->addDelConfirmation(notification.confirmation_id, false);
+        } else {
+            rpc_client_->addDelConfirmation(notification.confirmation_id, true);
+        }
     } else {
         qWarning ("Unknown message %s\n", notification.type.toUtf8().data());
     }
@@ -331,6 +343,9 @@ SyncNotification SyncNotification::fromJson(const json_t *root)
         notification.repo_name = json.getString("repo_name");
         notification.confirmation_id = json.getString("confirmation_id");
         notification.delete_files = json.getString("delete_files");
+    } else if (notification.type == "del_repo_confirmation") {
+        notification.repo_name = json.getString("repo_name");
+        notification.confirmation_id = json.getString("confirmation_id");
     } else {
         notification.repo_id = json.getString("repo_id");
         notification.repo_name = json.getString("repo_name");
