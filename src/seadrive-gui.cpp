@@ -468,6 +468,10 @@ void SeadriveGui::updateAccountToDaemon()
 #else
             rpc_client_->deleteAccount(msg.account, true);
 #endif
+        } else if (msg.type == AccountResynced) {
+#ifdef Q_OS_WIN32
+            rpc_client_->resyncAccount (msg.account);
+#endif
         }
     }
 }
