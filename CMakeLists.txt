@@ -22,13 +22,7 @@ ENDIF()
 
 option(BUILD_ENABLE_WARNINGS "Enable compiler warnings." ON)
 
-OPTION(BUILD_SPARKLE_SUPPORT "Build Sparkle support" OFF)
-
 OPTION(USE_QT_WEBKIT "use qt webkit" OFF)
-
-IF (BUILD_SPARKLE_SUPPORT)
-  ADD_DEFINITIONS(-DHAVE_SPARKLE_SUPPORT)
-ENDIF()
 
 MESSAGE("Build type: ${CMAKE_BUILD_TYPE}")
 
@@ -65,21 +59,6 @@ IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "BSD")
     LINK_DIRECTORIES(${QT_QTDBUS_LIBRARIES})
     SET(EXTRA_LIBS ${EXTRA_LIBS} ${QT_QTDBUS_LIBRARIES})
 ELSEIF (APPLE)
-    IF (BUILD_SPARKLE_SUPPORT)
-        SET(platform_specific_moc_headers ${platform_specific_moc_headers} src/auto-update-service.h)
-        SET(platform_specific_sources ${platform_specific_sources} src/auto-update-service.cpp)
-        SET(platform_specific_sources ${platform_specific_sources} src/mac-sparkle-support.mm)
-        SET_SOURCE_FILES_PROPERTIES(src/mac-sparkle-support.mm
-          PROPERTIES COMPILE_FLAGS -fobjc-arc)
-
-        SET(SPARKLE_FRAMEWORK /usr/local/Sparkle.framework)
-        IF(NOT EXISTS "${SPARKLE_FRAMEWORK}")
-          message(FATAL_ERROR "File ${SPARKLE_FRAMEWORK} not found. Please setup it correctly.")
-        ENDIF()
-        INCLUDE_DIRECTORIES(${SPARKLE_FRAMEWORK}/Headers)
-        SET(EXTRA_LIBS ${EXTRA_LIBS} ${SPARKLE_FRAMEWORK})
-    ENDIF()
-
     SET(platform_specific_sources ${platform_specific_sources}
       src/application.cpp
       src/file-provider-mgr.cpp

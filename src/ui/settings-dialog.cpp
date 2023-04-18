@@ -17,10 +17,6 @@
 #include "utils/registry.h"
 #endif
 
-#ifdef HAVE_SPARKLE_SUPPORT
-#include "auto-update-service.h"
-#endif
-
 namespace {
 
 const char *kSettingsGroupForSettingsDialog = "SettingsDialog";
@@ -40,12 +36,6 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
         tr("Auto start %1 after login").arg(getBrand()));
 
     mTabWidget->setCurrentIndex(0);
-
-#ifdef HAVE_SPARKLE_SUPPORT
-    if (!AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
-        mCheckLatestVersionBox->setVisible(false);
-    }
-#endif
 
     mLanguageComboBox->addItems(I18NHelper::getInstance()->getLanguages());
     SettingsManager mgr;
@@ -125,12 +115,6 @@ void SettingsDialog::updateSettings()
         mgr->setShellExtensionEnabled(mShellExtCheckBox->checkState() == Qt::Checked);
 #endif
 
-#ifdef HAVE_SPARKLE_SUPPORT
-        if (AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
-            bool enabled = mCheckLatestVersionBox->checkState() == Qt::Checked;
-            AutoUpdateService::instance()->setAutoUpdateEnabled(enabled);
-        }
-#endif
 #if defined(Q_OS_MAC)
         mgr->setHideWindowsIncompatibilityPathMsg(mHideWindowsIncompatibilityCheckBox->checkState() == Qt::Checked);
 #endif
@@ -251,13 +235,6 @@ void SettingsDialog::showEvent(QShowEvent *event)
         mHideWindowsIncompatibilityCheckBox->setCheckState(state);
 #else
         mHideWindowsIncompatibilityCheckBox->hide();
-#endif
-
-#ifdef HAVE_SPARKLE_SUPPORT
-        if (AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
-            state = AutoUpdateService::instance()->autoUpdateEnabled() ? Qt::Checked : Qt::Unchecked;
-            mCheckLatestVersionBox->setCheckState(state);
-        }
 #endif
 
 #if defined(_MSC_VER)

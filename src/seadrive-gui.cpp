@@ -46,10 +46,6 @@
 #include "utils/utils-mac.h"
 #endif
 
-#ifdef HAVE_SPARKLE_SUPPORT
-#include "auto-update-service.h"
-#endif
-
 #include "seadrive-gui.h"
 
 namespace {
@@ -246,10 +242,6 @@ SeadriveGui::SeadriveGui(bool dev_mode)
 
 SeadriveGui::~SeadriveGui()
 {
-#ifdef HAVE_SPARKLE_SUPPORT
-    AutoUpdateService::instance()->stop();
-#endif
-
     delete tray_icon_;
     delete daemon_mgr_;
     delete rpc_client_;
@@ -435,12 +427,6 @@ void SeadriveGui::onDaemonStarted()
     SeafileExtensionHandler::instance()->start();
     RegElement::installCustomUrlHandler();
 #endif
-
-#ifdef HAVE_SPARKLE_SUPPORT
-    if (AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
-        AutoUpdateService::instance()->start();
-    }
-#endif // HAVE_SPARKLE_SUPPORT
 
 #if defined(Q_OS_WIN32)
     ThumbnailService::instance()->start();
