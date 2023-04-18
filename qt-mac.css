@@ -52,3 +52,7 @@ FileBrowserDialog QToolBar QToolButton#backwardButton {
 FileBrowserDialog QToolBar QToolButton#forwardButton {
     margin-left: 0px;
 }
+
+QMessageBox {
+    messagebox-text-interaction-flags: NoTextInteraction;
+}
