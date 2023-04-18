@@ -265,10 +265,10 @@ void MessagePoller::processNotification(const SyncNotification& notification)
                       .arg(match.captured(1)).arg(match.captured(2));
         }
 
-        QString info = tr("Confirm to bulk delete files in library \"%1\" ?")
+        QString info = tr("Do you want to delete files in library \"%1\" ?")
                           .arg(notification.repo_name.trimmed());
 
-        if (gui->bulkDeletingMessageBox(text, info)) {
+        if (gui->deletingConfirmationBox(text, info)) {
             rpc_client_->addDelConfirmation(notification.confirmation_id, false);
         } else {
             rpc_client_->addDelConfirmation(notification.confirmation_id, true);
@@ -280,7 +280,7 @@ void MessagePoller::processNotification(const SyncNotification& notification)
         QString info = tr("Confirm to delete library \"%1\" ?")
                           .arg(notification.repo_name.trimmed());
 
-        if (gui->bulkDeletingMessageBox(text, info)) {
+        if (gui->deletingConfirmationBox(text, info)) {
             rpc_client_->addDelConfirmation(notification.confirmation_id, false);
         } else {
             rpc_client_->addDelConfirmation(notification.confirmation_id, true);
