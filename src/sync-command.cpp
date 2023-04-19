@@ -31,12 +31,15 @@ public:
 
 static std::unique_ptr<GetSharedLinkRequest, QtLaterDeleter> get_shared_link_req_;
 static std::unique_ptr<GetUploadLinkRequest, QtLaterDeleter> get_upload_link_req_;
+static std::unique_ptr<GetSmartLinkRequest, QtLaterDeleter> get_smart_link_req_;
 
 SyncCommand::SyncCommand() {
 }
 
 SyncCommand::~SyncCommand() {
     get_shared_link_req_.reset();
+    get_upload_link_req_.reset();
+    get_smart_link_req_.reset();
 }
 
 void SyncCommand::doShareLink(const Account &account, const QString &repo_id, const QString &path) {
@@ -78,13 +81,14 @@ void SyncCommand::onShareLinkGeneratedFailed(const ApiError& error)
 
 void SyncCommand::doInternalLink(const Account &account, const QString &repo_id, const QString &path, bool is_dir)
 {
-    GetSmartLinkRequest *req = new GetSmartLinkRequest(account, repo_id, QString("/").append(path), is_dir);
-    connect(req, SIGNAL(success(const QString&)),
+    get_smart_link_req_.reset(new GetSmartLinkRequest(
+        account, repo_id, QString("/").append(path), is_dir));
+    connect(get_smart_link_req_.get(), SIGNAL(success(const QString&)),
             this, SLOT(onGetSmartLinkSuccess(const QString&)));
-    connect(req, SIGNAL(failed(const ApiError&)),
+    connect(get_smart_link_req_.get(), SIGNAL(failed(const ApiError&)),
             this, SLOT(onGetSmartLinkFailed(const ApiError&)));
 
-    req->send();
+    get_smart_link_req_->send();
 }
 
 void SyncCommand::onGetSmartLinkSuccess(const QString& smart_link)
