@@ -258,11 +258,13 @@ void SeafileExtensionHandler::getUploadLink(const Account& account, const QStrin
 
 void SeafileExtensionHandler::onGetUploadLinkSuccess(const QString& upload_link)
 {
+    GetUploadLinkRequest *req = qobject_cast<GetUploadLinkRequest *>(sender());
     UploadLinkDialog *dialog = new UploadLinkDialog(upload_link, NULL);
     dialog->setAttribute(Qt::WA_DeleteOnClose);
     dialog->show();
     dialog->raise();
     dialog->activateWindow();
+    req->deleteLater();
 }
 
 void SeafileExtensionHandler::onGetUploadLinkFailed(const ApiError& error)
@@ -318,6 +320,7 @@ void SeafileExtensionHandler::onGetSmartLinkSuccess(const QString& smart_link)
 
 void SeafileExtensionHandler::onGetSmartLinkFailed(const ApiError& error)
 {
+    GetSmartLinkRequest *req = (GetSmartLinkRequest *)(sender());
     qWarning("get smart_link failed %s\n", error.toString().toUtf8().data());
 
     int http_error_code =  error.httpErrorCode();
@@ -326,6 +329,7 @@ void SeafileExtensionHandler::onGetSmartLinkFailed(const ApiError& error)
     } else {
         gui->warningBox(tr("failed get internal link %1").arg(error.toString()));
     }
+    req->deleteLater();
 }
 
 void SeafileExtensionHandler::onShareLinkGenerated(const QString& link)
@@ -344,15 +348,18 @@ void SeafileExtensionHandler::onShareLinkGenerated(const QString& link)
     dialog->show();
     dialog->raise();
     dialog->activateWindow();
+    req->deleteLater();
 }
 
 void SeafileExtensionHandler::onShareLinkGeneratedFailed(const ApiError& error) {
+    GetSharedLinkRequest *req = qobject_cast<GetSharedLinkRequest *>(sender());
     int http_error_code = error.httpErrorCode();
     if (http_error_code == 403) {
         gui->warningBox(tr("No permissions to create a shared link"));
     } else {
         gui->messageBox(tr("Failed to get share link %1\n").arg(error.toString()));
     }
+    req->deleteLater();
 }
 
 void SeafileExtensionHandler::lockFile(const Account& account,
@@ -381,6 +388,7 @@ void SeafileExtensionHandler::onLockFileSuccess()
     //     QString path = QDir::toNativeSeparators(QDir(repo.worktree).absoluteFilePath(req->path().mid(1)));
     //     SHChangeNotify(SHCNE_ATTRIBUTES, SHCNF_PATH, path.toUtf8().data(), NULL);
     // }
+    req->deleteLater();
 }
 
 void SeafileExtensionHandler::onLockFileFailed(const ApiError& error)
@@ -388,6 +396,7 @@ void SeafileExtensionHandler::onLockFileFailed(const ApiError& error)
     LockFileRequest *req = qobject_cast<LockFileRequest *>(sender());
     QString str = req->lock() ? tr("Failed to lock file") : tr("Failed to unlock file");
     gui->warningBox(QString("%1: %2").arg(str, error.toString()));
+    req->deleteLater();
 }
 
 void SeafileExtensionHandler::privateShare(const Account& account,

@@ -290,25 +290,25 @@ void MessagePoller::processNotification(const SyncNotification& notification)
         } else {
             rpc_client_->addDelConfirmation(notification.confirmation_id, true);
         }
-    } else if (notification.type == "get_share_link") {
+    } else if (notification.type == "action.get_share_link") {
         Account account = gui->accountManager()->getAccountByDomainID(notification.domain_id);
         if (!account.isValid()) {
             return;
         }
         sync_command_->doShareLink(account, notification.repo_id, notification.repo_path);
-    } else if (notification.type == "get_internal_link") {
+    } else if (notification.type == "action.get_internal_link") {
         Account account = gui->accountManager()->getAccountByDomainID(notification.domain_id);
         if (!account.isValid()) {
             return;
         }
         sync_command_->doInternalLink(account, notification.repo_id, notification.repo_path, notification.is_dir);
-    } else if (notification.type == "get_upload_link") {
+    } else if (notification.type == "action.get_upload_link") {
         Account account = gui->accountManager()->getAccountByDomainID(notification.domain_id);
         if (!account.isValid()) {
             return;
         }
         sync_command_->doGetUploadLink(account, notification.repo_id, notification.repo_path);
-    } else if (notification.type == "view_file_history") {
+    } else if (notification.type == "action.view_file_history") {
         Account account = gui->accountManager()->getAccountByDomainID(notification.domain_id);
         if (!account.isValid()) {
             return;
