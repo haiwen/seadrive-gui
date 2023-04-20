@@ -98,6 +98,9 @@ public:
 
     Account getAccountFromJson(json_t *ret_obj) const;
 
+    Account getAccountByDomainID (const QString& domain_id) const;
+
+
     void clearAccountToken(const Account& account,
                            bool force_relogin=false);
 

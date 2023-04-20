@@ -12,8 +12,11 @@
 #include "rpc/rpc-client.h"
 #include "rpc/sync-error.h"
 #include "ui/tray-icon.h"
+#include "account.h"
+#include "account-mgr.h"
 
 #include "message-poller.h"
+#include "sync-command.h"
 
 namespace {
 
@@ -68,6 +71,7 @@ public:
 MessagePoller::MessagePoller(QObject *parent): QObject(parent)
 {
     check_notification_timer_ = new QTimer(this);
+    sync_command_ = new SyncCommand();
     connect(check_notification_timer_, SIGNAL(timeout()), this, SLOT(checkSeaDriveEvents()));
     connect(check_notification_timer_, SIGNAL(timeout()), this, SLOT(checkNotification()));
     connect(check_notification_timer_, SIGNAL(timeout()), this, SLOT(checkSyncStatus()));
@@ -76,6 +80,7 @@ MessagePoller::MessagePoller(QObject *parent): QObject(parent)
 
 MessagePoller::~MessagePoller()
 {
+    delete sync_command_;
 }
 
 void MessagePoller::start()
@@ -285,6 +290,30 @@ void MessagePoller::processNotification(const SyncNotification& notification)
         } else {
             rpc_client_->addDelConfirmation(notification.confirmation_id, true);
         }
+    } else if (notification.type == "action.get_share_link") {
+        Account account = gui->accountManager()->getAccountByDomainID(notification.domain_id);
+        if (!account.isValid()) {
+            return;
+        }
+        sync_command_->doShareLink(account, notification.repo_id, notification.repo_path);
+    } else if (notification.type == "action.get_internal_link") {
+        Account account = gui->accountManager()->getAccountByDomainID(notification.domain_id);
+        if (!account.isValid()) {
+            return;
+        }
+        sync_command_->doInternalLink(account, notification.repo_id, notification.repo_path, notification.is_dir);
+    } else if (notification.type == "action.get_upload_link") {
+        Account account = gui->accountManager()->getAccountByDomainID(notification.domain_id);
+        if (!account.isValid()) {
+            return;
+        }
+        sync_command_->doGetUploadLink(account, notification.repo_id, notification.repo_path);
+    } else if (notification.type == "action.view_file_history") {
+        Account account = gui->accountManager()->getAccountByDomainID(notification.domain_id);
+        if (!account.isValid()) {
+            return;
+        }
+        sync_command_->doShowFileHistory(account, notification.repo_id, notification.repo_path);
     } else {
         qWarning ("Unknown message %s\n", notification.type.toUtf8().data());
     }
@@ -346,6 +375,14 @@ SyncNotification SyncNotification::fromJson(const json_t *root)
     } else if (notification.type == "del_repo_confirmation") {
         notification.repo_name = json.getString("repo_name");
         notification.confirmation_id = json.getString("confirmation_id");
+    } else if (notification.type == "action.get_share_link" ||
+               notification.type == "action.get_internal_link" ||
+               notification.type == "action.get_upload_link" ||
+               notification.type == "action.view_file_history") {
+        notification.repo_id = json.getString("repo_id");
+        notification.repo_path = json.getString("repo_path");
+        notification.domain_id = json.getString("domain_id");
+        notification.is_dir = json.getBool("is_dir");
     } else {
         notification.repo_id = json.getString("repo_id");
         notification.repo_name = json.getString("repo_name");
