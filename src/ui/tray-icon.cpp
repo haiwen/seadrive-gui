@@ -654,6 +654,12 @@ void SeafileTrayIcon::deleteAccount()
         return;
     Account account = qvariant_cast<Account>(action->data());
 
+    bool is_uploading = gui->rpcClient()->isAccountUploading (account);
+    if (is_uploading) {
+        gui->warningBox (tr("There are changes being uploaded under the account, please try again later"));
+        return;
+    }
+
     QString question = tr("Are you sure to remove account from \"%1\"?").arg(account.serverUrl.toString());
 
     if (!gui->yesOrNoBox(question, nullptr, false)) {
@@ -670,6 +676,12 @@ void SeafileTrayIcon::resyncAccount()
     if (!action)
         return;
     Account account = qvariant_cast<Account>(action->data());
+
+    bool is_uploading = gui->rpcClient()->isAccountUploading (account);
+    if (is_uploading) {
+        gui->warningBox (tr("There are changes being uploaded under the account, please try again later"));
+        return;
+    }
 
     QString question = tr("Are you sure to resync account from \"%1\"?").arg(account.serverUrl.toString());
 

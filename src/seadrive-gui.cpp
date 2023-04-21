@@ -470,7 +470,9 @@ void SeadriveGui::updateAccountToDaemon()
 #endif
         } else if (msg.type == AccountResynced) {
 #ifdef Q_OS_WIN32
-            rpc_client_->resyncAccount (msg.account);
+            rpc_client_->deleteAccount(msg.account, false);
+            rpc_client_->addAccount (msg.account);
+            qWarning() << "Resynced account" << msg.account;
 #endif
         }
     }

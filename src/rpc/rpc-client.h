@@ -86,12 +86,9 @@ public:
 
     bool addAccount(const Account& account);
 
-#if defined(Q_OS_WIN32)
-    bool resyncAccount(const Account& account);
-#endif
-
     bool logoutAccount(const Account& account);
     bool deleteAccount(const Account& account, bool remove_cache);
+    bool isAccountUploading(const Account& account);
 
     bool getRepoIdByPath(const QString& server,
                          const QString& username,
