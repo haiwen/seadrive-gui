@@ -483,6 +483,7 @@ bool SeafileRpcClient::addAccount(const Account& account)
 
     return true;
 }
+
 #elif defined(Q_OS_MAC)
 bool SeafileRpcClient::addAccount(const Account& account)
 {
@@ -559,6 +560,32 @@ bool SeafileRpcClient::logoutAccount(const Account& account)
     }
     qWarning() << "logout account" << account;
     return true;
+}
+
+bool SeafileRpcClient::isAccountUploading(const Account& account)
+{
+    GError *error = NULL;
+    QString serverAddr = account.serverUrl.toString();
+    if (serverAddr.endsWith("/")) {
+        serverAddr = serverAddr.left(serverAddr.size() - 1);
+    }
+
+    int ret = searpc_client_call__int(seadrive_rpc_client_, "seafile_is_account_uploading", &error,
+                                      2,
+                                      "string", toCStr(serverAddr),
+                                      "string", toCStr(account.username));
+    if (error) {
+        qWarning() << "Unable to check if account is uploading" << account << ":"
+                   << (error->message ? error->message : "");
+        g_error_free(error);
+        return false;
+    }
+
+    if (ret > 0) {
+        return true;
+    }
+
+    return false;
 }
 
 bool SeafileRpcClient::getRepoIdByPath(const QString &server,

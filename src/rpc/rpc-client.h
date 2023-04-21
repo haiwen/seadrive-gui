@@ -88,6 +88,7 @@ public:
 
     bool logoutAccount(const Account& account);
     bool deleteAccount(const Account& account, bool remove_cache);
+    bool isAccountUploading(const Account& account);
 
     bool getRepoIdByPath(const QString& server,
                          const QString& username,

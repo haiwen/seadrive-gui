@@ -19,6 +19,7 @@ class SeafileRpcClient;
 typedef enum {
     AccountAdded = 0,
     AccountRemoved,
+    AccountResynced,
 } MessageType;
 
 struct AccountMessage {
@@ -75,6 +76,12 @@ public:
     // Remove the account. Used when user removes an account from the
     // account menu.
     int removeAccount(const Account& account);
+
+#if defined(Q_OS_WIN32)
+    // Resync the account. Used when user resync an account from the
+    // account menu.
+    int resyncAccount(const Account& account);
+#endif
 
     // Use all valid accounts, or re-login if no valid account.
     void validateAndUseAccounts();
@@ -134,8 +141,8 @@ private:
 #if defined(_MSC_VER)
     static bool loadSyncRootInfoCB(struct sqlite3_stmt *stmt, void *data);
     const QString getOldSyncRootDir(const Account& account);
-    const QString genSyncRootName(const Account& account);
-    void setAccountSyncRoot(Account &account);
+    const QString genSyncRootName(const Account& account, bool resync);
+    void setAccountSyncRoot(Account &account, bool resync);
 #endif
     static bool loadAccountsCB(struct sqlite3_stmt *stmt, void *data);
     static bool loadServerInfoCB(struct sqlite3_stmt *stmt, void *data);

@@ -85,6 +85,7 @@ private slots:
     void checkTrayIconMessageQueue();
 
     void deleteAccount();
+    void resyncAccount();
 
     // only used on windows
     void onMessageClicked();
