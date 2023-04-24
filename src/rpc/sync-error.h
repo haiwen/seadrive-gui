@@ -37,8 +37,8 @@
 #define SYNC_ERROR_ID_MOVE_NOT_IN_REPO          27
 #define SYNC_ERROR_ID_DEL_CONFIRMATION_PENDING  28
 #define SYNC_ERROR_ID_INVALID_PATH_ON_WINDOWS   29
+#define SYNC_ERROR_ID_GENERAL_ERROR             30
 
-#define SYNC_ERROR_ID_GENERAL_ERROR             100
 
 class SyncError {
 public:

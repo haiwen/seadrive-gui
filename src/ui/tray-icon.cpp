@@ -207,7 +207,7 @@ void SeafileTrayIcon::prepareContextMenu()
         global_sync_error_action_->setVisible(false);
     }
 
-    show_sync_errors_action_->setVisible(!sync_errors_.isEmpty());
+    show_sync_errors_action_->setVisible(true);
 
     // Remove all menu items and recreate them.
     account_menu_->clear();
