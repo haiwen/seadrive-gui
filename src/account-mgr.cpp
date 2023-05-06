@@ -598,10 +598,48 @@ void::AccountManager::slotUpdateAccountInfoSucess(const AccountInfo& info)
     req = NULL;
 }
 
+void AccountManager::addAccount(const Account& account)
+{
+    Account added_account;
+    {
+        QMutexLocker locker(&accounts_mutex_);
+        for (int i = 0; i < accounts_.size(); i++) {
+            if (accounts_[i] == account) {
+                added_account = accounts_[i];
+                break;
+            }
+        }
+    }
+
+#if defined(Q_OS_WIN32)
+    if (added_account.isValid()) {
+        // setAccountSyncRoot will update the syncRoot in added_account variable, so subsequent methods (e.g. addAccount()) can get the sync root.
+        setAccountSyncRoot(added_account, false);
+    }
+#elif defined(Q_OS_MAC)
+    if (added_account.isValid()) {
+        gui->fileProviderManager()->registerDomain(added_account);
+        gui->fileProviderManager()->askUserToEnable();
+    }
+#endif
+
+    AccountMessage msg;
+    msg.type = AccountAdded;
+    msg.account = added_account;
+    messages.enqueue(msg);
+
+    emit accountMQUpdated();
+}
+
 void AccountManager::slotUpdateAccountInfoFailed()
 {
     FetchAccountInfoRequest* req = (FetchAccountInfoRequest*)(sender());
     req->deleteLater();
+
+    Account account = req->account();
+
+    addAccount(account);
+
     req = NULL;
 }
 
@@ -656,6 +694,9 @@ void AccountManager::serverInfoFailed(const ApiError &error)
 {
     ServerInfoRequest *req = (ServerInfoRequest *)(sender());
     req->deleteLater();
+    Account account = req->account();
+
+    addAccount(account);
 
     qWarning("update server info failed %s\n", error.toString().toUtf8().data());
 }

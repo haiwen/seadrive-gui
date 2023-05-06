@@ -356,6 +356,11 @@ class ServerInfoRequest : public SeafileApiRequest
 public:
     ServerInfoRequest(const Account& account);
 
+    const Account& account() const
+    {
+        return account_;
+    }
+
 signals:
     void success(const Account& account, const ServerInfo& info);
 

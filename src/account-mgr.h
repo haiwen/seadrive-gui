@@ -152,6 +152,7 @@ private:
     void updateSyncRootInfo(SyncRootInfo& sync_root_info);
 #endif
     Account getAccount(const QString& url, const QString& username) const;
+    void addAccount(const Account& account);
 
     struct sqlite3 *db;
 

@@ -16,7 +16,9 @@
 #include "account-mgr.h"
 
 #include "message-poller.h"
+#if defined(Q_OS_MAC)
 #include "sync-command.h"
+#endif
 
 namespace {
 
@@ -71,7 +73,9 @@ public:
 MessagePoller::MessagePoller(QObject *parent): QObject(parent)
 {
     check_notification_timer_ = new QTimer(this);
+#if defined(Q_OS_MAC)
     sync_command_ = new SyncCommand();
+#endif
     connect(check_notification_timer_, SIGNAL(timeout()), this, SLOT(checkSeaDriveEvents()));
     connect(check_notification_timer_, SIGNAL(timeout()), this, SLOT(checkNotification()));
     connect(check_notification_timer_, SIGNAL(timeout()), this, SLOT(checkSyncStatus()));
@@ -80,7 +84,9 @@ MessagePoller::MessagePoller(QObject *parent): QObject(parent)
 
 MessagePoller::~MessagePoller()
 {
+#if defined(Q_OS_MAC)
     delete sync_command_;
+#endif
 }
 
 void MessagePoller::start()
@@ -291,29 +297,37 @@ void MessagePoller::processNotification(const SyncNotification& notification)
             rpc_client_->addDelConfirmation(notification.confirmation_id, true);
         }
     } else if (notification.type == "action.get_share_link") {
+#if defined(Q_OS_MAC)
         Account account = gui->accountManager()->getAccountByDomainID(notification.domain_id);
         if (!account.isValid()) {
             return;
         }
         sync_command_->doShareLink(account, notification.repo_id, notification.repo_path);
+#endif
     } else if (notification.type == "action.get_internal_link") {
+#if defined(Q_OS_MAC)
         Account account = gui->accountManager()->getAccountByDomainID(notification.domain_id);
         if (!account.isValid()) {
             return;
         }
         sync_command_->doInternalLink(account, notification.repo_id, notification.repo_path, notification.is_dir);
+#endif
     } else if (notification.type == "action.get_upload_link") {
+#if defined(Q_OS_MAC)
         Account account = gui->accountManager()->getAccountByDomainID(notification.domain_id);
         if (!account.isValid()) {
             return;
         }
         sync_command_->doGetUploadLink(account, notification.repo_id, notification.repo_path);
+#endif
     } else if (notification.type == "action.view_file_history") {
+#if defined(Q_OS_MAC)
         Account account = gui->accountManager()->getAccountByDomainID(notification.domain_id);
         if (!account.isValid()) {
             return;
         }
         sync_command_->doShowFileHistory(account, notification.repo_id, notification.repo_path);
+#endif
     } else {
         qWarning ("Unknown message %s\n", notification.type.toUtf8().data());
     }
