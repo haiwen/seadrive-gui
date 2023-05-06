@@ -635,20 +635,10 @@ void AccountManager::slotUpdateAccountInfoFailed()
     req->deleteLater();
 
     Account account = req->account();
-    Account added_account;
-    {
-        QMutexLocker locker(&accounts_mutex_);
-        for (int i = 0; i < accounts_.size(); i++) {
-            if (accounts_[i] == account) {
-                added_account = accounts_[i];
-                break;
-            }
-        }
-    }
 
     // It's necessary to add account to daemon, if the account info can't be obtained  due to network reasons.
     // The account has beed loaded from database.
-    addAccountToDaemon(added_account);
+    addAccountToDaemon(account);
 
     req = NULL;
 }
@@ -683,20 +673,10 @@ void AccountManager::serverInfoFailed(const ApiError &error)
     ServerInfoRequest *req = (ServerInfoRequest *)(sender());
     req->deleteLater();
     Account account = req->account();
-    Account added_account;
-    {
-        QMutexLocker locker(&accounts_mutex_);
-        for (int i = 0; i < accounts_.size(); i++) {
-            if (accounts_[i] == account) {
-                added_account = accounts_[i];
-                break;
-            }
-        }
-    }
 
     // It's necessary to add account to daemon, if the server info can't be obtained  due to network reasons.
     // The account has beed loaded from database.
-    addAccountToDaemon(added_account);
+    addAccountToDaemon(account);
 
     qWarning("update server info failed %s\n", error.toString().toUtf8().data());
 }
