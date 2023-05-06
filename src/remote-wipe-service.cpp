@@ -36,13 +36,6 @@ void RemoteWipeService::start()
 {
     refresh_timer_->start(kAuthPingIntervalMSecs);
 
-    connect(gui->accountManager(), SIGNAL(accountsChanged()),
-            this, SLOT(onAccountChanged()));
-    sendAuthPing();
-}
-
-void RemoteWipeService::onAccountChanged()
-{
     sendAuthPing();
 }
 

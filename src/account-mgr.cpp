@@ -355,8 +355,6 @@ void AccountManager::enableAccount(const Account& account) {
     sqlite3_free(zql);
 
     fetchAccountInfoFromServer(account);
-
-    emit accountsChanged();
 }
 
 void AccountManager::disableAccount(const Account& account) {
@@ -598,7 +596,7 @@ void::AccountManager::slotUpdateAccountInfoSucess(const AccountInfo& info)
     req = NULL;
 }
 
-void AccountManager::addAccount(const Account& account)
+void AccountManager::addAccountToDaemon(const Account& account)
 {
     Account added_account;
     {
@@ -637,8 +635,20 @@ void AccountManager::slotUpdateAccountInfoFailed()
     req->deleteLater();
 
     Account account = req->account();
+    Account added_account;
+    {
+        QMutexLocker locker(&accounts_mutex_);
+        for (int i = 0; i < accounts_.size(); i++) {
+            if (accounts_[i] == account) {
+                added_account = accounts_[i];
+                break;
+            }
+        }
+    }
 
-    addAccount(account);
+    // It's necessary to add account to daemon, if the account info can't be obtained  due to network reasons.
+    // The account has beed loaded from database.
+    addAccountToDaemon(added_account);
 
     req = NULL;
 }
@@ -665,29 +675,7 @@ void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo 
         }
     }
 
-#if defined(Q_OS_WIN32)
-    if (updated_account.isValid()) {
-        // setAccountSyncRoot will update the syncRoot in updated_account variable, so subsequent methods (e.g. addAccount()) can get the sync root.
-        setAccountSyncRoot(updated_account, false);
-    }
-#elif defined(Q_OS_MAC)
-    if (updated_account.isValid()) {
-        gui->fileProviderManager()->registerDomain(updated_account);
-        gui->fileProviderManager()->askUserToEnable();
-    }
-#endif
-
-    AccountMessage msg;
-    msg.type = AccountAdded;
-    msg.account = updated_account;
-    messages.enqueue(msg);
-
-    emit accountMQUpdated();
-
-    bool changed = account.serverInfo != info;
-    if (changed) {
-        emit accountsChanged();
-    }
+    addAccountToDaemon(updated_account);
 }
 
 void AccountManager::serverInfoFailed(const ApiError &error)
@@ -695,8 +683,20 @@ void AccountManager::serverInfoFailed(const ApiError &error)
     ServerInfoRequest *req = (ServerInfoRequest *)(sender());
     req->deleteLater();
     Account account = req->account();
+    Account added_account;
+    {
+        QMutexLocker locker(&accounts_mutex_);
+        for (int i = 0; i < accounts_.size(); i++) {
+            if (accounts_[i] == account) {
+                added_account = accounts_[i];
+                break;
+            }
+        }
+    }
 
-    addAccount(account);
+    // It's necessary to add account to daemon, if the server info can't be obtained  due to network reasons.
+    // The account has beed loaded from database.
+    addAccountToDaemon(added_account);
 
     qWarning("update server info failed %s\n", error.toString().toUtf8().data());
 }
@@ -729,8 +729,6 @@ void AccountManager::clearAccountToken(const Account& account,
 
     if (force_relogin) {
         reloginAccount(account);
-    } else {
-        emit accountsChanged();
     }
 }
 
