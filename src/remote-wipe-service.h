@@ -28,7 +28,6 @@ signals:
 private slots:
     void onRequestSuccess();
     void onRequestFailed(const ApiError& error);
-    void onAccountChanged();
 
 private:
     RemoteWipeService(QObject *parent=0);

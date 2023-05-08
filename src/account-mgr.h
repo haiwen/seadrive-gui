@@ -123,7 +123,6 @@ signals:
     /**
      * Account added/removed/switched.
      */
-    void accountsChanged();
     void accountMQUpdated();
     void accountInfoUpdated(const Account& account);
 
@@ -152,6 +151,7 @@ private:
     void updateSyncRootInfo(SyncRootInfo& sync_root_info);
 #endif
     Account getAccount(const QString& url, const QString& username) const;
+    void addAccountToDaemon(const Account& account);
 
     struct sqlite3 *db;
 
