@@ -18,10 +18,6 @@
         <translation>О программе</translation>
     </message>
     <message>
-        <source>Check For Updates</source>
-        <translation> Проверить обновления</translation>
-    </message>
-    <message>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -37,31 +33,31 @@
     <name>AutoLogonDialog</name>
     <message>
         <source>auto login</source>
-        <translation type="unfinished"/>
+        <translation>автоматический вход</translation>
     </message>
     <message>
         <source>auto logining, please wait a moment</source>
-        <translation type="unfinished"/>
+        <translation>автоматический вход, пожалуйста, подождите</translation>
     </message>
     <message>
         <source>Please input server address</source>
-        <translation type="unfinished"/>
+        <translation>Введите адрес сервера</translation>
     </message>
     <message>
         <source>address</source>
-        <translation type="unfinished"/>
+        <translation>адрес</translation>
     </message>
     <message>
         <source>Please enter the server address</source>
-        <translation type="unfinished"/>
+        <translation>Введите адрес сервера</translation>
     </message>
     <message>
         <source>%1 is not a valid server address</source>
-        <translation type="unfinished"/>
+        <translation>%1 неправильный адрес сервера</translation>
     </message>
     <message>
         <source>login failed</source>
-        <translation type="unfinished"/>
+        <translation>не удалось войти</translation>
     </message>
 </context>
 <context>
@@ -310,7 +306,7 @@
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Например: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>or http://192.168.1.24:8000</source>
@@ -428,12 +424,20 @@
         <translation>Удалено &quot;%1&quot; и еще %2 файлов.</translation>
     </message>
     <message>
-        <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
-        <translation>Подтвердить массовое удаление файлов в библиотеке &quot;%1&quot; ?</translation>
-    </message>
-    <message>
         <source>You can&apos;t create files in the mount folder directly</source>
         <translation>Вы не можете создавать файлы в папке монтирования напрямую</translation>
+    </message>
+    <message>
+        <source>Do you want to delete files in library &quot;%1&quot; ?</source>
+        <translation>Вы хотите удалить файлы в библиотеке &quot;%1&quot; ?</translation>
+    </message>
+    <message>
+        <source>Deleted library &quot;%1&quot;</source>
+        <translation>Удалена библиотека &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <source>Confirm to delete library &quot;%1&quot; ?</source>
+        <translation>Подтвердить удаление библиотеки &quot;%1&quot; ?</translation>
     </message>
 </context>
 <context>
@@ -754,6 +758,10 @@
         <source>Waiting for confirmation to delete files</source>
         <translation>Ожидание подтверждения удаления файлов</translation>
     </message>
+    <message>
+        <source>The path %1 contains symbols that are not supported by the Windows system.</source>
+        <translation>Путь %1 содержит символы, не поддерживаемые системой Windows.</translation>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -766,35 +774,35 @@
     <name>SeaDriveRootDialog</name>
     <message>
         <source>Choose SeaDrive Cache Folder</source>
-        <translation type="unfinished"/>
+        <translation> Выберите папку для кэша SeaDrive</translation>
     </message>
     <message>
         <source>Your files will appear in a local cache folder. Please choose the folder:</source>
-        <translation type="unfinished"/>
+        <translation>Ваши файлы появятся в папке локального кэша. Выберите папку:</translation>
     </message>
     <message>
         <source>choose...</source>
-        <translation type="unfinished"/>
+        <translation>выбрать...</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Choose %1 Cache Folder </source>
-        <translation type="unfinished"/>
+        <translation>Выберите папку для кэша %1</translation>
     </message>
     <message>
         <source>Choose %1 Cache Folder</source>
-        <translation type="unfinished"/>
+        <translation>Выберите папку для кэша %1</translation>
     </message>
     <message>
         <source>Please choose %1 cache folder</source>
-        <translation type="unfinished"/>
+        <translation>Выберите папку для кэша %1</translation>
     </message>
     <message>
         <source>Create %1 folder failed!</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось создать папку %1!</translation>
     </message>
 </context>
 <context>
@@ -865,7 +873,7 @@
     </message>
     <message>
         <source>To start %1 extension, you need to click the %2 entry in Finder</source>
-        <translation type="unfinished"/>
+        <translation>Чтобы запустить расширение %1, вам нужно щелкнуть запись %2 в Finder</translation>
     </message>
 </context>
 <context>
@@ -1018,6 +1026,18 @@
         <source>Starting ...</source>
         <translation>Запуск ...</translation>
     </message>
+    <message>
+        <source>Resync</source>
+        <translation>Повторная синхронизация</translation>
+    </message>
+    <message>
+        <source>There are changes being uploaded under the account, please try again later</source>
+        <translation>Под учетной записью загружаются изменения, повторите попытку позже</translation>
+    </message>
+    <message>
+        <source>Are you sure to resync account from &quot;%1&quot;?</source>
+        <translation>Вы уверены, что повторно синхронизируете учетную запись с &quot;%1&quot; ?</translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>
@@ -1114,10 +1134,6 @@
         <translation>Включить расширение Explorer</translation>
     </message>
     <message>
-        <source>Check for updates automatically</source>
-        <translation>Проверять обновления автоматически</translation>
-    </message>
-    <message>
         <source>Do not verify server certificate in HTTPS syncing</source>
         <translation>Не проверять сертификат сервера при HTTPS синхронизации</translation>
     </message>
@@ -1198,12 +1214,16 @@
         <translation>Вы изменили папку для кэша %1. Перезагрузить, чтобы применить изменения?</translation>
     </message>
     <message>
-        <source>Confirm before bulk deleting files more than</source>
-        <translation>Подтвердите перед массовым удалением файлов более</translation>
-    </message>
-    <message>
         <source>0</source>
         <translation>0</translation>
+    </message>
+    <message>
+        <source>Hide Windows incompatibility paths Message</source>
+        <translation>Скрыть сообщение о путях несовместимости Windows</translation>
+    </message>
+    <message>
+        <source>Confirm before deleting files more than</source>
+        <translation>Подтвердить удаление файлов более, чем</translation>
     </message>
 </context>
 <context>
@@ -1246,6 +1266,25 @@
     <message>
         <source>Login with Shibboleth</source>
         <translation>Shibboleth Вход</translation>
+    </message>
+</context>
+<context>
+    <name>SyncCommand</name>
+    <message>
+        <source>No permissions to create a shared link</source>
+        <translation>Нет прав на создание общедоступной ссылки</translation>
+    </message>
+    <message>
+        <source>failed to get share link %1</source>
+        <translation>не удалось получить общедоступную ссылку %1</translation>
+    </message>
+    <message>
+        <source>failed get internal link %1</source>
+        <translation>не удалось получить внутреннюю ссылку %1</translation>
+    </message>
+    <message>
+        <source>Failed to get upload link for file &quot;%1&quot;</source>
+        <translation>Не удалось получить ссылку для загрузки файла &quot;%1&quot;</translation>
     </message>
 </context>
 <context>

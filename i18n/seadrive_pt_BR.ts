@@ -18,10 +18,6 @@
         <translation>Sobre</translation>
     </message>
     <message>
-        <source>Check For Updates</source>
-        <translation>Verificar atualizações</translation>
-    </message>
-    <message>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -428,11 +424,19 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
+        <source>You can&apos;t create files in the mount folder directly</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>You can&apos;t create files in the mount folder directly</source>
+        <source>Do you want to delete files in library &quot;%1&quot; ?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deleted library &quot;%1&quot;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm to delete library &quot;%1&quot; ?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -754,6 +758,10 @@
         <source>Waiting for confirmation to delete files</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>The path %1 contains symbols that are not supported by the Windows system.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -1017,6 +1025,18 @@ Abrir % 1 ajuda on-line</translation>
         <source>Starting ...</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Resync</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>There are changes being uploaded under the account, please try again later</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Are you sure to resync account from &quot;%1&quot;?</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>
@@ -1113,10 +1133,6 @@ Abrir % 1 ajuda on-line</translation>
         <translation>Habilitar a Extensão Explorer</translation>
     </message>
     <message>
-        <source>Check for updates automatically</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Do not verify server certificate in HTTPS syncing</source>
         <translation>Não verificar o certificado do servidor quando sincronizando por HTTPS</translation>
     </message>
@@ -1197,11 +1213,15 @@ Abrir % 1 ajuda on-line</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Confirm before bulk deleting files more than</source>
+        <source>0</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>0</source>
+        <source>Hide Windows incompatibility paths Message</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm before deleting files more than</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1244,6 +1264,25 @@ Abrir % 1 ajuda on-line</translation>
     <name>ShibLoginDialog</name>
     <message>
         <source>Login with Shibboleth</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>SyncCommand</name>
+    <message>
+        <source>No permissions to create a shared link</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>failed to get share link %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>failed get internal link %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get upload link for file &quot;%1&quot;</source>
         <translation type="unfinished"/>
     </message>
 </context>

@@ -18,10 +18,6 @@
         <translation>Über</translation>
     </message>
     <message>
-        <source>Check For Updates</source>
-        <translation>Auf Aktualisierungen prüfen</translation>
-    </message>
-    <message>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -428,12 +424,20 @@
         <translation>Die Datei &quot;%1&quot; und %2 weitere Dateien wurden gelöscht.</translation>
     </message>
     <message>
-        <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
-        <translation>Bitte bestätigen Sie die Maschenlösung in Bibliothek &quot;%1&quot;.</translation>
-    </message>
-    <message>
         <source>You can&apos;t create files in the mount folder directly</source>
         <translation>Sie können keine Dateien direkt im Mount-Ordner erstellen.</translation>
+    </message>
+    <message>
+        <source>Do you want to delete files in library &quot;%1&quot; ?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deleted library &quot;%1&quot;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm to delete library &quot;%1&quot; ?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -754,6 +758,10 @@
         <source>Waiting for confirmation to delete files</source>
         <translation>Die Löschbestätigung wir abgewartet.</translation>
     </message>
+    <message>
+        <source>The path %1 contains symbols that are not supported by the Windows system.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -1017,6 +1025,18 @@
         <source>Starting ...</source>
         <translation>Startet ...</translation>
     </message>
+    <message>
+        <source>Resync</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>There are changes being uploaded under the account, please try again later</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Are you sure to resync account from &quot;%1&quot;?</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>
@@ -1113,10 +1133,6 @@
         <translation>Die Explorer-Symbole anzeigen</translation>
     </message>
     <message>
-        <source>Check for updates automatically</source>
-        <translation>Automatisch auf Aktualisierungen prüfen</translation>
-    </message>
-    <message>
         <source>Do not verify server certificate in HTTPS syncing</source>
         <translation>Server-Zertifikat bei https-Synchronisierung nicht überprüfen</translation>
     </message>
@@ -1197,12 +1213,16 @@
         <translation>Sie haben den Ordner für den %1 Zwischenspeicher geändert. Möchten Sie das jetzt aktivieren mit einem Neustart?</translation>
     </message>
     <message>
-        <source>Confirm before bulk deleting files more than</source>
-        <translation>Bitte bestätigen Sie die Massenlöschung von Dateien.</translation>
-    </message>
-    <message>
         <source>0</source>
         <translation>0</translation>
+    </message>
+    <message>
+        <source>Hide Windows incompatibility paths Message</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm before deleting files more than</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1245,6 +1265,25 @@
     <message>
         <source>Login with Shibboleth</source>
         <translation>Anmelden mit Shibboleth</translation>
+    </message>
+</context>
+<context>
+    <name>SyncCommand</name>
+    <message>
+        <source>No permissions to create a shared link</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>failed to get share link %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>failed get internal link %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get upload link for file &quot;%1&quot;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
