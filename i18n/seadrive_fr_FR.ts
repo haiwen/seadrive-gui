@@ -18,10 +18,6 @@
         <translation>À propos</translation>
     </message>
     <message>
-        <source>Check For Updates</source>
-        <translation>Vérifier les mises à jour</translation>
-    </message>
-    <message>
         <source>OK</source>
         <translation>Ok</translation>
     </message>
@@ -53,11 +49,11 @@
     </message>
     <message>
         <source>Please enter the server address</source>
-        <translation type="unfinished"/>
+        <translation>Entrez l&apos;adresse du serveur</translation>
     </message>
     <message>
         <source>%1 is not a valid server address</source>
-        <translation type="unfinished"/>
+        <translation>%1 n&apos;est pas une adresse de serveur valide</translation>
     </message>
     <message>
         <source>login failed</source>
@@ -114,7 +110,7 @@
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"/>
+        <translation>Serveur</translation>
     </message>
     <message>
         <source>Username</source>
@@ -309,7 +305,7 @@
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Par exemple : https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>or http://192.168.1.24:8000</source>
@@ -427,11 +423,19 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
+        <source>You can&apos;t create files in the mount folder directly</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>You can&apos;t create files in the mount folder directly</source>
+        <source>Do you want to delete files in library &quot;%1&quot; ?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deleted library &quot;%1&quot;</source>
+        <translation>Bibliothèque &quot;%1&quot; supprimée</translation>
+    </message>
+    <message>
+        <source>Confirm to delete library &quot;%1&quot; ?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -753,6 +757,10 @@
         <source>Waiting for confirmation to delete files</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>The path %1 contains symbols that are not supported by the Windows system.</source>
+        <translation>Le chemin du fichier %1 contient des symboles qui ne sont pas supportés par le système Windows.</translation>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -773,11 +781,11 @@
     </message>
     <message>
         <source>choose...</source>
-        <translation type="unfinished"/>
+        <translation>Choisir...</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Choose %1 Cache Folder </source>
@@ -860,7 +868,7 @@
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <source>To start %1 extension, you need to click the %2 entry in Finder</source>
@@ -1016,6 +1024,18 @@
         <source>Starting ...</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Resync</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>There are changes being uploaded under the account, please try again later</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Are you sure to resync account from &quot;%1&quot;?</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>
@@ -1112,10 +1132,6 @@
         <translation>Activer l&apos;extension Explorer</translation>
     </message>
     <message>
-        <source>Check for updates automatically</source>
-        <translation>Vérifier les mises à jour automatiquement</translation>
-    </message>
-    <message>
         <source>Do not verify server certificate in HTTPS syncing</source>
         <translation>Ne pas vérifier le certificat serveur lors de la synchronisation en HTTPS</translation>
     </message>
@@ -1196,11 +1212,15 @@
         <translation>Vous avez modifié le dossier de cache %1. Redémarrez pour appliquer ?</translation>
     </message>
     <message>
-        <source>Confirm before bulk deleting files more than</source>
-        <translation type="unfinished"/>
+        <source>0</source>
+        <translation>0</translation>
     </message>
     <message>
-        <source>0</source>
+        <source>Hide Windows incompatibility paths Message</source>
+        <translation>Masquer les messages de Windows relatifs aux incompatibilités des chemins d&apos;accès</translation>
+    </message>
+    <message>
+        <source>Confirm before deleting files more than</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1244,6 +1264,25 @@
     <message>
         <source>Login with Shibboleth</source>
         <translation>Se connecter avec Shibboleth</translation>
+    </message>
+</context>
+<context>
+    <name>SyncCommand</name>
+    <message>
+        <source>No permissions to create a shared link</source>
+        <translation>Aucune autorisation pour créer un lien partagé</translation>
+    </message>
+    <message>
+        <source>failed to get share link %1</source>
+        <translation>Impossible d&apos;obtenir le lien de partage %1</translation>
+    </message>
+    <message>
+        <source>failed get internal link %1</source>
+        <translation>Impossible d&apos;obtenir le lien interne %1</translation>
+    </message>
+    <message>
+        <source>Failed to get upload link for file &quot;%1&quot;</source>
+        <translation>Impossible d&apos;obtenir le lien d&apos;envoi du fichier &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -1300,11 +1339,11 @@
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"/>
+        <translation>Serveur</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"/>
+        <translation>Identifiant</translation>
     </message>
 </context>
 <context>

@@ -18,10 +18,6 @@
         <translation>정보</translation>
     </message>
     <message>
-        <source>Check For Updates</source>
-        <translation>업데이트 확인</translation>
-    </message>
-    <message>
         <source>OK</source>
         <translation>확인</translation>
     </message>
@@ -37,31 +33,31 @@
     <name>AutoLogonDialog</name>
     <message>
         <source>auto login</source>
-        <translation type="unfinished"/>
+        <translation>자동 로그인</translation>
     </message>
     <message>
         <source>auto logining, please wait a moment</source>
-        <translation type="unfinished"/>
+        <translation>자동 로그인 중입니다. 잠시만 기다려주세요</translation>
     </message>
     <message>
         <source>Please input server address</source>
-        <translation type="unfinished"/>
+        <translation>서버 주소를 입력해주세요</translation>
     </message>
     <message>
         <source>address</source>
-        <translation type="unfinished"/>
+        <translation>주소</translation>
     </message>
     <message>
         <source>Please enter the server address</source>
-        <translation type="unfinished"/>
+        <translation>서버 주소를 입력해주세요</translation>
     </message>
     <message>
         <source>%1 is not a valid server address</source>
-        <translation type="unfinished"/>
+        <translation>%1 서버 주소가 올바르지 않습니다</translation>
     </message>
     <message>
         <source>login failed</source>
-        <translation type="unfinished"/>
+        <translation>로그인 실패</translation>
     </message>
 </context>
 <context>
@@ -310,7 +306,7 @@
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;예: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>or http://192.168.1.24:8000</source>
@@ -428,12 +424,20 @@
         <translation>&quot;%1&quot; 파일과 파일 %2개를 삭제했습니다.</translation>
     </message>
     <message>
-        <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
-        <translation>&quot;%1&quot; 라이브러리의 여러 파일을 삭제할까요?</translation>
-    </message>
-    <message>
         <source>You can&apos;t create files in the mount folder directly</source>
         <translation>마운트 폴더에 직접 파일을 만들 수 없습니다</translation>
+    </message>
+    <message>
+        <source>Do you want to delete files in library &quot;%1&quot; ?</source>
+        <translation>&quot;%1&quot; 라이브러리의 파일을 삭제할까요?</translation>
+    </message>
+    <message>
+        <source>Deleted library &quot;%1&quot;</source>
+        <translation>&quot;%1&quot; 라이브러리 삭제함</translation>
+    </message>
+    <message>
+        <source>Confirm to delete library &quot;%1&quot; ?</source>
+        <translation>&quot;%1&quot; 라이브러리를 삭제할까요?</translation>
     </message>
 </context>
 <context>
@@ -754,6 +758,10 @@
         <source>Waiting for confirmation to delete files</source>
         <translation>파일 삭제 확인을 기다리는 중</translation>
     </message>
+    <message>
+        <source>The path %1 contains symbols that are not supported by the Windows system.</source>
+        <translation>%1 경로에 윈도우 시스템에서 지원하지 않는 심볼이 들어있습니다.</translation>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -766,35 +774,35 @@
     <name>SeaDriveRootDialog</name>
     <message>
         <source>Choose SeaDrive Cache Folder</source>
-        <translation type="unfinished"/>
+        <translation>SeaDrive 캐시 폴더 선택</translation>
     </message>
     <message>
         <source>Your files will appear in a local cache folder. Please choose the folder:</source>
-        <translation type="unfinished"/>
+        <translation>로컬 캐시 폴더에 파일이 나타납니다. 폴더를 선택해주세요:</translation>
     </message>
     <message>
         <source>choose...</source>
-        <translation type="unfinished"/>
+        <translation>선택...</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>확인</translation>
     </message>
     <message>
         <source>Choose %1 Cache Folder </source>
-        <translation type="unfinished"/>
+        <translation>%1 캐시 폴더 선택</translation>
     </message>
     <message>
         <source>Choose %1 Cache Folder</source>
-        <translation type="unfinished"/>
+        <translation>%1 캐시 폴더 선택</translation>
     </message>
     <message>
         <source>Please choose %1 cache folder</source>
-        <translation type="unfinished"/>
+        <translation>%1 캐시 폴더를 선택해주세요</translation>
     </message>
     <message>
         <source>Create %1 folder failed!</source>
-        <translation type="unfinished"/>
+        <translation>%1 폴더 만들기에 실패했습니다!</translation>
     </message>
 </context>
 <context>
@@ -865,7 +873,7 @@
     </message>
     <message>
         <source>To start %1 extension, you need to click the %2 entry in Finder</source>
-        <translation type="unfinished"/>
+        <translation>%1 확장자 처리를 시작하려면, 폴더에서 %2 항목을 눌러야 합니다</translation>
     </message>
 </context>
 <context>
@@ -1017,6 +1025,18 @@
         <source>Starting ...</source>
         <translation>시작하는 중 ...</translation>
     </message>
+    <message>
+        <source>Resync</source>
+        <translation>다시 동기화</translation>
+    </message>
+    <message>
+        <source>There are changes being uploaded under the account, please try again later</source>
+        <translation>계정에 업로드한 내용이 바뀌었습니다. 나중에 다시 시도하세요</translation>
+    </message>
+    <message>
+        <source>Are you sure to resync account from &quot;%1&quot;?</source>
+        <translation>&quot;%1&quot;의 계정을 다시 동기화할까요?</translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>
@@ -1113,10 +1133,6 @@
         <translation>Explorer 확장 기능 활성화</translation>
     </message>
     <message>
-        <source>Check for updates automatically</source>
-        <translation>업데이트 자동 확인</translation>
-    </message>
-    <message>
         <source>Do not verify server certificate in HTTPS syncing</source>
         <translation>HTTPS 동기화시 서버 인증서 검증하지 않음</translation>
     </message>
@@ -1197,12 +1213,16 @@
         <translation>%1 캐시 폴더를 바꿨습니다. 다시 시작해서 적용할까요?</translation>
     </message>
     <message>
-        <source>Confirm before bulk deleting files more than</source>
-        <translation>다음 수보다 많은 여러 파일을 삭제하기 전 확인</translation>
-    </message>
-    <message>
         <source>0</source>
         <translation>0</translation>
+    </message>
+    <message>
+        <source>Hide Windows incompatibility paths Message</source>
+        <translation>윈도우 비호환 경로 알림 메시지 숨기기</translation>
+    </message>
+    <message>
+        <source>Confirm before deleting files more than</source>
+        <translation>다음 갯수 이상 파일 삭제 전 확인</translation>
     </message>
 </context>
 <context>
@@ -1245,6 +1265,25 @@
     <message>
         <source>Login with Shibboleth</source>
         <translation>시볼레스 로그인</translation>
+    </message>
+</context>
+<context>
+    <name>SyncCommand</name>
+    <message>
+        <source>No permissions to create a shared link</source>
+        <translation>공유 링크를 만들 권한이 없습니다</translation>
+    </message>
+    <message>
+        <source>failed to get share link %1</source>
+        <translation>%1 공유 링크 가져오기에 실패했습니다</translation>
+    </message>
+    <message>
+        <source>failed get internal link %1</source>
+        <translation>%1 내부 링크 가져오기에 실패했습니다</translation>
+    </message>
+    <message>
+        <source>Failed to get upload link for file &quot;%1&quot;</source>
+        <translation>&quot;%1&quot; 파일의 업로드 링크 가져오기에 실패했습니다</translation>
     </message>
 </context>
 <context>

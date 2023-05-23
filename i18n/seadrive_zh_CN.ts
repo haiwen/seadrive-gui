@@ -18,10 +18,6 @@
         <translation>关于</translation>
     </message>
     <message>
-        <source>Check For Updates</source>
-        <translation>检查更新</translation>
-    </message>
-    <message>
         <source>OK</source>
         <translation>确定</translation>
     </message>
@@ -428,12 +424,20 @@
         <translation>删除了 “%1” 以及其它 %2 个文件</translation>
     </message>
     <message>
-        <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
+        <source>You can&apos;t create files in the mount folder directly</source>
+        <translation>无法在顶层目录下创建文件</translation>
+    </message>
+    <message>
+        <source>Do you want to delete files in library &quot;%1&quot; ?</source>
         <translation>确认删除 “%1” 资料库中的文件？</translation>
     </message>
     <message>
-        <source>You can&apos;t create files in the mount folder directly</source>
-        <translation>无法在顶层目录下创建文件</translation>
+        <source>Deleted library &quot;%1&quot;</source>
+        <translation>删除了资料库 “%1”</translation>
+    </message>
+    <message>
+        <source>Confirm to delete library &quot;%1&quot; ?</source>
+        <translation>确认删除资料库 “%1” ？</translation>
     </message>
 </context>
 <context>
@@ -754,6 +758,10 @@
         <source>Waiting for confirmation to delete files</source>
         <translation>等待确认文件删除操作</translation>
     </message>
+    <message>
+        <source>The path %1 contains symbols that are not supported by the Windows system.</source>
+        <translation>文件路径 %1 包含 Windows 系统不支持的符号。</translation>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -1017,6 +1025,18 @@
         <source>Starting ...</source>
         <translation>正在启动 ...</translation>
     </message>
+    <message>
+        <source>Resync</source>
+        <translation>重新同步</translation>
+    </message>
+    <message>
+        <source>There are changes being uploaded under the account, please try again later</source>
+        <translation>部分修改正在同步中，请稍后重试</translation>
+    </message>
+    <message>
+        <source>Are you sure to resync account from &quot;%1&quot;?</source>
+        <translation>您确定要重新同步资料库 “%1” 吗？</translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>
@@ -1113,10 +1133,6 @@
         <translation>启用文件浏览器的扩展</translation>
     </message>
     <message>
-        <source>Check for updates automatically</source>
-        <translation>自动检查更新</translation>
-    </message>
-    <message>
         <source>Do not verify server certificate in HTTPS syncing</source>
         <translation>HTTPS 同步过程中不验证服务器证书</translation>
     </message>
@@ -1197,12 +1213,16 @@
         <translation>你已经修改了 %1 缓存文件夹失败。重启应用使其生效</translation>
     </message>
     <message>
-        <source>Confirm before bulk deleting files more than</source>
-        <translation>提示确认操作，当删除的文件数大于</translation>
-    </message>
-    <message>
         <source>0</source>
         <translation>0</translation>
+    </message>
+    <message>
+        <source>Hide Windows incompatibility paths Message</source>
+        <translation>隐藏文件路径不兼容 Windows 系统的提示</translation>
+    </message>
+    <message>
+        <source>Confirm before deleting files more than</source>
+        <translation>提示确认操作，当删除的文件数大于</translation>
     </message>
 </context>
 <context>
@@ -1245,6 +1265,25 @@
     <message>
         <source>Login with Shibboleth</source>
         <translation>Shibboleth 登录</translation>
+    </message>
+</context>
+<context>
+    <name>SyncCommand</name>
+    <message>
+        <source>No permissions to create a shared link</source>
+        <translation>没有权限创建共享链接</translation>
+    </message>
+    <message>
+        <source>failed to get share link %1</source>
+        <translation>获取共享链接失败 %1</translation>
+    </message>
+    <message>
+        <source>failed get internal link %1</source>
+        <translation>获取内部链接失败 %1</translation>
+    </message>
+    <message>
+        <source>Failed to get upload link for file &quot;%1&quot;</source>
+        <translation>获取文件 “%1” 的上传链接失败</translation>
     </message>
 </context>
 <context>

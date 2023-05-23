@@ -18,10 +18,6 @@
         <translation>Über</translation>
     </message>
     <message>
-        <source>Check For Updates</source>
-        <translation>Auf Aktualisierungen prüfen</translation>
-    </message>
-    <message>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -53,11 +49,11 @@
     </message>
     <message>
         <source>Please enter the server address</source>
-        <translation type="unfinished"/>
+        <translation>Geben Sie die Serveradresse ein</translation>
     </message>
     <message>
         <source>%1 is not a valid server address</source>
-        <translation type="unfinished"/>
+        <translation>%1 ist keine gültige Serveradresse</translation>
     </message>
     <message>
         <source>login failed</source>
@@ -310,7 +306,7 @@
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zum Beispiel: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>or http://192.168.1.24:8000</source>
@@ -428,12 +424,20 @@
         <translation>Die Datei &quot;%1&quot; und %2 weitere Dateien wurden gelöscht.</translation>
     </message>
     <message>
-        <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
-        <translation>Bitte bestätigen Sie die Maschenlösung in Bibliothek &quot;%1&quot;.</translation>
-    </message>
-    <message>
         <source>You can&apos;t create files in the mount folder directly</source>
         <translation>Sie können keine Dateien direkt im Mount-Ordner erstellen.</translation>
+    </message>
+    <message>
+        <source>Do you want to delete files in library &quot;%1&quot; ?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deleted library &quot;%1&quot;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm to delete library &quot;%1&quot; ?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -754,6 +758,10 @@
         <source>Waiting for confirmation to delete files</source>
         <translation>Die Löschbestätigung wir abgewartet.</translation>
     </message>
+    <message>
+        <source>The path %1 contains symbols that are not supported by the Windows system.</source>
+        <translation>Der Dateipfad %1 enthält Zeichen, die von Windows nicht unterstützt werden.</translation>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -774,11 +782,11 @@
     </message>
     <message>
         <source>choose...</source>
-        <translation type="unfinished"/>
+        <translation>ändern …</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Choose %1 Cache Folder </source>
@@ -1017,6 +1025,18 @@
         <source>Starting ...</source>
         <translation>Startet ...</translation>
     </message>
+    <message>
+        <source>Resync</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>There are changes being uploaded under the account, please try again later</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Are you sure to resync account from &quot;%1&quot;?</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>
@@ -1113,10 +1133,6 @@
         <translation>Die Explorer-Symbole anzeigen</translation>
     </message>
     <message>
-        <source>Check for updates automatically</source>
-        <translation>Automatisch auf Aktualisierungen prüfen</translation>
-    </message>
-    <message>
         <source>Do not verify server certificate in HTTPS syncing</source>
         <translation>Server-Zertifikat bei https-Synchronisierung nicht überprüfen</translation>
     </message>
@@ -1197,12 +1213,16 @@
         <translation>Sie haben den Ordner für den %1 Zwischenspeicher geändert. Möchten Sie das jetzt aktivieren mit einem Neustart?</translation>
     </message>
     <message>
-        <source>Confirm before bulk deleting files more than</source>
-        <translation>Bitte bestätigen Sie die Massenlöschung von Dateien.</translation>
-    </message>
-    <message>
         <source>0</source>
         <translation>0</translation>
+    </message>
+    <message>
+        <source>Hide Windows incompatibility paths Message</source>
+        <translation>Hinweis auf nicht kompatible Windows-Pfade ausblenden</translation>
+    </message>
+    <message>
+        <source>Confirm before deleting files more than</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1245,6 +1265,25 @@
     <message>
         <source>Login with Shibboleth</source>
         <translation>Anmelden mit Shibboleth</translation>
+    </message>
+</context>
+<context>
+    <name>SyncCommand</name>
+    <message>
+        <source>No permissions to create a shared link</source>
+        <translation>Sie haben nicht die Berechtigung für die Erstellung eines Freigabelinks</translation>
+    </message>
+    <message>
+        <source>failed to get share link %1</source>
+        <translation>Der Abruf des Freigabelinks %1 ist fehlgeschlagen</translation>
+    </message>
+    <message>
+        <source>failed get internal link %1</source>
+        <translation>Der Abruf des internen Links %1 ist fehlgeschlagen</translation>
+    </message>
+    <message>
+        <source>Failed to get upload link for file &quot;%1&quot;</source>
+        <translation>Der Abruf des Upload-Links für die Datei &quot;%1&quot; ist fehlgeschlagen</translation>
     </message>
 </context>
 <context>
