@@ -49,11 +49,11 @@
     </message>
     <message>
         <source>Please enter the server address</source>
-        <translation type="unfinished"/>
+        <translation>Geben Sie die Serveradresse ein</translation>
     </message>
     <message>
         <source>%1 is not a valid server address</source>
-        <translation type="unfinished"/>
+        <translation>%1 ist keine gültige Serveradresse</translation>
     </message>
     <message>
         <source>login failed</source>
@@ -306,7 +306,7 @@
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zum Beispiel: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>or http://192.168.1.24:8000</source>
@@ -760,7 +760,7 @@
     </message>
     <message>
         <source>The path %1 contains symbols that are not supported by the Windows system.</source>
-        <translation type="unfinished"/>
+        <translation>Der Dateipfad %1 enthält Zeichen, die von Windows nicht unterstützt werden.</translation>
     </message>
 </context>
 <context>
@@ -782,11 +782,11 @@
     </message>
     <message>
         <source>choose...</source>
-        <translation type="unfinished"/>
+        <translation>ändern …</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Choose %1 Cache Folder </source>
@@ -1218,7 +1218,7 @@
     </message>
     <message>
         <source>Hide Windows incompatibility paths Message</source>
-        <translation type="unfinished"/>
+        <translation>Hinweis auf nicht kompatible Windows-Pfade ausblenden</translation>
     </message>
     <message>
         <source>Confirm before deleting files more than</source>
@@ -1271,19 +1271,19 @@
     <name>SyncCommand</name>
     <message>
         <source>No permissions to create a shared link</source>
-        <translation type="unfinished"/>
+        <translation>Sie haben nicht die Berechtigung für die Erstellung eines Freigabelinks</translation>
     </message>
     <message>
         <source>failed to get share link %1</source>
-        <translation type="unfinished"/>
+        <translation>Der Abruf des Freigabelinks %1 ist fehlgeschlagen</translation>
     </message>
     <message>
         <source>failed get internal link %1</source>
-        <translation type="unfinished"/>
+        <translation>Der Abruf des internen Links %1 ist fehlgeschlagen</translation>
     </message>
     <message>
         <source>Failed to get upload link for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Der Abruf des Upload-Links für die Datei &quot;%1&quot; ist fehlgeschlagen</translation>
     </message>
 </context>
 <context>
