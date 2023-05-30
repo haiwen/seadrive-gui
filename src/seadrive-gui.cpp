@@ -435,6 +435,9 @@ void SeadriveGui::onDaemonStarted()
 
 void SeadriveGui::updateAccountToDaemon()
 {
+    if (!rpc_client_->isConnected()) {
+        return;
+    }
     while (!account_mgr_->messages.isEmpty()) {
         auto msg = account_mgr_->messages.dequeue();
 
