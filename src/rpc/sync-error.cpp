@@ -162,6 +162,10 @@ QString SyncError::syncErrorIdToErrorStr(int error_id, const QString& path)
 #endif
     case SYNC_ERROR_ID_DEL_CONFIRMATION_PENDING:
         return QObject::tr("Waiting for confirmation to delete files");
+    case SYNC_ERROR_ID_INVALID_PATH_ON_WINDOWS:
+        return QObject::tr("The path %1 contains symbols that are not supported by the Windows system.").arg(file);
+    case SYNC_ERROR_ID_TOO_MANY_FILES:
+        return QObject::tr("Too many files in library");
     case SYNC_ERROR_ID_GENERAL_ERROR:
     default:
         return QObject::tr("Unknown error");
