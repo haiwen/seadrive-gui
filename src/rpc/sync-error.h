@@ -38,7 +38,8 @@
 #define SYNC_ERROR_ID_DEL_CONFIRMATION_PENDING  28
 #define SYNC_ERROR_ID_INVALID_PATH_ON_WINDOWS   29
 #define SYNC_ERROR_ID_TOO_MANY_FILES            30
-#define SYNC_ERROR_ID_GENERAL_ERROR             31
+#define SYNC_ERROR_ID_BLOCK_MISSING             31
+#define SYNC_ERROR_ID_GENERAL_ERROR             32
 
 
 class SyncError {
