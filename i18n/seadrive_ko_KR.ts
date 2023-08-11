@@ -762,6 +762,14 @@
         <source>The path %1 contains symbols that are not supported by the Windows system.</source>
         <translation>%1 경로에 윈도우 시스템에서 지원하지 않는 심볼이 들어있습니다.</translation>
     </message>
+    <message>
+        <source>Too many files in library.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to upload file blocks. Please check network or firewall.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>

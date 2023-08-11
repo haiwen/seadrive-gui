@@ -761,6 +761,14 @@
         <source>The path %1 contains symbols that are not supported by the Windows system.</source>
         <translation>Le chemin du fichier %1 contient des symboles qui ne sont pas supportés par le système Windows.</translation>
     </message>
+    <message>
+        <source>Too many files in library.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to upload file blocks. Please check network or firewall.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>

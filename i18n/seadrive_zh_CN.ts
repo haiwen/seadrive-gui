@@ -762,6 +762,14 @@
         <source>The path %1 contains symbols that are not supported by the Windows system.</source>
         <translation>文件路径 %1 包含 Windows 系统不支持的符号。</translation>
     </message>
+    <message>
+        <source>Too many files in library.</source>
+        <translation>资料库文件过多</translation>
+    </message>
+    <message>
+        <source>Failed to upload file blocks. Please check network or firewall.</source>
+        <translation>上传文件块失败，请检查网络和防火墙的状态</translation>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
