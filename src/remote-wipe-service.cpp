@@ -77,9 +77,8 @@ void RemoteWipeService::onRequestFailed(const ApiError& error)
     // but we only handle this error here to avoid complicate code since it is
     // general enough.
     if (error.type() == ApiError::HTTP_ERROR && error.httpErrorCode() == 401) {
-        askDaemonDeleteAccount(req->account());
+        gui->accountManager()->removeAccount(req->account());
         gui->warningBox(tr("Authorization expired, please re-login"));
-        gui->accountManager()->disableAccount(req->account());
         active_request_count_--;
         return;
     }
