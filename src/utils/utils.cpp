@@ -830,3 +830,10 @@ int runAsCommand(const QString &binary, const QStringList &arguments, QString *o
         *output = process.readAllStandardOutput().trimmed();
     return process.exitCode();
 }
+
+QString trimNULL(QString& s) {
+    if (s.endsWith(QChar::Null)) {
+        s.chop(1);
+    }
+    return s;
+}

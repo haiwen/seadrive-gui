@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -294,16 +294,16 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <QtInstall>Qt5.15.1-64bit</QtInstall>
-    <QtModules>core;gui;network;webengine;webenginewidgets;widgets</QtModules>
+    <QtInstall>Qt 6.5.2</QtInstall>
+    <QtModules>core;gui;network;widgets;core5compat;webenginecore;webenginewidgets</QtModules>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="QtSettings">
-    <QtInstall>Qt 5.13.1-32bit</QtInstall>
-    <QtModules>core;gui;network;qml;webchannel;webengine;webenginewidgets;websockets;widgets</QtModules>
+    <QtInstall>Qt 6.5.2</QtInstall>
+    <QtModules>core;gui;network;widgets;core5compat;webenginecore;webenginewidgets</QtModules>
   </PropertyGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <QtInstall>Qt5.15.1-64bit</QtInstall>
-    <QtModules>core;network;gui;widgets;webengine;webenginewidgets</QtModules>
+    <QtInstall>Qt 6.5.2</QtInstall>
+    <QtModules>core;gui;network;widgets;core5compat;webenginecore;webenginewidgets</QtModules>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="QtSettings">
     <QtInstall>Qt 5.13.1-64bit</QtInstall>

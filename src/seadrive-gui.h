@@ -55,7 +55,7 @@ public:
     // Read preconfigure settings
     QVariant readPreconfigureEntry(const QString& key, const QVariant& default_value = QVariant());
     // ExpandedVars String
-    QString readPreconfigureExpandedString(const QString& key, const QString& default_value = QString());
+    QString readPreconfigureExpandedString(const QString& key, const QVariant& default_value = QVariant());
 
     // Accessors.
     bool isDevMode() const { return dev_mode_; }
