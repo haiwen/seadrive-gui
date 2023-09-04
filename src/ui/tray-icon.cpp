@@ -689,6 +689,8 @@ void SeafileTrayIcon::resyncAccount()
         return;
     }
 
+    gui->messageBox(tr("Resync the account will create a new sync root directory"));
+
     gui->accountManager()->resyncAccount(account);
 #endif
 }
