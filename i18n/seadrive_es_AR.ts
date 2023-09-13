@@ -1041,7 +1041,7 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Are you sure to resync account from &quot;%1&quot;?</source>
+        <source>The account will be synced to a new sync root folder. Are you sure to resync account from &quot;%1&quot;?</source>
         <translation type="unfinished"/>
     </message>
 </context>

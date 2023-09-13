@@ -33,19 +33,19 @@
     <name>AutoLogonDialog</name>
     <message>
         <source>auto login</source>
-        <translation type="unfinished"/>
+        <translation>Connexion automatique</translation>
     </message>
     <message>
         <source>auto logining, please wait a moment</source>
-        <translation type="unfinished"/>
+        <translation>Connexion automatique, veuillez patienter.</translation>
     </message>
     <message>
         <source>Please input server address</source>
-        <translation type="unfinished"/>
+        <translation>Veuillez introduire l&apos;adresse du serveur.</translation>
     </message>
     <message>
         <source>address</source>
-        <translation type="unfinished"/>
+        <translation>Adresse</translation>
     </message>
     <message>
         <source>Please enter the server address</source>
@@ -57,7 +57,7 @@
     </message>
     <message>
         <source>login failed</source>
-        <translation type="unfinished"/>
+        <translation>Échec de la connexion</translation>
     </message>
 </context>
 <context>
@@ -114,7 +114,7 @@
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"/>
+        <translation>Nom d&apos;utilisateur</translation>
     </message>
 </context>
 <context>
@@ -140,7 +140,7 @@
     <name>FileProviderManager</name>
     <message>
         <source>%1 will ask permissions to enable Finder plugin.</source>
-        <translation type="unfinished"/>
+        <translation>%1 demandera des autorisations pour activer le plugin Finder.</translation>
     </message>
 </context>
 <context>
@@ -202,7 +202,7 @@
     </message>
     <message>
         <source>%1 has dowloaded your files list.</source>
-        <translation type="unfinished"/>
+        <translation>%1 a téléchargé votre liste de fichiers.</translation>
     </message>
 </context>
 <context>
@@ -420,15 +420,15 @@
     </message>
     <message>
         <source>Deleted &quot;%1&quot; and %2 more files.</source>
-        <translation type="unfinished"/>
+        <translation>Suppression du fichier &quot;%1&quot; et de %2 autres fichiers.</translation>
     </message>
     <message>
         <source>You can&apos;t create files in the mount folder directly</source>
-        <translation type="unfinished"/>
+        <translation>Vous ne pouvez pas créer directement des fichiers dans le dossier de montage</translation>
     </message>
     <message>
         <source>Do you want to delete files in library &quot;%1&quot; ?</source>
-        <translation type="unfinished"/>
+        <translation>Voulez-vous supprimer les fichiers de la bibliothèque &quot;%1&quot; ?</translation>
     </message>
     <message>
         <source>Deleted library &quot;%1&quot;</source>
@@ -436,7 +436,7 @@
     </message>
     <message>
         <source>Confirm to delete library &quot;%1&quot; ?</source>
-        <translation type="unfinished"/>
+        <translation>Confirmer la suppression de la bibliothèque &quot;%1&quot; ?</translation>
     </message>
 </context>
 <context>
@@ -755,7 +755,7 @@
     </message>
     <message>
         <source>Waiting for confirmation to delete files</source>
-        <translation type="unfinished"/>
+        <translation>Attente de la confirmation de suppression des fichiers</translation>
     </message>
     <message>
         <source>The path %1 contains symbols that are not supported by the Windows system.</source>
@@ -763,11 +763,11 @@
     </message>
     <message>
         <source>Too many files in library.</source>
-        <translation type="unfinished"/>
+        <translation>Trop de fichiers dans la bibliothèque.</translation>
     </message>
     <message>
         <source>Failed to upload file blocks. Please check network or firewall.</source>
-        <translation type="unfinished"/>
+        <translation>Échec du téléchargement des blocs de fichiers. Veuillez vérifier le réseau ou le pare-feu.</translation>
     </message>
 </context>
 <context>
@@ -781,11 +781,11 @@
     <name>SeaDriveRootDialog</name>
     <message>
         <source>Choose SeaDrive Cache Folder</source>
-        <translation type="unfinished"/>
+        <translation>Choisissez le dossier de cache SeaDrive</translation>
     </message>
     <message>
         <source>Your files will appear in a local cache folder. Please choose the folder:</source>
-        <translation type="unfinished"/>
+        <translation>Vos fichiers apparaîtront dans un dossier cache local. Veuillez choisir le dossier : </translation>
     </message>
     <message>
         <source>choose...</source>
@@ -797,19 +797,19 @@
     </message>
     <message>
         <source>Choose %1 Cache Folder </source>
-        <translation type="unfinished"/>
+        <translation>Choisissez le dossier de cache %1</translation>
     </message>
     <message>
         <source>Choose %1 Cache Folder</source>
-        <translation type="unfinished"/>
+        <translation>Choisissez le dossier de cache %1</translation>
     </message>
     <message>
         <source>Please choose %1 cache folder</source>
-        <translation type="unfinished"/>
+        <translation>Veuillez choisir le dossier de cache %1</translation>
     </message>
     <message>
         <source>Create %1 folder failed!</source>
-        <translation type="unfinished"/>
+        <translation>La création du dossier %1 a échoué !</translation>
     </message>
 </context>
 <context>
@@ -880,7 +880,7 @@
     </message>
     <message>
         <source>To start %1 extension, you need to click the %2 entry in Finder</source>
-        <translation type="unfinished"/>
+        <translation>Pour lancer l&apos;extension %1, vous devez cliquer sur l&apos;entrée %2 dans le Finder.</translation>
     </message>
 </context>
 <context>
@@ -1030,18 +1030,18 @@
     </message>
     <message>
         <source>Starting ...</source>
-        <translation type="unfinished"/>
+        <translation>Démarrage ...</translation>
     </message>
     <message>
         <source>Resync</source>
-        <translation type="unfinished"/>
+        <translation>Resynchroniser</translation>
     </message>
     <message>
         <source>There are changes being uploaded under the account, please try again later</source>
-        <translation type="unfinished"/>
+        <translation>Des modifications sont en cours de téléchargement sur le compte, veuillez réessayer plus tard.</translation>
     </message>
     <message>
-        <source>Are you sure to resync account from &quot;%1&quot;?</source>
+        <source>The account will be synced to a new sync root folder. Are you sure to resync account from &quot;%1&quot;?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1229,7 +1229,7 @@
     </message>
     <message>
         <source>Confirm before deleting files more than</source>
-        <translation type="unfinished"/>
+        <translation>Confirmez avant de supprimer des fichiers de plus de </translation>
     </message>
 </context>
 <context>

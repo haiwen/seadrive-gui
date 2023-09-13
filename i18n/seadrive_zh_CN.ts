@@ -1042,8 +1042,8 @@
         <translation>部分修改正在同步中，请稍后重试</translation>
     </message>
     <message>
-        <source>Are you sure to resync account from &quot;%1&quot;?</source>
-        <translation>您确定要重新同步资料库 “%1” 吗？</translation>
+        <source>The account will be synced to a new sync root folder. Are you sure to resync account from &quot;%1&quot;?</source>
+        <translation>此账号即将被同步到新的根目录，您确定要重新同步资料库 “%1” 吗？</translation>
     </message>
 </context>
 <context>

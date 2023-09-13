@@ -33,19 +33,19 @@
     <name>AutoLogonDialog</name>
     <message>
         <source>auto login</source>
-        <translation type="unfinished"/>
+        <translation>Automatisch anmelden</translation>
     </message>
     <message>
         <source>auto logining, please wait a moment</source>
-        <translation type="unfinished"/>
+        <translation>Automatisches Anmelden, bitte warten Sie</translation>
     </message>
     <message>
         <source>Please input server address</source>
-        <translation type="unfinished"/>
+        <translation>Bitte geben Sie die Serveradresse ein</translation>
     </message>
     <message>
         <source>address</source>
-        <translation type="unfinished"/>
+        <translation>Adresse</translation>
     </message>
     <message>
         <source>Please enter the server address</source>
@@ -57,7 +57,7 @@
     </message>
     <message>
         <source>login failed</source>
-        <translation type="unfinished"/>
+        <translation>Anmeldung fehlgeschlagen</translation>
     </message>
 </context>
 <context>
@@ -429,15 +429,15 @@
     </message>
     <message>
         <source>Do you want to delete files in library &quot;%1&quot; ?</source>
-        <translation type="unfinished"/>
+        <translation>Möchten Sie die Dateien in der Bibliothek &quot;%1&quot; löschen? </translation>
     </message>
     <message>
         <source>Deleted library &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Die Bibliothek &quot;%1&quot; wurde gelöscht.</translation>
     </message>
     <message>
         <source>Confirm to delete library &quot;%1&quot; ?</source>
-        <translation type="unfinished"/>
+        <translation>Möchten Sie die Bibliothek &quot;%1&quot; löschen?</translation>
     </message>
 </context>
 <context>
@@ -764,11 +764,11 @@
     </message>
     <message>
         <source>Too many files in library.</source>
-        <translation type="unfinished"/>
+        <translation>Die Bibliothek enthält zu viele Dateien.</translation>
     </message>
     <message>
         <source>Failed to upload file blocks. Please check network or firewall.</source>
-        <translation type="unfinished"/>
+        <translation>Einzelne Dateipakete konnten nicht hochgeladen werden. Bitte überprüfen Sie Ihr Netzwerk oder die Firewall.</translation>
     </message>
 </context>
 <context>
@@ -782,11 +782,11 @@
     <name>SeaDriveRootDialog</name>
     <message>
         <source>Choose SeaDrive Cache Folder</source>
-        <translation type="unfinished"/>
+        <translation>Wählen Sie einen Ordner für den SeaDrive-Zwischenspeicher</translation>
     </message>
     <message>
         <source>Your files will appear in a local cache folder. Please choose the folder:</source>
-        <translation type="unfinished"/>
+        <translation>Ihre Dateien werden in einem lokalen Zwischenspeicher angezeigt. Bitte wählen Sie einen Ordner dafür:</translation>
     </message>
     <message>
         <source>choose...</source>
@@ -798,19 +798,19 @@
     </message>
     <message>
         <source>Choose %1 Cache Folder </source>
-        <translation type="unfinished"/>
+        <translation>Wählen Sie einen Ordner für den %1-Zwischenspeicher</translation>
     </message>
     <message>
         <source>Choose %1 Cache Folder</source>
-        <translation type="unfinished"/>
+        <translation>Wählen Sie einen Ordner für den %1-Zwischenspeicher</translation>
     </message>
     <message>
         <source>Please choose %1 cache folder</source>
-        <translation type="unfinished"/>
+        <translation>Bitte wählen Sie einen Ordner für den %1-Zwischenspeicher</translation>
     </message>
     <message>
         <source>Create %1 folder failed!</source>
-        <translation type="unfinished"/>
+        <translation>Der Ordner für %1 konnte nicht angelegt werden!</translation>
     </message>
 </context>
 <context>
@@ -881,7 +881,7 @@
     </message>
     <message>
         <source>To start %1 extension, you need to click the %2 entry in Finder</source>
-        <translation type="unfinished"/>
+        <translation>Um die Erweiterung %1 zu starten, klicken Sie bitte im Finder den Eintrag %2 </translation>
     </message>
 </context>
 <context>
@@ -1035,14 +1035,14 @@
     </message>
     <message>
         <source>Resync</source>
-        <translation type="unfinished"/>
+        <translation>Neu synchronisieren</translation>
     </message>
     <message>
         <source>There are changes being uploaded under the account, please try again later</source>
-        <translation type="unfinished"/>
+        <translation>Gerade werden im Konto Änderungen hochgeladen. Bitte versuchen sie es später noch einmal.</translation>
     </message>
     <message>
-        <source>Are you sure to resync account from &quot;%1&quot;?</source>
+        <source>The account will be synced to a new sync root folder. Are you sure to resync account from &quot;%1&quot;?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1230,7 +1230,7 @@
     </message>
     <message>
         <source>Confirm before deleting files more than</source>
-        <translation type="unfinished"/>
+        <translation>Löschbestätigung anfordern bei mehr Dateien als</translation>
     </message>
 </context>
 <context>

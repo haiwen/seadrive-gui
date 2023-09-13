@@ -764,11 +764,11 @@
     </message>
     <message>
         <source>Too many files in library.</source>
-        <translation type="unfinished"/>
+        <translation>Слишком много файлов в библиотеке.</translation>
     </message>
     <message>
         <source>Failed to upload file blocks. Please check network or firewall.</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось загрузить блоки файлов. Проверьте сеть или брандмауэр.</translation>
     </message>
 </context>
 <context>
@@ -1043,8 +1043,8 @@
         <translation>Под учетной записью загружаются изменения, повторите попытку позже</translation>
     </message>
     <message>
-        <source>Are you sure to resync account from &quot;%1&quot;?</source>
-        <translation>Вы уверены, что повторно синхронизируете учетную запись с &quot;%1&quot; ?</translation>
+        <source>The account will be synced to a new sync root folder. Are you sure to resync account from &quot;%1&quot;?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
