@@ -764,11 +764,11 @@
     </message>
     <message>
         <source>Too many files in library.</source>
-        <translation type="unfinished"/>
+        <translation>라이브러리에 파일이 너무 많습니다.</translation>
     </message>
     <message>
         <source>Failed to upload file blocks. Please check network or firewall.</source>
-        <translation type="unfinished"/>
+        <translation>파일 블록 업로드에 실패했습니다. 네트워크 또는 방화벽을 확인하세요.</translation>
     </message>
 </context>
 <context>
@@ -1042,8 +1042,8 @@
         <translation>계정에 업로드한 내용이 바뀌었습니다. 나중에 다시 시도하세요</translation>
     </message>
     <message>
-        <source>Are you sure to resync account from &quot;%1&quot;?</source>
-        <translation>&quot;%1&quot;의 계정을 다시 동기화할까요?</translation>
+        <source>The account will be synced to a new sync root folder. Are you sure to resync account from &quot;%1&quot;?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1094,7 +1094,7 @@
     </message>
     <message>
         <source>Please choose the cache folder</source>
-        <translation>캐시 폴더를 선택하십시오</translation>
+        <translation>캐시 폴더를 선택하세요</translation>
     </message>
     <message>
         <source>The proxy host address can&apos;t be empty</source>
