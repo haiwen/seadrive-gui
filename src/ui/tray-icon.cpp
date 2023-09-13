@@ -683,13 +683,11 @@ void SeafileTrayIcon::resyncAccount()
         return;
     }
 
-    QString question = tr("Are you sure to resync account from \"%1\"?").arg(account.serverUrl.toString());
+    QString question = tr("The account will be synced to a new sync root folder. Are you sure to resync account from \"%1\"?").arg(account.serverUrl.toString());
 
     if (!gui->yesOrNoBox(question, nullptr, false)) {
         return;
     }
-
-    gui->messageBox(tr("Resync the account will create a new sync root directory"));
 
     gui->accountManager()->resyncAccount(account);
 #endif
