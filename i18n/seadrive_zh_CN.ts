@@ -777,6 +777,10 @@
         <source>Authorization expired, please re-login</source>
         <translation>账号验证信息已过期，请重新登录</translation>
     </message>
+    <message>
+        <source>Authorization expired, please re-login. You can find files that are not uploaded yet at ~/Library/CloudStorage</source>
+        <translation>账号验证信息已过期，请重新登录。您可以在 “资源库/CloudStorage” 目录里找到未上传的文件。</translation>
+    </message>
 </context>
 <context>
     <name>SeaDriveRootDialog</name>

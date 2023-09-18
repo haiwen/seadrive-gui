@@ -777,6 +777,10 @@
         <source>Authorization expired, please re-login</source>
         <translation>Авторизация истекла. Пожалуйста, войдите снова</translation>
     </message>
+    <message>
+        <source>Authorization expired, please re-login. You can find files that are not uploaded yet at ~/Library/CloudStorage</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SeaDriveRootDialog</name>
@@ -1044,7 +1048,7 @@
     </message>
     <message>
         <source>The account will be synced to a new sync root folder. Are you sure to resync account from &quot;%1&quot;?</source>
-        <translation type="unfinished"/>
+        <translation>Аккаунт будет синхронизирован с новой корневой папкой синхронизации. Вы уверены, что хотите повторно синхронизировать аккаунт с &quot;%1&quot;?</translation>
     </message>
 </context>
 <context>

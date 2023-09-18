@@ -778,6 +778,10 @@
         <source>Authorization expired, please re-login</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Authorization expired, please re-login. You can find files that are not uploaded yet at ~/Library/CloudStorage</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SeaDriveRootDialog</name>
