@@ -193,6 +193,10 @@ void TransferItemsTableModel::setTransferItems()
 {
     json_t *upload_reply, *download_reply;
 
+    if (!gui->rpcClient()->isConnected()) {
+        return;
+    }
+
     if (!gui->rpcClient()->getUploadProgress(&upload_reply)) {
         return;
     }
