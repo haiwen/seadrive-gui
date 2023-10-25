@@ -201,7 +201,7 @@
         <translation>Fertig</translation>
     </message>
     <message>
-        <source>%1 has dowloaded your files list.</source>
+        <source>%1 has downloaded your files list.</source>
         <translation>%1 hat Ihre Dateiliste heruntergeladen.</translation>
     </message>
 </context>

@@ -203,7 +203,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 has dowloaded your files list.</source>
+        <source>%1 has downloaded your files list.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

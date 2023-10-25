@@ -201,7 +201,7 @@
         <translation>완료</translation>
     </message>
     <message>
-        <source>%1 has dowloaded your files list.</source>
+        <source>%1 has downloaded your files list.</source>
         <translation>%1(에)서 파일 목록을 다운로드했습니다.</translation>
     </message>
 </context>
