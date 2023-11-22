@@ -663,7 +663,7 @@ void SeafileTrayIcon::deleteAccount()
 #ifdef Q_OS_WIN32
     QString question = tr("Are you sure to remove account from \"%1\"?").arg(account.serverUrl.toString());
 #else
-    QString question = tr("Are you sure to remove account from \"%1\"? You can find files that are downloaded yet at ~/Library/CloudStorage.").arg(account.serverUrl.toString());
+    QString question = tr("Are you sure to remove account from \"%1\"? After removing account, you can still find downloaded files at ~/Library/CloudStorage.").arg(account.serverUrl.toString());
 #endif
 
     if (!gui->yesOrNoBox(question, nullptr, false)) {
