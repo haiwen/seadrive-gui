@@ -18,6 +18,7 @@ bool FileProviderManager::registerDomain(const Account account) {
 
     fileProviderListDomains(&domains_);
     if (domains_.contains(id)) {
+        fileProviderReenumerate(id, name);
         return true;
     }
 

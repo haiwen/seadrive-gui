@@ -16,4 +16,6 @@ bool fileProviderAddDomain(const QString domain_id, const QString display_name, 
 
 bool fileProviderRemoveDomain(const QString domain_id, const QString display_name = "");
 
+void fileProviderReenumerate(const QString domain_id, const QString display_name);
+
 #endif // SEAFILE_CLIENT_FILE_PROVIDER_H_
