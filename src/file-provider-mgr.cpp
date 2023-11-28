@@ -17,7 +17,11 @@ bool FileProviderManager::registerDomain(const Account account) {
     QString name = displayName(account);
 
     fileProviderListDomains(&domains_);
+
+    // If the domain hasn't been registered, fileProviderAddDomain() will register the domain and start the file provider extension (seadrive daemon). Otherwise, calling fileProviderAddDomain() would do nothing.
+    // To start the extension for registered domains, we need to call fileProviderReenumerate().
     if (domains_.contains(id)) {
+        fileProviderReenumerate(id, name);
         return true;
     }
 

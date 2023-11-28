@@ -97,3 +97,27 @@ bool fileProviderRemoveDomain(const QString domain_id, const QString display_nam
 
     return success;
 }
+
+void fileProviderReenumerate(const QString domain_id, const QString display_name) {
+    qInfo() << "[File Provider] Reenumerating items";
+
+    QMutex mutex;
+    QWaitCondition condition;
+
+    NSFileProviderDomain *domain = [[NSFileProviderDomain alloc] initWithIdentifier:domain_id.toNSString() displayName:display_name.toNSString()];
+    NSFileProviderManager *mgr = [NSFileProviderManager managerForDomain:domain];
+
+    [mgr signalEnumeratorForContainerItemIdentifier: NSFileProviderWorkingSetContainerItemIdentifier completionHandler:[&](NSError *error) {
+        if (error != nil) {
+            qWarning() << "[File Provider] Error reenumerating items:" << error;
+            condition.wakeOne();
+            return;
+        }
+
+        condition.wakeOne();
+    }];
+
+    mutex.lock();
+    condition.wait(&mutex);
+    mutex.unlock();
+}
