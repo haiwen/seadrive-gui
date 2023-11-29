@@ -163,7 +163,7 @@ void SettingsManager::loadProxySettings()
     settings.beginGroup(kSettingsGroup);
 
     SeafileProxy proxy;
-    proxy.type = static_cast<ProxyType>(settings.value(kProxyType, 0).toInt());
+    proxy.type = static_cast<ProxyType>(settings.value(kProxyType, SystemProxy).toInt());
     proxy.host = settings.value(kProxyAddr, "").toString();
     proxy.port = settings.value(kProxyPort, 0).toInt();
     proxy.username = settings.value(kProxyUsername, "").toString();
