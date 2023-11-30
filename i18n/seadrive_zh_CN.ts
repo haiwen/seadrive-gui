@@ -26,7 +26,7 @@
     <name>AccountManager</name>
     <message>
         <source>failed to open account database</source>
-        <translation>打开帐户数据库失败</translation>
+        <translation>打开账号数据库失败</translation>
     </message>
 </context>
 <context>
@@ -216,7 +216,7 @@
     <name>LoginDialog</name>
     <message>
         <source>Add an account</source>
-        <translation>添加帐号</translation>
+        <translation>添加账号</translation>
     </message>
     <message>
         <source>Single Sign On</source>
@@ -983,7 +983,7 @@
     </message>
     <message>
         <source>Accounts</source>
-        <translation>帐号</translation>
+        <translation>账号</translation>
     </message>
     <message>
         <source>not logged in</source>
@@ -995,7 +995,7 @@
     </message>
     <message>
         <source>Add an account</source>
-        <translation>添加新帐户</translation>
+        <translation>添加账号</translation>
     </message>
     <message>
         <source>File</source>
@@ -1007,7 +1007,7 @@
     </message>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;?</source>
-        <translation>是否删除帐户 %1 ？</translation>
+        <translation>是否删除账号 %1 ？</translation>
     </message>
     <message>
         <source>Up %1, Down %2</source>
@@ -1048,6 +1048,10 @@
     <message>
         <source>The account will be synced to a new sync root folder. Are you sure to resync account from &quot;%1&quot;?</source>
         <translation>此账号即将被同步到新的根目录，您确定要重新同步资料库 “%1” 吗？</translation>
+    </message>
+    <message>
+        <source>Are you sure to remove account from &quot;%1&quot;? After removing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
+        <translation>是否删除账号 %1 ？删除账号后，已下载的文件仍保留在 ~/Library/CloudStorage 目录。</translation>
     </message>
 </context>
 <context>
