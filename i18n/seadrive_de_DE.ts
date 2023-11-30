@@ -779,7 +779,7 @@
     </message>
     <message>
         <source>Authorization expired, please re-login. You can find files that are not uploaded yet at ~/Library/CloudStorage</source>
-        <translation type="unfinished"/>
+        <translation>Ihre letztes  Login ist abgelaufen, bitte melden Sie sich neu an. Dateien, die noch nicht hochgeladen sind, finden Sie im Ordner ~/Library/CloudStorage</translation>
     </message>
 </context>
 <context>
@@ -1048,6 +1048,10 @@
     <message>
         <source>The account will be synced to a new sync root folder. Are you sure to resync account from &quot;%1&quot;?</source>
         <translation>Das Konto wird mit einem neuen Root-Ordner synchronisiert. Möchten Sie das Konto  wirklich von &quot;%1&quot; neu synchronisieren?</translation>
+    </message>
+    <message>
+        <source>Are you sure to remove account from &quot;%1&quot;? After removing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
