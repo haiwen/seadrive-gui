@@ -549,8 +549,8 @@ void AccountManager::fetchAccountInfoFromServer(const Account& account)
 void AccountManager::updateAccountServerInfo(const Account& account)
 {
     ServerInfoRequest *request = new ServerInfoRequest(account);
-    connect(request, SIGNAL(success(const Account&, const ServerInfo &)),
-            this, SLOT(serverInfoSuccess(const Account&, const ServerInfo &)));
+    connect(request, SIGNAL(success(const ServerInfo &)),
+            this, SLOT(serverInfoSuccess(const ServerInfo &)));
     connect(request, SIGNAL(failed(const ApiError&)),
             this, SLOT(serverInfoFailed(const ApiError&)));
     request->send();
@@ -643,9 +643,10 @@ void AccountManager::slotUpdateAccountInfoFailed()
     req = NULL;
 }
 
-void AccountManager::serverInfoSuccess(const Account &account, const ServerInfo &info)
+void AccountManager::serverInfoSuccess(const ServerInfo &info)
 {
     ServerInfoRequest *req = (ServerInfoRequest *)(sender());
+    const Account& account = req->account();
     req->deleteLater();
 
     setServerInfoKeyValue(db, account, kVersionKeyName, info.getVersionString());

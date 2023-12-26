@@ -129,7 +129,7 @@ signals:
 private slots:
     void slotUpdateAccountInfoSucess(const AccountInfo& info);
     void slotUpdateAccountInfoFailed();
-    void serverInfoSuccess(const Account &account, const ServerInfo &info);
+    void serverInfoSuccess(const ServerInfo &info);
     void serverInfoFailed(const ApiError&);
 
 private:
