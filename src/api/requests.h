@@ -11,6 +11,7 @@
 #include "server-repo.h"
 #include "server-repo.h"
 #include "api/seaf-dirent.h"
+#include "api/sso-status.h"
 
 class QDir;
 class QNetworkReply;
@@ -355,6 +356,7 @@ class ServerInfoRequest : public SeafileApiRequest
     Q_OBJECT
 public:
     ServerInfoRequest(const Account& account);
+    ServerInfoRequest(const QUrl& server_url);
 
     const Account& account() const
     {
@@ -362,7 +364,7 @@ public:
     }
 
 signals:
-    void success(const Account& account, const ServerInfo& info);
+    void success(const ServerInfo& info);
 
 protected slots:
     void requestSuccess(QNetworkReply& reply);
@@ -1107,4 +1109,39 @@ private:
     Q_DISABLE_COPY(GetUploadLinkRequest);
     QString path_;
 };
+
+class ClientSSOLinkRequest : public SeafileApiRequest
+{
+    Q_OBJECT
+
+public:
+    ClientSSOLinkRequest(const QUrl& server_url);
+
+signals:
+    void success(const QString& link);
+
+protected slots:
+    void requestSuccess(QNetworkReply& reply);
+
+private:
+    Q_DISABLE_COPY(ClientSSOLinkRequest)
+};
+
+class ClientSSOStatusRequest : public SeafileApiRequest
+{
+    Q_OBJECT
+
+public:
+    ClientSSOStatusRequest(const QUrl& server_url, const QString& token);
+
+signals:
+    void success(const ClientSSOStatus& status);
+
+protected slots:
+    void requestSuccess(QNetworkReply& reply);
+
+private:
+    Q_DISABLE_COPY(ClientSSOStatusRequest)
+};
+
 #endif // SEADRIVE_GUI_API_REQUESTS_H
