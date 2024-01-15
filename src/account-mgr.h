@@ -77,11 +77,9 @@ public:
     // account menu.
     int removeAccount(const Account& account);
 
-#if defined(Q_OS_WIN32)
     // Resync the account. Used when user resync an account from the
     // account menu.
     int resyncAccount(const Account& account);
-#endif
 
     // Use all valid accounts, or re-login if no valid account.
     void validateAndUseAccounts();

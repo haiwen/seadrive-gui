@@ -463,6 +463,12 @@ void SeadriveGui::updateAccountToDaemon()
             rpc_client_->addAccount (msg.account);
             init_sync_dlg_->launch();
             qWarning() << "Resynced account" << msg.account;
+#else
+            rpc_client_->deleteAccount(msg.account, true);
+            gui->fileProviderManager()->registerDomain(msg.account);
+            rpc_client_->addAccount (msg.account);
+            init_sync_dlg_->launch();
+            qWarning() << "Resynced account" << msg.account;
 #endif
         }
     }
