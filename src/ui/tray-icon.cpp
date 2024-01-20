@@ -55,12 +55,6 @@ const int kMessageDisplayTimeMSecs = 5000;
 const char* const kPreconfigureUseKerberosLogin = "PreconfigureUseKerberosLogin";
 #endif
 
-#ifdef Q_OS_MAC
-void darkmodeWatcher(bool /*new Value*/) {
-    gui->trayIcon()->reloadTrayIcon();
-}
-#endif
-
 } // namespace
 
 SeafileTrayIcon::SeafileTrayIcon(QObject *parent)
@@ -118,9 +112,6 @@ void SeafileTrayIcon::start()
     setState(STATE_DAEMON_UP);
 
     refresh_timer_->start(kRefreshInterval);
-#if defined(Q_OS_MAC)
-    utils::mac::set_darkmode_watcher(&darkmodeWatcher);
-#endif
 }
 
 void SeafileTrayIcon::createActions()
@@ -385,6 +376,10 @@ QIcon SeafileTrayIcon::getIcon(const QString& name)
     }
 
     QIcon icon(name);
+#ifdef Q_OS_MAC
+    // The icon style has been changed to monochrome on macOS.
+    icon.setIsMask(true);
+#endif
     icon_cache_[name] = icon;
     return icon;
 }
@@ -428,8 +423,6 @@ QIcon SeafileTrayIcon::stateToIcon(TrayState state)
     QString full_icon_name = QString(":/images/win/%1.ico").arg(icon_name);
     return getIcon(full_icon_name);
 #elif defined(Q_OS_MAC)
-    bool isDarkMode = utils::mac::is_darkmode();
-    // filename = icon_name + ?white + .png
     QString icon_name;
 
     switch (state) {
@@ -457,7 +450,7 @@ QIcon SeafileTrayIcon::stateToIcon(TrayState state)
         icon_name = ":/images/mac/notification";
         break;
     }
-    return getIcon(icon_name + (isDarkMode ? "_white" : "") + ".png");
+    return getIcon(icon_name + ".png");
 #else
     QString icon_name;
     switch (state) {
