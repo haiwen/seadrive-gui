@@ -6,6 +6,7 @@
 #include "account.h"
 
 class QLineEdit;
+class ApiError;
 
 class SharedLinkDialog : public QDialog
 {
@@ -22,8 +23,8 @@ private slots:
     void onCopyText();
     void onDownloadStateChanged(int state);
     void slotGenSharedLink();
-    void slotGetSharedLink(const QString& link);
-    void slotPasswordEditTextChanged(const QString& text);
+    void onCreateSharedLinkSuccess(const QString& link);
+    void onCreateSharedLinkFailed(const ApiError& error);
     void slotShowPasswordCheckBoxClicked(int state);
 
 private:

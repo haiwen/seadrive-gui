@@ -6,7 +6,7 @@
 #include "account-mgr.h"
 #include "seadrive-gui.h"
 #include "api/requests.h"
-
+#include "api/api-error.h"
 
 SharedLinkDialog::SharedLinkDialog(const QString &link,
                                    const Account &account,
@@ -20,7 +20,7 @@ SharedLinkDialog::SharedLinkDialog(const QString &link,
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     QVBoxLayout *layout = new QVBoxLayout;
 
-    QLabel *password_label = new QLabel(tr("Password(At least 8 characters)"));
+    QLabel *password_label = new QLabel(tr("Password"));
     layout->addWidget(password_label);
 
     QHBoxLayout *passwd_hlayout = new QHBoxLayout;
@@ -31,8 +31,6 @@ SharedLinkDialog::SharedLinkDialog(const QString &link,
 
     password_editor_ = new QLineEdit;
     passwd_hlayout->addWidget(password_editor_);
-    connect(password_editor_, &QLineEdit::textChanged, this,
-            &SharedLinkDialog::slotPasswordEditTextChanged);
     password_editor_->setEchoMode(QLineEdit::Password);
     layout->addLayout(passwd_hlayout);
 
@@ -123,26 +121,33 @@ void SharedLinkDialog::slotGenSharedLink()
 
     CreateSharedLinkRequest *req = new CreateSharedLinkRequest(account_, repo_id_, path_in_repo_, password, expire_days);
 
-    connect(req, &CreateSharedLinkRequest::success,
-            this, &SharedLinkDialog::slotGetSharedLink);
+    connect(req, SIGNAL(success(const QString&)),
+            this, SLOT(onCreateSharedLinkSuccess(const QString&)));
+    connect(req, SIGNAL(failed(const ApiError&)),
+            this, SLOT(onCreateSharedLinkFailed(const ApiError&)));
     req->send();
 }
 
-void SharedLinkDialog::slotGetSharedLink(const QString& link)
+void SharedLinkDialog::onCreateSharedLinkSuccess(const QString& link)
 {
-   text_ = link;
-   editor_->setText(text_);
+    text_ = link;
+    editor_->setText(text_);
 }
 
-
-void SharedLinkDialog::slotPasswordEditTextChanged(const QString &text)
+void SharedLinkDialog::onCreateSharedLinkFailed(const ApiError& error)
 {
-    if (text.size() > 0 && text.size() < 8) {
-        generate_link_pushbutton_->setDisabled(true);
-    } else {
-        generate_link_pushbutton_->setEnabled(true);
+    if (error.type() != ApiError::HTTP_ERROR) {
+        gui->warningBox(tr("Failed to generate share link: %1").arg(error.toString()));
+        return;
     }
 
+    auto httpCode = error.httpErrorCode();
+    if (httpCode == 400) {
+        gui->warningBox(tr("Failed to generate share link: Invalid input"));
+        return;
+    }
+
+    gui->warningBox(tr("Failed to generate share link: %1").arg(error.toString()));
 }
 
 void SharedLinkDialog::slotShowPasswordCheckBoxClicked(int state)
