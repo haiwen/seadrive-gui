@@ -52,8 +52,7 @@ public:
                      const QString& repo_id = QString(),
                      const QString& commit_id = QString(),
                      const QString& previous_commit_id = QString(),
-                     MessageIcon icon = Information,
-                     int millisecondsTimeoutHint = 10000);
+                     MessageIcon icon = Information);
 
     void showWarningMessage(const QString& title,
                             const QString& message);

@@ -309,8 +309,7 @@ void SeafileTrayIcon::showMessage(const QString &title,
                                   const QString &repo_id,
                                   const QString &commit_id,
                                   const QString &previous_commit_id,
-                                  MessageIcon icon,
-                                  int millisecondsTimeoutHint)
+                                  MessageIcon icon)
 {
 #if defined(Q_OS_LINUX)
     repo_id_ = repo_id;
@@ -607,7 +606,7 @@ void SeafileTrayIcon::checkTrayIconMessageQueue()
         TrayNotificationWidget* trayNotification = new TrayNotificationWidget(info_icon.pixmap(32, 32), msg.title, msg.message);
         tnm->append(trayNotification);
     } else {
-        QSystemTrayIcon::showMessage(msg.title, msg.message, msg.icon, kMessageDisplayTimeMSecs);
+        QSystemTrayIcon::showMessage(msg.title, msg.message, msg.icon, 0);
     }
 #else
     QSystemTrayIcon::showMessage(msg.title, msg.message, msg.icon, kMessageDisplayTimeMSecs);
