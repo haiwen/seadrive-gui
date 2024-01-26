@@ -396,7 +396,6 @@ int AccountManager::removeAccount(const Account& account)
     return 0;
 }
 
-#if defined(Q_OS_WIN32)
 int AccountManager::resyncAccount(const Account& account)
 {
     Account updated_account;
@@ -410,7 +409,9 @@ int AccountManager::resyncAccount(const Account& account)
         }
     }
 
+#if defined(Q_OS_WIN32)
     setAccountSyncRoot(updated_account, true);
+#endif
 
     AccountMessage msg;
     msg.type = AccountResynced;
@@ -421,7 +422,6 @@ int AccountManager::resyncAccount(const Account& account)
 
     return 0;
 }
-#endif
 
 void AccountManager::updateAccountLastVisited(const Account& account)
 {

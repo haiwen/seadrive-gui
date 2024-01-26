@@ -226,14 +226,12 @@ void SeafileTrayIcon::prepareContextMenu()
             connect(delete_account_action, SIGNAL(triggered()), this, SLOT(deleteAccount()));
             submenu->addAction(delete_account_action);
 
-#if defined(Q_OS_WIN32)
             QAction *resync_account_action = new QAction(tr("Resync"), this);
             resync_account_action->setIcon(QIcon(":/images/resync.png"));
             resync_account_action->setIconVisibleInMenu(true);
             resync_account_action->setData(QVariant::fromValue(account));
             connect(resync_account_action, SIGNAL(triggered()), this, SLOT(resyncAccount()));
             submenu->addAction(resync_account_action);
-#endif
 
             account_menu_->addMenu(submenu);
         }
@@ -667,7 +665,6 @@ void SeafileTrayIcon::deleteAccount()
 
 void SeafileTrayIcon::resyncAccount()
 {
-#if defined(Q_OS_WIN32)
     QAction *action = qobject_cast<QAction*>(sender());
     if (!action)
         return;
@@ -686,7 +683,6 @@ void SeafileTrayIcon::resyncAccount()
     }
 
     gui->accountManager()->resyncAccount(account);
-#endif
 }
 
 void SeafileTrayIcon::setTransferRate(qint64 up_rate, qint64 down_rate)
