@@ -75,7 +75,7 @@ public:
 
     // Remove the account. Used when user removes an account from the
     // account menu.
-    int removeAccount(const Account& account);
+    void removeAccount(const Account& account);
 
     // Resync the account. Used when user resync an account from the
     // account menu.

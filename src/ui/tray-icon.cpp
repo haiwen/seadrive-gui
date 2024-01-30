@@ -661,6 +661,10 @@ void SeafileTrayIcon::deleteAccount()
     }
 
     gui->accountManager()->removeAccount(account);
+
+    if (gui->accountManager()->allAccounts().isEmpty()) {
+        gui->trayIcon()->showLoginDialog();
+    }
 }
 
 void SeafileTrayIcon::resyncAccount()

@@ -364,7 +364,7 @@ void AccountManager::disableAccount(const Account& account) {
     clearAccountToken(account);
 }
 
-int AccountManager::removeAccount(const Account& account)
+void AccountManager::removeAccount(const Account& account)
 {
     char *zql = sqlite3_mprintf(
         "DELETE FROM Accounts WHERE url = %Q AND username = %Q",
@@ -388,12 +388,7 @@ int AccountManager::removeAccount(const Account& account)
     messages.enqueue(msg);
 
     emit accountMQUpdated();
-
-    if (allAccounts().empty()) {
-        gui->trayIcon()->showLoginDialog();
-    }
-
-    return 0;
+    return;
 }
 
 int AccountManager::resyncAccount(const Account& account)

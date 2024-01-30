@@ -77,12 +77,13 @@ void RemoteWipeService::onRequestFailed(const ApiError& error)
     // but we only handle this error here to avoid complicate code since it is
     // general enough.
     if (error.type() == ApiError::HTTP_ERROR && error.httpErrorCode() == 401) {
-        gui->accountManager()->removeAccount(req->account());
 #ifdef Q_OS_MAC
         gui->warningBox(tr("Authorization expired, please re-login. You can find files that are not uploaded yet at ~/Library/CloudStorage"));
 #else
         gui->warningBox(tr("Authorization expired, please re-login"));
 #endif
+        gui->accountManager()->removeAccount(req->account());
+        gui->accountManager()->reloginAccount(req->account());
         active_request_count_--;
         return;
     }
