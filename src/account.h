@@ -26,6 +26,7 @@ public:
     QString token;
 #if defined(Q_OS_WIN32)
     QString syncRoot;
+    QString syncFolderName;
 #endif
     qint64 lastVisited;
     bool isShibboleth;
@@ -58,6 +59,7 @@ public:
         token(rhs.token),
 #if defined(Q_OS_WIN32)
         syncRoot(rhs.syncRoot),
+        syncFolderName(rhs.syncFolderName),
 #endif
         lastVisited(rhs.lastVisited),
         isShibboleth(rhs.isShibboleth),
@@ -74,6 +76,7 @@ public:
         token = rhs.token;
 #if defined(Q_OS_WIN32)
         syncRoot = rhs.syncRoot;
+        syncFolderName = rhs.syncFolderName;
 #endif
         lastVisited = rhs.lastVisited;
         isShibboleth = rhs.isShibboleth;

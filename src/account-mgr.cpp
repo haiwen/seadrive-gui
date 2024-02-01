@@ -739,6 +739,7 @@ const QString AccountManager::genSyncRootName(const Account& account, bool resyn
     QString url = account.serverUrl.toString();
     QString nickname = account.accountInfo.name;
     QString email = account.username;
+    QString sync_folder_name = account.syncFolderName;
     QString seadrive_root = gui->seadriveRoot();
     QString sync_root_path, sync_root_name;
 
@@ -750,7 +751,7 @@ const QString AccountManager::genSyncRootName(const Account& account, bool resyn
         return old_sync_dir;
     }
 
-    if (!resync) {
+    if (!resync && sync_folder_name.isEmpty()) {
         foreach (SyncRootInfo sync_root_info, sync_root_infos_)
         {
             if (url == sync_root_info.getUrl() && email == sync_root_info.getUserName()) {
@@ -763,7 +764,9 @@ const QString AccountManager::genSyncRootName(const Account& account, bool resyn
         }
     }
 
-    if (!nickname.isEmpty()) {
+    if (!sync_folder_name.isEmpty()) {
+        sync_root_name = toCStr(sync_folder_name);
+    } else if (!nickname.isEmpty()) {
         sync_root_name = toCStr(nickname);
     } else {
         int pos = email.indexOf("@");
