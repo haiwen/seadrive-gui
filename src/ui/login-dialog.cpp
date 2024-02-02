@@ -87,6 +87,14 @@ LoginDialog::LoginDialog(QWidget *parent) : QDialog(parent)
 
     mAutomaticLogin->setCheckState(Qt::Checked);
 
+#ifdef Q_OS_WIN32
+    mSyncFolderNameLabel->setVisible(true);
+    mSyncFolderName->setVisible(true);
+#else
+    mSyncFolderNameLabel->setVisible(false);
+    mSyncFolderName->setVisible(false);
+#endif
+
     connect(mSubmitBtn, SIGNAL(clicked()), this, SLOT(doLogin()));
 
     QRect screen;
@@ -155,6 +163,7 @@ void LoginDialog::disableInputs()
     mPassword->setEnabled(false);
     mSubmitBtn->setEnabled(false);
     mComputerName->setEnabled(false);
+    mSyncFolderName->setEnabled(false);
 }
 
 void LoginDialog::enableInputs()
@@ -164,6 +173,7 @@ void LoginDialog::enableInputs()
     mPassword->setEnabled(true);
     mSubmitBtn->setEnabled(true);
     mComputerName->setEnabled(true);
+    mSyncFolderName->setEnabled(true);
 }
 
 void LoginDialog::onNetworkError(const QNetworkReply::NetworkError& error, const QString& error_string)
@@ -233,6 +243,7 @@ bool LoginDialog::validateInputs()
     username_ = mUsername->text();
     password_ = mPassword->text();
     computer_name_ = mComputerName->text();
+    sync_folder_name_ = mSyncFolderName->text().trimmed();
 
     gui->settingsManager()->setComputerName(computer_name_);
 
@@ -291,6 +302,9 @@ void LoginDialog::onFetchAccountInfoSuccess(const AccountInfo& info)
     account.username = info.email;
     account.isAutomaticLogin =
         mAutomaticLogin->checkState() == Qt::Checked;
+#ifdef Q_OS_WIN32
+    account.syncFolderName = sync_folder_name_;
+#endif
 
     gui->accountManager()->enableAccount(account);
     gui->accountManager()->updateAccountInfo(account, info);
