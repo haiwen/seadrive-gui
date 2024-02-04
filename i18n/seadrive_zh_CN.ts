@@ -344,6 +344,30 @@
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
+    <message>
+        <source>Sync Folder Name:</source>
+        <translation>同步文件夹名称：</translation>
+    </message>
+    <message>
+        <source>(leave empty to use defaults)</source>
+        <translation>（留空则使用默认值）</translation>
+    </message>
+    <message>
+        <source>Failed to get server info. Please check the server address.</source>
+        <translation>获取服务器数据失败。请检查服务器地址。</translation>
+    </message>
+    <message>
+        <source>Failed to get client sso link.</source>
+        <translation>获取客户端单点登录链接失败。</translation>
+    </message>
+    <message>
+        <source>SSO login failed.</source>
+        <translation>单点登录失败。</translation>
+    </message>
+    <message>
+        <source>Failed to get client sso status.</source>
+        <translation>获取客户端单点登录状态失败。</translation>
+    </message>
 </context>
 <context>
     <name>MessagePoller</name>
@@ -1260,10 +1284,6 @@
         <translation>复制至剪贴板</translation>
     </message>
     <message>
-        <source>Password(At least 8 characters)</source>
-        <translation>密码（至少 8 个字符）</translation>
-    </message>
-    <message>
         <source>Show password</source>
         <translation>显示密码</translation>
     </message>
@@ -1274,6 +1294,18 @@
     <message>
         <source>Generate link</source>
         <translation>生成链接</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>密码</translation>
+    </message>
+    <message>
+        <source>Failed to generate share link: %1</source>
+        <translation>生成共享链接失败：%1</translation>
+    </message>
+    <message>
+        <source>Failed to generate share link: Invalid input</source>
+        <translation>生成共享链接失败：输入错误</translation>
     </message>
 </context>
 <context>

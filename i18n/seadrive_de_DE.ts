@@ -344,6 +344,30 @@
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
+    <message>
+        <source>Sync Folder Name:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>(leave empty to use defaults)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get server info. Please check the server address.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get client sso link.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SSO login failed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get client sso status.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MessagePoller</name>
@@ -1260,10 +1284,6 @@
         <translation>Kopieren</translation>
     </message>
     <message>
-        <source>Password(At least 8 characters)</source>
-        <translation>Passwort (mindestens 8 Zeichen)</translation>
-    </message>
-    <message>
         <source>Show password</source>
         <translation>Passwort anzeigen</translation>
     </message>
@@ -1274,6 +1294,18 @@
     <message>
         <source>Generate link</source>
         <translation>Link erstellen</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to generate share link: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to generate share link: Invalid input</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
