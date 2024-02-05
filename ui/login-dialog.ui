@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>550</width>
-    <height>440</height>
+    <height>349</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -125,36 +125,10 @@ min-width: 260px;
        <property name="spacing">
         <number>10</number>
        </property>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="mUsername"/>
-       </item>
        <item row="0" column="0">
         <widget class="QLabel" name="serverUrl">
          <property name="text">
           <string>Server:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QLabel" name="mStatusText">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>status text</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QLineEdit" name="mComputerName"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Email / Username:</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -230,6 +204,36 @@ min-width: 260px;
          </item>
         </layout>
        </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Email / Username:</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="mUsername"/>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Password:</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="mPassword">
+         <property name="echoMode">
+          <enum>QLineEdit::Password</enum>
+         </property>
+        </widget>
+       </item>
        <item row="4" column="1">
         <layout class="QGridLayout" name="automaticLoginLayout">
          <property name="verticalSpacing">
@@ -257,23 +261,6 @@ min-width: 260px;
          </item>
         </layout>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Password:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="mPassword">
-         <property name="echoMode">
-          <enum>QLineEdit::Password</enum>
-         </property>
-        </widget>
-       </item>
        <item row="5" column="0">
         <widget class="QLabel" name="label_5">
          <property name="text">
@@ -287,6 +274,9 @@ min-width: 260px;
          </property>
         </widget>
        </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="mComputerName"/>
+       </item>
        <item row="6" column="1">
         <widget class="QLabel" name="hint_3">
          <property name="text">
@@ -294,23 +284,13 @@ min-width: 260px;
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="mSyncFolderNameLabel">
-         <property name="text">
-          <string>Sync Folder Name:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
        <item row="7" column="1">
-        <widget class="QLineEdit" name="mSyncFolderName">
-         <property name="maxLength">
-          <number>8</number>
+        <widget class="QLabel" name="mStatusText">
+         <property name="enabled">
+          <bool>true</bool>
          </property>
-         <property name="placeholderText">
-          <string>(leave empty to use defaults)</string>
+         <property name="text">
+          <string>status text</string>
          </property>
         </widget>
        </item>

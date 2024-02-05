@@ -66,7 +66,6 @@ private:
     QString password_;
     QString sso_token_;
     QString computer_name_;
-    QString sync_folder_name_;
     LoginRequest *request_;
     FetchAccountInfoRequest *account_info_req_;
 
