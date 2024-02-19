@@ -345,14 +345,6 @@
         <translation>取消</translation>
     </message>
     <message>
-        <source>Sync Folder Name:</source>
-        <translation>同步文件夹名称：</translation>
-    </message>
-    <message>
-        <source>(leave empty to use defaults)</source>
-        <translation>（留空则使用默认值）</translation>
-    </message>
-    <message>
         <source>Failed to get server info. Please check the server address.</source>
         <translation>获取服务器数据失败。请检查服务器地址。</translation>
     </message>

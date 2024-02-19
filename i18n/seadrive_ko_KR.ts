@@ -345,14 +345,6 @@
         <translation>취소</translation>
     </message>
     <message>
-        <source>Sync Folder Name:</source>
-        <translation>동기화 폴더 이름:</translation>
-    </message>
-    <message>
-        <source>(leave empty to use defaults)</source>
-        <translation>(기본값을 사용하려면 빈 채로 두세요)</translation>
-    </message>
-    <message>
         <source>Failed to get server info. Please check the server address.</source>
         <translation>서버 정보 가져오기를 실패했습니다. 서버 주소를 확인하세요.</translation>
     </message>

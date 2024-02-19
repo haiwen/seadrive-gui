@@ -345,14 +345,6 @@
         <translation>Отмена</translation>
     </message>
     <message>
-        <source>Sync Folder Name:</source>
-        <translation>Имя папки синхронизации:</translation>
-    </message>
-    <message>
-        <source>(leave empty to use defaults)</source>
-        <translation>(оставьте пустым, чтобы использовать значения по умолчанию)</translation>
-    </message>
-    <message>
         <source>Failed to get server info. Please check the server address.</source>
         <translation>Не удалось получить информацию о сервере. Проверьте адрес сервера.</translation>
     </message>

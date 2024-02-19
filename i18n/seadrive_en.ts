@@ -346,14 +346,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sync Folder Name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>(leave empty to use defaults)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Failed to get server info. Please check the server address.</source>
         <translation type="unfinished"></translation>
     </message>
