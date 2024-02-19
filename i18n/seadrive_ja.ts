@@ -344,6 +344,22 @@
         <source>Cancel</source>
         <translation>キャンセル</translation>
     </message>
+    <message>
+        <source>Failed to get server info. Please check the server address.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get client sso link.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SSO login failed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to get client sso status.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MessagePoller</name>
@@ -1259,10 +1275,6 @@
         <translation>クリップボードにコピー</translation>
     </message>
     <message>
-        <source>Password(At least 8 characters)</source>
-        <translation>パスワード（8文字以上）</translation>
-    </message>
-    <message>
         <source>Show password</source>
         <translation>パスワードを表示</translation>
     </message>
@@ -1273,6 +1285,18 @@
     <message>
         <source>Generate link</source>
         <translation>リンクの生成</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to generate share link: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to generate share link: Invalid input</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

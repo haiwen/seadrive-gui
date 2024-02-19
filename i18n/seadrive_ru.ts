@@ -344,6 +344,22 @@
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
+    <message>
+        <source>Failed to get server info. Please check the server address.</source>
+        <translation>Не удалось получить информацию о сервере. Проверьте адрес сервера.</translation>
+    </message>
+    <message>
+        <source>Failed to get client sso link.</source>
+        <translation>Не удалось получить ссылку единого входа клиента.</translation>
+    </message>
+    <message>
+        <source>SSO login failed.</source>
+        <translation>Не удалось войти в систему единого входа.</translation>
+    </message>
+    <message>
+        <source>Failed to get client sso status.</source>
+        <translation>Не удалось получить статус единого входа клиента.</translation>
+    </message>
 </context>
 <context>
     <name>MessagePoller</name>
@@ -1052,7 +1068,7 @@
     </message>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;? After removing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
-        <translation type="unfinished"/>
+        <translation>Вы уверены, что хотите удалить аккаунт из &quot;%1&quot;? После удаления аккаунта вы по-прежнему сможете найти загруженные файлы в ~/Library/CloudStorage.</translation>
     </message>
 </context>
 <context>
@@ -1261,10 +1277,6 @@
         <translation>Копировать в буфер обмена</translation>
     </message>
     <message>
-        <source>Password(At least 8 characters)</source>
-        <translation>Пароль (Не менее 8 символов)</translation>
-    </message>
-    <message>
         <source>Show password</source>
         <translation>Показать пароль</translation>
     </message>
@@ -1275,6 +1287,18 @@
     <message>
         <source>Generate link</source>
         <translation>Создать ссылку</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Пароль</translation>
+    </message>
+    <message>
+        <source>Failed to generate share link: %1</source>
+        <translation>Не удалось создать ссылку общего доступа: %1</translation>
+    </message>
+    <message>
+        <source>Failed to generate share link: Invalid input</source>
+        <translation>Не удалось создать ссылку общего доступа: Неверный ввод</translation>
     </message>
 </context>
 <context>

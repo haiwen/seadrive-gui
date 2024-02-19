@@ -344,6 +344,22 @@
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
+    <message>
+        <source>Failed to get server info. Please check the server address.</source>
+        <translation>서버 정보 가져오기를 실패했습니다. 서버 주소를 확인하세요.</translation>
+    </message>
+    <message>
+        <source>Failed to get client sso link.</source>
+        <translation>클라이언트 단일 로그인 연결 가져오기를 실패했습니다.</translation>
+    </message>
+    <message>
+        <source>SSO login failed.</source>
+        <translation>SSO 로그인을 실패했습니다.</translation>
+    </message>
+    <message>
+        <source>Failed to get client sso status.</source>
+        <translation>클라이언트 단일 로그인 상태 가져오기를 실패했습니다. </translation>
+    </message>
 </context>
 <context>
     <name>MessagePoller</name>
@@ -779,7 +795,7 @@
     </message>
     <message>
         <source>Authorization expired, please re-login. You can find files that are not uploaded yet at ~/Library/CloudStorage</source>
-        <translation type="unfinished"/>
+        <translation>인증 기간이 지났으니 다시 로그인하세요. 아직 업로드하지 않은 파일은 ~/Library/CloudStorage 위치에서 찾아볼 수 있습니다.</translation>
     </message>
 </context>
 <context>
@@ -1047,11 +1063,11 @@
     </message>
     <message>
         <source>The account will be synced to a new sync root folder. Are you sure to resync account from &quot;%1&quot;?</source>
-        <translation type="unfinished"/>
+        <translation>계정을 새 동기화 루트 폴더에 동기화합니다. &quot;%1&quot; 계정을 다시 동기화할까요?</translation>
     </message>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;? After removing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
-        <translation type="unfinished"/>
+        <translation>정말로 &quot;%1&quot; 계정을 제거할까요? 계정을 제거하더라도 ~/Library/CloudStorage 위치에서 다운로드한 파일을 찾을 수 있습니다.</translation>
     </message>
 </context>
 <context>
@@ -1260,10 +1276,6 @@
         <translation>클립보드로 복사</translation>
     </message>
     <message>
-        <source>Password(At least 8 characters)</source>
-        <translation>암호(최소 8문자)</translation>
-    </message>
-    <message>
         <source>Show password</source>
         <translation>암호 표시</translation>
     </message>
@@ -1274,6 +1286,18 @@
     <message>
         <source>Generate link</source>
         <translation>링크 만들기</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>암호</translation>
+    </message>
+    <message>
+        <source>Failed to generate share link: %1</source>
+        <translation>공유 링크 만들기를 실패했습니다: %1</translation>
+    </message>
+    <message>
+        <source>Failed to generate share link: Invalid input</source>
+        <translation>공유 링크 만들기를 실패했습니다: 부적절한 입력</translation>
     </message>
 </context>
 <context>
