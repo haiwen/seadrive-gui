@@ -644,10 +644,11 @@ void SeafileTrayIcon::deleteAccount()
         return;
     Account account = qvariant_cast<Account>(action->data());
 
-    bool is_uploading = gui->rpcClient()->isAccountUploading (account);
-    if (is_uploading) {
-        gui->warningBox (tr("There are changes being uploaded under the account, please try again later"));
-        return;
+    if (gui->rpcClient()->isConnected()) {
+        if (gui->rpcClient()->isAccountUploading(account)) {
+            gui->warningBox(tr("There are changes being uploaded under the account, please try again later"));
+            return;
+        }
     }
 
 #ifdef Q_OS_WIN32
