@@ -346,27 +346,27 @@
     </message>
     <message>
         <source>Sync Folder Name:</source>
-        <translation type="unfinished"/>
+        <translation>동기화 폴더 이름:</translation>
     </message>
     <message>
         <source>(leave empty to use defaults)</source>
-        <translation type="unfinished"/>
+        <translation>(기본값을 사용하려면 빈 채로 두세요)</translation>
     </message>
     <message>
         <source>Failed to get server info. Please check the server address.</source>
-        <translation type="unfinished"/>
+        <translation>서버 정보 가져오기를 실패했습니다. 서버 주소를 확인하세요.</translation>
     </message>
     <message>
         <source>Failed to get client sso link.</source>
-        <translation type="unfinished"/>
+        <translation>클라이언트 단일 로그인 연결 가져오기를 실패했습니다.</translation>
     </message>
     <message>
         <source>SSO login failed.</source>
-        <translation type="unfinished"/>
+        <translation>SSO 로그인을 실패했습니다.</translation>
     </message>
     <message>
         <source>Failed to get client sso status.</source>
-        <translation type="unfinished"/>
+        <translation>클라이언트 단일 로그인 상태 가져오기를 실패했습니다. </translation>
     </message>
 </context>
 <context>
@@ -1297,15 +1297,15 @@
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"/>
+        <translation>암호</translation>
     </message>
     <message>
         <source>Failed to generate share link: %1</source>
-        <translation type="unfinished"/>
+        <translation>공유 링크 만들기를 실패했습니다: %1</translation>
     </message>
     <message>
         <source>Failed to generate share link: Invalid input</source>
-        <translation type="unfinished"/>
+        <translation>공유 링크 만들기를 실패했습니다: 부적절한 입력</translation>
     </message>
 </context>
 <context>
