@@ -1295,10 +1295,6 @@
         <source>Failed to generate share link: %1</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Failed to generate share link: Invalid input</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ShibLoginDialog</name>

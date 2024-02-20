@@ -1296,10 +1296,6 @@
         <source>Failed to generate share link: %1</source>
         <translation>Не удалось создать ссылку общего доступа: %1</translation>
     </message>
-    <message>
-        <source>Failed to generate share link: Invalid input</source>
-        <translation>Не удалось создать ссылку общего доступа: Неверный ввод</translation>
-    </message>
 </context>
 <context>
     <name>ShibLoginDialog</name>

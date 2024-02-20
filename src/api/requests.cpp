@@ -3,6 +3,7 @@
 #include <QScopedPointer>
 #include <QtNetwork>
 #include <QPixmap>
+#include <QJsonDocument>
 
 #include "account.h"
 
@@ -1275,6 +1276,14 @@ void CreateSharedLinkRequest::requestSuccess(QNetworkReply& reply)
     const char* share_link = json_string_value(json_object_get(json.data(), "link"));
 
     emit success(share_link);
+}
+
+void CreateSharedLinkRequest::onHttpError(int code)
+{
+    QJsonDocument doc(QJsonDocument::fromJson(replyBody()));
+    error_msg = doc["error_msg"].toString();
+
+    emit failed(ApiError::fromHttpError(code));
 }
 
 GetSharedLinkRequest::GetSharedLinkRequest(const Account &account,

@@ -1295,10 +1295,6 @@
         <source>Failed to generate share link: %1</source>
         <translation>공유 링크 만들기를 실패했습니다: %1</translation>
     </message>
-    <message>
-        <source>Failed to generate share link: Invalid input</source>
-        <translation>공유 링크 만들기를 실패했습니다: 부적절한 입력</translation>
-    </message>
 </context>
 <context>
     <name>ShibLoginDialog</name>

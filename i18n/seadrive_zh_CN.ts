@@ -1295,10 +1295,6 @@
         <source>Failed to generate share link: %1</source>
         <translation>生成共享链接失败：%1</translation>
     </message>
-    <message>
-        <source>Failed to generate share link: Invalid input</source>
-        <translation>生成共享链接失败：输入错误</translation>
-    </message>
 </context>
 <context>
     <name>ShibLoginDialog</name>
