@@ -136,18 +136,15 @@ void SharedLinkDialog::onCreateSharedLinkSuccess(const QString& link)
 
 void SharedLinkDialog::onCreateSharedLinkFailed(const ApiError& error)
 {
-    if (error.type() != ApiError::HTTP_ERROR) {
-        gui->warningBox(tr("Failed to generate share link: %1").arg(error.toString()));
-        return;
-    }
+    CreateSharedLinkRequest *req = qobject_cast<CreateSharedLinkRequest*>(sender());
 
-    auto httpCode = error.httpErrorCode();
-    if (httpCode == 400) {
-        gui->warningBox(tr("Failed to generate share link: Invalid input"));
+    if (error.type() == ApiError::HTTP_ERROR && error.httpErrorCode() == 400) {
+        gui->warningBox(tr("Failed to generate share link: %1").arg(req->errorMsg()));
         return;
     }
 
     gui->warningBox(tr("Failed to generate share link: %1").arg(error.toString()));
+    return;
 }
 
 void SharedLinkDialog::slotShowPasswordCheckBoxClicked(int state)

@@ -38,6 +38,7 @@ public:
     virtual void send();
 
     const QNetworkReply* reply() const;
+    const QByteArray replyBody() const;
 
 signals:
     void failed(const ApiError& error);
