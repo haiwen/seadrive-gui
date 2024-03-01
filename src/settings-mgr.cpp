@@ -660,6 +660,9 @@ void SettingsManager::onSystemProxyPolled(const QNetworkProxy &system_proxy)
         // qDebug ("system proxy not changed\n");
         return;
     }
+    if (!gui->rpcClient()->isConnected()) {
+        return;
+    }
     // qDebug ("system proxy changed\n");
     last_system_proxy_ = system_proxy;
     SeafileProxy proxy = SeafileProxy::fromQtNetworkProxy(system_proxy);
