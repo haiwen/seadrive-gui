@@ -67,7 +67,7 @@ public:
 
     void migrateOldConfig(const QString& data_dir);
 
-#if defined(Q_OS_WIN32)
+#if defined(Q_OS_WIN32) || defined(Q_OS_LINUX)
     QString seadriveRoot() const;
 #endif
 
@@ -107,6 +107,7 @@ private slots:
     void onDaemonStarted();
     void onDaemonRestarted();
     void onDaemonRestarted(const QString& domain_id);
+
     void connectDaemon();
 
 private:
