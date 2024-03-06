@@ -482,6 +482,17 @@ void SeadriveGui::start()
 
     RemoteWipeService::instance()->start();
     AccountInfoService::instance()->start();
+#elif defined(Q_OS_LINUX)
+    settings_mgr_->loadProxySettings();
+    settings_mgr_->applyProxySettings();
+
+    loginAccounts();
+
+    connect(daemon_mgr_, SIGNAL(daemonStarted()),
+            this, SLOT(onDaemonStarted()));
+    connect(daemon_mgr_, SIGNAL(daemonRestarted()),
+            this, SLOT(onDaemonRestarted()));
+    daemon_mgr_->startSeadriveDaemon();
 #endif
 }
 
@@ -543,8 +554,8 @@ void SeadriveGui::onDaemonStarted()
         message_poller->start();
         message_pollers_.insert(EMPTY_DOMAIN_ID, message_poller);
     }
-#if defined(Q_OS_WIN32)
-    rpc_client->connectDaemon();
+#if defined(Q_OS_WIN32) || defined(Q_OS_LINUX)
+    rpc_client_->connectDaemon();
 #endif
 
     auto accounts = account_mgr_->activeAccounts();
@@ -800,6 +811,22 @@ bool SeadriveGui::initLog()
     }
 #endif
 
+  // On linux we must unmount the mount point dir before trying to create it,
+  // otherwise checkdir_with_mkdir would think it doesn't exist and try to
+  // create it, but the creation operation would fail.
+#if defined(Q_OS_LINUX)
+      QStringList umount_arguments;
+      umount_arguments << "-u" << seadriveRoot();
+      QProcess::execute("fusermount", umount_arguments);
+#endif
+
+#if defined(Q_OS_LINUX)
+  if (checkdir_with_mkdir(toCStr(seadriveRoot())) < 0) {
+      errorAndExit(tr("Failed to initialize: failed to create seadrive mount folder"));
+      return false;
+  }
+#endif
+
     if (applet_log_init(toCStr(seadrive_dir.absolutePath())) < 0) {
         errorAndExit(tr("Failed to initialize log: %1").arg(g_strerror(errno)));
         return false;
@@ -1022,6 +1049,11 @@ QString SeadriveGui::readPreconfigureExpandedString(const QString& key, const QV
 QString SeadriveGui::seadriveRoot() const
 {
     return seadrive_root_;
+}
+#elif defined(Q_OS_LINUX)
+QString SeadriveGui::seadriveRoot() const
+{
+    return QDir::home().absoluteFilePath(getBrand());
 }
 #endif
 
