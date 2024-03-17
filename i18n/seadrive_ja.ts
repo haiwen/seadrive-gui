@@ -201,7 +201,7 @@
         <translation>終了</translation>
     </message>
     <message>
-        <source>%1 has dowloaded your files list.</source>
+        <source>%1 has downloaded your files list.</source>
         <translation type="unfinished"/>
     </message>
 </context>

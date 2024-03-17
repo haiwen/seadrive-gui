@@ -201,7 +201,7 @@
         <translation>完成</translation>
     </message>
     <message>
-        <source>%1 has dowloaded your files list.</source>
+        <source>%1 has downloaded your files list.</source>
         <translation>%1 已经完成文件列表获取。</translation>
     </message>
 </context>
