@@ -156,7 +156,7 @@ bool SeafileRpcClient::tryConnectDaemon(bool first) {
 int SeafileRpcClient::seafileGetConfig(const QString &key, QString *value)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return -1;
     }
 
@@ -178,7 +178,7 @@ int SeafileRpcClient::seafileGetConfig(const QString &key, QString *value)
 int SeafileRpcClient::seafileGetConfigInt(const QString &key, int *value)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return -1;
     }
 
@@ -198,7 +198,7 @@ int SeafileRpcClient::seafileGetConfigInt(const QString &key, int *value)
 int SeafileRpcClient::seafileSetConfig(const QString &key, const QString &value)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return -1;
     }
 
@@ -229,7 +229,7 @@ int SeafileRpcClient::setDownloadRateLimit(int limit)
 int SeafileRpcClient::setRateLimit(bool upload, int limit)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return -1;
     }
 
@@ -248,7 +248,7 @@ int SeafileRpcClient::setRateLimit(bool upload, int limit)
 int SeafileRpcClient::seafileSetConfigInt(const QString &key, int value)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return -1;
     }
 
@@ -268,7 +268,7 @@ int SeafileRpcClient::seafileSetConfigInt(const QString &key, int value)
 int SeafileRpcClient::getDownloadRate(int *rate)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return -1;
     }
 
@@ -289,7 +289,7 @@ int SeafileRpcClient::getDownloadRate(int *rate)
 int SeafileRpcClient::getUploadRate(int *rate)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return -1;
     }
 
@@ -310,7 +310,7 @@ int SeafileRpcClient::getUploadRate(int *rate)
 bool SeafileRpcClient::getUploadProgress(json_t **ret_obj)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -334,7 +334,7 @@ bool SeafileRpcClient::getUploadProgress(json_t **ret_obj)
 bool SeafileRpcClient::getDownloadProgress(json_t **ret_obj)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -360,7 +360,7 @@ int SeafileRpcClient::getRepoProperty(const QString &repo_id,
                                       QString *value)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return -1;
     }
 
@@ -387,7 +387,7 @@ int SeafileRpcClient::setRepoProperty(const QString &repo_id,
                                       const QString& value)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return -1;
     }
 
@@ -412,7 +412,7 @@ int SeafileRpcClient::setRepoToken(const QString &repo_id,
                                    const QString& token)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return -1;
     }
 
@@ -437,7 +437,7 @@ bool SeafileRpcClient::getRepoFileLockStatus(const QString& repo_id,
                                              int* status)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -459,7 +459,7 @@ bool SeafileRpcClient::getRepoFileLockStatus(const QString& repo_id,
 int SeafileRpcClient::getCategorySyncStatus(const QString& category, QString *status)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return -1;
     }
 
@@ -490,7 +490,7 @@ int SeafileRpcClient::markFileLockState(const QString &repo_id,
                                         bool lock)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return -1;
     }
 
@@ -517,7 +517,7 @@ bool SeafileRpcClient::setServerProperty(const QString &url,
                                          const QString &value)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -540,7 +540,7 @@ bool SeafileRpcClient::setServerProperty(const QString &url,
 bool SeafileRpcClient::addAccount(const Account& account)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -573,7 +573,7 @@ bool SeafileRpcClient::addAccount(const Account& account)
 bool SeafileRpcClient::addAccount(const Account& account)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -616,7 +616,7 @@ bool SeafileRpcClient::addAccount(const Account& account)
 bool SeafileRpcClient::deleteAccount(const Account& account, bool remove_cache)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -639,7 +639,7 @@ bool SeafileRpcClient::deleteAccount(const Account& account, bool remove_cache)
 bool SeafileRpcClient::logoutAccount(const Account& account)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -665,7 +665,7 @@ bool SeafileRpcClient::logoutAccount(const Account& account)
 bool SeafileRpcClient::isAccountUploading(const Account& account)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -699,7 +699,7 @@ bool SeafileRpcClient::getRepoIdByPath(const QString &server,
                                        QString *repo_id)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -729,7 +729,7 @@ bool SeafileRpcClient::getRepoUnameById(const QString &repo_id,
                                         QString *repo_uname)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -760,7 +760,7 @@ bool SeafileRpcClient::getRepoUnameById(const QString &repo_id,
 bool SeafileRpcClient::getAccountByRepoId(const QString& repo_id, json_t **ret_obj)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -784,7 +784,7 @@ bool SeafileRpcClient::getAccountByRepoId(const QString& repo_id, json_t **ret_o
 bool SeafileRpcClient::getSyncNotification(json_t **ret_obj)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -813,7 +813,7 @@ bool SeafileRpcClient::getSyncNotification(json_t **ret_obj)
 bool SeafileRpcClient::getGlobalSyncStatus(json_t **ret_obj)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -839,7 +839,7 @@ bool SeafileRpcClient::getGlobalSyncStatus(json_t **ret_obj)
 bool SeafileRpcClient::setCacheCleanIntervalMinutes(int interval)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -858,7 +858,7 @@ bool SeafileRpcClient::setCacheCleanIntervalMinutes(int interval)
 bool SeafileRpcClient::setCacheSizeLimitGB(int limit)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -878,7 +878,7 @@ bool SeafileRpcClient::setCacheSizeLimitGB(int limit)
 bool SeafileRpcClient::getCacheCleanIntervalMinutes(int *value)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -899,7 +899,7 @@ bool SeafileRpcClient::getCacheCleanIntervalMinutes(int *value)
 bool SeafileRpcClient::getCacheSizeLimitGB(int *value)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -920,7 +920,7 @@ bool SeafileRpcClient::getCacheSizeLimitGB(int *value)
 bool SeafileRpcClient::getSeaDriveEvents(json_t **ret_obj)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -947,7 +947,7 @@ bool SeafileRpcClient::getSeaDriveEvents(json_t **ret_obj)
 bool SeafileRpcClient::getSyncErrors(json_t **ret_obj)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -977,7 +977,7 @@ bool SeafileRpcClient::cachePath(const QString& repo_id,
                                  const QString& path_in_repo)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -1006,7 +1006,7 @@ bool SeafileRpcClient::isFileCached(const QString& repo_id,
                                     const QString& path_in_repo)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -1032,7 +1032,7 @@ bool SeafileRpcClient::isFileCached(const QString& repo_id,
 bool SeafileRpcClient::getEncryptedRepoList(json_t **ret_obj)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -1059,7 +1059,7 @@ bool SeafileRpcClient::setEncryptedRepoPassword(const QString& repo_id,
                                                 QString* error_message)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -1084,7 +1084,7 @@ bool SeafileRpcClient::setEncryptedRepoPassword(const QString& repo_id,
 bool SeafileRpcClient::clearEncryptedRepoPassword(const QString& repo_id)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -1107,7 +1107,7 @@ bool SeafileRpcClient::clearEncryptedRepoPassword(const QString& repo_id)
 bool SeafileRpcClient::exitSeadriveDaemon()
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -1129,7 +1129,7 @@ bool SeafileRpcClient::exitSeadriveDaemon()
 bool SeafileRpcClient::unCachePath(const QString& repo_id, const QString& path_in_repo)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
@@ -1154,7 +1154,7 @@ bool SeafileRpcClient::unCachePath(const QString& repo_id, const QString& path_i
 bool SeafileRpcClient::addDelConfirmation(const QString& confirmation_id, bool resync)
 {
     if (!connected_) {
-        qWarning("Call searpc from unconnected client");
+        qWarning("Call searpc from disconnected client");
         return false;
     }
 
