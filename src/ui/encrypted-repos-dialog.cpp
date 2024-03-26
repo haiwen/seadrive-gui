@@ -264,9 +264,6 @@ EncryptedReposTableModel::EncryptedReposTableModel(QObject *parent)
 void EncryptedReposTableModel::updateEncryptRepoList()
 {
     rpc_client_ = gui->rpcClient();
-    if (!rpc_client_->isConnected()) {
-        return;
-    }
     json_t *ret;
     if (!rpc_client_->getEncryptedRepoList(&ret)) {
        qWarning("failed to get encrypt library list");
