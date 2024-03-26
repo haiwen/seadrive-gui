@@ -155,6 +155,11 @@ bool SeafileRpcClient::tryConnectDaemon(bool first) {
 
 int SeafileRpcClient::seafileGetConfig(const QString &key, QString *value)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return -1;
+    }
+
     GError *error = NULL;
     char *ret = searpc_client_call__string (seadrive_rpc_client_,
                                             "seafile_get_config", &error,
@@ -172,6 +177,11 @@ int SeafileRpcClient::seafileGetConfig(const QString &key, QString *value)
 
 int SeafileRpcClient::seafileGetConfigInt(const QString &key, int *value)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return -1;
+    }
+
     GError *error = NULL;
     *value = searpc_client_call__int (seadrive_rpc_client_,
                                       "seafile_get_config_int", &error,
@@ -187,6 +197,11 @@ int SeafileRpcClient::seafileGetConfigInt(const QString &key, int *value)
 
 int SeafileRpcClient::seafileSetConfig(const QString &key, const QString &value)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return -1;
+    }
+
     // printf ("set config: %s = %s\n", toCStr(key), toCStr(value));
     GError *error = NULL;
     searpc_client_call__int (seadrive_rpc_client_,
@@ -213,6 +228,11 @@ int SeafileRpcClient::setDownloadRateLimit(int limit)
 
 int SeafileRpcClient::setRateLimit(bool upload, int limit)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return -1;
+    }
+
     GError *error = NULL;
     const char *rpc = upload ? "seafile_set_upload_rate_limit" : "seafile_set_download_rate_limit";
     searpc_client_call__int (seadrive_rpc_client_,
@@ -227,6 +247,11 @@ int SeafileRpcClient::setRateLimit(bool upload, int limit)
 
 int SeafileRpcClient::seafileSetConfigInt(const QString &key, int value)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return -1;
+    }
+
     // printf ("set config: %s = %d\n", toCStr(key), value);
     GError *error = NULL;
     searpc_client_call__int (seadrive_rpc_client_,
@@ -242,6 +267,11 @@ int SeafileRpcClient::seafileSetConfigInt(const QString &key, int value)
 
 int SeafileRpcClient::getDownloadRate(int *rate)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return -1;
+    }
+
     GError *error = NULL;
     int ret = searpc_client_call__int (seadrive_rpc_client_,
                                        "seafile_get_download_rate",
@@ -258,6 +288,11 @@ int SeafileRpcClient::getDownloadRate(int *rate)
 
 int SeafileRpcClient::getUploadRate(int *rate)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return -1;
+    }
+
     GError *error = NULL;
     int ret = searpc_client_call__int (seadrive_rpc_client_,
                                        "seafile_get_upload_rate",
@@ -274,6 +309,11 @@ int SeafileRpcClient::getUploadRate(int *rate)
 
 bool SeafileRpcClient::getUploadProgress(json_t **ret_obj)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     json_t *ret = searpc_client_call__json (
         seadrive_rpc_client_,
@@ -293,6 +333,11 @@ bool SeafileRpcClient::getUploadProgress(json_t **ret_obj)
 
 bool SeafileRpcClient::getDownloadProgress(json_t **ret_obj)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     json_t *ret = searpc_client_call__json (
         seadrive_rpc_client_,
@@ -314,6 +359,11 @@ int SeafileRpcClient::getRepoProperty(const QString &repo_id,
                                       const QString& name,
                                       QString *value)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return -1;
+    }
+
     GError *error = NULL;
     char *ret = searpc_client_call__string (
         seadrive_rpc_client_,
@@ -336,6 +386,11 @@ int SeafileRpcClient::setRepoProperty(const QString &repo_id,
                                       const QString& name,
                                       const QString& value)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return -1;
+    }
+
     GError *error = NULL;
     int ret = searpc_client_call__int (
         seadrive_rpc_client_,
@@ -356,6 +411,11 @@ int SeafileRpcClient::setRepoProperty(const QString &repo_id,
 int SeafileRpcClient::setRepoToken(const QString &repo_id,
                                    const QString& token)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return -1;
+    }
+
     GError *error = NULL;
     int ret = searpc_client_call__int (
         seadrive_rpc_client_,
@@ -376,6 +436,11 @@ bool SeafileRpcClient::getRepoFileLockStatus(const QString& repo_id,
                                              const QString& path_in_repo,
                                              int* status)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     *status = searpc_client_call__int(seadrive_rpc_client_, "seafile_get_path_lock_status",
                             &error, 2,
@@ -393,6 +458,11 @@ bool SeafileRpcClient::getRepoFileLockStatus(const QString& repo_id,
 
 int SeafileRpcClient::getCategorySyncStatus(const QString& category, QString *status)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return -1;
+    }
+
     GError *error = NULL;
     char *ret = searpc_client_call__string (
         seadrive_rpc_client_,
@@ -419,6 +489,11 @@ int SeafileRpcClient::markFileLockState(const QString &repo_id,
                                         const QString &path_in_repo,
                                         bool lock)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return -1;
+    }
+
     GError *error = NULL;
     char *ret = searpc_client_call__string (
         seadrive_rpc_client_,
@@ -441,6 +516,11 @@ bool SeafileRpcClient::setServerProperty(const QString &url,
                                          const QString &key,
                                          const QString &value)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     // printf("set server config: %s %s = %s\n", toCStr(url), toCStr(key),
     //        toCStr(value));
     GError *error = NULL;
@@ -459,6 +539,11 @@ bool SeafileRpcClient::setServerProperty(const QString &url,
 #if defined(Q_OS_WIN32)
 bool SeafileRpcClient::addAccount(const Account& account)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     QString serverAddr = account.serverUrl.toString();
     if (serverAddr.endsWith("/")) {
@@ -487,6 +572,11 @@ bool SeafileRpcClient::addAccount(const Account& account)
 #elif defined(Q_OS_MAC)
 bool SeafileRpcClient::addAccount(const Account& account)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     QString serverAddr = account.serverUrl.toString();
     if (serverAddr.endsWith("/")) {
@@ -525,6 +615,11 @@ bool SeafileRpcClient::addAccount(const Account& account)
 
 bool SeafileRpcClient::deleteAccount(const Account& account, bool remove_cache)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     searpc_client_call__int(seadrive_rpc_client_, "seafile_delete_account", &error,
                             3,
@@ -543,6 +638,11 @@ bool SeafileRpcClient::deleteAccount(const Account& account, bool remove_cache)
 
 bool SeafileRpcClient::logoutAccount(const Account& account)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     searpc_client_call__int(seadrive_rpc_client_,
                             "seafile_logout_account",
@@ -564,6 +664,11 @@ bool SeafileRpcClient::logoutAccount(const Account& account)
 
 bool SeafileRpcClient::isAccountUploading(const Account& account)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     QString serverAddr = account.serverUrl.toString();
     if (serverAddr.endsWith("/")) {
@@ -593,6 +698,11 @@ bool SeafileRpcClient::getRepoIdByPath(const QString &server,
                                        const QString &repo_uname,
                                        QString *repo_id)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     char *ret = searpc_client_call__string (
         seadrive_rpc_client_,
@@ -618,6 +728,11 @@ bool SeafileRpcClient::getRepoIdByPath(const QString &server,
 bool SeafileRpcClient::getRepoUnameById(const QString &repo_id,
                                         QString *repo_uname)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     char *ret = searpc_client_call__string (
         seadrive_rpc_client_,
@@ -644,6 +759,11 @@ bool SeafileRpcClient::getRepoUnameById(const QString &repo_id,
 
 bool SeafileRpcClient::getAccountByRepoId(const QString& repo_id, json_t **ret_obj)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     json_t *ret = searpc_client_call__json(seadrive_rpc_client_, "seafile_get_account_by_repo_id", &error,
                                            1,
@@ -663,6 +783,11 @@ bool SeafileRpcClient::getAccountByRepoId(const QString& repo_id, json_t **ret_o
 
 bool SeafileRpcClient::getSyncNotification(json_t **ret_obj)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     json_t *ret = searpc_client_call__json (
         seadrive_rpc_client_,
@@ -687,6 +812,11 @@ bool SeafileRpcClient::getSyncNotification(json_t **ret_obj)
 
 bool SeafileRpcClient::getGlobalSyncStatus(json_t **ret_obj)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     json_t *ret = searpc_client_call__json (
         seadrive_rpc_client_,
@@ -708,6 +838,11 @@ bool SeafileRpcClient::getGlobalSyncStatus(json_t **ret_obj)
 
 bool SeafileRpcClient::setCacheCleanIntervalMinutes(int interval)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     searpc_client_call__int (seadrive_rpc_client_,
                              "seafile_set_clean_cache_interval",
@@ -722,6 +857,11 @@ bool SeafileRpcClient::setCacheCleanIntervalMinutes(int interval)
 
 bool SeafileRpcClient::setCacheSizeLimitGB(int limit)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     gint64 limit_in_bytes = ((gint64)limit) * 1e9;
     searpc_client_call__int (seadrive_rpc_client_,
@@ -737,6 +877,11 @@ bool SeafileRpcClient::setCacheSizeLimitGB(int limit)
 
 bool SeafileRpcClient::getCacheCleanIntervalMinutes(int *value)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     int ret = searpc_client_call__int (seadrive_rpc_client_,
                                        "seafile_get_clean_cache_interval",
@@ -753,6 +898,11 @@ bool SeafileRpcClient::getCacheCleanIntervalMinutes(int *value)
 
 bool SeafileRpcClient::getCacheSizeLimitGB(int *value)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     gint64 ret = searpc_client_call__int64 (seadrive_rpc_client_,
                                             "seafile_get_cache_size_limit",
@@ -769,6 +919,11 @@ bool SeafileRpcClient::getCacheSizeLimitGB(int *value)
 
 bool SeafileRpcClient::getSeaDriveEvents(json_t **ret_obj)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     json_t *ret = searpc_client_call__json (
         seadrive_rpc_client_,
@@ -791,6 +946,11 @@ bool SeafileRpcClient::getSeaDriveEvents(json_t **ret_obj)
 
 bool SeafileRpcClient::getSyncErrors(json_t **ret_obj)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     json_t *ret = searpc_client_call__json (
         seadrive_rpc_client_,
@@ -816,6 +976,11 @@ bool SeafileRpcClient::getSyncErrors(json_t **ret_obj)
 bool SeafileRpcClient::cachePath(const QString& repo_id,
                                  const QString& path_in_repo)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     int ret = searpc_client_call__int (
         seadrive_rpc_client_,
@@ -840,6 +1005,11 @@ bool SeafileRpcClient::cachePath(const QString& repo_id,
 bool SeafileRpcClient::isFileCached(const QString& repo_id,
                                     const QString& path_in_repo)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     int ret = searpc_client_call__int (
         seadrive_rpc_client_,
@@ -861,6 +1031,11 @@ bool SeafileRpcClient::isFileCached(const QString& repo_id,
 
 bool SeafileRpcClient::getEncryptedRepoList(json_t **ret_obj)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     json_t *ret = searpc_client_call__json (
             seadrive_rpc_client_,
@@ -883,6 +1058,11 @@ bool SeafileRpcClient::setEncryptedRepoPassword(const QString& repo_id,
                                                 const QString& password,
                                                 QString* error_message)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     int ret = searpc_client_call__int(
         seadrive_rpc_client_,
@@ -903,6 +1083,11 @@ bool SeafileRpcClient::setEncryptedRepoPassword(const QString& repo_id,
 
 bool SeafileRpcClient::clearEncryptedRepoPassword(const QString& repo_id)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     int ret = searpc_client_call__int(
         seadrive_rpc_client_,
@@ -921,6 +1106,11 @@ bool SeafileRpcClient::clearEncryptedRepoPassword(const QString& repo_id)
 
 bool SeafileRpcClient::exitSeadriveDaemon()
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     int ret = searpc_client_call__int(seadrive_rpc_client_,
         "seafile_stop_process", &error,
@@ -938,6 +1128,11 @@ bool SeafileRpcClient::exitSeadriveDaemon()
 
 bool SeafileRpcClient::unCachePath(const QString& repo_id, const QString& path_in_repo)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     int ret = searpc_client_call__int (
         seadrive_rpc_client_,
@@ -958,6 +1153,11 @@ bool SeafileRpcClient::unCachePath(const QString& repo_id, const QString& path_i
 
 bool SeafileRpcClient::addDelConfirmation(const QString& confirmation_id, bool resync)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     int ret = searpc_client_call__int(seadrive_rpc_client_,
                             "seafile_add_del_confirmation",
