@@ -9,7 +9,9 @@
 #include <QCoreApplication>
 #include <QMessageBox>
 #include <QHostInfo>
+#ifndef Q_OS_LINUX
 #include <QCryptoGraphicHash>
+#endif
 
 #include <errno.h>
 #include <glib.h>
@@ -344,6 +346,17 @@ void SeadriveGui::start()
     connect(&connect_daemon_timer_, SIGNAL(timeout()),
             this, SLOT(connectDaemon()));
     connect_daemon_timer_.start(kConnectDaemonIntervalMsec);
+#elif defined(Q_OS_LINUX)
+    settings_mgr_->loadProxySettings();
+    settings_mgr_->applyProxySettings();
+
+    loginAccounts();
+
+    connect(daemon_mgr_, SIGNAL(daemonStarted()),
+            this, SLOT(onDaemonStarted()));
+    connect(daemon_mgr_, SIGNAL(daemonRestarted()),
+            this, SLOT(onDaemonRestarted()));
+    daemon_mgr_->startSeadriveDaemon();
 #endif
 }
 
@@ -395,7 +408,7 @@ void SeadriveGui::loginAccounts()
 
 void SeadriveGui::onDaemonStarted()
 {
-#if defined(Q_OS_WIN32)
+#if defined(Q_OS_WIN32) || defined(Q_OS_LINUX)
     rpc_client_->connectDaemon();
 #endif
 
@@ -458,7 +471,7 @@ void SeadriveGui::updateAccountToDaemon()
             rpc_client_->deleteAccount(msg.account, true);
 #endif
         } else if (msg.type == AccountResynced) {
-#ifdef Q_OS_WIN32
+#if defined(Q_OS_WIN32) || defined(Q_OS_LINUX)
             rpc_client_->deleteAccount(msg.account, false);
             rpc_client_->addAccount (msg.account);
             init_sync_dlg_->launch();
@@ -474,7 +487,7 @@ void SeadriveGui::updateAccountToDaemon()
     }
 }
 
-#if defined(Q_OS_WIN32)
+#if defined(Q_OS_WIN32) || defined(Q_OS_LINUX)
 void SeadriveGui::onDaemonRestarted()
 {
     qDebug("reviving rpc client when daemon is restarted");
@@ -611,6 +624,22 @@ bool SeadriveGui::initLog()
         errorAndExit(tr("Failed to initialize: failed to create %1 data folder").arg(getBrand()));
         return false;
     }
+
+  // On linux we must unmount the mount point dir before trying to create it,
+  // otherwise checkdir_with_mkdir would think it doesn't exist and try to
+  // create it, but the creation operation would fail.
+#if defined(Q_OS_LINUX)
+      QStringList umount_arguments;
+      umount_arguments << "-u" << seadriveRoot();
+      QProcess::execute("fusermount", umount_arguments);
+#endif
+
+#if defined(Q_OS_LINUX)
+  if (checkdir_with_mkdir(toCStr(seadriveRoot())) < 0) {
+      errorAndExit(tr("Failed to initialize: failed to create seadrive mount folder"));
+      return false;
+  }
+#endif
 
     if (applet_log_init(toCStr(seadrive_dir.absolutePath())) < 0) {
         errorAndExit(tr("Failed to initialize log: %1").arg(g_strerror(errno)));
@@ -834,6 +863,11 @@ QString SeadriveGui::readPreconfigureExpandedString(const QString& key, const QV
 QString SeadriveGui::seadriveRoot() const
 {
     return seadrive_root_;
+}
+#elif defined(Q_OS_LINUX)
+QString SeadriveGui::seadriveRoot() const
+{
+    return QDir::home().absoluteFilePath(getBrand());
 }
 #endif
 

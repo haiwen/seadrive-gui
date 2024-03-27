@@ -26,6 +26,8 @@ public:
     QString token;
 #if defined(Q_OS_WIN32)
     QString syncRoot;
+#elif defined (Q_OS_LINUX)
+    QString displayName;
 #endif
     qint64 lastVisited;
     bool isShibboleth;
@@ -58,6 +60,8 @@ public:
         token(rhs.token),
 #if defined(Q_OS_WIN32)
         syncRoot(rhs.syncRoot),
+#elif defined(Q_OS_LINUX)
+        displayName(rhs.displayName),
 #endif
         lastVisited(rhs.lastVisited),
         isShibboleth(rhs.isShibboleth),
@@ -74,6 +78,8 @@ public:
         token = rhs.token;
 #if defined(Q_OS_WIN32)
         syncRoot = rhs.syncRoot;
+#elif defined(Q_OS_LINUX)
+        displayName = rhs.displayName;
 #endif
         lastVisited = rhs.lastVisited;
         isShibboleth = rhs.isShibboleth;

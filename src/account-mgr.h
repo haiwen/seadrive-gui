@@ -141,6 +141,9 @@ private:
     const QString genSyncRootName(const Account& account, bool resync);
     void setAccountSyncRoot(Account &account, bool resync);
 #endif
+#if defined(Q_OS_LINUX)
+    void setAccountDisplayName(Account &account);
+#endif
     static bool loadAccountsCB(struct sqlite3_stmt *stmt, void *data);
     static bool loadServerInfoCB(struct sqlite3_stmt *stmt, void *data);
 

@@ -176,6 +176,21 @@ QStringList DaemonManager::collectSeaDriveArgs()
     args << sync_root_path;
 #endif
 
+#if defined(Q_OS_LINUX)
+      args << "-f";
+
+      QString fuse_opts = qgetenv("SEADRIVE_FUSE_OPTS");
+      if (fuse_opts.isEmpty()) {
+          QStringList umount_arguments;
+          umount_arguments << "-u" << gui->seadriveRoot();
+          QProcess::execute("fusermount", umount_arguments);
+          QString mount_dir = gui->seadriveRoot();
+          args << mount_dir;
+      } else {
+          args << fuse_opts.split(" ");
+      }
+#endif
+
     auto stream = qWarning() << "starting seadrive daemon:" << kSeadriveExecutable;
     foreach (const QString& arg, args) {
         stream << arg;

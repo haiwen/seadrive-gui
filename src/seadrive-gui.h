@@ -60,7 +60,7 @@ public:
     // Accessors.
     bool isDevMode() const { return dev_mode_; }
 
-#if defined(Q_OS_WIN32)
+#if defined(Q_OS_WIN32) || defined(Q_OS_LINUX)
     QString seadriveRoot() const;
 #endif
 
@@ -100,7 +100,7 @@ private slots:
 
     void onDaemonRestarted();
 
-#ifndef Q_OS_WIN32
+#ifdef Q_OS_MAC
     void connectDaemon();
 #endif
 
