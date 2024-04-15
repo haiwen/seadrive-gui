@@ -1299,8 +1299,8 @@
 <context>
     <name>ShibLoginDialog</name>
     <message>
-        <source>Login with Shibboleth</source>
-        <translation>Shibboleth 登录</translation>
+        <source>Single Sign On</source>
+        <translation>单点登录或微信登录</translation>
     </message>
 </context>
 <context>

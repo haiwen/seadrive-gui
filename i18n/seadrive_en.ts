@@ -1299,7 +1299,7 @@
 <context>
     <name>ShibLoginDialog</name>
     <message>
-        <source>Login with Shibboleth</source>
+        <source>Single Sign On</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
