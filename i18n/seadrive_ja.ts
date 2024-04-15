@@ -755,10 +755,6 @@
         <translation>％1はライブラリに追加されず、アップロードされません</translation>
     </message>
     <message>
-        <source>Library is too large to sync.</source>
-        <translation>ライブラリが大きすぎて同期できません。</translation>
-    </message>
-    <message>
         <source>You can only move files/folders within a library or from one library to another library</source>
         <translation>ライブラリ内またはあるライブラリから別のライブラリにのみファイル/フォルダを移動できます</translation>
     </message>
@@ -784,6 +780,10 @@
     </message>
     <message>
         <source>Failed to upload file blocks. Please check network or firewall.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Library contains too many files.</source>
         <translation type="unfinished"/>
     </message>
 </context>

@@ -754,10 +754,6 @@
         <translation>Le fichier %1 ne peut pas êtres ajouté à la bibliothèque, il ne seras pas téléversé.</translation>
     </message>
     <message>
-        <source>Library is too large to sync.</source>
-        <translation>La bibliothèque est trop grande pour être synchronisée.</translation>
-    </message>
-    <message>
         <source>You can only move files/folders within a library or from one library to another library</source>
         <translation>Vous ne pouvez déplacer des fichiers/dossiers qu&apos;au sein d&apos;une bibliothèque ou d&apos;une bibliothèque à une autre.</translation>
     </message>
@@ -784,6 +780,10 @@
     <message>
         <source>Failed to upload file blocks. Please check network or firewall.</source>
         <translation>Échec du téléchargement des blocs de fichiers. Veuillez vérifier le réseau ou le pare-feu.</translation>
+    </message>
+    <message>
+        <source>Library contains too many files.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

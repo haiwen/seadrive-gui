@@ -755,10 +755,6 @@
         <translation>%1 не добавлен в библиотеку и не будет загружен</translation>
     </message>
     <message>
-        <source>Library is too large to sync.</source>
-        <translation>Библиотека слишком велика для синхронизации.</translation>
-    </message>
-    <message>
         <source>You can only move files/folders within a library or from one library to another library</source>
         <translation>Вы можете перемещать файлы/папки только внутри библиотеки или из одной библиотеки в другую</translation>
     </message>
@@ -785,6 +781,10 @@
     <message>
         <source>Failed to upload file blocks. Please check network or firewall.</source>
         <translation>Не удалось загрузить блоки файлов. Проверьте сеть или брандмауэр.</translation>
+    </message>
+    <message>
+        <source>Library contains too many files.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
