@@ -346,19 +346,19 @@
     </message>
     <message>
         <source>Failed to get server info. Please check the server address.</source>
-        <translation type="unfinished"/>
+        <translation>Die Server-Information konnte nicht abgerufen werden. Bitte überprüfen Sie die URL des Servers.</translation>
     </message>
     <message>
         <source>Failed to get client sso link.</source>
-        <translation type="unfinished"/>
+        <translation>Der Link des Single Sign-On konnte nicht abgerufen werden.</translation>
     </message>
     <message>
         <source>SSO login failed.</source>
-        <translation type="unfinished"/>
+        <translation>Single Sign-on ist fehlgeschlagen.</translation>
     </message>
     <message>
         <source>Failed to get client sso status.</source>
-        <translation type="unfinished"/>
+        <translation>Der Status des Single Sign-On konnte nicht abgerufen werden.</translation>
     </message>
 </context>
 <context>
@@ -755,10 +755,6 @@
         <translation>%1 wurde keiner Bibliothek hinzugefügt und wird daher nicht hochgeladen.</translation>
     </message>
     <message>
-        <source>Library is too large to sync.</source>
-        <translation>Die Bibliothek ist für die Synchronisation zu groß.</translation>
-    </message>
-    <message>
         <source>You can only move files/folders within a library or from one library to another library</source>
         <translation>Sie können Dateien oder Ordner nur innerhalb einer Bibliothek bzw. von einer Bibliothek in eine andere verschieben.</translation>
     </message>
@@ -785,6 +781,10 @@
     <message>
         <source>Failed to upload file blocks. Please check network or firewall.</source>
         <translation>Einzelne Dateipakete konnten nicht hochgeladen werden. Bitte überprüfen Sie Ihr Netzwerk oder die Firewall.</translation>
+    </message>
+    <message>
+        <source>Library contains too many files.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1067,7 +1067,7 @@
     </message>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;? After removing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
-        <translation type="unfinished"/>
+        <translation>Möchten Sie wirklich den Account aus &quot;%1&quot; entfernen? Wenn Sie den Account austragen, können Sie heruntergeladene Dateien weiterhin finden unter  ~/Library/CloudStorage.</translation>
     </message>
 </context>
 <context>
@@ -1289,18 +1289,18 @@
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"/>
+        <translation>Passwort</translation>
     </message>
     <message>
         <source>Failed to generate share link: %1</source>
-        <translation type="unfinished"/>
+        <translation>Der Freigabelink %1 konnte nicht erstellt werden</translation>
     </message>
 </context>
 <context>
     <name>ShibLoginDialog</name>
     <message>
-        <source>Login with Shibboleth</source>
-        <translation>Anmelden mit Shibboleth</translation>
+        <source>Single Sign On</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

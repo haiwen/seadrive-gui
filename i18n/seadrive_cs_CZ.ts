@@ -755,10 +755,6 @@
         <translation>%1 není přidáno do knihovny nebude nahráno</translation>
     </message>
     <message>
-        <source>Library is too large to sync.</source>
-        <translation>Knihovna je příliš velká na to, aby šla synchronizovat.</translation>
-    </message>
-    <message>
         <source>You can only move files/folders within a library or from one library to another library</source>
         <translation>Soubory/složky je možné přesouvat pouze v rámci knihovny nebo z jedné knihovny do jiné</translation>
     </message>
@@ -784,6 +780,10 @@
     </message>
     <message>
         <source>Failed to upload file blocks. Please check network or firewall.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Library contains too many files.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1298,8 +1298,8 @@
 <context>
     <name>ShibLoginDialog</name>
     <message>
-        <source>Login with Shibboleth</source>
-        <translation>Přihlásit pomocí Shibboleth</translation>
+        <source>Single Sign On</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

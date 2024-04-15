@@ -755,10 +755,6 @@
         <translation>%1 没有被添加到资料库文件夹中，因此不会被上传</translation>
     </message>
     <message>
-        <source>Library is too large to sync.</source>
-        <translation>资料库太大无法同步</translation>
-    </message>
-    <message>
         <source>You can only move files/folders within a library or from one library to another library</source>
         <translation>您只能将文件、文件夹在一个资料库内移动，或者从一个资料库移动到另一个资料库。</translation>
     </message>
@@ -785,6 +781,10 @@
     <message>
         <source>Failed to upload file blocks. Please check network or firewall.</source>
         <translation>上传文件块失败，请检查网络和防火墙的状态</translation>
+    </message>
+    <message>
+        <source>Library contains too many files.</source>
+        <translation>资料库文件数量过多。</translation>
     </message>
 </context>
 <context>
@@ -1299,8 +1299,8 @@
 <context>
     <name>ShibLoginDialog</name>
     <message>
-        <source>Login with Shibboleth</source>
-        <translation>Shibboleth 登录</translation>
+        <source>Single Sign On</source>
+        <translation>单点登录或微信登录</translation>
     </message>
 </context>
 <context>

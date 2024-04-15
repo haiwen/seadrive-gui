@@ -755,10 +755,6 @@
         <translation>%1을(를) 라이브러리에 추가하지 않아 업로드하지 않습니다</translation>
     </message>
     <message>
-        <source>Library is too large to sync.</source>
-        <translation>라이브러리가 동기화하기에 너무 큽니다.</translation>
-    </message>
-    <message>
         <source>You can only move files/folders within a library or from one library to another library</source>
         <translation>파일 또는 폴더 이동은 라이브러리 내부 또는 다른 라이브러리로만 가능합니다.</translation>
     </message>
@@ -785,6 +781,10 @@
     <message>
         <source>Failed to upload file blocks. Please check network or firewall.</source>
         <translation>파일 블록 업로드에 실패했습니다. 네트워크 또는 방화벽을 확인하세요.</translation>
+    </message>
+    <message>
+        <source>Library contains too many files.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1299,8 +1299,8 @@
 <context>
     <name>ShibLoginDialog</name>
     <message>
-        <source>Login with Shibboleth</source>
-        <translation>시볼레스 로그인</translation>
+        <source>Single Sign On</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
