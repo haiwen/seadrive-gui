@@ -67,6 +67,8 @@ public:
 
     bool isGlobalError() const;
 
+    bool isNetworkError() const;
+
     bool isValid() const { return error_id >= 0; }
 
     bool operator==(const SyncError& rhs) const {

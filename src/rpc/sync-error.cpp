@@ -152,3 +152,20 @@ bool SyncError::isGlobalError() const
 {
     return repo_id.isEmpty();
 }
+
+bool SyncError::isNetworkError() const
+{
+    switch (error_id) {
+    case SYNC_ERROR_ID_NETWORK:
+    case SYNC_ERROR_ID_RESOLVE_PROXY:
+    case SYNC_ERROR_ID_RESOLVE_HOST:
+    case SYNC_ERROR_ID_CONNECT:
+    case SYNC_ERROR_ID_SSL:
+    case SYNC_ERROR_ID_TX:
+    case SYNC_ERROR_ID_TX_TIMEOUT:
+    case SYNC_ERROR_ID_UNHANDLED_REDIRECT:
+        return true;
+    default:
+        return false;
+    }
+}
