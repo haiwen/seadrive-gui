@@ -164,7 +164,7 @@ private:
     qint64 down_rate_;
 
     QList<SyncError> sync_errors_;
-    SyncError global_sync_error_;
+    SyncError network_error_;
     SyncErrorsDialog *sync_errors_dialog_;
     TransferProgressDialog * transfer_progress_dialog_;
     EncryptedReposDialog *enc_repo_dialog_;

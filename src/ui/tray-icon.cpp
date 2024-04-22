@@ -191,9 +191,9 @@ void SeafileTrayIcon::prepareContextMenu()
 {
     auto accounts = gui->accountManager()->allAccounts();
 
-    if (global_sync_error_.isValid()) {
+    if (network_error_.isValid()) {
         global_sync_error_action_->setVisible(true);
-        global_sync_error_action_->setText(global_sync_error_.error_str);
+        global_sync_error_action_->setText(network_error_.error_str);
     } else {
         global_sync_error_action_->setVisible(false);
     }
@@ -697,12 +697,12 @@ void SeafileTrayIcon::setTransferRate(qint64 up_rate, qint64 down_rate)
 void SeafileTrayIcon::setSyncErrors(const QList<SyncError> errors)
 {
     sync_errors_.clear();
-    global_sync_error_ = SyncError();
+    network_error_= SyncError();
 
     foreach (const SyncError& error, errors) {
-        if (error.network_error_()) {
-            if (global_sync_error_.timestamp < error.timestamp) {
-                global_sync_error_ = error;
+        if (error.isNetworkError()) {
+            if (network_error_.timestamp < error.timestamp) {
+                network_error_ = error;
             }
         } else {
             sync_errors_.push_back(error);
@@ -719,7 +719,7 @@ void SeafileTrayIcon::setStateWithSyncErrors()
     } else {
         timestamp = 0;
     }
-    if (global_sync_error_.isValid()) {
+    if (network_error_.isValid()) {
         setState(STATE_HAS_SYNC_ERRORS);
     } else if(!sync_errors_.isEmpty()) {
         if(timestamp > sync_errors_[0].timestamp) {
