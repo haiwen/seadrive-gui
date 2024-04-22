@@ -65,7 +65,7 @@ public:
     static QString syncErrorIdToErrorStr(int errr_id, const QString& path);
     void translateErrorStr();
 
-    bool isGlobalError() const;
+    bool isNetworkError() const;
 
     bool isValid() const { return error_id >= 0; }
 
