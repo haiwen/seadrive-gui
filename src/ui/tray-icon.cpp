@@ -700,7 +700,7 @@ void SeafileTrayIcon::setSyncErrors(const QList<SyncError> errors)
     global_sync_error_ = SyncError();
 
     foreach (const SyncError& error, errors) {
-        if (error.isNetworkError()) {
+        if (error.network_error_()) {
             if (global_sync_error_.timestamp < error.timestamp) {
                 global_sync_error_ = error;
             }

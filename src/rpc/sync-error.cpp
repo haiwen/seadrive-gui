@@ -148,12 +148,7 @@ void SyncError::translateErrorStr()
     error_str = syncErrorIdToErrorStr(error_id, path);
 }
 
-bool SyncError::isGlobalError() const
-{
-    return repo_id.isEmpty();
-}
-
-bool SyncError::isNetworkError() const
+bool SyncError::network_error_() const
 {
     switch (error_id) {
     case SYNC_ERROR_ID_NETWORK:
