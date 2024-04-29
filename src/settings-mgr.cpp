@@ -315,7 +315,7 @@ void SettingsManager::SeafileProxy::toQtNetworkProxy(QNetworkProxy *proxy) const
                                      : QNetworkProxy::Socks5Proxy);
     proxy->setHostName(host);
     proxy->setPort(port);
-    if (type == HttpProxy && !username.isEmpty() && !password.isEmpty()) {
+    if ((type == HttpProxy || type == SocksProxy) && !username.isEmpty() && !password.isEmpty()) {
         proxy->setUser(username);
         proxy->setPassword(password);
     }
@@ -340,6 +340,8 @@ SettingsManager::SeafileProxy SettingsManager::SeafileProxy::fromQtNetworkProxy(
         sproxy.password = proxy.password();
     } else if (proxy.type() == QNetworkProxy::Socks5Proxy) {
         sproxy.type = SocksProxy;
+        sproxy.username = proxy.user();
+        sproxy.password = proxy.password();
     }
 
     return sproxy;
@@ -357,7 +359,8 @@ bool SettingsManager::SeafileProxy::operator==(const SeafileProxy &rhs) const
                username == rhs.username && password == rhs.password;
     } else {
         // socks proxy
-        return host == rhs.host && port == rhs.port;
+        return host == rhs.host && port == rhs.port &&
+               username == rhs.username && password == rhs.password;
     }
 }
 
@@ -440,7 +443,7 @@ void SettingsManager::writeProxyDetailsToDaemon(const SeafileProxy& proxy)
     rpc->seafileSetConfig(kProxyType, type);
     rpc->seafileSetConfig(kProxyAddr, proxy.host.toUtf8().data());
     rpc->seafileSetConfigInt(kProxyPort, proxy.port);
-    if (type == "http") {
+    if (type == "http" ||  type == "socks") {
         rpc->seafileSetConfig(kProxyUsername, proxy.username.toUtf8().data());
         rpc->seafileSetConfig(kProxyPassword, proxy.password.toUtf8().data());
     }
