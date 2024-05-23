@@ -618,6 +618,7 @@ void AccountManager::addAccountToDaemon(const Account& account)
     if (added_account.isValid()) {
         gui->fileProviderManager()->registerDomain(added_account);
         gui->fileProviderManager()->askUserToEnable();
+        emit daemonStarted(added_account.domainID());
     }
 #endif
 

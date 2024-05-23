@@ -23,6 +23,14 @@ namespace
 const char *kCheckLatestVersion = "checkLatestVersion";
 const char *kEnableSearch = "enableSearch";
 const char *kBehaviorGroup = "Behavior";
+const char *kNotifySync = "notifySync";
+const char *kMaxDownloadRatio = "maxDownloadRatio";
+const char *kMaxUploadRatio = "maxUploadRatio";
+const char *kCacheCleanInterval = "cacheCleanInterval";
+const char *kCacheSizeLimit = "cacheSizeLimit";
+const char *kSyncExtraTempFile = "syncExtraTempFile";
+const char *kDisableVerifyCert = "disableVerifyCert";
+const char *kDeleteConfirmThreshold = "deleteConfirmThreshold";
 
 #if defined(_MSC_VER)
 const char *kSeadriveRoot = "seadriveRoot";
@@ -112,38 +120,23 @@ SettingsManager::SettingsManager()
 
 void SettingsManager::loadSettings()
 {
-    QString str;
-    int value;
+    bubbleNotifycation_ = getNotify();
 
-    if (gui->rpcClient()->seafileGetConfig("notify_sync", &str) >= 0)
-        bubbleNotifycation_ = (str == "off") ? false : true;
+    maxDownloadRatio_ = geteMaxDownloadRatio();
 
-    if (gui->rpcClient()->seafileGetConfigInt("download_limit", &value) >= 0)
-        maxDownloadRatio_ = value >> 10;
+    maxUploadRatio_ = geteMaxUploadRatio();
 
-    if (gui->rpcClient()->seafileGetConfigInt("upload_limit", &value) >= 0)
-        maxUploadRatio_ = value >> 10;
+    sync_extra_temp_file_ = getSyncExtraTempFile();
 
-    if (gui->rpcClient()->seafileGetConfig("sync_extra_temp_file",
-                                                  &str) >= 0)
-        sync_extra_temp_file_ = (str == "true") ? true : false;
+    verify_http_sync_cert_disabled_ = getHttpSyncCertVerifyDisabled();
 
-    if (gui->rpcClient()->seafileGetConfig("disable_verify_certificate",
-                                                  &str) >= 0)
-        verify_http_sync_cert_disabled_ = (str == "true") ? true : false;
+    cache_size_limit_gb_ = qMax(1, getCacheSizeLimitGB());
 
-    if (gui->rpcClient()->getCacheSizeLimitGB(&value)) {
-        cache_size_limit_gb_ = qMax(1, value);
-    }
+    cache_clean_limit_minutes_ = qMax(1, getCacheCleanIntervalMinutes());
 
-    if (gui->rpcClient()->getCacheCleanIntervalMinutes(&value)) {
-        cache_clean_limit_minutes_ = qMax(1, value);
-    }
-
-    if (gui->rpcClient()->seafileGetConfigInt("delete_confirm_threshold",
-                                              &value) >= 0) {
+    int value = getDeleteConfirmThreshold();
+    if (value >= 0)
         delete_confirm_threshold_ = value;
-    }
 
     loadProxySettings();
     applyProxySettings();
@@ -172,15 +165,32 @@ void SettingsManager::loadProxySettings()
     current_proxy_ = proxy;
 }
 
-void SettingsManager::setNotify(bool notify)
+void SettingsManager::setNotify(const QString& domain_id, bool notify)
 {
+    QSettings settings;
+    settings.beginGroup(kSettingsGroup);
+    settings.setValue(kNotifySync, notify);
+    settings.endGroup();
+
     if (bubbleNotifycation_ != notify) {
-        if (gui->rpcClient()->seafileSetConfig(
-                "notify_sync", notify ? "on" : "off") < 0) {
-            return;
-        }
         bubbleNotifycation_ = notify;
     }
+    SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
+    if (rpc_client->isConnected())
+        rpc_client->seafileSetConfig(
+                "notify_sync", notify ? "on" : "off");
+}
+
+bool SettingsManager::getNotify()
+{
+    QSettings settings;
+    bool notify;
+
+    settings.beginGroup(kSettingsGroup);
+    notify = settings.value(kNotifySync, true).toBool();
+    settings.endGroup();
+
+    return notify;
 }
 
 void SettingsManager::setAutoStart(bool autoStart)
@@ -191,44 +201,114 @@ void SettingsManager::setAutoStart(bool autoStart)
     }
 }
 
-void SettingsManager::setMaxDownloadRatio(unsigned int ratio)
+void SettingsManager::setMaxDownloadRatio(const QString& domain_id, unsigned int ratio)
 {
+    QSettings settings;
+    settings.beginGroup(kSettingsGroup);
+    settings.setValue(kMaxDownloadRatio, ratio);
+    settings.endGroup();
+
     if (maxDownloadRatio_ != ratio) {
-        if (gui->rpcClient()->setDownloadRateLimit(ratio << 10) < 0) {
-            return;
-        }
         maxDownloadRatio_ = ratio;
     }
+    SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
+    if (rpc_client->isConnected())
+        rpc_client->setDownloadRateLimit(ratio << 10);
 }
 
-void SettingsManager::setMaxUploadRatio(unsigned int ratio)
+unsigned int SettingsManager::geteMaxDownloadRatio()
 {
+    QSettings settings;
+    unsigned int ratio;
+
+    settings.beginGroup(kSettingsGroup);
+    ratio = settings.value(kMaxDownloadRatio, 0).toUInt();
+    settings.endGroup();
+
+    return ratio;
+}
+
+void SettingsManager::setMaxUploadRatio(const QString& domain_id, unsigned int ratio)
+{
+    QSettings settings;
+    settings.beginGroup(kSettingsGroup);
+    settings.setValue(kMaxUploadRatio, ratio);
+    settings.endGroup();
+
     if (maxUploadRatio_ != ratio) {
-        if (gui->rpcClient()->setUploadRateLimit(ratio << 10) < 0) {
-            return;
-        }
         maxUploadRatio_ = ratio;
     }
+
+    SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
+    if (rpc_client->isConnected())
+        rpc_client->setUploadRateLimit(ratio << 10);
 }
 
-void SettingsManager::setCacheCleanIntervalMinutes(int interval)
+unsigned int SettingsManager::geteMaxUploadRatio()
 {
+    QSettings settings;
+    unsigned int ratio;
+
+    settings.beginGroup(kSettingsGroup);
+    ratio = settings.value(kMaxUploadRatio, 0).toUInt();
+    settings.endGroup();
+
+    return ratio;
+}
+
+void SettingsManager::setCacheCleanIntervalMinutes(const QString& domain_id, int interval)
+{
+    QSettings settings;
+    settings.beginGroup(kSettingsGroup);
+    settings.setValue(kCacheCleanInterval, interval);
+    settings.endGroup();
+
     if (cache_clean_limit_minutes_ != interval) {
-        if (!gui->rpcClient()->setCacheCleanIntervalMinutes(interval)) {
-            return;
-        }
         cache_clean_limit_minutes_ = interval;
     }
+
+    SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
+    if (rpc_client->isConnected())
+        rpc_client->setCacheCleanIntervalMinutes(interval);
 }
 
-void SettingsManager::setCacheSizeLimitGB(int limit)
+int SettingsManager::getCacheCleanIntervalMinutes()
 {
+    QSettings settings;
+    int interval;
+
+    settings.beginGroup(kSettingsGroup);
+    interval = settings.value(kCacheCleanInterval, 10).toInt();
+    settings.endGroup();
+
+    return interval;
+}
+
+void SettingsManager::setCacheSizeLimitGB(const QString& domain_id, int limit)
+{
+    QSettings settings;
+    settings.beginGroup(kSettingsGroup);
+    settings.setValue(kCacheSizeLimit, limit);
+    settings.endGroup();
+
     if (cache_size_limit_gb_ != limit) {
-        if (!gui->rpcClient()->setCacheSizeLimitGB(limit)) {
-            return;
-        }
         cache_size_limit_gb_ = limit;
     }
+
+    SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
+    if (rpc_client->isConnected())
+        rpc_client->setCacheSizeLimitGB(limit);
+}
+int SettingsManager::getCacheSizeLimitGB()
+{
+    QSettings settings;
+    int limit;
+
+    settings.beginGroup(kSettingsGroup);
+    limit = settings.value(kCacheSizeLimit, 10).toInt();
+    settings.endGroup();
+
+    return limit;
 }
 
 void SettingsManager::removeAllSettings()
@@ -268,15 +348,33 @@ bool SettingsManager::isCheckLatestVersionEnabled()
     return enabled;
 }
 
-void SettingsManager::setSyncExtraTempFile(bool sync)
+void SettingsManager::setSyncExtraTempFile(const QString& domain_id, bool sync)
 {
+    QSettings settings;
+    settings.beginGroup(kSettingsGroup);
+    settings.setValue(kSyncExtraTempFile, sync);
+    settings.endGroup();
+
     if (sync_extra_temp_file_ != sync) {
-        if (gui->rpcClient()->seafileSetConfig(
-                "sync_extra_temp_file", sync ? "true" : "false") < 0) {
-            return;
-        }
         sync_extra_temp_file_ = sync;
     }
+
+    SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
+    if (rpc_client->isConnected())
+        rpc_client->seafileSetConfig(
+            "sync_extra_temp_file", sync ? "true" : "false");
+}
+
+bool SettingsManager::getSyncExtraTempFile()
+{
+    QSettings settings;
+    bool sync;
+
+    settings.beginGroup(kSettingsGroup);
+    sync = settings.value(kSyncExtraTempFile, false).toBool();
+    settings.endGroup();
+
+    return sync;
 }
 
 void SettingsManager::setSearchEnabled(bool enabled)
@@ -361,7 +459,7 @@ bool SettingsManager::SeafileProxy::operator==(const SeafileProxy &rhs) const
     }
 }
 
-void SettingsManager::setProxy(const SeafileProxy &proxy)
+void SettingsManager::setProxy(const QString& domain_id, const SeafileProxy &proxy)
 {
     if (proxy == current_proxy_) {
         return;
@@ -369,8 +467,9 @@ void SettingsManager::setProxy(const SeafileProxy &proxy)
     current_proxy_ = proxy;
 
     writeProxySettings(proxy);
-    if (gui->rpcClient()->isConnected()) {
-        writeProxySettingsToDaemon(proxy);
+    SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
+    if (rpc_client->isConnected()) {
+        writeProxySettingsToDaemon(domain_id, proxy);
     }
     applyProxySettings();
 }
@@ -413,9 +512,12 @@ void SettingsManager::writeProxySettings(const SeafileProxy &proxy)
     settings.sync();
 }
 
-void SettingsManager::writeProxySettingsToDaemon(const SeafileProxy &proxy)
+void SettingsManager::writeProxySettingsToDaemon(const QString& domain_id, const SeafileProxy &proxy)
 {
-    SeafileRpcClient *rpc = gui->rpcClient();
+    SeafileRpcClient *rpc = gui->rpcClient(domain_id);
+    if (!rpc->isConnected())
+        return;
+
     if (proxy.type == NoProxy) {
         rpc->seafileSetConfig(kUseProxy, "false");
         return;
@@ -429,13 +531,16 @@ void SettingsManager::writeProxySettingsToDaemon(const SeafileProxy &proxy)
         rpc->seafileSetConfig(kUseSystemProxy, "false");
     }
 
-    writeProxyDetailsToDaemon(proxy);
+    writeProxyDetailsToDaemon(domain_id, proxy);
 }
 
-void SettingsManager::writeProxyDetailsToDaemon(const SeafileProxy& proxy)
+void SettingsManager::writeProxyDetailsToDaemon(const QString& domain_id, const SeafileProxy& proxy)
 {
     Q_ASSERT(proxy.type != NoProxy && proxy.type != SystemProxy);
-    SeafileRpcClient *rpc = gui->rpcClient();
+    SeafileRpcClient *rpc = gui->rpcClient(domain_id);
+    if (!rpc->isConnected())
+        return;
+
     QString type = proxy.type == HttpProxy ? "http" : "socks";
     rpc->seafileSetConfig(kProxyType, type);
     rpc->seafileSetConfig(kProxyAddr, proxy.host.toUtf8().data());
@@ -446,40 +551,88 @@ void SettingsManager::writeProxyDetailsToDaemon(const SeafileProxy& proxy)
     }
 }
 
-void SettingsManager::setHttpSyncCertVerifyDisabled(bool disabled)
+void SettingsManager::setHttpSyncCertVerifyDisabled(const QString& domain_id, bool disabled)
 {
+    QSettings settings;
+    settings.beginGroup(kSettingsGroup);
+    settings.setValue(kDisableVerifyCert, disabled);
+    settings.endGroup();
+
     if (verify_http_sync_cert_disabled_ != disabled) {
-        if (gui->rpcClient()->seafileSetConfig(
-                "disable_verify_certificate", disabled ? "true" : "false") < 0) {
-            return;
-        }
         verify_http_sync_cert_disabled_ = disabled;
     }
+
+    SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
+    if (rpc_client->isConnected())
+        rpc_client->seafileSetConfig(
+            "disable_verify_certificate", disabled ? "true" : "false");
 }
 
-void SettingsManager::setDeleteConfirmThreshold(int value)
+bool SettingsManager::getHttpSyncCertVerifyDisabled()
 {
+    QSettings settings;
+    bool disabled;
+
+    settings.beginGroup(kSettingsGroup);
+    disabled = settings.value(kDisableVerifyCert, false).toBool();
+    settings.endGroup();
+
+    return disabled;
+}
+
+void SettingsManager::setDeleteConfirmThreshold(const QString& domain_id, int value)
+{
+    QSettings settings;
+    settings.beginGroup(kSettingsGroup);
+    settings.setValue(kDeleteConfirmThreshold, value);
+    settings.endGroup();
+
     if (delete_confirm_threshold_ != value) {
-        if (gui->rpcClient()->seafileSetConfigInt(
-                "delete_confirm_threshold", value) < 0) {
-            return;
-        }
         delete_confirm_threshold_ = value;
     }
+
+    SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
+    if (rpc_client->isConnected())
+        rpc_client->seafileSetConfigInt(
+                "delete_confirm_threshold", value);
+}
+
+int SettingsManager::getDeleteConfirmThreshold()
+{
+    QSettings settings;
+    int value;
+
+    settings.beginGroup(kSettingsGroup);
+    value = settings.value(kDeleteConfirmThreshold, 500).toInt();
+    settings.endGroup();
+
+    return value;
 }
 
 #if defined(Q_OS_MAC)
 bool SettingsManager::getHideWindowsIncompatibilityPathMsg()
 {
-    QString str;
-    gui->rpcClient()->seafileGetConfig(kHideWindowsIncompatiblePathNotification, &str);
-    return str == "true";
+    QSettings settings;
+    bool enabled;
+
+    settings.beginGroup(kSettingsGroup);
+    enabled = settings.value(kHideWindowsIncompatiblePathNotification, false).toBool();
+    settings.endGroup();
+
+    return enabled;
 }
 
-void SettingsManager::setHideWindowsIncompatibilityPathMsg(bool enabled)
+void SettingsManager::setHideWindowsIncompatibilityPathMsg(const QString& domain_id, bool enabled)
 {
+    QSettings settings;
+    settings.beginGroup(kSettingsGroup);
+    settings.setValue(kHideWindowsIncompatiblePathNotification, enabled);
+    settings.endGroup();
+
     QString set_value = enabled == true ? "true" : "false";
-    gui->rpcClient()->seafileSetConfig(kHideWindowsIncompatiblePathNotification, set_value);
+    SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
+    if (rpc_client->isConnected())
+        rpc_client->seafileSetConfig(kHideWindowsIncompatiblePathNotification, set_value);
     return;
 }
 #endif
@@ -660,17 +813,21 @@ void SettingsManager::onSystemProxyPolled(const QNetworkProxy &system_proxy)
         // qDebug ("system proxy not changed\n");
         return;
     }
-    if (!gui->rpcClient()->isConnected()) {
-        return;
-    }
     // qDebug ("system proxy changed\n");
     last_system_proxy_ = system_proxy;
     SeafileProxy proxy = SeafileProxy::fromQtNetworkProxy(system_proxy);
-    if (proxy.type == NoProxy) {
-        // qDebug ("system proxy changed to no proxy\n");
-        gui->rpcClient()->seafileSetConfig(kProxyType, "none");
-    } else {
-        writeProxyDetailsToDaemon(proxy);
+    auto accounts = gui->accountManager()->activeAccounts();
+    for (int i = 0; i <  accounts.size(); i++) {
+        SeafileRpcClient *rpc_client = gui->rpcClient(accounts.at(i).domainID());
+        if (!rpc_client->isConnected()) {
+            continue;
+        }
+        if (proxy.type == NoProxy) {
+            // qDebug ("system proxy changed to no proxy\n");
+            rpc_client->seafileSetConfig(kProxyType, "none");
+        } else {
+            writeProxyDetailsToDaemon(accounts.at(i).domainID(), proxy);
+        }
     }
 }
 

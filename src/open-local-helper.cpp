@@ -31,13 +31,14 @@ void openLocalFile(QString& repo_id, QString& path_in_repo)
 {
 #if defined(Q_OS_WIN32)
     QString repo_name;
-    if (!gui->rpcClient()->getRepoUnameById(repo_id, &repo_name)) {
+    SeafileRpcClient *rpc_client = gui->rpcClient("");
+    if (!rpc_client->getRepoUnameById(repo_id, &repo_name)) {
         qWarning("failed to get repo uname by %s", toCStr(repo_id));
         return;
     }
 
     json_t *ret_obj = nullptr;
-    if (!gui->rpcClient()->getAccountByRepoId(repo_id, &ret_obj)) {
+    if (!rpc_client->getAccountByRepoId(repo_id, &ret_obj)) {
         qWarning("failed to get account by repo id %s", toCStr(repo_id));
         return;
     }

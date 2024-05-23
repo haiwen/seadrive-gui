@@ -626,9 +626,13 @@ void SeafileTrayIcon::onMessageClicked()
 
     // DiffReader *reader = new DiffReader(repo, previous_commit_id_, commit_id_);
     // QThreadPool::globalInstance()->start(reader);
-    if (gui->messagePoller()->lastEventType() == "file-download.start") {
-        showTransferProgressDialog();
-        transfer_progress_dialog_->showDownloadTab();
+    auto accounts = gui->accountManager()->activeAccounts();
+    for (int i = 0; i <  accounts.size(); i++) {
+        if (gui->messagePoller(accounts.at(i).domainID())->lastEventType() == "file-download.start") {
+            showTransferProgressDialog();
+            transfer_progress_dialog_->showDownloadTab();
+            break;
+        }
     }
 }
 
@@ -644,7 +648,9 @@ void SeafileTrayIcon::deleteAccount()
         return;
     Account account = qvariant_cast<Account>(action->data());
 
-    if (gui->rpcClient()->isAccountUploading(account)) {
+    SeafileRpcClient *rpc_client = gui->rpcClient(account.domainID());
+
+    if (rpc_client->isAccountUploading(account)) {
         gui->warningBox(tr("There are changes being uploaded under the account, please try again later"));
         return;
     }
@@ -668,8 +674,9 @@ void SeafileTrayIcon::resyncAccount()
     if (!action)
         return;
     Account account = qvariant_cast<Account>(action->data());
+    SeafileRpcClient *rpc_client = gui->rpcClient(account.domainID());
 
-    bool is_uploading = gui->rpcClient()->isAccountUploading (account);
+    bool is_uploading = rpc_client->isAccountUploading (account);
     if (is_uploading) {
         gui->warningBox (tr("There are changes being uploaded under the account, please try again later"));
         return;

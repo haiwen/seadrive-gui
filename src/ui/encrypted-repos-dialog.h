@@ -15,6 +15,7 @@ public:
     QString repo_name;
     QString repo_server;
     QString repo_username;
+    QString domain_id;
     bool is_password_set;
 
     bool operator==(const EncryptedRepoInfo& info) const {
@@ -63,8 +64,8 @@ public:
     void resizeEvent(QResizeEvent *event);
 
 signals:
-    void sigSetEncRepoPassword(const QString& repo_id, const QString& password);
-    void sigClearEncEncRepoPassword(const QString& repo_id);
+    void sigSetEncRepoPassword(const QString& domain_id, const QString& repo_id, const QString& password);
+    void sigClearEncEncRepoPassword(const QString& domain_id, const QString& repo_id);
 
 private slots:
     void onItemDoubleClicked(const QModelIndex& index);
@@ -97,14 +98,13 @@ public:
 
 public slots:
     void updateEncryptRepoList();
-    void slotSetEncRepoPassword(const QString& repo_id, const QString& password);
-    void slotClearEncRepoPassword(const QString& repo_id);
+    void slotSetEncRepoPassword(const QString& domain_id, const QString& repo_id, const QString& password);
+    void slotClearEncRepoPassword(const QString& domain_id, const QString& repo_id);
 
 private:
 
     QTimer* update_timer_;
     QList<EncryptedRepoInfo> enc_repo_infos_;
-    SeafileRpcClient *rpc_client_;
     int repo_name_column_width_;
     int repo_server_column_width_;
     int repo_username_column_width_;

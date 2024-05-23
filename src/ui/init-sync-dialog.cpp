@@ -44,10 +44,10 @@ bool InitSyncDialog::hasNewLogin()
     return new_login_;
 }
 
-void InitSyncDialog::launch()
+void InitSyncDialog::launch(const QString& domain_id)
 {
     if (!poller_connected_) {
-        connect(gui->messagePoller(), SIGNAL(seadriveFSLoaded()),
+        connect(gui->messagePoller(domain_id), SIGNAL(seadriveFSLoaded()),
                 this, SLOT(onFSLoaded()));
         poller_connected_ = true;
     }

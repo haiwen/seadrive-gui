@@ -86,7 +86,7 @@ void SettingsDialog::setCurrentTab(int index)
     mTabWidget->setCurrentIndex(index);
 }
 
-void SettingsDialog::updateSettings()
+void SettingsDialog::updateSettings(const QString& domain_id)
 {
     SettingsManager *mgr = gui->settingsManager();
     bool language_changed = false;
@@ -95,14 +95,14 @@ void SettingsDialog::updateSettings()
     QString spotlight_updated;
 
     if (mBasicTab->isEnabled()) {
-        mgr->setNotify(mNotifyCheckBox->checkState() == Qt::Checked);
+        mgr->setNotify(domain_id, mNotifyCheckBox->checkState() == Qt::Checked);
         mgr->setAutoStart(mAutoStartCheckBox->checkState() == Qt::Checked);
-        mgr->setSyncExtraTempFile(mSyncExtraTempFileCheckBox->checkState() == Qt::Checked);
+        mgr->setSyncExtraTempFile(domain_id, mSyncExtraTempFileCheckBox->checkState() == Qt::Checked);
 
-        mgr->setMaxDownloadRatio(mDownloadSpinBox->value());
-        mgr->setMaxUploadRatio(mUploadSpinBox->value());
+        mgr->setMaxDownloadRatio(domain_id, mDownloadSpinBox->value());
+        mgr->setMaxUploadRatio(domain_id, mUploadSpinBox->value());
 
-        mgr->setHttpSyncCertVerifyDisabled(mDisableVerifyHttpSyncCert->checkState() == Qt::Checked);
+        mgr->setHttpSyncCertVerifyDisabled(domain_id, mDisableVerifyHttpSyncCert->checkState() == Qt::Checked);
 
         if ((mSpotlightCheckBox->checkState() == Qt::Checked) != mgr->getSearchEnabled()) {
             mgr->setSearchEnabled(mSpotlightCheckBox->checkState() == Qt::Checked);
@@ -116,14 +116,14 @@ void SettingsDialog::updateSettings()
 #endif
 
 #if defined(Q_OS_MAC)
-        mgr->setHideWindowsIncompatibilityPathMsg(mHideWindowsIncompatibilityCheckBox->checkState() == Qt::Checked);
+        mgr->setHideWindowsIncompatibilityPathMsg(domain_id, mHideWindowsIncompatibilityCheckBox->checkState() == Qt::Checked);
 #endif
     }
 
     if (mAdvancedTab->isEnabled()) {
-        mgr->setCacheCleanIntervalMinutes(mCacheCleanInterval->value());
-        mgr->setCacheSizeLimitGB(mCacheSizeLimit->value());
-        mgr->setDeleteConfirmThreshold(mDeleteConfirmSpinBox->value());
+        mgr->setCacheCleanIntervalMinutes(domain_id, mCacheCleanInterval->value());
+        mgr->setCacheSizeLimitGB(domain_id, mCacheSizeLimit->value());
+        mgr->setDeleteConfirmThreshold(domain_id, mDeleteConfirmSpinBox->value());
 
 #if defined(_MSC_VER)
         if (mShowCacheDir->text() != current_seadrive_root_ ) {
@@ -144,7 +144,7 @@ void SettingsDialog::updateSettings()
         language_changed = true;
     }
 
-    updateProxySettings();
+    updateProxySettings(domain_id);
 
     if (language_changed && gui->yesOrNoBox(
         tr("You have changed language, Restart to apply it?"), this, true)) {
@@ -177,74 +177,66 @@ void SettingsDialog::closeEvent(QCloseEvent *event)
 
 void SettingsDialog::showEvent(QShowEvent *event)
 {
-    bool isDaemonUp = gui->rpcClient()->isConnected();
     SettingsManager *mgr = gui->settingsManager();
 
-    if (isDaemonUp) {
-        mBasicTab->setDisabled(false);
-        mAdvancedTab->setDisabled(false);
-    } else {
-        mBasicTab->setDisabled(true);
-        mAdvancedTab->setDisabled(true);
-    }
+    mBasicTab->setDisabled(false);
+    mAdvancedTab->setDisabled(false);
 
-    if (isDaemonUp) {
-        mgr->loadSettings();
+    mgr->loadSettings();
 
-        Qt::CheckState state;
+    Qt::CheckState state;
 
-        state = mgr->syncExtraTempFile() ? Qt::Checked : Qt::Unchecked;
-        mSyncExtraTempFileCheckBox->setCheckState(state);
+    state = mgr->syncExtraTempFile() ? Qt::Checked : Qt::Unchecked;
+    mSyncExtraTempFileCheckBox->setCheckState(state);
 
-        state = mgr->httpSyncCertVerifyDisabled() ? Qt::Checked : Qt::Unchecked;
-        mDisableVerifyHttpSyncCert->setCheckState(state);
+    state = mgr->getHttpSyncCertVerifyDisabled() ? Qt::Checked : Qt::Unchecked;
+    mDisableVerifyHttpSyncCert->setCheckState(state);
 
-        // currently supports windows only
-        state = mgr->autoStart() ? Qt::Checked : Qt::Unchecked;
-        mAutoStartCheckBox->setCheckState(state);
+    // currently supports windows only
+    state = mgr->autoStart() ? Qt::Checked : Qt::Unchecked;
+    mAutoStartCheckBox->setCheckState(state);
 #if !defined(Q_OS_WIN32) && !defined(Q_OS_MAC)
-        mAutoStartCheckBox->hide();
+    mAutoStartCheckBox->hide();
 #endif
 
 #if defined(Q_OS_WIN32)
-        state = mgr->shellExtensionEnabled() ? Qt::Checked : Qt::Unchecked;
-        mShellExtCheckBox->setCheckState(state);
+    state = mgr->shellExtensionEnabled() ? Qt::Checked : Qt::Unchecked;
+    mShellExtCheckBox->setCheckState(state);
 #else
-        mShellExtCheckBox->hide();
+    mShellExtCheckBox->hide();
 #endif
-        state = mgr->notify() ? Qt::Checked : Qt::Unchecked;
-        mNotifyCheckBox->setCheckState(state);
+    state = mgr->notify() ? Qt::Checked : Qt::Unchecked;
+    mNotifyCheckBox->setCheckState(state);
 
-        int ratio;
-        ratio = mgr->maxDownloadRatio();
-        mDownloadSpinBox->setValue(ratio);
-        ratio = mgr->maxUploadRatio();
-        mUploadSpinBox->setValue(ratio);
+    int ratio;
+    ratio = mgr->maxDownloadRatio();
+    mDownloadSpinBox->setValue(ratio);
+    ratio = mgr->maxUploadRatio();
+    mUploadSpinBox->setValue(ratio);
 
-        int value;
-        value = mgr->getCacheCleanIntervalMinutes();
-        mCacheCleanInterval->setValue(value);
-        value = mgr->getCacheSizeLimitGB();
-        mCacheSizeLimit->setValue(value);
+    int value;
+    value = mgr->getCacheCleanIntervalMinutes();
+    mCacheCleanInterval->setValue(value);
+    value = mgr->getCacheSizeLimitGB();
+    mCacheSizeLimit->setValue(value);
 
-        value = mgr->deleteConfirmThreshold();
-        mDeleteConfirmSpinBox->setValue(value);
+    value = mgr->getDeleteConfirmThreshold();
+    mDeleteConfirmSpinBox->setValue(value);
 
 #if defined(Q_OS_MAC)
-        state = mgr->getHideWindowsIncompatibilityPathMsg() ? Qt::Checked : Qt::Unchecked;
-        mHideWindowsIncompatibilityCheckBox->setCheckState(state);
+    state = mgr->getHideWindowsIncompatibilityPathMsg() ? Qt::Checked : Qt::Unchecked;
+    mHideWindowsIncompatibilityCheckBox->setCheckState(state);
 #else
-        mHideWindowsIncompatibilityCheckBox->hide();
+    mHideWindowsIncompatibilityCheckBox->hide();
 #endif
 
 #if defined(_MSC_VER)
-        if (!mgr->getSeadriveRoot(&current_seadrive_root_)) {
-            current_seadrive_root_ = gui->seadriveRoot();
-        }
-        mShowCacheDir->setText(current_seadrive_root_);
-        mShowCacheDir->setReadOnly(true);
-#endif
+    if (!mgr->getSeadriveRoot(&current_seadrive_root_)) {
+        current_seadrive_root_ = gui->seadriveRoot();
     }
+    mShowCacheDir->setText(current_seadrive_root_);
+    mShowCacheDir->setReadOnly(true);
+#endif
 
     mLanguageComboBox->setCurrentIndex(I18NHelper::getInstance()->preferredLanguage());
 
@@ -343,7 +335,7 @@ void SettingsDialog::showHideControlsBasedOnCurrentProxyType(int state)
 
 // Called when the user clicked "OK" button of the settings dialog. Return
 // true if the proxy settings has been changed by the user.
-bool SettingsDialog::updateProxySettings()
+bool SettingsDialog::updateProxySettings(const QString& domain_id)
 {
     SettingsManager *mgr = gui->settingsManager();
     SettingsManager::SeafileProxy old_proxy = mgr->getProxy();
@@ -377,7 +369,7 @@ bool SettingsDialog::updateProxySettings()
     }
 
     if (new_proxy != old_proxy) {
-        mgr->setProxy(new_proxy);
+        mgr->setProxy(domain_id, new_proxy);
         return true;
     }
 
@@ -457,6 +449,14 @@ void SettingsDialog::onOkBtnClicked()
     if (!validateProxyInputs()) {
         return;
     }
-    updateSettings();
+
+    updateSettings("");
+
+#ifdef Q_OS_MAC
+    auto accounts = gui->accountManager()->activeAccounts();
+    for (int i = 0; i <  accounts.size(); i++) {
+        updateSettings(accounts.at(i).domainID());
+    }
+#endif
     accept();
 }

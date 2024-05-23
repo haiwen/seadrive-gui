@@ -4,7 +4,6 @@
 #include <QUrl>
 #include <QString>
 
-
 class SettingsDialog : public QDialog,
                     public Ui::SettingsDialog
 {
@@ -17,7 +16,7 @@ private slots:
 
     void closeEvent(QCloseEvent *event);
     void showEvent(QShowEvent *event);
-    void updateSettings();
+    void updateSettings(const QString& domain_id);
     void onOkBtnClicked();
     void selectDirAction();
 
@@ -25,7 +24,7 @@ private slots:
     void showHideControlsBasedOnCurrentProxyType(int state);
 
 private:
-    bool updateProxySettings();
+    bool updateProxySettings(const QString& domain_id);
     bool validateProxyInputs();
 
     QString current_seadrive_root_;

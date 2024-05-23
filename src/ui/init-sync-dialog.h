@@ -19,7 +19,7 @@ public:
 
     void markNewLogin();
     bool hasNewLogin();
-    void launch();
+    void launch(const QString& domain_id);
 
 private slots:
     void checkDownloadProgress();

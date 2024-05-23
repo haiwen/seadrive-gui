@@ -26,10 +26,10 @@ public slots:
     void restartSeadriveDaemon();
 
 signals:
-    void daemonStarted();
+    void daemonStarted(const QString& domain_id);
 
     void daemonDead();
-    void daemonRestarted();
+    void daemonRestarted(const QString& domain_id);
 
 private slots:
     void onDaemonStarted();

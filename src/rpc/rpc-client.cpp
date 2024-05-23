@@ -33,9 +33,10 @@ const char *kSeadriveRpcService = "seadrive-rpcserver";
 
 } // namespace
 
-SeafileRpcClient::SeafileRpcClient()
+SeafileRpcClient::SeafileRpcClient(const QString& domain_id)
     : seadrive_rpc_client_(0),
-      connected_(false)
+      connected_(false),
+      domain_id_(domain_id)
 {
 #if defined(Q_OS_MAC)
     check_daemon_timer_ = new QTimer(this);
@@ -61,8 +62,9 @@ void SeafileRpcClient::connectDaemon()
         pipe_client = searpc_create_named_pipe_client(
             utils::win::getLocalPipeName(kSeadriveSockName).c_str());
 #elif defined(Q_OS_MAC)
+        QString data_dir = QDir(seadriveDir()).filePath(domain_id_);
         pipe_client = searpc_create_named_pipe_client(
-            toCStr(QDir(seadriveDataDir()).filePath(kSeadriveSockName)));
+            toCStr(QDir(data_dir).filePath(kSeadriveSockName)));
 #else
         pipe_client = searpc_create_named_pipe_client(
             toCStr(QDir(gui->daemonManager()->currentCacheDir()).filePath(kSeadriveSockName)));
@@ -105,7 +107,7 @@ void SeafileRpcClient::checkDaemonAlive()
     connected_ = false;
     tryConnectDaemon (false);
     if (connected_) {
-        emit daemonRestarted();
+        emit daemonRestarted(domain_id_);
     }
 #endif
 }
@@ -125,8 +127,9 @@ bool SeafileRpcClient::tryConnectDaemon(bool first) {
     pipe_client = searpc_create_named_pipe_client(
         utils::win::getLocalPipeName(kSeadriveSockName).c_str());
 #elif defined(Q_OS_MAC)
+    QString data_dir = QDir(seadriveDir()).filePath(domain_id_);
     pipe_client = searpc_create_named_pipe_client(
-        toCStr(QDir(seadriveDataDir()).filePath(kSeadriveSockName)));
+        toCStr(QDir(data_dir).filePath(kSeadriveSockName)));
 #else
     pipe_client = searpc_create_named_pipe_client(
         toCStr(QDir(gui->daemonManager()->currentCacheDir()).filePath(kSeadriveSockName)));

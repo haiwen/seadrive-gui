@@ -117,6 +117,8 @@ void MessagePoller::onDaemonRestarted()
 void MessagePoller::checkSeaDriveEvents()
 {
     json_t *ret;
+    if (!rpc_client_->isConnected())
+        return;
     if (!rpc_client_->getSeaDriveEvents(&ret)) {
         return;
     }
@@ -129,6 +131,8 @@ void MessagePoller::checkSeaDriveEvents()
 void MessagePoller::checkNotification()
 {
     json_t *ret;
+    if (!rpc_client_->isConnected())
+        return;
     if (!rpc_client_->getSyncNotification(&ret)) {
         return;
     }
@@ -141,6 +145,8 @@ void MessagePoller::checkNotification()
 void MessagePoller::checkSyncStatus()
 {
     json_t *ret;
+    if (!rpc_client_->isConnected())
+        return;
     if (!rpc_client_->getGlobalSyncStatus(&ret)) {
         return;
     }
@@ -159,6 +165,8 @@ void MessagePoller::checkSyncStatus()
 void MessagePoller::checkSyncErrors()
 {
     json_t *ret;
+    if (!rpc_client_->isConnected())
+        return;
     if (!rpc_client_->isConnected()) {
         return;
     }

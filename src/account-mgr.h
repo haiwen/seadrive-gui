@@ -123,6 +123,7 @@ signals:
      */
     void accountMQUpdated();
     void accountInfoUpdated(const Account& account);
+    void daemonStarted(const QString& domain_id);
 
 private slots:
     void slotUpdateAccountInfoSucess(const AccountInfo& info);

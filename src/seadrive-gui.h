@@ -8,6 +8,7 @@
 #include <QTimer>
 
 #include "rpc/rpc-server.h"
+#include "account-mgr.h"
 
 class DaemonManager;
 class SeafileRpcClient;
@@ -60,6 +61,10 @@ public:
     // Accessors.
     bool isDevMode() const { return dev_mode_; }
 
+#ifdef Q_OS_MAC
+    void setAccounts();
+#endif
+
 #if defined(Q_OS_WIN32)
     QString seadriveRoot() const;
 #endif
@@ -70,7 +75,7 @@ public:
 
     AccountManager *accountManager() { return account_mgr_; }
 
-    SeafileRpcClient *rpcClient() { return rpc_client_; }
+    SeafileRpcClient *rpcClient(const QString& domain_id);
 
     SettingsManager *settingsManager() { return settings_mgr_; }
 
@@ -78,11 +83,13 @@ public:
 
     AboutDialog *aboutDialog() { return about_dlg_; }
 
-    MessagePoller * messagePoller() { return message_poller_; }
+    MessagePoller *messagePoller(const QString& domain_id);
 
     InitSyncDialog *initSyncDialog() { return init_sync_dlg_; }
 
     FileProviderManager *fileProviderManager() { return file_provider_mgr_; }
+
+    void writeSettingsToDaemon(const QString& domain_id);
 
     // CertsManager *certsManager() { return certs_mgr_; }
 
@@ -95,10 +102,10 @@ public slots:
 
 private slots:
     void onAboutToQuit();
-    void onDaemonStarted();
+    void onDaemonStarted(const QString& domain_id);
     void updateAccountToDaemon();
 
-    void onDaemonRestarted();
+    void onDaemonRestarted(const QString& domain_id);
 
 #ifndef Q_OS_WIN32
     void connectDaemon();
@@ -114,7 +121,7 @@ private:
     void loginAccounts();
 
 #if defined(Q_OS_MAC)
-    void logoutAccountsFromDaemon();
+    void logoutAccountsFromDaemon(const Account& account);
 #endif
 
     bool dev_mode_;
@@ -125,7 +132,7 @@ private:
 
     AccountManager *account_mgr_;
 
-    SeafileRpcClient *rpc_client_;
+    QMap<QString, SeafileRpcClient *> rpc_clients_;
 
     SettingsManager *settings_mgr_;
 
@@ -133,7 +140,7 @@ private:
 
     AboutDialog *about_dlg_;
 
-    MessagePoller *message_poller_;
+    QMap<QString, MessagePoller *> message_pollers_;
 
     InitSyncDialog *init_sync_dlg_;
 
