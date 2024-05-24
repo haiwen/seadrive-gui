@@ -219,7 +219,8 @@ SeadriveGui::SeadriveGui(bool dev_mode)
     : dev_mode_(dev_mode),
       started_(false),
       in_exit_(false),
-      first_use_(false)
+      first_use_(false),
+      tray_icon_started_(false)
 {
     startup_time_ = QDateTime::currentMSecsSinceEpoch();
     tray_icon_ = new SeafileTrayIcon(this);
@@ -356,7 +357,11 @@ void SeadriveGui::migrateOldData()
     if (!QDir(data_dir).removeRecursively()) {
         qWarning("failed to remove data dir: %s\n", strerror(errno));
     }
-    //TODO:reconnect domain
+
+    for (int i = 0; i < accounts.size(); i++) {
+        auto account = accounts.at(i); 
+        file_provider_mgr_->connect(account);
+    }
     qWarning("finish migrating old data to new version");
 }
 #endif
@@ -461,8 +466,8 @@ void SeadriveGui::start()
             this, SLOT(connectDaemon()));
     connect_daemon_timer_.start(kConnectDaemonIntervalMsec);
 
-    connect(account_mgr_, SIGNAL(accountMQUpdated()),
-            this, SLOT(updateAccountToDaemon()));
+    connect(account_mgr_, SIGNAL(accountMQUpdated(const QString &)),
+            this, SLOT(updateAccountToDaemon(const QString &)));
 
     connect(account_mgr_, SIGNAL(daemonStarted(const QString &)),
             this, SLOT(onDaemonStarted(const QString &)));
@@ -554,9 +559,9 @@ void SeadriveGui::onDaemonStarted(const QString& domain_id)
     // When launching seadrive-gui, the login event may be raised before the
     // daemon started. For that reason, we queue all account updating events,
     // and begin processing here.
-    connect(account_mgr_, SIGNAL(accountMQUpdated()),
-            this, SLOT(updateAccountToDaemon()));
-    updateAccountToDaemon();
+    connect(account_mgr_, SIGNAL(accountMQUpdated(const QString &)),
+            this, SLOT(updateAccountToDaemon(const QString &)));
+    updateAccountToDaemon("");
 
     tray_icon_->start();
     MessagePoller *message_poller_ = messagePoller(domain_id);
@@ -614,12 +619,18 @@ void SeadriveGui::setAccounts()
 }
 #endif
 
-void SeadriveGui::updateAccountToDaemon()
+void SeadriveGui::updateAccountToDaemon(const QString& domain_id)
 {
+    QQueue<AccountMessage> pending_messages;
     while (!account_mgr_->messages.isEmpty()) {
         auto msg = account_mgr_->messages.dequeue();
+        if (msg.account.domainID() != domain_id) {
+            pending_messages.enqueue(msg);
+            continue;
+        }
         SeafileRpcClient *rpc_client = rpcClient(msg.account.domainID());
         if (!rpc_client->isConnected()) {
+            pending_messages.enqueue(msg);
             continue;
         }
 
@@ -653,6 +664,11 @@ void SeadriveGui::updateAccountToDaemon()
             qWarning() << "Resynced account" << msg.account;
 #endif
         }
+    }
+
+    while (!pending_messages.isEmpty()) {
+        auto msg = pending_messages.dequeue();
+        account_mgr_->messages.enqueue(msg);
     }
 }
 
@@ -693,7 +709,8 @@ void SeadriveGui::onDaemonRestarted(const QString& domain_id)
 // connectDaemon is used to notify the user to click on the SeaDrive entry in Finder and update the accounts to all SeaDrive daemon.
 void SeadriveGui::connectDaemon()
 {
-    bool success = true;
+    bool success = false;
+    bool all_success = true;
     auto accounts = account_mgr_->activeAccounts();
     for (int i = 0; i < accounts.size(); i++) {
         auto account = accounts.at(i);
@@ -707,14 +724,19 @@ void SeadriveGui::connectDaemon()
                 }
                 connect_daemon_retry_++;
             }
-            success = false;
-            continue;
+            all_success = false;
+        } else {
+            success = true;
+            updateAccountToDaemon(account.domainID());
         }
     }
 
-    if (success) {
+    if (success && !tray_icon_started_) {
+        tray_icon_started_ = true;
         tray_icon_->start();
-        updateAccountToDaemon();
+    }
+
+    if (all_success) {
         connect_daemon_timer_.stop();
     }
 }

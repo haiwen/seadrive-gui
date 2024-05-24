@@ -121,7 +121,7 @@ signals:
     /**
      * Account added/removed/switched.
      */
-    void accountMQUpdated();
+    void accountMQUpdated(const QString& domain_id);
     void accountInfoUpdated(const Account& account);
     void daemonStarted(const QString& domain_id);
 

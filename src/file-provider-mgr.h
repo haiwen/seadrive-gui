@@ -25,6 +25,8 @@ public:
 
     void disconnect(const Account account);
 
+    void connect(const Account account);
+
 private:
     QString displayName(const Account account);
 

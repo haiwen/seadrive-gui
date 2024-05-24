@@ -387,7 +387,7 @@ int AccountManager::removeAccount(const Account& account)
     msg.account = account;
     messages.enqueue(msg);
 
-    emit accountMQUpdated();
+    emit accountMQUpdated(account.domainID());
 
     if (allAccounts().empty()) {
         gui->trayIcon()->showLoginDialog();
@@ -418,7 +418,7 @@ int AccountManager::resyncAccount(const Account& account)
     msg.account = updated_account;
     messages.enqueue(msg);
 
-    emit accountMQUpdated();
+    emit accountMQUpdated(updated_account.domainID());
 
     return 0;
 }
@@ -627,7 +627,7 @@ void AccountManager::addAccountToDaemon(const Account& account)
     msg.account = added_account;
     messages.enqueue(msg);
 
-    emit accountMQUpdated();
+    emit accountMQUpdated(added_account.domainID());
 }
 
 void AccountManager::slotUpdateAccountInfoFailed()

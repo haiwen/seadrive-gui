@@ -62,6 +62,8 @@ QString mapToJson(QMap<QString, QVariant> map);
 bool getSeadriveRoot(QString *seadrive_root);
 #endif
 
+QString seadriveWorkDir();
+
 QString seadriveDir();
 
 QString seadriveDataDir();

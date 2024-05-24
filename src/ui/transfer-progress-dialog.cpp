@@ -221,6 +221,10 @@ void TransferItemsTableModel::setTransferItems()
         SeafileRpcClient *rpc_client = gui->rpcClient(account.domainID()); 
         json_t *upload_reply, *download_reply;
 
+        if (!rpc_client->isConnected()) {
+            continue;
+        }
+
         if (!rpc_client->getUploadProgress(&upload_reply)) {
             continue;
         }

@@ -50,7 +50,8 @@ namespace {
 
 const char *kSeafileClientBrand = "SeaDrive";
 #if defined(Q_OS_MAC)
-const char *kSeadriveConfDir = "Library/Containers/com.seafile.seadrive.fprovider/Data/Documents";
+const char *kSeadriveWorkDir = "Library/Containers/com.seafile.seadrive.fprovider/Data";
+const char *kSeadriveConfDir = "Documents";
 #elif defined(Q_OS_WIN32)
 const char *kSeadriveConfDir = "seadrive";
 #else
@@ -109,6 +110,14 @@ bool getOpenApplicationFromXdgUtils(const QString &mime, QString *application)
 
 } // namespace
 
+QString seadriveWorkDir() {
+#ifdef Q_OS_MAC
+    QString seadriveWorkPath = QDir(QDir::homePath()).filePath(kSeadriveWorkDir);
+    return seadriveWorkPath;
+#else
+    return QDir::homePath();
+#endif
+}
 
 QString seadriveDir() {
     return kSeadriveConfDir;

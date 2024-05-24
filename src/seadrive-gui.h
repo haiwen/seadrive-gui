@@ -105,7 +105,7 @@ public slots:
 private slots:
     void onAboutToQuit();
     void onDaemonStarted(const QString& domain_id);
-    void updateAccountToDaemon();
+    void updateAccountToDaemon(const QString& domainn_id);
 
     void onDaemonRestarted(const QString& domain_id);
 
@@ -159,6 +159,8 @@ private:
     QString style_;
 
     bool first_use_;
+
+    bool tray_icon_started_;
 
     QString disk_letter_;
 #if defined(_MSC_VER)
