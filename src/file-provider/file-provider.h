@@ -18,4 +18,6 @@ bool fileProviderRemoveDomain(const QString domain_id, const QString display_nam
 
 void fileProviderReenumerate(const QString domain_id, const QString display_name);
 
+void fileProviderDisconnect (const QString domain_id, const QString display_name);
+
 #endif // SEAFILE_CLIENT_FILE_PROVIDER_H_

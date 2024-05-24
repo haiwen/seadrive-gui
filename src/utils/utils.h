@@ -82,6 +82,8 @@ QUrl urlJoin(const QUrl& url, const QString& tail);
 
 void removeDirRecursively(const QString &path);
 
+bool copyDirRecursively(const QString &src_path, const QString &dst_path);
+
 QString dumpHexPresentation(const QByteArray &bytes);
 
 QString dumpSslErrors(const QList<QSslError>&);

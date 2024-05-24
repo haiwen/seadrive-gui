@@ -262,7 +262,7 @@ EncryptedReposTableModel::EncryptedReposTableModel(QObject *parent)
 
 }
 
-#ifdef O_OS_MAC
+#ifdef Q_OS_MAC
 void EncryptedReposTableModel::updateEncryptRepoList()
 {
     QList<EncryptedRepoInfo> enc_repo_infos;

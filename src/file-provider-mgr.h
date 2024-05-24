@@ -23,6 +23,8 @@ public:
 
     bool hasEnabledDomains();
 
+    void disconnect(const Account account);
+
 private:
     QString displayName(const Account account);
 

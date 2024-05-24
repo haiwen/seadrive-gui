@@ -13,6 +13,7 @@
 
 #include <errno.h>
 #include <glib.h>
+#include <sqlite3.h>
 
 #include "utils/utils.h"
 #include "utils/file-utils.h"
@@ -264,6 +265,102 @@ SeadriveGui::~SeadriveGui()
 
 }
 
+#ifdef Q_OS_MAC
+bool loadConfigCB(sqlite3_stmt *stmt, void *data)
+{
+    SettingsManager *mgr = static_cast<SettingsManager* >(data);
+    const char *key = (const char *)sqlite3_column_text (stmt, 0);
+    const char *value = (const char *)sqlite3_column_text (stmt, 1);
+    if (strcmp(key, "notify_sync") == 0) {
+        if (strcmp(value, "on") == 0) {
+            mgr->setNotify("", true);
+        } else {
+            mgr->setNotify("", false);
+        }
+    } else if (strcmp(key, "download_limit") == 0) {
+        int rate = atoi(value);
+        mgr->setMaxDownloadRatio("", rate);
+    } else if (strcmp(key, "upload_limit") == 0) {
+        int rate = atoi(value);
+        mgr->setMaxUploadRatio("", rate);
+    } else if (strcmp(key, "clean_cache_interval") == 0) {
+        int interval = atoi(value);
+        mgr->setCacheCleanIntervalMinutes("", interval);
+    } else if (strcmp(key, "cache_size_limit") == 0) {
+        int limit = atoi(value);
+        mgr->setCacheSizeLimitGB("", limit);
+    } else if (strcmp(key, "sync_extra_temp_file") == 0) {
+        if (strcmp(value, "true") == 0) {
+            mgr->setSyncExtraTempFile("", true);
+        } else {
+            mgr->setSyncExtraTempFile("", false);
+        }
+    } else if (strcmp(key, "disable_verify_certificate") == 0) {
+        if (strcmp(value, "true") == 0) {
+            mgr->setHttpSyncCertVerifyDisabled("", true);
+        } else {
+            mgr->setHttpSyncCertVerifyDisabled("", false);
+        }
+    } else if (strcmp(key, "delete_confirm_threshold") == 0) {
+        int threshold = atoi(value);
+        mgr->setDeleteConfirmThreshold("", threshold);
+    } else if (strcmp(key, "hide_windows_incompatible_path_notification") == 0) {
+        if (strcmp(value, "true") == 0) {
+            mgr->setHideWindowsIncompatibilityPathMsg("", true);
+        } else {
+            mgr->setHideWindowsIncompatibilityPathMsg("", false);
+        }
+    }
+    return true;
+}
+
+void SeadriveGui::migrateOldConfig(const QString& dataDir)
+{
+    const char *errmsg;
+    struct sqlite3 *db = NULL;
+
+    QString db_path = QDir(dataDir).filePath("Config.db");
+    if (sqlite3_open (toCStr(db_path), &db)) {
+        errmsg = sqlite3_errmsg (db);
+        qCritical("failed to open config database %s: %s",
+                toCStr(db_path), errmsg ? errmsg : "no error given");
+
+        return;
+    }
+
+    const char *sql = "SELECT key, value FROM Config";
+    sqlite_foreach_selected_row (db, sql, loadConfigCB, settings_mgr_);
+
+    sqlite3_close(db);
+}
+
+void SeadriveGui::migrateOldData()
+{
+    QString data_dir = QDir(seadriveDir()).filePath("data");
+    if (!QDir(data_dir).exists())
+        return;
+
+    qWarning("start migrating old data to new version");
+    migrateOldConfig(data_dir);
+
+    auto accounts = account_mgr_->allAccounts();
+    for (int i = 0; i < accounts.size(); i++) {
+        auto account = accounts.at(i); 
+        file_provider_mgr_->disconnect(account);
+        QString dst_path = QDir(seadriveDir()).filePath(account.domainID());
+        if (!copyDirRecursively(data_dir, dst_path)) {
+            errorAndExit(tr("Faild to migrate old data"));
+            return;
+        }
+    }
+    if (!QDir(data_dir).removeRecursively()) {
+        qWarning("failed to remove data dir: %s\n", strerror(errno));
+    }
+    //TODO:reconnect domain
+    qWarning("finish migrating old data to new version");
+}
+#endif
+
 void SeadriveGui::start()
 {
     started_ = true;
@@ -282,6 +379,10 @@ void SeadriveGui::start()
     qWarning("seadrive gui started");
 
     account_mgr_->start();
+
+#ifdef Q_OS_MAC
+    migrateOldData();
+#endif
 
     // Load system proxy information. This must be done before we start seadrive
     // daemon.

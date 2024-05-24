@@ -62,6 +62,8 @@ public:
     bool isDevMode() const { return dev_mode_; }
 
 #ifdef Q_OS_MAC
+    void migrateOldData();
+    void migrateOldConfig(const QString& data_dir);
     void setAccounts();
 #endif
 
