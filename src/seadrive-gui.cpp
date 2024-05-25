@@ -1146,14 +1146,14 @@ SeafileRpcClient *SeadriveGui::rpcClient(const QString& domain_id)
         rpc_client = rpc_clients_.value(domain_id);
         if (!rpc_client->isConnected()) {
 #ifdef Q_OS_MAC
-            rpc_client->tryConnectDaemon(false);
+            rpc_client->tryConnectDaemon();
 #endif
         }
         return rpc_client;
     }
     rpc_client = new SeafileRpcClient(domain_id);
 #ifdef Q_OS_MAC
-    rpc_client->tryConnectDaemon(true);
+    rpc_client->tryConnectDaemon();
 #endif
     rpc_clients_.insert(domain_id, rpc_client);
     return rpc_client;

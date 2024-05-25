@@ -33,7 +33,7 @@ public:
     SeafileRpcClient(const QString& domain_id);
     ~SeafileRpcClient();
     void connectDaemon();
-    bool tryConnectDaemon(bool first);
+    bool tryConnectDaemon();
 #if defined(Q_OS_MAC)
     void checkDaemon();
 #endif
@@ -151,6 +151,7 @@ private:
 
     bool connected_;
     QString domain_id_;
+    bool first_;
 
     QTimer *check_daemon_timer_;
 };

@@ -36,7 +36,8 @@ const char *kSeadriveRpcService = "seadrive-rpcserver";
 SeafileRpcClient::SeafileRpcClient(const QString& domain_id)
     : seadrive_rpc_client_(0),
       connected_(false),
-      domain_id_(domain_id)
+      domain_id_(domain_id),
+      first_(true)
 {
 #if defined(Q_OS_MAC)
     check_daemon_timer_ = new QTimer(this);
@@ -105,7 +106,7 @@ void SeafileRpcClient::checkDaemonAlive()
         seadrive_rpc_client_ = 0;
     }
     connected_ = false;
-    tryConnectDaemon (false);
+    tryConnectDaemon ();
     if (connected_) {
         emit daemonRestarted(domain_id_);
     }
@@ -120,7 +121,7 @@ void SeafileRpcClient::checkDaemon() {
 }
 #endif
 
-bool SeafileRpcClient::tryConnectDaemon(bool first) {
+bool SeafileRpcClient::tryConnectDaemon() {
     SearpcNamedPipeClient *pipe_client;
 
 #if defined(Q_OS_WIN32)
@@ -143,15 +144,17 @@ bool SeafileRpcClient::tryConnectDaemon(bool first) {
         return false;
     }
 
+    // The rpc client will check whether the daemon is alive and reconnect by itself on macOS.
+#if defined(Q_OS_MAC)
+    if (first_) {
+        checkDaemon ();
+        first_ = false;
+    }
+#endif
+
     seadrive_rpc_client_ = searpc_client_with_named_pipe_transport(
         pipe_client, kSeadriveRpcService);
     connected_ = true;
-    // The rpc client will check whether the daemon is alive and reconnect by itself on macOS.
-#if defined(Q_OS_MAC)
-    if (first) {
-        checkDaemon ();
-    }
-#endif
 
     return true;
 }
