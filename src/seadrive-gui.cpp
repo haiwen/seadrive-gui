@@ -690,6 +690,7 @@ void SeadriveGui::onDaemonRestarted(const QString& domain_id)
     for (int i = 0; i <  accounts.size(); i++) {
         rpc_client->addAccount(accounts.at(i));
     }
+    MessagePoller *message_poller_ = messagePoller(domain_id);
     message_poller_->setRpcClient (rpc_client);
 }
 #endif

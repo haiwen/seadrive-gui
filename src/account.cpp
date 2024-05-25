@@ -17,9 +17,13 @@ QString Account::getSignature() const
 }
 
 QString Account::domainID() const {
+#ifdef Q_OS_MAC
     if (!isValid()) {
         return "";
     }
 
     return ::md5(serverUrl.url() + username);
+#else
+    return "";
+#endif
 }

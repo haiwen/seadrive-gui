@@ -214,7 +214,7 @@ SeafileExtensionHandler::SeafileExtensionHandler()
     connect(listener_thread_, &ExtConnectionListenerThread::getUploadLink,
             this, &SeafileExtensionHandler::getUploadLink);
 
-    rpc_client_ = new SeafileRpcClient();
+    rpc_client_ = new SeafileRpcClient("");
 }
 
 void SeafileExtensionHandler::start()
@@ -223,7 +223,7 @@ void SeafileExtensionHandler::start()
     listener_thread_->start();
     started_ = true;
 
-    connect(gui->daemonManager(), SIGNAL(daemonRestarted()), this, SLOT(onDaemonRestarted()));
+    connect(gui->daemonManager(), SIGNAL(daemonRestarted(const QString &)), this, SLOT(onDaemonRestarted()));
 }
 
 void SeafileExtensionHandler::onDaemonRestarted()
@@ -232,7 +232,7 @@ void SeafileExtensionHandler::onDaemonRestarted()
     if (rpc_client_) {
         delete rpc_client_;
     }
-    rpc_client_ = new SeafileRpcClient();
+    rpc_client_ = new SeafileRpcClient("");
     rpc_client_->connectDaemon();
 }
 
