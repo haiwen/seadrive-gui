@@ -280,10 +280,10 @@ bool loadConfigCB(sqlite3_stmt *stmt, void *data)
         }
     } else if (strcmp(key, "download_limit") == 0) {
         int rate = atoi(value);
-        mgr->setMaxDownloadRatio("", rate);
+        mgr->setMaxDownloadRatio("", rate >> 10);
     } else if (strcmp(key, "upload_limit") == 0) {
         int rate = atoi(value);
-        mgr->setMaxUploadRatio("", rate);
+        mgr->setMaxUploadRatio("", rate >> 10);
     } else if (strcmp(key, "clean_cache_interval") == 0) {
         int interval = atoi(value);
         mgr->setCacheCleanIntervalMinutes("", interval);
@@ -603,6 +603,9 @@ void SeadriveGui::setAccounts()
         SeafileRpcClient *rpc_client = rpcClient(domain_id);
         message_poller_->setRpcClient(rpc_client);
         message_poller_->start();
+
+        connect (rpc_client, SIGNAL(daemonRestarted(const QString &)), this, SLOT(onDaemonRestarted(const QString &)));
+
         if (!rpc_client->isConnected())
             continue;
         settings_mgr_->writeProxySettingsToDaemon(domain_id, settings_mgr_->getProxy());
@@ -614,7 +617,6 @@ void SeadriveGui::setAccounts()
             rpc_client->seafileSetConfig(
                 "client_name", gui->settingsManager()->getComputerName());
         }
-        connect (rpc_client, SIGNAL(daemonRestarted(const QString &)), this, SLOT(onDaemonRestarted(const QString &)));
     }
 }
 #endif
@@ -705,6 +707,8 @@ void SeadriveGui::onDaemonRestarted(const QString& domain_id)
         return;
     }
     rpc_client->addAccount(account);
+    settings_mgr_->writeProxySettingsToDaemon(domain_id, settings_mgr_->getProxy());
+    writeSettingsToDaemon(domain_id);
 }
 
 // connectDaemon is used to notify the user to click on the SeaDrive entry in Finder and update the accounts to all SeaDrive daemon.
