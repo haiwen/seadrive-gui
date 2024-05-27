@@ -529,9 +529,6 @@ void SeadriveGui::onDaemonStarted(const QString& domain_id)
 {
     SeafileRpcClient *rpc_client = rpcClient(domain_id);
 
-    MessagePoller *message_poller_ = messagePoller(domain_id);
-    message_poller_->setRpcClient(rpc_client);
-    message_poller_->start();
     if (!rpc_client->isConnected()) {
         return;
     }
@@ -599,15 +596,11 @@ void SeadriveGui::setAccounts()
     for (int i = 0; i <  accounts.size(); i++) {
         auto account = accounts.at(i);
         QString domain_id = account.domainID();
-        MessagePoller *message_poller_ = messagePoller(domain_id);
         SeafileRpcClient *rpc_client = rpcClient(domain_id);
-        message_poller_->setRpcClient(rpc_client);
-        message_poller_->start();
-
-        connect (rpc_client, SIGNAL(daemonRestarted(const QString &)), this, SLOT(onDaemonRestarted(const QString &)));
 
         if (!rpc_client->isConnected())
             continue;
+
         settings_mgr_->writeProxySettingsToDaemon(domain_id, settings_mgr_->getProxy());
         writeSettingsToDaemon(domain_id);
         QString value;
@@ -1158,6 +1151,11 @@ SeafileRpcClient *SeadriveGui::rpcClient(const QString& domain_id)
     rpc_client = new SeafileRpcClient(domain_id);
 #ifdef Q_OS_MAC
     rpc_client->tryConnectDaemon();
+    MessagePoller *message_poller = messagePoller(domain_id);
+    message_poller->setRpcClient(rpc_client);
+    message_poller->start();
+
+    connect (rpc_client, SIGNAL(daemonRestarted(const QString &)), this, SLOT(onDaemonRestarted(const QString &)));
 #endif
     rpc_clients_.insert(domain_id, rpc_client);
     return rpc_client;
