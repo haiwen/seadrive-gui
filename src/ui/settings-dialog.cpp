@@ -86,13 +86,9 @@ void SettingsDialog::setCurrentTab(int index)
     mTabWidget->setCurrentIndex(index);
 }
 
-void SettingsDialog::updateSettings(const QString& domain_id)
+void SettingsDialog::updateSettingsToDaemon(const QString& domain_id)
 {
     SettingsManager *mgr = gui->settingsManager();
-    bool language_changed = false;
-    bool seadrive_root_changed = false;
-    bool cache_dir_changed = false;
-    QString spotlight_updated;
 
     if (mBasicTab->isEnabled()) {
         mgr->setNotify(domain_id, mNotifyCheckBox->checkState() == Qt::Checked);
@@ -103,13 +99,6 @@ void SettingsDialog::updateSettings(const QString& domain_id)
         mgr->setMaxUploadRatio(domain_id, mUploadSpinBox->value());
 
         mgr->setHttpSyncCertVerifyDisabled(domain_id, mDisableVerifyHttpSyncCert->checkState() == Qt::Checked);
-
-        if ((mSpotlightCheckBox->checkState() == Qt::Checked) != mgr->getSearchEnabled()) {
-            mgr->setSearchEnabled(mSpotlightCheckBox->checkState() == Qt::Checked);
-            spotlight_updated = mSpotlightCheckBox->checkState() == Qt::Checked
-                                ? tr("enabled search")
-                                : tr("disabled search");
-        }
 
 #ifdef Q_OS_WIN32
         mgr->setShellExtensionEnabled(mShellExtCheckBox->checkState() == Qt::Checked);
@@ -124,7 +113,27 @@ void SettingsDialog::updateSettings(const QString& domain_id)
         mgr->setCacheCleanIntervalMinutes(domain_id, mCacheCleanInterval->value());
         mgr->setCacheSizeLimitGB(domain_id, mCacheSizeLimit->value());
         mgr->setDeleteConfirmThreshold(domain_id, mDeleteConfirmSpinBox->value());
+    }
+}
 
+void SettingsDialog::updateSettings()
+{
+    SettingsManager *mgr = gui->settingsManager();
+    bool language_changed = false;
+    bool seadrive_root_changed = false;
+    bool cache_dir_changed = false;
+    QString spotlight_updated;
+
+    if (mBasicTab->isEnabled()) {
+        if ((mSpotlightCheckBox->checkState() == Qt::Checked) != mgr->getSearchEnabled()) {
+            mgr->setSearchEnabled(mSpotlightCheckBox->checkState() == Qt::Checked);
+            spotlight_updated = mSpotlightCheckBox->checkState() == Qt::Checked
+                                ? tr("enabled search")
+                                : tr("disabled search");
+        }
+    }
+
+    if (mAdvancedTab->isEnabled()) {
 #if defined(_MSC_VER)
         if (mShowCacheDir->text() != current_seadrive_root_ ) {
             seadrive_root_changed = true;
@@ -144,7 +153,7 @@ void SettingsDialog::updateSettings(const QString& domain_id)
         language_changed = true;
     }
 
-    updateProxySettings(domain_id);
+    updateProxySettings();
 
     if (language_changed && gui->yesOrNoBox(
         tr("You have changed language, Restart to apply it?"), this, true)) {
@@ -335,7 +344,7 @@ void SettingsDialog::showHideControlsBasedOnCurrentProxyType(int state)
 
 // Called when the user clicked "OK" button of the settings dialog. Return
 // true if the proxy settings has been changed by the user.
-bool SettingsDialog::updateProxySettings(const QString& domain_id)
+bool SettingsDialog::updateProxySettings()
 {
     SettingsManager *mgr = gui->settingsManager();
     SettingsManager::SeafileProxy old_proxy = mgr->getProxy();
@@ -369,7 +378,7 @@ bool SettingsDialog::updateProxySettings(const QString& domain_id)
     }
 
     if (new_proxy != old_proxy) {
-        mgr->setProxy(domain_id, new_proxy);
+        mgr->setProxy(new_proxy);
         return true;
     }
 
@@ -450,13 +459,16 @@ void SettingsDialog::onOkBtnClicked()
         return;
     }
 
-    updateSettings("");
+    updateSettingsToDaemon(EMPTY_DOMAIN_ID);
 
 #ifdef Q_OS_MAC
     auto accounts = gui->accountManager()->activeAccounts();
     for (int i = 0; i <  accounts.size(); i++) {
-        updateSettings(accounts.at(i).domainID());
+        updateSettingsToDaemon(accounts.at(i).domainID());
     }
 #endif
+
+    updateSettings();
+
     accept();
 }

@@ -88,6 +88,9 @@ public:
 
     bool logoutAccount(const Account& account);
     bool deleteAccount(const Account& account, bool remove_cache);
+#ifdef Q_OS_MAC
+    bool deleteDomainAccount(const QString& domain_id);
+#endif
     bool isAccountUploading(const Account& account);
 
     bool getRepoIdByPath(const QString& server,
@@ -135,6 +138,8 @@ public:
                      const QString& path_in_repo);
 
     bool addDelConfirmation(const QString& confirmation_id, bool resync);
+
+    QString domainID() const { return domain_id_; }
 
 signals:
     void daemonRestarted(const QString& domain_id);

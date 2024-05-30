@@ -214,7 +214,7 @@ SeafileExtensionHandler::SeafileExtensionHandler()
     connect(listener_thread_, &ExtConnectionListenerThread::getUploadLink,
             this, &SeafileExtensionHandler::getUploadLink);
 
-    rpc_client_ = new SeafileRpcClient("");
+    rpc_client_ = new SeafileRpcClient(EMPTY_DOMAIN_ID);
 }
 
 void SeafileExtensionHandler::start()
@@ -232,7 +232,7 @@ void SeafileExtensionHandler::onDaemonRestarted()
     if (rpc_client_) {
         delete rpc_client_;
     }
-    rpc_client_ = new SeafileRpcClient("");
+    rpc_client_ = new SeafileRpcClient(EMPTY_DOMAIN_ID);
     rpc_client_->connectDaemon();
 }
 

@@ -55,7 +55,7 @@ namespace {
     const char *kPreconfigureCacheDirectory = "PreconfigureCacheDirectory";
 #endif
 
-const int kConnectDaemonIntervalMsec = 2000;
+const int kConnectDaemonIntervalMsec = 1000;
 
 enum DEBUG_LEVEL {
   DEBUG = 0,
@@ -274,42 +274,42 @@ bool loadConfigCB(sqlite3_stmt *stmt, void *data)
     const char *value = (const char *)sqlite3_column_text (stmt, 1);
     if (strcmp(key, "notify_sync") == 0) {
         if (strcmp(value, "on") == 0) {
-            mgr->setNotify("", true);
+            mgr->setNotify(EMPTY_DOMAIN_ID, true);
         } else {
-            mgr->setNotify("", false);
+            mgr->setNotify(EMPTY_DOMAIN_ID, false);
         }
     } else if (strcmp(key, "download_limit") == 0) {
         int rate = atoi(value);
-        mgr->setMaxDownloadRatio("", rate >> 10);
+        mgr->setMaxDownloadRatio(EMPTY_DOMAIN_ID, rate >> 10);
     } else if (strcmp(key, "upload_limit") == 0) {
         int rate = atoi(value);
-        mgr->setMaxUploadRatio("", rate >> 10);
+        mgr->setMaxUploadRatio(EMPTY_DOMAIN_ID, rate >> 10);
     } else if (strcmp(key, "clean_cache_interval") == 0) {
         int interval = atoi(value);
-        mgr->setCacheCleanIntervalMinutes("", interval);
+        mgr->setCacheCleanIntervalMinutes(EMPTY_DOMAIN_ID, interval);
     } else if (strcmp(key, "cache_size_limit") == 0) {
         int limit = atoi(value);
-        mgr->setCacheSizeLimitGB("", limit);
+        mgr->setCacheSizeLimitGB(EMPTY_DOMAIN_ID, limit);
     } else if (strcmp(key, "sync_extra_temp_file") == 0) {
         if (strcmp(value, "true") == 0) {
-            mgr->setSyncExtraTempFile("", true);
+            mgr->setSyncExtraTempFile(EMPTY_DOMAIN_ID, true);
         } else {
-            mgr->setSyncExtraTempFile("", false);
+            mgr->setSyncExtraTempFile(EMPTY_DOMAIN_ID, false);
         }
     } else if (strcmp(key, "disable_verify_certificate") == 0) {
         if (strcmp(value, "true") == 0) {
-            mgr->setHttpSyncCertVerifyDisabled("", true);
+            mgr->setHttpSyncCertVerifyDisabled(EMPTY_DOMAIN_ID, true);
         } else {
-            mgr->setHttpSyncCertVerifyDisabled("", false);
+            mgr->setHttpSyncCertVerifyDisabled(EMPTY_DOMAIN_ID, false);
         }
     } else if (strcmp(key, "delete_confirm_threshold") == 0) {
         int threshold = atoi(value);
-        mgr->setDeleteConfirmThreshold("", threshold);
+        mgr->setDeleteConfirmThreshold(EMPTY_DOMAIN_ID, threshold);
     } else if (strcmp(key, "hide_windows_incompatible_path_notification") == 0) {
         if (strcmp(value, "true") == 0) {
-            mgr->setHideWindowsIncompatibilityPathMsg("", true);
+            mgr->setHideWindowsIncompatibilityPathMsg(EMPTY_DOMAIN_ID, true);
         } else {
-            mgr->setHideWindowsIncompatibilityPathMsg("", false);
+            mgr->setHideWindowsIncompatibilityPathMsg(EMPTY_DOMAIN_ID, false);
         }
     }
     return true;
@@ -446,10 +446,10 @@ void SeadriveGui::start()
 
     loginAccounts();
 
-    connect(daemon_mgr_, SIGNAL(daemonStarted(const QString &)),
-            this, SLOT(onDaemonStarted(const QString &)));
-    connect(daemon_mgr_, SIGNAL(daemonRestarted(const QString &)),
-            this, SLOT(onDaemonRestarted(const QString &)));
+    connect(daemon_mgr_, SIGNAL(daemonStarted()),
+            this, SLOT(onDaemonStarted()));
+    connect(daemon_mgr_, SIGNAL(daemonRestarted()),
+            this, SLOT(onDaemonRestarted()));
     daemon_mgr_->startSeadriveDaemon();
 
 #elif defined(Q_OS_MAC)
@@ -466,13 +466,6 @@ void SeadriveGui::start()
             this, SLOT(connectDaemon()));
     connect_daemon_timer_.start(kConnectDaemonIntervalMsec);
 
-    connect(account_mgr_, SIGNAL(accountMQUpdated(const QString &)),
-            this, SLOT(updateAccountToDaemon(const QString &)));
-
-    connect(account_mgr_, SIGNAL(daemonStarted(const QString &)),
-            this, SLOT(onDaemonStarted(const QString &)));
-
-    setAccounts();
     RemoteWipeService::instance()->start();
     AccountInfoService::instance()->start();
 #endif
@@ -524,48 +517,30 @@ void SeadriveGui::loginAccounts()
     }
 }
 
-#ifdef Q_OS_MAC
-void SeadriveGui::onDaemonStarted(const QString& domain_id)
+void SeadriveGui::onDaemonStarted()
 {
-    SeafileRpcClient *rpc_client = rpcClient(domain_id);
-
-    if (!rpc_client->isConnected()) {
-        return;
+#ifndef Q_OS_MAC
+    SeafileRpcClient *rpc_client = rpcClient(EMPTY_DOMAIN_ID);
+    if (!rpc_client) {
+        rpc_client = new SeafileRpcClient(EMPTY_DOMAIN_ID);
+        rpc_clients_.insert(EMPTY_DOMAIN_ID, rpc_client)
+        MessagePoller *message_poller = new MessagePoller();
+        message_poller->setRpcClient(rpc_client);
+        message_poller->start();
+        message_pollers_.insert(EMPTY_DOMAIN_ID, message_poller);
     }
-
-    settings_mgr_->writeProxySettingsToDaemon(domain_id, settings_mgr_->getProxy());
-    writeSettingsToDaemon(domain_id);
-
-    QString value;
-    if (rpc_client->seafileGetConfig("client_id", &value) < 0 ||
-        value.isEmpty() || value != getUniqueClientId()) {
-        rpc_client->seafileSetConfig("client_id", getUniqueClientId());
-        rpc_client->seafileSetConfig(
-            "client_name", gui->settingsManager()->getComputerName());
-    }
-}
-#else
-void SeadriveGui::onDaemonStarted(const QString& domain_id)
-{
-    SeafileRpcClient *rpc_client = rpcClient(domain_id);
 #if defined(Q_OS_WIN32)
     rpc_client->connectDaemon();
 #endif
 
-    // The addAccount() RPC should be invoked after an account being logged in.
-    // When launching seadrive-gui, the login event may be raised before the
-    // daemon started. For that reason, we queue all account updating events,
-    // and begin processing here.
-    connect(account_mgr_, SIGNAL(accountMQUpdated(const QString &)),
-            this, SLOT(updateAccountToDaemon(const QString &)));
-    updateAccountToDaemon("");
+    auto accounts = account_mgr_->activeAccounts();
+    for (int i = 0; i < accounts.size(); i++) {
+        auto account = accounts.at(i);
+        rpc_client->addAccount(account);
+    }
 
     tray_icon_->start();
-    MessagePoller *message_poller_ = messagePoller(domain_id);
-    message_poller_->setRpcClient(rpc_client);
-    message_poller_->start();
-    settings_mgr_->writeProxySettingsToDaemon(domain_id, settings_mgr_->getProxy());
-    writeSettingsToDaemon(domain_id);
+    settings_mgr_->writeSettingsToDaemon(domain_id);
 
     QString value;
     if (rpc_client->seafileGetConfig("client_id", &value) < 0 ||
@@ -586,97 +561,20 @@ void SeadriveGui::onDaemonStarted(const QString& domain_id)
 #if defined(Q_OS_WIN32)
     ThumbnailService::instance()->start();
 #endif
-}
 #endif
-
-#ifdef Q_OS_MAC
-void SeadriveGui::setAccounts()
-{
-    auto accounts = account_mgr_->activeAccounts();
-    for (int i = 0; i <  accounts.size(); i++) {
-        auto account = accounts.at(i);
-        QString domain_id = account.domainID();
-        SeafileRpcClient *rpc_client = rpcClient(domain_id);
-
-        if (!rpc_client->isConnected())
-            continue;
-
-        settings_mgr_->writeProxySettingsToDaemon(domain_id, settings_mgr_->getProxy());
-        writeSettingsToDaemon(domain_id);
-        QString value;
-        if (rpc_client->seafileGetConfig("client_id", &value) < 0 ||
-            value.isEmpty() || value != getUniqueClientId()) {
-            rpc_client->seafileSetConfig("client_id", getUniqueClientId());
-            rpc_client->seafileSetConfig(
-                "client_name", gui->settingsManager()->getComputerName());
-        }
-    }
-}
-#endif
-
-void SeadriveGui::updateAccountToDaemon(const QString& domain_id)
-{
-    QQueue<AccountMessage> pending_messages;
-    while (!account_mgr_->messages.isEmpty()) {
-        auto msg = account_mgr_->messages.dequeue();
-        if (msg.account.domainID() != domain_id) {
-            pending_messages.enqueue(msg);
-            continue;
-        }
-        SeafileRpcClient *rpc_client = rpcClient(msg.account.domainID());
-        if (!rpc_client->isConnected()) {
-            pending_messages.enqueue(msg);
-            continue;
-        }
-
-        if (msg.type == AccountAdded) {
-            if (!rpc_client->addAccount(msg.account)) {
-                continue;
-            }
-
-            // The init sync dlg only launches when there is a new logged in account.
-            if (init_sync_dlg_->hasNewLogin()) {
-                init_sync_dlg_->launch(msg.account.domainID());
-            }
-
-        } else if (msg.type == AccountRemoved) {
-#ifdef Q_OS_WIN32
-            rpc_client->deleteAccount(msg.account, false);
-#else
-            rpc_client->deleteAccount(msg.account, true);
-#endif
-        } else if (msg.type == AccountResynced) {
-#ifdef Q_OS_WIN32
-            rpc_client->deleteAccount(msg.account, false);
-            rpc_client->addAccount (msg.account);
-            init_sync_dlg_->launch(msg.account.domainID());
-            qWarning() << "Resynced account" << msg.account;
-#else
-            rpc_client->deleteAccount(msg.account, true);
-            gui->fileProviderManager()->registerDomain(msg.account);
-            rpc_client->addAccount (msg.account);
-            init_sync_dlg_->launch(msg.account.domainID());
-            qWarning() << "Resynced account" << msg.account;
-#endif
-        }
-    }
-
-    while (!pending_messages.isEmpty()) {
-        auto msg = pending_messages.dequeue();
-        account_mgr_->messages.enqueue(msg);
-    }
 }
 
-#if defined(Q_OS_WIN32)
-void SeadriveGui::onDaemonRestarted(const QString& domain_id)
+void SeadriveGui::onDaemonRestarted()
 {
+#ifndef Q_OS_MAC
     qDebug("reviving rpc client when daemon is restarted");
-    SeafileRpcClient *rpc_client = rpcClient(domain_id);
+    SeafileRpcClient *rpc_client = rpcClient(EMPTY_DOMAIN_ID);
     if (rpc_client) {
-        rpc_clients_.remove(domain_id);
+        rpc_clients_.remove(EMPTY_DOMAIN_ID);
         delete rpc_client;
     }
-    rpc_client = rpcClient(domain_id);
+    rpc_client = new SeafileRpcClient(EMPTY_DOMAIN_ID);
+    rpc_clients_.insert(EMPTY_DOMAIN_ID, rpc_client)
     rpc_client->connectDaemon();
 
     qDebug("setting account when daemon is restarted");
@@ -685,35 +583,40 @@ void SeadriveGui::onDaemonRestarted(const QString& domain_id)
     for (int i = 0; i <  accounts.size(); i++) {
         rpc_client->addAccount(accounts.at(i));
     }
-    MessagePoller *message_poller_ = messagePoller(domain_id);
-    message_poller_->setRpcClient (rpc_client);
-}
-#endif
-
-#if defined(Q_OS_MAC)
-void SeadriveGui::onDaemonRestarted(const QString& domain_id)
-{
-    qDebug("setting account when daemon is restarted");
-    SeafileRpcClient *rpc_client = rpcClient(domain_id);
-    auto account = account_mgr_->getAccountByDomainID(domain_id);
-    if (!account.isValid()) {
-        return;
+    MessagePoller *message_poller_ = messagePoller(EMPTY_DOMAIN_ID);
+    if (message_poller) {
+        message_poller_->setRpcClient (rpc_client);
+    } else {
+        message_poller = new MessagePoller();
+        message_poller->setRpcClient(rpc_client);
+        message_poller->start();
+        message_pollers_.insert(EMPTY_DOMAIN_ID, message_poller);
     }
-    rpc_client->addAccount(account);
-    settings_mgr_->writeProxySettingsToDaemon(domain_id, settings_mgr_->getProxy());
-    writeSettingsToDaemon(domain_id);
+#endif
 }
 
-// connectDaemon is used to notify the user to click on the SeaDrive entry in Finder and update the accounts to all SeaDrive daemon.
+// Traverse all accounts in the account manager every second, create an rpc client and connect to the domain for each account.
 void SeadriveGui::connectDaemon()
 {
+#ifdef Q_OS_MAC
     bool success = false;
-    bool all_success = true;
     auto accounts = account_mgr_->activeAccounts();
+
     for (int i = 0; i < accounts.size(); i++) {
         auto account = accounts.at(i);
-        SeafileRpcClient *rpc_client = rpcClient(account.domainID()); 
-        if (!rpc_client->isConnected()) {
+        QString domain_id = account.domainID();
+        SeafileRpcClient *rpc_client = rpcClient(domain_id); 
+        if (!rpc_client) {
+            rpc_client = new SeafileRpcClient(domain_id);
+            rpc_clients_.insert(domain_id, rpc_client);
+            rpc_client->tryConnectDaemon();
+            MessagePoller *message_poller = new MessagePoller();
+            message_poller->setRpcClient(rpc_client);
+            message_poller->start();
+            message_pollers_.insert(domain_id, message_poller);
+        } else if (!rpc_client->isConnected()) {
+            account_mgr_->setAccountAdded(account, false);
+            rpc_client->tryConnectDaemon();
             if (!notified_start_extension_) {
                 if (connect_daemon_retry_ > 5) {
                     notified_start_extension_ = true;
@@ -722,10 +625,45 @@ void SeadriveGui::connectDaemon()
                 }
                 connect_daemon_retry_++;
             }
-            all_success = false;
         } else {
+            if (account.added) {
+                continue;
+            }
+            account_mgr_->setAccountAdded(account, true);
+            rpc_client->addAccount(account);
+            settings_mgr_->writeSettingsToDaemon(domain_id);
+
+            QString value;
+            if (rpc_client->seafileGetConfig("client_id", &value) < 0 ||
+                value.isEmpty() || value != getUniqueClientId()) {
+                rpc_client->seafileSetConfig("client_id", getUniqueClientId());
+                rpc_client->seafileSetConfig(
+                    "client_name", gui->settingsManager()->getComputerName());
+            }
+            // The init sync dlg only launches when there is a new logged in account.
+            if (init_sync_dlg_->hasNewLogin()) {
+                init_sync_dlg_->launch(account.domainID());
+            }
             success = true;
-            updateAccountToDaemon(account.domainID());
+        }
+    }
+
+    QMapIterator<QString, SeafileRpcClient *> it(rpc_clients_);
+    while (it.hasNext()) {
+        it.next();
+        auto rpc_client = it.value();
+        auto domain_id = it.key();
+        auto account = account_mgr_->getAccountByDomainID(domain_id);
+        if (!account.isValid()) {
+            // account has beed deleted, remove account from domain.
+            rpc_client->deleteDomainAccount(domain_id);
+            MessagePoller *message_poller = messagePoller(domain_id);
+            message_pollers_.remove(domain_id);
+            message_poller->stop();
+            delete message_poller;
+            rpc_clients_.remove(domain_id);
+            delete rpc_client;
+            init_sync_dlg_->clearPoller(domain_id);
         }
     }
 
@@ -733,16 +671,14 @@ void SeadriveGui::connectDaemon()
         tray_icon_started_ = true;
         tray_icon_->start();
     }
-
-    if (all_success) {
-        connect_daemon_timer_.stop();
-    }
+#endif
 }
 
+#ifdef Q_OS_MAC
 void SeadriveGui::logoutAccountsFromDaemon(const Account& account)
 {
     SeafileRpcClient *rpc_client = rpcClient(account.domainID());
-    if (!rpc_client->isConnected()) {
+    if (!rpc_client) {
         return;
     }
 
@@ -1103,62 +1039,13 @@ QString SeadriveGui::getUniqueClientId()
     return id;
 }
 
-void SeadriveGui::writeSettingsToDaemon(const QString& domain_id)
-{
-    bool notify = settings_mgr_->getNotify();
-    settings_mgr_->setNotify(domain_id, notify);
-
-    bool sync = settings_mgr_->getSyncExtraTempFile();
-    settings_mgr_->setSyncExtraTempFile(domain_id, sync);
-
-    unsigned int download_ratio = settings_mgr_->geteMaxDownloadRatio();
-    settings_mgr_->setMaxDownloadRatio(domain_id, download_ratio);
-
-    unsigned int upload_ratio = settings_mgr_->geteMaxUploadRatio();
-    settings_mgr_->setMaxUploadRatio(domain_id, upload_ratio);
-
-    bool disabled = settings_mgr_->getHttpSyncCertVerifyDisabled();
-    settings_mgr_->setHttpSyncCertVerifyDisabled(domain_id, disabled);
-
-#if defined(Q_OS_MAC)
-    bool enabled = settings_mgr_->getHideWindowsIncompatibilityPathMsg();
-    settings_mgr_->setHideWindowsIncompatibilityPathMsg(domain_id, enabled);
-#endif
-
-    int interval = settings_mgr_->getCacheCleanIntervalMinutes();
-    settings_mgr_->setCacheCleanIntervalMinutes(domain_id, interval);
-
-    int limit = settings_mgr_->getCacheSizeLimitGB();
-    settings_mgr_->setCacheSizeLimitGB(domain_id, limit);
-
-    int value = settings_mgr_->getDeleteConfirmThreshold();
-    settings_mgr_->setDeleteConfirmThreshold(domain_id, value);
-}
-
-// create a new rpc client by domain_id, if the OS is windows, domain_id is an empty string.
 SeafileRpcClient *SeadriveGui::rpcClient(const QString& domain_id)
 {
     SeafileRpcClient *rpc_client;
     if (rpc_clients_.contains(domain_id)) {
-        rpc_client = rpc_clients_.value(domain_id);
-        if (!rpc_client->isConnected()) {
-#ifdef Q_OS_MAC
-            rpc_client->tryConnectDaemon();
-#endif
-        }
-        return rpc_client;
+        return rpc_clients_.value(domain_id);
     }
-    rpc_client = new SeafileRpcClient(domain_id);
-#ifdef Q_OS_MAC
-    rpc_client->tryConnectDaemon();
-    MessagePoller *message_poller = messagePoller(domain_id);
-    message_poller->setRpcClient(rpc_client);
-    message_poller->start();
-
-    connect (rpc_client, SIGNAL(daemonRestarted(const QString &)), this, SLOT(onDaemonRestarted(const QString &)));
-#endif
-    rpc_clients_.insert(domain_id, rpc_client);
-    return rpc_client;
+    return NULL;
 }
 
 MessagePoller *SeadriveGui::messagePoller(const QString& domain_id)
@@ -1166,7 +1053,5 @@ MessagePoller *SeadriveGui::messagePoller(const QString& domain_id)
     if (message_pollers_.contains(domain_id)) {
         return message_pollers_.value(domain_id);
     }
-    MessagePoller *message_poller_ = new MessagePoller();
-    message_pollers_.insert(domain_id, message_poller_);
-    return message_poller_;
+    return NULL;
 }

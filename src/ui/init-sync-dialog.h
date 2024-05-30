@@ -20,6 +20,7 @@ public:
     void markNewLogin();
     bool hasNewLogin();
     void launch(const QString& domain_id);
+    void clearPoller(const QString& domain_id);
 
 private slots:
     void checkDownloadProgress();
@@ -37,10 +38,11 @@ private:
     QTimer *check_download_timer_;
 
     bool new_login_;
-    bool poller_connected_;
 
     QString waiting_text_;
     int dots_;
+
+     QMap<QString, bool> pollers_;
 };
 
 #endif // SEAFILE_CLIENT_INIT_VDRIVE_DIALOG_H

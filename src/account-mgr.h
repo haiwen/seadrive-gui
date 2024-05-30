@@ -16,17 +16,6 @@ struct sqlite3_stmt;
 class ApiError;
 class SeafileRpcClient;
 
-typedef enum {
-    AccountAdded = 0,
-    AccountRemoved,
-    AccountResynced,
-} MessageType;
-
-struct AccountMessage {
-    MessageType type;
-    Account account;
-};
-
 #if defined(_MSC_VER)
 class SyncRootInfo {
 public:
@@ -109,10 +98,7 @@ public:
     void clearAccountToken(const Account& account,
                            bool force_relogin=false);
 
-    // messages serves as a simple asynchronous queue between account
-    // adding/removing events and rpc calls to daemon. One should enqueue
-    // the message first, and then emit the accountMQUpdated() signal.
-    QQueue<AccountMessage> messages;
+    void setAccountAdded(Account& account, bool added);
 
 public slots:
     void reloginAccount(const Account &account);
@@ -121,9 +107,7 @@ signals:
     /**
      * Account added/removed/switched.
      */
-    void accountMQUpdated(const QString& domain_id);
     void accountInfoUpdated(const Account& account);
-    void daemonStarted(const QString& domain_id);
 
 private slots:
     void slotUpdateAccountInfoSucess(const AccountInfo& info);

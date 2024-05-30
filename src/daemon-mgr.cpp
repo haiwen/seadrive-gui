@@ -220,9 +220,9 @@ void DaemonManager::checkDaemonReady()
         restart_retried_ = 0;
         if (first_start_) {
             first_start_ = false;
-            emit daemonStarted("");
+            emit daemonStarted();
         } else {
-            emit daemonRestarted("");
+            emit daemonRestarted();
         }
         return;
     }
@@ -244,8 +244,8 @@ void DaemonManager::stopAllDaemon()
     }
     if (!gui->isDevMode() && seadrive_daemon_) {
 #if defined(_MSC_VER)
-        SeafileRpcClient *rpc_client = gui->rpcClient("");
-        if (!rpc_client->exitSeadriveDaemon()) {
+        SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
+        if (!rpc_client || !rpc_client->exitSeadriveDaemon()) {
             qWarning("failed to exit seadrive daemon");
         }
 #elif defined(Q_OS_LINUX)
@@ -292,7 +292,7 @@ void DaemonManager::scheduleRestartDaemon()
     // not retry too many times, because during the retry nothing
     // would be shown to the user and would confuse him.
     int max_retry = 2;
-    SeafileRpcClient *rpc_client = gui->rpcClient("");
+    SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
     if (rpc_client && rpc_client->isConnected()) {
         max_retry = kDaemonRestartMaxRetries;
     }

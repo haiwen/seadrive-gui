@@ -19,7 +19,7 @@ const char* kExplorerPath = "c:/windows/explorer.exe";
 
 
 InitSyncDialog::InitSyncDialog()
-    : QDialog(), new_login_(false), poller_connected_(false)
+    : QDialog(), new_login_(false)
 {
     setupUi(this);
     mLogo->setPixmap(QPixmap(":/images/seafile-32.png"));
@@ -46,10 +46,14 @@ bool InitSyncDialog::hasNewLogin()
 
 void InitSyncDialog::launch(const QString& domain_id)
 {
-    if (!poller_connected_) {
-        connect(gui->messagePoller(domain_id), SIGNAL(seadriveFSLoaded()),
+    if (!pollers_.contains(domain_id)) {
+        MessagePoller *message_poller = gui->messagePoller(domain_id);
+        if (!message_poller) {
+            return;
+        }
+        connect(message_poller, SIGNAL(seadriveFSLoaded()),
                 this, SLOT(onFSLoaded()));
-        poller_connected_ = true;
+        pollers_.insert(domain_id, true);
     }
 
     gui->trayIcon()->setLoginActionEnabled(false);
@@ -120,4 +124,12 @@ void InitSyncDialog::closeEvent(QCloseEvent *event)
 {
     event->ignore();
     hide();
+}
+
+void InitSyncDialog::clearPoller(const QString& domain_id)
+{
+    if (!pollers_.contains(domain_id)) {
+        return;
+    }
+    pollers_.remove(domain_id);
 }

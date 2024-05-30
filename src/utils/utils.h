@@ -11,6 +11,8 @@
 #include <QUrl>
 #include <QSslError>
 
+const QString EMPTY_DOMAIN_ID = "00000000000000000000000000000000";
+
 class QSslCipher;
 class QSslCertificate;
 

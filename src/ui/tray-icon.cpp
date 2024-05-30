@@ -628,6 +628,9 @@ void SeafileTrayIcon::onMessageClicked()
     // QThreadPool::globalInstance()->start(reader);
     auto accounts = gui->accountManager()->activeAccounts();
     for (int i = 0; i <  accounts.size(); i++) {
+        if (!gui->messagePoller(accounts.at(i).domainID())) {
+            continue;
+        }
         if (gui->messagePoller(accounts.at(i).domainID())->lastEventType() == "file-download.start") {
             showTransferProgressDialog();
             transfer_progress_dialog_->showDownloadTab();
@@ -650,7 +653,7 @@ void SeafileTrayIcon::deleteAccount()
 
     SeafileRpcClient *rpc_client = gui->rpcClient(account.domainID());
 
-    if (rpc_client->isAccountUploading(account)) {
+    if (rpc_client && rpc_client->isAccountUploading(account)) {
         gui->warningBox(tr("There are changes being uploaded under the account, please try again later"));
         return;
     }
@@ -675,6 +678,10 @@ void SeafileTrayIcon::resyncAccount()
         return;
     Account account = qvariant_cast<Account>(action->data());
     SeafileRpcClient *rpc_client = gui->rpcClient(account.domainID());
+    if (!rpc_client) {
+        gui->warningBox (tr("Failed to connect to daemon, please try again later"));
+        return;
+    }
 
     bool is_uploading = rpc_client->isAccountUploading (account);
     if (is_uploading) {

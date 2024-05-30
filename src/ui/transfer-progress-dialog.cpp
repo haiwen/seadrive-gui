@@ -193,9 +193,9 @@ TransferItemsTableModel::TransferItemsTableModel(QObject* parent)
 void TransferItemsTableModel::setTransferItems()
 {
     json_t *upload_reply, *download_reply;
-    SeafileRpcClient *rpc_client = gui->rpcClient("");
+    SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
 
-    if (!rpc_client->getUploadProgress(&upload_reply)) {
+    if (!rpc_client || !rpc_client->getUploadProgress(&upload_reply)) {
         return;
     }
     QScopedPointer<json_t, JsonPointerCustomDeleter> upload(upload_reply);
@@ -221,7 +221,7 @@ void TransferItemsTableModel::setTransferItems()
         SeafileRpcClient *rpc_client = gui->rpcClient(account.domainID()); 
         json_t *upload_reply, *download_reply;
 
-        if (!rpc_client->isConnected()) {
+        if (!rpc_client) {
             continue;
         }
 

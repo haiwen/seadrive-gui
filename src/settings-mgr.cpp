@@ -176,7 +176,7 @@ void SettingsManager::setNotify(const QString& domain_id, bool notify)
         bubbleNotifycation_ = notify;
     }
     SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
-    if (rpc_client->isConnected())
+    if (rpc_client)
         rpc_client->seafileSetConfig(
                 "notify_sync", notify ? "on" : "off");
 }
@@ -212,7 +212,7 @@ void SettingsManager::setMaxDownloadRatio(const QString& domain_id, unsigned int
         maxDownloadRatio_ = ratio;
     }
     SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
-    if (rpc_client->isConnected())
+    if (rpc_client)
         rpc_client->setDownloadRateLimit(ratio << 10);
 }
 
@@ -240,7 +240,7 @@ void SettingsManager::setMaxUploadRatio(const QString& domain_id, unsigned int r
     }
 
     SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
-    if (rpc_client->isConnected())
+    if (rpc_client)
         rpc_client->setUploadRateLimit(ratio << 10);
 }
 
@@ -268,7 +268,7 @@ void SettingsManager::setCacheCleanIntervalMinutes(const QString& domain_id, int
     }
 
     SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
-    if (rpc_client->isConnected())
+    if (rpc_client)
         rpc_client->setCacheCleanIntervalMinutes(interval);
 }
 
@@ -296,7 +296,7 @@ void SettingsManager::setCacheSizeLimitGB(const QString& domain_id, int limit)
     }
 
     SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
-    if (rpc_client->isConnected())
+    if (rpc_client)
         rpc_client->setCacheSizeLimitGB(limit);
 }
 int SettingsManager::getCacheSizeLimitGB()
@@ -360,7 +360,7 @@ void SettingsManager::setSyncExtraTempFile(const QString& domain_id, bool sync)
     }
 
     SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
-    if (rpc_client->isConnected())
+    if (rpc_client)
         rpc_client->seafileSetConfig(
             "sync_extra_temp_file", sync ? "true" : "false");
 }
@@ -459,7 +459,7 @@ bool SettingsManager::SeafileProxy::operator==(const SeafileProxy &rhs) const
     }
 }
 
-void SettingsManager::setProxy(const QString& domain_id, const SeafileProxy &proxy)
+void SettingsManager::setProxy(const SeafileProxy &proxy)
 {
     if (proxy == current_proxy_) {
         return;
@@ -467,10 +467,21 @@ void SettingsManager::setProxy(const QString& domain_id, const SeafileProxy &pro
     current_proxy_ = proxy;
 
     writeProxySettings(proxy);
-    SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
-    if (rpc_client->isConnected()) {
-        writeProxySettingsToDaemon(domain_id, proxy);
+
+#ifdef Q_OS_MAC
+    auto accounts = gui->accountManager()->activeAccounts();
+    for (int i = 0; i <  accounts.size(); i++) {
+        SeafileRpcClient *rpc_client = gui->rpcClient(accounts.at(i).domainID());
+        if (rpc_client) {
+            writeProxySettingsToDaemon(accounts.at(i).domainID(), proxy);
+        }
     }
+#else
+    SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
+    if (rpc_client) {
+        writeProxySettingsToDaemon(EMPTY_DOMAIN_ID, proxy);
+    }
+#endif
     applyProxySettings();
 }
 
@@ -515,7 +526,7 @@ void SettingsManager::writeProxySettings(const SeafileProxy &proxy)
 void SettingsManager::writeProxySettingsToDaemon(const QString& domain_id, const SeafileProxy &proxy)
 {
     SeafileRpcClient *rpc = gui->rpcClient(domain_id);
-    if (!rpc->isConnected())
+    if (!rpc)
         return;
 
     if (proxy.type == NoProxy) {
@@ -538,7 +549,7 @@ void SettingsManager::writeProxyDetailsToDaemon(const QString& domain_id, const 
 {
     Q_ASSERT(proxy.type != NoProxy && proxy.type != SystemProxy);
     SeafileRpcClient *rpc = gui->rpcClient(domain_id);
-    if (!rpc->isConnected())
+    if (!rpc)
         return;
 
     QString type = proxy.type == HttpProxy ? "http" : "socks";
@@ -549,6 +560,40 @@ void SettingsManager::writeProxyDetailsToDaemon(const QString& domain_id, const 
         rpc->seafileSetConfig(kProxyUsername, proxy.username.toUtf8().data());
         rpc->seafileSetConfig(kProxyPassword, proxy.password.toUtf8().data());
     }
+}
+
+void SettingsManager::writeSettingsToDaemon(const QString& domain_id)
+{
+    bool notify = getNotify();
+    setNotify(domain_id, notify);
+
+    bool sync = getSyncExtraTempFile();
+    setSyncExtraTempFile(domain_id, sync);
+
+    unsigned int download_ratio = geteMaxDownloadRatio();
+    setMaxDownloadRatio(domain_id, download_ratio);
+
+    unsigned int upload_ratio = geteMaxUploadRatio();
+    setMaxUploadRatio(domain_id, upload_ratio);
+
+    bool disabled = getHttpSyncCertVerifyDisabled();
+    setHttpSyncCertVerifyDisabled(domain_id, disabled);
+
+#if defined(Q_OS_MAC)
+    bool enabled = getHideWindowsIncompatibilityPathMsg();
+    setHideWindowsIncompatibilityPathMsg(domain_id, enabled);
+#endif
+
+    int interval = getCacheCleanIntervalMinutes();
+    setCacheCleanIntervalMinutes(domain_id, interval);
+
+    int limit = getCacheSizeLimitGB();
+    setCacheSizeLimitGB(domain_id, limit);
+
+    int value = getDeleteConfirmThreshold();
+    setDeleteConfirmThreshold(domain_id, value);
+
+    writeProxySettingsToDaemon(domain_id, getProxy());
 }
 
 void SettingsManager::setHttpSyncCertVerifyDisabled(const QString& domain_id, bool disabled)
@@ -563,7 +608,7 @@ void SettingsManager::setHttpSyncCertVerifyDisabled(const QString& domain_id, bo
     }
 
     SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
-    if (rpc_client->isConnected())
+    if (rpc_client)
         rpc_client->seafileSetConfig(
             "disable_verify_certificate", disabled ? "true" : "false");
 }
@@ -592,7 +637,7 @@ void SettingsManager::setDeleteConfirmThreshold(const QString& domain_id, int va
     }
 
     SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
-    if (rpc_client->isConnected())
+    if (rpc_client)
         rpc_client->seafileSetConfigInt(
                 "delete_confirm_threshold", value);
 }
@@ -631,7 +676,7 @@ void SettingsManager::setHideWindowsIncompatibilityPathMsg(const QString& domain
 
     QString set_value = enabled == true ? "true" : "false";
     SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
-    if (rpc_client->isConnected())
+    if (rpc_client)
         rpc_client->seafileSetConfig(kHideWindowsIncompatiblePathNotification, set_value);
     return;
 }
@@ -819,7 +864,7 @@ void SettingsManager::onSystemProxyPolled(const QNetworkProxy &system_proxy)
     auto accounts = gui->accountManager()->activeAccounts();
     for (int i = 0; i <  accounts.size(); i++) {
         SeafileRpcClient *rpc_client = gui->rpcClient(accounts.at(i).domainID());
-        if (!rpc_client->isConnected()) {
+        if (!rpc_client) {
             continue;
         }
         if (proxy.type == NoProxy) {

@@ -59,7 +59,11 @@ EncryptedRepoInfo EncryptedRepoInfo::fromJSON(const json_t *root) {
     enc_repo_info.repo_server = json.getString("server");
     enc_repo_info.repo_username = json.getString("username");
     enc_repo_info.is_password_set  = json.getBool("is_passwd_set");
+#ifdef Q_OS_MAC
     enc_repo_info.domain_id = json.getString("domain_id");
+#else
+    enc_repo_info.domain_id = EMPTY_DOMAIN_ID;
+#endif
     return enc_repo_info;
 }
 
@@ -270,7 +274,7 @@ void EncryptedReposTableModel::updateEncryptRepoList()
     for (int i = 0; i <  accounts.size(); i++) {
         SeafileRpcClient *rpc_client = gui->rpcClient(accounts.at(i).domainID());
         json_t *ret;
-        if (!rpc_client->getEncryptedRepoList(&ret)) {
+        if (!rpc_client || !rpc_client->getEncryptedRepoList(&ret)) {
            qWarning("failed to get encrypt library list");
            continue;
         }
@@ -299,12 +303,12 @@ void EncryptedReposTableModel::updateEncryptRepoList()
 #else
 void EncryptedReposTableModel::updateEncryptRepoList()
 {
-    SeafileRpcClient *rpc_client = gui->rpcClient("");
+    SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
     json_t *ret;
-    if (!rpc_client->getEncryptedRepoList(&ret)) {
+    if (!rpc_client || !rpc_client->getEncryptedRepoList(&ret)) {
        qWarning("failed to get encrypt library list");
        return;
-     }
+    }
     QList<EncryptedRepoInfo> enc_repo_infos = EncryptedRepoInfo::listFromJSON(ret);
     json_decref(ret);
 
@@ -331,7 +335,7 @@ void EncryptedReposTableModel::slotSetEncRepoPassword(const QString& domain_id, 
 {
     SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
     QString error_msg;
-    if (!rpc_client->setEncryptedRepoPassword(repo_id, password, &error_msg)) {
+    if (!rpc_client || !rpc_client->setEncryptedRepoPassword(repo_id, password, &error_msg)) {
         if (error_msg.isEmpty()) {
             gui->messageBox(tr("Failed to set encrypted library password"));
         } else if(error_msg == "Wrong password"){
@@ -343,7 +347,7 @@ void EncryptedReposTableModel::slotSetEncRepoPassword(const QString& domain_id, 
 void EncryptedReposTableModel::slotClearEncRepoPassword(const QString& domain_id, const QString& repo_id)
 {
     SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
-    if (!rpc_client->clearEncryptedRepoPassword(repo_id)) {
+    if (!rpc_client || !rpc_client->clearEncryptedRepoPassword(repo_id)) {
         gui->messageBox(tr("Failed to clear encrypted library password"));
     }
 }

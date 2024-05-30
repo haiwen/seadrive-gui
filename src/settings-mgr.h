@@ -65,7 +65,7 @@ public:
 
     void getProxy(QNetworkProxy *proxy) const;
     SeafileProxy getProxy() const { return current_proxy_; };
-    void setProxy(const QString& domain_id, const SeafileProxy& proxy);
+    void setProxy(const SeafileProxy& proxy);
 
     void setNotify(const QString& domain_id, bool notify);
     bool getNotify();
@@ -124,6 +124,8 @@ public:
     void writeSystemProxyInfo(const QUrl& url, const QString& file_path);
 
     void writeProxySettingsToDaemon(const QString& domain_id, const SeafileProxy& proxy);
+
+    void writeSettingsToDaemon(const QString& domain_id);
 
 private slots:
     void checkSystemProxy();

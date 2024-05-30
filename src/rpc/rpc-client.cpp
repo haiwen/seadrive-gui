@@ -642,6 +642,28 @@ bool SeafileRpcClient::deleteAccount(const Account& account, bool remove_cache)
     return true;
 }
 
+#ifdef Q_OS_MAC
+bool SeafileRpcClient::deleteDomainAccount(const QString& domain_id)
+{
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
+    GError *error = NULL;
+    searpc_client_call__int(seadrive_rpc_client_, "seafile_delete_domain_account", &error, 1,
+                               "string", toCStr(domain_id));
+    if (error) {
+        qWarning() << "Unable to delete account" << domain_id << ":"
+                   << (error->message ? error->message : "");
+        g_error_free(error);
+        return false;
+    }
+    qWarning() << "Deleted account" << domain_id;
+    return true;
+}
+#endif
+
 bool SeafileRpcClient::logoutAccount(const Account& account)
 {
     if (!connected_) {

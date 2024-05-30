@@ -31,8 +31,8 @@ void openLocalFile(QString& repo_id, QString& path_in_repo)
 {
 #if defined(Q_OS_WIN32)
     QString repo_name;
-    SeafileRpcClient *rpc_client = gui->rpcClient("");
-    if (!rpc_client->getRepoUnameById(repo_id, &repo_name)) {
+    SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
+    if (!rpc_client || !rpc_client->getRepoUnameById(repo_id, &repo_name)) {
         qWarning("failed to get repo uname by %s", toCStr(repo_id));
         return;
     }

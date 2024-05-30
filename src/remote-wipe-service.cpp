@@ -101,6 +101,9 @@ void RemoteWipeService::onRequestSuccess()
 void RemoteWipeService::askDaemonDeleteAccount(const Account& account)
 {
     SeafileRpcClient *rpc_client = gui->rpcClient(account.domainID());
+    if (!rpc_client) {
+        return;
+    }
     if (!rpc_client->deleteAccount(account, true)) {
         qWarning() << "Failed to remove local cache of account" << account;
         return;

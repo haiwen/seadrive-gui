@@ -64,7 +64,6 @@ public:
 #ifdef Q_OS_MAC
     void migrateOldData();
     void migrateOldConfig(const QString& data_dir);
-    void setAccounts();
 #endif
 
 #if defined(Q_OS_WIN32)
@@ -104,14 +103,9 @@ public slots:
 
 private slots:
     void onAboutToQuit();
-    void onDaemonStarted(const QString& domain_id);
-    void updateAccountToDaemon(const QString& domainn_id);
-
-    void onDaemonRestarted(const QString& domain_id);
-
-#ifndef Q_OS_WIN32
+    void onDaemonStarted();
+    void onDaemonRestarted();
     void connectDaemon();
-#endif
 
 private:
     Q_DISABLE_COPY(SeadriveGui)

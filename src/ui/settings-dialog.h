@@ -16,7 +16,8 @@ private slots:
 
     void closeEvent(QCloseEvent *event);
     void showEvent(QShowEvent *event);
-    void updateSettings(const QString& domain_id);
+    void updateSettings();
+    void updateSettingsToDaemon(const QString& domain_id);
     void onOkBtnClicked();
     void selectDirAction();
 
@@ -24,7 +25,7 @@ private slots:
     void showHideControlsBasedOnCurrentProxyType(int state);
 
 private:
-    bool updateProxySettings(const QString& domain_id);
+    bool updateProxySettings();
     bool validateProxyInputs();
 
     QString current_seadrive_root_;

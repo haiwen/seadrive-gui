@@ -24,6 +24,6 @@ QString Account::domainID() const {
 
     return ::md5(serverUrl.url() + username);
 #else
-    return "";
+    return EMPTY_DOMAIN_ID;
 #endif
 }

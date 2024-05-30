@@ -225,8 +225,8 @@ QString SyncErrorsTableView::findLocalPathFromError(const SyncError& error)
     }
 
     QString repo_uname;
-    SeafileRpcClient *rpc_client = gui->rpcClient("");
-    if (!rpc_client->getRepoUnameById(error.repo_id, &repo_uname)) {
+    SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
+    if (!rpc_client || !rpc_client->getRepoUnameById(error.repo_id, &repo_uname)) {
         return "";
     }
 
