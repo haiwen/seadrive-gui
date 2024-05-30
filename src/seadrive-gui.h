@@ -105,6 +105,7 @@ private slots:
     void onAboutToQuit();
     void onDaemonStarted();
     void onDaemonRestarted();
+    void onDaemonRestarted(const QString& domain_id);
     void connectDaemon();
 
 private:

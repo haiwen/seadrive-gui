@@ -595,6 +595,14 @@ void SeadriveGui::onDaemonRestarted()
 #endif
 }
 
+void SeadriveGui::onDaemonRestarted(const QString& domain_id)
+{
+#ifdef Q_OS_MAC
+    auto account = account_mgr_->getAccountByDomainID(domain_id);
+    account_mgr_->setAccountAdded(account, false);
+#endif
+}
+
 // Traverse all accounts in the account manager every second, create an rpc client and connect to the domain for each account.
 void SeadriveGui::connectDaemon()
 {
@@ -614,6 +622,8 @@ void SeadriveGui::connectDaemon()
             message_poller->setRpcClient(rpc_client);
             message_poller->start();
             message_pollers_.insert(domain_id, message_poller);
+            connect(rpc_client, SIGNAL(daemonRestarted(const QString&)),
+                    this, SLOT(onDaemonRestarted(const QString&)));
         } else if (!rpc_client->isConnected()) {
             account_mgr_->setAccountAdded(account, false);
             rpc_client->tryConnectDaemon();
