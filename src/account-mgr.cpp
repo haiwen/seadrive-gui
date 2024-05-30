@@ -422,7 +422,7 @@ int AccountManager::resyncAccount(const Account& account)
 #ifdef Q_OS_MAC
     rpc_client->deleteAccount(updated_account, true);
     gui->fileProviderManager()->registerDomain(updated_account);
-    rpc_client->addAccount(updated_account);
+    setAccountAdded(updated_account, false);
     gui->initSyncDialog()->launch(updated_account.domainID());
     qWarning() << "Resynced account" << updated_account;
 #else
