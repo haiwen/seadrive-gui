@@ -523,7 +523,7 @@ void SeadriveGui::onDaemonStarted()
     SeafileRpcClient *rpc_client = rpcClient(EMPTY_DOMAIN_ID);
     if (!rpc_client) {
         rpc_client = new SeafileRpcClient(EMPTY_DOMAIN_ID);
-        rpc_clients_.insert(EMPTY_DOMAIN_ID, rpc_client)
+        rpc_clients_.insert(EMPTY_DOMAIN_ID, rpc_client);
         MessagePoller *message_poller = new MessagePoller();
         message_poller->setRpcClient(rpc_client);
         message_poller->start();
@@ -540,7 +540,7 @@ void SeadriveGui::onDaemonStarted()
     }
 
     tray_icon_->start();
-    settings_mgr_->writeSettingsToDaemon(domain_id);
+    settings_mgr_->writeSettingsToDaemon(EMPTY_DOMAIN_ID);
 
     QString value;
     if (rpc_client->seafileGetConfig("client_id", &value) < 0 ||
@@ -574,7 +574,7 @@ void SeadriveGui::onDaemonRestarted()
         delete rpc_client;
     }
     rpc_client = new SeafileRpcClient(EMPTY_DOMAIN_ID);
-    rpc_clients_.insert(EMPTY_DOMAIN_ID, rpc_client)
+    rpc_clients_.insert(EMPTY_DOMAIN_ID, rpc_client);
     rpc_client->connectDaemon();
 
     qDebug("setting account when daemon is restarted");
@@ -583,9 +583,9 @@ void SeadriveGui::onDaemonRestarted()
     for (int i = 0; i <  accounts.size(); i++) {
         rpc_client->addAccount(accounts.at(i));
     }
-    MessagePoller *message_poller_ = messagePoller(EMPTY_DOMAIN_ID);
+    MessagePoller *message_poller = messagePoller(EMPTY_DOMAIN_ID);
     if (message_poller) {
-        message_poller_->setRpcClient (rpc_client);
+        message_poller->setRpcClient (rpc_client);
     } else {
         message_poller = new MessagePoller();
         message_poller->setRpcClient(rpc_client);

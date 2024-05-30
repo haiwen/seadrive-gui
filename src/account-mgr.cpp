@@ -634,7 +634,7 @@ void AccountManager::addAccountToDaemon(const Account& account)
 #endif
 
 #ifndef Q_OS_MAC
-    SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAID_ID);
+    SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
     if (rpc_client) {
         rpc_client->addAccount(added_account);
     }
