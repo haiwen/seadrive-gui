@@ -192,6 +192,7 @@ TransferItemsTableModel::TransferItemsTableModel(QObject* parent)
 #if defined(Q_OS_WIN32)
 void TransferItemsTableModel::setTransferItems()
 {
+    TransferProgress transfer_progress;
     json_t *upload_reply, *download_reply;
     SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
 
@@ -206,8 +207,8 @@ void TransferItemsTableModel::setTransferItems()
     QScopedPointer<json_t, JsonPointerCustomDeleter> download(download_reply);
 
     beginResetModel();
-    transfer_progress_ =
-        TransferProgress::fromJSON(upload.data(), download.data());
+    TransferProgress::fromJSON(upload.data(), download.data(), transfer_progress);
+    transfer_progress_ = transfer_progress;
     endResetModel();
 }
 #endif
@@ -215,6 +216,8 @@ void TransferItemsTableModel::setTransferItems()
 #if defined(Q_OS_MAC)
 void TransferItemsTableModel::setTransferItems()
 {
+    TransferProgress transfer_progress;
+    beginResetModel();
     auto accounts = gui->accountManager()->activeAccounts();
     for (int i = 0; i < accounts.size(); i++) {
         auto account = accounts.at(i);
@@ -235,12 +238,11 @@ void TransferItemsTableModel::setTransferItems()
         }
         QScopedPointer<json_t, JsonPointerCustomDeleter> download(download_reply);
 
-        beginResetModel();
-        transfer_progress_ =
-            TransferProgress::fromJSON(upload.data(), download.data());
-        endResetModel();
+        TransferProgress::fromJSON(upload.data(), download.data(), transfer_progress);
         
     }
+    transfer_progress_ = transfer_progress;
+    endResetModel();
 }
 #endif
 
