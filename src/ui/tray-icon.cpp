@@ -708,10 +708,16 @@ void SeafileTrayIcon::setTransferRate(qint64 up_rate, qint64 down_rate)
                     translateTransferRate(down_rate_)));
 }
 
-void SeafileTrayIcon::setSyncErrors(const QList<SyncError> errors)
+void SeafileTrayIcon::setSyncErrors(const QString& domain_id, const QList<SyncError> errors)
 {
     sync_errors_.clear();
     network_error_= SyncError();
+
+    QList<SyncError> sync_errors;
+    if (domain_errors_.contains(domain_id)) {
+        sync_errors = domain_errors_.value(domain_id);
+    }
+    sync_errors.clear();
 
     foreach (const SyncError& error, errors) {
         if (error.isNetworkError()) {
@@ -719,9 +725,18 @@ void SeafileTrayIcon::setSyncErrors(const QList<SyncError> errors)
                 network_error_ = error;
             }
         } else {
-            sync_errors_.push_back(error);
+            sync_errors.push_back(error);
         }
     }
+    domain_errors_.insert(domain_id, sync_errors);
+
+    QMapIterator<QString, QList<SyncError>> it(domain_errors_);
+    while (it.hasNext()) {
+        it.next();
+        auto errors = it.value();  
+        sync_errors_.append(errors);
+    }
+
     reloadTrayIcon();
 }
 

@@ -166,14 +166,14 @@ void MessagePoller::checkSyncErrors()
 {
     json_t *ret;
     if (!rpc_client_->getSyncErrors(&ret)) {
-        gui->trayIcon()->setSyncErrors(QList<SyncError>());
+        gui->trayIcon()->setSyncErrors(rpc_client_->domainID(), QList<SyncError>());
         return;
     }
 
     QList<SyncError> errors = SyncError::listFromJSON(ret);
     json_decref(ret);
 
-    gui->trayIcon()->setSyncErrors(errors);
+    gui->trayIcon()->setSyncErrors(rpc_client_->domainID(), errors);
 }
 
 void MessagePoller::processNotification(const SyncNotification& notification)
