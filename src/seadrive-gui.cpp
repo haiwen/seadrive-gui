@@ -631,7 +631,7 @@ void SeadriveGui::connectDaemon()
         if (!rpc_client->isConnected()) {
             account_mgr_->setAccountAdded(account, false);
             rpc_client->tryConnectDaemon();
-            if (!account.notified_start_extension) {
+            if (!rpc_client->isConnected() && !account.notified_start_extension) {
                 if (account.connect_daemon_retry > 5) {
                     account_mgr_->setAccountNotifiedStartExtension(account, true);
                     if (file_provider_mgr_->hasEnabledDomains())
