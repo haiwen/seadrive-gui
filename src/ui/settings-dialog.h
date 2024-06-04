@@ -17,7 +17,6 @@ private slots:
     void closeEvent(QCloseEvent *event);
     void showEvent(QShowEvent *event);
     void updateSettings();
-    void updateSettingsToDaemon(const QString& domain_id);
     void onOkBtnClicked();
     void selectDirAction();
 

@@ -67,14 +67,14 @@ public:
     SeafileProxy getProxy() const { return current_proxy_; };
     void setProxy(const SeafileProxy& proxy);
 
-    void setNotify(const QString& domain_id, bool notify);
+    void setNotify(bool notify);
     bool getNotify();
     void setAutoStart(bool autoStart);
-    void setMaxDownloadRatio(const QString& domain_id, unsigned int ratio);
+    void setMaxDownloadRatio(unsigned int ratio);
     unsigned int geteMaxDownloadRatio();
-    void setMaxUploadRatio(const QString& domain_id, unsigned int ratio);
+    void setMaxUploadRatio(unsigned int ratio);
     unsigned int geteMaxUploadRatio();
-    void setSyncExtraTempFile(const QString& domain_id, bool sync);
+    void setSyncExtraTempFile(bool sync);
     bool getSyncExtraTempFile();
     void setSearchEnabled(bool enabled);
     bool getSearchEnabled();
@@ -82,19 +82,19 @@ public:
     void setCheckLatestVersionEnabled(bool enabled);
     bool isCheckLatestVersionEnabled();
 
-    void setHttpSyncCertVerifyDisabled(const QString& domain_id, bool disabled);
+    void setHttpSyncCertVerifyDisabled(bool disabled);
     bool getHttpSyncCertVerifyDisabled();
 
-    void setDeleteConfirmThreshold(const QString& domain_id, int value);
+    void setDeleteConfirmThreshold(int value);
     int getDeleteConfirmThreshold();
 
     QString getComputerName();
     void setComputerName(const QString& computerName);
 
-    void setCacheCleanIntervalMinutes(const QString& domain_id, int interval);
+    void setCacheCleanIntervalMinutes(int interval);
     int getCacheCleanIntervalMinutes();
 
-    void setCacheSizeLimitGB(const QString& domain_id, int limit);
+    void setCacheSizeLimitGB(int limit);
     int getCacheSizeLimitGB();
 
     QString getLastShibUrl();
@@ -114,7 +114,7 @@ public:
 
 #if defined(Q_OS_MAC)
     bool getHideWindowsIncompatibilityPathMsg();
-    void setHideWindowsIncompatibilityPathMsg(const QString& domain_id, bool enabled);
+    void setHideWindowsIncompatibilityPathMsg(bool enabled);
 #endif
 public:
 
@@ -125,7 +125,7 @@ public:
 
     void writeProxySettingsToDaemon(const QString& domain_id, const SeafileProxy& proxy);
 
-    void writeSettingsToDaemon(const QString& domain_id);
+    void writeSettingsToDaemon();
 
 private slots:
     void checkSystemProxy();

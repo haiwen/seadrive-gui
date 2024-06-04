@@ -86,36 +86,6 @@ void SettingsDialog::setCurrentTab(int index)
     mTabWidget->setCurrentIndex(index);
 }
 
-void SettingsDialog::updateSettingsToDaemon(const QString& domain_id)
-{
-    SettingsManager *mgr = gui->settingsManager();
-
-    if (mBasicTab->isEnabled()) {
-        mgr->setNotify(domain_id, mNotifyCheckBox->checkState() == Qt::Checked);
-        mgr->setAutoStart(mAutoStartCheckBox->checkState() == Qt::Checked);
-        mgr->setSyncExtraTempFile(domain_id, mSyncExtraTempFileCheckBox->checkState() == Qt::Checked);
-
-        mgr->setMaxDownloadRatio(domain_id, mDownloadSpinBox->value());
-        mgr->setMaxUploadRatio(domain_id, mUploadSpinBox->value());
-
-        mgr->setHttpSyncCertVerifyDisabled(domain_id, mDisableVerifyHttpSyncCert->checkState() == Qt::Checked);
-
-#ifdef Q_OS_WIN32
-        mgr->setShellExtensionEnabled(mShellExtCheckBox->checkState() == Qt::Checked);
-#endif
-
-#if defined(Q_OS_MAC)
-        mgr->setHideWindowsIncompatibilityPathMsg(domain_id, mHideWindowsIncompatibilityCheckBox->checkState() == Qt::Checked);
-#endif
-    }
-
-    if (mAdvancedTab->isEnabled()) {
-        mgr->setCacheCleanIntervalMinutes(domain_id, mCacheCleanInterval->value());
-        mgr->setCacheSizeLimitGB(domain_id, mCacheSizeLimit->value());
-        mgr->setDeleteConfirmThreshold(domain_id, mDeleteConfirmSpinBox->value());
-    }
-}
-
 void SettingsDialog::updateSettings()
 {
     SettingsManager *mgr = gui->settingsManager();
@@ -123,6 +93,31 @@ void SettingsDialog::updateSettings()
     bool seadrive_root_changed = false;
     bool cache_dir_changed = false;
     QString spotlight_updated;
+
+    if (mBasicTab->isEnabled()) {
+        mgr->setNotify(mNotifyCheckBox->checkState() == Qt::Checked);
+        mgr->setAutoStart(mAutoStartCheckBox->checkState() == Qt::Checked);
+        mgr->setSyncExtraTempFile(mSyncExtraTempFileCheckBox->checkState() == Qt::Checked);
+
+        mgr->setMaxDownloadRatio(mDownloadSpinBox->value());
+        mgr->setMaxUploadRatio(mUploadSpinBox->value());
+
+        mgr->setHttpSyncCertVerifyDisabled(mDisableVerifyHttpSyncCert->checkState() == Qt::Checked);
+
+#ifdef Q_OS_WIN32
+        mgr->setShellExtensionEnabled(mShellExtCheckBox->checkState() == Qt::Checked);
+#endif
+
+#if defined(Q_OS_MAC)
+        mgr->setHideWindowsIncompatibilityPathMsg(mHideWindowsIncompatibilityCheckBox->checkState() == Qt::Checked);
+#endif
+    }
+
+    if (mAdvancedTab->isEnabled()) {
+        mgr->setCacheCleanIntervalMinutes(mCacheCleanInterval->value());
+        mgr->setCacheSizeLimitGB(mCacheSizeLimit->value());
+        mgr->setDeleteConfirmThreshold(mDeleteConfirmSpinBox->value());
+    }
 
     if (mBasicTab->isEnabled()) {
         if ((mSpotlightCheckBox->checkState() == Qt::Checked) != mgr->getSearchEnabled()) {
@@ -458,15 +453,6 @@ void SettingsDialog::onOkBtnClicked()
     if (!validateProxyInputs()) {
         return;
     }
-
-    updateSettingsToDaemon(EMPTY_DOMAIN_ID);
-
-#ifdef Q_OS_MAC
-    auto accounts = gui->accountManager()->activeAccounts();
-    for (int i = 0; i <  accounts.size(); i++) {
-        updateSettingsToDaemon(accounts.at(i).domainID());
-    }
-#endif
 
     updateSettings();
 

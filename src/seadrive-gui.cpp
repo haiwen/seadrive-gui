@@ -274,42 +274,42 @@ bool loadConfigCB(sqlite3_stmt *stmt, void *data)
     const char *value = (const char *)sqlite3_column_text (stmt, 1);
     if (strcmp(key, "notify_sync") == 0) {
         if (strcmp(value, "on") == 0) {
-            mgr->setNotify(EMPTY_DOMAIN_ID, true);
+            mgr->setNotify(true);
         } else {
-            mgr->setNotify(EMPTY_DOMAIN_ID, false);
+            mgr->setNotify(false);
         }
     } else if (strcmp(key, "download_limit") == 0) {
         int rate = atoi(value);
-        mgr->setMaxDownloadRatio(EMPTY_DOMAIN_ID, rate >> 10);
+        mgr->setMaxDownloadRatio(rate >> 10);
     } else if (strcmp(key, "upload_limit") == 0) {
         int rate = atoi(value);
-        mgr->setMaxUploadRatio(EMPTY_DOMAIN_ID, rate >> 10);
+        mgr->setMaxUploadRatio(rate >> 10);
     } else if (strcmp(key, "clean_cache_interval") == 0) {
         int interval = atoi(value);
-        mgr->setCacheCleanIntervalMinutes(EMPTY_DOMAIN_ID, interval);
+        mgr->setCacheCleanIntervalMinutes(interval);
     } else if (strcmp(key, "cache_size_limit") == 0) {
         int limit = atoi(value);
-        mgr->setCacheSizeLimitGB(EMPTY_DOMAIN_ID, limit);
+        mgr->setCacheSizeLimitGB(limit);
     } else if (strcmp(key, "sync_extra_temp_file") == 0) {
         if (strcmp(value, "true") == 0) {
-            mgr->setSyncExtraTempFile(EMPTY_DOMAIN_ID, true);
+            mgr->setSyncExtraTempFile(true);
         } else {
-            mgr->setSyncExtraTempFile(EMPTY_DOMAIN_ID, false);
+            mgr->setSyncExtraTempFile(false);
         }
     } else if (strcmp(key, "disable_verify_certificate") == 0) {
         if (strcmp(value, "true") == 0) {
-            mgr->setHttpSyncCertVerifyDisabled(EMPTY_DOMAIN_ID, true);
+            mgr->setHttpSyncCertVerifyDisabled(true);
         } else {
-            mgr->setHttpSyncCertVerifyDisabled(EMPTY_DOMAIN_ID, false);
+            mgr->setHttpSyncCertVerifyDisabled(false);
         }
     } else if (strcmp(key, "delete_confirm_threshold") == 0) {
         int threshold = atoi(value);
-        mgr->setDeleteConfirmThreshold(EMPTY_DOMAIN_ID, threshold);
+        mgr->setDeleteConfirmThreshold(threshold);
     } else if (strcmp(key, "hide_windows_incompatible_path_notification") == 0) {
         if (strcmp(value, "true") == 0) {
-            mgr->setHideWindowsIncompatibilityPathMsg(EMPTY_DOMAIN_ID, true);
+            mgr->setHideWindowsIncompatibilityPathMsg(true);
         } else {
-            mgr->setHideWindowsIncompatibilityPathMsg(EMPTY_DOMAIN_ID, false);
+            mgr->setHideWindowsIncompatibilityPathMsg(false);
         }
     }
     return true;
@@ -540,7 +540,7 @@ void SeadriveGui::onDaemonStarted()
     }
 
     tray_icon_->start();
-    settings_mgr_->writeSettingsToDaemon(EMPTY_DOMAIN_ID);
+    settings_mgr_->writeSettingsToDaemon();
 
     QString value;
     if (rpc_client->seafileGetConfig("client_id", &value) < 0 ||
@@ -641,7 +641,7 @@ void SeadriveGui::connectDaemon()
             }
             account_mgr_->setAccountAdded(account, true);
             rpc_client->addAccount(account);
-            settings_mgr_->writeSettingsToDaemon(domain_id);
+            settings_mgr_->writeSettingsToDaemon();
 
             QString value;
             if (rpc_client->seafileGetConfig("client_id", &value) < 0 ||
