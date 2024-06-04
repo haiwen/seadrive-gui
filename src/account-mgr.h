@@ -100,6 +100,10 @@ public:
 
     void setAccountAdded(Account& account, bool added);
 
+    void setAccountNotifiedStartExtension(Account& account, bool notified_start_extension);
+
+    void addAccountConnectDaemonRetry(Account& account);
+
 public slots:
     void reloginAccount(const Account &account);
 

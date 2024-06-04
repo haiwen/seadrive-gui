@@ -914,3 +914,23 @@ void AccountManager::setAccountAdded(Account& account, bool added) {
         }
     }
 }
+
+void AccountManager::setAccountNotifiedStartExtension(Account& account, bool notified_start_extension) {
+    QMutexLocker locker(&accounts_mutex_);
+    for (int i = 0; i < accounts_.size(); i++) {
+        if (accounts_.at(i) == account) {
+            accounts_[i].notified_start_extension = notified_start_extension;
+            break;
+        }
+    }
+}
+
+void AccountManager::addAccountConnectDaemonRetry(Account& account) {
+    QMutexLocker locker(&accounts_mutex_);
+    for (int i = 0; i < accounts_.size(); i++) {
+        if (accounts_.at(i) == account) {
+            accounts_[i].connect_daemon_retry++;
+            break;
+        }
+    }
+}

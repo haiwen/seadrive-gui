@@ -233,8 +233,6 @@ SeadriveGui::SeadriveGui(bool dev_mode)
 
 #if defined(Q_OS_MAC)
     file_provider_mgr_ = new FileProviderManager();
-    notified_start_extension_ = false;
-    connect_daemon_retry_ = 0;
 #endif
 
     connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onAboutToQuit()));
@@ -612,33 +610,38 @@ void SeadriveGui::connectDaemon()
 
     for (int i = 0; i < accounts.size(); i++) {
         auto account = accounts.at(i);
+        // If account was added to daemon before, the rpc client should have been created
+        // and the connection is managed by itself.
+        if (account.added) {
+            continue;
+        }
         QString domain_id = account.domainID();
         SeafileRpcClient *rpc_client = rpcClient(domain_id); 
         if (!rpc_client) {
             rpc_client = new SeafileRpcClient(domain_id);
             rpc_clients_.insert(domain_id, rpc_client);
-            rpc_client->tryConnectDaemon();
             MessagePoller *message_poller = new MessagePoller();
             message_poller->setRpcClient(rpc_client);
             message_poller->start();
             message_pollers_.insert(domain_id, message_poller);
             connect(rpc_client, SIGNAL(daemonRestarted(const QString&)),
                     this, SLOT(onDaemonRestarted(const QString&)));
-        } else if (!rpc_client->isConnected()) {
+        }
+
+        if (!rpc_client->isConnected()) {
             account_mgr_->setAccountAdded(account, false);
             rpc_client->tryConnectDaemon();
-            if (!notified_start_extension_) {
-                if (connect_daemon_retry_ > 5) {
-                    notified_start_extension_ = true;
+            if (!account.notified_start_extension) {
+                if (account.connect_daemon_retry > 5) {
+                    account_mgr_->setAccountNotifiedStartExtension(account, true);
                     if (file_provider_mgr_->hasEnabledDomains())
-                        messageBox(tr("To start %1 extension, you need to click the %2 entry in Finder").arg(getBrand()).arg(getBrand()));
+                        messageBox(tr("To start %1 extension for account %2, you need to click the %3 entry in Finder").arg(getBrand()).arg(account.username).arg(getBrand()));
                 }
-                connect_daemon_retry_++;
+                account_mgr_->addAccountConnectDaemonRetry(account);
             }
-        } else {
-            if (account.added) {
-                continue;
-            }
+        }
+
+        if (rpc_client->isConnected()) {
             account_mgr_->setAccountAdded(account, true);
             rpc_client->addAccount(account);
             settings_mgr_->writeSettingsToDaemon();
@@ -668,9 +671,11 @@ void SeadriveGui::connectDaemon()
             // account has beed deleted, remove account from domain.
             rpc_client->deleteDomainAccount(domain_id);
             MessagePoller *message_poller = messagePoller(domain_id);
-            message_pollers_.remove(domain_id);
-            message_poller->stop();
-            delete message_poller;
+            if (message_poller) {
+                message_pollers_.remove(domain_id);
+                message_poller->stop();
+                delete message_poller;
+            }
             rpc_clients_.remove(domain_id);
             delete rpc_client;
             init_sync_dlg_->clearPoller(domain_id);

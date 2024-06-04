@@ -32,16 +32,21 @@ public:
     bool isAutomaticLogin;
     bool isKerberos;
     bool added;
+    bool notified_start_extension;
+    int connect_daemon_retry;
 
     Account() : serverInfo(),
                 lastVisited(0),
                 isShibboleth(false),
                 isAutomaticLogin(false),
                 isKerberos(false),
-                added(false) {}
+                added(false),
+                notified_start_extension(false),
+                connect_daemon_retry(0) {}
     Account(QUrl serverUrl, QString username, QString token,
             qint64 lastVisited=0, bool isShibboleth = false,
-            bool isAutomaticLogin = true, bool isKerberos = false, bool added = false)
+            bool isAutomaticLogin = true, bool isKerberos = false, bool added = false,
+            bool notified_start_extension = false, int connect_daemon_retry = 0)
         : serverInfo(),
           accountInfo(),
           serverUrl(serverUrl),
@@ -51,7 +56,9 @@ public:
           isShibboleth(isShibboleth),
           isAutomaticLogin(isAutomaticLogin),
           isKerberos(isKerberos),
-          added(added) {}
+          added(added),
+          notified_start_extension(notified_start_extension),
+          connect_daemon_retry(connect_daemon_retry) {}
 
     Account(const Account &rhs)
       : serverInfo(rhs.serverInfo),
@@ -66,7 +73,9 @@ public:
         isShibboleth(rhs.isShibboleth),
         isAutomaticLogin(rhs.isAutomaticLogin),
         isKerberos(rhs.isKerberos),
-        added(rhs.added)
+        added(rhs.added),
+        notified_start_extension(rhs.notified_start_extension),
+        connect_daemon_retry(rhs.connect_daemon_retry)
     {
     }
 
@@ -84,6 +93,8 @@ public:
         isAutomaticLogin = rhs.isAutomaticLogin;
         isKerberos = rhs.isKerberos;
         added = rhs.added;
+        notified_start_extension = rhs.notified_start_extension;
+        connect_daemon_retry = rhs.connect_daemon_retry;
         return *this;
     }
 
