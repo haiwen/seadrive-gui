@@ -37,7 +37,11 @@ QString getAppletRpcPipePath()
 #else
     QString current_cache_dir;
     if (!gui->settingsManager()->getCacheDir(&current_cache_dir)) {
+#if defined(Q_OS_MAC)
+        current_cache_dir = seadriveDir();
+#else
         current_cache_dir = seadriveDataDir();
+#endif
     }
     if (QDir::isAbsolutePath(current_cache_dir)) {
         current_cache_dir = QDir::home().relativeFilePath(current_cache_dir);

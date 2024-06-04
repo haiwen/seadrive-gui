@@ -121,3 +121,47 @@ void fileProviderReenumerate(const QString domain_id, const QString display_name
     condition.wait(&mutex);
     mutex.unlock();
 }
+
+void fileProviderDisconnect(const QString domain_id, const QString display_name) {
+    qInfo() << "[File Provider] Disconnect domain";
+
+    QMutex mutex;
+    QWaitCondition condition;
+
+    NSFileProviderDomain *domain = [[NSFileProviderDomain alloc] initWithIdentifier:domain_id.toNSString() displayName:display_name.toNSString()];
+    NSFileProviderManager *mgr = [NSFileProviderManager managerForDomain:domain];
+
+    [mgr disconnectWithReason:@"Upgrading SeaDrive" options:NSFileProviderManagerDisconnectionOptionsTemporary completionHandler:[&](NSError *error) {
+        if (error != nil) {
+            qWarning() << "[File Provider] Error disconnect domainn:" << error;
+        }
+        condition.wakeOne();
+        return;
+    }];
+
+    mutex.lock();
+    condition.wait(&mutex);
+    mutex.unlock();
+}
+
+void fileProviderConnect (const QString domain_id, const QString display_name) {
+    qInfo() << "[File Provider] Connect domain";
+
+    QMutex mutex;
+    QWaitCondition condition;
+
+    NSFileProviderDomain *domain = [[NSFileProviderDomain alloc] initWithIdentifier:domain_id.toNSString() displayName:display_name.toNSString()];
+    NSFileProviderManager *mgr = [NSFileProviderManager managerForDomain:domain];
+
+    [mgr reconnectWithCompletionHandler:[&](NSError *error) {
+        if (error != nil) {
+            qWarning() << "[File Provider] Error connect domain:" << error;
+        }
+        condition.wakeOne();
+        return;
+    }];
+
+    mutex.lock();
+    condition.wait(&mutex);
+    mutex.unlock();
+}

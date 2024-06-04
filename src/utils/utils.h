@@ -11,6 +11,8 @@
 #include <QUrl>
 #include <QSslError>
 
+const QString EMPTY_DOMAIN_ID = "00000000000000000000000000000000";
+
 class QSslCipher;
 class QSslCertificate;
 
@@ -62,6 +64,8 @@ QString mapToJson(QMap<QString, QVariant> map);
 bool getSeadriveRoot(QString *seadrive_root);
 #endif
 
+QString seadriveWorkDir();
+
 QString seadriveDir();
 
 QString seadriveDataDir();
@@ -81,6 +85,8 @@ QString md5(const QString& s);
 QUrl urlJoin(const QUrl& url, const QString& tail);
 
 void removeDirRecursively(const QString &path);
+
+bool copyDirRecursively(const QString &src_path, const QString &dst_path);
 
 QString dumpHexPresentation(const QByteArray &bytes);
 

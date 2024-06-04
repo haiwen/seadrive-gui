@@ -50,7 +50,8 @@ namespace {
 
 const char *kSeafileClientBrand = "SeaDrive";
 #if defined(Q_OS_MAC)
-const char *kSeadriveConfDir = "Library/Containers/com.seafile.seadrive.fprovider/Data/Documents";
+const char *kSeadriveWorkDir = "Library/Containers/com.seafile.seadrive.fprovider/Data";
+const char *kSeadriveConfDir = "Documents";
 #elif defined(Q_OS_WIN32)
 const char *kSeadriveConfDir = "seadrive";
 #else
@@ -109,6 +110,14 @@ bool getOpenApplicationFromXdgUtils(const QString &mime, QString *application)
 
 } // namespace
 
+QString seadriveWorkDir() {
+#ifdef Q_OS_MAC
+    QString seadriveWorkPath = QDir(QDir::homePath()).filePath(kSeadriveWorkDir);
+    return seadriveWorkPath;
+#else
+    return QDir::homePath();
+#endif
+}
 
 QString seadriveDir() {
     return kSeadriveConfDir;
@@ -683,6 +692,34 @@ void removeDirRecursively(const QString &path)
     } else {
         QFile::remove(path);
     }
+}
+
+bool copyDirRecursively(const QString &src_path, const QString &dst_path) {
+    QDir src_dir(src_path);
+
+    if (checkdir_with_mkdir(toCStr(dst_path)) < 0) {
+        return false;
+    }
+
+    QStringList files = src_dir.entryList(QDir::Files);
+    QStringList dirs = src_dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
+
+    foreach (const QString &file, files) {
+        QString src_file_path = src_path + QDir::separator() + file;
+        QString dst_file_path = dst_path + QDir::separator() + file;
+        if (!QFile::copy(src_file_path, dst_file_path)) {
+            continue;
+        }
+    }
+
+    foreach (const QString &dir, dirs) {
+        QString src_dir_path = src_path + QDir::separator() + dir;
+        QString dst_dir_path = dst_path + QDir::separator() + dir;
+        if (!copyDirRecursively(src_dir_path, dst_dir_path))
+            continue;
+    }
+
+    return true;
 }
 
 QString dumpHexPresentation(const QByteArray &bytes)

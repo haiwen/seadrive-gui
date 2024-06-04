@@ -98,3 +98,15 @@ QString FileProviderManager::displayName(const Account account) {
     }
     return name + "(" + account.serverUrl.host() + ")";
 }
+
+void FileProviderManager::disconnect(const Account account) {
+    QString id = account.domainID();
+    QString name = displayName(account);
+    fileProviderDisconnect(id, name);
+}
+
+void FileProviderManager::connect(const Account account) {
+    QString id = account.domainID();
+    QString name = displayName(account);
+    fileProviderConnect (id, name);
+}

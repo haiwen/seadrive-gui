@@ -189,25 +189,62 @@ TransferItemsTableModel::TransferItemsTableModel(QObject* parent)
 
 }
 
+#if defined(Q_OS_WIN32)
 void TransferItemsTableModel::setTransferItems()
 {
+    TransferProgress transfer_progress;
     json_t *upload_reply, *download_reply;
+    SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
 
-    if (!gui->rpcClient()->getUploadProgress(&upload_reply)) {
+    if (!rpc_client || !rpc_client->getUploadProgress(&upload_reply)) {
         return;
     }
     QScopedPointer<json_t, JsonPointerCustomDeleter> upload(upload_reply);
 
-    if (!gui->rpcClient()->getDownloadProgress(&download_reply)) {
+    if (!rpc_client->getDownloadProgress(&download_reply)) {
         return;
     }
     QScopedPointer<json_t, JsonPointerCustomDeleter> download(download_reply);
 
     beginResetModel();
-    transfer_progress_ =
-        TransferProgress::fromJSON(upload.data(), download.data());
+    TransferProgress::fromJSON(upload.data(), download.data(), transfer_progress);
+    transfer_progress_ = transfer_progress;
     endResetModel();
 }
+#endif
+
+#if defined(Q_OS_MAC)
+void TransferItemsTableModel::setTransferItems()
+{
+    TransferProgress transfer_progress;
+    beginResetModel();
+    auto accounts = gui->accountManager()->activeAccounts();
+    for (int i = 0; i < accounts.size(); i++) {
+        auto account = accounts.at(i);
+        SeafileRpcClient *rpc_client = gui->rpcClient(account.domainID()); 
+        json_t *upload_reply, *download_reply;
+
+        if (!rpc_client) {
+            continue;
+        }
+
+        if (!rpc_client->getUploadProgress(&upload_reply)) {
+            continue;
+        }
+        QScopedPointer<json_t, JsonPointerCustomDeleter> upload(upload_reply);
+
+        if (!rpc_client->getDownloadProgress(&download_reply)) {
+            continue;
+        }
+        QScopedPointer<json_t, JsonPointerCustomDeleter> download(download_reply);
+
+        TransferProgress::fromJSON(upload.data(), download.data(), transfer_progress);
+        
+    }
+    transfer_progress_ = transfer_progress;
+    endResetModel();
+}
+#endif
 
 int TransferItemsTableModel::columnCount(const QModelIndex& parent) const
 {

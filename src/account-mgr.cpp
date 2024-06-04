@@ -9,6 +9,8 @@
 #include <QRegularExpression>
 
 #include "account-mgr.h"
+#include "rpc/rpc-client.h"
+#include "ui/init-sync-dialog.h"
 #include "seadrive-gui.h"
 #include "utils/utils.h"
 #include "api/api-error.h"
@@ -381,13 +383,13 @@ int AccountManager::removeAccount(const Account& account)
             std::remove(accounts_.begin(), accounts_.end(), account),
             accounts_.end());
     }
-
-    AccountMessage msg;
-    msg.type = AccountRemoved;
-    msg.account = account;
-    messages.enqueue(msg);
-
-    emit accountMQUpdated();
+    
+#ifndef Q_OS_MAC
+    SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
+    if (rpc_client) {
+        rpc_client->deleteAccount(account, false);
+    }
+#endif
 
     if (allAccounts().empty()) {
         gui->trayIcon()->showLoginDialog();
@@ -413,12 +415,22 @@ int AccountManager::resyncAccount(const Account& account)
     setAccountSyncRoot(updated_account, true);
 #endif
 
-    AccountMessage msg;
-    msg.type = AccountResynced;
-    msg.account = updated_account;
-    messages.enqueue(msg);
-
-    emit accountMQUpdated();
+    SeafileRpcClient *rpc_client = gui->rpcClient(updated_account.domainID());
+    if (!rpc_client || !rpc_client->isConnected()) {
+        return 0;
+    }
+#ifdef Q_OS_MAC
+    rpc_client->deleteAccount(updated_account, true);
+    gui->fileProviderManager()->registerDomain(updated_account);
+    setAccountAdded(updated_account, false);
+    gui->initSyncDialog()->launch(updated_account.domainID());
+    qWarning() << "Resynced account" << updated_account;
+#else
+    rpc_client->deleteAccount(updated_account, false);
+    rpc_client->addAccount(updated_account);
+    gui->initSyncDialog()->launch(EMPTY_DOMAIN_ID);
+    qWarning() << "Resynced account" << updated_account;
+#endif
 
     return 0;
 }
@@ -621,12 +633,12 @@ void AccountManager::addAccountToDaemon(const Account& account)
     }
 #endif
 
-    AccountMessage msg;
-    msg.type = AccountAdded;
-    msg.account = added_account;
-    messages.enqueue(msg);
-
-    emit accountMQUpdated();
+#ifndef Q_OS_MAC
+    SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
+    if (rpc_client) {
+        rpc_client->addAccount(added_account);
+    }
+#endif
 }
 
 void AccountManager::slotUpdateAccountInfoFailed()
@@ -891,4 +903,34 @@ Account AccountManager::getAccount(const QString& url, const QString& username) 
 
 bool AccountManager::hasAccount() const {
     return !allAccounts().empty();
+}
+
+void AccountManager::setAccountAdded(Account& account, bool added) {
+    QMutexLocker locker(&accounts_mutex_);
+    for (int i = 0; i < accounts_.size(); i++) {
+        if (accounts_.at(i) == account) {
+            accounts_[i].added = added;
+            break;
+        }
+    }
+}
+
+void AccountManager::setAccountNotifiedStartExtension(Account& account, bool notified_start_extension) {
+    QMutexLocker locker(&accounts_mutex_);
+    for (int i = 0; i < accounts_.size(); i++) {
+        if (accounts_.at(i) == account) {
+            accounts_[i].notified_start_extension = notified_start_extension;
+            break;
+        }
+    }
+}
+
+void AccountManager::addAccountConnectDaemonRetry(Account& account) {
+    QMutexLocker locker(&accounts_mutex_);
+    for (int i = 0; i < accounts_.size(); i++) {
+        if (accounts_.at(i) == account) {
+            accounts_[i].connect_daemon_retry++;
+            break;
+        }
+    }
 }

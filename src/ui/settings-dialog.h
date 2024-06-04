@@ -4,7 +4,6 @@
 #include <QUrl>
 #include <QString>
 
-
 class SettingsDialog : public QDialog,
                     public Ui::SettingsDialog
 {

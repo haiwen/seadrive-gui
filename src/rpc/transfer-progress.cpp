@@ -85,11 +85,9 @@ void getTransferredListFromJSON(
 } // namespace
 
 
-TransferProgress TransferProgress::fromJSON(
-    const json_t *upload, const json_t *download)
+void TransferProgress::fromJSON(
+    const json_t *upload, const json_t *download, TransferProgress& transfer_progress)
 {
-    TransferProgress transfer_progress;
-
     getTransferringListFromJSON(
         upload, UPLOAD, &transfer_progress.uploading_files);
     getTransferringListFromJSON(
@@ -98,6 +96,4 @@ TransferProgress TransferProgress::fromJSON(
         upload, UPLOAD, &transfer_progress.uploaded_files);
     getTransferredListFromJSON(
         download, DOWNLOAD, &transfer_progress.downloaded_files);
-
-    return transfer_progress;
 }

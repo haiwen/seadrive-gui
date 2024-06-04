@@ -225,12 +225,13 @@ QString SyncErrorsTableView::findLocalPathFromError(const SyncError& error)
     }
 
     QString repo_uname;
-    if (!gui->rpcClient()->getRepoUnameById(error.repo_id, &repo_uname)) {
+    SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
+    if (!rpc_client || !rpc_client->getRepoUnameById(error.repo_id, &repo_uname)) {
         return "";
     }
 
     json_t *ret_obj = nullptr;
-    if (!gui->rpcClient()->getAccountByRepoId(error.repo_id, &ret_obj)) {
+    if (!rpc_client->getAccountByRepoId(error.repo_id, &ret_obj)) {
         return "";
     }
 

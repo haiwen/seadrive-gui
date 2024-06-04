@@ -94,8 +94,14 @@ void MessagePoller::start()
     check_notification_timer_->start(kCheckNotificationIntervalMSecs);
 #if defined(Q_OS_WIN32)
     connect(gui->daemonManager(), SIGNAL(daemonDead()), this, SLOT(onDaemonDead()));
-    connect(gui->daemonManager(), SIGNAL(daemonRestarted()), this, SLOT(onDaemonRestarted()));
+    connect(gui->daemonManager(), SIGNAL(daemonRestarted(const QString &)), this, SLOT(onDaemonRestarted()));
 #endif
+}
+
+void MessagePoller::stop()
+{
+    qDebug("pausing message poller when account is deleted");
+    check_notification_timer_->stop();
 }
 
 void MessagePoller::setRpcClient(SeafileRpcClient *rpc_client)
@@ -159,18 +165,15 @@ void MessagePoller::checkSyncStatus()
 void MessagePoller::checkSyncErrors()
 {
     json_t *ret;
-    if (!rpc_client_->isConnected()) {
-        return;
-    }
     if (!rpc_client_->getSyncErrors(&ret)) {
-        gui->trayIcon()->setSyncErrors(QList<SyncError>());
+        gui->trayIcon()->setSyncErrors(rpc_client_->domainID(), QList<SyncError>());
         return;
     }
 
     QList<SyncError> errors = SyncError::listFromJSON(ret);
     json_decref(ret);
 
-    gui->trayIcon()->setSyncErrors(errors);
+    gui->trayIcon()->setSyncErrors(rpc_client_->domainID(), errors);
 }
 
 void MessagePoller::processNotification(const SyncNotification& notification)

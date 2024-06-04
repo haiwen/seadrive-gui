@@ -68,10 +68,14 @@ public:
     void setProxy(const SeafileProxy& proxy);
 
     void setNotify(bool notify);
+    bool getNotify();
     void setAutoStart(bool autoStart);
     void setMaxDownloadRatio(unsigned int ratio);
+    unsigned int geteMaxDownloadRatio();
     void setMaxUploadRatio(unsigned int ratio);
+    unsigned int geteMaxUploadRatio();
     void setSyncExtraTempFile(bool sync);
+    bool getSyncExtraTempFile();
     void setSearchEnabled(bool enabled);
     bool getSearchEnabled();
 
@@ -79,19 +83,19 @@ public:
     bool isCheckLatestVersionEnabled();
 
     void setHttpSyncCertVerifyDisabled(bool disabled);
-    bool httpSyncCertVerifyDisabled() const { return verify_http_sync_cert_disabled_; }
+    bool getHttpSyncCertVerifyDisabled();
 
     void setDeleteConfirmThreshold(int value);
-    int deleteConfirmThreshold() { return delete_confirm_threshold_; }
+    int getDeleteConfirmThreshold();
 
     QString getComputerName();
     void setComputerName(const QString& computerName);
 
-    int getCacheCleanIntervalMinutes() const { return cache_clean_limit_minutes_; }
     void setCacheCleanIntervalMinutes(int interval);
+    int getCacheCleanIntervalMinutes();
 
-    int getCacheSizeLimitGB() const { return cache_size_limit_gb_; }
     void setCacheSizeLimitGB(int limit);
+    int getCacheSizeLimitGB();
 
     QString getLastShibUrl();
     void setLastShibUrl(const QString& url);
@@ -119,7 +123,9 @@ public:
     // Write the system proxy information, to be read by seadrive daemon.
     void writeSystemProxyInfo(const QUrl& url, const QString& file_path);
 
-    void writeProxySettingsToDaemon(const SeafileProxy& proxy);
+    void writeProxySettingsToDaemon(const QString& domain_id, const SeafileProxy& proxy);
+
+    void writeSettingsToDaemon();
 
 private slots:
     void checkSystemProxy();
@@ -129,7 +135,7 @@ private:
     Q_DISABLE_COPY(SettingsManager)
 
     void writeProxySettings(const SeafileProxy& proxy);
-    void writeProxyDetailsToDaemon(const SeafileProxy& proxy);
+    void writeProxyDetailsToDaemon(const QString& domain_id, const SeafileProxy& proxy);
 
     bool auto_sync_;
     bool bubbleNotifycation_;

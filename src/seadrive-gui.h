@@ -8,6 +8,7 @@
 #include <QTimer>
 
 #include "rpc/rpc-server.h"
+#include "account-mgr.h"
 
 class DaemonManager;
 class SeafileRpcClient;
@@ -60,6 +61,11 @@ public:
     // Accessors.
     bool isDevMode() const { return dev_mode_; }
 
+#ifdef Q_OS_MAC
+    void migrateOldData();
+    void migrateOldConfig(const QString& data_dir);
+#endif
+
 #if defined(Q_OS_WIN32)
     QString seadriveRoot() const;
 #endif
@@ -70,7 +76,7 @@ public:
 
     AccountManager *accountManager() { return account_mgr_; }
 
-    SeafileRpcClient *rpcClient() { return rpc_client_; }
+    SeafileRpcClient *rpcClient(const QString& domain_id);
 
     SettingsManager *settingsManager() { return settings_mgr_; }
 
@@ -78,11 +84,13 @@ public:
 
     AboutDialog *aboutDialog() { return about_dlg_; }
 
-    MessagePoller * messagePoller() { return message_poller_; }
+    MessagePoller *messagePoller(const QString& domain_id);
 
     InitSyncDialog *initSyncDialog() { return init_sync_dlg_; }
 
     FileProviderManager *fileProviderManager() { return file_provider_mgr_; }
+
+    void writeSettingsToDaemon(const QString& domain_id);
 
     // CertsManager *certsManager() { return certs_mgr_; }
 
@@ -96,13 +104,9 @@ public slots:
 private slots:
     void onAboutToQuit();
     void onDaemonStarted();
-    void updateAccountToDaemon();
-
     void onDaemonRestarted();
-
-#ifndef Q_OS_WIN32
+    void onDaemonRestarted(const QString& domain_id);
     void connectDaemon();
-#endif
 
 private:
     Q_DISABLE_COPY(SeadriveGui)
@@ -114,7 +118,7 @@ private:
     void loginAccounts();
 
 #if defined(Q_OS_MAC)
-    void logoutAccountsFromDaemon();
+    void logoutAccountsFromDaemon(const Account& account);
 #endif
 
     bool dev_mode_;
@@ -125,7 +129,7 @@ private:
 
     AccountManager *account_mgr_;
 
-    SeafileRpcClient *rpc_client_;
+    QMap<QString, SeafileRpcClient *> rpc_clients_;
 
     SettingsManager *settings_mgr_;
 
@@ -133,7 +137,7 @@ private:
 
     AboutDialog *about_dlg_;
 
-    MessagePoller *message_poller_;
+    QMap<QString, MessagePoller *> message_pollers_;
 
     InitSyncDialog *init_sync_dlg_;
 
@@ -151,6 +155,8 @@ private:
 
     bool first_use_;
 
+    bool tray_icon_started_;
+
     QString disk_letter_;
 #if defined(_MSC_VER)
 
@@ -161,11 +167,6 @@ private:
     qint64 startup_time_;
 
     QTimer connect_daemon_timer_;
-
-#if defined(Q_OS_MAC)
-    bool notified_start_extension_;
-    int connect_daemon_retry_;
-#endif
 };
 
 /**

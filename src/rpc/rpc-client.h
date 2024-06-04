@@ -30,10 +30,10 @@ class SeafileRpcClient : public QObject {
     Q_OBJECT
 
 public:
-    SeafileRpcClient();
+    SeafileRpcClient(const QString& domain_id);
     ~SeafileRpcClient();
     void connectDaemon();
-    bool tryConnectDaemon(bool first);
+    bool tryConnectDaemon();
 #if defined(Q_OS_MAC)
     void checkDaemon();
 #endif
@@ -88,6 +88,9 @@ public:
 
     bool logoutAccount(const Account& account);
     bool deleteAccount(const Account& account, bool remove_cache);
+#ifdef Q_OS_MAC
+    bool deleteDomainAccount(const QString& domain_id);
+#endif
     bool isAccountUploading(const Account& account);
 
     bool getRepoIdByPath(const QString& server,
@@ -136,8 +139,10 @@ public:
 
     bool addDelConfirmation(const QString& confirmation_id, bool resync);
 
+    QString domainID() const { return domain_id_; }
+
 signals:
-    void daemonRestarted();
+    void daemonRestarted(const QString& domain_id);
 
 private slots:
     void checkDaemonAlive();
@@ -150,6 +155,8 @@ private:
     _SearpcClient *seadrive_rpc_client_;
 
     bool connected_;
+    QString domain_id_;
+    bool first_;
 
     QTimer *check_daemon_timer_;
 };

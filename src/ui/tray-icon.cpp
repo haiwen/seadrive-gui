@@ -626,9 +626,16 @@ void SeafileTrayIcon::onMessageClicked()
 
     // DiffReader *reader = new DiffReader(repo, previous_commit_id_, commit_id_);
     // QThreadPool::globalInstance()->start(reader);
-    if (gui->messagePoller()->lastEventType() == "file-download.start") {
-        showTransferProgressDialog();
-        transfer_progress_dialog_->showDownloadTab();
+    auto accounts = gui->accountManager()->activeAccounts();
+    for (int i = 0; i <  accounts.size(); i++) {
+        if (!gui->messagePoller(accounts.at(i).domainID())) {
+            continue;
+        }
+        if (gui->messagePoller(accounts.at(i).domainID())->lastEventType() == "file-download.start") {
+            showTransferProgressDialog();
+            transfer_progress_dialog_->showDownloadTab();
+            break;
+        }
     }
 }
 
@@ -644,7 +651,9 @@ void SeafileTrayIcon::deleteAccount()
         return;
     Account account = qvariant_cast<Account>(action->data());
 
-    if (gui->rpcClient()->isAccountUploading(account)) {
+    SeafileRpcClient *rpc_client = gui->rpcClient(account.domainID());
+
+    if (rpc_client && rpc_client->isAccountUploading(account)) {
         gui->warningBox(tr("There are changes being uploaded under the account, please try again later"));
         return;
     }
@@ -668,8 +677,13 @@ void SeafileTrayIcon::resyncAccount()
     if (!action)
         return;
     Account account = qvariant_cast<Account>(action->data());
+    SeafileRpcClient *rpc_client = gui->rpcClient(account.domainID());
+    if (!rpc_client || !rpc_client->isConnected()) {
+        gui->warningBox (tr("Failed to connect to daemon, please try again later"));
+        return;
+    }
 
-    bool is_uploading = gui->rpcClient()->isAccountUploading (account);
+    bool is_uploading = rpc_client->isAccountUploading (account);
     if (is_uploading) {
         gui->warningBox (tr("There are changes being uploaded under the account, please try again later"));
         return;
@@ -694,10 +708,16 @@ void SeafileTrayIcon::setTransferRate(qint64 up_rate, qint64 down_rate)
                     translateTransferRate(down_rate_)));
 }
 
-void SeafileTrayIcon::setSyncErrors(const QList<SyncError> errors)
+void SeafileTrayIcon::setSyncErrors(const QString& domain_id, const QList<SyncError> errors)
 {
     sync_errors_.clear();
     network_error_= SyncError();
+
+    QList<SyncError> sync_errors;
+    if (domain_errors_.contains(domain_id)) {
+        sync_errors = domain_errors_.value(domain_id);
+    }
+    sync_errors.clear();
 
     foreach (const SyncError& error, errors) {
         if (error.isNetworkError()) {
@@ -705,9 +725,18 @@ void SeafileTrayIcon::setSyncErrors(const QList<SyncError> errors)
                 network_error_ = error;
             }
         } else {
-            sync_errors_.push_back(error);
+            sync_errors.push_back(error);
         }
     }
+    domain_errors_.insert(domain_id, sync_errors);
+
+    QMapIterator<QString, QList<SyncError>> it(domain_errors_);
+    while (it.hasNext()) {
+        it.next();
+        auto errors = it.value();  
+        sync_errors_.append(errors);
+    }
+
     reloadTrayIcon();
 }
 

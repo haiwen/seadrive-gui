@@ -5,6 +5,7 @@
 #include <QHash>
 #include <QQueue>
 #include <QList>
+#include <QMap>
 
 #include "rpc/sync-error.h"
 
@@ -59,7 +60,7 @@ public:
 
     void setTransferRate(qint64 up_rate, qint64 down_rate);
 
-    void setSyncErrors(const QList<SyncError> errors);
+    void setSyncErrors(const QString& domain_id, const QList<SyncError> errors);
     QList<SyncError> syncErrors() const { return sync_errors_; }
 
     void setLoginActionEnabled(bool enabled);
@@ -164,6 +165,7 @@ private:
     qint64 down_rate_;
 
     QList<SyncError> sync_errors_;
+    QMap<QString, QList<SyncError>> domain_errors_;
     SyncError network_error_;
     SyncErrorsDialog *sync_errors_dialog_;
     TransferProgressDialog * transfer_progress_dialog_;

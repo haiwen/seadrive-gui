@@ -104,13 +104,6 @@ void SettingsDialog::updateSettings()
 
         mgr->setHttpSyncCertVerifyDisabled(mDisableVerifyHttpSyncCert->checkState() == Qt::Checked);
 
-        if ((mSpotlightCheckBox->checkState() == Qt::Checked) != mgr->getSearchEnabled()) {
-            mgr->setSearchEnabled(mSpotlightCheckBox->checkState() == Qt::Checked);
-            spotlight_updated = mSpotlightCheckBox->checkState() == Qt::Checked
-                                ? tr("enabled search")
-                                : tr("disabled search");
-        }
-
 #ifdef Q_OS_WIN32
         mgr->setShellExtensionEnabled(mShellExtCheckBox->checkState() == Qt::Checked);
 #endif
@@ -124,7 +117,18 @@ void SettingsDialog::updateSettings()
         mgr->setCacheCleanIntervalMinutes(mCacheCleanInterval->value());
         mgr->setCacheSizeLimitGB(mCacheSizeLimit->value());
         mgr->setDeleteConfirmThreshold(mDeleteConfirmSpinBox->value());
+    }
 
+    if (mBasicTab->isEnabled()) {
+        if ((mSpotlightCheckBox->checkState() == Qt::Checked) != mgr->getSearchEnabled()) {
+            mgr->setSearchEnabled(mSpotlightCheckBox->checkState() == Qt::Checked);
+            spotlight_updated = mSpotlightCheckBox->checkState() == Qt::Checked
+                                ? tr("enabled search")
+                                : tr("disabled search");
+        }
+    }
+
+    if (mAdvancedTab->isEnabled()) {
 #if defined(_MSC_VER)
         if (mShowCacheDir->text() != current_seadrive_root_ ) {
             seadrive_root_changed = true;
@@ -177,74 +181,66 @@ void SettingsDialog::closeEvent(QCloseEvent *event)
 
 void SettingsDialog::showEvent(QShowEvent *event)
 {
-    bool isDaemonUp = gui->rpcClient()->isConnected();
     SettingsManager *mgr = gui->settingsManager();
 
-    if (isDaemonUp) {
-        mBasicTab->setDisabled(false);
-        mAdvancedTab->setDisabled(false);
-    } else {
-        mBasicTab->setDisabled(true);
-        mAdvancedTab->setDisabled(true);
-    }
+    mBasicTab->setDisabled(false);
+    mAdvancedTab->setDisabled(false);
 
-    if (isDaemonUp) {
-        mgr->loadSettings();
+    mgr->loadSettings();
 
-        Qt::CheckState state;
+    Qt::CheckState state;
 
-        state = mgr->syncExtraTempFile() ? Qt::Checked : Qt::Unchecked;
-        mSyncExtraTempFileCheckBox->setCheckState(state);
+    state = mgr->syncExtraTempFile() ? Qt::Checked : Qt::Unchecked;
+    mSyncExtraTempFileCheckBox->setCheckState(state);
 
-        state = mgr->httpSyncCertVerifyDisabled() ? Qt::Checked : Qt::Unchecked;
-        mDisableVerifyHttpSyncCert->setCheckState(state);
+    state = mgr->getHttpSyncCertVerifyDisabled() ? Qt::Checked : Qt::Unchecked;
+    mDisableVerifyHttpSyncCert->setCheckState(state);
 
-        // currently supports windows only
-        state = mgr->autoStart() ? Qt::Checked : Qt::Unchecked;
-        mAutoStartCheckBox->setCheckState(state);
+    // currently supports windows only
+    state = mgr->autoStart() ? Qt::Checked : Qt::Unchecked;
+    mAutoStartCheckBox->setCheckState(state);
 #if !defined(Q_OS_WIN32) && !defined(Q_OS_MAC)
-        mAutoStartCheckBox->hide();
+    mAutoStartCheckBox->hide();
 #endif
 
 #if defined(Q_OS_WIN32)
-        state = mgr->shellExtensionEnabled() ? Qt::Checked : Qt::Unchecked;
-        mShellExtCheckBox->setCheckState(state);
+    state = mgr->shellExtensionEnabled() ? Qt::Checked : Qt::Unchecked;
+    mShellExtCheckBox->setCheckState(state);
 #else
-        mShellExtCheckBox->hide();
+    mShellExtCheckBox->hide();
 #endif
-        state = mgr->notify() ? Qt::Checked : Qt::Unchecked;
-        mNotifyCheckBox->setCheckState(state);
+    state = mgr->notify() ? Qt::Checked : Qt::Unchecked;
+    mNotifyCheckBox->setCheckState(state);
 
-        int ratio;
-        ratio = mgr->maxDownloadRatio();
-        mDownloadSpinBox->setValue(ratio);
-        ratio = mgr->maxUploadRatio();
-        mUploadSpinBox->setValue(ratio);
+    int ratio;
+    ratio = mgr->maxDownloadRatio();
+    mDownloadSpinBox->setValue(ratio);
+    ratio = mgr->maxUploadRatio();
+    mUploadSpinBox->setValue(ratio);
 
-        int value;
-        value = mgr->getCacheCleanIntervalMinutes();
-        mCacheCleanInterval->setValue(value);
-        value = mgr->getCacheSizeLimitGB();
-        mCacheSizeLimit->setValue(value);
+    int value;
+    value = mgr->getCacheCleanIntervalMinutes();
+    mCacheCleanInterval->setValue(value);
+    value = mgr->getCacheSizeLimitGB();
+    mCacheSizeLimit->setValue(value);
 
-        value = mgr->deleteConfirmThreshold();
-        mDeleteConfirmSpinBox->setValue(value);
+    value = mgr->getDeleteConfirmThreshold();
+    mDeleteConfirmSpinBox->setValue(value);
 
 #if defined(Q_OS_MAC)
-        state = mgr->getHideWindowsIncompatibilityPathMsg() ? Qt::Checked : Qt::Unchecked;
-        mHideWindowsIncompatibilityCheckBox->setCheckState(state);
+    state = mgr->getHideWindowsIncompatibilityPathMsg() ? Qt::Checked : Qt::Unchecked;
+    mHideWindowsIncompatibilityCheckBox->setCheckState(state);
 #else
-        mHideWindowsIncompatibilityCheckBox->hide();
+    mHideWindowsIncompatibilityCheckBox->hide();
 #endif
 
 #if defined(_MSC_VER)
-        if (!mgr->getSeadriveRoot(&current_seadrive_root_)) {
-            current_seadrive_root_ = gui->seadriveRoot();
-        }
-        mShowCacheDir->setText(current_seadrive_root_);
-        mShowCacheDir->setReadOnly(true);
-#endif
+    if (!mgr->getSeadriveRoot(&current_seadrive_root_)) {
+        current_seadrive_root_ = gui->seadriveRoot();
     }
+    mShowCacheDir->setText(current_seadrive_root_);
+    mShowCacheDir->setReadOnly(true);
+#endif
 
     mLanguageComboBox->setCurrentIndex(I18NHelper::getInstance()->preferredLanguage());
 
@@ -457,6 +453,8 @@ void SettingsDialog::onOkBtnClicked()
     if (!validateProxyInputs()) {
         return;
     }
+
     updateSettings();
+
     accept();
 }

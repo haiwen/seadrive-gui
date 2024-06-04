@@ -59,6 +59,11 @@ EncryptedRepoInfo EncryptedRepoInfo::fromJSON(const json_t *root) {
     enc_repo_info.repo_server = json.getString("server");
     enc_repo_info.repo_username = json.getString("username");
     enc_repo_info.is_password_set  = json.getBool("is_passwd_set");
+#ifdef Q_OS_MAC
+    enc_repo_info.domain_id = json.getString("domain_id");
+#else
+    enc_repo_info.domain_id = EMPTY_DOMAIN_ID;
+#endif
     return enc_repo_info;
 }
 
@@ -89,14 +94,14 @@ EncryptedReposDialog::EncryptedReposDialog(QWidget *parent) : QDialog(parent)
     model_ = new EncryptedReposTableModel(this);
     table_->setModel(model_);
 
-    connect(table_, SIGNAL(sigSetEncRepoPassword(const QString&, const QString&)),
-            model_, SLOT(slotSetEncRepoPassword(const QString&, const QString&)));
-    connect(table_, SIGNAL(sigClearEncEncRepoPassword(const QString&)),
-            model_, SLOT(slotClearEncRepoPassword(const QString&)));
+    connect(table_, SIGNAL(sigSetEncRepoPassword(const QString&, const QString&, const QString&)),
+            model_, SLOT(slotSetEncRepoPassword(const QString&, const QString&, const QString&)));
+    connect(table_, SIGNAL(sigClearEncEncRepoPassword(const QString&, const QString&)),
+            model_, SLOT(slotClearEncRepoPassword(const QString&, const QString&)));
 
-    connect(table_, SIGNAL(sigSetEncRepoPassword(const QString&, const QString&)),
+    connect(table_, SIGNAL(sigSetEncRepoPassword(const QString&, const QString&, const QString&)),
             model_, SLOT(updateEncryptRepoList()));
-    connect(table_, SIGNAL(sigClearEncEncRepoPassword(const QString&)),
+    connect(table_, SIGNAL(sigClearEncEncRepoPassword(const QString&, const QString&)),
             model_, SLOT(updateEncryptRepoList()));
 
     QWidget *widget =  new QWidget(this);
@@ -233,14 +238,14 @@ void EncryptedReposTableView::onClickSyncAction()
                 tr("After unsyncing, the local encryption key of this library will be cleared and this library cannot be accessed in virtual drive. Are you sure to unsync?"),
                 this, true);
         if (ok) {
-            emit sigClearEncEncRepoPassword(enc_repo_info_.repo_id);
+            emit sigClearEncEncRepoPassword(enc_repo_info_.domain_id, enc_repo_info_.repo_id);
         }
     } else {
         QString repo_password = QInputDialog::getText(this, tr("Enter library password to sync"),
                                     tr("Enter library password to sync"),
                                     QLineEdit::Password, QString(""), &ok);
         if (ok && !repo_password.isEmpty()) {
-            emit sigSetEncRepoPassword(enc_repo_info_.repo_id, repo_password);
+            emit sigSetEncRepoPassword(enc_repo_info_.domain_id, enc_repo_info_.repo_id, repo_password);
         }
     }
 }
@@ -261,14 +266,49 @@ EncryptedReposTableModel::EncryptedReposTableModel(QObject *parent)
 
 }
 
+#ifdef Q_OS_MAC
 void EncryptedReposTableModel::updateEncryptRepoList()
 {
-    rpc_client_ = gui->rpcClient();
+    QList<EncryptedRepoInfo> enc_repo_infos;
+    auto accounts = gui->accountManager()->activeAccounts();
+    for (int i = 0; i <  accounts.size(); i++) {
+        SeafileRpcClient *rpc_client = gui->rpcClient(accounts.at(i).domainID());
+        json_t *ret;
+        if (!rpc_client || !rpc_client->getEncryptedRepoList(&ret)) {
+           qWarning("failed to get encrypt library list");
+           continue;
+        }
+        QList<EncryptedRepoInfo> infos = EncryptedRepoInfo::listFromJSON(ret);
+        enc_repo_infos.append(infos);
+        json_decref(ret);
+    }
+
+    if (enc_repo_infos_.size() != enc_repo_infos.size()) {
+        beginResetModel();
+        enc_repo_infos_ = enc_repo_infos;
+        endResetModel();
+        return;
+    }
+
+    for (int i = 0, n = enc_repo_infos.size(); i < n; i++) {
+        if (enc_repo_infos_[i] == enc_repo_infos[i]) {
+            continue;
+        }
+        enc_repo_infos_[i] = enc_repo_infos[i];
+        QModelIndex start = index(i, 0);
+        QModelIndex stop = index(i, MAX_COLUMN - 1);
+        emit dataChanged(start, stop);
+    }
+}
+#else
+void EncryptedReposTableModel::updateEncryptRepoList()
+{
+    SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
     json_t *ret;
-    if (!rpc_client_->getEncryptedRepoList(&ret)) {
+    if (!rpc_client || !rpc_client->getEncryptedRepoList(&ret)) {
        qWarning("failed to get encrypt library list");
        return;
-     }
+    }
     QList<EncryptedRepoInfo> enc_repo_infos = EncryptedRepoInfo::listFromJSON(ret);
     json_decref(ret);
 
@@ -289,11 +329,13 @@ void EncryptedReposTableModel::updateEncryptRepoList()
         emit dataChanged(start, stop);
     }
 }
+#endif
 
-void EncryptedReposTableModel::slotSetEncRepoPassword(const QString& repo_id, const QString& password)
+void EncryptedReposTableModel::slotSetEncRepoPassword(const QString& domain_id, const QString& repo_id, const QString& password)
 {
+    SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
     QString error_msg;
-    if (!rpc_client_->setEncryptedRepoPassword(repo_id, password, &error_msg)) {
+    if (!rpc_client || !rpc_client->setEncryptedRepoPassword(repo_id, password, &error_msg)) {
         if (error_msg.isEmpty()) {
             gui->messageBox(tr("Failed to set encrypted library password"));
         } else if(error_msg == "Wrong password"){
@@ -302,9 +344,10 @@ void EncryptedReposTableModel::slotSetEncRepoPassword(const QString& repo_id, co
     }
 }
 
-void EncryptedReposTableModel::slotClearEncRepoPassword(const QString& repo_id)
+void EncryptedReposTableModel::slotClearEncRepoPassword(const QString& domain_id, const QString& repo_id)
 {
-    if (!rpc_client_->clearEncryptedRepoPassword(repo_id)) {
+    SeafileRpcClient *rpc_client = gui->rpcClient(domain_id);
+    if (!rpc_client || !rpc_client->clearEncryptedRepoPassword(repo_id)) {
         gui->messageBox(tr("Failed to clear encrypted library password"));
     }
 }
