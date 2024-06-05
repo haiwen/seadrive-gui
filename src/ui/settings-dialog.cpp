@@ -294,11 +294,11 @@ void SettingsDialog::showHideControlsBasedOnCurrentProxyType(int state)
             mProxyHostLabel->setVisible(true);
             mProxyPort->setVisible(true);
             mProxyPortLabel->setVisible(true);
-            mProxyRequirePassword->setVisible(false);
-            mProxyUsername->setVisible(false);
-            mProxyUsernameLabel->setVisible(false);
-            mProxyPassword->setVisible(false);
-            mProxyPasswordLabel->setVisible(false);
+            mProxyRequirePassword->setVisible(true);
+            mProxyUsername->setVisible(true);
+            mProxyUsernameLabel->setVisible(true);
+            mProxyPassword->setVisible(true);
+            mProxyPasswordLabel->setVisible(true);
             break;
         case SettingsManager::NoProxy:
         case SettingsManager::SystemProxy:
@@ -365,6 +365,11 @@ bool SettingsDialog::updateProxySettings()
         case SettingsManager::SocksProxy:
             new_proxy.host = proxy_host;
             new_proxy.port = proxy_port;
+            if (mProxyRequirePassword->checkState() == Qt::Checked) {
+                new_proxy.username = proxy_username;
+                new_proxy.password = proxy_password;
+                break;
+            }
             break;
         case SettingsManager::NoProxy:
         case SettingsManager::SystemProxy:
