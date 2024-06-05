@@ -42,6 +42,8 @@
 #include <QSslCipher>
 #include <QSslCertificate>
 
+#include <QVersionNumber>
+
 #include "seadrive-gui.h"
 
 #include "utils/utils.h"
@@ -874,3 +876,16 @@ QString trimNULL(QString& s) {
     }
     return s;
 }
+
+#ifdef Q_OS_MAC
+bool checkOSVersion() {
+    QString osVersion = QSysInfo::productVersion();
+    QVersionNumber currentVersion = QVersionNumber::fromString(osVersion);
+    QVersionNumber minAllowedVersion(14, 4, 0); 
+
+    if (currentVersion < minAllowedVersion) {
+        return false;
+    }
+    return true;
+}
+#endif

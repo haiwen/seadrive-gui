@@ -384,6 +384,15 @@ void SeadriveGui::start()
     account_mgr_->start();
 
 #ifdef Q_OS_MAC
+    auto accounts = account_mgr_->activeAccounts();
+    if (!checkOSVersion() && accounts.size() > 1) {
+        errorAndExit(tr("SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. "
+                   "Please upgrade your macOS or downgrade SeaDrive to 3.0.9").arg(STRINGIZE(SEADRIVE_GUI_VERSION)));
+        return;
+    }
+#endif
+
+#ifdef Q_OS_MAC
     migrateOldData();
 #endif
 
@@ -635,7 +644,7 @@ void SeadriveGui::connectDaemon()
                 if (account.connect_daemon_retry > 5) {
                     account_mgr_->setAccountNotifiedStartExtension(account, true);
                     if (file_provider_mgr_->hasEnabledDomains())
-                        messageBox(tr("To start %1 extension for account %2, you need to click the %3 entry in Finder").arg(getBrand()).arg(account.username).arg(getBrand()));
+                        messageBox(tr("To start %1 extension for account %2, you need to click the %3 entry in Finder").arg(getBrand()).arg(account.accountInfo.name).arg(getBrand()));
                 }
                 account_mgr_->addAccountConnectDaemonRetry(account);
             }
