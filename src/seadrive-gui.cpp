@@ -385,7 +385,7 @@ void SeadriveGui::start()
 
 #ifdef Q_OS_MAC
     auto accounts = account_mgr_->activeAccounts();
-    if (!checkOSVersion() && accounts.size() > 1) {
+    if (!checkOSVersion144() && accounts.size() > 1) {
         errorAndExit(tr("SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. "
                    "Please upgrade your macOS or downgrade SeaDrive to 3.0.9").arg(STRINGIZE(SEADRIVE_GUI_VERSION)));
         return;

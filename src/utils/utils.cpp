@@ -878,7 +878,7 @@ QString trimNULL(QString& s) {
 }
 
 #ifdef Q_OS_MAC
-bool checkOSVersion() {
+bool checkOSVersion144() {
     QString osVersion = QSysInfo::productVersion();
     QVersionNumber currentVersion = QVersionNumber::fromString(osVersion);
     QVersionNumber minAllowedVersion(14, 4, 0); 
