@@ -113,4 +113,8 @@ int runAsCommand(const QString &binary, const QStringList &arguments, QString *o
 
 QString trimNULL(QString& s);
 
+#ifdef Q_OS_MAC
+bool checkOSVersion144();
+#endif
+
 #endif
