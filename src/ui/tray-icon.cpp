@@ -495,9 +495,17 @@ void SeafileTrayIcon::openHelp()
 {
     QString url;
     if (QLocale::system().name() == "zh_CN") {
-        url = "https://cloud.seafile.com/published/seafile-user-manual/seadrive_client/install_seadrive_client.md";
+#ifdef Q_OS_MAC
+        url = "https://cloud.seafile.com/published/seafile-user-manual/seadrive_client/SeaDrive%20for%20MacOS.md";
+#else
+        url = "https://cloud.seafile.com/published/seafile-user-manual/seadrive_client/Seadrive%203.0%20for%20Windows10.md";
+#endif
     } else {
-        url = "https://download.seafile.com/published/seafile-user-manual/drive_client/using_drive_client.md";
+#ifdef Q_OS_MAC
+        url = "https://help.seafile.com/drive_client/drive_client_for_macos/";
+#else
+        url = "https://help.seafile.com/drive_client/drive_client_for_win10/";
+#endif
     }
 
     QDesktopServices::openUrl(QUrl(url));
@@ -733,7 +741,7 @@ void SeafileTrayIcon::setSyncErrors(const QString& domain_id, const QList<SyncEr
     QMapIterator<QString, QList<SyncError>> it(domain_errors_);
     while (it.hasNext()) {
         it.next();
-        auto errors = it.value();  
+        auto errors = it.value();
         sync_errors_.append(errors);
     }
 
