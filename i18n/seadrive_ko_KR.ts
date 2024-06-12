@@ -306,7 +306,7 @@
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;예: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>or http://192.168.1.24:8000</source>
@@ -359,6 +359,10 @@
     <message>
         <source>Failed to get client sso status.</source>
         <translation>클라이언트 단일 로그인 상태 가져오기를 실패했습니다. </translation>
+    </message>
+    <message>
+        <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -786,6 +790,10 @@
         <source>Library contains too many files.</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Failed to download file. Please check disk space or folder permissions</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -900,8 +908,16 @@
         <translation>설정</translation>
     </message>
     <message>
-        <source>To start %1 extension, you need to click the %2 entry in Finder</source>
-        <translation>%1 확장자 처리를 시작하려면, 폴더에서 %2 항목을 눌러야 합니다</translation>
+        <source>Faild to migrate old data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>To start %1 extension for account %2, you need to click the %3 entry in Finder</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1068,6 +1084,10 @@
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;? After removing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
         <translation>정말로 &quot;%1&quot; 계정을 제거할까요? 계정을 제거하더라도 ~/Library/CloudStorage 위치에서 다운로드한 파일을 찾을 수 있습니다.</translation>
+    </message>
+    <message>
+        <source>Failed to connect to daemon, please try again later</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

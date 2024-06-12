@@ -360,6 +360,10 @@
         <source>Failed to get client sso status.</source>
         <translation>获取客户端单点登录状态失败。</translation>
     </message>
+    <message>
+        <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
+        <translation>SeaDrive %1 多账号功能不兼容 macOS 14.4 以下版本。请升级您的 macOS 系统或者安装 SeaDrive 3.0.9 版本。</translation>
+    </message>
 </context>
 <context>
     <name>MessagePoller</name>
@@ -786,6 +790,10 @@
         <source>Library contains too many files.</source>
         <translation>资料库文件数量过多。</translation>
     </message>
+    <message>
+        <source>Failed to download file. Please check disk space or folder permissions</source>
+        <translation>下载文件失败，请检查磁盘空间和目录权限。</translation>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -900,8 +908,16 @@
         <translation>设置</translation>
     </message>
     <message>
-        <source>To start %1 extension, you need to click the %2 entry in Finder</source>
-        <translation>如需启动 %1 扩展，请点击“访达”里的 %2 项目</translation>
+        <source>Faild to migrate old data</source>
+        <translation>迁移旧数据失败</translation>
+    </message>
+    <message>
+        <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
+        <translation>SeaDrive %1 多账号功能不兼容 macOS 14.4 以下版本。请升级您的 macOS 系统或者安装 SeaDrive 3.0.9 版本。</translation>
+    </message>
+    <message>
+        <source>To start %1 extension for account %2, you need to click the %3 entry in Finder</source>
+        <translation>请点击访达里的 %3 ，来启动 %2 账号的 %1 扩展</translation>
     </message>
 </context>
 <context>
@@ -1068,6 +1084,10 @@
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;? After removing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
         <translation>是否删除账号 %1 ？删除账号后，已下载的文件仍保留在 ~/Library/CloudStorage 目录。</translation>
+    </message>
+    <message>
+        <source>Failed to connect to daemon, please try again later</source>
+        <translation>无法连接守护进程，请稍后重试</translation>
     </message>
 </context>
 <context>
