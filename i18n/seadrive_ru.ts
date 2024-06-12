@@ -306,7 +306,7 @@
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Например: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>or http://192.168.1.24:8000</source>
@@ -359,6 +359,10 @@
     <message>
         <source>Failed to get client sso status.</source>
         <translation>Не удалось получить статус единого входа клиента.</translation>
+    </message>
+    <message>
+        <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
+        <translation>SeaDrive %1 с несколькими учетными записями не может работать с macOS версии ниже 14.4. Обновите macOS или понизьте версию SeaDrive до 3.0.9</translation>
     </message>
 </context>
 <context>
@@ -784,7 +788,11 @@
     </message>
     <message>
         <source>Library contains too many files.</source>
-        <translation type="unfinished"/>
+        <translation>Библиотека содержит слишком много файлов.</translation>
+    </message>
+    <message>
+        <source>Failed to download file. Please check disk space or folder permissions</source>
+        <translation>Не удалось скачать файл. Проверьте место на диске или права доступа к папке</translation>
     </message>
 </context>
 <context>
@@ -900,8 +908,16 @@
         <translation>Настройки</translation>
     </message>
     <message>
-        <source>To start %1 extension, you need to click the %2 entry in Finder</source>
-        <translation>Чтобы запустить расширение %1, вам нужно щелкнуть запись %2 в Finder</translation>
+        <source>Faild to migrate old data</source>
+        <translation>Не удалось перенести старые данные</translation>
+    </message>
+    <message>
+        <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
+        <translation>SeaDrive %1 с несколькими учетными записями не может работать с macOS версии ниже 14.4. Обновите macOS или понизьте версию SeaDrive до 3.0.9</translation>
+    </message>
+    <message>
+        <source>To start %1 extension for account %2, you need to click the %3 entry in Finder</source>
+        <translation>Чтобы запустить расширение %1 для учетной записи %2, вам нужно щелкнуть запись %3 в Finder</translation>
     </message>
 </context>
 <context>
@@ -1069,6 +1085,10 @@
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;? After removing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
         <translation>Вы уверены, что хотите удалить аккаунт из &quot;%1&quot;? После удаления аккаунта вы по-прежнему сможете найти загруженные файлы в ~/Library/CloudStorage.</translation>
+    </message>
+    <message>
+        <source>Failed to connect to background process, please try again later</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1301,7 +1321,7 @@
     <name>ShibLoginDialog</name>
     <message>
         <source>Single Sign On</source>
-        <translation type="unfinished"/>
+        <translation>Единая точка входа</translation>
     </message>
 </context>
 <context>

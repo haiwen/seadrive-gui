@@ -305,7 +305,7 @@
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Par exemple : https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>or http://192.168.1.24:8000</source>
@@ -357,6 +357,10 @@
     </message>
     <message>
         <source>Failed to get client sso status.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -785,6 +789,10 @@
         <source>Library contains too many files.</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Failed to download file. Please check disk space or folder permissions</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -899,8 +907,16 @@
         <translation>Paramètres</translation>
     </message>
     <message>
-        <source>To start %1 extension, you need to click the %2 entry in Finder</source>
-        <translation>Pour lancer l&apos;extension %1, vous devez cliquer sur l&apos;entrée %2 dans le Finder.</translation>
+        <source>Faild to migrate old data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>To start %1 extension for account %2, you need to click the %3 entry in Finder</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1066,6 +1082,10 @@
     </message>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;? After removing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to connect to background process, please try again later</source>
         <translation type="unfinished"/>
     </message>
 </context>

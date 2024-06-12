@@ -306,7 +306,7 @@
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zum Beispiel: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>or http://192.168.1.24:8000</source>
@@ -359,6 +359,10 @@
     <message>
         <source>Failed to get client sso status.</source>
         <translation>Der Status des Single Sign-On konnte nicht abgerufen werden.</translation>
+    </message>
+    <message>
+        <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -784,6 +788,10 @@
     </message>
     <message>
         <source>Library contains too many files.</source>
+        <translation>Die Bibliothek enthält zu viele Dateien.</translation>
+    </message>
+    <message>
+        <source>Failed to download file. Please check disk space or folder permissions</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -900,8 +908,16 @@
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <source>To start %1 extension, you need to click the %2 entry in Finder</source>
-        <translation>Um die Erweiterung %1 zu starten, klicken Sie bitte im Finder den Eintrag %2 </translation>
+        <source>Faild to migrate old data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>To start %1 extension for account %2, you need to click the %3 entry in Finder</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1068,6 +1084,10 @@
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;? After removing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
         <translation>Möchten Sie wirklich den Account aus &quot;%1&quot; entfernen? Wenn Sie den Account austragen, können Sie heruntergeladene Dateien weiterhin finden unter  ~/Library/CloudStorage.</translation>
+    </message>
+    <message>
+        <source>Failed to connect to background process, please try again later</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1300,7 +1320,7 @@
     <name>ShibLoginDialog</name>
     <message>
         <source>Single Sign On</source>
-        <translation type="unfinished"/>
+        <translation>Single Sign-On</translation>
     </message>
 </context>
 <context>

@@ -687,7 +687,7 @@ void SeafileTrayIcon::resyncAccount()
     Account account = qvariant_cast<Account>(action->data());
     SeafileRpcClient *rpc_client = gui->rpcClient(account.domainID());
     if (!rpc_client || !rpc_client->isConnected()) {
-        gui->warningBox (tr("Failed to connect to daemon, please try again later"));
+        gui->warningBox (tr("Failed to connect to background process, please try again later"));
         return;
     }
 
