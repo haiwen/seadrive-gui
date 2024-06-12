@@ -1086,8 +1086,8 @@
         <translation>是否删除账号 %1 ？删除账号后，已下载的文件仍保留在 ~/Library/CloudStorage 目录。</translation>
     </message>
     <message>
-        <source>Failed to connect to daemon, please try again later</source>
-        <translation>无法连接守护进程，请稍后重试</translation>
+        <source>Failed to connect to background process, please try again later</source>
+        <translation>无法连接后台进程，请稍后重试</translation>
     </message>
 </context>
 <context>

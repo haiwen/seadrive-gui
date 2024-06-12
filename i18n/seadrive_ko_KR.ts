@@ -1086,7 +1086,7 @@
         <translation>정말로 &quot;%1&quot; 계정을 제거할까요? 계정을 제거하더라도 ~/Library/CloudStorage 위치에서 다운로드한 파일을 찾을 수 있습니다.</translation>
     </message>
     <message>
-        <source>Failed to connect to daemon, please try again later</source>
+        <source>Failed to connect to background process, please try again later</source>
         <translation type="unfinished"/>
     </message>
 </context>

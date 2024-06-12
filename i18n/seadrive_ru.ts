@@ -1087,8 +1087,8 @@
         <translation>Вы уверены, что хотите удалить аккаунт из &quot;%1&quot;? После удаления аккаунта вы по-прежнему сможете найти загруженные файлы в ~/Library/CloudStorage.</translation>
     </message>
     <message>
-        <source>Failed to connect to daemon, please try again later</source>
-        <translation>Не удалось подключиться к демону. Повторите попытку позже.</translation>
+        <source>Failed to connect to background process, please try again later</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

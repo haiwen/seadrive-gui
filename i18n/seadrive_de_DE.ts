@@ -1086,7 +1086,7 @@
         <translation>Möchten Sie wirklich den Account aus &quot;%1&quot; entfernen? Wenn Sie den Account austragen, können Sie heruntergeladene Dateien weiterhin finden unter  ~/Library/CloudStorage.</translation>
     </message>
     <message>
-        <source>Failed to connect to daemon, please try again later</source>
+        <source>Failed to connect to background process, please try again later</source>
         <translation type="unfinished"/>
     </message>
 </context>

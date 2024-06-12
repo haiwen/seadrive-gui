@@ -1086,7 +1086,7 @@ Abrir % 1 ajuda on-line</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Failed to connect to daemon, please try again later</source>
+        <source>Failed to connect to background process, please try again later</source>
         <translation type="unfinished"/>
     </message>
 </context>

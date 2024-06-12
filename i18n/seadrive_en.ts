@@ -1086,7 +1086,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Failed to connect to daemon, please try again later</source>
+        <source>Failed to connect to background process, please try again later</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
