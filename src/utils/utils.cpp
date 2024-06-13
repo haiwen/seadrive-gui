@@ -54,6 +54,7 @@ const char *kSeafileClientBrand = "SeaDrive";
 #if defined(Q_OS_MAC)
 const char *kSeadriveWorkDir = "Library/Containers/com.seafile.seadrive.fprovider/Data";
 const char *kSeadriveConfDir = "Documents";
+const char *kSeadirveProcName = "SeaDrive File Provider";
 #elif defined(Q_OS_WIN32)
 const char *kSeadriveConfDir = "seadrive";
 #else
@@ -887,4 +888,23 @@ bool checkOSVersion144() {
     }
     return true;
 }
+
+void stopDaemon()
+{
+    QProcess findProcessId;
+    findProcessId.start("pgrep", QStringList(kSeadirveProcName));
+    findProcessId.waitForFinished();
+    QByteArray result = findProcessId.readAllStandardOutput().trimmed();
+    if (result.isEmpty()) {
+        return;
+    }
+
+    QString pidString = QString::fromUtf8(result);
+    qint64 pid = pidString.toLongLong();
+
+    QProcess killProcess;
+    killProcess.start("kill", QStringList() << "-9" << QString::number(pid));
+    killProcess.waitForFinished();
+}
+
 #endif

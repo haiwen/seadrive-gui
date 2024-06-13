@@ -115,6 +115,7 @@ QString trimNULL(QString& s);
 
 #ifdef Q_OS_MAC
 bool checkOSVersion144();
+void stopDaemon();
 #endif
 
 #endif
