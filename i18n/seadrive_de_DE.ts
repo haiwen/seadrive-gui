@@ -305,10 +305,6 @@
         <translation>Server:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>or http://192.168.1.24:8000</source>
         <translation>oder http://192.168.1.24:8000</translation>
     </message>
@@ -362,6 +358,10 @@
     </message>
     <message>
         <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
+        <translation>SeaDrive %1 mit mehreren Accounts benötigt mindestens macOS 14.4. Bitte aktualisieren Sie Ihr Betriebssystem oder wechseln Sie zur älteren Version 3.0.9 von SeaDrive.</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -792,7 +792,7 @@
     </message>
     <message>
         <source>Failed to download file. Please check disk space or folder permissions</source>
-        <translation type="unfinished"/>
+        <translation>Die Datei konnte nicht heruntergeladen werden. Bitte kontrollieren Sie den Speicherplatz oder die Berechtigungen im Ordner</translation>
     </message>
 </context>
 <context>
@@ -909,15 +909,15 @@
     </message>
     <message>
         <source>Faild to migrate old data</source>
-        <translation type="unfinished"/>
+        <translation>Die alten Daten konnten nicht migriert werden</translation>
     </message>
     <message>
         <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
-        <translation type="unfinished"/>
+        <translation>SeaDrive %1 mit mehreren Accounts benötigt mindestens macOS 14.4. Bitte aktualisieren Sie Ihr Betriebssystem oder wechseln Sie zur älteren Version 3.0.9 von SeaDrive.</translation>
     </message>
     <message>
         <source>To start %1 extension for account %2, you need to click the %3 entry in Finder</source>
-        <translation type="unfinished"/>
+        <translation>Um die Erweiterung %1 für Account %2 zu starten, klicken Sie bitte auf den Eintrag %3 im Finder</translation>
     </message>
 </context>
 <context>
@@ -1087,7 +1087,7 @@
     </message>
     <message>
         <source>Failed to connect to background process, please try again later</source>
-        <translation type="unfinished"/>
+        <translation>Der Hintergrundprozess konnte nicht aufgerufen werden. Bitte versuchen Sie es später noch einmal</translation>
     </message>
 </context>
 <context>
