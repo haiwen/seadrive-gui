@@ -305,10 +305,6 @@
         <translation>Сервер:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>or http://192.168.1.24:8000</source>
         <translation>или http://192.168.1.24:8000</translation>
     </message>
@@ -363,6 +359,10 @@
     <message>
         <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
         <translation>SeaDrive %1 с несколькими учетными записями не может работать с macOS версии ниже 14.4. Обновите macOS или понизьте версию SeaDrive до 3.0.9</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1088,7 +1088,7 @@
     </message>
     <message>
         <source>Failed to connect to background process, please try again later</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось подключиться к фоновому процессу. Повторите попытку позже.</translation>
     </message>
 </context>
 <context>
