@@ -679,6 +679,9 @@ void SeadriveGui::connectDaemon()
         if (!account.isValid()) {
             // account has beed deleted, remove account from domain.
             rpc_client->deleteDomainAccount(domain_id);
+            if (!checkOSVersion144()) {
+                stopDaemon();
+            }
             MessagePoller *message_poller = messagePoller(domain_id);
             if (message_poller) {
                 message_pollers_.remove(domain_id);

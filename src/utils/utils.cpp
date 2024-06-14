@@ -42,7 +42,7 @@
 #include <QSslCipher>
 #include <QSslCertificate>
 
-#include <QVersionNumber>
+#include <QOperatingSystemVersion>
 
 #include "seadrive-gui.h"
 
@@ -54,6 +54,7 @@ const char *kSeafileClientBrand = "SeaDrive";
 #if defined(Q_OS_MAC)
 const char *kSeadriveWorkDir = "Library/Containers/com.seafile.seadrive.fprovider/Data";
 const char *kSeadriveConfDir = "Documents";
+const char *kSeadirveProcName = "SeaDrive File Provider";
 #elif defined(Q_OS_WIN32)
 const char *kSeadriveConfDir = "seadrive";
 #else
@@ -879,13 +880,31 @@ QString trimNULL(QString& s) {
 
 #ifdef Q_OS_MAC
 bool checkOSVersion144() {
-    QString osVersion = QSysInfo::productVersion();
-    QVersionNumber currentVersion = QVersionNumber::fromString(osVersion);
-    QVersionNumber minAllowedVersion(14, 4, 0); 
+    QOperatingSystemVersion currentVersion = QOperatingSystemVersion::current();
+    QOperatingSystemVersion minAllowedVersion(QOperatingSystemVersion::MacOS, 14, 4);
 
     if (currentVersion < minAllowedVersion) {
         return false;
     }
     return true;
 }
+
+void stopDaemon()
+{
+    QProcess findProcessId;
+    findProcessId.start("pgrep", QStringList(kSeadirveProcName));
+    findProcessId.waitForFinished();
+    QByteArray result = findProcessId.readAllStandardOutput().trimmed();
+    if (result.isEmpty()) {
+        return;
+    }
+
+    QString pidString = QString::fromUtf8(result);
+    qint64 pid = pidString.toLongLong();
+
+    QProcess killProcess;
+    killProcess.start("kill", QStringList() << "-9" << QString::number(pid));
+    killProcess.waitForFinished();
+}
+
 #endif
