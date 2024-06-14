@@ -284,10 +284,10 @@ bool loadConfigCB(sqlite3_stmt *stmt, void *data)
         mgr->setMaxUploadRatio(rate >> 10);
     } else if (strcmp(key, "clean_cache_interval") == 0) {
         int interval = atoi(value);
-        mgr->setCacheCleanIntervalMinutes(interval);
+        mgr->setCacheCleanIntervalMinutes(interval / 60);
     } else if (strcmp(key, "cache_size_limit") == 0) {
         int limit = atoi(value);
-        mgr->setCacheSizeLimitGB(limit);
+        mgr->setCacheSizeLimitGB(limit / 1e9);
     } else if (strcmp(key, "sync_extra_temp_file") == 0) {
         if (strcmp(value, "true") == 0) {
             mgr->setSyncExtraTempFile(true);
