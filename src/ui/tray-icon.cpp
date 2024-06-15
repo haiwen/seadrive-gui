@@ -526,6 +526,14 @@ void SeafileTrayIcon::showSettingsWindow()
 
 void SeafileTrayIcon::showLoginDialog()
 {
+#ifdef Q_OS_MAC
+    auto accounts = gui->accountManager()->activeAccounts();
+    if (!checkOSVersion144() && accounts.size() >= 1) {
+        gui->warningBox(tr("SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. "
+                   "Please upgrade your macOS or downgrade SeaDrive to 3.0.9").arg(STRINGIZE(SEADRIVE_GUI_VERSION)));
+        return;
+    }
+#endif
     showLoginDialog(Account());
 }
 
