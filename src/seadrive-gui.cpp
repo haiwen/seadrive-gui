@@ -394,6 +394,13 @@ void SeadriveGui::start()
 
 #ifdef Q_OS_MAC
     migrateOldData();
+#else
+    QDir seadrive_dir = seadriveDir();
+    QString domain_dir = seadrive_dir.filePath(EMPTY_DOMAIN_ID);
+    if (!QDir(domain_dir).exists()) {
+        migrateOldConfig(seadriveDataDir());
+        checkdir_with_mkdir(toCStr(domain_dir));
+    }
 #endif
 
     // Load system proxy information. This must be done before we start seadrive
