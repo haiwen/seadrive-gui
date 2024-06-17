@@ -395,11 +395,9 @@ void SeadriveGui::start()
 #ifdef Q_OS_MAC
     migrateOldData();
 #else
-    QDir seadrive_dir = seadriveDir();
-    QString domain_dir = seadrive_dir.filePath(EMPTY_DOMAIN_ID);
-    if (!QDir(domain_dir).exists()) {
+    if (!settings_mgr_->getMigrateStatus()) {
         migrateOldConfig(seadriveDataDir());
-        checkdir_with_mkdir(toCStr(domain_dir));
+        settings_mgr_->setMigrateStatus(true);
     }
 #endif
 
