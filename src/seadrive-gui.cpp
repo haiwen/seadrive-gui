@@ -264,7 +264,6 @@ SeadriveGui::~SeadriveGui()
 
 }
 
-#ifdef Q_OS_MAC
 bool loadConfigCB(sqlite3_stmt *stmt, void *data)
 {
     SettingsManager *mgr = static_cast<SettingsManager* >(data);
@@ -304,11 +303,13 @@ bool loadConfigCB(sqlite3_stmt *stmt, void *data)
         int threshold = atoi(value);
         mgr->setDeleteConfirmThreshold(threshold);
     } else if (strcmp(key, "hide_windows_incompatible_path_notification") == 0) {
+#ifdef Q_OS_MAC
         if (strcmp(value, "true") == 0) {
             mgr->setHideWindowsIncompatibilityPathMsg(true);
         } else {
             mgr->setHideWindowsIncompatibilityPathMsg(false);
         }
+#endif
     }
     return true;
 }
@@ -333,6 +334,7 @@ void SeadriveGui::migrateOldConfig(const QString& dataDir)
     sqlite3_close(db);
 }
 
+#ifdef Q_OS_MAC
 void SeadriveGui::migrateOldData()
 {
     QString data_dir = QDir(seadriveDir()).filePath("data");

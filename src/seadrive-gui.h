@@ -63,8 +63,9 @@ public:
 
 #ifdef Q_OS_MAC
     void migrateOldData();
-    void migrateOldConfig(const QString& data_dir);
 #endif
+
+    void migrateOldConfig(const QString& data_dir);
 
 #if defined(Q_OS_WIN32)
     QString seadriveRoot() const;
