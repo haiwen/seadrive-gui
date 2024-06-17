@@ -115,6 +115,9 @@ public:
 #if defined(Q_OS_MAC)
     bool getHideWindowsIncompatibilityPathMsg();
     void setHideWindowsIncompatibilityPathMsg(bool enabled);
+#else
+    bool getMigrateStatus();
+    void setMigrateStatus(bool finished);
 #endif
 public:
 

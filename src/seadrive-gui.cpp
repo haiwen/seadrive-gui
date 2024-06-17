@@ -394,6 +394,11 @@ void SeadriveGui::start()
 
 #ifdef Q_OS_MAC
     migrateOldData();
+#else
+    if (!settings_mgr_->getMigrateStatus()) {
+        migrateOldConfig(seadriveDataDir());
+        settings_mgr_->setMigrateStatus(true);
+    }
 #endif
 
     // Load system proxy information. This must be done before we start seadrive

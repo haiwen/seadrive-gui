@@ -31,6 +31,7 @@ const char *kCacheSizeLimit = "cacheSizeLimit";
 const char *kSyncExtraTempFile = "syncExtraTempFile";
 const char *kDisableVerifyCert = "disableVerifyCert";
 const char *kDeleteConfirmThreshold = "deleteConfirmThreshold";
+const char *kMigrateStatus = "kMigrateStatus";
 
 #if defined(_MSC_VER)
 const char *kSeadriveRoot = "seadriveRoot";
@@ -992,6 +993,28 @@ void SettingsManager::onSystemProxyPolled(const QNetworkProxy &system_proxy)
 SystemProxyPoller::SystemProxyPoller(const QUrl &url) : url_(url)
 {
 }
+
+#ifndef Q_OS_MAC
+bool SettingsManager::getMigrateStatus()
+{
+    QSettings settings;
+    bool finished;
+
+    settings.beginGroup(kSettingsGroup);
+    finished = settings.value(kMigrateStatus, false).toBool();
+    settings.endGroup();
+
+    return finished;
+}
+
+void SettingsManager::setMigrateStatus(bool finished)
+{
+    QSettings settings;
+    settings.beginGroup(kSettingsGroup);
+    settings.setValue(kMigrateStatus, finished);
+    settings.endGroup();
+}
+#endif
 
 void SystemProxyPoller::run()
 {
