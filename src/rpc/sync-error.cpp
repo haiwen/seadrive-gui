@@ -138,6 +138,8 @@ QString SyncError::syncErrorIdToErrorStr(int error_id, const QString& path)
         return QObject::tr("Failed to upload file blocks. Please check network or firewall.");
     case SYNC_ERROR_ID_CHECKOUT_FILE:
         return QObject::tr("Failed to download file. Please check disk space or folder permissions");
+    case SYNC_ERROR_ID_CASE_CONFLICT:
+        return QObject::tr("Path has character case conflict with existing file or folder. Will not be downloaded");
     case SYNC_ERROR_ID_GENERAL_ERROR:
     default:
         return QObject::tr("Unknown error");
