@@ -93,7 +93,7 @@ void InitSyncDialog::finish()
 
     gui->trayIcon()->setLoginActionEnabled(true);
 
-    QString msg = tr("%1 has dowloaded your files list.").arg(getBrand());
+    QString msg = tr("%1 has downloaded your files list.").arg(getBrand());
     setStatusText(msg);
     setStatusIcon(":/images/ok-48.png");
 
