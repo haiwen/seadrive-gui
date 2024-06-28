@@ -123,7 +123,7 @@ QString SyncError::syncErrorIdToErrorStr(int error_id, const QString& path)
     case SYNC_ERROR_ID_UPDATE_NOT_IN_REPO:
         return QObject::tr("%1 is not added to a library and will not be uploaded").arg(file);
     case SYNC_ERROR_ID_LIBRARY_TOO_LARGE:
-        return QObject::tr("Library has too many files that can't be synced.");
+        return QObject::tr("Library cannot be synced since it has too many files.");
 #if defined(Q_OS_WIN32)
     case SYNC_ERROR_ID_MOVE_NOT_IN_REPO:
         return QObject::tr("You can only move files/folders within a library or from one library to another library");
@@ -133,7 +133,7 @@ QString SyncError::syncErrorIdToErrorStr(int error_id, const QString& path)
     case SYNC_ERROR_ID_INVALID_PATH_ON_WINDOWS:
         return QObject::tr("The path %1 contains symbols that are not supported by the Windows system.").arg(file);
     case SYNC_ERROR_ID_TOO_MANY_FILES:
-        return QObject::tr("The number of files exceeds limit of library.");
+        return QObject::tr("Files cannot be uploaded to this library due to file number limit settings.");
     case SYNC_ERROR_ID_BLOCK_MISSING:
         return QObject::tr("Failed to upload file blocks. Please check network or firewall.");
     case SYNC_ERROR_ID_CHECKOUT_FILE:
