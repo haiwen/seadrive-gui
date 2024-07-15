@@ -40,7 +40,8 @@
 #define SYNC_ERROR_ID_TOO_MANY_FILES            30
 #define SYNC_ERROR_ID_BLOCK_MISSING             31
 #define SYNC_ERROR_ID_CHECKOUT_FILE             32
-#define SYNC_ERROR_ID_GENERAL_ERROR             33
+#define SYNC_ERROR_ID_CASE_CONFLICT             33
+#define SYNC_ERROR_ID_GENERAL_ERROR             34
 
 
 class SyncError {
