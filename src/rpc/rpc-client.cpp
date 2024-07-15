@@ -557,9 +557,10 @@ bool SeafileRpcClient::addAccount(const Account& account)
     }
 
     searpc_client_call__int(seadrive_rpc_client_, "seafile_add_account", &error,
-                            6,
+                            7,
                             "string", toCStr(serverAddr),
                             "string", toCStr(account.username),
+                            "string", toCStr(account.accountInfo.name),
                             "string", toCStr(account.token),
                             "string", toCStr(QDir::toNativeSeparators(account.syncRoot)),
                             "string", toCStr(account.serverUrl.host()),
@@ -600,9 +601,10 @@ bool SeafileRpcClient::addAccount(const Account& account)
     }
 
     searpc_client_call__int(seadrive_rpc_client_, "seafile_add_account", &error,
-                            6,
+                            7,
                             "string", toCStr(serverAddr),
                             "string", toCStr(account.username),
+                            "string", toCStr(account.accountInfo.name),
                             "string", toCStr(account.token),
                             "string", toCStr(account.domainID()),
                             "string", toCStr(language),
