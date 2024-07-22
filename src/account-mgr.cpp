@@ -412,7 +412,7 @@ int AccountManager::resyncAccount(const Account& account)
     }
 
 #if defined(Q_OS_WIN32)
-    setAccountSyncRoot(updated_account, true);
+    setAccountSyncRoot(updated_account);
 #endif
 
     SeafileRpcClient *rpc_client = gui->rpcClient(updated_account.domainID());
@@ -624,7 +624,7 @@ void AccountManager::addAccountToDaemon(const Account& account)
 #if defined(Q_OS_WIN32)
     if (added_account.isValid()) {
         // setAccountSyncRoot will update the syncRoot in added_account variable, so subsequent methods (e.g. addAccount()) can get the sync root.
-        setAccountSyncRoot(added_account, false);
+        setAccountSyncRoot(added_account);
     }
 #elif defined(Q_OS_MAC)
     if (added_account.isValid()) {
@@ -746,7 +746,7 @@ const QString AccountManager::getOldSyncRootDir(const Account& account)
     return "";
 }
 
-const QString AccountManager::genSyncRootName(const Account& account, bool resync)
+const QString AccountManager::genSyncRootName(const Account& account)
 {
     QString url = account.serverUrl.toString();
     QString nickname = account.accountInfo.name;
@@ -758,19 +758,17 @@ const QString AccountManager::genSyncRootName(const Account& account, bool resyn
                         toCStr(url), toCStr(nickname), toCStr(email));
 
     QString old_sync_dir = getOldSyncRootDir(account);
-    if (!old_sync_dir.isEmpty() && !resync) {
+    if (!old_sync_dir.isEmpty()) {
         return old_sync_dir;
     }
 
-    if (!resync) {
-        foreach (SyncRootInfo sync_root_info, sync_root_infos_)
-        {
-            if (url == sync_root_info.getUrl() && email == sync_root_info.getUserName()) {
-                QString sync_root_name = sync_root_info.syncRootName();
-                if (!sync_root_name.isEmpty()) {
-                    qWarning("use exist syncroot name %s", toCStr(sync_root_name));
-                    return sync_root_name;
-                }
+    foreach (SyncRootInfo sync_root_info, sync_root_infos_)
+    {
+        if (url == sync_root_info.getUrl() && email == sync_root_info.getUserName()) {
+            QString sync_root_name = sync_root_info.syncRootName();
+            if (!sync_root_name.isEmpty()) {
+                qWarning("use exist syncroot name %s", toCStr(sync_root_name));
+                return sync_root_name;
             }
         }
     }
@@ -836,9 +834,9 @@ const QString AccountManager::genSyncRootName(const Account& account, bool resyn
     return new_sync_root_name;
 }
 
-void AccountManager::setAccountSyncRoot(Account &account, bool resync)
+void AccountManager::setAccountSyncRoot(Account &account)
 {
-    auto name = genSyncRootName(account, resync);
+    auto name = genSyncRootName(account);
     QString sync_root = ::pathJoin(gui->seadriveRoot(), name);
 
     // The sync_root is also updated to the account argument, to avoid another looking up from accounts_ member.
