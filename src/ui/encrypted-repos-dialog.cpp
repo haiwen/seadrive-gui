@@ -426,11 +426,11 @@ QVariant EncryptedReposTableModel::data(const QModelIndex & index, int role) con
 
     const EncryptedRepoInfo &enc_repo_info = enc_repo_infos_[index.row()];
 
-    if (column == COLUMN_REPO_NAME) {
+    if (column == COLUMN_REPO_NAME && role == Qt::DisplayRole) {
         return enc_repo_info.repo_name ;
-    } else if (column == COLUMN_REPO_SERVER) {
+    } else if (column == COLUMN_REPO_SERVER && role == Qt::DisplayRole) {
         return enc_repo_info.repo_server;
-    } else if (column == COLUMN_REPO_USERNAME) {
+    } else if (column == COLUMN_REPO_USERNAME && role == Qt::DisplayRole) {
         auto account = gui->accountManager()->getAccountByUrlAndUsername(
                             enc_repo_info.repo_server, enc_repo_info.repo_username);
         QString name = account.accountInfo.name;
