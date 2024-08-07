@@ -223,7 +223,7 @@ void SeafileExtensionHandler::start()
     listener_thread_->start();
     started_ = true;
 
-    connect(gui->daemonManager(), SIGNAL(daemonRestarted(const QString &)), this, SLOT(onDaemonRestarted()));
+    connect(gui->daemonManager(), SIGNAL(daemonRestarted()), this, SLOT(onDaemonRestarted()));
 }
 
 void SeafileExtensionHandler::onDaemonRestarted()
