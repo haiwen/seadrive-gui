@@ -118,4 +118,6 @@ bool checkOSVersion144();
 void stopDaemon();
 #endif
 
+bool openUrl(QUrl url);
+
 #endif

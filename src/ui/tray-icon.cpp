@@ -508,13 +508,13 @@ void SeafileTrayIcon::openHelp()
 #endif
     }
 
-    QDesktopServices::openUrl(QUrl(url));
+    openUrl(QUrl(url));
 }
 
 void SeafileTrayIcon::openLogDirectory()
 {
     QString log_dir = QFileInfo(seadriveLogDir()).absoluteFilePath();
-    QDesktopServices::openUrl(QUrl::fromLocalFile(log_dir));
+    openUrl(QUrl::fromLocalFile(log_dir));
 }
 
 void SeafileTrayIcon::showSettingsWindow()
@@ -566,7 +566,7 @@ void SeafileTrayIcon::onActivated(QSystemTrayIcon::ActivationReason reason)
 #if !defined(Q_OS_MAC)
     switch(reason) {
     case QSystemTrayIcon::Trigger: // single click
-        QDesktopServices::openUrl(QUrl::fromLocalFile(gui->seadriveRoot()));
+        openUrl(QUrl::fromLocalFile(gui->seadriveRoot()));
     case QSystemTrayIcon::MiddleClick:
     case QSystemTrayIcon::DoubleClick:
         // showMainWindow();

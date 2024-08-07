@@ -55,7 +55,7 @@ void openLocalFile(QString& repo_id, QString& path_in_repo)
         qWarning("the file or directory %s not exists ", toCStr(path_to_open));
         return;
     }
-    QDesktopServices::openUrl(QUrl::fromLocalFile(path_to_open));
+    openUrl(QUrl::fromLocalFile(path_to_open));
 #endif
 }
 
