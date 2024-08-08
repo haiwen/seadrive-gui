@@ -213,7 +213,7 @@ void SyncErrorsTableView::onItemDoubleClicked(const QModelIndex& index)
     if (path_to_open.isEmpty() || !QFileInfo(path_to_open).exists()) {
         path_to_open = gui->seadriveRoot();
     }
-    QDesktopServices::openUrl(QUrl::fromLocalFile(path_to_open));
+    openUrl(QUrl::fromLocalFile(path_to_open));
 #endif
 }
 
