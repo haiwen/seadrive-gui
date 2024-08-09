@@ -555,13 +555,12 @@ SyncErrorsDialog {
 SyncErrorsTableView {
     margin: 0;
     padding: 0;
-    border: 2px solid #ECECEC;
-    border-top: 0px;
+    border: 1px solid #B6B6B6;
     qproperty-focusPolicy: NoFocus;
 }
 
 SyncErrorsTableView QHeaderView::section {
-    padding: 6px 8px;
+    padding: 2px 8px;
     font-size: 12px;
     font-weight: bold;
 }
@@ -600,13 +599,12 @@ EncryptedReposDialog {
 EncryptedReposTableView {
     margin: 0;
     padding: 0;
-    border: 2px solid #ECECEC;
-    border-top: 0px;
+    border: 1px solid #B6B6B6;
     qproperty-focusPolicy: NoFocus;
 }
 
 EncryptedReposTableView QHeaderView::section {
-    padding: 6px 8px;
+    padding: 2px 8px;
     font-size: 12px;
     font-weight: bold;
 }
