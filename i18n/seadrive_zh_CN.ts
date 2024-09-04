@@ -357,10 +357,6 @@
         <translation>获取客户端单点登录状态失败。</translation>
     </message>
     <message>
-        <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
-        <translation>SeaDrive %1 多账号功能不兼容 macOS 14.4 以下版本。请升级您的 macOS 系统或者安装 SeaDrive 3.0.9 版本。</translation>
-    </message>
-    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;例如：https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -779,20 +775,24 @@
         <translation>文件路径 %1 包含 Windows 系统不支持的符号。</translation>
     </message>
     <message>
-        <source>Too many files in library.</source>
-        <translation>资料库文件过多</translation>
-    </message>
-    <message>
         <source>Failed to upload file blocks. Please check network or firewall.</source>
         <translation>上传文件块失败，请检查网络和防火墙的状态</translation>
     </message>
     <message>
-        <source>Library contains too many files.</source>
-        <translation>资料库文件数量过多。</translation>
-    </message>
-    <message>
         <source>Failed to download file. Please check disk space or folder permissions</source>
         <translation>下载文件失败，请检查磁盘空间和目录权限。</translation>
+    </message>
+    <message>
+        <source>Library cannot be synced since it has too many files.</source>
+        <translation>资料库文件太多，无法进行同步。</translation>
+    </message>
+    <message>
+        <source>Files cannot be uploaded to this library due to file number limit settings.</source>
+        <translation>由于资料库文件数限制，文件无法上传。</translation>
+    </message>
+    <message>
+        <source>Path has character case conflict with existing file or folder. Will not be downloaded</source>
+        <translation>同步路径与现存文件或目录存在大小写冲突，下载已跳过</translation>
     </message>
 </context>
 <context>
@@ -1088,6 +1088,10 @@
     <message>
         <source>Failed to connect to background process, please try again later</source>
         <translation>无法连接后台进程，请稍后重试</translation>
+    </message>
+    <message>
+        <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
+        <translation>SeaDrive %1 多账号功能不兼容 macOS 14.4 以下版本。请升级您的 macOS 系统或者安装 SeaDrive 3.0.9 版本。</translation>
     </message>
 </context>
 <context>

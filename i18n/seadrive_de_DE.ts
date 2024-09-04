@@ -202,7 +202,7 @@
     </message>
     <message>
         <source>%1 has downloaded your files list.</source>
-        <translation>%1 hat Ihre Dateiliste heruntergeladen.</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -357,12 +357,8 @@
         <translation>Der Status des Single Sign-On konnte nicht abgerufen werden.</translation>
     </message>
     <message>
-        <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
-        <translation>SeaDrive %1 mit mehreren Accounts benötigt mindestens macOS 14.4. Bitte aktualisieren Sie Ihr Betriebssystem oder wechseln Sie zur älteren Version 3.0.9 von SeaDrive.</translation>
-    </message>
-    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zum Beispiel: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -779,20 +775,24 @@
         <translation>Der Dateipfad %1 enthält Zeichen, die von Windows nicht unterstützt werden.</translation>
     </message>
     <message>
-        <source>Too many files in library.</source>
-        <translation>Die Bibliothek enthält zu viele Dateien.</translation>
-    </message>
-    <message>
         <source>Failed to upload file blocks. Please check network or firewall.</source>
         <translation>Einzelne Dateipakete konnten nicht hochgeladen werden. Bitte überprüfen Sie Ihr Netzwerk oder die Firewall.</translation>
     </message>
     <message>
-        <source>Library contains too many files.</source>
-        <translation>Die Bibliothek enthält zu viele Dateien.</translation>
-    </message>
-    <message>
         <source>Failed to download file. Please check disk space or folder permissions</source>
         <translation>Die Datei konnte nicht heruntergeladen werden. Bitte kontrollieren Sie den Speicherplatz oder die Berechtigungen im Ordner</translation>
+    </message>
+    <message>
+        <source>Library cannot be synced since it has too many files.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Files cannot be uploaded to this library due to file number limit settings.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path has character case conflict with existing file or folder. Will not be downloaded</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1088,6 +1088,10 @@
     <message>
         <source>Failed to connect to background process, please try again later</source>
         <translation>Der Hintergrundprozess konnte nicht aufgerufen werden. Bitte versuchen Sie es später noch einmal</translation>
+    </message>
+    <message>
+        <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

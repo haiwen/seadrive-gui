@@ -202,7 +202,7 @@
     </message>
     <message>
         <source>%1 has downloaded your files list.</source>
-        <translation>%1(에)서 파일 목록을 다운로드했습니다.</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -357,12 +357,8 @@
         <translation>클라이언트 단일 로그인 상태 가져오기를 실패했습니다. </translation>
     </message>
     <message>
-        <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;예: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -779,19 +775,23 @@
         <translation>%1 경로에 윈도우 시스템에서 지원하지 않는 심볼이 들어있습니다.</translation>
     </message>
     <message>
-        <source>Too many files in library.</source>
-        <translation>라이브러리에 파일이 너무 많습니다.</translation>
-    </message>
-    <message>
         <source>Failed to upload file blocks. Please check network or firewall.</source>
         <translation>파일 블록 업로드에 실패했습니다. 네트워크 또는 방화벽을 확인하세요.</translation>
     </message>
     <message>
-        <source>Library contains too many files.</source>
+        <source>Failed to download file. Please check disk space or folder permissions</source>
+        <translation>파일 다운로드에 실패했습니다. 디스크 용량 또는 폴더 권한을 확인하세요</translation>
+    </message>
+    <message>
+        <source>Library cannot be synced since it has too many files.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Failed to download file. Please check disk space or folder permissions</source>
+        <source>Files cannot be uploaded to this library due to file number limit settings.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path has character case conflict with existing file or folder. Will not be downloaded</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -909,15 +909,15 @@
     </message>
     <message>
         <source>Faild to migrate old data</source>
-        <translation type="unfinished"/>
+        <translation>오래된 데이터 이전에 실패했습니다</translation>
     </message>
     <message>
         <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
-        <translation type="unfinished"/>
+        <translation>맥 OS 14.4 미만인 경우 SeaDrive %1의 다중 계정 사용이 동작하지 않습니다. 맥 OS를 업그레이드하거나 SeaDrive를 3.0.9로 다운그레이드하세요.</translation>
     </message>
     <message>
         <source>To start %1 extension for account %2, you need to click the %3 entry in Finder</source>
-        <translation type="unfinished"/>
+        <translation>%2 계정에서 %1 확장 기능을 시작하려면 파인더에서 %3 항목을 눌러야합니다</translation>
     </message>
 </context>
 <context>
@@ -1087,6 +1087,10 @@
     </message>
     <message>
         <source>Failed to connect to background process, please try again later</source>
+        <translation>백그라운드 프로세스 연결에 실패했습니다. 나중에 다시 시도하세요</translation>
+    </message>
+    <message>
+        <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1320,7 +1324,7 @@
     <name>ShibLoginDialog</name>
     <message>
         <source>Single Sign On</source>
-        <translation type="unfinished"/>
+        <translation>단일 로그인</translation>
     </message>
 </context>
 <context>

@@ -357,10 +357,6 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"/>
     </message>
@@ -779,19 +775,23 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Too many files in library.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Failed to upload file blocks. Please check network or firewall.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Library contains too many files.</source>
+        <source>Failed to download file. Please check disk space or folder permissions</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Failed to download file. Please check disk space or folder permissions</source>
+        <source>Library cannot be synced since it has too many files.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Files cannot be uploaded to this library due to file number limit settings.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path has character case conflict with existing file or folder. Will not be downloaded</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1086,6 +1086,10 @@
     </message>
     <message>
         <source>Failed to connect to background process, please try again later</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
         <translation type="unfinished"/>
     </message>
 </context>
