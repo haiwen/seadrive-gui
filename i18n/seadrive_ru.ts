@@ -202,7 +202,7 @@
     </message>
     <message>
         <source>%1 has downloaded your files list.</source>
-        <translation>%1 скачал список файлов.</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -357,12 +357,8 @@
         <translation>Не удалось получить статус единого входа клиента.</translation>
     </message>
     <message>
-        <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
-        <translation>SeaDrive %1 с несколькими учетными записями не может работать с macOS версии ниже 14.4. Обновите macOS или понизьте версию SeaDrive до 3.0.9</translation>
-    </message>
-    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Например: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -779,20 +775,24 @@
         <translation>Путь %1 содержит символы, не поддерживаемые системой Windows.</translation>
     </message>
     <message>
-        <source>Too many files in library.</source>
-        <translation>Слишком много файлов в библиотеке.</translation>
-    </message>
-    <message>
         <source>Failed to upload file blocks. Please check network or firewall.</source>
         <translation>Не удалось загрузить блоки файлов. Проверьте сеть или брандмауэр.</translation>
     </message>
     <message>
-        <source>Library contains too many files.</source>
-        <translation>Библиотека содержит слишком много файлов.</translation>
-    </message>
-    <message>
         <source>Failed to download file. Please check disk space or folder permissions</source>
         <translation>Не удалось скачать файл. Проверьте место на диске или права доступа к папке</translation>
+    </message>
+    <message>
+        <source>Library cannot be synced since it has too many files.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Files cannot be uploaded to this library due to file number limit settings.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path has character case conflict with existing file or folder. Will not be downloaded</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1089,6 +1089,10 @@
     <message>
         <source>Failed to connect to background process, please try again later</source>
         <translation>Не удалось подключиться к фоновому процессу. Повторите попытку позже.</translation>
+    </message>
+    <message>
+        <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
