@@ -551,7 +551,7 @@ bool SeafileRpcClient::addAccount(const Account& account)
     }
 
     GError *error = NULL;
-    QString serverAddr = account.serverUrl.toString();
+    QString serverAddr = account.serverUrl.toString(QUrl::FullyEncoded);
     if (serverAddr.endsWith("/")) {
         serverAddr = serverAddr.left(serverAddr.size() - 1);
     }
@@ -585,7 +585,7 @@ bool SeafileRpcClient::addAccount(const Account& account)
     }
 
     GError *error = NULL;
-    QString serverAddr = account.serverUrl.toString();
+    QString serverAddr = account.serverUrl.toString(QUrl::FullyEncoded);
     if (serverAddr.endsWith("/")) {
         serverAddr = serverAddr.left(serverAddr.size() - 1);
     }
@@ -663,7 +663,7 @@ bool SeafileRpcClient::deleteAccount(const Account& account, bool remove_cache)
     GError *error = NULL;
     searpc_client_call__int(seadrive_rpc_client_, "seafile_delete_account", &error,
                             3,
-                            "string", toCStr(account.serverUrl.toString()),
+                            "string", toCStr(account.serverUrl.toString(QUrl::FullyEncoded)),
                             "string", toCStr(account.username),
                             "int", remove_cache ? 1 : 0);
     if (error) {
@@ -711,7 +711,7 @@ bool SeafileRpcClient::logoutAccount(const Account& account)
                             &error,
                             2,
                             "string",
-                            toCStr(account.serverUrl.toString()),
+                            toCStr(account.serverUrl.toString(QUrl::FullyEncoded)),
                             "string",
                             toCStr(account.username));
     if (error) {
@@ -732,7 +732,7 @@ bool SeafileRpcClient::isAccountUploading(const Account& account)
     }
 
     GError *error = NULL;
-    QString serverAddr = account.serverUrl.toString();
+    QString serverAddr = account.serverUrl.toString(QUrl::FullyEncoded);
     if (serverAddr.endsWith("/")) {
         serverAddr = serverAddr.left(serverAddr.size() - 1);
     }
