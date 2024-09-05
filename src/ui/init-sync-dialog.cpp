@@ -46,6 +46,7 @@ bool InitSyncDialog::hasNewLogin()
 
 void InitSyncDialog::launch(const QString& domain_id)
 {
+#if !defined(Q_OS_MAC)
     if (!pollers_.contains(domain_id)) {
         MessagePoller *message_poller = gui->messagePoller(domain_id);
         if (!message_poller) {
@@ -69,6 +70,7 @@ void InitSyncDialog::launch(const QString& domain_id)
     check_download_timer_->start(kCheckDownloadInterval);
 
     ensureVisible();
+#endif
 }
 
 void InitSyncDialog::checkDownloadProgress()
