@@ -413,6 +413,8 @@ int AccountManager::resyncAccount(const Account& account)
 
 #if defined(Q_OS_WIN32)
     setAccountSyncRoot(updated_account);
+#elif defined(Q_OS_LINUX)
+    setAccountDisplayName(updated_account);
 #endif
 
     SeafileRpcClient *rpc_client = gui->rpcClient(updated_account.domainID());
@@ -631,6 +633,10 @@ void AccountManager::addAccountToDaemon(const Account& account)
         gui->fileProviderManager()->registerDomain(added_account);
         gui->fileProviderManager()->askUserToEnable();
     }
+#elif defined(Q_OS_LINUX)
+    if (added_account.isValid()) {
+        setAccountDisplayName(added_account);
+    }
 #endif
 
 #ifndef Q_OS_MAC
@@ -846,6 +852,26 @@ void AccountManager::setAccountSyncRoot(Account &account)
     for (size_t i = 0; i < accounts_.size(); i++) {
         if (accounts_.at(i) == account) {
             accounts_[i].syncRoot = sync_root;
+            break;
+        }
+    }
+}
+#endif
+
+#if defined(Q_OS_LINUX)
+void AccountManager::setAccountDisplayName(Account &account)
+{
+    QString name = account.accountInfo.name;
+    if (name.isEmpty()) {
+        name = account.username;
+    }
+    QString displayName = name + "(" + account.serverUrl.host() + ")";
+    account.displayName = displayName;
+
+    QMutexLocker locker(&accounts_mutex_);
+    for (size_t i = 0; i < accounts_.size(); i++) {
+        if (accounts_.at(i) == account) {
+            accounts_[i].displayName = displayName;
             break;
         }
     }
