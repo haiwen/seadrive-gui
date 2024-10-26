@@ -110,3 +110,15 @@ void FileProviderManager::connect(const Account account) {
     QString name = displayName(account);
     fileProviderConnect (id, name);
 }
+
+QString FileProviderManager::rootPath(const Account account) {
+    QString id = account.domainID();
+    QString name = displayName(account);
+    QUrl url;
+
+    if (!fileProviderGetUserVisibleURL(id, name, &url)) {
+        return QString();
+    }
+
+    return url.path();
+}

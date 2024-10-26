@@ -2,6 +2,7 @@
 #define SEAFILE_CLIENT_FILE_PROVIDER_H_
 
 #include <QMap>
+#include <QUrl>
 
 struct Domain {
     QString identifier;
@@ -21,5 +22,7 @@ void fileProviderReenumerate(const QString domain_id, const QString display_name
 void fileProviderDisconnect (const QString domain_id, const QString display_name);
 
 void fileProviderConnect (const QString domain_id, const QString display_name);
+
+bool fileProviderGetUserVisibleURL(const QString domain_id, const QString display_name, QUrl *url);
 
 #endif // SEAFILE_CLIENT_FILE_PROVIDER_H_

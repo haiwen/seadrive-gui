@@ -27,6 +27,8 @@ public:
 
     void connect(const Account account);
 
+    QString rootPath(const Account account);
+
 private:
     QString displayName(const Account account);
 

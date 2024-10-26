@@ -165,3 +165,33 @@ void fileProviderConnect (const QString domain_id, const QString display_name) {
     condition.wait(&mutex);
     mutex.unlock();
 }
+
+bool fileProviderGetUserVisibleURL(const QString domain_id, const QString display_name, QUrl *url)
+{
+    qInfo() << "[File Provider] Placeholder URL";
+
+    bool success = false;
+    QMutex mutex;
+    QWaitCondition condition;
+
+    NSFileProviderDomain *domain = [[NSFileProviderDomain alloc] initWithIdentifier:domain_id.toNSString() displayName:display_name.toNSString()];
+    NSFileProviderManager *mgr = [NSFileProviderManager managerForDomain:domain];
+
+    [mgr getUserVisibleURLForItemIdentifier:NSFileProviderRootContainerItemIdentifier completionHandler:[&](NSURL *userVisibleFile, NSError *error) {
+        if (error != nil) {
+            qWarning() << "[File Provider] Error get user visible URL:" << error;
+            condition.wakeOne();
+            return;
+        }
+
+        *url = QUrl::fromNSURL(userVisibleFile);
+        success = true;
+        condition.wakeOne();
+    }];
+
+    mutex.lock();
+    condition.wait(&mutex);
+    mutex.unlock();
+
+    return success;
+}

@@ -271,6 +271,9 @@
     <ClCompile Include="src\thumbnail-service.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ui\search-dialog.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\api\api-error.h">
@@ -496,6 +499,9 @@
     </QtMoc>
     <QtMoc Include="src\thumbnail-service.h">
       <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\search-dialog.h">
+      <Filter>Header Files\ui</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

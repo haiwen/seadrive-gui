@@ -21,6 +21,7 @@
 #include "src/ui/encrypted-repos-dialog.h"
 #include "src/ui/sync-errors-dialog.h"
 #include "src/ui/transfer-progress-dialog.h"
+#include "src/ui/search-dialog.h"
 #include "api/api-error.h"
 #include "api/requests.h"
 #include "seadrive-gui.h"
@@ -69,6 +70,7 @@ SeafileTrayIcon::SeafileTrayIcon(QObject *parent)
       sync_errors_dialog_(nullptr),
       transfer_progress_dialog_(nullptr),
       enc_repo_dialog_(nullptr),
+      search_dialog_(nullptr),
       enable_login_action_(true)
 {
     setState(STATE_DAEMON_DOWN);
@@ -128,6 +130,8 @@ void SeafileTrayIcon::createActions()
     quit_action_ = new QAction(tr("&Quit"), this);
     connect(quit_action_, SIGNAL(triggered()), this, SLOT(quitSeafile()));
 
+    search_action_ = new QAction(tr("Search files"), this);
+    connect(search_action_, SIGNAL(triggered()), this, SLOT(showSearchDialog()));
 
     settings_action_ = new QAction(tr("Settings"), this);
     connect(settings_action_, SIGNAL(triggered()), this, SLOT(showSettingsWindow()));
@@ -170,6 +174,7 @@ void SeafileTrayIcon::createContextMenu()
     context_menu_->addSeparator();
 
     context_menu_->addAction(open_log_directory_action_);
+    context_menu_->addAction(search_action_);
     context_menu_->addAction(settings_action_);
 
     context_menu_->addSeparator();
@@ -190,6 +195,13 @@ void SeafileTrayIcon::createContextMenu()
 void SeafileTrayIcon::prepareContextMenu()
 {
     auto accounts = gui->accountManager()->allAccounts();
+    search_action_->setVisible(false);
+    for (int i = 0; i < accounts.size(); i++) {
+        if (accounts.at(i).isPro()) {
+            search_action_->setVisible(true);
+            break;
+        }
+    }
 
     if (network_error_.isValid()) {
         global_sync_error_action_->setVisible(true);
@@ -522,6 +534,23 @@ void SeafileTrayIcon::showSettingsWindow()
     gui->settingsDialog()->show();
     gui->settingsDialog()->raise();
     gui->settingsDialog()->activateWindow();
+}
+
+void SeafileTrayIcon::showSearchDialog()
+{
+    if (search_dialog_ == nullptr) {
+        search_dialog_ = new SearchDialog();
+    }
+
+    search_dialog_->show();
+    search_dialog_->raise();
+    search_dialog_->activateWindow();
+    connect(search_dialog_, SIGNAL(aboutClose()), this, SLOT(clearDialog()));
+}
+
+void SeafileTrayIcon::clearDialog()
+{
+    search_dialog_ = nullptr;
 }
 
 void SeafileTrayIcon::showLoginDialog()
