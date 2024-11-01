@@ -100,9 +100,7 @@ LoginDialog::LoginDialog(QWidget *parent) : QDialog(parent)
 
 void LoginDialog::setupShibLoginLink()
 {
-    QString txt = QString("<a style=\"color:#777\" href=\"#\">%1</a>").arg(tr("Single Sign On"));
-    mShibLoginLink->setText(txt);
-    connect(mShibLoginLink, SIGNAL(linkActivated(const QString&)),
+    connect(mSSOBtn, SIGNAL(clicked()),
             this, SLOT(loginWithShib()));
 }
 
@@ -155,6 +153,7 @@ void LoginDialog::disableInputs()
     mPassword->setEnabled(false);
     mSubmitBtn->setEnabled(false);
     mComputerName->setEnabled(false);
+    mSSOBtn->setEnabled(false);
 }
 
 void LoginDialog::enableInputs()
@@ -164,6 +163,7 @@ void LoginDialog::enableInputs()
     mPassword->setEnabled(true);
     mSubmitBtn->setEnabled(true);
     mComputerName->setEnabled(true);
+    mSSOBtn->setEnabled(true);
 }
 
 void LoginDialog::onNetworkError(const QNetworkReply::NetworkError& error, const QString& error_string)
