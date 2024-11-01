@@ -668,6 +668,12 @@ void SeafileTrayIcon::deleteAccount()
     Account account = qvariant_cast<Account>(action->data());
 
     SeafileRpcClient *rpc_client = gui->rpcClient(account.domainID());
+#ifdef Q_OS_MAC
+    if (!rpc_client || !rpc_client->isConnected()) {
+        gui->warningBox (tr("Failed to connect to background process, please try again later"));
+        return;
+    }
+#endif
 
     if (rpc_client && rpc_client->isAccountUploading(account)) {
         gui->warningBox(tr("There are changes being uploaded under the account, please try again later"));
