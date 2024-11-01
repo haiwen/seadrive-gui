@@ -195,6 +195,8 @@ void SeafileTrayIcon::createContextMenu()
 void SeafileTrayIcon::prepareContextMenu()
 {
     auto accounts = gui->accountManager()->allAccounts();
+
+#ifdef Q_OS_MAC
     search_action_->setVisible(false);
     for (int i = 0; i < accounts.size(); i++) {
         if (accounts.at(i).isPro()) {
@@ -202,6 +204,9 @@ void SeafileTrayIcon::prepareContextMenu()
             break;
         }
     }
+#else
+    search_action_->setVisible(false);
+#endif
 
     if (network_error_.isValid()) {
         global_sync_error_action_->setVisible(true);
