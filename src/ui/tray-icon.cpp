@@ -670,7 +670,7 @@ void SeafileTrayIcon::deleteAccount()
     SeafileRpcClient *rpc_client = gui->rpcClient(account.domainID());
 #ifdef Q_OS_MAC
     if (!rpc_client || !rpc_client->isConnected()) {
-        gui->warningBox(tr("To remove account from \"%1\", you need to click the %2 entry in Finder and try again later").arg(account.serverUrl.toString()).arg(getBrand()));
+        gui->warningBox (tr("Failed to connect to background process, please try again later"));
         return;
     }
 #endif
