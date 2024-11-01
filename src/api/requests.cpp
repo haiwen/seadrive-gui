@@ -803,10 +803,7 @@ void FileSearchRequest::requestSuccess(QNetworkReply& reply)
         tmp.repo_id = map["repo_id"].toString();
         tmp.repo_name = map["repo_name"].toString();
         tmp.name = map["name"].toString();
-        tmp.oid = map["oid"].toString();
-        tmp.last_modified = map["last_modified"].toLongLong();
         tmp.fullpath = map["fullpath"].toString();
-        tmp.size = map["size"].toLongLong();
         retval.push_back(tmp);
     }
     bool has_more = dict["has_more"].toBool();

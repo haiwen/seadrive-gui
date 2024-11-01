@@ -456,10 +456,7 @@ struct FileSearchResult {
     QString repo_id;
     QString repo_name;
     QString name;
-    QString oid;
-    qint64 last_modified;
     QString fullpath;
-    qint64 size;
 };
 
 Q_DECLARE_METATYPE(FileSearchResult)
