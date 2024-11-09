@@ -309,6 +309,8 @@ QLineEdit#mSearchBar {
     padding: 0 0px;
     border: 1px solid #E0E0E0;
     border-radius: 3px;
+    color: #AAAAAA;
+    background-color: #FFFFFF;
 }
 
 QLineEdit#mSearchBar QLabel {
@@ -366,6 +368,7 @@ FileBrowserDialog QToolBar QPushButton {
     font-size: 13px;
     padding: 3px;
     margin: 1px;
+    color: #252525;
     background-color: white;
     qproperty-focusPolicy: NoFocus;
 }
@@ -388,12 +391,14 @@ FileBrowserDialog QToolBar QToolButton#forwardButton {
 
 FileBrowserDialog QToolBar QLabel {
     margin-left: 2px;
+    color: #252525;
 }
 
 FileBrowserDialog QToolBar QPushButton:hover {
     border: 1px solid #d0d0d0;
     border-radius: 4px;
-    color: #FF9A2A;
+    color: #252525;
+    background-color: white;
 }
 
 SearchItemsTableView,
