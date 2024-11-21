@@ -151,27 +151,27 @@
     <name>FinderSyncHost</name>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
+        <translation>Файл &quot;%1&quot; заблокирован %2</translation>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось получить информацию о блокировке файла &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Failed to get upload link for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось получить ссылку для загрузки файла &quot;%1&quot;</translation>
     </message>
     <message>
         <source>No permissions to create a shared link</source>
-        <translation type="unfinished"/>
+        <translation>Нет прав на создание общедоступной ссылки</translation>
     </message>
     <message>
         <source>failed to get share link %1</source>
-        <translation type="unfinished"/>
+        <translation>не удалось получить общедоступную ссылку %1</translation>
     </message>
     <message>
         <source>failed get internal link %1</source>
-        <translation type="unfinished"/>
+        <translation>не удалось получить внутреннюю ссылку %1</translation>
     </message>
 </context>
 <context>
@@ -187,7 +187,8 @@
     <message>
         <source>%1 has dowloaded your files list.
 Please click the &quot;Finish&quot; button to open %1 folder.</source>
-        <translation type="unfinished"/>
+        <translation>%1 скачал список файлов.
+Нажмите кнопку &quot;Готово&quot;, чтобы открыть папку %1.</translation>
     </message>
     <message>
         <source>Dialog</source>
@@ -426,11 +427,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
-        <translation type="unfinished"/>
+        <translation>Подтвердить массовое удаление файлов в библиотеке &quot;%1&quot; ?</translation>
     </message>
     <message>
         <source>Deleted &quot;%1&quot; and %2 more files.</source>
-        <translation type="unfinished"/>
+        <translation>Удалено &quot;%1&quot; и еще %2 файлов.</translation>
     </message>
 </context>
 <context>
@@ -749,7 +750,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Waiting for confirmation to delete files</source>
-        <translation type="unfinished"/>
+        <translation>Ожидание подтверждения удаления файлов</translation>
     </message>
 </context>
 <context>
@@ -763,11 +764,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <name>SeadriveGui</name>
     <message>
         <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
-        <translation type="unfinished"/>
+        <translation>Вы должны вручную одобрить %1 расширение ядра в настройках системы. Нажмите OK, чтобы открыть диалоговое окно настроек системы. После этого повторно запустите %1.</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to install kernel driver</source>
-        <translation type="unfinished"/>
+        <translation>Ошибка: не удалось установить драйвер ядра</translation>
     </message>
     <message>
         <source>Faild to choose a disk letter</source>
@@ -839,7 +840,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation>Настройки</translation>
     </message>
 </context>
 <context>
@@ -913,7 +914,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Search files</source>
-        <translation type="unfinished"/>
+        <translation>Поиск файлов</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -925,11 +926,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Open %1 &amp;folder</source>
-        <translation type="unfinished"/>
+        <translation>Открыть &amp;папку %1</translation>
     </message>
     <message>
         <source>open %1 folder</source>
-        <translation type="unfinished"/>
+        <translation>открыть папку %1</translation>
     </message>
     <message>
         <source>Open &amp;logs folder</source>
@@ -957,7 +958,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation type="unfinished"/>
+        <translation>Выбрать</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1186,7 +1187,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Enable FinderSync Extension</source>
-        <translation type="unfinished"/>
+        <translation>Включить расширение FinderSync</translation>
     </message>
     <message>
         <source>Enable Explorer Extension</source>
@@ -1286,11 +1287,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Confirm before bulk deleting files more than</source>
-        <translation type="unfinished"/>
+        <translation>Подтвердите перед массовым удалением файлов более</translation>
     </message>
     <message>
         <source>0</source>
-        <translation type="unfinished"/>
+        <translation>0</translation>
     </message>
 </context>
 <context>

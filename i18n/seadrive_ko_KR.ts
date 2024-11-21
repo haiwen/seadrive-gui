@@ -151,27 +151,27 @@
     <name>FinderSyncHost</name>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
+        <translation>%2 사용자가 &quot;%1&quot; 파일을 잠궜습니다</translation>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; 파일의 잠금 정보 가져오기에 실패했습니다</translation>
     </message>
     <message>
         <source>Failed to get upload link for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; 파일의 업로드 링크 가져오기에 실패했습니다</translation>
     </message>
     <message>
         <source>No permissions to create a shared link</source>
-        <translation type="unfinished"/>
+        <translation>공유 링크를 만들 권한이 없습니다</translation>
     </message>
     <message>
         <source>failed to get share link %1</source>
-        <translation type="unfinished"/>
+        <translation>%1 공유 링크 가져오기에 실패했습니다</translation>
     </message>
     <message>
         <source>failed get internal link %1</source>
-        <translation type="unfinished"/>
+        <translation>%1 내부 링크 가져오기에 실패했습니다</translation>
     </message>
 </context>
 <context>
@@ -187,7 +187,8 @@
     <message>
         <source>%1 has dowloaded your files list.
 Please click the &quot;Finish&quot; button to open %1 folder.</source>
-        <translation type="unfinished"/>
+        <translation>%1에서 파일 목록을 다운로드했습니다.
+%1 폴더를 열려면 &quot;완료&quot; 단추를 누르세요.</translation>
     </message>
     <message>
         <source>Dialog</source>
@@ -426,11 +427,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; 라이브러리의 여러 파일을 삭제할까요?</translation>
     </message>
     <message>
         <source>Deleted &quot;%1&quot; and %2 more files.</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; 파일과 파일 %2개를 삭제했습니다.</translation>
     </message>
 </context>
 <context>
@@ -749,7 +750,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Waiting for confirmation to delete files</source>
-        <translation type="unfinished"/>
+        <translation>파일 삭제 확인을 기다리는 중</translation>
     </message>
 </context>
 <context>
@@ -763,11 +764,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <name>SeadriveGui</name>
     <message>
         <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
-        <translation type="unfinished"/>
+        <translation>시스템 기본 설정에서 %1 커널 확장 기능을 직접 허용해야 합니다. 확인을 누르면 시스템 기본 설정 대화상자가 뜹니다. 이후 %1을(를) 다시 실행해주세요.</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to install kernel driver</source>
-        <translation type="unfinished"/>
+        <translation>초기화 실패: 커널 드라이버 설치에 실패했습니다</translation>
     </message>
     <message>
         <source>Faild to choose a disk letter</source>
@@ -839,7 +840,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation>설정</translation>
     </message>
 </context>
 <context>
@@ -913,7 +914,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Search files</source>
-        <translation type="unfinished"/>
+        <translation>파일 검색</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -925,11 +926,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Open %1 &amp;folder</source>
-        <translation type="unfinished"/>
+        <translation>%1 폴더 열기(&amp;F)</translation>
     </message>
     <message>
         <source>open %1 folder</source>
-        <translation type="unfinished"/>
+        <translation>%1  폴더 열기</translation>
     </message>
     <message>
         <source>Open &amp;logs folder</source>
@@ -957,7 +958,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation type="unfinished"/>
+        <translation>선택</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1185,7 +1186,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Enable FinderSync Extension</source>
-        <translation type="unfinished"/>
+        <translation>FinderSync 확장 기능 활성화</translation>
     </message>
     <message>
         <source>Enable Explorer Extension</source>
@@ -1285,11 +1286,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Confirm before bulk deleting files more than</source>
-        <translation type="unfinished"/>
+        <translation>다음 수보다 많은 여러 파일을 삭제하기 전 확인</translation>
     </message>
     <message>
         <source>0</source>
-        <translation type="unfinished"/>
+        <translation>0</translation>
     </message>
 </context>
 <context>

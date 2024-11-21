@@ -30,7 +30,7 @@
     <name>AccountManager</name>
     <message>
         <source>failed to open account database</source>
-        <translation>Fehler beim Aufruf der Kontodatenbank</translation>
+        <translation>Die Kontodatenbank konnte nicht geöffnet werden.</translation>
     </message>
 </context>
 <context>
@@ -151,27 +151,27 @@
     <name>FinderSyncHost</name>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
+        <translation>Datei &quot;%1&quot; ist durch %2 gesperrt.</translation>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Der Abruf von Sperrinformationen für die Datei &quot;%1&quot; ist fehlgeschlagen.</translation>
     </message>
     <message>
         <source>Failed to get upload link for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Der Abruf des Upload-Links für die Datei &quot;%1&quot; ist fehlgeschlagen.</translation>
     </message>
     <message>
         <source>No permissions to create a shared link</source>
-        <translation type="unfinished"/>
+        <translation>Sie haben nicht die Berechtigung für die Erstellung eines Freigabelinks.</translation>
     </message>
     <message>
         <source>failed to get share link %1</source>
-        <translation type="unfinished"/>
+        <translation>Der Abruf des Freigabelinks %1 ist fehlgeschlagen.</translation>
     </message>
     <message>
         <source>failed get internal link %1</source>
-        <translation type="unfinished"/>
+        <translation>Der Abruf des internen Links %1 ist fehlgeschlagen.</translation>
     </message>
 </context>
 <context>
@@ -187,7 +187,8 @@
     <message>
         <source>%1 has dowloaded your files list.
 Please click the &quot;Finish&quot; button to open %1 folder.</source>
-        <translation type="unfinished"/>
+        <translation>%1 hat die Dateiliste heruntergeladen.
+Klicken Sie &quot;Abschließen&quot;, um den Order %1 zu öffnen.</translation>
     </message>
     <message>
         <source>Dialog</source>
@@ -426,11 +427,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Confirm to bulk delete files in library &quot;%1&quot; ?</source>
-        <translation type="unfinished"/>
+        <translation>Bitte bestätigen Sie die Maschenlösung in Bibliothek &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Deleted &quot;%1&quot; and %2 more files.</source>
-        <translation type="unfinished"/>
+        <translation>Die Datei &quot;%1&quot; und %2 weitere Dateien wurden gelöscht.</translation>
     </message>
 </context>
 <context>
@@ -749,7 +750,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Waiting for confirmation to delete files</source>
-        <translation type="unfinished"/>
+        <translation>Die Löschbestätigung wir abgewartet.</translation>
     </message>
 </context>
 <context>
@@ -763,11 +764,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     <name>SeadriveGui</name>
     <message>
         <source>You need to approve %1 kernel extension manually in the system preferences. Click OK to open the system preferences dialog. Please re-launch %1 after that.</source>
-        <translation type="unfinished"/>
+        <translation>Sie müssen %1 Kernelerweiterungen manuell in den Systemeinstellungen bestätigen. Klicken Sie OK, um die Systemeinstellungen zu öffnen. Starten Sie danach einmal neu.</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to install kernel driver</source>
-        <translation type="unfinished"/>
+        <translation>Die Initialisierung ist fehlgeschlagen. Der Kerneltreiber konnte nicht installiert werden.</translation>
     </message>
     <message>
         <source>Faild to choose a disk letter</source>
@@ -839,43 +840,44 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation>Einstellungen</translation>
     </message>
 </context>
 <context>
     <name>SeafileExtensionHandler</name>
     <message>
         <source>Failed to get upload link information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Für die Datei &quot;%1&quot; konnten die Informationen zum Upload-Link nicht abgerufen werden.</translation>
     </message>
     <message>
         <source>No permissions to create a shared link</source>
-        <translation type="unfinished"/>
+        <translation>Sie haben nicht die Berechtigung für die Erstellung eines Freigabelinks.</translation>
     </message>
     <message>
         <source>failed get internal link %1</source>
-        <translation type="unfinished"/>
+        <translation>Der Abruf des internen Links %1 ist fehlgeschlagen.</translation>
     </message>
     <message>
         <source>Failed to lock file</source>
-        <translation type="unfinished"/>
+        <translation>Die Datei konnte nicht gesperrt werden.</translation>
     </message>
     <message>
         <source>Failed to unlock file</source>
-        <translation type="unfinished"/>
+        <translation>Die Datei konnte nicht entsperrt werden.</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
+        <translation>Datei &quot;%1&quot; ist durch %2 gesperrt.</translation>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Der Abruf der Sperrinformationen für Datei &quot;%1&quot; ist fehlgeschlagen.</translation>
     </message>
     <message>
         <source>Failed to get share link %1
 </source>
-        <translation type="unfinished"/>
+        <translation>Der Abruf des Freigabelinks %1 ist fehlgeschlagen.
+</translation>
     </message>
 </context>
 <context>
@@ -912,7 +914,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Search files</source>
-        <translation type="unfinished"/>
+        <translation>Dateien durchsuchen</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -924,11 +926,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Open %1 &amp;folder</source>
-        <translation type="unfinished"/>
+        <translation>%1 &amp;folder öffnen</translation>
     </message>
     <message>
         <source>open %1 folder</source>
-        <translation type="unfinished"/>
+        <translation>Ordner %1 öffnen</translation>
     </message>
     <message>
         <source>Open &amp;logs folder</source>
@@ -956,7 +958,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation type="unfinished"/>
+        <translation>Wähle</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -988,7 +990,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Failed to delete account</source>
-        <translation>Fehler beim Entfernen des Kontos</translation>
+        <translation>Die Löschung des Kontos ist fehlgeschlagen.</translation>
     </message>
     <message>
         <source>Up %1, Down %2</source>
@@ -1016,7 +1018,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Failed to logout account %1</source>
-        <translation>Fehler beim Abmelden von Konto %1</translation>
+        <translation>Die Abmeldung vom Konto %1 ist fehlgeschlagen.</translation>
     </message>
 </context>
 <context>
@@ -1184,7 +1186,7 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Enable FinderSync Extension</source>
-        <translation type="unfinished"/>
+        <translation>Finder-Erweiterung aktivieren</translation>
     </message>
     <message>
         <source>Enable Explorer Extension</source>
@@ -1284,11 +1286,11 @@ Please click the &quot;Finish&quot; button to open %1 folder.</source>
     </message>
     <message>
         <source>Confirm before bulk deleting files more than</source>
-        <translation type="unfinished"/>
+        <translation>Bitte bestätigen Sie die Massenlöschung von Dateien.</translation>
     </message>
     <message>
         <source>0</source>
-        <translation type="unfinished"/>
+        <translation>0</translation>
     </message>
 </context>
 <context>
