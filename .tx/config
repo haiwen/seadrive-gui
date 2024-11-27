@@ -1,9 +1,9 @@
 [main]
 host = https://www.transifex.com
 
-[o:haiwen:p:seadrive-gui:r:v3]
+[o:haiwen:p:seadrive-gui:r:master]
 file_filter   = i18n/seadrive_<lang>.ts
 source_file   = i18n/seadrive_en.ts
 type          = QT
 minimum_perc  = 0
-resource_name = v3
+resource_name = master

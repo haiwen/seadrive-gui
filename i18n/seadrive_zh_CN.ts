@@ -1093,6 +1093,63 @@
         <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
         <translation>SeaDrive %1 多账号功能不兼容 macOS 14.4 以下版本。请升级您的 macOS 系统或者安装 SeaDrive 3.0.9 版本。</translation>
     </message>
+    <message>
+        <source>Search files</source>
+        <translation>搜索文件</translation>
+    </message>
+</context>
+<context>
+    <name>SearchDialog</name>
+    <message>
+        <source>Search files</source>
+        <translation>搜索文件</translation>
+    </message>
+    <message>
+        <source>All file types</source>
+        <translation>所有文件类型</translation>
+    </message>
+    <message>
+        <source>Custom file type</source>
+        <translation>自定义文件类型</translation>
+    </message>
+    <message>
+        <source>retry</source>
+        <translation>重试</translation>
+    </message>
+    <message>
+        <source>Failed to search&lt;br/&gt;Please %1</source>
+        <translation>搜索失败&lt;br/&gt;请%1</translation>
+    </message>
+    <message>
+        <source>No result found</source>
+        <translation>未找到结果</translation>
+    </message>
+</context>
+<context>
+    <name>SearchItemsTableModel</name>
+    <message>
+        <source>Name</source>
+        <translation>名称</translation>
+    </message>
+    <message>
+        <source>Kind</source>
+        <translation>类型</translation>
+    </message>
+</context>
+<context>
+    <name>SearchItemsTableView</name>
+    <message>
+        <source>&amp;Open the file</source>
+        <translation>&amp;打开文件</translation>
+    </message>
+    <message>
+        <source>&amp;Show in folder</source>
+        <translation>&amp;在文件夹里显示</translation>
+    </message>
+    <message>
+        <source>File not found, maybe not synchorized yet</source>
+        <translation>未找到文件，可能尚未同步</translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>
