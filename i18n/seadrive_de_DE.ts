@@ -202,7 +202,7 @@
     </message>
     <message>
         <source>%1 has downloaded your files list.</source>
-        <translation type="unfinished"/>
+        <translation>%1 hat Ihre Dateiliste heruntergeladen.</translation>
     </message>
 </context>
 <context>
@@ -784,15 +784,15 @@
     </message>
     <message>
         <source>Library cannot be synced since it has too many files.</source>
-        <translation type="unfinished"/>
+        <translation>Die Bibliothek kann nicht synchronisiert werden, weil sie zu viele Dateien enthält.</translation>
     </message>
     <message>
         <source>Files cannot be uploaded to this library due to file number limit settings.</source>
-        <translation type="unfinished"/>
+        <translation>Die Dateien können nicht hochgeladen werden, da sie die erlaubte Gesamtzahl an Dateien in dieser Bibliothek überschreiten.</translation>
     </message>
     <message>
         <source>Path has character case conflict with existing file or folder. Will not be downloaded</source>
-        <translation type="unfinished"/>
+        <translation>Der Dateipfad hat einen Konflikt mit der Großkleinschreibung einer bestehenden Datei oder eines Ordners. Herunterladen wird nicht möglich sein</translation>
     </message>
 </context>
 <context>
@@ -1091,6 +1091,63 @@
     </message>
     <message>
         <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
+        <translation>SeaDrive %1 mit mehreren Accounts benötigt mindestens macOS 14.4. Bitte aktualisieren Sie Ihr Betriebssystem oder wechseln Sie zur älteren Version 3.0.9 von SeaDrive.</translation>
+    </message>
+    <message>
+        <source>Search files</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>SearchDialog</name>
+    <message>
+        <source>Search files</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All file types</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom file type</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>retry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to search&lt;br/&gt;Please %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No result found</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>SearchItemsTableModel</name>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Kind</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>SearchItemsTableView</name>
+    <message>
+        <source>&amp;Open the file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Show in folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>File not found, maybe not synchorized yet</source>
         <translation type="unfinished"/>
     </message>
 </context>
