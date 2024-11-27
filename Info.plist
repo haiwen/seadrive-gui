@@ -15,9 +15,9 @@
 	<key>CFBundleName</key>
 	<string>SeaDrive</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.0.11</string>
+	<string>3.0.12</string>
 	<key>CFBundleVersion</key>
-	<string>3.0.11</string>
+	<string>3.0.12</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
     <key>CFBundleURLTypes</key>
