@@ -1,4 +1,4 @@
-## seadrive-gui 
+## seadrive-gui
 
 GUI part of seafile drive.
 
@@ -8,7 +8,7 @@ You are welcome to add translation in your language.
 
 ### Contribute your translation
 
-Please submit translations via Transifex: https://www.transifex.com/projects/p/seadrive-gui
+Please submit translations via Transifex: https://explore.transifex.com/haiwen/seadrive-gui/
 
 Steps:
 
