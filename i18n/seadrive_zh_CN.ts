@@ -1144,7 +1144,7 @@
     </message>
     <message>
         <source>&amp;Show in folder</source>
-        <translation>&amp;在目录里显示</translation>
+        <translation>&amp;在文件夹里显示</translation>
     </message>
     <message>
         <source>File not found, maybe not synchorized yet</source>
