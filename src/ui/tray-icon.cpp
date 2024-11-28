@@ -709,10 +709,12 @@ void SeafileTrayIcon::deleteAccount()
     }
 #endif
 
+#ifndef Q_OS_LINUX
     if (rpc_client && rpc_client->isAccountUploading(account)) {
         gui->warningBox(tr("There are changes being uploaded under the account, please try again later"));
         return;
     }
+#endif
 
 #if defined(Q_OS_WIN32) || defined(Q_OS_LINUX)
     QString question = tr("Are you sure to remove account from \"%1\"?").arg(account.serverUrl.toString());
@@ -739,11 +741,13 @@ void SeafileTrayIcon::resyncAccount()
         return;
     }
 
+#ifndef Q_OS_LINUX
     bool is_uploading = rpc_client->isAccountUploading (account);
     if (is_uploading) {
         gui->warningBox (tr("There are changes being uploaded under the account, please try again later"));
         return;
     }
+#endif
 
     QString question = tr("The account will be synced to a new sync root folder. Are you sure to resync account from \"%1\"?").arg(account.serverUrl.toString());
 

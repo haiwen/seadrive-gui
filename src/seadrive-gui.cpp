@@ -555,7 +555,7 @@ void SeadriveGui::onDaemonStarted()
         message_pollers_.insert(EMPTY_DOMAIN_ID, message_poller);
     }
 #if defined(Q_OS_WIN32) || defined(Q_OS_LINUX)
-    rpc_client_->connectDaemon();
+    rpc_client->connectDaemon();
 #endif
 
     auto accounts = account_mgr_->activeAccounts();

@@ -520,6 +520,9 @@ void SearchItemsTableView::openDirectory(bool open_file)
 #ifdef Q_OS_WIN32
     QString root = search_model_->account_.syncRoot;
 #endif
+#ifdef Q_OS_LINUX
+    QString root = gui->seadriveRoot();
+#endif
     if (root.isEmpty()) {
         qWarning() << "failed to get root path";
         return;
@@ -561,6 +564,9 @@ void SearchItemsTableView::onItemDoubleClick(const QModelIndex& index)
 #endif
 #ifdef Q_OS_WIN32
     QString root = search_model_->account_.syncRoot;
+#endif
+#ifdef Q_OS_LINUX
+    QString root = gui->seadriveRoot();
 #endif
     if (root.isEmpty()) {
         qWarning() << "failed to get root path";
