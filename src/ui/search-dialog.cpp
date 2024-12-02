@@ -337,6 +337,10 @@ void SearchDialog::doRealSearch(bool load_more,
     if (!search_model_->account_.isValid())
         return;
 
+    if (search_bar_->text().isEmpty()) {
+        return;
+    }
+
     if (search_request_) {
         // search_request_->abort();
         search_request_->deleteLater();
