@@ -622,6 +622,11 @@ bool SeafileRpcClient::addAccount(const Account& account)
 #elif defined(Q_OS_LINUX)
 bool SeafileRpcClient::addAccount(const Account& account)
 {
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
     GError *error = NULL;
     QString serverAddr = account.serverUrl.toEncoded().data();
     if (serverAddr.endsWith("/")) {
