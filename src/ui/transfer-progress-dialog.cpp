@@ -189,7 +189,7 @@ TransferItemsTableModel::TransferItemsTableModel(QObject* parent)
 
 }
 
-#if defined(Q_OS_WIN32)
+#if defined(Q_OS_WIN32) || defined(Q_OS_LINUX)
 void TransferItemsTableModel::setTransferItems()
 {
     TransferProgress transfer_progress;
