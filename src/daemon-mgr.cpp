@@ -189,6 +189,11 @@ QStringList DaemonManager::collectSeaDriveArgs()
       } else {
           args << fuse_opts.split(" ");
       }
+
+      if (checkdir_with_mkdir(toCStr(gui->seadriveRoot())) < 0) {
+          gui->errorAndExit(tr("Failed to initialize: failed to create seadrive mount folder"));
+          return args;
+      }
 #endif
 
     auto stream = qWarning() << "starting seadrive daemon:" << kSeadriveExecutable;

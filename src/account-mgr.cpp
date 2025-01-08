@@ -413,8 +413,6 @@ int AccountManager::resyncAccount(const Account& account)
 
 #if defined(Q_OS_WIN32)
     setAccountSyncRoot(updated_account);
-#elif defined(Q_OS_LINUX)
-    setAccountDisplayName(updated_account);
 #endif
 
     SeafileRpcClient *rpc_client = gui->rpcClient(updated_account.domainID());
@@ -866,9 +864,17 @@ void AccountManager::setAccountDisplayName(Account &account)
         name = account.username;
     }
     QString displayName = name + "(" + account.serverUrl.host() + ")";
-    account.displayName = displayName;
+    int j = 0;
 
     QMutexLocker locker(&accounts_mutex_);
+    for (size_t i = 0; i < accounts_.size(); i++) {
+        if (accounts_[i].displayName == displayName) {
+            j++;
+            name = QString("%1_%2").arg(name).arg(j);
+            displayName = name + "(" + account.serverUrl.host() + ")";
+        }
+    }
+    account.displayName = displayName;
     for (size_t i = 0; i < accounts_.size(); i++) {
         if (accounts_.at(i) == account) {
             accounts_[i].displayName = displayName;

@@ -749,7 +749,13 @@ void SeafileTrayIcon::resyncAccount()
     }
 #endif
 
-    QString question = tr("The account will be synced to a new sync root folder. Are you sure to resync account from \"%1\"?").arg(account.serverUrl.toString());
+#if defined(Q_OS_WIN32)
+    QString question = tr("Are you sure to resync account from \"%1\"? Downloaded and uploading files will not be removed").arg(account.serverUrl.toString());
+#elif defined(Q_OS_MAC)
+    QString question = tr("Are you sure to resync account from \"%1\"? After resyncing account, you can still find downloaded files at ~/Library/CloudStorage.").arg(account.serverUrl.toString());
+#else
+    QString question = tr("Are you sure to resync account from \"%1\"? Downloaded and uploading files will not be removed").arg(account.serverUrl.toString());
+#endif
 
     if (!gui->yesOrNoBox(question, nullptr, false)) {
         return;

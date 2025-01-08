@@ -554,9 +554,7 @@ void SeadriveGui::onDaemonStarted()
         message_poller->start();
         message_pollers_.insert(EMPTY_DOMAIN_ID, message_poller);
     }
-#if defined(Q_OS_WIN32) || defined(Q_OS_LINUX)
     rpc_client->connectDaemon();
-#endif
 
     auto accounts = account_mgr_->activeAccounts();
     for (int i = 0; i < accounts.size(); i++) {
@@ -818,13 +816,6 @@ bool SeadriveGui::initLog()
       QStringList umount_arguments;
       umount_arguments << "-u" << seadriveRoot();
       QProcess::execute("fusermount", umount_arguments);
-#endif
-
-#if defined(Q_OS_LINUX)
-  if (checkdir_with_mkdir(toCStr(seadriveRoot())) < 0) {
-      errorAndExit(tr("Failed to initialize: failed to create seadrive mount folder"));
-      return false;
-  }
 #endif
 
     if (applet_log_init(toCStr(seadrive_dir.absolutePath())) < 0) {
