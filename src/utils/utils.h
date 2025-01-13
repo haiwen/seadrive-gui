@@ -105,4 +105,6 @@ QString translateTransferRate(int rate);
 
 int runAsCommand(const QString &binary, const QStringList &arguments, QString *output = nullptr);
 
+bool openUrl(QUrl url);
+
 #endif

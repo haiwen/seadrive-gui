@@ -544,18 +544,18 @@ void SeafileTrayIcon::openHelp()
         url = "https://download.seafile.com/published/seafile-user-manual/drive_client/using_drive_client.md";
     }
 
-    QDesktopServices::openUrl(QUrl(url));
+    openUrl(QUrl(url));
 }
 
 void SeafileTrayIcon::openSeafileFolder()
 {
-    QDesktopServices::openUrl(QUrl::fromLocalFile(gui->mountDir()));
+    openUrl(QUrl::fromLocalFile(gui->mountDir()));
 }
 
 void SeafileTrayIcon::openLogDirectory()
 {
     QString log_path = QDir(gui->seadriveDir()).absoluteFilePath("logs");
-    QDesktopServices::openUrl(QUrl::fromLocalFile(log_path));
+    openUrl(QUrl::fromLocalFile(log_path));
 }
 
 void SeafileTrayIcon::showSettingsWindow()
@@ -703,7 +703,7 @@ void SeafileTrayIcon::onMessageClicked()
         transfer_progress_dialog_->showDownloadTab();
     } else if (gui->messagePoller()->lastEventType() == "file-download.done") {
         QString path = ::pathJoin(gui->mountDir(), ::getParentPath(gui->messagePoller()->lastEventPath()));
-        QDesktopServices::openUrl(QUrl::fromLocalFile(path));
+        openUrl(QUrl::fromLocalFile(path));
     }
 }
 

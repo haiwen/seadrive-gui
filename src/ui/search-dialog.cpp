@@ -493,7 +493,7 @@ void SearchItemsTableView::openDirectory(bool open_file)
         QString path_to_open = ::pathJoin(gui->mountDir(), repo_name, result.fullpath);
         QFileInfo fi(path_to_open);
         if (fi.exists()) {
-            open_file ? QDesktopServices::openUrl(QUrl::fromLocalFile(path_to_open)) :
+            open_file ? openUrl(QUrl::fromLocalFile(path_to_open)) :
             ::showInGraphicalShell(path_to_open);
             return;
         }
