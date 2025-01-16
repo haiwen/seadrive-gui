@@ -717,7 +717,7 @@ void SeafileTrayIcon::deleteAccount()
 #endif
 
 #if defined(Q_OS_WIN32) || defined(Q_OS_LINUX)
-    QString question = tr("Are you sure to remove account from \"%1\"?").arg(account.serverUrl.toString());
+    QString question = tr("Are you sure to remove account from \"%1\"? Downloaded and uploading files will not be removed.").arg(account.serverUrl.toString());
 #else
     QString question = tr("Are you sure to remove account from \"%1\"? After removing account, you can still find downloaded files at ~/Library/CloudStorage.").arg(account.serverUrl.toString());
 #endif
