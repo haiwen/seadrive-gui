@@ -863,7 +863,7 @@ void AccountManager::setAccountDisplayName(Account &account)
     if (name.isEmpty()) {
         name = account.username;
     }
-    QString displayName = name + "(" + account.serverUrl.host() + ")";
+    QString displayName = name + "_" + account.serverUrl.host();
     int j = 0;
 
     QMutexLocker locker(&accounts_mutex_);
@@ -871,7 +871,7 @@ void AccountManager::setAccountDisplayName(Account &account)
         if (accounts_[i].displayName == displayName) {
             j++;
             name = QString("%1_%2").arg(name).arg(j);
-            displayName = name + "(" + account.serverUrl.host() + ")";
+            displayName = name + "_" + account.serverUrl.host();
         }
     }
     account.displayName = displayName;
