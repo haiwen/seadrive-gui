@@ -311,8 +311,14 @@ void SearchDialog::changeAccount(int index)
 void SearchDialog::doSearch()
 {
     // make it search utf-8 charcters
-    if (search_bar_->text().toUtf8().size() < 3) {
+    if (search_bar_->text().toUtf8().size() <= 3) {
+        if (search_request_) {
+            search_request_->deleteLater();
+            search_request_ = nullptr;
+        }
+
         stack_->setCurrentIndex(INDEX_WAITING_VIEW);
+        search_text_last_modified_ = 0;
         return;
     }
 
@@ -378,6 +384,11 @@ void SearchDialog::onSearchSuccess(const std::vector<FileSearchResult>& results,
                                 bool is_loading_more,
                                 bool has_more)
 {
+    // The response should be from the latest request.
+    if (sender() != search_request_) {
+        return;
+    }
+
     if (results.size() == 0) {
         stack_->setCurrentIndex(INDEX_EMPTY_VIEW);
     } else {
@@ -415,6 +426,11 @@ void SearchDialog::onSearchSuccess(const std::vector<FileSearchResult>& results,
 
 void SearchDialog::onSearchFailed(const ApiError& error)
 {
+    // The response should be from the latest request.
+    if (sender() != search_request_) {
+        return;
+    }
+
     stack_->setCurrentIndex(INDEX_LOADING_FAILED_VIEW);
 }
 
