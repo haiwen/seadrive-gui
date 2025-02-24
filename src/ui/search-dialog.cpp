@@ -167,7 +167,8 @@ void SearchDialog::createToolBar()
     for (int i = 0; i < accounts.size(); i++) {
         auto account = accounts.at(i);
         if (account.isPro()) {
-            search_account_->insertItem(i, account.accountInfo.name, QVariant::fromValue(account));
+            QString item_name = QString("%1 (%2)").arg(account.accountInfo.name).arg(account.serverUrl.toString());
+            search_account_->insertItem(i, item_name, QVariant::fromValue(account));
         }
     }
     toolbar_->addWidget(search_account_);
