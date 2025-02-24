@@ -543,6 +543,14 @@ bool SeafileRpcClient::setServerProperty(const QString &url,
 }
 
 #if defined(Q_OS_WIN32)
+QString getDisplayName (const Account account) {
+    QString name = account.accountInfo.name;
+    if (name.isEmpty()) {
+        name = account.username;
+    }
+    return name + "(" + account.serverUrl.host() + ")";
+}
+
 bool SeafileRpcClient::addAccount(const Account& account)
 {
     if (!connected_) {
@@ -556,6 +564,8 @@ bool SeafileRpcClient::addAccount(const Account& account)
         serverAddr = serverAddr.left(serverAddr.size() - 1);
     }
 
+    QString displayName = getDisplayName (account);
+
     searpc_client_call__int(seadrive_rpc_client_, "seafile_add_account", &error,
                             7,
                             "string", toCStr(serverAddr),
@@ -563,7 +573,7 @@ bool SeafileRpcClient::addAccount(const Account& account)
                             "string", toCStr(account.accountInfo.name),
                             "string", toCStr(account.token),
                             "string", toCStr(QDir::toNativeSeparators(account.syncRoot)),
-                            "string", toCStr(account.serverUrl.host()),
+                            "string", toCStr(displayName),
                             "int", account.isPro() ? 1 : 0);
     if (error) {
         qWarning() << "Unable to add account" << account << ":"
