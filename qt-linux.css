@@ -1,4 +1,7 @@
-
 PrivateShareDialog QFrame#mFrame {
     border: 0;
+}
+
+SyncErrorsTableView::item {
+    color: #000000;
 }

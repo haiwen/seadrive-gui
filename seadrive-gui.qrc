@@ -199,6 +199,7 @@
     <file>qt.css</file>
     <file>qt-win.css</file>
     <file>qt-mac.css</file>
+    <file>qt-linux.css</file>
     <file>i18n/seadrive_ca.qm</file>
     <file>i18n/seadrive_de_DE.qm</file>
     <file>i18n/seadrive_en.qm</file>
