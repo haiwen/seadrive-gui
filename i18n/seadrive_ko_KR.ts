@@ -70,6 +70,10 @@
         <source>%1 exited unexpectedly</source>
         <translation>갑작스럽게 %1에서 나왔습니다</translation>
     </message>
+    <message>
+        <source>Failed to initialize: failed to create seadrive mount folder</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EncryptedReposDialog</name>
@@ -1038,10 +1042,6 @@
         <translation>&lt;h2&gt;Seafile 드라이브 클라이언트 %2&lt;/h2&gt;</translation>
     </message>
     <message>
-        <source>Are you sure to remove account from &quot;%1&quot;?</source>
-        <translation>정말로 &quot;%1&quot;의 계정을 제거할까요?</translation>
-    </message>
-    <message>
         <source>Up %1, Down %2</source>
         <translation>송신 %1, 수신 %2</translation>
     </message>
@@ -1078,10 +1078,6 @@
         <translation>계정에 업로드한 내용이 바뀌었습니다. 나중에 다시 시도하세요</translation>
     </message>
     <message>
-        <source>The account will be synced to a new sync root folder. Are you sure to resync account from &quot;%1&quot;?</source>
-        <translation>계정을 새 동기화 루트 폴더에 동기화합니다. &quot;%1&quot; 계정을 다시 동기화할까요?</translation>
-    </message>
-    <message>
         <source>Are you sure to remove account from &quot;%1&quot;? After removing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
         <translation>정말로 &quot;%1&quot; 계정을 제거할까요? 계정을 제거하더라도 ~/Library/CloudStorage 위치에서 다운로드한 파일을 찾을 수 있습니다.</translation>
     </message>
@@ -1095,6 +1091,18 @@
     </message>
     <message>
         <source>Search files</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Are you sure to remove account from &quot;%1&quot;? Downloaded and uploading files will not be removed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Are you sure to resync account from &quot;%1&quot;? Downloaded and uploading files will not be removed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Are you sure to resync account from &quot;%1&quot;? After resyncing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
         <translation type="unfinished"/>
     </message>
 </context>

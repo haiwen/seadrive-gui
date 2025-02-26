@@ -70,6 +70,10 @@
         <source>%1 exited unexpectedly</source>
         <translation>%1 意外退出</translation>
     </message>
+    <message>
+        <source>Failed to initialize: failed to create seadrive mount folder</source>
+        <translation>初始化失败：无法创建 SeaDrive 顶层目录</translation>
+    </message>
 </context>
 <context>
     <name>EncryptedReposDialog</name>
@@ -1038,10 +1042,6 @@
         <translation>&lt;h2&gt;Seafile Drive 客户端 %2&lt;/h2&gt;</translation>
     </message>
     <message>
-        <source>Are you sure to remove account from &quot;%1&quot;?</source>
-        <translation>是否删除账号 %1 ？</translation>
-    </message>
-    <message>
         <source>Up %1, Down %2</source>
         <translation>上传 %1，下载 %2</translation>
     </message>
@@ -1078,10 +1078,6 @@
         <translation>部分修改正在同步中，请稍后重试</translation>
     </message>
     <message>
-        <source>The account will be synced to a new sync root folder. Are you sure to resync account from &quot;%1&quot;?</source>
-        <translation>此账号即将被同步到新的根目录，您确定要重新同步资料库 “%1” 吗？</translation>
-    </message>
-    <message>
         <source>Are you sure to remove account from &quot;%1&quot;? After removing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
         <translation>是否删除账号 %1 ？删除账号后，已下载的文件仍保留在 ~/Library/CloudStorage 目录。</translation>
     </message>
@@ -1096,6 +1092,18 @@
     <message>
         <source>Search files</source>
         <translation>搜索文件</translation>
+    </message>
+    <message>
+        <source>Are you sure to remove account from &quot;%1&quot;? Downloaded and uploading files will not be removed.</source>
+        <translation>是否删除账号 %1 ？已下载和正在上传的文件会被保留。</translation>
+    </message>
+    <message>
+        <source>Are you sure to resync account from &quot;%1&quot;? Downloaded and uploading files will not be removed</source>
+        <translation>是否重新同步账号 %1 ？已下载和正在上传的文件会被保留。</translation>
+    </message>
+    <message>
+        <source>Are you sure to resync account from &quot;%1&quot;? After resyncing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
+        <translation>是否重新同步账号 %1 ？重新同步后，原先已下载的文件保留在 ~/Library/CloudStorage 目录。</translation>
     </message>
 </context>
 <context>

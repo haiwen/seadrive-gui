@@ -70,6 +70,10 @@
         <source>%1 exited unexpectedly</source>
         <translation>%1 неожиданно вышел</translation>
     </message>
+    <message>
+        <source>Failed to initialize: failed to create seadrive mount folder</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EncryptedReposDialog</name>
@@ -1039,10 +1043,6 @@
 Версия:  %2</translation>
     </message>
     <message>
-        <source>Are you sure to remove account from &quot;%1&quot;?</source>
-        <translation>Вы действительно хотите удалить учетную запись с &quot;%1&quot;?</translation>
-    </message>
-    <message>
         <source>Up %1, Down %2</source>
         <translation>Прием: %1, Отдача: %2</translation>
     </message>
@@ -1079,10 +1079,6 @@
         <translation>Под учетной записью загружаются изменения, повторите попытку позже</translation>
     </message>
     <message>
-        <source>The account will be synced to a new sync root folder. Are you sure to resync account from &quot;%1&quot;?</source>
-        <translation>Аккаунт будет синхронизирован с новой корневой папкой синхронизации. Вы уверены, что хотите повторно синхронизировать аккаунт с &quot;%1&quot;?</translation>
-    </message>
-    <message>
         <source>Are you sure to remove account from &quot;%1&quot;? After removing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
         <translation>Вы уверены, что хотите удалить аккаунт из &quot;%1&quot;? После удаления аккаунта вы по-прежнему сможете найти загруженные файлы в ~/Library/CloudStorage.</translation>
     </message>
@@ -1096,6 +1092,18 @@
     </message>
     <message>
         <source>Search files</source>
+        <translation>Поиск файлов</translation>
+    </message>
+    <message>
+        <source>Are you sure to remove account from &quot;%1&quot;? Downloaded and uploading files will not be removed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Are you sure to resync account from &quot;%1&quot;? Downloaded and uploading files will not be removed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Are you sure to resync account from &quot;%1&quot;? After resyncing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1103,53 +1111,53 @@
     <name>SearchDialog</name>
     <message>
         <source>Search files</source>
-        <translation type="unfinished"/>
+        <translation>Поиск файлов</translation>
     </message>
     <message>
         <source>All file types</source>
-        <translation type="unfinished"/>
+        <translation>Все типы файлов</translation>
     </message>
     <message>
         <source>Custom file type</source>
-        <translation type="unfinished"/>
+        <translation>Пользовательский тип файла</translation>
     </message>
     <message>
         <source>retry</source>
-        <translation type="unfinished"/>
+        <translation>повторить</translation>
     </message>
     <message>
         <source>Failed to search&lt;br/&gt;Please %1</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось найти&lt;br/&gt;Пожалуйста, %1</translation>
     </message>
     <message>
         <source>No result found</source>
-        <translation type="unfinished"/>
+        <translation>Ничего не найдено</translation>
     </message>
 </context>
 <context>
     <name>SearchItemsTableModel</name>
     <message>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Имя</translation>
     </message>
     <message>
         <source>Kind</source>
-        <translation type="unfinished"/>
+        <translation>Вид</translation>
     </message>
 </context>
 <context>
     <name>SearchItemsTableView</name>
     <message>
         <source>&amp;Open the file</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Открыть файл</translation>
     </message>
     <message>
         <source>&amp;Show in folder</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Показать в папке</translation>
     </message>
     <message>
         <source>File not found, maybe not synchorized yet</source>
-        <translation type="unfinished"/>
+        <translation>Файл не найден, возможно, не синхронизирован</translation>
     </message>
 </context>
 <context>
