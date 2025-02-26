@@ -72,6 +72,10 @@
         <source>%1 exited unexpectedly</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Failed to initialize: failed to create seadrive mount folder</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EncryptedReposDialog</name>
@@ -1038,10 +1042,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Are you sure to remove account from &quot;%1&quot;?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Up %1, Down %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1078,10 +1078,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The account will be synced to a new sync root folder. Are you sure to resync account from &quot;%1&quot;?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Are you sure to remove account from &quot;%1&quot;? After removing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1095,6 +1091,18 @@
     </message>
     <message>
         <source>Search files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure to remove account from &quot;%1&quot;? Downloaded and uploading files will not be removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure to resync account from &quot;%1&quot;? Downloaded and uploading files will not be removed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure to resync account from &quot;%1&quot;? After resyncing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
