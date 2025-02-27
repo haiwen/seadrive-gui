@@ -72,7 +72,7 @@
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
-        <translation type="unfinished"/>
+        <translation>Fehler bei der Initialisierung: konnte keinen Seadrive Mount-Ordner erstellen</translation>
     </message>
 </context>
 <context>
@@ -1091,72 +1091,72 @@
     </message>
     <message>
         <source>Search files</source>
-        <translation type="unfinished"/>
+        <translation>Dateien durchsuchen</translation>
     </message>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;? Downloaded and uploading files will not be removed.</source>
-        <translation type="unfinished"/>
+        <translation>Möchten Sie wirklich den Account aus &quot;%1&quot; entfernen? Heruntergeladene und hochgeladene Dateien werden nicht gelöscht.</translation>
     </message>
     <message>
         <source>Are you sure to resync account from &quot;%1&quot;? Downloaded and uploading files will not be removed</source>
-        <translation type="unfinished"/>
+        <translation>Möchten Sie wirklich den Account aus &quot;%1&quot; neu synchronisieren? Heruntergeladene und hochgeladene Dateien werden nicht gelöscht.</translation>
     </message>
     <message>
         <source>Are you sure to resync account from &quot;%1&quot;? After resyncing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
-        <translation type="unfinished"/>
+        <translation>Möchten Sie wirklich den Account aus &quot;%1&quot; neu synchronisieren? Wenn Sie den Account neu synchronisieren, können Sie heruntergeladene Dateien weiterhin finden unter  ~/Library/CloudStorage.</translation>
     </message>
 </context>
 <context>
     <name>SearchDialog</name>
     <message>
         <source>Search files</source>
-        <translation type="unfinished"/>
+        <translation>Dateien durchsuchen</translation>
     </message>
     <message>
         <source>All file types</source>
-        <translation type="unfinished"/>
+        <translation>Alle Dateitypen</translation>
     </message>
     <message>
         <source>Custom file type</source>
-        <translation type="unfinished"/>
+        <translation>Eigener Dateityp</translation>
     </message>
     <message>
         <source>retry</source>
-        <translation type="unfinished"/>
+        <translation>Wiederholen</translation>
     </message>
     <message>
         <source>Failed to search&lt;br/&gt;Please %1</source>
-        <translation type="unfinished"/>
+        <translation>&lt;br/&gt;konnte nicht gefunden werden. Bitte %1</translation>
     </message>
     <message>
         <source>No result found</source>
-        <translation type="unfinished"/>
+        <translation>Keine Ergebnisse gefunden</translation>
     </message>
 </context>
 <context>
     <name>SearchItemsTableModel</name>
     <message>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Kind</source>
-        <translation type="unfinished"/>
+        <translation>Art</translation>
     </message>
 </context>
 <context>
     <name>SearchItemsTableView</name>
     <message>
         <source>&amp;Open the file</source>
-        <translation type="unfinished"/>
+        <translation>Datei &amp;öffnen</translation>
     </message>
     <message>
         <source>&amp;Show in folder</source>
-        <translation type="unfinished"/>
+        <translation>Im Ordner &amp;anzeigen</translation>
     </message>
     <message>
         <source>File not found, maybe not synchorized yet</source>
-        <translation type="unfinished"/>
+        <translation>Datei nicht gefunden (vielleicht noch nicht synchronisiert)</translation>
     </message>
 </context>
 <context>

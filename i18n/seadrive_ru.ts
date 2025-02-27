@@ -72,7 +72,7 @@
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось инициализировать: не удалось создать папку для подключения seadrive</translation>
     </message>
 </context>
 <context>
@@ -1096,15 +1096,15 @@
     </message>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;? Downloaded and uploading files will not be removed.</source>
-        <translation type="unfinished"/>
+        <translation>Вы уверены, что необходимо удалить учетную запись с &quot;%1&quot;? Скачанные и загружаемые файлы не будут удалены.</translation>
     </message>
     <message>
         <source>Are you sure to resync account from &quot;%1&quot;? Downloaded and uploading files will not be removed</source>
-        <translation type="unfinished"/>
+        <translation>Вы уверены, что необходимо повторно синхронизировать учетную запись с &quot;%1&quot;? Скачанные и загружаемые файлы не будут удалены.</translation>
     </message>
     <message>
         <source>Are you sure to resync account from &quot;%1&quot;? After resyncing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
-        <translation type="unfinished"/>
+        <translation>Вы уверены, что необходимо повторно синхронизировать учетную запись с &quot;%1&quot;? После повторной синхронизации учетной записи вы по-прежнему можете найти загруженные файлы в ~/Library/CloudStorage.</translation>
     </message>
 </context>
 <context>
