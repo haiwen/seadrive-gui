@@ -1,15 +1,24 @@
+#include <string>
+
+#include <pwd.h>
 #include <time.h>
 #include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
 #include "log.h"
 
 namespace {
 
 static FILE *log_fp;
+const char *log_file_name = "seadrive_ext.log";
 
 std::string getLogPath()
 {
-    std::string home = seafile::utils::getHomeDir();
+    struct passwd *pw = getpwuid(getuid());
+    std::string home {pw->pw_dir}; 
     if (home.empty())
         return "";
 

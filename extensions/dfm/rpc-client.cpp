@@ -1,6 +1,8 @@
 #include "rpc-client.h"
 #include <unistd.h>
 #include <pwd.h>
+#include "log.h"
+#include <errno.h>
 
 namespace SeaDrivePlugin {
 
@@ -38,7 +40,9 @@ void SeaDriveRpcClient::connectDaemon()
     char *rpc_pipe_path = g_build_filename (seadrive_dir_.c_str(), kSeadriveSockName, NULL);
     SearpcNamedPipeClient *pipe_client;
     pipe_client = searpc_create_named_pipe_client(rpc_pipe_path);
+    seaf_ext_log ("connect daemon : %s\n", rpc_pipe_path);
     if (searpc_named_pipe_client_connect(pipe_client) < 0) {
+        seaf_ext_log ("connect daemon error %s\n", strerror(errno));
         g_free (rpc_pipe_path);
         g_free (pipe_client);
         return;
