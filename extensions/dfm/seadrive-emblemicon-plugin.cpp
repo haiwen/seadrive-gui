@@ -41,11 +41,11 @@ DFMExtEmblem SeaDriveEmblemIconPlugin::locationEmblemIcons(const std::string &fi
         return emblem;
     }
 
-    if (filePath.rfind(rpc_client_->getSeaDriveDir(), 0) != 0) {
+    if (filePath.rfind(rpc_client_->getMountDir(), 0) != 0) {
         return emblem;
     }
 
-    std::string repoPath = filePath.substr(rpc_client_->getSeaDriveDir().size());
+    std::string repoPath = filePath.substr(rpc_client_->getMountDir().size());
 
     if (!repoPath.empty() && repoPath[0] == '/') {
         repoPath = repoPath.substr(1);

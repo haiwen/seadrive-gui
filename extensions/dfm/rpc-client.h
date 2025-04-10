@@ -7,9 +7,10 @@
 #include <searpc-named-pipe-transport.h>
 
 enum LockState {
-      LOCKED = 0,
-      UNLOCKED,
-      UNKNOWN,
+      FILE_NOT_LOCKED = 0,
+      FILE_LOCKED_BY_OTHERS,
+      FILE_LOCKED_BY_ME_MANUAL,
+      FILE_LOCKED_BY_ME_AUTO
 };
 
 namespace SeaDrivePlugin {
@@ -21,7 +22,7 @@ public:
     void connectDaemon();
     bool tryConnectDaemon();
 
-    std::string getSeaDriveDir() const { return seadrive_dir_; }
+    std::string getMountDir() const { return mount_dir_; }
     bool isConnected() const { return connected_; }
 
     int lockFile (const char *path);
@@ -37,6 +38,7 @@ public:
 private:
     SearpcClient *seadrive_rpc_client_;
 
+    std::string mount_dir_;
     std::string seadrive_dir_;
     bool connected_;
 };

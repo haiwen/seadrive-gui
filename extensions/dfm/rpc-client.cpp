@@ -17,6 +17,7 @@ SeaDriveRpcClient::SeaDriveRpcClient()
 {
     struct passwd *pw = getpwuid(getuid());
     std::string homePath {pw->pw_dir}; 
+    mount_dir_ = homePath + "/SeaDrive";
     seadrive_dir_ = homePath + "/.seadrive";
 }
 
@@ -40,9 +41,8 @@ void SeaDriveRpcClient::connectDaemon()
     char *rpc_pipe_path = g_build_filename (seadrive_dir_.c_str(), kSeadriveSockName, NULL);
     SearpcNamedPipeClient *pipe_client;
     pipe_client = searpc_create_named_pipe_client(rpc_pipe_path);
-    seaf_ext_log ("connect daemon : %s\n", rpc_pipe_path);
     if (searpc_named_pipe_client_connect(pipe_client) < 0) {
-        seaf_ext_log ("connect daemon error %s\n", strerror(errno));
+    	seaf_ext_log ("failed to connect name pipe client for path %s: %s\n", rpc_pipe_path, strerror(errno));
         g_free (rpc_pipe_path);
         g_free (pipe_client);
         return;
@@ -61,7 +61,7 @@ int SeaDriveRpcClient::lockFile(const char *path)
 
     GError *error = NULL;
     searpc_client_call__int (seadrive_rpc_client_,
-                             "seadrive_lock_file", &error,
+                             "seafile_lock_file", &error,
                              1, "string", path);
     if (error) {
         g_error_free(error);
@@ -94,7 +94,7 @@ int SeaDriveRpcClient::unlockFile(const char *path)
 int SeaDriveRpcClient::getFileLockState (const char *path)
 {
     if (!connected_) {
-        return UNKNOWN;
+        return -1;
     }
 
     GError *error = NULL;
@@ -104,7 +104,7 @@ int SeaDriveRpcClient::getFileLockState (const char *path)
     if (error) {
         g_error_free(error);
         connected_ = false;
-        return UNKNOWN;
+        return -1;
     }
 
     return ret;
@@ -118,7 +118,7 @@ int SeaDriveRpcClient::getShareLink (const char *path)
 
     GError *error = NULL;
     searpc_client_call__int (seadrive_rpc_client_,
-                             "seeafile_get_share_link", &error,
+                             "seafile_get_share_link", &error,
                              1, "string", path);
     if (error) {
         g_error_free(error);
