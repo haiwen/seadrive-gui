@@ -114,7 +114,7 @@ bool SeaDriveMenuPlugin::buildNormalMenu(DFMExtMenu *main, const std::string &cu
 	}
 
         int state = rpc_client_->getFileLockState (path.c_str());
-        if (state == FILE_LOCKED_BY_ME_MANUAL) {
+        if (state == FILE_LOCKED_BY_ME_MANUAL || state == FILE_LOCKED_BY_ME_AUTO) {
             auto unlockFileAct { proxy_->createAction() };
             unlockFileAct->setText("解锁该文件");
             unlockFileAct->registerTriggered([this, path](DFMExtAction *, bool) {
