@@ -22,7 +22,7 @@ std::string getLogPath()
     if (home.empty())
         return "";
 
-    return home + "/" + log_file_name;
+    return home + "/.seadrive/" + log_file_name;
 }
 
 
@@ -40,11 +40,9 @@ seaf_ext_log_start ()
 
     if (log_fp) {
         seaf_ext_log ("\n----------------------------------\n"
-                      "log file initialized: 4.1.0 %s"
+                      "log file initialized %s"
                       "\n----------------------------------\n"
                       , log_path.c_str());
-    } else {
-        fprintf (stderr, "[LOG] Can't init log file %s\n", log_path.c_str());
     }
 }
 
