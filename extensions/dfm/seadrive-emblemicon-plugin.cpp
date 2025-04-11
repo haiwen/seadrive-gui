@@ -42,6 +42,7 @@ DFMExtEmblem SeaDriveEmblemIconPlugin::locationEmblemIcons(const std::string &fi
         return emblem;
     }
 
+    // If the file is not in the mount dir, do not set the emblem.
     if (filePath.rfind(rpc_client_->getMountDir(), 0) != 0) {
         return emblem;
     }
@@ -56,12 +57,13 @@ DFMExtEmblem SeaDriveEmblemIconPlugin::locationEmblemIcons(const std::string &fi
         return emblem;
     }
 
+    // Set a badge elemb on the file cache state, the state may be 'elemb-seadrive-done', 
+    // 'elemb-seadrive-locked-by-me' or 'elemb-seadrive-locked-by-others'.
     char *state = rpc_client_->getFileCacheState (repoPath.c_str());
     if (!state) {
         return emblem;
     }
 
-    seaf_ext_log ("get file cache state:%s\n", state);
     // Add a elemb icon to the bottom-left corner of the file icon.
     std::string strBuffer { state};
     if (!strBuffer.empty()) {

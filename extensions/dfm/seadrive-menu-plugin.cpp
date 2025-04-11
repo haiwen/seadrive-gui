@@ -52,11 +52,6 @@ bool SeaDriveMenuPlugin::buildNormalMenu(DFMExtMenu *main, const std::string &cu
                                    const std::string &focusPath, const std::list<std::string> &pathList,
                                    bool onDesktop)
 {
-    /*
-    main->registerDeleted([memTest](DFMExtMenu *self) {
-    });
-    */
-
     if (onDesktop) {
         return true;
     }
@@ -72,24 +67,27 @@ bool SeaDriveMenuPlugin::buildNormalMenu(DFMExtMenu *main, const std::string &cu
         return true;
     }
 
+    // If the file is not in the mount dir, do not set the menu.
     if (pathList.front().rfind(rpc_client_->getMountDir(), 0) != 0) {
         return true;
     }
 
+    // Set first-level menu.
     auto rootAction { proxy_->createAction() };
     rootAction->setText("SeaDrive");
 
     auto menu { proxy_->createMenu() };
 
     rootAction->setMenu(menu);
+    // Set second-level menu.
     rootAction->registerHovered([this, pathList](DFMExtAction *action) {
         std::string path = pathList.front().substr(rpc_client_->getMountDir().size());
         if (!path.empty() && path[0] == '/') {
             path = path.substr(1);
         }
-	if (path.empty()) {
-	    return;
-	}
+        if (path.empty()) {
+            return;
+        }
         if (!action->menu()->actions().empty())
             return;
 
@@ -98,12 +96,12 @@ bool SeaDriveMenuPlugin::buildNormalMenu(DFMExtMenu *main, const std::string &cu
             return;
         }
 
-	struct stat st;
-	if (stat(pathList.front().c_str(), &st)!= 0) {
-	    seaf_ext_log ("Failed to stat path %s: %s.\n", pathList.front().c_str(), strerror(errno));
-	    return;
-	}
-	if (S_ISDIR(st.st_mode)) {
+        struct stat st;
+        if (stat(pathList.front().c_str(), &st)!= 0) {
+            seaf_ext_log ("Failed to stat path %s: %s.\n", pathList.front().c_str(), strerror(errno));
+            return;
+        }
+        if (S_ISDIR(st.st_mode)) {
             auto uploadLinkAct { proxy_->createAction() };
             uploadLinkAct->setText("获取上传链接");
             uploadLinkAct->registerTriggered([this, path](DFMExtAction *, bool) {
@@ -111,7 +109,7 @@ bool SeaDriveMenuPlugin::buildNormalMenu(DFMExtMenu *main, const std::string &cu
             });
             action->menu()->addAction(uploadLinkAct);
             return;
-	}
+        }
 
         int state = rpc_client_->getFileLockState (path.c_str());
         if (state == FILE_LOCKED_BY_ME_MANUAL || state == FILE_LOCKED_BY_ME_AUTO) {
