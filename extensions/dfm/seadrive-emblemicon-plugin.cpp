@@ -1,4 +1,5 @@
 #include "seadrive-emblemicon-plugin.h"
+#include "log.h"
 
 #include <sys/types.h>
 #include <sys/xattr.h>
@@ -60,6 +61,7 @@ DFMExtEmblem SeaDriveEmblemIconPlugin::locationEmblemIcons(const std::string &fi
         return emblem;
     }
 
+    seaf_ext_log ("get file cache state:%s\n", state);
     // Add a elemb icon to the bottom-left corner of the file icon.
     std::string strBuffer { state};
     if (!strBuffer.empty()) {

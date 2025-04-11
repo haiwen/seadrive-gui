@@ -42,7 +42,6 @@ void SeaDriveRpcClient::connectDaemon()
     SearpcNamedPipeClient *pipe_client;
     pipe_client = searpc_create_named_pipe_client(rpc_pipe_path);
     if (searpc_named_pipe_client_connect(pipe_client) < 0) {
-    	seaf_ext_log ("failed to connect name pipe client for path %s: %s\n", rpc_pipe_path, strerror(errno));
         g_free (rpc_pipe_path);
         g_free (pipe_client);
         return;

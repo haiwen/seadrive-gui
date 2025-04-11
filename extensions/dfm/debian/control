@@ -1,0 +1,25 @@
+Source: seadrive-dfm-ext
+Section: net
+Priority: extra
+Maintainer: m.eik michalke <meik.michalke@hhu.de>
+Build-Depends:
+    debhelper (>= 7),
+    libdfm-extension-dev,
+    libglib2.0-dev,
+    cmake,
+    libsearpc-dev,
+Standards-Version: 3.9.5
+Homepage: https://www.seafile.com
+
+Package: seadrive-dfm-ext
+Architecture: any
+Depends:
+    ${shlibs:Depends},
+    ${misc:Depends},
+Description: Seafile Drive DFM Extension.
+ Seafile is an open source cloud storage system with features
+ on privacy protection and teamwork. Collections of files are
+ called libraries, and each library can be synced separately.
+ A library can also be encrypted with a user chosen password.
+ Seafile also allows users to create groups and easily sharing
+ files into groups.

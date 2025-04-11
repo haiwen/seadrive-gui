@@ -25,12 +25,21 @@ target_link_libraries(${PROJECT_NAME}
     )
 
 include(GNUInstallDirs)
-if(NOT DEFINED LIB_INSTALL_DIR)
-    set(LIB_INSTALL_DIR ${CMAKE_INSTALL_FULL_LIBDIR})
-endif()
+set(LIB_INSTALL_DIR /usr/lib/${CMAKE_LIBRARY_ARCHITECTURE})
 
 if(NOT DEFINED DFM_EXT_PLUGIN_DIR)
     set(DFM_EXT_PLUGIN_DIR ${LIB_INSTALL_DIR}/dde-file-manager/plugins/extensions)
 endif()
+
+install(DIRECTORY
+  ${CMAKE_SOURCE_DIR}/data/icons/16x16
+  ${CMAKE_SOURCE_DIR}/data/icons/22x22
+  ${CMAKE_SOURCE_DIR}/data/icons/24x24
+  ${CMAKE_SOURCE_DIR}/data/icons/32x32
+  ${CMAKE_SOURCE_DIR}/data/icons/48x48
+  ${CMAKE_SOURCE_DIR}/data/icons/128x128
+  ${CMAKE_SOURCE_DIR}/data/icons/scalable
+  DESTINATION share/icons/hicolor
+)
 
 install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${DFM_EXT_PLUGIN_DIR})

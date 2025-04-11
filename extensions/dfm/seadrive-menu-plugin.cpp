@@ -146,7 +146,6 @@ bool SeaDriveMenuPlugin::buildNormalMenu(DFMExtMenu *main, const std::string &cu
         fileHistoryAct->setText("查看文件历史");
         fileHistoryAct->registerTriggered([this, path](DFMExtAction *, bool) {
             rpc_client_->showFileHistory (path.c_str());
-	    seaf_ext_log ("show file history: %s\n", path.c_str());
         });
 
         action->menu()->addAction(shareLinkAct);
