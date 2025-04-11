@@ -66,7 +66,7 @@ SeafileApiClient::SeafileApiClient(QObject *parent)
         static QNetworkAccessManager *manager = new QNetworkAccessManager(qApp);
         na_mgr_ = manager;
         NetworkManager::instance()->addWatch(na_mgr_);
-        // manager->setTransferTimeout(kDefaultHttpTimeout);
+        manager->setTransferTimeout(kDefaultHttpTimeout);
         // na_mgr_->setCache(CustomizationService::instance()->diskCache());
     }
 }
