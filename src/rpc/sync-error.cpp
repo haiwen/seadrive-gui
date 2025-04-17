@@ -128,7 +128,7 @@ QString SyncError::syncErrorIdToErrorStr(int error_id, const QString& path)
     case SYNC_ERROR_ID_MOVE_NOT_IN_REPO:
         return QObject::tr("You can only move files/folders within a library or from one library to another library");
     case SYNC_ERROR_ID_RENAME_WORKTREE:
-        return QObject::tr("Failed to rename library name.");
+        return QObject::tr("Failed to change library name since some files are opened in it");
 #endif
     case SYNC_ERROR_ID_DEL_CONFIRMATION_PENDING:
         return QObject::tr("Waiting for confirmation to delete files");
