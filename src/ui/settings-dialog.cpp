@@ -24,7 +24,7 @@ const char *kSettingsGroupForSettingsDialog = "SettingsDialog";
 } // namespace
 
 SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
-    current_cache_dir_(QString())
+    current_data_dir_(QString())
 {
     setupUi(this);
     setWindowTitle(tr("Settings"));
@@ -40,9 +40,9 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
     mLanguageComboBox->addItems(I18NHelper::getInstance()->getLanguages());
     SettingsManager mgr;
 #if !defined(_MSC_VER)
-    if (!mgr.getCacheDir(&current_cache_dir_))
-        current_cache_dir_ = QDir(seadriveDataDir()).absolutePath();
-    mShowCacheDir->setText(current_cache_dir_);
+    if (!mgr.getDataDir(&current_data_dir_))
+        current_data_dir_ = QDir(seadriveDataDir()).absolutePath();
+    mShowCacheDir->setText(current_data_dir_);
     mShowCacheDir->setReadOnly(true);
     mCacheLabel->setText(tr("Cache directory:"));
 #endif
@@ -136,9 +136,9 @@ void SettingsDialog::updateSettings()
         }
         RegElement::removeIconRegItem();
 #else
-        if (mShowCacheDir->text() != current_cache_dir_) {
+        if (mShowCacheDir->text() != current_data_dir_) {
             cache_dir_changed = true;
-            mgr->setCacheDir(mShowCacheDir->text());
+            mgr->setDataDir(mShowCacheDir->text());
         }
 #endif
     }
@@ -439,7 +439,7 @@ bool SettingsDialog::validateProxyInputs()
 void SettingsDialog::selectDirAction()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Please choose the cache folder"),
-                                                    current_cache_dir_.toUtf8().data(),
+                                                    current_data_dir_.toUtf8().data(),
                                                     QFileDialog::ShowDirsOnly
                                                     | QFileDialog::DontResolveSymlinks);
     if (dir.isEmpty())

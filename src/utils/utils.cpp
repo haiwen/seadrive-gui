@@ -53,12 +53,12 @@ namespace {
 const char *kSeafileClientBrand = "SeaDrive";
 #if defined(Q_OS_MAC)
 const char *kSeadriveWorkDir = "Library/Containers/com.seafile.seadrive.fprovider/Data";
-const char *kSeadriveConfDir = "Documents";
+const char *kSeadriveInternalDir = "Documents";
 const char *kSeadirveProcName = "SeaDrive File Provider";
 #elif defined(Q_OS_WIN32)
-const char *kSeadriveConfDir = "seadrive";
+const char *kSeadriveInternalDir = "seadrive";
 #else
-const char *kSeadriveConfDir = ".seadrive";
+const char *kSeadriveInternalDir = ".seadrive";
 #endif
 
 const char *kSettingsGroup = "Settings";
@@ -122,34 +122,24 @@ QString seadriveWorkDir() {
 #endif
 }
 
-QString seadriveDir() {
-    return kSeadriveConfDir;
+// seadriveInternalDir returns the location of internal diretory. It contains files used internally by the application, including the GUI database and the metadata for the daemon.
+// On Windows, the path is "$HOME/seadrive".
+// On macOS, the path is "~/Library/Containers/com.seafile.seadrive.fprovider/Data/Document".
+// On Linux, the path is "~/.seadrive".
+QString seadriveInternalDir() {
+    return kSeadriveInternalDir;
 }
 
+// seadriveDataDir returns the location of internal data diretory.
+// On Windows and Linux, the path is "${seadriveInternalDir}/data".
+// On macOS, each daemon creates its own data directory.
 QString seadriveDataDir() {
-    return QDir(seadriveDir()).filePath("data");
+    return QDir(seadriveInternalDir()).filePath("data");
 }
 
 QString seadriveLogDir() {
-    return QDir(seadriveDir()).filePath("logs");
+    return QDir(seadriveInternalDir()).filePath("logs");
 }
-
-#if defined(_MSC_VER)
-bool getSeadriveRoot(QString *seadrive_root)
-{
-    QSettings settings;
-
-    settings.beginGroup(kSettingsGroup);
-    if (!settings.contains(kSeadriveRoot)) {
-        return false;
-    }
-
-    *seadrive_root = settings.value(kSeadriveRoot, true).toString();
-    settings.endGroup();
-
-    return true;
-}
-#endif
 
 QString defaultDownloadDir() {
     static QStringList list = QStandardPaths::standardLocations(QStandardPaths::DownloadLocation);
