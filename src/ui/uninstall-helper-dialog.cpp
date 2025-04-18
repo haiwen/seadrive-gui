@@ -9,7 +9,6 @@
 
 #include "utils/utils.h"
 #include "seadrive-gui.h"
-#include "settings-mgr.h"
 #include "utils/uninstall-helpers.h"
 #if defined(_MSC_VER)
 #include "utils/registry.h"
@@ -105,6 +104,5 @@ void RemoveSeafileDataThread::run()
 #endif
 
     delete_dir_recursively(seadrive_data_dir);
-    SettingsManager::removeAllSettings();
     return;
 }
