@@ -240,7 +240,7 @@ static void read_account_info_from_db(std::vector<Account>* ptr_accounts)
     const char *errmsg;
     struct sqlite3 *db;
 
-    QString db_path = QDir(seadriveDir()).filePath("accounts.db");
+    QString db_path = QDir(seadriveInternalDir()).filePath("accounts.db");
     if (sqlite3_open (toCStr(db_path), &db)) {
         errmsg = sqlite3_errmsg (db);
         qCritical("failed to open account database %s: %s",

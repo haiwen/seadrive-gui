@@ -117,8 +117,8 @@ void DaemonManager::startSeadriveDaemon()
         shutdown_process (kSeadriveExecutable);
     }
 
-    if (!gui->settingsManager()->getCacheDir(&current_cache_dir_))
-        current_cache_dir_ = QDir(seadriveDataDir()).absolutePath();
+    if (!gui->settingsManager()->getDataDir(&current_data_dir_))
+        current_data_dir_ = QDir(seadriveDataDir()).absolutePath();
 
 #if defined(Q_OS_WIN32)
 # if !defined(_MSC_VER)
@@ -135,7 +135,7 @@ void DaemonManager::startSeadriveDaemon()
         utils::win::getLocalPipeName(kSeadriveSockName).c_str());
 #else
     searpc_pipe_client_ = searpc_create_named_pipe_client(
-        toCStr(QDir(current_cache_dir_).filePath(kSeadriveSockName)));
+        toCStr(QDir(current_data_dir_).filePath(kSeadriveSockName)));
 #endif
 
     transitionState(DAEMON_STARTING);
@@ -159,7 +159,7 @@ QStringList DaemonManager::collectSeaDriveArgs()
 {
     QStringList args;
 
-    args << "-d" << current_cache_dir_;
+    args << "-d" << current_data_dir_;
     args << "-l" << QDir(seadriveLogDir()).absoluteFilePath("seadrive.log");
     if (I18NHelper::getInstance()->isTargetLanguage("zh_CN")) {
         args << "-L" << "zh_cn";
