@@ -21,6 +21,8 @@ struct SyncNotification {
     QString confirmation_id;
     QString delete_files;
     QString domain_id;
+    QString server;
+    QString username;
     bool is_dir;
     int error_id;
     QString error;

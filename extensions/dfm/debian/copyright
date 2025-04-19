@@ -1,0 +1,11 @@
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: seafile-client
+Upstream-Contact: Lingtao Pan <daniel.pan@seafile.com>
+Source: https://github.com/haiwen/seafile-client
+
+Files: *
+Copyright: 2017 Seafile LTD
+License: Apache
+  You should have received a copy of the license with your Debian system,
+  in the file /usr/share/common-licenses/Apache-2.0, or with the
+  source package as the file COPYING or LICENSE.

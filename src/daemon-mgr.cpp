@@ -133,9 +133,12 @@ void DaemonManager::startSeadriveDaemon()
 #endif
     searpc_pipe_client_ = searpc_create_named_pipe_client(
         utils::win::getLocalPipeName(kSeadriveSockName).c_str());
-#else
+#elif defined(Q_OS_MAC)
     searpc_pipe_client_ = searpc_create_named_pipe_client(
         toCStr(QDir(current_cache_dir_).filePath(kSeadriveSockName)));
+#else
+    searpc_pipe_client_ = searpc_create_named_pipe_client(
+        toCStr(QDir(seadriveDir()).filePath(kSeadriveSockName)));
 #endif
 
     transitionState(DAEMON_STARTING);
@@ -177,6 +180,8 @@ QStringList DaemonManager::collectSeaDriveArgs()
 #endif
 
 #if defined(Q_OS_LINUX)
+      // Use ~/.seadrive add rpc pip path.
+      args << "-p" << QDir(seadriveDir()).absolutePath();
       args << "-f";
 
       QString fuse_opts = qgetenv("SEADRIVE_FUSE_OPTS");

@@ -68,7 +68,7 @@ void SeafileRpcClient::connectDaemon()
             toCStr(QDir(data_dir).filePath(kSeadriveSockName)));
 #else
         pipe_client = searpc_create_named_pipe_client(
-            toCStr(QDir(gui->daemonManager()->currentCacheDir()).filePath(kSeadriveSockName)));
+            toCStr(QDir(seadriveDir()).filePath(kSeadriveSockName)));
 #endif
         if (searpc_named_pipe_client_connect(pipe_client) < 0) {
             if (retry++ > 5) {
@@ -133,7 +133,7 @@ bool SeafileRpcClient::tryConnectDaemon() {
         toCStr(QDir(data_dir).filePath(kSeadriveSockName)));
 #else
     pipe_client = searpc_create_named_pipe_client(
-        toCStr(QDir(gui->daemonManager()->currentCacheDir()).filePath(kSeadriveSockName)));
+        toCStr(QDir(seadriveDir()).filePath(kSeadriveSockName)));
 #endif
     if (!pipe_client) {
         return false;

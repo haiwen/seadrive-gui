@@ -16,7 +16,7 @@
 #include "account-mgr.h"
 
 #include "message-poller.h"
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
 #include "sync-command.h"
 #endif
 
@@ -73,7 +73,7 @@ public:
 MessagePoller::MessagePoller(QObject *parent): QObject(parent)
 {
     check_notification_timer_ = new QTimer(this);
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
     sync_command_ = new SyncCommand();
 #endif
     connect(check_notification_timer_, SIGNAL(timeout()), this, SLOT(checkSeaDriveEvents()));
@@ -84,7 +84,7 @@ MessagePoller::MessagePoller(QObject *parent): QObject(parent)
 
 MessagePoller::~MessagePoller()
 {
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
     delete sync_command_;
 #endif
 }
@@ -297,10 +297,22 @@ void MessagePoller::processNotification(const SyncNotification& notification)
             return;
         }
         sync_command_->doShareLink(account, notification.repo_id, notification.repo_path);
+#elif defined(Q_OS_LINUX)
+        Account account = gui->accountManager()->getAccountByUrlAndUsername(notification.server, notification.username);
+        if (!account.isValid()) {
+            return;
+        }
+        sync_command_->doShareLink(account, notification.repo_id, notification.repo_path);
 #endif
     } else if (notification.type == "action.get_internal_link") {
 #if defined(Q_OS_MAC)
         Account account = gui->accountManager()->getAccountByDomainID(notification.domain_id);
+        if (!account.isValid()) {
+            return;
+        }
+        sync_command_->doInternalLink(account, notification.repo_id, notification.repo_path, notification.is_dir);
+#elif defined(Q_OS_LINUX)
+        Account account = gui->accountManager()->getAccountByUrlAndUsername(notification.server, notification.username);
         if (!account.isValid()) {
             return;
         }
@@ -313,10 +325,22 @@ void MessagePoller::processNotification(const SyncNotification& notification)
             return;
         }
         sync_command_->doGetUploadLink(account, notification.repo_id, notification.repo_path);
+#elif defined(Q_OS_LINUX)
+        Account account = gui->accountManager()->getAccountByUrlAndUsername(notification.server, notification.username);
+        if (!account.isValid()) {
+            return;
+        }
+        sync_command_->doGetUploadLink(account, notification.repo_id, notification.repo_path);
 #endif
     } else if (notification.type == "action.view_file_history") {
 #if defined(Q_OS_MAC)
         Account account = gui->accountManager()->getAccountByDomainID(notification.domain_id);
+        if (!account.isValid()) {
+            return;
+        }
+        sync_command_->doShowFileHistory(account, notification.repo_id, notification.repo_path);
+#elif defined(Q_OS_LINUX)
+        Account account = gui->accountManager()->getAccountByUrlAndUsername(notification.server, notification.username);
         if (!account.isValid()) {
             return;
         }
@@ -390,6 +414,8 @@ SyncNotification SyncNotification::fromJson(const json_t *root)
         notification.repo_id = json.getString("repo_id");
         notification.repo_path = json.getString("repo_path");
         notification.domain_id = json.getString("domain_id");
+        notification.server = json.getString("server");
+        notification.username = json.getString("username");
         notification.is_dir = json.getBool("is_dir");
     } else {
         notification.repo_id = json.getString("repo_id");
