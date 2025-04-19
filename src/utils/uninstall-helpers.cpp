@@ -19,6 +19,7 @@
 #include <QFileInfo>
 
 #include "utils/utils.h"
+#include "settings-mgr.h"
 #include "utils/file-utils.h"
 #include "ui/uninstall-helper-dialog.h"
 #include "rpc/rpc-server.h"
@@ -171,6 +172,8 @@ void do_remove_user_data()
     }
 #endif
 
+    SettingsManager::removeAllSettings();
+
     UninstallHelperDialog *dialog = new UninstallHelperDialog;
 
     dialog->show();
@@ -280,4 +283,3 @@ void do_seadrive_unregister_sync_root()
 
 }
 #endif // _MSC_VER
-
