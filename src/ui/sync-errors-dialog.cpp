@@ -210,8 +210,8 @@ void SyncErrorsTableView::onItemDoubleClicked(const QModelIndex& index)
     // printf("error repo id is %s\n", error.repo_id.toUtf8().data());
 #if defined(Q_OS_WIN32)
     QString path_to_open = findLocalPathFromError(error);
-    if (path_to_open.isEmpty() || !QFileInfo(path_to_open).exists()) {
-        path_to_open = gui->seadriveRoot();
+    if (path_to_open.isEmpty()) {
+        return;
     }
     openUrl(QUrl::fromLocalFile(path_to_open));
 #endif
@@ -224,11 +224,7 @@ QString SyncErrorsTableView::findLocalPathFromError(const SyncError& error)
         return "";
     }
 
-    QString repo_uname;
     SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
-    if (!rpc_client || !rpc_client->getRepoUnameById(error.repo_id, &repo_uname)) {
-        return "";
-    }
 
     json_t *ret_obj = nullptr;
     if (!rpc_client->getAccountByRepoId(error.repo_id, &ret_obj)) {
@@ -240,7 +236,17 @@ QString SyncErrorsTableView::findLocalPathFromError(const SyncError& error)
         return "";
     }
 
-    return ::pathJoin(account.syncRoot, repo_uname);
+    QString repo_uname;
+    if (!rpc_client || !rpc_client->getRepoUnameById(error.repo_id, &repo_uname)) {
+        return account.syncRoot;
+    }
+
+    QString local_path = ::pathJoin(account.syncRoot, repo_uname);
+    if (!QFileInfo(local_path).exists()) {
+        return account.syncRoot;
+    }
+
+    return local_path;
 #endif
 }
 

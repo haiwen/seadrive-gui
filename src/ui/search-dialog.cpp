@@ -543,6 +543,9 @@ void SearchItemsTableView::openDirectory(bool open_file)
 #endif
 #ifdef Q_OS_LINUX
     QString root = gui->seadriveRoot();
+    if (gui->accountManager()->activeAccounts().size() > 1) {
+        root = ::pathJoin(root, search_model_->account_.displayName);
+    }
 #endif
     if (root.isEmpty()) {
         qWarning() << "failed to get root path";
@@ -588,6 +591,9 @@ void SearchItemsTableView::onItemDoubleClick(const QModelIndex& index)
 #endif
 #ifdef Q_OS_LINUX
     QString root = gui->seadriveRoot();
+    if (gui->accountManager()->activeAccounts().size() > 1) {
+        root = ::pathJoin(root, search_model_->account_.displayName);
+    }
 #endif
     if (root.isEmpty()) {
         qWarning() << "failed to get root path";

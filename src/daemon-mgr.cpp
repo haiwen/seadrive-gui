@@ -117,8 +117,12 @@ void DaemonManager::startSeadriveDaemon()
         shutdown_process (kSeadriveExecutable);
     }
 
-    if (!gui->settingsManager()->getDataDir(&current_data_dir_))
+#if defined(Q_OS_LINUX)
+    // Data directory settings is effective only on Linux.
+    if (!gui->settingsManager()->getDataDir(&current_data_dir_)) {
         current_data_dir_ = QDir(seadriveDataDir()).absolutePath();
+    }
+#endif
 
 #if defined(Q_OS_WIN32)
 # if !defined(_MSC_VER)

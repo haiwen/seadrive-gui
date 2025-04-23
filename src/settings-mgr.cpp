@@ -884,6 +884,7 @@ void SettingsManager::setSeadriveRoot(const QString& seadrive_root)
 }
 #endif // _MSC_VER
 
+#if defined(Q_OS_LINUX)
 bool SettingsManager::getDataDir(QString *current_data_dir)
 {
     QSettings settings;
@@ -907,6 +908,7 @@ void SettingsManager::setDataDir(const QString& current_data_dir)
     settings.setValue(kCacheDir, current_data_dir);
     settings.endGroup();
 }
+#endif
 
 void SettingsManager::writeSystemProxyInfo(const QUrl &url,
                                            const QString &file_path)
