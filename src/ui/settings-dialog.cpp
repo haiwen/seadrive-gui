@@ -24,7 +24,7 @@ const char *kSettingsGroupForSettingsDialog = "SettingsDialog";
 } // namespace
 
 SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
-    current_cache_dir_(QString())
+    current_data_dir_(QString())
 {
     setupUi(this);
     setWindowTitle(tr("Settings"));
@@ -38,16 +38,22 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
     mTabWidget->setCurrentIndex(0);
 
     mLanguageComboBox->addItems(I18NHelper::getInstance()->getLanguages());
-    SettingsManager mgr;
-#if !defined(_MSC_VER)
-    if (!mgr.getCacheDir(&current_cache_dir_))
-        current_cache_dir_ = QDir(seadriveDataDir()).absolutePath();
-    mShowCacheDir->setText(current_cache_dir_);
+
+#if defined(Q_OS_WIN32)
+    SettingsManager *mgr = gui->settingsManager();
+    if (!mgr->getSeadriveRoot(&current_seadrive_root_)) {
+        current_seadrive_root_ = gui->seadriveRoot();
+    }
+    mShowCacheDir->setText(current_seadrive_root_);
+    mShowCacheDir->setReadOnly(true);
+#elif defined(Q_OS_LINUX)
+    SettingsManager *mgr = gui->settingsManager();
+    if (!mgr.getDataDir(&current_data_dir_))
+        current_data_dir_ = QDir(seadriveDataDir()).absolutePath();
+    mShowCacheDir->setText(current_data_dir_);
     mShowCacheDir->setReadOnly(true);
     mCacheLabel->setText(tr("Cache directory:"));
-#endif
-
-#if defined(Q_OS_MAC)
+#else
     mCacheLabel->hide();
     mShowCacheDir->hide();
     mSelectBtn->hide();
@@ -129,16 +135,16 @@ void SettingsDialog::updateSettings()
     }
 
     if (mAdvancedTab->isEnabled()) {
-#if defined(_MSC_VER)
-        if (mShowCacheDir->text() != current_seadrive_root_ ) {
+#if defined(Q_OS_WIN32)
+        if (mShowCacheDir->text() != current_seadrive_root_) {
             seadrive_root_changed = true;
             mgr->setSeadriveRoot(mShowCacheDir->text());
         }
         RegElement::removeIconRegItem();
-#else
-        if (mShowCacheDir->text() != current_cache_dir_) {
+#elif defined(Q_OS_LINUX)
+        if (mShowCacheDir->text() != current_data_dir_) {
             cache_dir_changed = true;
-            mgr->setCacheDir(mShowCacheDir->text());
+            mgr->setDataDir(mShowCacheDir->text());
         }
 #endif
     }
@@ -232,14 +238,6 @@ void SettingsDialog::showEvent(QShowEvent *event)
     mHideWindowsIncompatibilityCheckBox->setCheckState(state);
 #else
     mHideWindowsIncompatibilityCheckBox->hide();
-#endif
-
-#if defined(_MSC_VER)
-    if (!mgr->getSeadriveRoot(&current_seadrive_root_)) {
-        current_seadrive_root_ = gui->seadriveRoot();
-    }
-    mShowCacheDir->setText(current_seadrive_root_);
-    mShowCacheDir->setReadOnly(true);
 #endif
 
     mLanguageComboBox->setCurrentIndex(I18NHelper::getInstance()->preferredLanguage());
@@ -439,7 +437,7 @@ bool SettingsDialog::validateProxyInputs()
 void SettingsDialog::selectDirAction()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Please choose the cache folder"),
-                                                    current_cache_dir_.toUtf8().data(),
+                                                    current_data_dir_.toUtf8().data(),
                                                     QFileDialog::ShowDirsOnly
                                                     | QFileDialog::DontResolveSymlinks);
     if (dir.isEmpty())

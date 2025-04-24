@@ -141,7 +141,7 @@ bool ThumbnailService::getThumbnailFromCache(const QString &repo_id,
 
 void ThumbnailService::start()
 {
-    thumbnails_dir_ = QDir(gui->seadriveRoot()).filePath("thumbs");
+    thumbnails_dir_ = QDir(seadriveInternalDir()).filePath("thumbs");
     checkdir_with_mkdir(toCStr(thumbnails_dir_));
     schedule_timer_->start(kScheduleIntervalSecs * 1000);
     cache_clean_timer_->start(kThumbCacheCleanIntervalSecs * 1000);

@@ -68,6 +68,10 @@ public:
     void migrateOldConfig(const QString& data_dir);
 
 #if defined(Q_OS_WIN32) || defined(Q_OS_LINUX)
+    // seadriveRoot returns the location of user directory (aka cache dir).
+    // On Windows, the path is "$HOME/seadrive_root".
+    // On macOS, the path is not defined.
+    // On Linux, the path is "~/seadrive/"
     QString seadriveRoot() const;
 #endif
 

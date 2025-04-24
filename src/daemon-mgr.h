@@ -20,7 +20,7 @@ public:
     DaemonManager();
     ~DaemonManager();
     void startSeadriveDaemon();
-    QString currentCacheDir() const { return current_cache_dir_; }
+    QString currentDataDir() const { return current_data_dir_; }
 
 public slots:
     void restartSeadriveDaemon();
@@ -54,7 +54,7 @@ private:
     bool first_start_;
     int restart_retried_;
     _SearpcNamedPipeClient *searpc_pipe_client_;
-    QString current_cache_dir_;
+    QString current_data_dir_;
 
 };
 

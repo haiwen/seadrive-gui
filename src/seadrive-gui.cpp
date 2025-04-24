@@ -177,7 +177,7 @@ bool debugEnabledInDebugFlagFile()
 #ifdef Q_OS_MAC
 void writeCABundleForCurl()
 {
-    QString dir = seadriveDir();
+    QString dir = seadriveInternalDir();
     QString ca_bundle_path = pathJoin(dir, "ca-bundle.pem");
     QFile bundle(ca_bundle_path);
     if (bundle.exists()) {
@@ -337,7 +337,7 @@ void SeadriveGui::migrateOldConfig(const QString& dataDir)
 #ifdef Q_OS_MAC
 void SeadriveGui::migrateOldData()
 {
-    QString data_dir = QDir(seadriveDir()).filePath("data");
+    QString data_dir = QDir(seadriveInternalDir()).filePath("data");
     if (!QDir(data_dir).exists())
         return;
 
@@ -346,9 +346,9 @@ void SeadriveGui::migrateOldData()
 
     auto accounts = account_mgr_->allAccounts();
     for (int i = 0; i < accounts.size(); i++) {
-        auto account = accounts.at(i); 
+        auto account = accounts.at(i);
         file_provider_mgr_->disconnect(account);
-        QString dst_path = QDir(seadriveDir()).filePath(account.domainID());
+        QString dst_path = QDir(seadriveInternalDir()).filePath(account.domainID());
         if (!copyDirRecursively(data_dir, dst_path)) {
             errorAndExit(tr("Faild to migrate old data"));
             return;
@@ -359,7 +359,7 @@ void SeadriveGui::migrateOldData()
     }
 
     for (int i = 0; i < accounts.size(); i++) {
-        auto account = accounts.at(i); 
+        auto account = accounts.at(i);
         file_provider_mgr_->connect(account);
     }
     qWarning("finish migrating old data to new version");
@@ -411,7 +411,7 @@ void SeadriveGui::start()
     }
 #if defined(Q_OS_MAC)
     settings_mgr_->writeSystemProxyInfo(
-        url, QDir(seadriveDir()).filePath("system-proxy.txt"));
+        url, QDir(seadriveInternalDir()).filePath("system-proxy.txt"));
 #else
     settings_mgr_->writeSystemProxyInfo(
         url, QDir(seadriveDataDir()).filePath("system-proxy.txt"));
@@ -641,7 +641,7 @@ void SeadriveGui::connectDaemon()
             continue;
         }
         QString domain_id = account.domainID();
-        SeafileRpcClient *rpc_client = rpcClient(domain_id); 
+        SeafileRpcClient *rpc_client = rpcClient(domain_id);
         if (!rpc_client) {
             rpc_client = new SeafileRpcClient(domain_id);
             rpc_clients_.insert(domain_id, rpc_client);
@@ -793,7 +793,7 @@ void SeadriveGui::restartApp()
 
 bool SeadriveGui::initLog()
 {
-    QDir seadrive_dir = seadriveDir();
+    QDir seadrive_dir = seadriveInternalDir();
     if (checkdir_with_mkdir(toCStr(seadrive_dir.absolutePath())) < 0) {
         errorAndExit(tr("Failed to initialize: failed to create %1 folder").arg(getBrand()));
         return false;
@@ -1051,7 +1051,7 @@ QString SeadriveGui::seadriveRoot() const
 QString SeadriveGui::getUniqueClientId()
 {
     // Id file path is `~/.seadrive/id`
-    QFile id_file(QDir(seadriveDir()).absoluteFilePath("id"));
+    QFile id_file(QDir(seadriveInternalDir()).absoluteFilePath("id"));
     if (!id_file.exists()) {
         srand(time(NULL));
         QString id;

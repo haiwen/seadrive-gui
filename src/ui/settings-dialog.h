@@ -28,7 +28,7 @@ private:
     bool validateProxyInputs();
 
     QString current_seadrive_root_;
-    QString current_cache_dir_;
+    QString current_data_dir_;
 
     Q_DISABLE_COPY(SettingsDialog);
 };

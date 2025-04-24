@@ -34,20 +34,26 @@ QString getAppletRpcPipePath()
 {
 #if defined(Q_OS_WIN32)
     return utils::win::getLocalPipeName(kSeaDriveSockName).c_str();
-#else
-    QString current_cache_dir;
-    if (!gui->settingsManager()->getCacheDir(&current_cache_dir)) {
-#if defined(Q_OS_MAC)
-        current_cache_dir = seadriveDir();
-#else
-        current_cache_dir = seadriveDataDir();
-#endif
+
+#elif defined(Q_OS_LINUX)
+    QString current_data_dir;
+    if (!gui->settingsManager()->getDataDir(&current_data_dir)) {
+        current_data_dir = seadriveDataDir();
     }
-    if (QDir::isAbsolutePath(current_cache_dir)) {
-        current_cache_dir = QDir::home().relativeFilePath(current_cache_dir);
+    if (QDir::isAbsolutePath(current_data_dir)) {
+        current_data_dir = QDir::home().relativeFilePath(current_data_dir);
     }
-    QString socket_path = pathJoin(current_cache_dir,kSeaDriveSockName);
+    QString socket_path = pathJoin(current_data_dir,kSeaDriveSockName);
     return socket_path;
+
+#else
+    QString current_data_dir = seadriveInternalDir();
+    if (QDir::isAbsolutePath(current_data_dir)) {
+        current_data_dir = QDir::home().relativeFilePath(current_data_dir);
+    }
+    QString socket_path = pathJoin(current_data_dir,kSeaDriveSockName);
+    return socket_path;
+
 #endif
 }
 

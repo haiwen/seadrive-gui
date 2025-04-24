@@ -156,7 +156,7 @@ int AccountManager::start()
     const char *errmsg;
     const char *sql;
 
-    QString db_path = QDir(seadriveDir()).filePath("accounts.db");
+    QString db_path = QDir(seadriveInternalDir()).filePath("accounts.db");
     if (sqlite3_open (toCStr(db_path), &db)) {
         errmsg = sqlite3_errmsg (db);
         qCritical("failed to open account database %s: %s",
@@ -383,7 +383,7 @@ int AccountManager::removeAccount(const Account& account)
             std::remove(accounts_.begin(), accounts_.end(), account),
             accounts_.end());
     }
-    
+
 #ifndef Q_OS_MAC
     SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
     if (rpc_client) {

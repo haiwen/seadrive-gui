@@ -109,8 +109,11 @@ public:
     bool getSeadriveRoot(QString *seadrive_root);
     void setSeadriveRoot(const QString& seadrive_root);
 #endif
-    bool getCacheDir(QString *current_cache_dir);
-    void setCacheDir(const QString& current_cache_dir);
+
+#if defined(Q_OS_LINUX)
+    bool getDataDir(QString *current_data_dir);
+    void setDataDir(const QString& current_data_dir);
+#endif
 
 #if defined(Q_OS_MAC)
     bool getHideWindowsIncompatibilityPathMsg();

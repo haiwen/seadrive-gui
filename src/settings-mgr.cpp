@@ -884,7 +884,8 @@ void SettingsManager::setSeadriveRoot(const QString& seadrive_root)
 }
 #endif // _MSC_VER
 
-bool SettingsManager::getCacheDir(QString *current_cache_dir)
+#if defined(Q_OS_LINUX)
+bool SettingsManager::getDataDir(QString *current_data_dir)
 {
     QSettings settings;
 
@@ -893,20 +894,21 @@ bool SettingsManager::getCacheDir(QString *current_cache_dir)
         return false;
     }
 
-    *current_cache_dir = settings.value(kCacheDir).toString();
+    *current_data_dir = settings.value(kCacheDir).toString();
     settings.endGroup();
 
     return true;
 }
 
-void SettingsManager::setCacheDir(const QString& current_cache_dir)
+void SettingsManager::setDataDir(const QString& current_data_dir)
 {
     QSettings settings;
 
     settings.beginGroup(kSettingsGroup);
-    settings.setValue(kCacheDir, current_cache_dir);
+    settings.setValue(kCacheDir, current_data_dir);
     settings.endGroup();
 }
+#endif
 
 void SettingsManager::writeSystemProxyInfo(const QUrl &url,
                                            const QString &file_path)
