@@ -39,21 +39,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
 
     mLanguageComboBox->addItems(I18NHelper::getInstance()->getLanguages());
 
-#if defined(Q_OS_WIN32)
-    SettingsManager *mgr = gui->settingsManager();
-    if (!mgr->getSeadriveRoot(&current_seadrive_root_)) {
-        current_seadrive_root_ = gui->seadriveRoot();
-    }
-    mShowCacheDir->setText(current_seadrive_root_);
-    mShowCacheDir->setReadOnly(true);
-#elif defined(Q_OS_LINUX)
-    SettingsManager *mgr = gui->settingsManager();
-    if (!mgr.getDataDir(&current_data_dir_))
-        current_data_dir_ = QDir(seadriveDataDir()).absolutePath();
-    mShowCacheDir->setText(current_data_dir_);
-    mShowCacheDir->setReadOnly(true);
-    mCacheLabel->setText(tr("Cache directory:"));
-#else
+#if defined(Q_OS_MAC)
     mCacheLabel->hide();
     mShowCacheDir->hide();
     mSelectBtn->hide();
@@ -238,6 +224,20 @@ void SettingsDialog::showEvent(QShowEvent *event)
     mHideWindowsIncompatibilityCheckBox->setCheckState(state);
 #else
     mHideWindowsIncompatibilityCheckBox->hide();
+#endif
+
+#if defined(Q_OS_WIN32)
+    if (!mgr->getSeadriveRoot(&current_seadrive_root_)) {
+        current_seadrive_root_ = gui->seadriveRoot();
+    }
+    mShowCacheDir->setText(current_seadrive_root_);
+    mShowCacheDir->setReadOnly(true);
+#elif defined(Q_OS_LINUX)
+    if (!mgr->getDataDir(&current_data_dir_))
+        current_data_dir_ = QDir(seadriveDataDir()).absolutePath();
+    mShowCacheDir->setText(current_data_dir_);
+    mShowCacheDir->setReadOnly(true);
+    mCacheLabel->setText(tr("Cache directory:"));
 #endif
 
     mLanguageComboBox->setCurrentIndex(I18NHelper::getInstance()->preferredLanguage());

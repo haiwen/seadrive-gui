@@ -122,6 +122,8 @@ void DaemonManager::startSeadriveDaemon()
     if (!gui->settingsManager()->getDataDir(&current_data_dir_)) {
         current_data_dir_ = QDir(seadriveDataDir()).absolutePath();
     }
+#else
+    current_data_dir_ = QDir(seadriveDataDir()).absolutePath();
 #endif
 
 #if defined(Q_OS_WIN32)
