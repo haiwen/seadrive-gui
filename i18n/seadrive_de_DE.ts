@@ -798,6 +798,10 @@
         <source>Path has character case conflict with existing file or folder. Will not be downloaded</source>
         <translation>Der Dateipfad hat einen Konflikt mit der Großkleinschreibung einer bestehenden Datei oder eines Ordners. Herunterladen wird nicht möglich sein</translation>
     </message>
+    <message>
+        <source>Failed to change library name since some files are opened in it</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
@@ -999,7 +1003,7 @@
     </message>
     <message>
         <source>Show file sync errors</source>
-        <translation>Dateifehler beim Synchronisieren anzeigen</translation>
+        <translation>Fehler bei der Dateisynchronisation anzeigen</translation>
     </message>
     <message>
         <source>Open &amp;logs folder</source>
@@ -1415,7 +1419,7 @@
     <name>SyncErrorsDialog</name>
     <message>
         <source>File Sync Errors</source>
-        <translation>Dateifehler bei der Synchronisation</translation>
+        <translation>Fehler bei der Dateisynchronisation</translation>
     </message>
     <message>
         <source>No sync errors.</source>

@@ -798,6 +798,10 @@
         <source>Path has character case conflict with existing file or folder. Will not be downloaded</source>
         <translation>同步路径与现存文件或目录存在大小写冲突，下载已跳过</translation>
     </message>
+    <message>
+        <source>Failed to change library name since some files are opened in it</source>
+        <translation>无法修改资料库名称，部分文件正在使用中</translation>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
