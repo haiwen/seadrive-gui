@@ -799,6 +799,10 @@
         <source>Path has character case conflict with existing file or folder. Will not be downloaded</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Failed to change library name since some files are opened in it</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoteWipeService</name>

@@ -72,7 +72,7 @@
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
-        <translation type="unfinished"/>
+        <translation>초기화 실패: seadrive 마운트 폴더 만들기에 실패했습니다</translation>
     </message>
 </context>
 <context>
@@ -206,7 +206,7 @@
     </message>
     <message>
         <source>%1 has downloaded your files list.</source>
-        <translation type="unfinished"/>
+        <translation>%1을(를) 파일 목록에 다운로드했습니다.</translation>
     </message>
 </context>
 <context>
@@ -788,14 +788,18 @@
     </message>
     <message>
         <source>Library cannot be synced since it has too many files.</source>
-        <translation type="unfinished"/>
+        <translation>파일이 너무 많아 라이브러리를 동기화할 수 없습니다.</translation>
     </message>
     <message>
         <source>Files cannot be uploaded to this library due to file number limit settings.</source>
-        <translation type="unfinished"/>
+        <translation>파일 갯수 제한 설정 때문에 이 라이브러리에 파일을 업로드할 수 없습니다.</translation>
     </message>
     <message>
         <source>Path has character case conflict with existing file or folder. Will not be downloaded</source>
+        <translation>기존 파일 또는 폴더 경로에 동일한 대소문자가 있습니다. 다운로드할 수 없습니다</translation>
+    </message>
+    <message>
+        <source>Failed to change library name since some files are opened in it</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1087,76 +1091,76 @@
     </message>
     <message>
         <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
-        <translation type="unfinished"/>
+        <translation>SeaDrive %1은(는) macOS 14.4 미만에서 다중 계정으로 사용할 수 없습니다. macOS를 업그레이드하거나 SeaDrive 를 3.0.9로 다운그레이드하세요.</translation>
     </message>
     <message>
         <source>Search files</source>
-        <translation type="unfinished"/>
+        <translation>파일 검색</translation>
     </message>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;? Downloaded and uploading files will not be removed.</source>
-        <translation type="unfinished"/>
+        <translation>정말로 &quot;%1&quot;(에)서 계정을 제거할까요? 다운로드 및 업로드한 파일은 제거하지 않습니다.</translation>
     </message>
     <message>
         <source>Are you sure to resync account from &quot;%1&quot;? Downloaded and uploading files will not be removed</source>
-        <translation type="unfinished"/>
+        <translation>정말로 &quot;%1&quot;(에)서 계정을 다시 동기화할까요? 다운로드 및 업로드한 파일은 제거하지 않습니다.</translation>
     </message>
     <message>
         <source>Are you sure to resync account from &quot;%1&quot;? After resyncing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
-        <translation type="unfinished"/>
+        <translation>정말로 &quot;%1&quot;(에)서 계정을 다시 동기화할까요? 계정을 다시 동기화하더라도 ~/Library/CloudStorage에서 다운로드한 파일을 찾아볼 수 있습니다.</translation>
     </message>
 </context>
 <context>
     <name>SearchDialog</name>
     <message>
         <source>Search files</source>
-        <translation type="unfinished"/>
+        <translation>파일 검색</translation>
     </message>
     <message>
         <source>All file types</source>
-        <translation type="unfinished"/>
+        <translation>모든 파일 형식</translation>
     </message>
     <message>
         <source>Custom file type</source>
-        <translation type="unfinished"/>
+        <translation>개별 지정 파일 형식</translation>
     </message>
     <message>
         <source>retry</source>
-        <translation type="unfinished"/>
+        <translation>다시 시도</translation>
     </message>
     <message>
         <source>Failed to search&lt;br/&gt;Please %1</source>
-        <translation type="unfinished"/>
+        <translation>&lt;br/&gt;검색에 실패했습니다 %1 하세요</translation>
     </message>
     <message>
         <source>No result found</source>
-        <translation type="unfinished"/>
+        <translation>결과가 없습니다</translation>
     </message>
 </context>
 <context>
     <name>SearchItemsTableModel</name>
     <message>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>이름</translation>
     </message>
     <message>
         <source>Kind</source>
-        <translation type="unfinished"/>
+        <translation>종류</translation>
     </message>
 </context>
 <context>
     <name>SearchItemsTableView</name>
     <message>
         <source>&amp;Open the file</source>
-        <translation type="unfinished"/>
+        <translation>파일 열기(&amp;O)</translation>
     </message>
     <message>
         <source>&amp;Show in folder</source>
-        <translation type="unfinished"/>
+        <translation>폴더에 표시(&amp;S)</translation>
     </message>
     <message>
         <source>File not found, maybe not synchorized yet</source>
-        <translation type="unfinished"/>
+        <translation>파일이 없습니다. 동기화 하지 않았을 수도 있습니다</translation>
     </message>
 </context>
 <context>

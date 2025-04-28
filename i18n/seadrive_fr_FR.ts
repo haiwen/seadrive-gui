@@ -26,7 +26,7 @@
     <name>AccountManager</name>
     <message>
         <source>failed to open account database</source>
-        <translation>L&apos;ouverture de la base de données du compte a échoué</translation>
+        <translation>L&apos;ouverture de la base de données du compte a échoué.</translation>
     </message>
 </context>
 <context>
@@ -72,7 +72,7 @@
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
-        <translation type="unfinished"/>
+        <translation>Échec de l&apos;initialisation: Le dossier de montage SeaDrive n&apos;a pas pu créé.</translation>
     </message>
 </context>
 <context>
@@ -90,7 +90,7 @@
     <name>EncryptedReposTableModel</name>
     <message>
         <source>Failed to set encrypted library password</source>
-        <translation>Impossible de définir le mot de passe de la bibliothèque chiffrée</translation>
+        <translation>Le mot de passe de la bibliothèque chiffrée n&apos;a pas pu être défini.</translation>
     </message>
     <message>
         <source>Password error</source>
@@ -98,7 +98,7 @@
     </message>
     <message>
         <source>Failed to clear encrypted library password</source>
-        <translation>Impossible de supprimer le mot de passe de la bibliothèque chiffrée</translation>
+        <translation>Le mot de passe de la bibliothèque chiffrée n&apos;a pas pu être effacé.</translation>
     </message>
     <message>
         <source>Right click this item to sync or unsync the encrypted library</source>
@@ -206,7 +206,7 @@
     </message>
     <message>
         <source>%1 has downloaded your files list.</source>
-        <translation type="unfinished"/>
+        <translation>%1 a téléchargé la liste de vos fichiers</translation>
     </message>
 </context>
 <context>
@@ -345,23 +345,23 @@
     </message>
     <message>
         <source>Failed to get server info. Please check the server address.</source>
-        <translation type="unfinished"/>
+        <translation>Impossible d&apos;obtenir les informations du serveur. Veuillez vérifier l&apos;adresse du serveur.</translation>
     </message>
     <message>
         <source>Failed to get client sso link.</source>
-        <translation type="unfinished"/>
+        <translation>Impossible d&apos;obtenir le lien SSO du client</translation>
     </message>
     <message>
         <source>SSO login failed.</source>
-        <translation type="unfinished"/>
+        <translation>La connexion SSO a échoué.</translation>
     </message>
     <message>
         <source>Failed to get client sso status.</source>
-        <translation type="unfinished"/>
+        <translation>Impossible d&apos;obtenir l&apos;état SSO du client</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Par example: https://example.votre-serveur.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -783,18 +783,22 @@
     </message>
     <message>
         <source>Failed to download file. Please check disk space or folder permissions</source>
-        <translation type="unfinished"/>
+        <translation>Le téléchargement du fichier a échoué. Veuillez vérifier l&apos;espace sur le disque dur ou  les autorisations du dossier.</translation>
     </message>
     <message>
         <source>Library cannot be synced since it has too many files.</source>
-        <translation type="unfinished"/>
+        <translation>La bibliothèque ne peut pas être synchronisée. Elle contient trop de fichiers.</translation>
     </message>
     <message>
         <source>Files cannot be uploaded to this library due to file number limit settings.</source>
-        <translation type="unfinished"/>
+        <translation>Les fichiers ne peuvent pas être importés vers cette bibliothèque. La limite du nombre de fichiers est dépassé.</translation>
     </message>
     <message>
         <source>Path has character case conflict with existing file or folder. Will not be downloaded</source>
+        <translation>Le chemin d&apos;accès présente un conflit de caractères avec un fichier ou un dossier existant. Le téléchargement n&apos;est pas éffectué.</translation>
+    </message>
+    <message>
+        <source>Failed to change library name since some files are opened in it</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -806,7 +810,7 @@
     </message>
     <message>
         <source>Authorization expired, please re-login. You can find files that are not uploaded yet at ~/Library/CloudStorage</source>
-        <translation type="unfinished"/>
+        <translation>L&apos;autorisation a expirée. Veuillez vous reconnecter. Vous pouvez trouver les fichiers qui n&apos;ont pas encore été envoyés dans ~/Library/CloudStorage</translation>
     </message>
 </context>
 <context>
@@ -841,7 +845,7 @@
     </message>
     <message>
         <source>Create %1 folder failed!</source>
-        <translation>La création du dossier %1 a échoué !</translation>
+        <translation>La création du dossier %1 a échoué.</translation>
     </message>
 </context>
 <context>
@@ -912,15 +916,15 @@
     </message>
     <message>
         <source>Faild to migrate old data</source>
-        <translation type="unfinished"/>
+        <translation>La migration des anciennes données a échoué.</translation>
     </message>
     <message>
         <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
-        <translation type="unfinished"/>
+        <translation>SeaDrive %1 avec plusieurs comptes ne peut pas fonctionner avec une version de macOS inférieure à 14.4. Veuillez mettre à jour votre macOS ou rétrograder SeaDrive à la version 3.0.9.</translation>
     </message>
     <message>
         <source>To start %1 extension for account %2, you need to click the %3 entry in Finder</source>
-        <translation type="unfinished"/>
+        <translation>Afin de lancer l&apos;extension %1 pour le compte %2, veuillez cliquer sur l&apos;élément %3 dans le Finder.</translation>
     </message>
 </context>
 <context>
@@ -1078,84 +1082,84 @@
     </message>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;? After removing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
-        <translation type="unfinished"/>
+        <translation>Êtes-vous sûr de vouloir supprimer le compte de &quot;%1&quot;? Après avoir supprimé le compte, vous pouvez toujours trouver les fichiers téléchargés dans ~/Bibliothèque/CloudStorage.</translation>
     </message>
     <message>
         <source>Failed to connect to background process, please try again later</source>
-        <translation type="unfinished"/>
+        <translation>La connexion au processus d&apos;arrière-plan a échoué. Veuillez réessayer plus tard.</translation>
     </message>
     <message>
         <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
-        <translation type="unfinished"/>
+        <translation>SeaDrive %1 avec plusieurs comptes ne peut pas fonctionner avec une version de macOS inférieure à 14.4. Veuillez mettre à jour votre macOS ou rétrograder SeaDrive à la version 3.0.9.</translation>
     </message>
     <message>
         <source>Search files</source>
-        <translation type="unfinished"/>
+        <translation>Rechercher des fichiers</translation>
     </message>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;? Downloaded and uploading files will not be removed.</source>
-        <translation type="unfinished"/>
+        <translation>Êtes-vous sûr de vouloir supprimer le compte de &quot;%1&quot;? Les fichiers téléchargés et envoyés ne seront pas supprimés.</translation>
     </message>
     <message>
         <source>Are you sure to resync account from &quot;%1&quot;? Downloaded and uploading files will not be removed</source>
-        <translation type="unfinished"/>
+        <translation>Êtes-vous sûr de vouloir resyncroniser le compte de &quot;%1&quot;? Les fichiers téléchargés et envoyés ne seront pas supprimés.</translation>
     </message>
     <message>
         <source>Are you sure to resync account from &quot;%1&quot;? After resyncing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
-        <translation type="unfinished"/>
+        <translation>Êtes-vous sûr de vouloir resyncroniser le compte de &quot;%1&quot;? Après avoir resyncronisé le compte, vous pouvez toujours trouver les fichiers téléchargés dans ~/Bibliothèque/CloudStorage.</translation>
     </message>
 </context>
 <context>
     <name>SearchDialog</name>
     <message>
         <source>Search files</source>
-        <translation type="unfinished"/>
+        <translation>Rechercher des fichiers</translation>
     </message>
     <message>
         <source>All file types</source>
-        <translation type="unfinished"/>
+        <translation>Tous types de fichiers</translation>
     </message>
     <message>
         <source>Custom file type</source>
-        <translation type="unfinished"/>
+        <translation>Type de fichier personnalisé</translation>
     </message>
     <message>
         <source>retry</source>
-        <translation type="unfinished"/>
+        <translation>Réessayer</translation>
     </message>
     <message>
         <source>Failed to search&lt;br/&gt;Please %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de rechercher&lt;br/&gt;Please %1</translation>
     </message>
     <message>
         <source>No result found</source>
-        <translation type="unfinished"/>
+        <translation>Aucun résultat</translation>
     </message>
 </context>
 <context>
     <name>SearchItemsTableModel</name>
     <message>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Nom</translation>
     </message>
     <message>
         <source>Kind</source>
-        <translation type="unfinished"/>
+        <translation>Type</translation>
     </message>
 </context>
 <context>
     <name>SearchItemsTableView</name>
     <message>
         <source>&amp;Open the file</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Ouvrir le fichier</translation>
     </message>
     <message>
         <source>&amp;Show in folder</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Afficher dans le dossier</translation>
     </message>
     <message>
         <source>File not found, maybe not synchorized yet</source>
-        <translation type="unfinished"/>
+        <translation>Fichier non trouvé, peut-être qu&apos;il n&apos;est pas encore synchronisé.</translation>
     </message>
 </context>
 <context>
@@ -1377,18 +1381,18 @@
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"/>
+        <translation>Mot de passe :</translation>
     </message>
     <message>
         <source>Failed to generate share link: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de générer un lien de partage: %1</translation>
     </message>
 </context>
 <context>
     <name>ShibLoginDialog</name>
     <message>
         <source>Single Sign On</source>
-        <translation type="unfinished"/>
+        <translation>Authentification unique</translation>
     </message>
 </context>
 <context>
