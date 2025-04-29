@@ -460,6 +460,39 @@ bool SeafileRpcClient::getRepoFileLockStatus(const QString& repo_id,
     }
     return true;
 }
+#elif defined(Q_OS_LINUX)
+int SeafileRpcClient::getRepoFileStatus(const Account& account,
+                                        const QString& repo_uname,
+                                        const QString& path_in_repo,
+                                        QString *status)
+{
+    QString serverAddr = account.serverUrl.toString(QUrl::FullyEncoded);
+    if (serverAddr.endsWith("/")) {
+        serverAddr = serverAddr.left(serverAddr.size() - 1);
+    }
+    GError *error = NULL;
+    char *ret = searpc_client_call__string (
+            seadrive_rpc_client_,
+            "seafile_get_path_sync_status",
+            &error, 4,
+            "string", toCStr(serverAddr),
+            "string", toCStr(account.username),
+            "string", toCStr(repo_uname),
+            "string", toCStr(path_in_repo));
+    if (error) {
+        qWarning("failed to get path status for %s/%s: %s\n",
+                 toCStr(repo_uname),
+                 toCStr(path_in_repo),
+                 error->message);
+        g_error_free(error);
+        return -1;
+    }
+
+    *status = ret;
+
+    g_free (ret);
+    return 0;
+}
 #endif
 
 int SeafileRpcClient::getCategorySyncStatus(const QString& category, QString *status)

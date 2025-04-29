@@ -191,6 +191,12 @@ SET(moc_headers
   ${SHIB_EXTRA_HEADER}
   ${platform_specific_moc_headers}
 )
+
+IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "BSD")
+    LIST(APPEND moc_headers 
+        src/ext-handler.h)
+ENDIF()
+
 IF(QT_VERSION_MAJOR EQUAL 6)
     QT6_WRAP_CPP(moc_output ${moc_headers})
 ELSE()
@@ -326,6 +332,13 @@ SET(seadrive_gui_sources
   src/i18n.cpp
   third_party/QtAwesome/QtAwesome.cpp
 )
+
+IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "BSD")
+    LIST(APPEND seadrive_gui_sources
+        src/ext-handler.cpp)
+ENDIF()
+
+
 
 INCLUDE_DIRECTORIES(
   ${CMAKE_CURRENT_SOURCE_DIR}

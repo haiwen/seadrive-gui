@@ -1,12 +1,17 @@
 #ifndef SEADRIVE_CLIENT_EXT_HANLDER_H
 #define SEADRIVE_CLIENT_EXT_HANLDER_H
 
+#include <QtGlobal>
 #include <QObject>
 #include <QThread>
 #include <QList>
 #include <QHash>
 
+#ifdef Q_OS_WIN32
 #include <windows.h>
+#else
+typedef int HANDLE;
+#endif
 
 #include "utils/singleton.h"
 #include "account.h"
@@ -141,7 +146,11 @@ private:
 
     void handleGenShareLink(const QStringList& args, bool internal);
     QString handleListRepos(const QStringList& args);
+#ifdef Q_OS_WIN32
     QString handleGetFileLockStatus(const QStringList& args);
+#else
+    QString handleGetFileStatus(const QStringList& args);
+#endif
     void handleLockFile(const QStringList& args, bool lock);
     void handlePrivateShare(const QStringList& args, bool to_group);
     void handleShowHistory(const QStringList& args);
@@ -156,6 +165,8 @@ private:
 
     bool isFileCached(const QString &path);
     bool handleIsFileCached(QStringList &args);
+    bool isFileInRepo(const QString &path);
+    bool handleIsFileInRepo(QStringList &args);
     QString handleGetMountPoint();
     QString handleGetThumbnailFromServer(QStringList &args);
     bool fetchThumbnail(const QString &path, int size, QString *file);

@@ -41,6 +41,8 @@
 #include "utils/utils-win.h"
 #include "ext-handler.h"
 #include "ui/seadrive-root-dialog.h"
+#elif defined(Q_OS_LINUX)
+#include "ext-handler.h"
 #endif
 
 #if defined(Q_OS_MAC)
@@ -579,6 +581,8 @@ void SeadriveGui::onDaemonStarted()
 #if defined(_MSC_VER)
     SeafileExtensionHandler::instance()->start();
     RegElement::installCustomUrlHandler();
+#elif defined(Q_OS_LINUX)
+    SeafileExtensionHandler::instance()->start();
 #endif
 
 #if defined(Q_OS_WIN32)

@@ -72,6 +72,11 @@ public:
     bool getRepoFileLockStatus(const QString& repo_id,
                                const QString& path_in_repo,
                                int* status);
+#elif defined(Q_OS_LINUX)
+    int getRepoFileStatus(const Account& account,
+                          const QString& repo_uname,
+                          const QString& path_in_repo,
+                          QString *status);
 #endif
 
     int getCategorySyncStatus(const QString& category, QString *status);
