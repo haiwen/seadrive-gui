@@ -296,13 +296,13 @@ bool parseFilePath(const QString &path,
         if (a.displayName == display_name) {
             *account = a;
             // skip display name
-            relative_path = relative_path.mid(display_name.length() + 1);
+            parts.removeFirst();
             found = true;
             break;
         }
     }
 
-    if (relative_path.isEmpty()){
+    if (parts.isEmpty()){
         return false;
     }
 
@@ -312,37 +312,24 @@ bool parseFilePath(const QString &path,
         return false;
     }
 
-    if (relative_path.endsWith("/")) {
-        relative_path = relative_path.left(relative_path.length() - 1);
-    }
-
-    if (!category_out && !relative_path.contains('/')) {
-        return false;
-    }
-
-    int pos = relative_path.indexOf('/');
-    QString category = relative_path.left(pos);
     if (category_out) {
-        *category_out = category;
+        *category_out = parts[0];
     }
 
-    if (!relative_path.contains('/')) {
+    parts.removeFirst();
+    if (parts.isEmpty()){
         return true;
     }
 
-    QString remaining = relative_path.mid(pos + 1);
-    // printf("category = %s, remaining = %s\n", category.toUtf8().data(), remaining.toUtf8().data());
-
-    if (remaining.contains('/')) {
-        int pos = remaining.indexOf('/');
-        *repo = remaining.left(pos);
-        *path_in_repo = remaining.mid(pos);
-        // printf("repo = %s, path_in_repo = %s\n", repo->toUtf8().data(),
-        //        path_in_repo->toUtf8().data());
+    if (parts.size() > 1) {
+        *repo = parts[0];
+        parts.removeFirst();
+        *path_in_repo = parts.join("/");
     } else {
-        *repo = remaining;
+        *repo = parts[0];
         *path_in_repo = "";
     }
+
     return true;
 }
 
