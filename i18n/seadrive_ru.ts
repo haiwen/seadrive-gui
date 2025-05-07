@@ -800,7 +800,7 @@
     </message>
     <message>
         <source>Failed to change library name since some files are opened in it</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось изменить название библиотеки, так как в ней открыты некоторые файлы</translation>
     </message>
 </context>
 <context>
