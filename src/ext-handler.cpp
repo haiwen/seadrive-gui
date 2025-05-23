@@ -1,11 +1,5 @@
-#include <winsock2.h>
-#include <windows.h>
-#include <io.h>
-#include <shlobj.h>
-#include <shlwapi.h>
 #include <fcntl.h>
 #include <ctype.h>
-#include <userenv.h>
 
 #include <string>
 #include <QMutexLocker>
@@ -30,6 +24,19 @@
 #include "auto-login-service.h"
 #include "ext-handler.h"
 #include "thumbnail-service.h"
+
+#ifdef Q_OS_LINUX
+#include <QApplication>
+#include "ui/tray-icon.h"
+#endif
+
+#ifdef Q_OS_WIN32
+#include <winsock2.h>
+#include <windows.h>
+#include <io.h>
+#include <shlobj.h>
+#include <shlwapi.h>
+#include <userenv.h>
 
 namespace {
 
@@ -184,6 +191,160 @@ inline QString path_concat(const QString& s1, const QString& s2)
 }
 
 } // namespace
+#else
+#include <unistd.h>
+#include <sys/socket.h>
+#include <sys/un.h>
+#include <sys/stat.h>
+#include <string.h>
+
+#include <glib.h>
+
+namespace {
+
+const char *kSeafExtPipeName = "seadrive_ext.sock";
+
+bool
+extPipeReadN (int pipe_fd, void *vptr, size_t n)
+{
+    size_t  nleft;
+    gssize nread;
+    char    *ptr;
+
+    ptr = (char *)vptr;
+    nleft = n;
+    while (nleft > 0) {
+        if ( (nread = read(pipe_fd, ptr, nleft)) < 0) {
+            if (errno == EINTR)
+                nread = 0;      /* and call read() again */
+            else
+                return false;
+        } else if (nread == 0)
+            break;              /* EOF */
+
+        nleft -= nread;
+        ptr   += nread;
+    }
+    return(n - nleft) >= 0;
+}
+
+bool
+extPipeWriteN(int pipe_fd, void *vptr, size_t n)
+{
+    size_t      nleft;
+    gssize     nwritten;
+    const char  *ptr;
+
+    ptr = (char *)vptr;
+    nleft = n;
+    while (nleft > 0) {
+        if ( (nwritten = write(pipe_fd, ptr, nleft)) <= 0)
+        {
+            if (nwritten < 0 && errno == EINTR)
+                nwritten = 0;       /* and call write() again */
+            else
+                return false;         /* error */
+        }
+
+        nleft -= nwritten;
+        ptr   += nwritten;
+    }
+    return true;
+}
+
+/**
+ * Replace "\" with "/", and remove the trailing slash
+ */
+QString normalizedPath(const QString& path)
+{
+    QString p = QDir::fromNativeSeparators(path);
+    if (p.endsWith("/")) {
+        p = p.left(p.size() - 1);
+    }
+    return p;
+}
+
+std::string formatErrorMessage()
+{
+    return strerror (errno);
+}
+
+bool parseFilePath(const QString &path,
+                   Account *account,
+                   QString *repo,
+                   QString *path_in_repo,
+                   QString *category_out)
+{
+    // The path of the file in relative to the mount point.
+    // It is like "My Libraries/Documents"
+    QString relative_path;
+
+    QDir sync_root_base = QDir::home().filePath("SeaDrive");
+    QString base_dir = sync_root_base.path() + '/';
+
+    if (path.startsWith(base_dir)) {
+        relative_path = path.mid(base_dir.length());
+    } else {
+        return false;
+    }
+
+    if (relative_path.isEmpty()){
+        return false;
+    }
+
+    QStringList parts = relative_path.split('/', Qt::SkipEmptyParts);
+    QString display_name = parts[0];
+
+    bool found = false;
+    auto accounts = gui->accountManager()->activeAccounts();
+    for (auto a : accounts) {
+        if (a.displayName == display_name) {
+            *account = a;
+            // skip display name
+            parts.removeFirst();
+            found = true;
+            break;
+        }
+    }
+
+    if (parts.isEmpty()){
+        return false;
+    }
+
+    if (!found && accounts.size() == 1) {
+        *account = accounts.first();
+    } else if (!found) {
+        return false;
+    }
+
+    if (category_out) {
+        *category_out = parts[0];
+    }
+
+    parts.removeFirst();
+    if (parts.isEmpty()){
+        return true;
+    }
+
+    if (parts.size() > 1) {
+        *repo = parts[0];
+        parts.removeFirst();
+        *path_in_repo = parts.join("/");
+    } else {
+        *repo = parts[0];
+        *path_in_repo = "";
+    }
+
+    return true;
+}
+
+inline QString path_concat(const QString& s1, const QString& s2)
+{
+    return QString("%1/%2").arg(s1).arg(s2);
+}
+
+} // namespace
+#endif
 
 
 SINGLETON_IMPL(SeafileExtensionHandler)
@@ -238,11 +399,13 @@ void SeafileExtensionHandler::onDaemonRestarted()
 
 void SeafileExtensionHandler::stop()
 {
+#ifdef Q_OS_WIN32
     if (started_) {
         // Before seafile client exits, tell the shell to clean all the file
         // status icons
         SHChangeNotify (SHCNE_ASSOCCHANGED, SHCNF_IDLIST, NULL, NULL);
     }
+#endif
 }
 
 void SeafileExtensionHandler::getUploadLink(const Account& account, const QString& repo_id, const QString& path_in_repo)
@@ -460,6 +623,7 @@ void SeafileExtensionHandler::onGetFileLockInfoFailed(const ApiError& error)
     req->deleteLater();
 }
 
+#ifdef Q_OS_WIN32
 void ExtConnectionListenerThread::run()
 {
     std::string local_pipe_name = utils::win::getLocalPipeName(kSeafExtPipeName);
@@ -501,6 +665,76 @@ void ExtConnectionListenerThread::run()
         servePipeInNewThread(pipe);
     }
 }
+#else
+void ExtConnectionListenerThread::run()
+{
+    QString data_dir = seadriveInternalDir();
+    QString socket_path = pathJoin(data_dir, kSeafExtPipeName);
+    const char *un_path = toCStr(socket_path);
+    qWarning("[ext] listening on %s", un_path);
+    int pipe_fd = -1;
+
+    pipe_fd = socket (AF_UNIX, SOCK_STREAM, 0);
+    if (pipe_fd < 0) {
+        qWarning("[ext] Failed to create unix socket fd: %s\n", strerror(errno));
+        close (pipe_fd);
+        return;
+    }
+
+    struct sockaddr_un saddr;
+    saddr.sun_family = AF_UNIX;
+
+    if (strlen(un_path) > sizeof(saddr.sun_path)-1) {
+        qWarning("[ext] Unix socket path %s is too long."
+                 "Please set or modify UNIX_SOCKET option in ccnet.conf.\n",
+                 un_path);
+        close (pipe_fd);
+        return;
+    }
+
+    if (g_file_test (un_path, G_FILE_TEST_EXISTS)) {
+        qWarning("[ext] socket file exists, delete it anyway\n");
+        if (unlink (un_path) < 0) {
+            qWarning("[ext] delete ext socket file failed : %s\n", strerror(errno));
+            close(pipe_fd);
+            return;
+        }
+    }
+
+    g_strlcpy (saddr.sun_path, un_path, sizeof(saddr.sun_path));
+    if (bind(pipe_fd, (struct sockaddr *)&saddr, sizeof(saddr)) < 0) {
+        qWarning("[ext] Failed to bind unix socket fd to %s : %s\n",
+                un_path, strerror(errno));
+        close(pipe_fd);
+        return;
+    }
+
+    if (listen(pipe_fd, 10) < 0) {
+        qWarning("[ext] Failed to listen to unix socket: %s\n", strerror(errno));
+        close (pipe_fd);
+        return;
+    }
+
+    if (chmod(un_path, 0700) < 0) {
+        qWarning("[ext] Failed to set permisson for unix socket %s: %s\n",
+                 un_path, strerror(errno));
+        close (pipe_fd);
+        return;
+    }
+
+    while (1) {
+        int connfd = accept (pipe_fd, NULL, 0);
+        if (connfd < 0) {
+            qWarning("[ext] Failed to accept from unix socket: %s\n", strerror(errno));
+            close (pipe_fd);
+            return;
+        }
+
+        qDebug ("[ext] Accepted an extension pipe client\n");
+        servePipeInNewThread(connfd);
+    }
+}
+#endif
 
 void ExtConnectionListenerThread::servePipeInNewThread(HANDLE pipe)
 {
@@ -547,7 +781,11 @@ void ExtCommandsHandler::run()
         } else if (cmd == "get-internal-link") {
             handleGenShareLink(args, true);
         } else if (cmd == "get-file-status") {
+#ifdef Q_OS_WIN32
             resp = handleGetFileLockStatus(args);
+#else
+            resp = handleGetFileStatus(args);
+#endif
         } else if (cmd == "lock-file") {
             handleLockFile(args, true);
         } else if (cmd == "unlock-file") {
@@ -567,9 +805,65 @@ void ExtCommandsHandler::run()
         } else if (cmd == "is-file-cached") {
             bool is_cached = handleIsFileCached(args);
             resp = is_cached ? "cached" : "uncached";
-        } else if (cmd == "get-thumbnail-from-server") {
+        } else if (cmd == "is-file-in-repo") {
+            bool is_in_repo = handleIsFileInRepo(args);
+            resp = is_in_repo ? "true" : "false";
+        }
+#ifdef Q_OS_WIN32
+        else if (cmd == "get-thumbnail-from-server") {
             resp = handleGetThumbnailFromServer(args);
-        } else {
+        }
+#endif
+#ifdef Q_OS_LINUX
+        else if (cmd == "show-transfer-progress") {
+            QTimer::singleShot(0, qApp, [this]() {
+                gui->trayIcon()->showTransferProgressDialog();
+            });
+        } else if (cmd == "show-file-sync-errors") {
+            QTimer::singleShot(0, qApp, [this]() {
+                gui->trayIcon()->showSyncErrorsDialog();
+            });
+        } else if (cmd == "show-encrypted-libraries") {
+            QTimer::singleShot(0, qApp, [this]() {
+                gui->trayIcon()->showEncRepoDialog();
+            });
+        } else if (cmd == "open-logs-folder") {
+            QTimer::singleShot(0, qApp, [this]() {
+                gui->trayIcon()->openLogDirectory();
+            });
+        } else if (cmd == "show-settings") {
+            QTimer::singleShot(0, qApp, [this]() {
+                gui->trayIcon()->showSettingsWindow();
+            });
+        } else if (cmd == "show-about") {
+            QTimer::singleShot(0, qApp, [this]() {
+                gui->trayIcon()->showAboutDialog();
+            });
+        } else if (cmd == "show-help") {
+            QTimer::singleShot(0, qApp, [this]() {
+                gui->trayIcon()->openHelp();
+            });
+        } else if (cmd == "quit") {
+            QMetaObject::invokeMethod(qApp, [this]() {
+                QCoreApplication::exit(0);
+            }, Qt::QueuedConnection);
+        } else if (cmd == "show-accounts") {
+            resp = handleShowAccounts();
+        } else if (cmd == "add-account") {
+            QTimer::singleShot(0, qApp, [this]() {
+                gui->trayIcon()->showLoginDialog();
+            });
+        } else if (cmd == "delete-account") {
+            QTimer::singleShot(0, qApp, [this, args]() {
+                handleDeleteAccount(args);
+            });
+        } else if (cmd == "resync-account") {
+            QTimer::singleShot(0, qApp, [this, args]() {
+                handleResyncAccount(args);
+            });
+        }
+#endif
+        else {
             qWarning ("[ext] unknown request command: %s", cmd.toUtf8().data());
         }
 
@@ -580,10 +874,16 @@ void ExtCommandsHandler::run()
         }
     }
 
+#ifdef Q_OS_WIN32
     qDebug ("An extension client is disconnected: GLE=%lu\n",
             GetLastError());
     DisconnectNamedPipe(pipe_);
     CloseHandle(pipe_);
+#else
+    qDebug ("An extension client is disconnected: %s\n",
+            strerror(errno));
+    close (pipe_);
+#endif
 }
 
 bool ExtCommandsHandler::readRequest(QStringList *args)
@@ -647,6 +947,7 @@ void ExtCommandsHandler::handleGenShareLink(const QStringList& args, bool intern
 
 QString ExtCommandsHandler::handleListRepos(const QStringList& args)
 {
+#ifdef Q_OS_WIN32
     if (args.size() != 0) {
         qWarning("handleListRepos: args is not 0");
         return "";
@@ -673,6 +974,9 @@ QString ExtCommandsHandler::handleListRepos(const QStringList& args)
     }
 
     return fullpaths.join("\n");
+#else
+    return "";
+#endif
 }
 
 void ExtCommandsHandler::handleGetUploadLink(const QStringList& args)
@@ -691,6 +995,7 @@ void ExtCommandsHandler::handleGetUploadLink(const QStringList& args)
     emit getUploadLink(account, repo_id, path_in_repo);
 }
 
+#ifdef Q_OS_WIN32
 QString ExtCommandsHandler::handleGetFileLockStatus(const QStringList& args)
 {
     if (args.size() != 1) {
@@ -732,6 +1037,33 @@ QString ExtCommandsHandler::handleGetFileLockStatus(const QStringList& args)
 
     return status;
 }
+#else
+QString ExtCommandsHandler::handleGetFileStatus(const QStringList& args)
+{
+    if (args.size() != 1) {
+        return "";
+    }
+    QString path = normalizedPath(args[0]);
+
+    QString status;
+    Account account;
+    QString path_in_repo;
+    QString repo;
+    QString category;
+
+    if (!parseFilePath(path, &account, &repo, &path_in_repo, &category)) {
+        qWarning() << "failed to parse file path:" << path;
+        return "";
+    }
+
+    QMutexLocker locker(&rpc_client_mutex_);
+    if (rpc_client_->getRepoFileStatus(account, path_concat(category, repo), path_in_repo, &status) != 0) {
+        return "";
+    }
+
+    return status;
+}
+#endif
 
 void ExtCommandsHandler::handleLockFile(const QStringList& args, bool lock)
 {
@@ -883,6 +1215,94 @@ bool ExtCommandsHandler::isFileCached(const QString &path) {
     return rpc_client_->isFileCached(repo_id, path_in_repo);
 }
 
+bool ExtCommandsHandler::handleIsFileInRepo(QStringList &args) {
+    if (args.size() != 1) {
+        return false;
+    }
+
+    QString file_path = normalizedPath(args.first());
+    return isFileInRepo(file_path);
+}
+
+bool ExtCommandsHandler::isFileInRepo(const QString &path) {
+    Account account;
+    QString repo_id, path_in_repo;
+    if (!parseRepoFileInfo(path, &account, &repo_id, &path_in_repo)) {
+        return false;
+    }
+
+    return true;
+}
+
+QString ExtCommandsHandler::handleShowAccounts()
+{
+    auto accounts = gui->accountManager()->allAccounts();
+    if (accounts.empty()) {
+        return "";
+    }
+
+    json_t *array = json_array();
+    json_t *obj;
+
+    for (size_t i = 0, n = accounts.size(); i < n; i++) {
+        obj = json_object();
+        const Account &account = accounts[i];
+        QString text_name = account.accountInfo.name.isEmpty() ?
+                    account.username : account.accountInfo.name;
+        QString text = text_name + " (" + account.serverUrl.host() + ")";
+        json_object_set_new (obj, "name", json_string(toCStr(text)));
+
+        json_object_set_new (obj, "signature", json_string(toCStr(account.getSignature())));
+
+        json_array_append_new (array, obj);
+    }
+
+    char *info = json_dumps(array, 0);
+    QString ret = QString::fromUtf8(info);
+    json_decref (array);
+    free (info);
+
+    return ret;
+}
+
+void ExtCommandsHandler::handleDeleteAccount(QStringList args) {
+    if (args.size() != 1) {
+        return;
+    }
+
+    QString signature = normalizedPath(args.first());
+    Account account = gui->accountManager()->getAccountBySignature(signature);
+
+    QString question = tr("Are you sure to remove account from \"%1\"? Downloaded and uploading files will not be removed.").arg(account.serverUrl.toString());
+    if (!gui->yesOrNoBox(question, nullptr, false)) {
+        return;
+    }
+    gui->accountManager()->removeAccount(account);
+}
+
+void ExtCommandsHandler::handleResyncAccount(QStringList args) {
+    if (args.size() != 1) {
+        return;
+    }
+
+    QString signature = normalizedPath(args.first());
+    Account account = gui->accountManager()->getAccountBySignature(signature);
+    SeafileRpcClient *rpc_client = gui->rpcClient(account.domainID());
+    if (!rpc_client || !rpc_client->isConnected()) {
+        gui->warningBox (tr("Failed to connect to background process, please try again later"));
+        return;
+    }
+
+    QString question = tr("Are you sure to resync account from \"%1\"? Downloaded and uploading files will not be removed").arg(account.serverUrl.toString());
+    if (!gui->yesOrNoBox(question, nullptr, false)) {
+        return;
+    }
+
+    gui->accountManager()->resyncAccount(account);
+
+}
+
+#ifdef Q_OS_WIN32
 // Get thumbanil from server and return the cached thumbnail path
 QString ExtCommandsHandler::handleGetThumbnailFromServer(QStringList& args) {
     if (args.size() != 2) {
@@ -920,3 +1340,4 @@ bool ExtCommandsHandler::fetchThumbnail(const QString &path, int size, QString *
     return ThumbnailService::instance()->getThumbnail(
             account, repo_id, path_in_repo, size, timeout_msecs, file);
 }
+#endif
