@@ -167,6 +167,9 @@ private:
     bool handleIsFileCached(QStringList &args);
     bool isFileInRepo(const QString &path);
     bool handleIsFileInRepo(QStringList &args);
+    QString handleShowAccounts();
+    void handleDeleteAccount(QStringList args);
+    void handleResyncAccount(QStringList args);
     QString handleGetMountPoint();
     QString handleGetThumbnailFromServer(QStringList &args);
     bool fetchThumbnail(const QString &path, int size, QString *file);

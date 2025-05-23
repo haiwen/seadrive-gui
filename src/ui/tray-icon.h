@@ -67,12 +67,19 @@ public:
     void setLoginActionEnabled(bool enabled);
 
 public slots:
+    void openHelp();
     void showSettingsWindow();
     void showSearchDialog();
     void showLoginDialog();
     void showLoginDialog(const Account& account);
     void showAboutDialog();
     void onLoginDialogClosed();
+
+    void openLogDirectory();
+
+    void showSyncErrorsDialog();
+    void showTransferProgressDialog();
+    void showEncRepoDialog();
 
 private slots:
     void clearDialog();
@@ -82,8 +89,6 @@ private slots:
     void rotateTrayIcon();
     void refreshTrayIcon();
     void refreshTrayIconToolTip();
-    void openHelp();
-    void openLogDirectory();
     void about();
     void checkTrayIconMessageQueue();
 
@@ -92,10 +97,6 @@ private slots:
 
     // only used on windows
     void onMessageClicked();
-
-    void showSyncErrorsDialog();
-    void showTransferProgressDialog();
-    void showEncRepoDialog();
 
 private:
     Q_DISABLE_COPY(SeafileTrayIcon)

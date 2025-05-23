@@ -25,6 +25,11 @@
 #include "ext-handler.h"
 #include "thumbnail-service.h"
 
+#ifdef Q_OS_LINUX
+#include <QApplication>
+#include "ui/tray-icon.h"
+#endif
+
 #ifdef Q_OS_WIN32
 #include <winsock2.h>
 #include <windows.h>
@@ -809,6 +814,55 @@ void ExtCommandsHandler::run()
             resp = handleGetThumbnailFromServer(args);
         }
 #endif
+#ifdef Q_OS_LINUX
+        else if (cmd == "show-transfer-progress") {
+            QTimer::singleShot(0, qApp, [this]() {
+                gui->trayIcon()->showTransferProgressDialog();
+            });
+        } else if (cmd == "show-file-sync-errors") {
+            QTimer::singleShot(0, qApp, [this]() {
+                gui->trayIcon()->showSyncErrorsDialog();
+            });
+        } else if (cmd == "show-encrypted-libraries") {
+            QTimer::singleShot(0, qApp, [this]() {
+                gui->trayIcon()->showEncRepoDialog();
+            });
+        } else if (cmd == "open-logs-folder") {
+            QTimer::singleShot(0, qApp, [this]() {
+                gui->trayIcon()->openLogDirectory();
+            });
+        } else if (cmd == "show-settings") {
+            QTimer::singleShot(0, qApp, [this]() {
+                gui->trayIcon()->showSettingsWindow();
+            });
+        } else if (cmd == "show-about") {
+            QTimer::singleShot(0, qApp, [this]() {
+                gui->trayIcon()->showAboutDialog();
+            });
+        } else if (cmd == "show-help") {
+            QTimer::singleShot(0, qApp, [this]() {
+                gui->trayIcon()->openHelp();
+            });
+        } else if (cmd == "quit") {
+            QMetaObject::invokeMethod(qApp, [this]() {
+                QCoreApplication::exit(0);
+            }, Qt::QueuedConnection);
+        } else if (cmd == "show-accounts") {
+            resp = handleShowAccounts();
+        } else if (cmd == "add-account") {
+            QTimer::singleShot(0, qApp, [this]() {
+                gui->trayIcon()->showLoginDialog();
+            });
+        } else if (cmd == "delete-account") {
+            QTimer::singleShot(0, qApp, [this, args]() {
+                handleDeleteAccount(args);
+            });
+        } else if (cmd == "resync-account") {
+            QTimer::singleShot(0, qApp, [this, args]() {
+                handleResyncAccount(args);
+            });
+        }
+#endif
         else {
             qWarning ("[ext] unknown request command: %s", cmd.toUtf8().data());
         }
@@ -1180,6 +1234,73 @@ bool ExtCommandsHandler::isFileInRepo(const QString &path) {
     return true;
 }
 
+QString ExtCommandsHandler::handleShowAccounts()
+{
+    auto accounts = gui->accountManager()->allAccounts();
+    if (accounts.empty()) {
+        return "";
+    }
+
+    json_t *array = json_array();
+    json_t *obj;
+
+    for (size_t i = 0, n = accounts.size(); i < n; i++) {
+        obj = json_object();
+        const Account &account = accounts[i];
+        QString text_name = account.accountInfo.name.isEmpty() ?
+                    account.username : account.accountInfo.name;
+        QString text = text_name + " (" + account.serverUrl.host() + ")";
+        json_object_set_new (obj, "name", json_string(toCStr(text)));
+
+        json_object_set_new (obj, "signature", json_string(toCStr(account.getSignature())));
+
+        json_array_append_new (array, obj);
+    }
+
+    char *info = json_dumps(array, 0);
+    QString ret = QString::fromUtf8(info);
+    json_decref (array);
+    free (info);
+
+    return ret;
+}
+
+void ExtCommandsHandler::handleDeleteAccount(QStringList args) {
+    if (args.size() != 1) {
+        return;
+    }
+
+    QString signature = normalizedPath(args.first());
+    Account account = gui->accountManager()->getAccountBySignature(signature);
+
+    QString question = tr("Are you sure to remove account from \"%1\"? Downloaded and uploading files will not be removed.").arg(account.serverUrl.toString());
+    if (!gui->yesOrNoBox(question, nullptr, false)) {
+        return;
+    }
+    gui->accountManager()->removeAccount(account);
+}
+
+void ExtCommandsHandler::handleResyncAccount(QStringList args) {
+    if (args.size() != 1) {
+        return;
+    }
+
+    QString signature = normalizedPath(args.first());
+    Account account = gui->accountManager()->getAccountBySignature(signature);
+    SeafileRpcClient *rpc_client = gui->rpcClient(account.domainID());
+    if (!rpc_client || !rpc_client->isConnected()) {
+        gui->warningBox (tr("Failed to connect to background process, please try again later"));
+        return;
+    }
+
+    QString question = tr("Are you sure to resync account from \"%1\"? Downloaded and uploading files will not be removed").arg(account.serverUrl.toString());
+    if (!gui->yesOrNoBox(question, nullptr, false)) {
+        return;
+    }
+
+    gui->accountManager()->resyncAccount(account);
+
+}
 
 #ifdef Q_OS_WIN32
 // Get thumbanil from server and return the cached thumbnail path
