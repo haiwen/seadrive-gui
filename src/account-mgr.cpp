@@ -755,6 +755,7 @@ const QString AccountManager::genSyncRootName(const Account& account)
     QString url = account.serverUrl.toString();
     QString nickname = account.accountInfo.name;
     QString email = account.username;
+    QString sync_root_folder_name = account.syncRootFolderName;
     QString seadrive_root = gui->seadriveRoot();
     QString sync_root_path, sync_root_name;
 
@@ -766,18 +767,22 @@ const QString AccountManager::genSyncRootName(const Account& account)
         return old_sync_dir;
     }
 
-    foreach (SyncRootInfo sync_root_info, sync_root_infos_)
-    {
-        if (url == sync_root_info.getUrl() && email == sync_root_info.getUserName()) {
-            QString sync_root_name = sync_root_info.syncRootName();
-            if (!sync_root_name.isEmpty()) {
-                qWarning("use exist syncroot name %s", toCStr(sync_root_name));
-                return sync_root_name;
+    if (sync_root_folder_name.isEmpty()) {
+        foreach (SyncRootInfo sync_root_info, sync_root_infos_)
+        {
+            if (url == sync_root_info.getUrl() && email == sync_root_info.getUserName()) {
+                QString sync_root_name = sync_root_info.syncRootName();
+                if (!sync_root_name.isEmpty()) {
+                    qWarning("use exist syncroot name %s", toCStr(sync_root_name));
+                    return sync_root_name;
+                }
             }
         }
     }
 
-    if (!nickname.isEmpty()) {
+    if (!sync_root_folder_name.isEmpty()) {
+        sync_root_name = toCStr(sync_root_folder_name);
+    } else if (!nickname.isEmpty()) {
         sync_root_name = toCStr(nickname);
     } else {
         int pos = email.indexOf("@");

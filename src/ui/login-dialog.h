@@ -28,6 +28,7 @@ public:
     void initFromAccount(const Account& account);
 
 private slots:
+    void toggleAdvancedOptions(bool checked);
     void doLogin();
     void loginSuccess(const QString& token);
     void loginFailed(const ApiError& error);
@@ -66,6 +67,9 @@ private:
     QString password_;
     QString sso_token_;
     QString computer_name_;
+#ifdef Q_OS_WIN32
+    QString sync_root_folder_name_;
+#endif
     LoginRequest *request_;
     FetchAccountInfoRequest *account_info_req_;
 

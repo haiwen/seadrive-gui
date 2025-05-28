@@ -26,6 +26,7 @@ public:
     QString token;
 #if defined(Q_OS_WIN32)
     QString syncRoot;
+    QString syncRootFolderName;
 #elif defined (Q_OS_LINUX)
     QString displayName;
 #endif
@@ -70,6 +71,7 @@ public:
         token(rhs.token),
 #if defined(Q_OS_WIN32)
         syncRoot(rhs.syncRoot),
+        syncRootFolderName(rhs.syncRootFolderName),
 #elif defined(Q_OS_LINUX)
         displayName(rhs.displayName),
 #endif
@@ -91,6 +93,7 @@ public:
         token = rhs.token;
 #if defined(Q_OS_WIN32)
         syncRoot = rhs.syncRoot;
+        syncRootFolderName = rhs.syncRootFolderName;
 #elif defined(Q_OS_LINUX)
         displayName = rhs.displayName;
 #endif
