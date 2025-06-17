@@ -143,6 +143,21 @@
     </message>
 </context>
 <context>
+    <name>ExtCommandsHandler</name>
+    <message>
+        <source>Are you sure to remove account from &quot;%1&quot;? Downloaded and uploading files will not be removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to connect to background process, please try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure to resync account from &quot;%1&quot;? Downloaded and uploading files will not be removed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FileProviderManager</name>
     <message>
         <source>%1 will ask permissions to enable Finder plugin.</source>
@@ -363,6 +378,26 @@
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync Root Folder Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync root folder name cannot be empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync root folder name cannot contain the following characters: &lt; &gt; : &quot; / \ | ? *</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Files in this account will be synced under the path like &apos;C:\Users\Jim\seadrive_root\&amp;lt;sync root folder name&amp;gt;&apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
