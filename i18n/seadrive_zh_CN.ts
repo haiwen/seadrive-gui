@@ -141,6 +141,21 @@
     </message>
 </context>
 <context>
+    <name>ExtCommandsHandler</name>
+    <message>
+        <source>Are you sure to remove account from &quot;%1&quot;? Downloaded and uploading files will not be removed.</source>
+        <translation>是否删除账号 %1 ？已下载和正在上传的文件会被保留。</translation>
+    </message>
+    <message>
+        <source>Failed to connect to background process, please try again later</source>
+        <translation>无法连接后台进程，请稍后重试</translation>
+    </message>
+    <message>
+        <source>Are you sure to resync account from &quot;%1&quot;? Downloaded and uploading files will not be removed</source>
+        <translation>是否重新同步账号 %1 ？已下载和正在上传的文件会被保留。</translation>
+    </message>
+</context>
+<context>
     <name>FileProviderManager</name>
     <message>
         <source>%1 will ask permissions to enable Finder plugin.</source>
@@ -363,6 +378,26 @@
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;例如：https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Advanced Options</source>
+        <translation>高级选项</translation>
+    </message>
+    <message>
+        <source>Sync Root Folder Name:</source>
+        <translation>根目录名称：</translation>
+    </message>
+    <message>
+        <source>Sync root folder name cannot be empty</source>
+        <translation>根目录名称不能为空</translation>
+    </message>
+    <message>
+        <source>Sync root folder name cannot contain the following characters: &lt; &gt; : &quot; / \ | ? *</source>
+        <translation>根目录名称不能包含以下字符：&lt; &gt; : &quot; / \ | ? *</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Files in this account will be synced under the path like &apos;C:\Users\Jim\seadrive_root\&amp;lt;sync root folder name&amp;gt;&apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;账号中的文件会被同步到以下路径：C:\Users\Jim\seadrive_root\&lt;根目录名称&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
