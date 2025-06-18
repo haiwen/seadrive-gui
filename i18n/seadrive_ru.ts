@@ -144,15 +144,15 @@
     <name>ExtCommandsHandler</name>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;? Downloaded and uploading files will not be removed.</source>
-        <translation type="unfinished"/>
+        <translation>Вы уверены, что необходимо удалить учетную запись с &quot;%1&quot;? Скачанные и загружаемые файлы не будут удалены.</translation>
     </message>
     <message>
         <source>Failed to connect to background process, please try again later</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось подключиться к фоновому процессу. Повторите попытку позже</translation>
     </message>
     <message>
         <source>Are you sure to resync account from &quot;%1&quot;? Downloaded and uploading files will not be removed</source>
-        <translation type="unfinished"/>
+        <translation>Вы уверены, что необходимо повторно синхронизировать учетную запись с &quot;%1&quot;? Скачанные и загружаемые файлы не будут удалены</translation>
     </message>
 </context>
 <context>
@@ -381,23 +381,23 @@
     </message>
     <message>
         <source>Advanced Options</source>
-        <translation type="unfinished"/>
+        <translation>Расширенные параметры</translation>
     </message>
     <message>
         <source>Sync Root Folder Name:</source>
-        <translation type="unfinished"/>
+        <translation>Имя корневой папки синхронизации:</translation>
     </message>
     <message>
         <source>Sync root folder name cannot be empty</source>
-        <translation type="unfinished"/>
+        <translation>Имя корневой папки синхронизации не может быть пустым</translation>
     </message>
     <message>
         <source>Sync root folder name cannot contain the following characters: &lt; &gt; : &quot; / \ | ? *</source>
-        <translation type="unfinished"/>
+        <translation>Имя корневой папки синхронизации не может содержать следующие символы: &lt; &gt; : &quot; / \ | ? *</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Files in this account will be synced under the path like &apos;C:\Users\Jim\seadrive_root\&amp;lt;sync root folder name&amp;gt;&apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Файлы в этой учетной записи будут синхронизированы по пути, подобному &apos;C:\Users\Jim\seadrive_root\&amp;lt;имя корневой папки синхронизации&amp;gt;&apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
