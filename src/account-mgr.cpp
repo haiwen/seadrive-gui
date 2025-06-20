@@ -377,6 +377,20 @@ int AccountManager::removeAccount(const Account& account)
     sqlite_query_exec(db, zql);
     sqlite3_free(zql);
 
+#if defined(_MSC_VER)
+    zql = sqlite3_mprintf(
+        "DELETE FROM SyncRootInfo WHERE url = %Q AND username = %Q",
+        // url
+        account.serverUrl.toString().toUtf8().data(),
+        // username
+        account.username.toUtf8().data()
+    );
+    sqlite_query_exec(db, zql);
+    sqlite3_free(zql);
+
+    loadSyncRootInfo();
+#endif
+
     {
         QMutexLocker locker(&accounts_mutex_);
         accounts_.erase(
@@ -767,15 +781,13 @@ const QString AccountManager::genSyncRootName(const Account& account)
         return old_sync_dir;
     }
 
-    if (sync_root_folder_name.isEmpty()) {
-        foreach (SyncRootInfo sync_root_info, sync_root_infos_)
-        {
-            if (url == sync_root_info.getUrl() && email == sync_root_info.getUserName()) {
-                QString sync_root_name = sync_root_info.syncRootName();
-                if (!sync_root_name.isEmpty()) {
-                    qWarning("use exist syncroot name %s", toCStr(sync_root_name));
-                    return sync_root_name;
-                }
+    foreach (SyncRootInfo sync_root_info, sync_root_infos_)
+    {
+        if (url == sync_root_info.getUrl() && email == sync_root_info.getUserName()) {
+            QString sync_root_name = sync_root_info.syncRootName();
+            if (!sync_root_name.isEmpty()) {
+                qWarning("use exist syncroot name %s", toCStr(sync_root_name));
+                return sync_root_name;
             }
         }
     }
