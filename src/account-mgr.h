@@ -126,6 +126,7 @@ private:
     void updateAccountServerInfo(const Account& account);
 #if defined(_MSC_VER)
     static bool loadSyncRootInfoCB(struct sqlite3_stmt *stmt, void *data);
+    const QString getPreviousSyncRootFolderName(const QString& url, const QString& username);
     const QString getOldSyncRootDir(const Account& account);
     const QString genSyncRootName(const Account& account);
     void setAccountSyncRoot(Account &account);

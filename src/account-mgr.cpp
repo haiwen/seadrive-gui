@@ -730,6 +730,23 @@ void AccountManager::clearAccountToken(const Account& account,
 }
 
 #if defined(_MSC_VER)
+
+const QString AccountManager::getPreviousSyncRootFolderName(const QString& url, const QString& username)
+{
+    QString previous_sync_root_name;
+    for (SyncRootInfo& sync_root_info : sync_root_infos_)
+    {
+        if (url == sync_root_info.getUrl() && username == sync_root_info.getUserName()) {
+            QString sync_root_name = sync_root_info.syncRootName();
+            if (!sync_root_name.isEmpty()) {
+                previous_sync_root_name = sync_root_name;
+                break;
+            }
+        }
+    }
+    return previous_sync_root_name;
+}
+
 const QString AccountManager::getOldSyncRootDir(const Account& account)
 {
 
@@ -784,6 +801,7 @@ const QString AccountManager::genSyncRootName(const Account& account)
             return previous_sync_root_name;
         }
     } else {
+        // When resyncing an account, we should use the previous sync root name.
         if (previous_sync_root_name == sync_root_folder_name) {
             qWarning("use exist syncroot name %s", toCStr(previous_sync_root_name));
             return previous_sync_root_name;
