@@ -767,16 +767,26 @@ const QString AccountManager::genSyncRootName(const Account& account)
         return old_sync_dir;
     }
 
-    if (sync_root_folder_name.isEmpty()) {
-        foreach (SyncRootInfo sync_root_info, sync_root_infos_)
-        {
-            if (url == sync_root_info.getUrl() && email == sync_root_info.getUserName()) {
-                QString sync_root_name = sync_root_info.syncRootName();
-                if (!sync_root_name.isEmpty()) {
-                    qWarning("use exist syncroot name %s", toCStr(sync_root_name));
-                    return sync_root_name;
-                }
+    QString previous_sync_root_name;
+    foreach (SyncRootInfo sync_root_info, sync_root_infos_)
+    {
+        if (url == sync_root_info.getUrl() && email == sync_root_info.getUserName()) {
+            QString sync_root_name = sync_root_info.syncRootName();
+            if (!sync_root_name.isEmpty()) {
+                previous_sync_root_name = sync_root_name;
+                break;
             }
+        }
+    }
+    if (sync_root_folder_name.isEmpty()) {
+        if (!previous_sync_root_name.isEmpty()) {
+            qWarning("use exist syncroot name %s", toCStr(previous_sync_root_name));
+            return previous_sync_root_name;
+        }
+    } else {
+        if (previous_sync_root_name == sync_root_folder_name) {
+            qWarning("use exist syncroot name %s", toCStr(previous_sync_root_name));
+            return previous_sync_root_name;
         }
     }
 
@@ -837,7 +847,7 @@ const QString AccountManager::genSyncRootName(const Account& account)
 
     SyncRootInfo sync_root_info(url, email, new_sync_root_name);
     updateSyncRootInfo(sync_root_info);
-    sync_root_infos_.push_back(sync_root_info);
+    loadSyncRootInfo();
 
     qDebug("[%s] This a new accout gen a new sync root name is %s", __func__, toCStr(new_sync_root_name));
     return new_sync_root_name;
