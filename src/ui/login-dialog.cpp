@@ -90,6 +90,8 @@ LoginDialog::LoginDialog(QWidget *parent) : QDialog(parent)
 #ifdef Q_OS_WIN32
     toggleAdvancedOptions(false);
     connect(mAdvancedOptions, SIGNAL(toggled(bool)), this, SLOT(toggleAdvancedOptions(bool)));
+    connect(mServerAddr, SIGNAL(editTextChanged(const QString&)), this, SLOT(fillSyncRootFolderName()));
+    connect(mUsername, SIGNAL(textChanged(const QString&)), this, SLOT(fillSyncRootFolderName()));
 #else
     toggleAdvancedOptions(false);
     mAdvancedOptions->setVisible(false);
@@ -130,6 +132,24 @@ void LoginDialog::toggleAdvancedOptions(bool checked)
     label_7->setVisible(checked);
     mSyncRootFolderName->setVisible(checked);
     hint_4->setVisible(checked);
+}
+
+void LoginDialog::fillSyncRootFolderName()
+{
+#ifdef Q_OS_WIN32
+    QString serverAddr = mServerAddr->currentText().trimmed();
+    QString username = mUsername->text().trimmed();
+
+    QString name = gui->accountManager()->getPreviousSyncRootFolderName(serverAddr, username);
+
+    if (name.isEmpty()) {
+        mSyncRootFolderName->setText("");
+        mSyncRootFolderName->setEnabled(true);
+    } else {
+        mSyncRootFolderName->setText(name);
+        mSyncRootFolderName->setEnabled(false);
+    }
+#endif
 }
 
 void LoginDialog::doLogin()
@@ -248,7 +268,7 @@ bool LoginDialog::validateInputs()
 
 #ifdef Q_OS_WIN32
     QString sync_root_folder_name;
-    if (mAdvancedOptions->isChecked()) {
+    if (mAdvancedOptions->isChecked() && mSyncRootFolderName->isEnabled()) {
         sync_root_folder_name = mSyncRootFolderName->text().trimmed();
         while (sync_root_folder_name.endsWith(".")) {
             sync_root_folder_name.resize(sync_root_folder_name.size() - 1);
