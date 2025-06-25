@@ -26,6 +26,7 @@ public:
     QString token;
 #if defined(Q_OS_WIN32)
     QString syncRoot;
+    // syncRootFolderName holds the user-specified name for the sync root folder. We combine this name with other components to build the full sync root path (see genSyncRootName() in account-mgr.cpp). This value can be empty, since we don’t persist it in the database.
     QString syncRootFolderName;
 #elif defined (Q_OS_LINUX)
     QString displayName;
