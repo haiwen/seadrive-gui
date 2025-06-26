@@ -49,7 +49,6 @@ public:
 
 #if defined(_MSC_VER)
     void loadSyncRootInfo();
-    QString getPreviousSyncRootFolderName(const QString& url, const QString& username);
 #endif
     // Load the accounts from local db when client starts.
     void loadAccounts();

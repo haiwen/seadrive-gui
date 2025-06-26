@@ -730,23 +730,6 @@ void AccountManager::clearAccountToken(const Account& account,
 }
 
 #if defined(_MSC_VER)
-
-QString AccountManager::getPreviousSyncRootFolderName(const QString& url, const QString& username)
-{
-    QString previous_sync_root_name;
-    for (SyncRootInfo& sync_root_info : sync_root_infos_)
-    {
-        if (url == sync_root_info.getUrl() && username == sync_root_info.getUserName()) {
-            QString sync_root_name = sync_root_info.syncRootName();
-            if (!sync_root_name.isEmpty()) {
-                previous_sync_root_name = sync_root_name;
-                break;
-            }
-        }
-    }
-    return previous_sync_root_name;
-}
-
 const QString AccountManager::getOldSyncRootDir(const Account& account)
 {
 
@@ -784,17 +767,16 @@ const QString AccountManager::genSyncRootName(const Account& account)
         return old_sync_dir;
     }
 
-    QString previous_sync_root_name = getPreviousSyncRootFolderName(url, email);
     if (sync_root_folder_name.isEmpty()) {
-        if (!previous_sync_root_name.isEmpty()) {
-            qWarning("use exist syncroot name %s", toCStr(previous_sync_root_name));
-            return previous_sync_root_name;
-        }
-    } else {
-        // When resyncing an account, we should use the previous sync root name.
-        if (previous_sync_root_name == sync_root_folder_name) {
-            qWarning("use exist syncroot name %s", toCStr(previous_sync_root_name));
-            return previous_sync_root_name;
+        foreach (SyncRootInfo sync_root_info, sync_root_infos_)
+        {
+            if (url == sync_root_info.getUrl() && email == sync_root_info.getUserName()) {
+                QString sync_root_name = sync_root_info.syncRootName();
+                if (!sync_root_name.isEmpty()) {
+                    qWarning("use exist syncroot name %s", toCStr(sync_root_name));
+                    return sync_root_name;
+                }
+            }
         }
     }
 
@@ -855,7 +837,7 @@ const QString AccountManager::genSyncRootName(const Account& account)
 
     SyncRootInfo sync_root_info(url, email, new_sync_root_name);
     updateSyncRootInfo(sync_root_info);
-    loadSyncRootInfo();
+    sync_root_infos_.push_back(sync_root_info);
 
     qDebug("[%s] This a new accout gen a new sync root name is %s", __func__, toCStr(new_sync_root_name));
     return new_sync_root_name;

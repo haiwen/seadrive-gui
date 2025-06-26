@@ -29,7 +29,6 @@ public:
 
 private slots:
     void toggleAdvancedOptions(bool checked);
-    void fillSyncRootFolderName();
     void doLogin();
     void loginSuccess(const QString& token);
     void loginFailed(const ApiError& error);
