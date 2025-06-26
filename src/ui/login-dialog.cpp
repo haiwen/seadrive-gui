@@ -87,14 +87,6 @@ LoginDialog::LoginDialog(QWidget *parent) : QDialog(parent)
 
     mAutomaticLogin->setCheckState(Qt::Checked);
 
-#ifdef Q_OS_WIN32
-    toggleAdvancedOptions(false);
-    connect(mAdvancedOptions, SIGNAL(toggled(bool)), this, SLOT(toggleAdvancedOptions(bool)));
-#else
-    toggleAdvancedOptions(false);
-    mAdvancedOptions->setVisible(false);
-#endif
-
     connect(mSubmitBtn, SIGNAL(clicked()), this, SLOT(doLogin()));
 
     QRect screen;
@@ -123,13 +115,6 @@ void LoginDialog::initFromAccount(const Account& account)
 
     mUsername->setText(account.username);
     mPassword->setFocus(Qt::OtherFocusReason);
-}
-
-void LoginDialog::toggleAdvancedOptions(bool checked)
-{
-    label_7->setVisible(checked);
-    mSyncRootFolderName->setVisible(checked);
-    hint_4->setVisible(checked);
 }
 
 void LoginDialog::doLogin()
@@ -168,7 +153,6 @@ void LoginDialog::disableInputs()
     mPassword->setEnabled(false);
     mSubmitBtn->setEnabled(false);
     mComputerName->setEnabled(false);
-    mSyncRootFolderName->setEnabled(false);
     mSSOBtn->setEnabled(false);
 }
 
@@ -179,7 +163,6 @@ void LoginDialog::enableInputs()
     mPassword->setEnabled(true);
     mSubmitBtn->setEnabled(true);
     mComputerName->setEnabled(true);
-    mSyncRootFolderName->setEnabled(true);
     mSSOBtn->setEnabled(true);
 }
 
@@ -246,32 +229,10 @@ bool LoginDialog::validateInputs()
         showWarning(tr("Please enter the computer name"));
     }
 
-#ifdef Q_OS_WIN32
-    QString sync_root_folder_name;
-    if (mAdvancedOptions->isChecked()) {
-        sync_root_folder_name = mSyncRootFolderName->text().trimmed();
-        while (sync_root_folder_name.endsWith(".")) {
-            sync_root_folder_name.resize(sync_root_folder_name.size() - 1);
-        }
-
-        if (sync_root_folder_name.size() == 0) {
-            showWarning(tr("Sync root folder name cannot be empty"));
-            return false;
-        }
-        if (sync_root_folder_name.contains(QRegularExpression("[<>:\"/\\\\|?*]"))) {
-            showWarning(tr("Sync root folder name cannot contain the following characters: < > : \" / \\ | ? *"));
-            return false;
-        }
-    }
-#endif
-
     url_ = url;
     username_ = mUsername->text();
     password_ = mPassword->text();
     computer_name_ = mComputerName->text();
-#ifdef Q_OS_WIN32
-    sync_root_folder_name_ = sync_root_folder_name;
-#endif
 
     gui->settingsManager()->setComputerName(computer_name_);
 
@@ -291,12 +252,8 @@ void LoginDialog::loginSuccess(const QString& token)
     if (account_info_req_) {
         account_info_req_->deleteLater();
     }
-
-    Account account(url_, username_, token);
-#ifdef Q_OS_WIN32
-    account.syncRootFolderName = sync_root_folder_name_;
-#endif
-    account_info_req_ = new FetchAccountInfoRequest(account);
+    account_info_req_ =
+        new FetchAccountInfoRequest(Account(url_, username_, token));
     connect(account_info_req_, SIGNAL(success(const AccountInfo&)), this,
             SLOT(onFetchAccountInfoSuccess(const AccountInfo&)));
     connect(account_info_req_, SIGNAL(failed(const ApiError&)), this,

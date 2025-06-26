@@ -7,14 +7,8 @@
     <x>0</x>
     <y>0</y>
     <width>550</width>
-    <height>476</height>
+    <height>349</height>
    </rect>
-  </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
@@ -131,12 +125,84 @@ min-width: 260px;
        <property name="spacing">
         <number>10</number>
        </property>
-       <item row="3" column="2">
-        <widget class="QLineEdit" name="mPassword">
-         <property name="echoMode">
-          <enum>QLineEdit::Password</enum>
+       <item row="0" column="0">
+        <widget class="QLabel" name="serverUrl">
+         <property name="text">
+          <string>Server:</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
         </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="mServerAddr">
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <layout class="QVBoxLayout" name="serverNoteLayout">
+         <item>
+          <widget class="QLabel" name="hint">
+           <property name="lineWidth">
+            <number>1</number>
+           </property>
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="textFormat">
+            <enum>Qt::AutoText</enum>
+           </property>
+           <property name="openExternalLinks">
+            <bool>false</bool>
+           </property>
+           <property name="textInteractionFlags">
+            <set>Qt::LinksAccessibleByMouse</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer2">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>-4</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="hint_2">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="text">
+            <string>or http://192.168.1.24:8000</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer3">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>4</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </item>
        <item row="2" column="0">
         <widget class="QLabel" name="label_2">
@@ -148,7 +214,27 @@ min-width: 260px;
          </property>
         </widget>
        </item>
-       <item row="4" column="2">
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="mUsername"/>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Password:</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="mPassword">
+         <property name="echoMode">
+          <enum>QLineEdit::Password</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
         <layout class="QGridLayout" name="automaticLoginLayout">
          <property name="verticalSpacing">
           <number>0</number>
@@ -175,63 +261,6 @@ min-width: 260px;
          </item>
         </layout>
        </item>
-       <item row="8" column="2">
-        <widget class="QLineEdit" name="mSyncRootFolderName"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Password:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="serverUrl">
-         <property name="text">
-          <string>Server:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="2">
-        <widget class="QCheckBox" name="mAdvancedOptions">
-         <property name="text">
-          <string>Advanced Options</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="2">
-        <widget class="QLabel" name="hint_3">
-         <property name="text">
-          <string>e.g. Jim's laptop</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QComboBox" name="mServerAddr">
-         <property name="editable">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>Sync Root Folder Name:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="2">
-        <widget class="QLineEdit" name="mComputerName"/>
-       </item>
        <item row="5" column="0">
         <widget class="QLabel" name="label_5">
          <property name="text">
@@ -245,62 +274,23 @@ min-width: 260px;
          </property>
         </widget>
        </item>
-       <item row="1" column="2">
-        <layout class="QVBoxLayout" name="serverNoteLayout">
-         <item>
-          <widget class="QLabel" name="hint">
-           <property name="lineWidth">
-            <number>1</number>
-           </property>
-           <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="textFormat">
-            <enum>Qt::AutoText</enum>
-           </property>
-           <property name="openExternalLinks">
-            <bool>false</bool>
-           </property>
-           <property name="textInteractionFlags">
-            <set>Qt::LinksAccessibleByMouse</set>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="hint_2">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="text">
-            <string>or http://192.168.1.24:8000</string>
-           </property>
-           <property name="openExternalLinks">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="mComputerName"/>
        </item>
-       <item row="2" column="2">
-        <widget class="QLineEdit" name="mUsername"/>
+       <item row="6" column="1">
+        <widget class="QLabel" name="hint_3">
+         <property name="text">
+          <string>e.g. Jim's laptop</string>
+         </property>
+        </widget>
        </item>
-       <item row="10" column="2">
+       <item row="7" column="1">
         <widget class="QLabel" name="mStatusText">
          <property name="enabled">
           <bool>true</bool>
          </property>
          <property name="text">
           <string>status text</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="2">
-        <widget class="QLabel" name="hint_4">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Files in this account will be synced under the path like 'C:\Users\Jim\seadrive_root\&amp;lt;sync root folder name&amp;gt;'&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
          </property>
         </widget>
        </item>
