@@ -183,6 +183,7 @@ SET(moc_headers
   src/ui/encrypted-repos-dialog.h
   src/ui/transfer-progress-dialog.h
   src/ui/uninstall-helper-dialog.h
+  src/ui/sync-root-name-dialog.h
   src/open-local-helper.h
 
   third_party/QtAwesome/QtAwesome.h
@@ -210,6 +211,7 @@ SET(ui_files
   ui/login-dialog.ui
   ui/settings-dialog.ui
   ui/about-dialog.ui
+  ui/sync-root-name-dialog.ui
 )
 IF(QT_VERSION_MAJOR EQUAL 6)
     QT6_WRAP_UI(ui_output ${ui_files})
@@ -323,6 +325,7 @@ SET(seadrive_gui_sources
   src/ui/encrypted-repos-dialog.cpp
   src/ui/transfer-progress-dialog.cpp
   src/ui/uninstall-helper-dialog.cpp
+  src/ui/sync-root-name-dialog.cpp
 
   src/open-local-helper.cpp
 

@@ -113,6 +113,13 @@ public:
         return !(*this == rhs);
     }
 
+    bool operator<(const Account& rhs) const {
+        if (serverUrl != rhs.serverUrl) {
+            return serverUrl < rhs.serverUrl;
+        }
+        return username < rhs.username;
+    }
+
     bool isValid() const {
         return token.length() > 0;
     }

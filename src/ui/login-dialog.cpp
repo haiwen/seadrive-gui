@@ -17,6 +17,7 @@
 #include "utils/utils.h"
 #include "shib/shib-login-dialog.h"
 #include "api/sso-status.h"
+#include "ui/sync-root-name-dialog.h"
 
 namespace {
 
@@ -289,8 +290,25 @@ void LoginDialog::onFetchAccountInfoSuccess(const AccountInfo& info)
     // The user may use the username to login, but we need to store the email
     // to account database
     account.username = info.email;
-    account.isAutomaticLogin =
-        mAutomaticLogin->checkState() == Qt::Checked;
+    account.isAutomaticLogin = mAutomaticLogin->checkState() == Qt::Checked;
+
+    // The genSyncRootName() function retrieves the account info, but updateAccountInfo() should be executed after enableAccount(), which should follow setSyncRootName(). As a result, we will update the account info in advance.
+    account.accountInfo = info;
+
+#ifdef Q_OS_WIN32
+    if (gui->accountManager()->getPreviousSyncRootName(account).isEmpty()) {
+        QString name = gui->accountManager()->genSyncRootName(account);
+
+        SyncRootNameDialog dialog(name, this);
+        if (!dialog.exec()) {
+            mStatusText->setText("");
+            enableInputs();
+            return;
+        }
+
+        gui->accountManager()->setSyncRootName(account, dialog.customName());
+    }
+#endif
 
     gui->accountManager()->enableAccount(account);
     gui->accountManager()->updateAccountInfo(account, info);
