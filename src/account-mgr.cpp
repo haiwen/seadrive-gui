@@ -15,9 +15,6 @@
 #include "utils/utils.h"
 #include "api/api-error.h"
 #include "api/requests.h"
-#if defined(_MSC_VER)
-#include "utils/file-utils.h"
-#endif
 #include "shib/shib-login-dialog.h"
 #include "settings-mgr.h"
 #include "account-info-service.h"
@@ -25,7 +22,8 @@
 #include "ui/tray-icon.h"
 #include "utils/json-utils.h"
 
-#if defined (Q_OS_WIN32)
+#ifdef Q_OS_WIN32
+#include "utils/file-utils.h"
 #include "win-sso/auto-logon-dialog.h"
 #endif
 
@@ -121,7 +119,7 @@ struct UserData {
     struct sqlite3 *db;
 };
 
-#if defined(_MSC_VER)
+#ifdef Q_OS_WIN32
 struct SyncRootInfoData {
     std::vector<SyncRootInfo> *syncrootinfos;
     struct sqlite3 *db;
@@ -204,7 +202,7 @@ int AccountManager::start()
         return -1;
     }
 
-#if defined(_MSC_VER)
+#ifdef Q_OS_WIN32
     sql = "CREATE TABLE IF NOT EXISTS SyncRootInfo ("
         "url VARCHAR(24), "
         "username VARCHAR(15), "
@@ -220,7 +218,7 @@ int AccountManager::start()
 
     loadAccounts();
 
-#if defined(_MSC_VER)
+#ifdef Q_OS_WIN32
     loadSyncRootInfo();
 #endif
 
@@ -277,32 +275,6 @@ bool AccountManager::loadServerInfoCB(sqlite3_stmt *stmt, void *data)
     }
     return true;
 }
-
-#if defined(_MSC_VER)
-bool AccountManager::loadSyncRootInfoCB(sqlite3_stmt *stmt, void* data)
-{
-
-    SyncRootInfoData *sync_root_info_data = static_cast<SyncRootInfoData* >(data);
-    const char *url = (const char *)sqlite3_column_text(stmt, 0);
-    const char *username = (const char *)sqlite3_column_text(stmt, 1);
-    const char *sync_root_path = (const char *)sqlite3_column_text(stmt, 2);
-
-    SyncRootInfo sync_root_info = SyncRootInfo(url, username, sync_root_path);
-
-    sync_root_info_data->syncrootinfos->push_back(sync_root_info);
-    return true;
-}
-
-void AccountManager::loadSyncRootInfo()
-{
-    const char* sql = "SELECT url, username, syncrootpath From SyncRootInfo";
-    sync_root_infos_.clear();
-    SyncRootInfoData sync_root_info_data;
-    sync_root_info_data.syncrootinfos = &sync_root_infos_;
-    sync_root_info_data.db = db;
-    sqlite_foreach_selected_row(db, sql, loadSyncRootInfoCB, &sync_root_info_data);
-}
-#endif
 
 void AccountManager::loadAccounts()
 {
@@ -450,23 +422,6 @@ void AccountManager::updateAccountLastVisited(const Account& account)
     sqlite3_free(zql);
 }
 
-#if defined(_MSC_VER)
-void AccountManager::updateSyncRootInfo(SyncRootInfo& sync_root_info)
-{
-    char *zql = sqlite3_mprintf(
-            "REPLACE INTO SyncRootInfo(url, username, syncrootpath)"
-            "VALUES (%Q, %Q, %Q) ",
-            // url
-            sync_root_info.getUrl().toUtf8().data(),
-            // username
-            sync_root_info.getUserName().toUtf8().data(),
-            // sync root name
-            sync_root_info.syncRootName().toUtf8().data());
-    sqlite_query_exec(db, zql);
-    sqlite3_free(zql);
-}
-#endif
-
 bool AccountManager::accountExists(const QUrl& url, const QString& username) const
 {
     auto accounts = allAccounts();
@@ -597,8 +552,7 @@ const Account AccountManager::updateAccountInfo(const Account& account,
     return updated_account;
 }
 
-
-void::AccountManager::slotUpdateAccountInfoSucess(const AccountInfo& info)
+void AccountManager::slotUpdateAccountInfoSucess(const AccountInfo& info)
 {
     FetchAccountInfoRequest* req = (FetchAccountInfoRequest*)(sender());
     updateAccountInfo(req->account(), info);
@@ -729,25 +683,135 @@ void AccountManager::clearAccountToken(const Account& account,
     }
 }
 
-#if defined(_MSC_VER)
-const QString AccountManager::getOldSyncRootDir(const Account& account)
+void AccountManager::reloginAccount(const Account &account)
 {
-
-    QString username = account.username;
-    QString addr = account.serverUrl.host();
-
-    QString sync_dir = QString("%1_%2").arg(addr).arg(username);
-    QByteArray sync_dir_md5 = QCryptographicHash::hash(sync_dir.toUtf8(),
-                                                    QCryptographicHash::Md5).toHex();
-
-    QString mid_sync_dir_md5 = sync_dir_md5.mid(0, 8);
-
-    QDir dir(gui->seadriveRoot());
-    if (dir.exists(mid_sync_dir_md5)) {
-        return mid_sync_dir_md5;
+    if (account.isShibboleth) {
+        ShibLoginDialog shib_dialog(account.serverUrl, gui->settingsManager()->getComputerName());
+        shib_dialog.exec();
+        return;
     }
 
-    return "";
+#if defined(Q_OS_WIN32)
+    if (account.isKerberos) {
+        AutoLogonDialog dialog;
+        dialog.exec();
+        return;
+    }
+#endif
+
+    gui->trayIcon()->showLoginDialog(account);
+}
+
+const QVector<Account> AccountManager::allAccounts() const
+{
+    QMutexLocker locker(&accounts_mutex_);
+    return accounts_;
+}
+
+const QVector<Account> AccountManager::activeAccounts() const {
+    auto accounts = allAccounts();
+    QVector<Account> active_accounts;
+    for (int i = 0; i < accounts.size(); i++) {
+        if (!accounts.at(i).token.isEmpty()) {
+            active_accounts.push_back(accounts.at(i));
+        }
+    }
+    return active_accounts;
+}
+
+Account AccountManager::getAccount(const QString& url, const QString& username) const {
+    auto accounts = allAccounts();
+    for (int i = 0; i < accounts.size(); i++) {
+        if (accounts.at(i).serverUrl.toString() == url &&
+            accounts.at(i).username == username) {
+            return accounts.at(i);
+        }
+    }
+    return Account();
+}
+
+bool AccountManager::hasAccount() const {
+    return !allAccounts().empty();
+}
+
+void AccountManager::setAccountAdded(Account& account, bool added) {
+    QMutexLocker locker(&accounts_mutex_);
+    for (int i = 0; i < accounts_.size(); i++) {
+        if (accounts_.at(i) == account) {
+            accounts_[i].added = added;
+            break;
+        }
+    }
+}
+
+void AccountManager::setAccountNotifiedStartExtension(Account& account, bool notified_start_extension) {
+    QMutexLocker locker(&accounts_mutex_);
+    for (int i = 0; i < accounts_.size(); i++) {
+        if (accounts_.at(i) == account) {
+            accounts_[i].notified_start_extension = notified_start_extension;
+            break;
+        }
+    }
+}
+
+void AccountManager::addAccountConnectDaemonRetry(Account& account) {
+    QMutexLocker locker(&accounts_mutex_);
+    for (int i = 0; i < accounts_.size(); i++) {
+        if (accounts_.at(i) == account) {
+            accounts_[i].connect_daemon_retry++;
+            break;
+        }
+    }
+}
+
+#ifdef Q_OS_WIN32
+bool AccountManager::loadSyncRootInfoCB(sqlite3_stmt *stmt, void* data)
+{
+    SyncRootInfoData *sync_root_info_data = static_cast<SyncRootInfoData* >(data);
+    const char *url = (const char *)sqlite3_column_text(stmt, 0);
+    const char *username = (const char *)sqlite3_column_text(stmt, 1);
+    const char *sync_root_path = (const char *)sqlite3_column_text(stmt, 2);
+
+    SyncRootInfo sync_root_info = SyncRootInfo(url, username, sync_root_path);
+
+    sync_root_info_data->syncrootinfos->push_back(sync_root_info);
+    return true;
+}
+
+void AccountManager::loadSyncRootInfo()
+{
+    const char* sql = "SELECT url, username, syncrootpath From SyncRootInfo";
+    sync_root_infos_.clear();
+    SyncRootInfoData sync_root_info_data;
+    sync_root_info_data.syncrootinfos = &sync_root_infos_;
+    sync_root_info_data.db = db;
+    sqlite_foreach_selected_row(db, sql, loadSyncRootInfoCB, &sync_root_info_data);
+}
+
+void AccountManager::updateSyncRootInfo(SyncRootInfo& sync_root_info)
+{
+    char *zql = sqlite3_mprintf(
+            "REPLACE INTO SyncRootInfo(url, username, syncrootpath)"
+            "VALUES (%Q, %Q, %Q) ",
+            // url
+            sync_root_info.getUrl().toUtf8().data(),
+            // username
+            sync_root_info.getUserName().toUtf8().data(),
+            // sync root name
+            sync_root_info.syncRootName().toUtf8().data());
+    sqlite_query_exec(db, zql);
+    sqlite3_free(zql);
+}
+
+QString AccountManager::getPreviousSyncRootName(const Account& account)
+{
+    for (auto& sync_root_info : sync_root_infos_) {
+        if (sync_root_info.getUrl() == account.serverUrl.toString() &&
+            sync_root_info.getUserName() == account.username) {
+            return sync_root_info.syncRootName();
+        }
+    }
+    return QString();
 }
 
 const QString AccountManager::genSyncRootName(const Account& account)
@@ -830,17 +894,49 @@ const QString AccountManager::genSyncRootName(const Account& account)
 
     sync_root_name = new_sync_root_name;
 
-    SyncRootInfo sync_root_info(url, email, new_sync_root_name);
-    updateSyncRootInfo(sync_root_info);
-    sync_root_infos_.push_back(sync_root_info);
-
     qDebug("[%s] This a new accout gen a new sync root name is %s", __func__, toCStr(new_sync_root_name));
     return new_sync_root_name;
 }
 
+const QString AccountManager::getOldSyncRootDir(const Account& account)
+{
+
+    QString username = account.username;
+    QString addr = account.serverUrl.host();
+
+    QString sync_dir = QString("%1_%2").arg(addr).arg(username);
+    QByteArray sync_dir_md5 = QCryptographicHash::hash(sync_dir.toUtf8(),
+                                                    QCryptographicHash::Md5).toHex();
+
+    QString mid_sync_dir_md5 = sync_dir_md5.mid(0, 8);
+
+    QDir dir(gui->seadriveRoot());
+    if (dir.exists(mid_sync_dir_md5)) {
+        return mid_sync_dir_md5;
+    }
+
+    return "";
+}
+
+void AccountManager::setSyncRootName(const Account& account, const QString& custom_name)
+{
+    custom_sync_root_names_[account] = custom_name;
+
+    SyncRootInfo sync_root_info(account.serverUrl.toString(),
+                                account.username,
+                                custom_name);
+    updateSyncRootInfo(sync_root_info);
+    loadSyncRootInfo();
+}
+
 void AccountManager::setAccountSyncRoot(Account &account)
 {
-    auto name = genSyncRootName(account);
+    QString name = custom_sync_root_names_.value(account);
+    if (name.isEmpty()) {
+        name = genSyncRootName(account);
+        setSyncRootName(account, name);
+    }
+
     QString sync_root = ::pathJoin(gui->seadriveRoot(), name);
 
     // The sync_root is also updated to the account argument, to avoid another looking up from accounts_ member.
@@ -883,84 +979,3 @@ void AccountManager::setAccountDisplayName(Account &account)
     }
 }
 #endif
-
-void AccountManager::reloginAccount(const Account &account)
-{
-    if (account.isShibboleth) {
-        ShibLoginDialog shib_dialog(account.serverUrl, gui->settingsManager()->getComputerName());
-        shib_dialog.exec();
-        return;
-    }
-
-#if defined(Q_OS_WIN32)
-    if (account.isKerberos) {
-        AutoLogonDialog dialog;
-        dialog.exec();
-        return;
-    }
-#endif
-
-    gui->trayIcon()->showLoginDialog(account);
-}
-
-const QVector<Account> AccountManager::allAccounts() const
-{
-    QMutexLocker locker(&accounts_mutex_);
-    return accounts_;
-}
-
-const QVector<Account> AccountManager::activeAccounts() const {
-    auto accounts = allAccounts();
-    QVector<Account> active_accounts;
-    for (int i = 0; i < accounts.size(); i++) {
-        if (!accounts.at(i).token.isEmpty()) {
-            active_accounts.push_back(accounts.at(i));
-        }
-    }
-    return active_accounts;
-}
-
-Account AccountManager::getAccount(const QString& url, const QString& username) const {
-    auto accounts = allAccounts();
-    for (int i = 0; i < accounts.size(); i++) {
-        if (accounts.at(i).serverUrl.toString() == url &&
-            accounts.at(i).username == username) {
-            return accounts.at(i);
-        }
-    }
-    return Account();
-}
-
-bool AccountManager::hasAccount() const {
-    return !allAccounts().empty();
-}
-
-void AccountManager::setAccountAdded(Account& account, bool added) {
-    QMutexLocker locker(&accounts_mutex_);
-    for (int i = 0; i < accounts_.size(); i++) {
-        if (accounts_.at(i) == account) {
-            accounts_[i].added = added;
-            break;
-        }
-    }
-}
-
-void AccountManager::setAccountNotifiedStartExtension(Account& account, bool notified_start_extension) {
-    QMutexLocker locker(&accounts_mutex_);
-    for (int i = 0; i < accounts_.size(); i++) {
-        if (accounts_.at(i) == account) {
-            accounts_[i].notified_start_extension = notified_start_extension;
-            break;
-        }
-    }
-}
-
-void AccountManager::addAccountConnectDaemonRetry(Account& account) {
-    QMutexLocker locker(&accounts_mutex_);
-    for (int i = 0; i < accounts_.size(); i++) {
-        if (accounts_.at(i) == account) {
-            accounts_[i].connect_daemon_retry++;
-            break;
-        }
-    }
-}

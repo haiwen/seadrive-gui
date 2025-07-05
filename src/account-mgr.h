@@ -16,7 +16,7 @@ struct sqlite3_stmt;
 class ApiError;
 class SeafileRpcClient;
 
-#if defined(_MSC_VER)
+#ifdef Q_OS_WIN32
 class SyncRootInfo {
 public:
 
@@ -47,9 +47,6 @@ public:
 
     int start();
 
-#if defined(_MSC_VER)
-    void loadSyncRootInfo();
-#endif
     // Load the accounts from local db when client starts.
     void loadAccounts();
 
@@ -104,6 +101,12 @@ public:
 
     void addAccountConnectDaemonRetry(Account& account);
 
+#ifdef Q_OS_WIN32
+    QString getPreviousSyncRootName(const Account& account);
+    const QString genSyncRootName(const Account& account);
+    void setSyncRootName(const Account& account, const QString& custom_name);
+#endif
+
 public slots:
     void reloginAccount(const Account &account);
 
@@ -124,22 +127,10 @@ private:
 
     void fetchAccountInfoFromServer(const Account& account);
     void updateAccountServerInfo(const Account& account);
-#if defined(_MSC_VER)
-    static bool loadSyncRootInfoCB(struct sqlite3_stmt *stmt, void *data);
-    const QString getOldSyncRootDir(const Account& account);
-    const QString genSyncRootName(const Account& account);
-    void setAccountSyncRoot(Account &account);
-#endif
-#if defined(Q_OS_LINUX)
-    void setAccountDisplayName(Account &account);
-#endif
     static bool loadAccountsCB(struct sqlite3_stmt *stmt, void *data);
     static bool loadServerInfoCB(struct sqlite3_stmt *stmt, void *data);
 
     void updateAccountLastVisited(const Account& account);
-#if defined(_MSC_VER)
-    void updateSyncRootInfo(SyncRootInfo& sync_root_info);
-#endif
     Account getAccount(const QString& url, const QString& username) const;
     void addAccountToDaemon(const Account& account);
 
@@ -150,9 +141,19 @@ private:
     mutable QMutex accounts_mutex_;
     QVector<Account> accounts_;
 
-#if defined(_MSC_VER)
-    // Store All sync root information
+#ifdef Q_OS_WIN32
+    static bool loadSyncRootInfoCB(struct sqlite3_stmt *stmt, void *data);
+    void loadSyncRootInfo();
+    void updateSyncRootInfo(SyncRootInfo& sync_root_info);
+    const QString getOldSyncRootDir(const Account& account);
+    void setAccountSyncRoot(Account &account);
+
     std::vector<SyncRootInfo> sync_root_infos_;
+    QMap<Account, QString> custom_sync_root_names_;
+#endif
+
+#ifdef Q_OS_LINUX
+    void setAccountDisplayName(Account &account);
 #endif
 };
 

@@ -66,6 +66,7 @@
     <ClCompile Include="src\ui\settings-dialog.cpp" />
     <ClCompile Include="src\ui\sharedlink-dialog.cpp" />
     <ClCompile Include="src\ui\sync-errors-dialog.cpp" />
+    <ClCompile Include="src\ui\sync-root-name-dialog.cpp" />
     <ClCompile Include="src\ui\transfer-progress-dialog.cpp" />
     <ClCompile Include="src\ui\tray-icon.cpp" />
     <ClCompile Include="src\ui\uninstall-helper-dialog.cpp" />
@@ -97,6 +98,7 @@
     <QtMoc Include="src\open-local-helper.h" />
     <QtMoc Include="src\thumbnail-service.h" />
     <QtMoc Include="src\ui\search-dialog.h" />
+    <QtMoc Include="src\ui\sync-root-name-dialog.h" />
     <ClInclude Include="third_party\WinSparkle-0.5.3\include\winsparkle-version.h" />
     <ClInclude Include="third_party\WinSparkle-0.5.3\include\winsparkle.h" />
     <QtMoc Include="src\api\requests.h" />
@@ -171,6 +173,7 @@
     <QtUic Include="ui\login-dialog.ui" />
     <QtUic Include="ui\seadrive-root-dialog.ui" />
     <QtUic Include="ui\settings-dialog.ui" />
+    <QtUic Include="ui\sync-root-name-dialog.ui" />
     <QtUic Include="ui\uninstall-helper-dialog.ui" />
   </ItemGroup>
   <ItemGroup>

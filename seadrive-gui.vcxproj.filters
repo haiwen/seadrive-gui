@@ -274,6 +274,9 @@
     <ClCompile Include="src\ui\search-dialog.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
+    <ClCompile Include="src\ui\sync-root-name-dialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\api\api-error.h">
@@ -503,6 +506,9 @@
     <QtMoc Include="src\ui\search-dialog.h">
       <Filter>Header Files\ui</Filter>
     </QtMoc>
+    <QtMoc Include="src\ui\sync-root-name-dialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="ui\about-dialog.ui">
@@ -524,6 +530,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ui\uninstall-helper-dialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\sync-root-name-dialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
