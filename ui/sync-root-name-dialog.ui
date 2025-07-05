@@ -2,34 +2,32 @@
 <ui version="4.0">
  <class>SyncRootNameDialog</class>
  <widget class="QDialog" name="SyncRootNameDialog">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>360</width>
-    <height>240</height>
-   </rect>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="leftMargin">
+    <number>24</number>
+   </property>
+   <property name="rightMargin">
+    <number>24</number>
+   </property>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
+      <spacer name="verticalSpacer_1">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>322</width>
+         <height>17</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
       <widget class="QLabel" name="label_1">
        <property name="text">
-        <string>Sync Root Folder Name:</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="mCustomName"/>
-     </item>
-     <item>
-      <widget class="QLabel" name="hint">
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Files in this account will be synced under the path like 'C:\Users\Jim\seadrive_root\&amp;lt;sync root folder name&amp;gt;'&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose a sync root folder name. Files in this account will be synced under the path like 'C:\Users\Jim\seadrive_root\&amp;lt;sync root folder name&amp;gt;'&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="textFormat">
         <enum>Qt::RichText</enum>
@@ -40,24 +38,14 @@
       </widget>
      </item>
      <item>
-      <spacer name="verticalSpacer_1">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
       <widget class="QCheckBox" name="mUseDefaultName">
        <property name="text">
         <string>Use default name</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="mCustomName"/>
      </item>
      <item>
       <spacer name="verticalSpacer_2">
