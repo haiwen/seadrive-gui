@@ -26,7 +26,6 @@
 #include "settings-mgr.h"
 #include "rpc/rpc-client.h"
 #include "utils/utils-win.h"
-#include "open-local-helper.h"
 #include "i18n.h"
 #if defined(Q_OS_MAC)
 #include "utils/utils-mac.h"
@@ -220,7 +219,6 @@ void DaemonManager::onDaemonStarted()
     qDebug("seadrive daemon is now running, checking if the service is ready");
     conn_daemon_timer_->start(kDaemonReadyCheckIntervalMilli);
     transitionState(DAEMON_CONNECTING);
-    OpenLocalHelper::instance()->checkPendingOpenLocalRequest();
 }
 
 void DaemonManager::checkDaemonReady()

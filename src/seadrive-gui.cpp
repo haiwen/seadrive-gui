@@ -32,6 +32,7 @@
 #include "remote-wipe-service.h"
 #include "account-info-service.h"
 #include "file-provider-mgr.h"
+#include "open-local-helper.h"
 #if defined(Q_OS_WIN32)
 #include "thumbnail-service.h"
 #endif
@@ -587,6 +588,7 @@ void SeadriveGui::onDaemonStarted()
 
 #if defined(Q_OS_WIN32)
     ThumbnailService::instance()->start();
+    OpenLocalHelper::instance()->checkPendingOpenLocalRequest();
 #endif
 #endif
 }
