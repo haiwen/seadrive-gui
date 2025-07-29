@@ -32,6 +32,7 @@ const char *kSyncExtraTempFile = "syncExtraTempFile";
 const char *kDisableVerifyCert = "disableVerifyCert";
 const char *kDeleteConfirmThreshold = "deleteConfirmThreshold";
 const char *kMigrateStatus = "kMigrateStatus";
+const char *kLastOpenSyncDialogTimestamp = "lastOpenSyncDialogTimestamp";
 
 #if defined(_MSC_VER)
 const char *kSeadriveRoot = "seadriveRoot";
@@ -1017,6 +1018,26 @@ void SettingsManager::setMigrateStatus(bool finished)
     settings.endGroup();
 }
 #endif
+
+qint64 SettingsManager::getLastOpenSyncDialogTimestamp()
+{
+    QSettings settings;
+    qint64 timestamp;
+
+    settings.beginGroup(kSettingsGroup);
+    timestamp = settings.value(kLastOpenSyncDialogTimestamp, 0).toLongLong();
+    settings.endGroup();
+
+    return timestamp;
+}
+
+void SettingsManager::setLastOpenSyncDialogTimestamp(qint64 timestamp)
+{
+    QSettings settings;
+    settings.beginGroup(kSettingsGroup);
+    settings.setValue(kLastOpenSyncDialogTimestamp, QVariant::fromValue(timestamp));
+    settings.endGroup();
+}
 
 void SystemProxyPoller::run()
 {
