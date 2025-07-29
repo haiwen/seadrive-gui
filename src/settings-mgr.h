@@ -122,6 +122,8 @@ public:
     bool getMigrateStatus();
     void setMigrateStatus(bool finished);
 #endif
+    qint64 getLastOpenSyncDialogTimestamp();
+    void setLastOpenSyncDialogTimestamp(qint64 timestamp);
 public:
 
     // Remove all settings from system when uninstall

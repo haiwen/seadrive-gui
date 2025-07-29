@@ -28,6 +28,7 @@
 #include "account-mgr.h"
 #include "rpc/rpc-client.h"
 #include "file-provider-mgr.h"
+#include "settings-mgr.h"
 
 #include "tray-icon.h"
 
@@ -812,7 +813,7 @@ void SeafileTrayIcon::setStateWithSyncErrors()
     if(sync_errors_dialog_ != nullptr) {
         timestamp = sync_errors_dialog_->getLastOpenSyncDialogTimestamp();
     } else {
-        timestamp = 0;
+        timestamp = gui->settingsManager()->getLastOpenSyncDialogTimestamp();
     }
     if (network_error_.isValid()) {
         setState(STATE_HAS_SYNC_ERRORS);
