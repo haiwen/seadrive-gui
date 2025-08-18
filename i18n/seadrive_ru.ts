@@ -379,26 +379,6 @@
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Например: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
-    <message>
-        <source>Advanced Options</source>
-        <translation>Расширенные параметры</translation>
-    </message>
-    <message>
-        <source>Sync Root Folder Name:</source>
-        <translation>Имя корневой папки синхронизации:</translation>
-    </message>
-    <message>
-        <source>Sync root folder name cannot be empty</source>
-        <translation>Имя корневой папки синхронизации не может быть пустым</translation>
-    </message>
-    <message>
-        <source>Sync root folder name cannot contain the following characters: &lt; &gt; : &quot; / \ | ? *</source>
-        <translation>Имя корневой папки синхронизации не может содержать следующие символы: &lt; &gt; : &quot; / \ | ? *</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Files in this account will be synced under the path like &apos;C:\Users\Jim\seadrive_root\&amp;lt;sync root folder name&amp;gt;&apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Файлы в этой учетной записи будут синхронизированы по пути, подобному &apos;C:\Users\Jim\seadrive_root\&amp;lt;имя корневой папки синхронизации&amp;gt;&apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
 </context>
 <context>
     <name>MessagePoller</name>
@@ -1483,6 +1463,33 @@
     <message>
         <source>Time</source>
         <translation>Время</translation>
+    </message>
+</context>
+<context>
+    <name>SyncRootNameDialog</name>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose a sync root folder name. Files in this account will be synced under the path like &apos;C:\Users\Jim\seadrive_root\&amp;lt;sync root folder name&amp;gt;&apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use default name</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sync Root Folder Name</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sync root name cannot be empty.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sync root name cannot contain the following characters: &lt; &gt; : &quot; / \ | ? *</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
