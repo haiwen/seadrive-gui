@@ -379,26 +379,6 @@
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;例如：https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
-    <message>
-        <source>Advanced Options</source>
-        <translation>高级选项</translation>
-    </message>
-    <message>
-        <source>Sync Root Folder Name:</source>
-        <translation>根目录名称：</translation>
-    </message>
-    <message>
-        <source>Sync root folder name cannot be empty</source>
-        <translation>根目录名称不能为空</translation>
-    </message>
-    <message>
-        <source>Sync root folder name cannot contain the following characters: &lt; &gt; : &quot; / \ | ? *</source>
-        <translation>根目录名称不能包含以下字符：&lt; &gt; : &quot; / \ | ? *</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Files in this account will be synced under the path like &apos;C:\Users\Jim\seadrive_root\&amp;lt;sync root folder name&amp;gt;&apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;账号中的文件会被同步到以下路径：C:\Users\Jim\seadrive_root\&lt;根目录名称&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
 </context>
 <context>
     <name>MessagePoller</name>
@@ -1482,6 +1462,33 @@
     <message>
         <source>Time</source>
         <translation>时间</translation>
+    </message>
+</context>
+<context>
+    <name>SyncRootNameDialog</name>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose a sync root folder name. Files in this account will be synced under the path like &apos;C:\Users\Jim\seadrive_root\&amp;lt;sync root folder name&amp;gt;&apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;请选择同步根目录名称。账号中的文件会被同步到以下路径：C:\Users\Jim\seadrive_root\&amp;lt;同步根目录&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Use default name</source>
+        <translation>使用默认名称</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>确定</translation>
+    </message>
+    <message>
+        <source>Sync Root Folder Name</source>
+        <translation>同步根目录名称</translation>
+    </message>
+    <message>
+        <source>Sync root name cannot be empty.</source>
+        <translation>同步根目录名称不能为空。</translation>
+    </message>
+    <message>
+        <source>Sync root name cannot contain the following characters: &lt; &gt; : &quot; / \ | ? *</source>
+        <translation>同步根目录名称不能包含以下字符：&amp;lt; &amp;gt; : &amp;quot; / \ | ? *</translation>
     </message>
 </context>
 <context>

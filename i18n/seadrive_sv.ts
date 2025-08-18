@@ -379,26 +379,6 @@
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"/>
     </message>
-    <message>
-        <source>Advanced Options</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Sync Root Folder Name:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Sync root folder name cannot be empty</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Sync root folder name cannot contain the following characters: &lt; &gt; : &quot; / \ | ? *</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Files in this account will be synced under the path like &apos;C:\Users\Jim\seadrive_root\&amp;lt;sync root folder name&amp;gt;&apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>MessagePoller</name>
@@ -1481,6 +1461,33 @@
     <message>
         <source>Time</source>
         <translation>Tid</translation>
+    </message>
+</context>
+<context>
+    <name>SyncRootNameDialog</name>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose a sync root folder name. Files in this account will be synced under the path like &apos;C:\Users\Jim\seadrive_root\&amp;lt;sync root folder name&amp;gt;&apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use default name</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sync Root Folder Name</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sync root name cannot be empty.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sync root name cannot contain the following characters: &lt; &gt; : &quot; / \ | ? *</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
