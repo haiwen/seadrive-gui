@@ -1469,27 +1469,27 @@
     <name>SyncRootNameDialog</name>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose a sync root folder name. Files in this account will be synced under the path like &apos;C:\Users\Jim\seadrive_root\&amp;lt;sync root folder name&amp;gt;&apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Выберите имя корневой папки для синхронизации. Файлы в этой учетной записи будут синхронизироваться по следующему пути &apos;C:\Users\Jim\seadrive_root\&amp;lt;имя корневой папки синхронизации&amp;gt;&apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Use default name</source>
-        <translation type="unfinished"/>
+        <translation>Использовать имя по умолчанию</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Sync Root Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Имя корневой папки синхронизации</translation>
     </message>
     <message>
         <source>Sync root name cannot be empty.</source>
-        <translation type="unfinished"/>
+        <translation>Корневое имя синхронизации не может быть пустым.</translation>
     </message>
     <message>
         <source>Sync root name cannot contain the following characters: &lt; &gt; : &quot; / \ | ? *</source>
-        <translation type="unfinished"/>
+        <translation>Корневое имя синхронизации не может содержать следующие символы: &lt; &gt; : &quot; / \ | ? *</translation>
     </message>
 </context>
 <context>
