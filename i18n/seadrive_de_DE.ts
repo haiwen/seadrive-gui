@@ -1468,27 +1468,27 @@
     <name>SyncRootNameDialog</name>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose a sync root folder name. Files in this account will be synced under the path like &apos;C:\Users\Jim\seadrive_root\&amp;lt;sync root folder name&amp;gt;&apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wählen Sie eine Bezeichnung für den Basisordner. Synchronisierungen dieses Accounts werden in einem Dateipfad abgelegt, der etwa so lautet: &apos;C:\Users\XY\seadrive_root\&amp;lt;BASISORDNER&amp;gt;&apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Use default name</source>
-        <translation type="unfinished"/>
+        <translation>Standardbezeichnung verwenden</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Sync Root Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Bezeichnung des Basisordners für die Synchronisierung</translation>
     </message>
     <message>
         <source>Sync root name cannot be empty.</source>
-        <translation type="unfinished"/>
+        <translation>Basisordner für die Synchronisierung ist erforderlich</translation>
     </message>
     <message>
         <source>Sync root name cannot contain the following characters: &lt; &gt; : &quot; / \ | ? *</source>
-        <translation type="unfinished"/>
+        <translation>Die Bezeichnung des Basisordners für die Synchronisierung darf nicht enthalten: &lt; &gt; : &quot; / \ | ? *</translation>
     </message>
 </context>
 <context>
