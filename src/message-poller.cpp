@@ -164,6 +164,10 @@ void MessagePoller::checkSyncStatus()
 
 void MessagePoller::checkSyncErrors()
 {
+    if (!rpc_client_->isConnected()) {
+        return;
+    }
+
     json_t *ret;
     if (!rpc_client_->getSyncErrors(&ret)) {
         gui->trayIcon()->setSyncErrors(rpc_client_->domainID(), QList<SyncError>());
