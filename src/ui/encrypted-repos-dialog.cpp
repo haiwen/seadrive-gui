@@ -14,6 +14,7 @@
 #include "rpc/rpc-client.h"
 #include "seadrive-gui.h"
 #include "account-mgr.h"
+#include "ui/init-sync-dialog.h"
 
 
 namespace {
@@ -341,6 +342,11 @@ void EncryptedReposTableModel::slotSetEncRepoPassword(const QString& domain_id, 
         } else if(error_msg == "Wrong password"){
             gui->messageBox(tr("Password error"));
         }
+    } else {
+#if defined(Q_OS_WIN32)
+    // Wait for the encrypted repo to be created.
+    gui->initSyncDialog()->launch(EMPTY_DOMAIN_ID);
+#endif
     }
 }
 
