@@ -7,6 +7,7 @@
 #include <QCloseEvent>
 
 #include "QtAwesome.h"
+#include "i18n.h"
 #include "utils/utils.h"
 #include "utils/file-utils.h"
 #include "seadrive-gui.h"
@@ -88,9 +89,22 @@ SyncErrorsDialog::SyncErrorsDialog(QWidget *parent)
     stack_ = new QStackedWidget;
     stack_->insertWidget(INDEX_EMPTY_VIEW, empty_view_);
     stack_->insertWidget(INDEX_TABE_VIEW, table_);
-    stack_->setContentsMargins(20, 20, 20, 20);
+    stack_->setContentsMargins(0, 0, 0, 0);
+
+    QString text;
+    if (I18NHelper::getInstance()->isTargetLanguage("zh_CN")) {
+        text = "<a href=\"https://cloud.seafile.com/wiki/publish/seafile-user-manual/7he2/\">" + tr("Descriptions for sync errors") + "</a>";
+    } else {
+        text = "<a href=\"https://help.seafile.com/faq/#meaning-file-syncing-errors\">" + tr("Descriptions for sync errors") + "</a>";
+    }
+    QLabel *label = new QLabel(text);
+    label->setTextFormat(Qt::RichText);
+    label->setMargin(6);
+
+    connect(label, SIGNAL(linkActivated(QString)), this, SLOT(onLinkActivated(QString)));
 
     vlayout->addWidget(stack_);
+    vlayout->addWidget(label);
 
     onModelReset();
     connect(model_, SIGNAL(modelReset()), this, SLOT(onModelReset()));
@@ -129,6 +143,10 @@ void SyncErrorsDialog::onModelReset()
     }
 }
 
+void SyncErrorsDialog::onLinkActivated(const QString& link)
+{
+    openUrl(QUrl(link));
+}
 
 void SyncErrorsDialog::createEmptyView()
 {
