@@ -31,6 +31,7 @@ public:
 
 private slots:
     void onModelReset();
+    void onLinkActivated(const QString& link);
 
 private:
     void createEmptyView();
