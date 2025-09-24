@@ -808,6 +808,8 @@ void ExtCommandsHandler::run()
         } else if (cmd == "is-file-in-repo") {
             bool is_in_repo = handleIsFileInRepo(args);
             resp = is_in_repo ? "true" : "false";
+        } else if (cmd == "uncache") {
+            handleUnCachePath(args);
         }
 #ifdef Q_OS_WIN32
         else if (cmd == "get-thumbnail-from-server") {
@@ -1232,6 +1234,22 @@ bool ExtCommandsHandler::isFileInRepo(const QString &path) {
     }
 
     return true;
+}
+
+void ExtCommandsHandler::handleUnCachePath(const QStringList& args)
+{
+    if (args.size() != 1) {
+        return;
+    }
+    QString path = normalizedPath(args[0]);
+    Account account;
+    QString repo_id, path_in_repo;
+    if (!parseRepoFileInfo(path, &account, &repo_id, &path_in_repo)) {
+        return;
+    }
+
+    QMutexLocker locker(&rpc_client_mutex_);
+    rpc_client_->unCachePath(repo_id, path_in_repo);
 }
 
 QString ExtCommandsHandler::handleShowAccounts()
