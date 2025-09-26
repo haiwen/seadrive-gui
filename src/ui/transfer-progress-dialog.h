@@ -6,6 +6,7 @@
 #include <QHeaderView>
 #include <QTimer>
 #include <QTabWidget>
+#include <QLabel>
 
 #include "utils/json-utils.h"
 #include "rpc/transfer-progress.h"
@@ -82,6 +83,8 @@ public:
     const TransferringInfo* itemAt(int row) const;
     uint nameColumnWidth() const;
     bool isTransferringRow(const QModelIndex& index) const;
+    QLabel* totalFilesView() const; 
+    void updateTotalFilesView() const;
 
 public slots:
     void onResize(const QSize& size);
@@ -100,6 +103,8 @@ private:
     QTimer *progress_timer_;
     TransferType transfer_type_;
     TransferProgress transfer_progress_;
+
+    QLabel *total_files_view_;
 };
 
 
