@@ -59,6 +59,7 @@ namespace {
 #endif
 
 const int kConnectDaemonIntervalMsec = 1000;
+const int kAppletLogRotateIntervalMesc = 1000 * 60 * 60; // 1 hour
 
 enum DEBUG_LEVEL {
   DEBUG = 0,
@@ -845,6 +846,10 @@ bool SeadriveGui::initLog()
     else
         qInstallMessageHandler(myLogHandler);
 
+    connect(&log_rotate_timer_, SIGNAL(timeout()),
+            this, SLOT(logRotate()));
+    log_rotate_timer_.start();
+
     return true;
 }
 
@@ -1100,6 +1105,13 @@ QString SeadriveGui::getUniqueClientId()
     }
 
     return id;
+}
+
+void SeadriveGui::logRotate()
+{
+    QDir seadrive_dir = seadriveInternalDir();
+    applet_log_rotate(toCStr(seadrive_dir.absolutePath()));
+
 }
 
 SeafileRpcClient *SeadriveGui::rpcClient(const QString& domain_id)

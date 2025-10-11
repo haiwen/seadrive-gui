@@ -54,7 +54,7 @@ applet_log (const gchar *log_domain, GLogLevelFlags log_level,
 #undef BUFSIZE
 }
 
-static void
+static gboolean
 delete_large_log_file(const char* file)
 {
     GStatBuf log_file_stat_buf;
@@ -65,12 +65,12 @@ delete_large_log_file(const char* file)
         if (errno != 2) {
             g_warning ("Get log file %s stat failed errno=%d.", file, errno);
         }
-        return;
+        return FALSE;
     }
 
     const int delete_threshold = 300 * 1000 * 1000;
     if (log_file_stat_buf.st_size <= delete_threshold) {
-        return;
+        return FALSE;
     }
 
     const char* backup_file_name_postfix = "-old";
@@ -83,7 +83,7 @@ delete_large_log_file(const char* file)
         if (g_remove(backup_file->str) != 0) {
             g_warning ("Delete old log file %s failed errno=%d.", backup_file->str, errno);
             g_string_free(backup_file, TRUE);
-            return;
+            return FALSE;
         } else {
             g_warning ("Deleted old log file %s.", backup_file->str);
         }
@@ -96,6 +96,8 @@ delete_large_log_file(const char* file)
     }
 
     g_string_free(backup_file, TRUE);
+
+    return TRUE;
 }
 
 int
@@ -103,7 +105,6 @@ applet_log_init (const char *seadrive_dir)
 {
     char *logdir = g_build_filename (seadrive_dir, "logs", NULL);
     char *seadrive_gui_log_file = g_build_filename(logdir, "seadrive-gui.log", NULL);
-    char *seadrive_log_file = g_build_filename(logdir, "seadrive.log", NULL);
 
     if (checkdir_with_mkdir (logdir) < 0) {
         g_free (logdir);
@@ -111,9 +112,6 @@ applet_log_init (const char *seadrive_dir)
     }
 
     g_free (logdir);
-
-    delete_large_log_file(seadrive_gui_log_file);
-    delete_large_log_file(seadrive_log_file);
 
     /* record all log message */
     applet_log_level = G_LOG_LEVEL_DEBUG;
@@ -137,4 +135,35 @@ applet_log_init (const char *seadrive_dir)
     g_free (seadrive_gui_log_file);
 
     return 0;
+}
+
+void
+applet_log_rotate (const char *seadrive_dir)
+{
+    char *logdir = g_build_filename (seadrive_dir, "logs", NULL);
+    char *seadrive_gui_log_file = g_build_filename(logdir, "seadrive-gui.log", NULL);
+    g_free (logdir);
+
+    if (!delete_large_log_file(seadrive_gui_log_file)) {
+        g_free (seadrive_gui_log_file);
+        return;
+    }
+
+    FILE *fp, *oldfp;
+#if defined(_MSC_VER)
+    if ((fp = (FILE *)g_fopen (seadrive_gui_log_file, "a+")) == NULL) {
+#else
+    if ((fp = (FILE *)(long)g_fopen (seadrive_gui_log_file, "a+")) == NULL) {
+#endif
+        g_warning ("Open file %s failed errno=%d\n", seadrive_gui_log_file, errno);
+        g_free (seadrive_gui_log_file);
+        return;
+    }
+
+    oldfp = logfp;
+    logfp = fp;
+    if (fclose(oldfp) < 0) {
+        g_warning ("Failed to close file %s\n", seadrive_gui_log_file);
+    }
+    g_free (seadrive_gui_log_file);
 }
