@@ -113,6 +113,7 @@ private slots:
     void onDaemonRestarted(const QString& domain_id);
 
     void connectDaemon();
+    void logRotate();
 
 private:
     Q_DISABLE_COPY(SeadriveGui)
@@ -173,6 +174,7 @@ private:
     qint64 startup_time_;
 
     QTimer connect_daemon_timer_;
+    QTimer log_rotate_timer_;
 };
 
 /**
