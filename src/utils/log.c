@@ -93,6 +93,8 @@ delete_large_log_file(const char* file)
         g_warning ("Renamed %s to backup file %s.", file, backup_file->str);
     } else {
         g_warning ("Rename %s to backup file failed errno=%d.", file, errno);
+        g_string_free(backup_file, TRUE);
+        return FALSE;
     }
 
     g_string_free(backup_file, TRUE);
