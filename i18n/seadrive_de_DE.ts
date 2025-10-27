@@ -1440,6 +1440,10 @@
         <source>No sync errors.</source>
         <translation>Keine Fehler bei der Synchronisation</translation>
     </message>
+    <message>
+        <source>Descriptions for sync errors</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SyncErrorsTableModel</name>

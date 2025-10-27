@@ -1440,6 +1440,10 @@ Abrir % 1 ajuda on-line</translation>
         <source>No sync errors.</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Descriptions for sync errors</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SyncErrorsTableModel</name>

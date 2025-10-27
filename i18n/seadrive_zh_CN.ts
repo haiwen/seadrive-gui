@@ -1440,6 +1440,10 @@
         <source>No sync errors.</source>
         <translation>没有同步错误。</translation>
     </message>
+    <message>
+        <source>Descriptions for sync errors</source>
+        <translation>同步错误的信息</translation>
+    </message>
 </context>
 <context>
     <name>SyncErrorsTableModel</name>

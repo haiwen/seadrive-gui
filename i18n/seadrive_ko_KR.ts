@@ -144,15 +144,15 @@
     <name>ExtCommandsHandler</name>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;? Downloaded and uploading files will not be removed.</source>
-        <translation type="unfinished"/>
+        <translation> &quot;%1&quot; 계정을 제거하시겠습니까?다운로드 및 업로드 된 파일은 삭제되지 않습니다.</translation>
     </message>
     <message>
         <source>Failed to connect to background process, please try again later</source>
-        <translation type="unfinished"/>
+        <translation>배경 프로세스에 연결할 수 없습니다. 나중에 다시 시도하십시오.</translation>
     </message>
     <message>
         <source>Are you sure to resync account from &quot;%1&quot;? Downloaded and uploading files will not be removed</source>
-        <translation type="unfinished"/>
+        <translation> &quot;%1&quot; 계정을 다시 동기화하시겠습니까?다운로드 및 업로드 된 파일은 삭제되지 않습니다.</translation>
     </message>
 </context>
 <context>
@@ -815,7 +815,7 @@
     </message>
     <message>
         <source>Failed to change library name since some files are opened in it</source>
-        <translation type="unfinished"/>
+        <translation>일부 파일이 열려 있기 때문에 라이브러리 이름을 변경할 수 없습니다.</translation>
     </message>
 </context>
 <context>
@@ -1440,6 +1440,10 @@
         <source>No sync errors.</source>
         <translation>오류 없이 동기화했습니다.</translation>
     </message>
+    <message>
+        <source>Descriptions for sync errors</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SyncErrorsTableModel</name>
@@ -1468,27 +1472,27 @@
     <name>SyncRootNameDialog</name>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose a sync root folder name. Files in this account will be synced under the path like &apos;C:\Users\Jim\seadrive_root\&amp;lt;sync root folder name&amp;gt;&apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;동기화 루트 폴더 이름을 선택합니다.이 계정의 파일은 &apos;C:UsersJimseadrive_root&amp;lt;와 같은 경로에서 동기화됩니다.루트 폴더 이름을 동기화&amp;gt;&apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Use default name</source>
-        <translation type="unfinished"/>
+        <translation>기본 이름 사용</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Sync Root Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>루트 폴더 이름 동기화</translation>
     </message>
     <message>
         <source>Sync root name cannot be empty.</source>
-        <translation type="unfinished"/>
+        <translation>동기화 루트 이름은 비어 있을 수 없습니다.</translation>
     </message>
     <message>
         <source>Sync root name cannot contain the following characters: &lt; &gt; : &quot; / \ | ? *</source>
-        <translation type="unfinished"/>
+        <translation>동기화 루트 이름은 다음 문자를 포함할 수 없습니다: &lt; &gt; : &quot; / | ? *</translation>
     </message>
 </context>
 <context>
