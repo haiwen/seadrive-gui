@@ -1439,6 +1439,10 @@
         <source>No sync errors.</source>
         <translation>Nincs szinkronizációs hiba.</translation>
     </message>
+    <message>
+        <source>Descriptions for sync errors</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SyncErrorsTableModel</name>
