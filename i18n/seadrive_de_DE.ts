@@ -1442,7 +1442,7 @@
     </message>
     <message>
         <source>Descriptions for sync errors</source>
-        <translation type="unfinished"/>
+        <translation>Beschreibungen für Fehler bei der Synchronisation</translation>
     </message>
 </context>
 <context>
