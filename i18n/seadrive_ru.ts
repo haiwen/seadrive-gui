@@ -1443,7 +1443,7 @@
     </message>
     <message>
         <source>Descriptions for sync errors</source>
-        <translation type="unfinished"/>
+        <translation>Описания ошибок синхронизации</translation>
     </message>
 </context>
 <context>
