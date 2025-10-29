@@ -848,7 +848,7 @@ bool SeadriveGui::initLog()
 
     connect(&log_rotate_timer_, SIGNAL(timeout()),
             this, SLOT(logRotate()));
-    log_rotate_timer_.start();
+    log_rotate_timer_.start(kAppletLogRotateIntervalMesc);
 
     return true;
 }
