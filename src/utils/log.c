@@ -139,33 +139,92 @@ applet_log_init (const char *seadrive_dir)
     return 0;
 }
 
+const int
+seafile_log_reopen (const char *logfile, const char *logfile_err, const char *logfile_old)
+{
+    FILE *fp, *oldfp, *errfp;
+
+#if defined(_MSC_VER)
+    if ((errfp = (FILE *)g_fopen (logfile_err, "a+")) == NULL) {
+#else
+    if ((errfp = (FILE *)(long)g_fopen (logfile_err, "a+")) == NULL) {
+#endif
+        g_warning ("Failed to open file %s\n", logfile_err);
+        return -1;
+    }
+
+    if (fclose(logfp) < 0) {
+        g_warning ("Failed to close file %s\n", logfile);
+        fclose (errfp);
+        return -1;
+    }
+    logfp = errfp;
+
+    if (g_file_test(logfile_old, G_FILE_TEST_EXISTS)) {
+        if (g_remove(logfile_old) != 0) {
+            g_warning ("Delete old log file %s failed errno=%d.", logfile_old, errno);
+            return -1;
+        } else {
+            g_warning ("Deleted old log file %s.", logfile_old);
+        }
+    }
+
+    if (g_rename(logfile, logfile_old) == 0) {
+        g_warning ("Renamed %s to backup file %s.", logfile, logfile_old);
+    } else {
+        g_warning ("Rename %s to backup file failed errno=%d.", logfile, errno);
+        return -1;
+    }
+
+#if defined(_MSC_VER)
+    if ((fp = (FILE *)g_fopen (logfile, "a+")) == NULL) {
+#else
+    if ((fp = (FILE *)(long)g_fopen (logfile, "a+")) == NULL) {
+#endif
+        g_warning ("Failed to open file %s\n", logfile);
+        return -1;
+    }
+    logfp = fp;
+
+    if (fclose (errfp) < 0) {
+        g_warning ("Failed to close file %s\n", logfile_err);
+    }
+
+    return 0;
+}
+
 void
 applet_log_rotate (const char *seadrive_dir)
 {
     char *logdir = g_build_filename (seadrive_dir, "logs", NULL);
     char *seadrive_gui_log_file = g_build_filename(logdir, "seadrive-gui.log", NULL);
+    char *seadrive_gui_log_file_old = g_build_filename (logdir, "seadrive-gui-old.log", NULL);
+    // seadrive-gui-error.log is used to record log, when failed to open new log file.
+    char *seadrive_gui_log_file_err = g_build_filename (logdir, "seadrive-gui-error.log", NULL);
+
+    GStatBuf log_file_stat_buf;
+    if (g_stat(seadrive_gui_log_file, &log_file_stat_buf) != 0) {
+        // Do not warn if errno=2 (file not exist), because during
+        // first run of the client the log files may not be created
+        // yet.
+        if (errno != 2) {
+            g_warning ("Get log file %s stat failed errno=%d.", seadrive_gui_log_file, errno);
+        }
+        goto out;
+    }
+
+    const int delete_threshold = 300 * 1000 * 1000;
+    if (log_file_stat_buf.st_size <= delete_threshold) {
+        goto out;
+    }
+
+    if (seafile_log_reopen (seadrive_gui_log_file, seadrive_gui_log_file_err, seadrive_gui_log_file_old) >= 0) {
+        g_remove (seadrive_gui_log_file_err);
+     }
+
+out:
     g_free (logdir);
-
-    if (!delete_large_log_file(seadrive_gui_log_file)) {
-        g_free (seadrive_gui_log_file);
-        return;
-    }
-
-    FILE *fp, *oldfp;
-#if defined(_MSC_VER)
-    if ((fp = (FILE *)g_fopen (seadrive_gui_log_file, "a+")) == NULL) {
-#else
-    if ((fp = (FILE *)(long)g_fopen (seadrive_gui_log_file, "a+")) == NULL) {
-#endif
-        g_warning ("Open file %s failed errno=%d\n", seadrive_gui_log_file, errno);
-        g_free (seadrive_gui_log_file);
-        return;
-    }
-
-    oldfp = logfp;
-    logfp = fp;
-    if (fclose(oldfp) < 0) {
-        g_warning ("Failed to close file %s\n", seadrive_gui_log_file);
-    }
     g_free (seadrive_gui_log_file);
+    g_free (seadrive_gui_log_file_old);
+    g_free (seadrive_gui_log_file_err);
 }
