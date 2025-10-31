@@ -2,6 +2,10 @@
 #include <time.h>
 #include <glib/gstdio.h>
 
+#if defined(_MSC_VER)
+#include <windows.h>
+#endif
+
 #include "log.h"
 
 static FILE *logfp;
@@ -127,6 +131,13 @@ applet_log_init (const char *seadrive_dir)
     g_free (seadrive_gui_log_file);
     return -1;
     }
+
+#if defined(_MSC_VER)
+    // Avoid having the seadrive daemon inherit the log file handle, which prevents renaming during log rotate.
+    intptr_t fd = _fileno(logfp);
+    HANDLE h = (HANDLE)_get_osfhandle(fd);
+    SetHandleInformation(h, HANDLE_FLAG_INHERIT, 0);
+#endif
 
     g_log_set_handler (NULL, G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL
                        | G_LOG_FLAG_RECURSION, applet_log, NULL);
