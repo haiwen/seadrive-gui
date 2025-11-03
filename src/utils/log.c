@@ -137,7 +137,7 @@ applet_log_init (const char *seadrive_dir)
     }
 
 #if defined(_MSC_VER)
-    // Avoid having the seadrive daemon inherit the log file handle, which prevents renaming during log rotate.
+    // Avoid having the seadrive daemon inherit the log file handle, which prevents file handle being opened by seadrive daamon when gui rotates the log.
     intptr_t fd = _fileno(logfp);
     HANDLE h = (HANDLE)_get_osfhandle(fd);
     SetHandleInformation(h, HANDLE_FLAG_INHERIT, 0);
