@@ -48,13 +48,17 @@ applet_log (const gchar *log_domain, GLogLevelFlags log_level,
     tm = localtime(&t);
     len = strftime (buf, BUFSIZE, "[%x %X] ", tm);
     g_return_if_fail (len < BUFSIZE);
-    fputs (buf, logfp);
-    fputs (message, logfp);
+    if (logfp != NULL) {
+        fputs (buf, logfp);
+        fputs (message, logfp);
 
-    if (strlen(message) > 0 && message[strlen(message) - 1] != '\n') {
-        fputs("\n", logfp);
+        if (strlen(message) > 0 && message[strlen(message) - 1] != '\n') {
+            fputs("\n", logfp);
+        }
+        fflush (logfp);
+    } else {
+        printf("%s %s", buf, message);
     }
-    fflush (logfp);
 #undef BUFSIZE
 }
 
@@ -151,25 +155,9 @@ applet_log_init (const char *seadrive_dir)
 }
 
 const int
-seafile_log_reopen (const char *logfile, const char *logfile_err, const char *logfile_old)
+seafile_log_reopen (const char *logfile, const char *logfile_old)
 {
-    FILE *fp, *oldfp, *errfp;
-
-#if defined(_MSC_VER)
-    if ((errfp = (FILE *)g_fopen (logfile_err, "a+")) == NULL) {
-#else
-    if ((errfp = (FILE *)(long)g_fopen (logfile_err, "a+")) == NULL) {
-#endif
-        g_warning ("Failed to open file %s\n", logfile_err);
-        return -1;
-    }
-
-    if (fclose(logfp) < 0) {
-        g_warning ("Failed to close file %s\n", logfile);
-        fclose (errfp);
-        return -1;
-    }
-    logfp = errfp;
+    FILE *fp;
 
     if (g_file_test(logfile_old, G_FILE_TEST_EXISTS)) {
         if (g_remove(logfile_old) != 0) {
@@ -180,10 +168,16 @@ seafile_log_reopen (const char *logfile, const char *logfile_err, const char *lo
         }
     }
 
+    if (fclose(logfp) < 0) {
+        g_warning ("Failed to close file %s\n", logfile);
+        return -1;
+    }
+    logfp = NULL;
+
     if (g_rename(logfile, logfile_old) == 0) {
-        g_warning ("Renamed %s to backup file %s.", logfile, logfile_old);
+        g_warning ("Renamed %s to backup file %s.\n", logfile, logfile_old);
     } else {
-        g_warning ("Rename %s to backup file failed errno=%d.", logfile, errno);
+        g_warning ("Rename %s to backup file failed errno=%d.\n", logfile, errno);
         return -1;
     }
 
@@ -197,10 +191,6 @@ seafile_log_reopen (const char *logfile, const char *logfile_err, const char *lo
     }
     logfp = fp;
 
-    if (fclose (errfp) < 0) {
-        g_warning ("Failed to close file %s\n", logfile_err);
-    }
-
     return 0;
 }
 
@@ -210,8 +200,6 @@ applet_log_rotate (const char *seadrive_dir)
     char *logdir = g_build_filename (seadrive_dir, "logs", NULL);
     char *seadrive_gui_log_file = g_build_filename(logdir, "seadrive-gui.log", NULL);
     char *seadrive_gui_log_file_old = g_build_filename (logdir, "seadrive-gui-old.log", NULL);
-    // seadrive-gui-error.log is used to record log, when failed to open new log file.
-    char *seadrive_gui_log_file_err = g_build_filename (logdir, "seadrive-gui-error.log", NULL);
 
     GStatBuf log_file_stat_buf;
     if (g_stat(seadrive_gui_log_file, &log_file_stat_buf) != 0) {
@@ -229,13 +217,10 @@ applet_log_rotate (const char *seadrive_dir)
         goto out;
     }
 
-    if (seafile_log_reopen (seadrive_gui_log_file, seadrive_gui_log_file_err, seadrive_gui_log_file_old) >= 0) {
-        g_remove (seadrive_gui_log_file_err);
-     }
+    seafile_log_reopen (seadrive_gui_log_file, seadrive_gui_log_file_old);
 
 out:
     g_free (logdir);
     g_free (seadrive_gui_log_file);
     g_free (seadrive_gui_log_file_old);
-    g_free (seadrive_gui_log_file_err);
 }
