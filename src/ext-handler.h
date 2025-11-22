@@ -167,6 +167,7 @@ private:
     bool handleIsFileCached(QStringList &args);
     bool isFileInRepo(const QString &path);
     bool handleIsFileInRepo(QStringList &args);
+    void handleUnCachePath(const QStringList& args);
     QString handleShowAccounts();
     void handleDeleteAccount(QStringList args);
     void handleResyncAccount(QStringList args);
