@@ -174,7 +174,7 @@ void MessagePoller::checkSyncErrors()
         return;
     }
 
-    QList<SyncError> errors = SyncError::listFromJSON(ret);
+    QList<SyncError> errors = SyncError::listFromJSON(rpc_client_->domainID(), ret);
     json_decref(ret);
 
     gui->trayIcon()->setSyncErrors(rpc_client_->domainID(), errors);

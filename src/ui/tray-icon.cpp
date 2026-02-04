@@ -801,8 +801,8 @@ void SeafileTrayIcon::setSyncErrors(const QString& domain_id, const QList<SyncEr
     QMapIterator<QString, QList<SyncError>> it(domain_errors_);
     while (it.hasNext()) {
         it.next();
-        auto errors = it.value();
-        sync_errors_.append(errors);
+        auto error = it.value();
+        sync_errors_.append(error);
     }
 
     reloadTrayIcon();

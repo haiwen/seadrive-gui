@@ -1,6 +1,7 @@
 #include <QObject>
 #include <QStringList>
 
+#include "jansson.h"
 #include "utils/utils.h"
 #include "utils/file-utils.h"
 #include "utils/json-utils.h"
@@ -25,11 +26,12 @@ SyncError SyncError::fromJSON(const json_t *root)
     return error;
 }
 
-QList<SyncError> SyncError::listFromJSON(const json_t *json)
+QList<SyncError> SyncError::listFromJSON(const QString& domain_id, const json_t *json)
 {
     QList<SyncError> errors;
     for (size_t i = 0; i < json_array_size(json); i++) {
         SyncError error = fromJSON(json_array_get(json, i));
+        error.domain_id = domain_id;
         errors.push_back(error);
     }
 

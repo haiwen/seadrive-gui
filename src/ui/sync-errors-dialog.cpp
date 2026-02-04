@@ -20,7 +20,7 @@
 
 namespace {
 
-const int kUpdateErrorsIntervalMSecs = 3000;
+const int kUpdateErrorsIntervalMSecs = 200;
 
 const int kDefaultColumnWidth = 120;
 const int kDefaultColumnHeight = 40;
@@ -192,7 +192,6 @@ void SyncErrorsTableView::contextMenuEvent(QContextMenuEvent *event)
 {
     QPoint pos = event->pos();
     int row = rowAt(pos.y());
-    qDebug("row = %d\n", row);
     if (row == -1) {
         return;
     }
@@ -200,6 +199,12 @@ void SyncErrorsTableView::contextMenuEvent(QContextMenuEvent *event)
     SyncErrorsTableModel *model = (SyncErrorsTableModel *)this->model();
 
     SyncError error = model->errorAt(row);
+
+    QModelIndexList selected = selectionModel()->selectedRows();
+    selected_sync_errors_.clear();
+    foreach(const QModelIndex &index, selected) {
+        selected_sync_errors_.append(model->errorAt(index.row()));
+    }
 
     prepareContextMenu(error);
     pos = viewport()->mapToGlobal(pos);
@@ -213,6 +218,9 @@ void SyncErrorsTableView::prepareContextMenu(const SyncError& error)
 void SyncErrorsTableView::createContextMenu()
 {
     context_menu_ = new QMenu(this);
+    delete_action_ = new QAction(tr("delete"), this);
+    context_menu_->addAction(delete_action_);
+    connect(delete_action_, SIGNAL(triggered()), this, SLOT(onDeleteFileAsyncError()));
 }
 
 void SyncErrorsTableView::resizeEvent(QResizeEvent *event)
@@ -235,6 +243,22 @@ void SyncErrorsTableView::onItemDoubleClicked(const QModelIndex& index)
     }
     openUrl(QUrl::fromLocalFile(path_to_open));
 #endif
+}
+
+void SyncErrorsTableView::onDeleteFileAsyncError()
+{
+    foreach(const SyncError& error, selected_sync_errors_) {
+        SeafileRpcClient *rpc_client = gui->rpcClient(error.domain_id);
+        if (!rpc_client) {
+            qWarning() << "Delete file sync error failed: rpc client not found";
+            continue;
+        }
+        bool success = rpc_client->deleteFileAsyncError(error.repo_id, error.path, error.error_id);
+        if (!success) {
+            gui->messageBox(tr("Delete file sync error failed"));
+            return;
+        }
+    }
 }
 
 QString SyncErrorsTableView::findLocalPathFromError(const SyncError& error)
