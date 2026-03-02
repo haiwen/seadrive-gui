@@ -187,7 +187,7 @@ QStringList DaemonManager::collectSeaDriveArgs()
       QString fuse_opts = qgetenv("SEADRIVE_FUSE_OPTS");
       if (fuse_opts.isEmpty()) {
           QStringList umount_arguments;
-          umount_arguments << "-u" << gui->seadriveRoot();
+          umount_arguments << "-uz" << gui->seadriveRoot();
           QProcess::execute("fusermount", umount_arguments);
           QString mount_dir = gui->seadriveRoot();
           args << mount_dir;
