@@ -57,6 +57,7 @@ public:
 
 private slots:
     void onItemDoubleClicked(const QModelIndex& index);
+    void onDeleteFileSyncError();
 
 private:
     void createContextMenu();
@@ -65,6 +66,8 @@ private:
 
 private:
     QMenu *context_menu_;
+    QAction *delete_action_;
+    QList<SyncError> selected_sync_errors_;
 };
 
 

@@ -1278,3 +1278,26 @@ bool SeafileRpcClient::addDelConfirmation(const QString& confirmation_id, bool r
 
     return ret == 0;
 }
+
+bool SeafileRpcClient::deleteFileSyncError(const QString& repo_id, const QString& path_in_repo, int error_id)
+{
+    if (!connected_) {
+        qWarning("Call searpc from disconnected client");
+        return false;
+    }
+
+    GError *error = NULL;
+    int ret = searpc_client_call__int(seadrive_rpc_client_,
+                            "seafile_del_file_sync_error",
+                            &error, 3,
+                            "string", toCStr(repo_id),
+                            "string", toCStr(path_in_repo),
+                            "int", error_id);
+    if (error) {
+        qWarning("failed to delete file sync error: %s\n", error->message);
+        g_error_free(error);
+        return false;
+    }
+
+    return ret == 0;
+}

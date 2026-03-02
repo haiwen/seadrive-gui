@@ -47,6 +47,7 @@
 
 class SyncError {
 public:
+    QString domain_id;
     QString repo_id;
     QString repo_name;
     QString path;
@@ -62,7 +63,7 @@ public:
         error_id = -1;
     }
 
-    static QList<SyncError> listFromJSON(const json_t *objlist);
+    static QList<SyncError> listFromJSON(const QString& domain_id, const json_t *objlist);
     static SyncError fromJSON(const json_t *objlist);
 
     static QString syncErrorIdToErrorStr(int errr_id, const QString& path);
@@ -73,7 +74,8 @@ public:
     bool isValid() const { return error_id >= 0; }
 
     bool operator==(const SyncError& rhs) const {
-        return repo_id == rhs.repo_id
+        return domain_id == rhs.domain_id
+            && repo_id == rhs.repo_id
             && repo_name == rhs.repo_name
             && path == rhs.path
             && error_id == rhs.error_id
