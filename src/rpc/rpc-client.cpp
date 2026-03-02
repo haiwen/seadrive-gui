@@ -1279,7 +1279,7 @@ bool SeafileRpcClient::addDelConfirmation(const QString& confirmation_id, bool r
     return ret == 0;
 }
 
-bool SeafileRpcClient::deleteFileAsyncError(const QString& repo_id, const QString& path_in_repo, int error_id)
+bool SeafileRpcClient::deleteFileSyncError(const QString& repo_id, const QString& path_in_repo, int error_id)
 {
     if (!connected_) {
         qWarning("Call searpc from disconnected client");
@@ -1294,7 +1294,7 @@ bool SeafileRpcClient::deleteFileAsyncError(const QString& repo_id, const QStrin
                             "string", toCStr(path_in_repo),
                             "int", error_id);
     if (error) {
-        qWarning("failed to delete file async error: %s\n", error->message);
+        qWarning("failed to delete file sync error: %s\n", error->message);
         g_error_free(error);
         return false;
     }

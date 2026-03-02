@@ -220,7 +220,7 @@ void SyncErrorsTableView::createContextMenu()
     context_menu_ = new QMenu(this);
     delete_action_ = new QAction(tr("delete"), this);
     context_menu_->addAction(delete_action_);
-    connect(delete_action_, SIGNAL(triggered()), this, SLOT(onDeleteFileAsyncError()));
+    connect(delete_action_, SIGNAL(triggered()), this, SLOT(onDeleteFileSyncError()));
 }
 
 void SyncErrorsTableView::resizeEvent(QResizeEvent *event)
@@ -245,7 +245,7 @@ void SyncErrorsTableView::onItemDoubleClicked(const QModelIndex& index)
 #endif
 }
 
-void SyncErrorsTableView::onDeleteFileAsyncError()
+void SyncErrorsTableView::onDeleteFileSyncError()
 {
     foreach(const SyncError& error, selected_sync_errors_) {
         SeafileRpcClient *rpc_client = gui->rpcClient(error.domain_id);
@@ -253,7 +253,7 @@ void SyncErrorsTableView::onDeleteFileAsyncError()
             qWarning() << "Delete file sync error failed: rpc client not found";
             continue;
         }
-        bool success = rpc_client->deleteFileAsyncError(error.repo_id, error.path, error.error_id);
+        bool success = rpc_client->deleteFileSyncError(error.repo_id, error.path, error.error_id);
         if (!success) {
             gui->messageBox(tr("Delete file sync error failed"));
             return;

@@ -144,7 +144,7 @@ public:
 
     bool addDelConfirmation(const QString& confirmation_id, bool resync);
 
-    bool deleteFileAsyncError(const QString& repo_id,
+    bool deleteFileSyncError(const QString& repo_id,
                               const QString& path_in_repo,
                               int error_id);
 
