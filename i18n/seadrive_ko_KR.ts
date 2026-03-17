@@ -1442,7 +1442,7 @@
     </message>
     <message>
         <source>Descriptions for sync errors</source>
-        <translation type="unfinished"/>
+        <translation>동기화 오류 설명</translation>
     </message>
 </context>
 <context>
@@ -1466,6 +1466,17 @@
     <message>
         <source>Time</source>
         <translation>시간</translation>
+    </message>
+</context>
+<context>
+    <name>SyncErrorsTableView</name>
+    <message>
+        <source>delete</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Delete file sync error failed</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

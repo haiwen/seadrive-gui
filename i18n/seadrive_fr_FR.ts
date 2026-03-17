@@ -144,15 +144,15 @@
     <name>ExtCommandsHandler</name>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;? Downloaded and uploading files will not be removed.</source>
-        <translation type="unfinished"/>
+        <translation>Êtes-vous sûr de vouloir supprimer le compte associé à «%1» ? Les fichiers téléchargés et chargés ne seront pas supprimés.</translation>
     </message>
     <message>
         <source>Failed to connect to background process, please try again later</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de se connecter au processus en arrière-plan. Veuillez réessayer plus tard.</translation>
     </message>
     <message>
         <source>Are you sure to resync account from &quot;%1&quot;? Downloaded and uploading files will not be removed</source>
-        <translation type="unfinished"/>
+        <translation>Êtes-vous sûr de vouloir resynchroniser le compte depuis «%1» ? Les fichiers téléchargés et chargés ne seront pas supprimés.</translation>
     </message>
 </context>
 <context>
@@ -814,7 +814,7 @@
     </message>
     <message>
         <source>Failed to change library name since some files are opened in it</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de modifier le nom de la bibliothèque car certains fichiers y sont ouverts.</translation>
     </message>
 </context>
 <context>
@@ -1441,7 +1441,7 @@
     </message>
     <message>
         <source>Descriptions for sync errors</source>
-        <translation type="unfinished"/>
+        <translation>Descriptions des erreurs de synchronisation</translation>
     </message>
 </context>
 <context>
@@ -1468,30 +1468,41 @@
     </message>
 </context>
 <context>
+    <name>SyncErrorsTableView</name>
+    <message>
+        <source>delete</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Delete file sync error failed</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>SyncRootNameDialog</name>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose a sync root folder name. Files in this account will be synced under the path like &apos;C:\Users\Jim\seadrive_root\&amp;lt;sync root folder name&amp;gt;&apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choisissez un nom pour le dossier racine de synchronisation. Les fichiers de ce compte seront synchronisés sous un chemin d&apos;accès comme &apos;C:\Users\Jim\seadrive_root\&amp;lt;sync root folder name&amp;gt;&apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Use default name</source>
-        <translation type="unfinished"/>
+        <translation>Utiliser le nom par défaut</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Sync Root Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>Nom du dossier racine de synchronisation</translation>
     </message>
     <message>
         <source>Sync root name cannot be empty.</source>
-        <translation type="unfinished"/>
+        <translation>Le nom du dossier racine de synchronisation ne peut pas être vide.</translation>
     </message>
     <message>
         <source>Sync root name cannot contain the following characters: &lt; &gt; : &quot; / \ | ? *</source>
-        <translation type="unfinished"/>
+        <translation>Le nom du dossier racine de synchronisation ne peut pas contenir les caractères suivants : &lt; &gt; : &quot; / \ | ? *</translation>
     </message>
 </context>
 <context>

@@ -751,7 +751,7 @@
     </message>
     <message>
         <source>Update to file %1 denied by folder permission setting</source>
-        <translation>文件夹权限设置拒绝更新文件 ％1</translation>
+        <translation>文件夹权限设置拒绝更新文件 %1</translation>
     </message>
     <message>
         <source>Path %1 ends with space or period character</source>
@@ -1466,6 +1466,17 @@
     <message>
         <source>Time</source>
         <translation>时间</translation>
+    </message>
+</context>
+<context>
+    <name>SyncErrorsTableView</name>
+    <message>
+        <source>delete</source>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <source>Delete file sync error failed</source>
+        <translation>删除文件同步错误失败</translation>
     </message>
 </context>
 <context>
