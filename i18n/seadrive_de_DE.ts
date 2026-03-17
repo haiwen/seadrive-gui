@@ -1469,6 +1469,17 @@
     </message>
 </context>
 <context>
+    <name>SyncErrorsTableView</name>
+    <message>
+        <source>delete</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Delete file sync error failed</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>SyncRootNameDialog</name>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose a sync root folder name. Files in this account will be synced under the path like &apos;C:\Users\Jim\seadrive_root\&amp;lt;sync root folder name&amp;gt;&apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
