@@ -1472,11 +1472,11 @@
     <name>SyncErrorsTableView</name>
     <message>
         <source>delete</source>
-        <translation type="unfinished"/>
+        <translation>Löschen</translation>
     </message>
     <message>
         <source>Delete file sync error failed</source>
-        <translation type="unfinished"/>
+        <translation>Löschung konnte nicht synchronisiert werden</translation>
     </message>
 </context>
 <context>

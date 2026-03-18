@@ -1473,11 +1473,11 @@
     <name>SyncErrorsTableView</name>
     <message>
         <source>delete</source>
-        <translation type="unfinished"/>
+        <translation>удалить</translation>
     </message>
     <message>
         <source>Delete file sync error failed</source>
-        <translation type="unfinished"/>
+        <translation>Ошибка синхронизации удаления файла.</translation>
     </message>
 </context>
 <context>
