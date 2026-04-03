@@ -1,5 +1,5 @@
-#include <getopt.h>
 #include <QApplication>
+#include <QCommandLineParser>
 #include <QMessageBox>
 #include <QWidget>
 #include <QTimer>
@@ -94,68 +94,56 @@ void setupSettingDomain()
     QCoreApplication::setApplicationName(QString("%1 Client").arg(appName));
 }
 
-void handleCommandLineOption(int argc, char *argv[])
+void handleCommandLineOption(const QApplication &app)
 {
-    int c;
-    static const char *short_options = "KDXPc:d:f:";
-    static const struct option long_options[] = {
-        { "fuse-opts", required_argument, NULL, 'o' },
-        { "stop", no_argument, NULL, 'K'},
-        { "open-local-file", no_argument, NULL, 'f' },
-#if defined(Q_OS_WIN32)
-        { "drive-letter", required_argument, NULL, 'L' },
-#endif
-        { "delay", no_argument, NULL, 'D' },
-        { "remove-user-data", no_argument, NULL, 'X' },
+    QCommandLineParser parser;
 
+    parser.addOptions({
+        QCommandLineOption(QStringList({"D", "delay"})),
         // seadrive-gui --dev won't launch seadrive daemon (you are
         // supposed to launch it yourself). This is for speeding up
         // the development cycles because starting the seadrvie daemon
         // and wait for it to be ready is very slow.
-        { "dev", no_argument, NULL, 'E' },
-        { NULL, 0, NULL, 0, },
-    };
+        QCommandLineOption(QStringList({"E", "dev"})),
+        QCommandLineOption(QStringList({"K", "stop"})),
+#ifdef Q_OS_WIN32
+        QCommandLineOption(QStringList({"L", "drive-letter"}), "The drive letter", "letter"),
+#endif
+        QCommandLineOption(QStringList({"X", "remove-user-data"})),
+        QCommandLineOption(QStringList({"f", "open-local-file"}), "Open a local file", "file"),
+        QCommandLineOption(QStringList({"o", "fuse-opts"}), "FUSE options", "fuse")
+    });
+    parser.process(app);
 
-    while ((c = getopt_long (argc, argv, short_options,
-                             long_options, NULL)) != EOF) {
-        switch (c) {
-        case 'o':
-            g_setenv ("SEADRIVE_FUSE_OPTS", optarg, 1);
-            break;
-#if defined(Q_OS_WIN32)
-        case 'L':
-            g_setenv ("SEADRIVE_LETTER", optarg, 1);
-            break;
-#if defined(HAVE_SPARKLE_SUPPORT) && defined(SEADRIVE_GUI_DEBUG)
-        case 'U':
-            g_setenv ("SEADRIVE_APPCAST_URI", optarg, 1);
-            break;
-#endif
-#endif
-        case 'D':
-            msleep(1000);
-            break;
-        case 'X':
-            do_remove_user_data();
-            exit(0);
-        case 'f':
-            OpenLocalHelper::instance()->handleOpenLocalFromCommandLine(optarg);
-            break;
-        case 'E':
-            dev_mode = true;
-            break;
-        case 'K':
-            // do_stop_app requires gui object be initialized. We save a
-            // flag here and exeute it later.
-            stop_app = true;
-            return;
-        default:
-            exit(1);
-        }
+    if (parser.isSet("D")) {
+        msleep(1000);
     }
-
+    if (parser.isSet("E")) {
+        dev_mode = true;
+    }
+    if (parser.isSet("K")) {
+        // do_stop_app requires gui object be initialized. We save a
+        // flag here and exeute it later.
+        stop_app = true;
+    }
+#ifdef Q_OS_WIN32
+    if (parser.isSet("L")) {
+        QByteArray path = parser.value("L").toUtf8();
+        g_setenv("SEADRIVE_LETTER", path.constData(), 1);
+    }
+#endif
+    if (parser.isSet("o")) {
+        QByteArray path = parser.value("o").toUtf8();
+        g_setenv("SEADRIVE_FUSE_OPTS", path.constData(), 1);
+    }
+    if (parser.isSet("X")) {
+        do_remove_user_data();
+        exit(0);
+    }
+    if (parser.isSet("f")) {
+        OpenLocalHelper::instance()->handleOpenLocalFromCommandLine(parser.value("f"));
+    }
 }
-
 
 } // anonymous namespace
 
@@ -198,7 +186,7 @@ int main(int argc, char *argv[])
 
     // check seadrive is running
     // start applet
-    handleCommandLineOption(argc, argv);
+    handleCommandLineOption(app);
 
     SeadriveGui mGui(dev_mode);
     gui = &mGui;
