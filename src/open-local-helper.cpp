@@ -68,6 +68,11 @@ OpenLocalHelper::OpenLocalHelper()
     QDesktopServices::setUrlHandler(kSeafileProtocolScheme, this, SLOT(openLocalFile(const QUrl&)));
 }
 
+OpenLocalHelper::~OpenLocalHelper()
+{
+    QDesktopServices::unsetUrlHandler(kSeafileProtocolScheme);
+}
+
 OpenLocalHelper*
 OpenLocalHelper::instance()
 {
@@ -104,7 +109,7 @@ bool OpenLocalHelper::openLocalFile(const QUrl &url)
     qDebug("[OpenLocalHelper] open local file: repo %s, path %s\n",
            repo_id.toUtf8().data(), path.toUtf8().data());
 
-    qWarning("get file repo id is %s, eamil is %s, path is %s\n", toCStr(repo_id), toCStr(email), toCStr(path));
+    qWarning("get file repo id is %s, email is %s, path is %s\n", toCStr(repo_id), toCStr(email), toCStr(path));
     ::openLocalFile(repo_id, path);
 
     return true;
@@ -115,12 +120,12 @@ void OpenLocalHelper::messageBox(const QString& msg)
     gui->messageBox(msg);
 }
 
-void OpenLocalHelper::handleOpenLocalFromCommandLine(const char *url)
+void OpenLocalHelper::handleOpenLocalFromCommandLine(const QString &url)
 {
     SeaDriveRpcServer::Client *client = SeaDriveRpcServer::getClient();
     if (client->connect()) {
         // An instance of seadrive applet is running
-        client->sendOpenSeafileUrlCommand(QUrl::fromEncoded(url));
+        client->sendOpenSeafileUrlCommand(QUrl(url));
         exit(0);
     } else {
         // No instance of seadrive client running, we just record the url and
@@ -133,7 +138,7 @@ void OpenLocalHelper::handleOpenLocalFromCommandLine(const char *url)
 void OpenLocalHelper::checkPendingOpenLocalRequest()
 {
     if (!url_.isEmpty()) {
-        openLocalFile(QUrl::fromEncoded(url_));
+        openLocalFile(QUrl(url_));
         setUrl(NULL);
     }
 }
