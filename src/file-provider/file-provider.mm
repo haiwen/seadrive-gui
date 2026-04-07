@@ -54,6 +54,8 @@ bool fileProviderAddDomain(const QString domain_id, const QString display_name, 
 
     NSFileProviderDomain *domain = [[NSFileProviderDomain alloc] initWithIdentifier:domain_id.toNSString() displayName:display_name.toNSString()];
     domain.hidden = hidden;
+    // Setting supportsSyncingTrash=NO, the system will decide how to handle the trashing operation.
+    domain.supportsSyncingTrash = NO;
     [NSFileProviderManager addDomain:domain completionHandler:[&](NSError *error) {
         if (error != nil) {
             qWarning() << "[File Provider] Error adding domain:" << error;
