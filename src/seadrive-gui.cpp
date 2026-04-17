@@ -700,7 +700,10 @@ void SeadriveGui::connectDaemon()
         auto domain_id = it.key();
         auto account = account_mgr_->getAccountByDomainID(domain_id);
         if (!account.isValid()) {
-            // account has beed deleted, remove account from domain.
+            // account has been deleted, remove account from domain.
+            // Unregister the FileProvider domain first so macOS stops
+            // sending enumerator signals for a domain that's going away.
+            fileProviderRemoveDomain(domain_id);
             rpc_client->deleteDomainAccount(domain_id);
             if (!checkOSVersion144()) {
                 stopDaemon();
