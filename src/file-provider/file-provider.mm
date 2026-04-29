@@ -54,7 +54,10 @@ bool fileProviderAddDomain(const QString domain_id, const QString display_name, 
 
     NSFileProviderDomain *domain = [[NSFileProviderDomain alloc] initWithIdentifier:domain_id.toNSString() displayName:display_name.toNSString()];
     domain.hidden = hidden;
-    // Setting supportsSyncingTrash=NO, the system will decide how to handle the trashing operation.
+    // When supportsSyncingTrash = NO, files will not be moved to the trash under CloudStorage (this is not the system trash).
+    // Some file deletion APIs may trigger behavior that moves files into the CloudStorage trash, and we do not support that behavior.
+    // Setting supportsSyncingTrash = NO ensures that when a file is deleted, it is either removed directly or moved to the system trash.
+    // In either case, SeaDrive will receive a delete event and can correctly delete the file from the cloud.
     domain.supportsSyncingTrash = NO;
     [NSFileProviderManager addDomain:domain completionHandler:[&](NSError *error) {
         if (error != nil) {
