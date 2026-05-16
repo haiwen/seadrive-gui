@@ -124,7 +124,7 @@ private:
     QAction *login_action_;
     QAction *open_log_directory_action_;
     QAction *show_sync_errors_action_;
-    QAction *global_sync_error_action_;
+    QList<QAction *> global_sync_error_actions_;
 
     QAction *about_action_;
     QAction *open_help_action_;
@@ -171,7 +171,8 @@ private:
 
     QList<SyncError> sync_errors_;
     QMap<QString, QList<SyncError>> domain_errors_;
-    SyncError network_error_;
+    QList<SyncError> raw_network_errors_;
+    QList<SyncError> network_errors_;
     SyncErrorsDialog *sync_errors_dialog_;
     TransferProgressDialog * transfer_progress_dialog_;
     EncryptedReposDialog *enc_repo_dialog_;
