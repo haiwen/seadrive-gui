@@ -108,7 +108,9 @@ void SeafileTrayIcon::start()
 {
     transfer_rate_display_action_->setEnabled(true);
     transfer_progress_action_->setEnabled(true);
-    global_sync_error_action_->setEnabled(true);
+    for (QAction *action : global_sync_error_actions_) {
+        action->setEnabled(true);
+    }
     show_sync_errors_action_->setEnabled(true);
     show_enc_repos_action_->setEnabled(true);
 
@@ -140,8 +142,6 @@ void SeafileTrayIcon::createActions()
     show_sync_errors_action_ = new QAction(tr("Show file sync errors"), this);
     connect(show_sync_errors_action_, SIGNAL(triggered()), this, SLOT(showSyncErrorsDialog()));
 
-    global_sync_error_action_ = new QAction("", this);
-
     open_log_directory_action_ = new QAction(tr("Open &logs folder"), this);
     open_log_directory_action_->setStatusTip(tr("open %1 log folder").arg(getBrand()));
     connect(open_log_directory_action_, SIGNAL(triggered()), this, SLOT(openLogDirectory()));
@@ -160,14 +160,13 @@ void SeafileTrayIcon::createContextMenu()
 {
     transfer_rate_display_action_->setEnabled(false);
     transfer_progress_action_->setEnabled(false);
-    global_sync_error_action_->setEnabled(false);
+    global_sync_error_actions_.clear();
     show_sync_errors_action_->setEnabled(false);
     show_enc_repos_action_->setEnabled(false);
 
     context_menu_ = new QMenu(NULL);
     context_menu_->addAction(transfer_rate_display_action_);
     context_menu_->addAction(transfer_progress_action_);
-    context_menu_->addAction(global_sync_error_action_);
     context_menu_->addAction(show_sync_errors_action_);
     context_menu_->addSeparator();
 
@@ -209,11 +208,22 @@ void SeafileTrayIcon::prepareContextMenu()
     search_action_->setVisible(false);
 #endif
 
-    if (network_error_.isValid()) {
-        global_sync_error_action_->setVisible(true);
-        global_sync_error_action_->setText(network_error_.error_str);
-    } else {
-        global_sync_error_action_->setVisible(false);
+    for (QAction *action : global_sync_error_actions_) {
+        context_menu_->removeAction(action);
+        delete action;
+    }
+    global_sync_error_actions_.clear();
+
+    for (const SyncError& error : network_errors_) {
+        QString label = error.error_str;
+        if (!error.server.isEmpty()) {
+            label = QString("%1 - Disconnected").arg(error.server);
+        }
+
+        QAction *action = new QAction(label, this);
+        action->setEnabled(true);
+        context_menu_->insertAction(show_sync_errors_action_, action);
+        global_sync_error_actions_.append(action);
     }
 
     show_sync_errors_action_->setVisible(true);
@@ -779,23 +789,18 @@ void SeafileTrayIcon::setTransferRate(qint64 up_rate, qint64 down_rate)
 void SeafileTrayIcon::setSyncErrors(const QString& domain_id, const QList<SyncError> errors)
 {
     sync_errors_.clear();
-    network_error_= SyncError();
+    raw_network_errors_.clear();
 
     QList<SyncError> sync_errors;
-    if (domain_errors_.contains(domain_id)) {
-        sync_errors = domain_errors_.value(domain_id);
-    }
-    sync_errors.clear();
 
     foreach (const SyncError& error, errors) {
         if (error.isNetworkError()) {
-            if (network_error_.timestamp < error.timestamp) {
-                network_error_ = error;
-            }
+            raw_network_errors_.push_back(error);
         } else {
             sync_errors.push_back(error);
         }
     }
+
     domain_errors_.insert(domain_id, sync_errors);
 
     QMapIterator<QString, QList<SyncError>> it(domain_errors_);
@@ -804,6 +809,17 @@ void SeafileTrayIcon::setSyncErrors(const QString& domain_id, const QList<SyncEr
         auto error = it.value();
         sync_errors_.append(error);
     }
+
+    network_errors_.clear();
+    QMap<QString, SyncError> latest_network_errors_by_server;
+    for (const SyncError& error : raw_network_errors_) {
+        const QString& server_key = error.server;
+        if (!latest_network_errors_by_server.contains(server_key) ||
+            latest_network_errors_by_server.value(server_key).timestamp < error.timestamp) {
+            latest_network_errors_by_server.insert(server_key, error);
+        }
+    }
+    network_errors_ = latest_network_errors_by_server.values();
 
     reloadTrayIcon();
 }
@@ -816,7 +832,7 @@ void SeafileTrayIcon::setStateWithSyncErrors()
     } else {
         timestamp = gui->settingsManager()->getLastOpenSyncDialogTimestamp();
     }
-    if (network_error_.isValid()) {
+    if (!network_errors_.isEmpty()) {
         setState(STATE_HAS_SYNC_ERRORS);
     } else if(!sync_errors_.isEmpty()) {
         if(timestamp > sync_errors_[0].timestamp) {

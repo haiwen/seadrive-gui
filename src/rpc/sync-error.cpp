@@ -13,6 +13,7 @@ SyncError SyncError::fromJSON(const json_t *root)
     SyncError error;
     Json json(root);
 
+    error.server = json.getString("server");
     error.repo_id = json.getString("repo_id");
     error.repo_name = json.getString("repo_name");
     error.path = json.getString("path");

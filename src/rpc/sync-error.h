@@ -48,6 +48,7 @@
 class SyncError {
 public:
     QString domain_id;
+    QString server;
     QString repo_id;
     QString repo_name;
     QString path;
