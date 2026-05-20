@@ -217,9 +217,7 @@ void SeafileTrayIcon::prepareContextMenu()
     for (const SyncError& error : network_errors_) {
         QString label = error.error_str;
         if (!error.server.isEmpty()) {
-            label = QString("%1 (%2)").arg(error.error_str, error.server);
-        } else {
-            label = QString("%1").arg(error.error_str);
+            label = QString("%1 - Disconnected").arg(error.server);
         }
 
         QAction *action = new QAction(label, this);
