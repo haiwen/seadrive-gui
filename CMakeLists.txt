@@ -606,6 +606,7 @@ IF(CMAKE_GENERATOR STREQUAL Xcode)
       COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/locked-by-me.icns ${RESOURCES_DIR}/locked-by-me.icns
       COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/locked-by-user.icns ${RESOURCES_DIR}/locked-by-user.icns
       COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/keep-downloaded.icns ${RESOURCES_DIR}/keep-downloaded.icns
+      COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/readonly.icns ${RESOURCES_DIR}/readonly.icns
   )
   SET(CMAKE_XCODE_ATTRIBUTE_GCC_GENERATE_DEBUGGING_SYMBOLS "YES")
   SET(CMAKE_XCODE_ATTRIBUTE_DEBUG_INFORMATION_FORMAT "dwarf-with-dsym")
