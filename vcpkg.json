@@ -4,22 +4,11 @@
         "getopt",
         "glib",
         "jansson",
-        "openssl",
-        "pthreads",
-        "sqlite3"
-    ],
-    "overrides": [
-        {
-            "name": "jansson",
-            "version": "2.12-1"
-        },
-        {
-            "name": "sqlite3",
-            "version": "3.31.1"
-        },
         {
             "name": "openssl",
-            "version": "3.5.4"
-        }
+            "version>=": "3.6.3#0"
+        },
+        "pthreads",
+        "sqlite3"
     ]
 }
