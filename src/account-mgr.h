@@ -105,6 +105,7 @@ public:
     QString getPreviousSyncRootName(const Account& account);
     const QString genSyncRootName(const Account& account);
     void setSyncRootName(const Account& account, const QString& custom_name);
+    void scheduleUpdateSyncRootSidebarLabels();
 #endif
 
 public slots:
@@ -144,6 +145,7 @@ private:
 #ifdef Q_OS_WIN32
     static bool loadSyncRootInfoCB(struct sqlite3_stmt *stmt, void *data);
     void loadSyncRootInfo();
+    void updateSyncRootSidebarLabels();
     void updateSyncRootInfo(SyncRootInfo& sync_root_info);
     const QString getOldSyncRootDir(const Account& account);
     void setAccountSyncRoot(Account &account);
