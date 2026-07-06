@@ -79,6 +79,9 @@
     <ClCompile Include="src\account-info-service.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\server-connectivity-service.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\account-mgr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -441,6 +444,9 @@
       <Filter>third_party\QtAwesome</Filter>
     </QtMoc>
     <QtMoc Include="src\account-info-service.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\server-connectivity-service.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="src\account-mgr.h">

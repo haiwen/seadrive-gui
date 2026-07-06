@@ -105,6 +105,7 @@ private:
     void createContextMenu();
     void createGlobalMenuBar();
     void setStateWithSyncErrors();
+    void updateNetworkErrors();
 
     QIcon stateToIcon(TrayState state);
     QIcon getIcon(const QString& name);
@@ -171,7 +172,7 @@ private:
 
     QList<SyncError> sync_errors_;
     QMap<QString, QList<SyncError>> domain_errors_;
-    QList<SyncError> raw_network_errors_;
+    QMap<QString, QList<SyncError>> domain_network_errors_;
     QList<SyncError> network_errors_;
     SyncErrorsDialog *sync_errors_dialog_;
     TransferProgressDialog * transfer_progress_dialog_;

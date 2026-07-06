@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\account-info-service.cpp" />
+    <ClCompile Include="src\server-connectivity-service.cpp" />
     <ClCompile Include="src\account-mgr.cpp" />
     <ClCompile Include="src\account.cpp" />
     <ClCompile Include="src\api\api-client.cpp" />
@@ -120,6 +121,7 @@
     <QtMoc Include="src\auto-login-service.h" />
     <QtMoc Include="src\account-mgr.h" />
     <QtMoc Include="src\account-info-service.h" />
+    <QtMoc Include="src\server-connectivity-service.h" />
     <ClInclude Include="src\account.h" />
     <ClInclude Include="src\api\api-error.h" />
     <ClInclude Include="src\api\commit-details.h" />

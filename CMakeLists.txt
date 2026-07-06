@@ -159,6 +159,7 @@ SET(moc_headers
   src/network-mgr.h
   src/remote-wipe-service.h
   src/account-info-service.h
+  src/server-connectivity-service.h
   src/rpc/rpc-client.h
   src/rpc/rpc-server.h
   src/seadrive-gui.h
@@ -295,6 +296,7 @@ SET(seadrive_gui_sources
   src/network-mgr.cpp
   src/remote-wipe-service.cpp
   src/account-info-service.cpp
+  src/server-connectivity-service.cpp
 
   src/rpc/rpc-client.cpp
   src/rpc/rpc-server.cpp
