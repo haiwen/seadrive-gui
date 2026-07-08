@@ -196,16 +196,14 @@ void SeafileTrayIcon::prepareContextMenu()
 {
     auto accounts = gui->accountManager()->allAccounts();
 
-#ifdef Q_OS_MAC
     search_action_->setVisible(false);
+#if defined(Q_OS_MAC) || defined(Q_OS_WIN32)
     for (int i = 0; i < accounts.size(); i++) {
         if (accounts.at(i).isPro()) {
             search_action_->setVisible(true);
             break;
         }
     }
-#else
-    search_action_->setVisible(false);
 #endif
 
     for (QAction *action : global_sync_error_actions_) {
