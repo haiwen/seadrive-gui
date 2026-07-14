@@ -29,6 +29,7 @@
 #include "rpc/rpc-client.h"
 #include "file-provider-mgr.h"
 #include "settings-mgr.h"
+#include "server-connectivity-service.h"
 
 #include "tray-icon.h"
 
@@ -789,19 +790,20 @@ void SeafileTrayIcon::setTransferRate(qint64 up_rate, qint64 down_rate)
 void SeafileTrayIcon::setSyncErrors(const QString& domain_id, const QList<SyncError> errors)
 {
     sync_errors_.clear();
-    raw_network_errors_.clear();
 
     QList<SyncError> sync_errors;
+    QList<SyncError> network_errors;
 
     foreach (const SyncError& error, errors) {
         if (error.isNetworkError()) {
-            raw_network_errors_.push_back(error);
+            network_errors.push_back(error);
         } else {
             sync_errors.push_back(error);
         }
     }
 
     domain_errors_.insert(domain_id, sync_errors);
+    domain_network_errors_.insert(domain_id, network_errors);
 
     QMapIterator<QString, QList<SyncError>> it(domain_errors_);
     while (it.hasNext()) {
@@ -810,18 +812,61 @@ void SeafileTrayIcon::setSyncErrors(const QString& domain_id, const QList<SyncEr
         sync_errors_.append(error);
     }
 
-    network_errors_.clear();
-    QMap<QString, SyncError> latest_network_errors_by_server;
-    for (const SyncError& error : raw_network_errors_) {
-        const QString& server_key = error.server;
-        if (!latest_network_errors_by_server.contains(server_key) ||
-            latest_network_errors_by_server.value(server_key).timestamp < error.timestamp) {
-            latest_network_errors_by_server.insert(server_key, error);
-        }
-    }
-    network_errors_ = latest_network_errors_by_server.values();
+    updateNetworkErrors();
 
     reloadTrayIcon();
+}
+
+namespace {
+
+// The daemon reports the server of a sync error as a plain url string.
+// Prefer the matching account's server url for pinging, since it is
+// normalized (scheme, port).
+QUrl serverUrlForSyncError(const SyncError& error)
+{
+    QUrl url(error.server);
+    const auto accounts = gui->accountManager()->activeAccounts();
+    for (const Account& account : accounts) {
+        if (account.serverUrl.host() == url.host()) {
+            return account.serverUrl;
+        }
+    }
+    return url;
+}
+
+} // namespace
+
+void SeafileTrayIcon::updateNetworkErrors()
+{
+    // Keep only the latest network error per server, and drop the
+    // errors of servers that have been successfully contacted since the
+    // error happened: network errors are transient, so once the server
+    // is reachable again they are resolved and should not keep the tray
+    // icon in the error state.
+    QMap<QString, SyncError> latest_network_errors_by_server;
+    QMapIterator<QString, QList<SyncError>> it(domain_network_errors_);
+    while (it.hasNext()) {
+        it.next();
+        for (const SyncError& error : it.value()) {
+            const QString& server_key = error.server;
+            if (!latest_network_errors_by_server.contains(server_key) ||
+                latest_network_errors_by_server.value(server_key).timestamp < error.timestamp) {
+                latest_network_errors_by_server.insert(server_key, error);
+            }
+        }
+    }
+
+    network_errors_.clear();
+    for (const SyncError& error : latest_network_errors_by_server.values()) {
+        QUrl url = serverUrlForSyncError(error);
+        if (ServerConnectivityService::instance()->lastSuccessTime(url.host()) > error.timestamp) {
+            continue;
+        }
+        network_errors_.push_back(error);
+        // Keep probing the server while its error is displayed; a
+        // successful ping resolves the error on the next update.
+        ServerConnectivityService::instance()->checkServer(url);
+    }
 }
 
 void SeafileTrayIcon::setStateWithSyncErrors()

@@ -11,6 +11,7 @@
 // #include "ui/ssl-confirm-dialog.h"
 #include "utils/utils.h"
 #include "network-mgr.h"
+#include "server-connectivity-service.h"
 
 #include "api-client.h"
 
@@ -233,6 +234,8 @@ void SeafileApiClient::httpRequestFinished()
         emit networkError(reply_->error(), reply_->errorString());
         return;
     }
+
+    ServerConnectivityService::instance()->updateOnSuccessfulRequest(reply_->url());
 
     if (handleHttpRedirect()) {
         return;
