@@ -787,19 +787,21 @@ void SeafileTrayIcon::setTransferRate(qint64 up_rate, qint64 down_rate)
 void SeafileTrayIcon::setSyncErrors(const QString& domain_id, const QList<SyncError> errors)
 {
     sync_errors_.clear();
-    raw_network_errors_.clear();
+    network_errors_.clear();
 
     QList<SyncError> sync_errors;
+    QList<SyncError> net_errors;
 
     foreach (const SyncError& error, errors) {
         if (error.isNetworkError()) {
-            raw_network_errors_.push_back(error);
+            net_errors.push_back(error);
         } else {
             sync_errors.push_back(error);
         }
     }
 
     domain_errors_.insert(domain_id, sync_errors);
+    domain_net_errors_.insert(domain_id, net_errors);
 
     QMapIterator<QString, QList<SyncError>> it(domain_errors_);
     while (it.hasNext()) {
@@ -808,15 +810,20 @@ void SeafileTrayIcon::setSyncErrors(const QString& domain_id, const QList<SyncEr
         sync_errors_.append(error);
     }
 
-    network_errors_.clear();
     QMap<QString, SyncError> latest_network_errors_by_server;
-    for (const SyncError& error : raw_network_errors_) {
-        const QString& server_key = error.server;
-        if (!latest_network_errors_by_server.contains(server_key) ||
-            latest_network_errors_by_server.value(server_key).timestamp < error.timestamp) {
-            latest_network_errors_by_server.insert(server_key, error);
+    QMapIterator<QString, QList<SyncError>> it2(domain_net_errors_);
+    while (it2.hasNext()) {
+        it2.next();
+        auto errors = it2.value();
+        for (const SyncError& error : errors) {
+            const QString& server_key = error.server;
+            if (!latest_network_errors_by_server.contains(server_key) ||
+                latest_network_errors_by_server.value(server_key).timestamp < error.timestamp) {
+                latest_network_errors_by_server.insert(server_key, error);
+            }
         }
     }
+
     network_errors_ = latest_network_errors_by_server.values();
 
     reloadTrayIcon();

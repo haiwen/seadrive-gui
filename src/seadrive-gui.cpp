@@ -711,6 +711,8 @@ void SeadriveGui::connectDaemon()
                 message_poller->stop();
                 delete message_poller;
             }
+            if (tray_icon_started_)
+                tray_icon_->setSyncErrors(domain_id, QList<SyncError>());
             rpc_clients_.remove(domain_id);
             delete rpc_client;
             init_sync_dlg_->clearPoller(domain_id);
