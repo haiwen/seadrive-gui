@@ -14,12 +14,12 @@
             "version": "2.12-1"
         },
         {
-            "name": "pthreads",
-            "version": "3.0.0-4"
-        },
-        {
             "name": "sqlite3",
             "version": "3.31.1"
+        },
+        {
+            "name": "openssl",
+            "version": "3.5.4"
         }
     ]
 }
