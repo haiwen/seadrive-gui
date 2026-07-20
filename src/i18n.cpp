@@ -69,6 +69,19 @@ int loadCurrentLanguage() {
     return pos - langs;
 }
 
+QLocale::Language targetQtLanguage(const QString &languagecode)
+{
+    if (languagecode == "zh_cn") {
+        return QLocale::Chinese;
+    } else if (languagecode == "de_de") {
+        return QLocale::German;
+    } else if (languagecode == "fr_fr") {
+        return QLocale::French;
+    }
+
+    return QLocale::C;
+}
+
 } // anonymous namespace
 
 I18NHelper *I18NHelper::instance_ = NULL;
@@ -153,17 +166,11 @@ bool I18NHelper::isTargetLanguage(QString language)
     if (lang_index == 0) {
         // An index of 0 means seafile client is configured to use the system locale.
         QLocale sys_locale = QLocale::system();
-        int target_locale;
-        if (languagecode == "zh_cn") {
-            target_locale = QLocale::China;
-        } else if (languagecode == "de_de") {
-            target_locale = QLocale::Germany;
-        } else if (languagecode == "fr_fr") {
-            target_locale = QLocale::France;
-        } else {
+        QLocale::Language target_language = targetQtLanguage(languagecode);
+        if (target_language == QLocale::C) {
             return false;
         }
-        return sys_locale.country() == target_locale;
+        return sys_locale.language() == target_language;
     } else {
         QString lang = QString(langs[lang_index]).toLower();
         return lang == languagecode;
