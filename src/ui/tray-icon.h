@@ -171,7 +171,7 @@ private:
 
     QList<SyncError> sync_errors_;
     QMap<QString, QList<SyncError>> domain_errors_;
-    QList<SyncError> raw_network_errors_;
+    QMap<QString, QList<SyncError>> domain_net_errors_;
     QList<SyncError> network_errors_;
     SyncErrorsDialog *sync_errors_dialog_;
     TransferProgressDialog * transfer_progress_dialog_;
