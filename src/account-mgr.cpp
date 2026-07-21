@@ -356,7 +356,9 @@ int AccountManager::removeAccount(const Account& account)
             accounts_.end());
     }
 
-#ifndef Q_OS_MAC
+#ifdef Q_OS_MAC
+    gui->fileProviderManager()->unregisterDomain(account);
+#else
     SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
     if (rpc_client) {
         rpc_client->deleteAccount(account, false);
