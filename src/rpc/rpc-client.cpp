@@ -581,7 +581,7 @@ QString getDisplayName (const Account account) {
     if (name.isEmpty()) {
         name = account.username;
     }
-    return name + "(" + account.serverUrl.host() + ")";
+    return name + " (" + account.serverUrl.host() + ")";
 }
 
 bool SeafileRpcClient::addAccount(const Account& account)
