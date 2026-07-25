@@ -89,7 +89,7 @@ SyncErrorsDialog::SyncErrorsDialog(QWidget *parent)
     stack_ = new QStackedWidget;
     stack_->insertWidget(INDEX_EMPTY_VIEW, empty_view_);
     stack_->insertWidget(INDEX_TABE_VIEW, table_);
-    stack_->setContentsMargins(0, 0, 0, 0);
+    stack_->setContentsMargins(20, 20, 20, 0);
 
     QString text;
     if (I18NHelper::getInstance()->isTargetLanguage("zh_CN")) {
