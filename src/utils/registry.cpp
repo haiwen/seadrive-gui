@@ -1,5 +1,6 @@
 #include <windows.h>
 #include <shlwapi.h>
+#include <shlobj.h>
 #include <vector>
 
 #include <QCoreApplication>
@@ -402,6 +403,48 @@ void RegElement::removeAllSyncRootManagerItem()
     }
     return;
 
+}
+
+QStringList RegElement::collectSyncRootManagerIds()
+{
+    return collectSyncRootMangerKeys(HKEY_LOCAL_MACHINE,
+                                     QString::fromWCharArray(kSYNC_ROOT_MANAGER));
+}
+
+// The label Explorer shows for a sync root in the navigation pane comes from
+// the default value of HKCU\Software\Classes\CLSID\<NamespaceCLSID>, not from
+// the SyncRootManager entry itself. The latter lives under HKLM and cannot be
+// written without elevation, but the CLSID key is per-user, so the label can
+// be overridden there.
+bool RegElement::setSyncRootSidebarLabel(const QString& sync_root_id, const QString& label)
+{
+    QString sync_root_path = QString::fromWCharArray(kSYNC_ROOT_MANAGER) + "\\" + sync_root_id;
+    QString clsid = getStringValue(HKEY_LOCAL_MACHINE, sync_root_path, "NamespaceCLSID");
+    if (clsid.isEmpty()) {
+        // The daemon has not registered this sync root yet.
+        return false;
+    }
+
+    QString clsid_path = QString("Software\\Classes\\CLSID\\%1").arg(clsid);
+    HKEY clsid_key;
+    if (openKey(HKEY_CURRENT_USER, clsid_path, &clsid_key, KEY_READ) != ERROR_SUCCESS) {
+        return false;
+    }
+    RegCloseKey(clsid_key);
+
+    if (getStringValue(HKEY_CURRENT_USER, clsid_path, "") == label) {
+        return true;
+    }
+
+    RegElement reg(HKEY_CURRENT_USER, clsid_path, "", label);
+    if (reg.add() != 0) {
+        qWarning("failed to set the sidebar label of sync root %s",
+                 sync_root_id.toUtf8().data());
+        return false;
+    }
+
+    SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, NULL, NULL);
+    return true;
 }
 
 #endif

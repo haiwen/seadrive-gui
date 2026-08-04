@@ -7,6 +7,7 @@
 #include <QDateTime>
 #include <QMutexLocker>
 #include <QRegularExpression>
+#include <QTimer>
 
 #include "account-mgr.h"
 #include "rpc/rpc-client.h"
@@ -24,6 +25,7 @@
 
 #ifdef Q_OS_WIN32
 #include "utils/file-utils.h"
+#include "utils/registry.h"
 #include "win-sso/auto-logon-dialog.h"
 #endif
 
@@ -360,6 +362,11 @@ int AccountManager::removeAccount(const Account& account)
     SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
     if (rpc_client) {
         rpc_client->deleteAccount(account, false);
+#if defined(Q_OS_WIN32)
+        // The remaining account (if it is now the only one) loses its
+        // account suffix in the explorer sidebar.
+        scheduleUpdateSyncRootSidebarLabels();
+#endif
     }
 #endif
 
@@ -595,6 +602,9 @@ void AccountManager::addAccountToDaemon(const Account& account)
     SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
     if (rpc_client) {
         rpc_client->addAccount(added_account);
+#if defined(Q_OS_WIN32)
+        scheduleUpdateSyncRootSidebarLabels();
+#endif
     }
 #endif
 }
@@ -948,6 +958,52 @@ void AccountManager::setAccountSyncRoot(Account &account)
             accounts_[i].syncRoot = sync_root;
             break;
         }
+    }
+}
+
+// The daemon registers each sync root in Explorer's navigation pane as
+// "SeaDrive - <user> (<server>)". When only one sync root is registered that
+// suffix carries no information, so relabel the entry to the plain brand
+// name; with multiple sync roots keep the account suffix to tell them apart.
+void AccountManager::updateSyncRootSidebarLabels()
+{
+    QStringList sync_root_ids = RegElement::collectSyncRootManagerIds();
+    if (sync_root_ids.isEmpty()) {
+        return;
+    }
+
+    auto accounts = activeAccounts();
+    for (int i = 0; i < accounts.size(); i++) {
+        const Account& account = accounts.at(i);
+
+        QString serverAddr = account.serverUrl.toString(QUrl::FullyEncoded);
+        if (serverAddr.endsWith("/")) {
+            serverAddr = serverAddr.left(serverAddr.size() - 1);
+        }
+        QString sync_root_id = QString("seadrive!%1!%2").arg(serverAddr).arg(account.username);
+        // Registry key names are case insensitive.
+        if (!sync_root_ids.contains(sync_root_id, Qt::CaseInsensitive)) {
+            continue;
+        }
+
+        QString label = getBrand();
+        if (sync_root_ids.size() > 1) {
+            label += " - " + getDisplayName(account);
+        }
+        RegElement::setSyncRootSidebarLabel(sync_root_id, label);
+    }
+}
+
+// The sync root is registered by the daemon at some point after the
+// seafile_add_account rpc returns, so the label rewrite is retried a few
+// times instead of being attempted only once.
+void AccountManager::scheduleUpdateSyncRootSidebarLabels()
+{
+    updateSyncRootSidebarLabels();
+
+    const int delays[] = {2000, 10000, 30000};
+    for (int delay : delays) {
+        QTimer::singleShot(delay, this, [this]() { updateSyncRootSidebarLabels(); });
     }
 }
 #endif

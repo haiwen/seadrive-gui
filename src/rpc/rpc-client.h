@@ -26,6 +26,10 @@ class AccountManager;
 #endif
 class CommitDetails;
 
+#if defined(Q_OS_WIN32)
+QString getDisplayName(const Account account);
+#endif
+
 class SeafileRpcClient : public QObject {
     Q_OBJECT
 

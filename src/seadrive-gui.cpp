@@ -565,6 +565,9 @@ void SeadriveGui::onDaemonStarted()
         auto account = accounts.at(i);
         rpc_client->addAccount(account);
     }
+#if defined(Q_OS_WIN32)
+    account_mgr_->scheduleUpdateSyncRootSidebarLabels();
+#endif
 
     tray_icon_->start();
     settings_mgr_->writeSettingsToDaemon();
@@ -613,6 +616,9 @@ void SeadriveGui::onDaemonRestarted()
     for (int i = 0; i <  accounts.size(); i++) {
         rpc_client->addAccount(accounts.at(i));
     }
+#if defined(Q_OS_WIN32)
+    account_mgr_->scheduleUpdateSyncRootSidebarLabels();
+#endif
     MessagePoller *message_poller = messagePoller(EMPTY_DOMAIN_ID);
     if (message_poller) {
         message_poller->setRpcClient (rpc_client);

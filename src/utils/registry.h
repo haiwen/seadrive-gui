@@ -2,6 +2,7 @@
 #define SEAFILE_CLIENT_UTILS_REGISTRY_H
 
 #include <QString>
+#include <QStringList>
 #include <QVariant>
 #include <windows.h>
 
@@ -55,6 +56,8 @@ public:
     static QVariant getPreconfigureValue(const QString& name);
     static QVariant getValue(HKEY root, const QString& path, const QString& name);
     static void removeAllSyncRootManagerItem();
+    static QStringList collectSyncRootManagerIds();
+    static bool setSyncRootSidebarLabel(const QString& sync_root_id, const QString& label);
     static void installCustomUrlHandler();
 
 private:
