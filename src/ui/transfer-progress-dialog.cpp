@@ -97,6 +97,12 @@ TransferTab::TransferTab(TransferType type, QWidget *parent)
     QVBoxLayout* vlayout = new QVBoxLayout;
     createTable(type);
     vlayout->addWidget(table_);
+#ifndef Q_OS_MAC
+    if (type == UPLOAD) {
+        QLabel *label = model_->totalFilesView();
+        vlayout->addWidget(label);
+    }
+#endif
     setLayout(vlayout);
     adjustSize();
 }
@@ -182,6 +188,9 @@ TransferItemsTableModel::TransferItemsTableModel(QObject* parent)
       name_column_width_(kNameColumnWidth),
       transfer_type_(UPLOAD)
 {
+    total_files_view_ = new QLabel(tr("%1 files uploading or pending").arg(0));
+    total_files_view_->setStyleSheet("color: red;");
+    total_files_view_->setAlignment(Qt::AlignLeft);
     progress_timer_ = new QTimer(this);
     connect(progress_timer_, SIGNAL(timeout()),
             this, SLOT(updateTransferringInfo()));
@@ -209,6 +218,7 @@ void TransferItemsTableModel::setTransferItems()
     beginResetModel();
     TransferProgress::fromJSON(upload.data(), download.data(), transfer_progress);
     transfer_progress_ = transfer_progress;
+    updateTotalFilesView();
     endResetModel();
 }
 #endif
@@ -483,6 +493,17 @@ bool TransferItemsTableModel::isTransferringRow(
         transferring_size = transfer_progress_.downloading_files.size();
     }
     return row < transferring_size;
+}
+
+QLabel* TransferItemsTableModel::totalFilesView() const
+{
+    return total_files_view_;
+}
+
+void TransferItemsTableModel::updateTotalFilesView() const
+{
+    int total_files = transfer_progress_.n_pending_files + transfer_progress_.uploading_files.size();
+    total_files_view_->setText(tr("%1 files uploading or pending").arg(total_files));
 }
 
 void TransferItemsTableModel::setTransferType(TransferType type)
