@@ -6,6 +6,7 @@
 
 struct Domain {
     QString identifier;
+    QString displayName;
     bool userEnabled;
 };
 

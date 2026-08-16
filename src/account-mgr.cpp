@@ -356,6 +356,9 @@ int AccountManager::removeAccount(const Account& account)
             accounts_.end());
     }
 
+    // On macOS the FileProvider domain is torn down by SeadriveGui::connectDaemon()
+    // once it notices the account is gone, so that the daemon gets a chance to
+    // clean up over RPC before its extension is stopped.
 #ifndef Q_OS_MAC
     SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
     if (rpc_client) {

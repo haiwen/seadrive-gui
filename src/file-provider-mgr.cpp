@@ -1,5 +1,8 @@
 #include "file-provider-mgr.h"
 
+#include <QDebug>
+#include <QSet>
+
 #include "account.h"
 #include "seadrive-gui.h"
 #include "utils/utils.h"
@@ -41,6 +44,30 @@ bool FileProviderManager::unregisterDomain(const Account account) {
     }
 
     return true;
+}
+
+void FileProviderManager::removeOrphanedDomains(const QVector<Account>& accounts) {
+    if (!fileProviderListDomains(&domains_)) {
+        return;
+    }
+
+    QSet<QString> known_domain_ids;
+    for (const Account& account : accounts) {
+        known_domain_ids.insert(account.domainID());
+    }
+
+    QMapIterator<QString, Domain> it(domains_);
+    while (it.hasNext()) {
+        it.next();
+        const Domain domain = it.value();
+        if (domain.identifier.isEmpty() || known_domain_ids.contains(domain.identifier)) {
+            continue;
+        }
+
+        qWarning() << "[File Provider] Removing orphaned domain" << domain.identifier
+                   << domain.displayName;
+        fileProviderRemoveDomain(domain.identifier, domain.displayName);
+    }
 }
 
 void FileProviderManager::askUserToEnable() {

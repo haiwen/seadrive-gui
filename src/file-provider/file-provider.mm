@@ -29,6 +29,7 @@ bool fileProviderListDomains(QMap<QString, Domain> *domains) {
         for (NSFileProviderDomain *nsdomain in nsdomains) {
             Domain domain;
             domain.identifier = QString::fromNSString(nsdomain.identifier);
+            domain.displayName = QString::fromNSString(nsdomain.displayName);
             domain.userEnabled = nsdomain.userEnabled;
 
             domains->insert(domain.identifier, domain);
@@ -84,17 +85,41 @@ bool fileProviderRemoveDomain(const QString domain_id, const QString display_nam
     QMutex mutex;
     QWaitCondition condition;
 
+    // The domain is matched by its identifier, so callers that no longer have
+    // the account around can leave the display name empty.
     NSFileProviderDomain *domain = [[NSFileProviderDomain alloc] initWithIdentifier:domain_id.toNSString() displayName:display_name.toNSString()];
-    [NSFileProviderManager removeDomain:domain completionHandler:[&](NSError *error) {
-        if (error != nil) {
-            qWarning() << "[File Provider] Error removing domain:" << error;
-            condition.wakeOne();
-            return;
-        }
 
-        success = true;
-        condition.wakeOne();
-    }];
+    if (@available(macOS 12.0, *)) {
+        // Keep what the user has already downloaded: removeDomain: on its own
+        // deletes the whole replica, while we tell the user their files are
+        // still there after the account is removed.
+        [NSFileProviderManager removeDomain:domain
+                                       mode:NSFileProviderDomainRemovalModePreserveDownloadedUserData
+                          completionHandler:[&](NSURL *preserved_location, NSError *error) {
+            if (error != nil) {
+                qWarning() << "[File Provider] Error removing domain:" << error;
+                condition.wakeOne();
+                return;
+            }
+
+            qInfo() << "[File Provider] Preserved user data of domain" << domain_id << "at"
+                    << (preserved_location != nil ? QString::fromNSString(preserved_location.path)
+                                                  : QString("<nothing preserved>"));
+            success = true;
+            condition.wakeOne();
+        }];
+    } else {
+        [NSFileProviderManager removeDomain:domain completionHandler:[&](NSError *error) {
+            if (error != nil) {
+                qWarning() << "[File Provider] Error removing domain:" << error;
+                condition.wakeOne();
+                return;
+            }
+
+            success = true;
+            condition.wakeOne();
+        }];
+    }
 
     mutex.lock();
     condition.wait(&mutex);

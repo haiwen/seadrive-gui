@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <QMap>
+#include <QVector>
 
 #include "file-provider/file-provider.h"
 
@@ -18,6 +19,9 @@ public:
 
     bool registerDomain(const Account account);
     bool unregisterDomain(const Account account);
+
+    // Unregisters every domain that no longer has an account behind it.
+    void removeOrphanedDomains(const QVector<Account>& accounts);
 
     void askUserToEnable();
 
