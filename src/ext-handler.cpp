@@ -1103,8 +1103,10 @@ bool ExtCommandsHandler::parseRepoFileInfo(const QString& path,
         return false;
     }
 
+    QString serverAddr = p_account->normalizedServerUrl();
+
     QMutexLocker locker(&rpc_client_mutex_);
-    if (!rpc_client_->getRepoIdByPath(p_account->serverUrl.url(),
+    if (!rpc_client_->getRepoIdByPath(serverAddr,
                                       p_account->username,
                                       path_concat(category, repo),
                                       p_repo_id)) {

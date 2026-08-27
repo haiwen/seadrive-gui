@@ -169,6 +169,7 @@ public:
 
     QUrl getAbsoluteUrl(const QString& relativeUrl) const;
     QString getSignature() const;
+    QString normalizedServerUrl() const;
 
     QString toString() const
     {

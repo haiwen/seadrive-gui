@@ -722,7 +722,7 @@ const QVector<Account> AccountManager::activeAccounts() const {
 Account AccountManager::getAccount(const QString& url, const QString& username) const {
     auto accounts = allAccounts();
     for (int i = 0; i < accounts.size(); i++) {
-        if (accounts.at(i).serverUrl.toString() == url &&
+        if (accounts.at(i).serverUrl.toString(QUrl::FullyEncoded) == url &&
             accounts.at(i).username == username) {
             return accounts.at(i);
         }
