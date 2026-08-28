@@ -466,7 +466,7 @@ int SeafileRpcClient::getRepoFileStatus(const Account& account,
                                         const QString& path_in_repo,
                                         QString *status)
 {
-    QString serverAddr = account.normalizedServerUrl();
+    QString serverAddr = account.serverUrl.toString(QUrl::FullyEncoded);
     GError *error = NULL;
     char *ret = searpc_client_call__string (
             seadrive_rpc_client_,
@@ -589,7 +589,7 @@ bool SeafileRpcClient::addAccount(const Account& account)
     }
 
     GError *error = NULL;
-    QString serverAddr = account.normalizedServerUrl();
+    QString serverAddr = account.serverUrl.toString(QUrl::FullyEncoded);
 
     QString displayName = getDisplayName (account);
 
@@ -622,7 +622,7 @@ bool SeafileRpcClient::addAccount(const Account& account)
     }
 
     GError *error = NULL;
-    QString serverAddr = account.normalizedServerUrl();
+    QString serverAddr = account.serverUrl.toString(QUrl::FullyEncoded);
     QString language;
     if (I18NHelper::getInstance()->isTargetLanguage("zh_cn")) {
         language = "zh_cn";
@@ -662,7 +662,7 @@ bool SeafileRpcClient::addAccount(const Account& account)
     }
 
     GError *error = NULL;
-    QString serverAddr = account.normalizedServerUrl();
+    QString serverAddr = account.serverUrl.toString(QUrl::FullyEncoded);
 
     searpc_client_call__int(seadrive_rpc_client_, "seafile_add_account", &error,
                             6,
@@ -692,7 +692,7 @@ bool SeafileRpcClient::deleteAccount(const Account& account, bool remove_cache)
     }
 
     GError *error = NULL;
-    QString serverAddr = account.normalizedServerUrl();
+    QString serverAddr = account.serverUrl.toString(QUrl::FullyEncoded);
     searpc_client_call__int(seadrive_rpc_client_, "seafile_delete_account", &error,
                             3,
                             "string", toCStr(serverAddr),
@@ -738,7 +738,7 @@ bool SeafileRpcClient::logoutAccount(const Account& account)
     }
 
     GError *error = NULL;
-    QString serverAddr = account.normalizedServerUrl();
+    QString serverAddr = account.serverUrl.toString(QUrl::FullyEncoded);
     searpc_client_call__int(seadrive_rpc_client_,
                             "seafile_logout_account",
                             &error,
@@ -765,7 +765,7 @@ bool SeafileRpcClient::isAccountUploading(const Account& account)
     }
 
     GError *error = NULL;
-    QString serverAddr = account.normalizedServerUrl();
+    QString serverAddr = account.serverUrl.toString(QUrl::FullyEncoded);
 
     int ret = searpc_client_call__int(seadrive_rpc_client_, "seafile_is_account_uploading", &error,
                                       2,

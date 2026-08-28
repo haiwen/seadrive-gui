@@ -161,7 +161,11 @@ Account AutoLogonDialog::parseAccount(const QString& cookie_value)
     if (email.isEmpty() or token.isEmpty()) {
         return Account();
     }
-    return Account(login_url_, email, token, 0, false, true, true);
+
+    Account account(login_url_, email, token, 0, false, true, true);
+    account.normalizedServerUrl();
+
+    return account;
 }
 
 void AutoLogonDialog::errorAndExit(const QString& msg)

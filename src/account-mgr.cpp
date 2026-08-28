@@ -290,7 +290,8 @@ void AccountManager::loadAccounts()
 
     for (Account& account : accounts_) {
         const QUrl original_url = account.serverUrl;
-        const QUrl normalized_url = QUrl(account.normalizedServerUrl());
+        account.normalizedServerUrl();
+        const QUrl normalized_url = account.serverUrl;
 
         if (normalized_url == original_url) {
             continue;
@@ -303,7 +304,6 @@ void AccountManager::loadAccounts()
             account.username.toUtf8().data());
         sqlite_query_exec(db, update_sql);
         sqlite3_free(update_sql);
-        account.serverUrl = normalized_url;
 
 #ifdef Q_OS_WIN32
         update_sql = sqlite3_mprintf(
@@ -323,7 +323,7 @@ void AccountManager::loadAccounts()
 
 void AccountManager::enableAccount(const Account& account) {
     Account new_account = account;
-    new_account.serverUrl = QUrl(new_account.normalizedServerUrl());
+    new_account.normalizedServerUrl();
     new_account.lastVisited = QDateTime::currentMSecsSinceEpoch();
 
     {
