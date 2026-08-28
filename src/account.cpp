@@ -19,9 +19,10 @@ QString Account::getSignature() const
 QString Account::normalizedServerUrl() const
 {
     QString serverAddr = serverUrl.toString(QUrl::FullyEncoded);
-    if (serverAddr.endsWith('/')) {
+    while (serverAddr.endsWith('/')) {
         serverAddr.chop(1);
     }
+
     return serverAddr;
 }
 

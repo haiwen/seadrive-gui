@@ -288,6 +288,34 @@ void AccountManager::loadAccounts()
     userdata.db = db;
     sqlite_foreach_selected_row (db, sql, loadAccountsCB, &userdata);
 
+    for (Account& account : accounts_) {
+        const QUrl original_url = account.serverUrl;
+        const QUrl normalized_url = QUrl(account.normalizedServerUrl());
+
+        if (normalized_url == original_url) {
+            continue;
+        }
+
+        char *update_sql = sqlite3_mprintf(
+            "UPDATE Accounts SET url = %Q WHERE url = %Q AND username = %Q",
+            normalized_url.toEncoded().data(),
+            original_url.toEncoded().data(),
+            account.username.toUtf8().data());
+        sqlite_query_exec(db, update_sql);
+        sqlite3_free(update_sql);
+        account.serverUrl = normalized_url;
+
+#ifdef Q_OS_WIN32
+        update_sql = sqlite3_mprintf(
+            "UPDATE SyncRootInfo SET url = %Q WHERE url = %Q AND username = %Q",
+            normalized_url.toEncoded().data(),
+            original_url.toEncoded().data(),
+            account.username.toUtf8().data());
+        sqlite_query_exec(db, update_sql);
+        sqlite3_free(update_sql);
+#endif
+    }
+
     std::stable_sort(accounts_.begin(), accounts_.end(), compareAccount);
 
     qWarning("loaded %d accounts", (int)accounts_.size());
@@ -295,12 +323,13 @@ void AccountManager::loadAccounts()
 
 void AccountManager::enableAccount(const Account& account) {
     Account new_account = account;
+    new_account.serverUrl = QUrl(new_account.normalizedServerUrl());
     new_account.lastVisited = QDateTime::currentMSecsSinceEpoch();
 
     {
         QMutexLocker locker(&accounts_mutex_);
         for (int i = 0; i < accounts_.size(); i++) {
-            if (accounts_[i] == account) {
+            if (accounts_[i] == new_account) {
                 accounts_.erase(accounts_.begin() + i);
                 break;
             }
@@ -328,7 +357,7 @@ void AccountManager::enableAccount(const Account& account) {
     sqlite_query_exec(db, zql);
     sqlite3_free(zql);
 
-    fetchAccountInfoFromServer(account);
+    fetchAccountInfoFromServer(new_account);
 }
 
 void AccountManager::disableAccount(const Account& account) {
