@@ -56,6 +56,10 @@ void openLocalFile(QString& repo_id, QString& path_in_repo)
         return;
     }
     openUrl(QUrl::fromLocalFile(path_to_open));
+
+#else
+    qWarning("openLocalFile is not implemented for this platform");
+
 #endif
 }
 
@@ -65,7 +69,7 @@ OpenLocalHelper::OpenLocalHelper()
 {
     url_ = nullptr;
 
-    QDesktopServices::setUrlHandler(kSeafileProtocolScheme, this, SLOT(openLocalFile(const QUrl&)));
+    QDesktopServices::setUrlHandler(kSeafileProtocolScheme, this, SLOT(openLocalFile(QUrl)));
 }
 
 OpenLocalHelper::~OpenLocalHelper()
