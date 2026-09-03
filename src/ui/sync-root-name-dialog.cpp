@@ -1,9 +1,10 @@
 #include "ui/sync-root-name-dialog.h"
 
+#include <QDir>
 #include <QRegularExpression>
 #include "seadrive-gui.h"
 
-SyncRootNameDialog::SyncRootNameDialog(QString name, QWidget *parent)
+SyncRootNameDialog::SyncRootNameDialog(QString name, bool allow_existing_default, QWidget *parent)
     : QDialog(parent)
 {
     setupUi(this);
@@ -12,6 +13,7 @@ SyncRootNameDialog::SyncRootNameDialog(QString name, QWidget *parent)
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     default_name_ = name;
+    allow_existing_default_ = allow_existing_default;
 
     mUseDefaultName->setChecked(true);
     onUseDefaultNameToggled(true);
@@ -38,6 +40,15 @@ void SyncRootNameDialog::accept()
     }
     if (name.contains(QRegularExpression("[<>:\"/\\\\|?*]"))) {
         gui->warningBox(tr("Sync root name cannot contain the following characters: < > : \" / \\ | ? *"), this);
+        return;
+    }
+
+    QDir seadrive_root(gui->seadriveRoot());
+    // A recovered legacy root already exists by design; every other existing
+    // root name would conflict with another account.
+    const bool is_existing_legacy_name = allow_existing_default_ && name == default_name_;
+    if (seadrive_root.exists(name) && !is_existing_legacy_name) {
+        gui->warningBox(tr("A sync root folder with this name already exists."), this);
         return;
     }
 

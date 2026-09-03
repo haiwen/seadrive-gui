@@ -103,7 +103,7 @@ public:
 
 #ifdef Q_OS_WIN32
     QString getPreviousSyncRootName(const Account& account);
-    const QString genSyncRootName(const Account& account);
+    const QString genSyncRootName(const Account& account, bool *is_old_sync_root = nullptr);
     void setSyncRootName(const Account& account, const QString& custom_name);
 #endif
 

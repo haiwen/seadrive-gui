@@ -297,9 +297,10 @@ void LoginDialog::onFetchAccountInfoSuccess(const AccountInfo& info)
 
 #ifdef Q_OS_WIN32
     if (gui->accountManager()->getPreviousSyncRootName(account).isEmpty()) {
-        QString name = gui->accountManager()->genSyncRootName(account);
+        bool is_old_sync_root = false;
+        QString name = gui->accountManager()->genSyncRootName(account, &is_old_sync_root);
 
-        SyncRootNameDialog dialog(name, this);
+        SyncRootNameDialog dialog(name, is_old_sync_root, this);
         if (!dialog.exec()) {
             mStatusText->setText("");
             enableInputs();

@@ -35,6 +35,7 @@ const char *kCustomLogoKeyName = "custom-logo";
 const char *kTotalStorage = "storage.total";
 const char *kUsedStorage = "storage.used";
 const char *kNickname = "name";
+const char *kPreconfigureCustomSyncRootName = "PreconfigureCustomSyncRootName";
 
 bool getShibbolethColumnInfoCallBack(sqlite3_stmt *stmt, void *data)
 {
@@ -814,21 +815,19 @@ QString AccountManager::getPreviousSyncRootName(const Account& account)
     return QString();
 }
 
-const QString AccountManager::genSyncRootName(const Account& account)
+const QString AccountManager::genSyncRootName(const Account& account, bool *is_old_sync_root)
 {
+    if (is_old_sync_root) {
+        *is_old_sync_root = false;
+    }
+
     QString url = account.serverUrl.toString();
     QString nickname = account.accountInfo.name;
     QString email = account.username;
     QString seadrive_root = gui->seadriveRoot();
-    QString sync_root_path, sync_root_name;
 
     qDebug("[%s] url is %s, nickname is %s, email is %s", __func__,
                         toCStr(url), toCStr(nickname), toCStr(email));
-
-    QString old_sync_dir = getOldSyncRootDir(account);
-    if (!old_sync_dir.isEmpty()) {
-        return old_sync_dir;
-    }
 
     foreach (SyncRootInfo sync_root_info, sync_root_infos_)
     {
@@ -841,9 +840,22 @@ const QString AccountManager::genSyncRootName(const Account& account)
         }
     }
 
-    if (!nickname.isEmpty()) {
-        sync_root_name = toCStr(nickname);
-    } else {
+    QString old_sync_dir = getOldSyncRootDir(account);
+    if (!old_sync_dir.isEmpty()) {
+        if (is_old_sync_root) {
+            *is_old_sync_root = true;
+        }
+        return old_sync_dir;
+    }
+
+    QString sync_root_name = gui->readPreconfigureExpandedString(kPreconfigureCustomSyncRootName, QVariant(), true);
+    if (!sync_root_name.isEmpty()) {
+        qWarning("use preconfigured syncroot name %s", toCStr(sync_root_name));
+        return sync_root_name;
+    }
+
+    sync_root_name = nickname;
+    if (sync_root_name.isEmpty()) {
         int pos = email.indexOf("@");
         sync_root_name = email.left(pos);
     }
@@ -873,7 +885,7 @@ const QString AccountManager::genSyncRootName(const Account& account)
     QVector<QString> other_account_sync_root_names;
     foreach (SyncRootInfo sync_root_info, sync_root_infos_)
     {
-        if (sync_root_info.getUrl() != url || sync_root_info.getUserName() != sync_root_name) {
+        if (sync_root_info.getUrl() != url || sync_root_info.getUserName() != email) {
             QString sync_root_name = sync_root_info.syncRootName();
             other_account_sync_root_names.push_back(sync_root_name);
         }

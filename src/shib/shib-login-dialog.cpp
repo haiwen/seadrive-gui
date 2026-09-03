@@ -21,6 +21,7 @@
 #include "account-mgr.h"
 #include "network-mgr.h"
 #include "ui/init-sync-dialog.h"
+#include "ui/sync-root-name-dialog.h"
 #include "api/api-error.h"
 #include "api/requests.h"
 
@@ -37,7 +38,8 @@ ShibLoginDialog::ShibLoginDialog(const QUrl& url,
                                  QWidget *parent)
     : QDialog(parent),
       url_(url),
-      cookie_seen_(false)
+      cookie_seen_(false),
+      account_info_req_(NULL)
 {
     setWindowTitle(tr("Single Sign On"));
     setWindowIcon(QIcon(":/images/seafile.png"));
@@ -117,19 +119,66 @@ void ShibLoginDialog::onNewCookieCreated(const QUrl& url, const QNetworkCookie& 
     QString name = cookie.name();
     QString value = cookie.value();
     if (url.host() == url_.host() && name == kSeahubShibCookieName) {
-        Account account = parseAccount(value);
-        if (!account.isValid()) {
+        account_ = parseAccount(value);
+        if (!account_.isValid()) {
             qWarning("wrong account information from server");
             return;
         }
         cookie_seen_ = true;
 
-        gui->accountManager()->enableAccount(account);
-
-        gui->initSyncDialog()->markNewLogin();
-
-        accept();
+        account_info_req_ = new FetchAccountInfoRequest(account_);
+        connect(account_info_req_, SIGNAL(success(const AccountInfo&)), this,
+                SLOT(onFetchAccountInfoSuccess(const AccountInfo&)));
+        connect(account_info_req_, SIGNAL(failed(const ApiError&)), this,
+                SLOT(onFetchAccountInfoFailed(const ApiError&)));
+        account_info_req_->send();
     }
+}
+
+void ShibLoginDialog::onFetchAccountInfoSuccess(const AccountInfo& info)
+{
+    FetchAccountInfoRequest *request = account_info_req_;
+    account_info_req_ = NULL;
+    request->deleteLater();
+
+    account_.username = info.email;
+    account_.accountInfo = info;
+
+#ifdef Q_OS_WIN32
+    if (gui->accountManager()->getPreviousSyncRootName(account_).isEmpty()) {
+        bool is_old_sync_root = false;
+        QString name = gui->accountManager()->genSyncRootName(account_, &is_old_sync_root);
+
+        SyncRootNameDialog dialog(name, is_old_sync_root, this);
+        if (!dialog.exec()) {
+            cookie_seen_ = false;
+            account_ = Account();
+            return;
+        }
+
+        gui->accountManager()->setSyncRootName(account_, dialog.customName());
+    }
+#endif
+
+    gui->accountManager()->enableAccount(account_);
+    gui->accountManager()->updateAccountInfo(account_, info);
+    gui->initSyncDialog()->markNewLogin();
+
+#ifndef Q_OS_MAC
+    gui->initSyncDialog()->launch(EMPTY_DOMAIN_ID);
+#endif
+
+    accept();
+}
+
+void ShibLoginDialog::onFetchAccountInfoFailed(const ApiError& error)
+{
+    FetchAccountInfoRequest *request = account_info_req_;
+    account_info_req_ = NULL;
+    request->deleteLater();
+    cookie_seen_ = false;
+    account_ = Account();
+    qWarning("unable to fetch account information: %s", error.toString().toUtf8().data());
 }
 
 void ShibLoginDialog::updateAddressBar(const QUrl& url)
