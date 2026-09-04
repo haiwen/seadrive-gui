@@ -17,6 +17,8 @@ class ApiError;
 class SeafileRpcClient;
 
 #ifdef Q_OS_WIN32
+extern const char *const kPreconfigureCustomSyncRootName;
+
 class SyncRootInfo {
 public:
 
@@ -26,9 +28,9 @@ public:
         sync_root_path_ = sync_root_path;
     }
 
-    QString getUrl() { return url_; }
-    QString getUserName() { return username_; }
-    QString syncRootName() { return sync_root_path_; }
+    QString getUrl() const { return url_; }
+    QString getUserName() const { return username_; }
+    QString syncRootName() const { return sync_root_path_; }
 
 private:
     QString url_;
@@ -103,7 +105,8 @@ public:
 
 #ifdef Q_OS_WIN32
     QString getPreviousSyncRootName(const Account& account);
-    const QString genSyncRootName(const Account& account, bool *is_old_sync_root = nullptr);
+    const QString genSyncRootName(const Account& account);
+    bool isSyncRootNameUsed(const QString& name) const;
     void setSyncRootName(const Account& account, const QString& custom_name);
 #endif
 
@@ -145,7 +148,6 @@ private:
     static bool loadSyncRootInfoCB(struct sqlite3_stmt *stmt, void *data);
     void loadSyncRootInfo();
     void updateSyncRootInfo(SyncRootInfo& sync_root_info);
-    const QString getOldSyncRootDir(const Account& account);
     void setAccountSyncRoot(Account &account);
 
     std::vector<SyncRootInfo> sync_root_infos_;

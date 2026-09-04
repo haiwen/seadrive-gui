@@ -10,7 +10,7 @@ class SyncRootNameDialog : public QDialog,
     Q_OBJECT
 
 public:
-    SyncRootNameDialog(QString name, bool allow_existing_default, QWidget *parent = 0);
+    SyncRootNameDialog(QString name, QWidget *parent = 0);
 
     QString customName() const { return custom_name_; }
 
@@ -22,7 +22,6 @@ private slots:
 private:
     QString default_name_;
     QString custom_name_;
-    bool allow_existing_default_;
 };
 
 #endif

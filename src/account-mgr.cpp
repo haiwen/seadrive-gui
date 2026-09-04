@@ -23,6 +23,8 @@
 #include "utils/json-utils.h"
 
 #ifdef Q_OS_WIN32
+const char *const kPreconfigureCustomSyncRootName = "PreconfigureCustomSyncRootName";
+
 #include "utils/file-utils.h"
 #include "win-sso/auto-logon-dialog.h"
 #endif
@@ -35,7 +37,6 @@ const char *kCustomLogoKeyName = "custom-logo";
 const char *kTotalStorage = "storage.total";
 const char *kUsedStorage = "storage.used";
 const char *kNickname = "name";
-const char *kPreconfigureCustomSyncRootName = "PreconfigureCustomSyncRootName";
 
 bool getShibbolethColumnInfoCallBack(sqlite3_stmt *stmt, void *data)
 {
@@ -815,16 +816,23 @@ QString AccountManager::getPreviousSyncRootName(const Account& account)
     return QString();
 }
 
-const QString AccountManager::genSyncRootName(const Account& account, bool *is_old_sync_root)
+bool AccountManager::isSyncRootNameUsed(const QString& name) const
 {
-    if (is_old_sync_root) {
-        *is_old_sync_root = false;
+    foreach (const SyncRootInfo& sync_root_info, sync_root_infos_) {
+        if (sync_root_info.syncRootName().compare(name, Qt::CaseInsensitive) == 0) {
+            return true;
+        }
     }
+    return false;
+}
 
+const QString AccountManager::genSyncRootName(const Account& account)
+{
     QString url = account.serverUrl.toString();
     QString nickname = account.accountInfo.name;
     QString email = account.username;
     QString seadrive_root = gui->seadriveRoot();
+    QString sync_root_name;
 
     qDebug("[%s] url is %s, nickname is %s, email is %s", __func__,
                         toCStr(url), toCStr(nickname), toCStr(email));
@@ -838,20 +846,6 @@ const QString AccountManager::genSyncRootName(const Account& account, bool *is_o
                 return sync_root_name;
             }
         }
-    }
-
-    QString old_sync_dir = getOldSyncRootDir(account);
-    if (!old_sync_dir.isEmpty()) {
-        if (is_old_sync_root) {
-            *is_old_sync_root = true;
-        }
-        return old_sync_dir;
-    }
-
-    QString sync_root_name = gui->readPreconfigureExpandedString(kPreconfigureCustomSyncRootName, QVariant(), true);
-    if (!sync_root_name.isEmpty()) {
-        qWarning("use preconfigured syncroot name %s", toCStr(sync_root_name));
-        return sync_root_name;
     }
 
     sync_root_name = nickname;
@@ -899,7 +893,17 @@ const QString AccountManager::genSyncRootName(const Account& account, bool *is_o
         i++;
     }
 
-    while (other_account_sync_root_names.contains(new_sync_root_name)) {
+    while (true) {
+        bool name_used = false;
+        foreach (const QString& other_name, other_account_sync_root_names) {
+            if (other_name.compare(new_sync_root_name, Qt::CaseInsensitive) == 0) {
+                name_used = true;
+                break;
+            }
+        }
+        if (!name_used) {
+            break;
+        }
         new_sync_root_name = QString("%1_%2").arg(new_sync_root_name).arg(i);
         i++;
     }
@@ -908,26 +912,6 @@ const QString AccountManager::genSyncRootName(const Account& account, bool *is_o
 
     qDebug("[%s] This a new accout gen a new sync root name is %s", __func__, toCStr(new_sync_root_name));
     return new_sync_root_name;
-}
-
-const QString AccountManager::getOldSyncRootDir(const Account& account)
-{
-
-    QString username = account.username;
-    QString addr = account.serverUrl.host();
-
-    QString sync_dir = QString("%1_%2").arg(addr).arg(username);
-    QByteArray sync_dir_md5 = QCryptographicHash::hash(sync_dir.toUtf8(),
-                                                    QCryptographicHash::Md5).toHex();
-
-    QString mid_sync_dir_md5 = sync_dir_md5.mid(0, 8);
-
-    QDir dir(gui->seadriveRoot());
-    if (dir.exists(mid_sync_dir_md5)) {
-        return mid_sync_dir_md5;
-    }
-
-    return "";
 }
 
 void AccountManager::setSyncRootName(const Account& account, const QString& custom_name)

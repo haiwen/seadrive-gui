@@ -1,10 +1,9 @@
 #include "ui/sync-root-name-dialog.h"
 
-#include <QDir>
 #include <QRegularExpression>
 #include "seadrive-gui.h"
 
-SyncRootNameDialog::SyncRootNameDialog(QString name, bool allow_existing_default, QWidget *parent)
+SyncRootNameDialog::SyncRootNameDialog(QString name, QWidget *parent)
     : QDialog(parent)
 {
     setupUi(this);
@@ -13,7 +12,6 @@ SyncRootNameDialog::SyncRootNameDialog(QString name, bool allow_existing_default
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     default_name_ = name;
-    allow_existing_default_ = allow_existing_default;
 
     mUseDefaultName->setChecked(true);
     onUseDefaultNameToggled(true);
@@ -43,14 +41,12 @@ void SyncRootNameDialog::accept()
         return;
     }
 
-    QDir seadrive_root(gui->seadriveRoot());
-    // A recovered legacy root already exists by design; every other existing
-    // root name would conflict with another account.
-    const bool is_existing_legacy_name = allow_existing_default_ && name == default_name_;
-    if (seadrive_root.exists(name) && !is_existing_legacy_name) {
+#ifdef Q_OS_WIN32
+    if (gui->accountManager()->isSyncRootNameUsed(name)) {
         gui->warningBox(tr("A sync root folder with this name already exists."), this);
         return;
     }
+#endif
 
     custom_name_ = name;
 

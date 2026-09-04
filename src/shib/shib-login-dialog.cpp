@@ -146,17 +146,28 @@ void ShibLoginDialog::onFetchAccountInfoSuccess(const AccountInfo& info)
 
 #ifdef Q_OS_WIN32
     if (gui->accountManager()->getPreviousSyncRootName(account_).isEmpty()) {
-        bool is_old_sync_root = false;
-        QString name = gui->accountManager()->genSyncRootName(account_, &is_old_sync_root);
+        QString name = gui->readPreconfigureExpandedString(kPreconfigureCustomSyncRootName, QVariant(), true);
 
-        SyncRootNameDialog dialog(name, is_old_sync_root, this);
-        if (!dialog.exec()) {
+        if (name.isEmpty()) {
+            name = gui->accountManager()->genSyncRootName(account_);
+
+            SyncRootNameDialog dialog(name, this);
+            if (!dialog.exec()) {
+                cookie_seen_ = false;
+                account_ = Account();
+                return;
+            }
+            name = dialog.customName();
+        }
+
+        if (gui->accountManager()->isSyncRootNameUsed(name)) {
+            gui->warningBox(tr("A sync root folder with this name already exists."), this);
             cookie_seen_ = false;
             account_ = Account();
             return;
         }
 
-        gui->accountManager()->setSyncRootName(account_, dialog.customName());
+        gui->accountManager()->setSyncRootName(account_, name);
     }
 #endif
 
@@ -178,7 +189,7 @@ void ShibLoginDialog::onFetchAccountInfoFailed(const ApiError& error)
     request->deleteLater();
     cookie_seen_ = false;
     account_ = Account();
-    qWarning("unable to fetch account information: %s", error.toString().toUtf8().data());
+    gui->warningBox(tr("Unable to fetch account information: %1").arg(error.toString()), this);
 }
 
 void ShibLoginDialog::updateAddressBar(const QUrl& url)

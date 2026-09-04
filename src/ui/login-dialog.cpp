@@ -297,17 +297,28 @@ void LoginDialog::onFetchAccountInfoSuccess(const AccountInfo& info)
 
 #ifdef Q_OS_WIN32
     if (gui->accountManager()->getPreviousSyncRootName(account).isEmpty()) {
-        bool is_old_sync_root = false;
-        QString name = gui->accountManager()->genSyncRootName(account, &is_old_sync_root);
+        QString name = gui->readPreconfigureExpandedString(kPreconfigureCustomSyncRootName, QVariant(), true);
 
-        SyncRootNameDialog dialog(name, is_old_sync_root, this);
-        if (!dialog.exec()) {
+        if (name.isEmpty()) {
+            name = gui->accountManager()->genSyncRootName(account);
+
+            SyncRootNameDialog dialog(name, this);
+            if (!dialog.exec()) {
+                mStatusText->setText("");
+                enableInputs();
+                return;
+            }
+            name = dialog.customName();
+        }
+
+        if (gui->accountManager()->isSyncRootNameUsed(name)) {
+            gui->warningBox(tr("A sync root folder with this name already exists."), this);
             mStatusText->setText("");
             enableInputs();
             return;
         }
 
-        gui->accountManager()->setSyncRootName(account, dialog.customName());
+        gui->accountManager()->setSyncRootName(account, name);
     }
 #endif
 
