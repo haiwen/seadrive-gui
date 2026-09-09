@@ -378,6 +378,10 @@
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Par example: https://example.votre-serveur.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <source>A sync root folder with this name already exists.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MessagePoller</name>
@@ -1409,6 +1413,14 @@
         <source>Single Sign On</source>
         <translation>Authentification unique</translation>
     </message>
+    <message>
+        <source>A sync root folder with this name already exists.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to fetch account information: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SyncCommand</name>
@@ -1503,6 +1515,10 @@
     <message>
         <source>Sync root name cannot contain the following characters: &lt; &gt; : &quot; / \ | ? *</source>
         <translation>Le nom du dossier racine de synchronisation ne peut pas contenir les caractères suivants : &lt; &gt; : &quot; / \ | ? *</translation>
+    </message>
+    <message>
+        <source>A sync root folder with this name already exists.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

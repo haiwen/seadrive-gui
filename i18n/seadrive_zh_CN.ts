@@ -379,6 +379,10 @@
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;例如：https://cloud.seafile.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <source>A sync root folder with this name already exists.</source>
+        <translation>已存在同名的同步根目录。</translation>
+    </message>
 </context>
 <context>
     <name>MessagePoller</name>
@@ -1410,6 +1414,14 @@
         <source>Single Sign On</source>
         <translation>单点登录或微信登录</translation>
     </message>
+    <message>
+        <source>A sync root folder with this name already exists.</source>
+        <translation>已存在同名的同步根目录。</translation>
+    </message>
+    <message>
+        <source>Unable to fetch account information: %1</source>
+        <translation>无法获取账号信息：%1</translation>
+    </message>
 </context>
 <context>
     <name>SyncCommand</name>
@@ -1504,6 +1516,10 @@
     <message>
         <source>Sync root name cannot contain the following characters: &lt; &gt; : &quot; / \ | ? *</source>
         <translation>同步根目录名称不能包含以下字符：&amp;lt; &amp;gt; : &amp;quot; / \ | ? *</translation>
+    </message>
+    <message>
+        <source>A sync root folder with this name already exists.</source>
+        <translation>已存在同名的同步根目录。</translation>
     </message>
 </context>
 <context>

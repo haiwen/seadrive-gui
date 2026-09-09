@@ -33,31 +33,31 @@
     <name>AutoLogonDialog</name>
     <message>
         <source>auto login</source>
-        <translation type="unfinished"/>
+        <translation>自動ログイン</translation>
     </message>
     <message>
         <source>auto logining, please wait a moment</source>
-        <translation type="unfinished"/>
+        <translation>自動ログイン中です。しばらくお待ちください</translation>
     </message>
     <message>
         <source>Please input server address</source>
-        <translation type="unfinished"/>
+        <translation>サーバーアドレスを入力してください</translation>
     </message>
     <message>
         <source>address</source>
-        <translation type="unfinished"/>
+        <translation>サーバーアドレス</translation>
     </message>
     <message>
         <source>Please enter the server address</source>
-        <translation type="unfinished"/>
+        <translation>サーバーアドレスを入力してください</translation>
     </message>
     <message>
         <source>%1 is not a valid server address</source>
-        <translation type="unfinished"/>
+        <translation>%1 は有効なサーバーアドレスではありません</translation>
     </message>
     <message>
         <source>login failed</source>
-        <translation type="unfinished"/>
+        <translation>ログインに失敗しました</translation>
     </message>
 </context>
 <context>
@@ -72,7 +72,7 @@
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
-        <translation type="unfinished"/>
+        <translation>初期化に失敗しました：Seadrive マウントフォルダーを作成に失敗しました</translation>
     </message>
 </context>
 <context>
@@ -114,11 +114,11 @@
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"/>
+        <translation>サーバー</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"/>
+        <translation>ユーザー名</translation>
     </message>
 </context>
 <context>
@@ -144,22 +144,22 @@
     <name>ExtCommandsHandler</name>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;? Downloaded and uploading files will not be removed.</source>
-        <translation type="unfinished"/>
+        <translation>このアカウントを削除してもよろしいですか？ダウンロード中とアップロード中ファイルは削除されません。</translation>
     </message>
     <message>
         <source>Failed to connect to background process, please try again later</source>
-        <translation type="unfinished"/>
+        <translation>背景プロセスに接続に失敗しました。しばらくお待ちください</translation>
     </message>
     <message>
         <source>Are you sure to resync account from &quot;%1&quot;? Downloaded and uploading files will not be removed</source>
-        <translation type="unfinished"/>
+        <translation>このアカウントを同期解除してもよろしいですか？ダウンロード中とアップロード中ファイルは同期解除されません。</translation>
     </message>
 </context>
 <context>
     <name>FileProviderManager</name>
     <message>
         <source>%1 will ask permissions to enable Finder plugin.</source>
-        <translation type="unfinished"/>
+        <translation>%1 は Finder プラグインを有効にするために権限を要求します</translation>
     </message>
 </context>
 <context>
@@ -221,7 +221,7 @@
     </message>
     <message>
         <source>%1 has downloaded your files list.</source>
-        <translation type="unfinished"/>
+        <translation>%1 はあなたのファイルリストをダウンロードしました。</translation>
     </message>
 </context>
 <context>
@@ -361,22 +361,26 @@
     </message>
     <message>
         <source>Failed to get server info. Please check the server address.</source>
-        <translation type="unfinished"/>
+        <translation>サーバー情報の取得に失敗しました。サーバーアドレスを確認してください。</translation>
     </message>
     <message>
         <source>Failed to get client sso link.</source>
-        <translation type="unfinished"/>
+        <translation>クライアントのSSOリンクの取得に失敗しました。</translation>
     </message>
     <message>
         <source>SSO login failed.</source>
-        <translation type="unfinished"/>
+        <translation>SSOログインに失敗しました。</translation>
     </message>
     <message>
         <source>Failed to get client sso status.</source>
-        <translation type="unfinished"/>
+        <translation>クライアントのSSO状態の取得に失敗しました。</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>例え:https://example.your-server.com</translation>
+    </message>
+    <message>
+        <source>A sync root folder with this name already exists.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -456,23 +460,23 @@
     </message>
     <message>
         <source>Deleted &quot;%1&quot; and %2 more files.</source>
-        <translation type="unfinished"/>
+        <translation>%1 と %2 個のファイルが削除されました</translation>
     </message>
     <message>
         <source>You can&apos;t create files in the mount folder directly</source>
-        <translation type="unfinished"/>
+        <translation>マウントフォルダに直接ファイルを作成することはできません</translation>
     </message>
     <message>
         <source>Do you want to delete files in library &quot;%1&quot; ?</source>
-        <translation type="unfinished"/>
+        <translation>「%1」のファイルを削除しますか？</translation>
     </message>
     <message>
         <source>Deleted library &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>「%1」が削除されました</translation>
     </message>
     <message>
         <source>Confirm to delete library &quot;%1&quot; ?</source>
-        <translation type="unfinished"/>
+        <translation>「%1」を削除しますか？</translation>
     </message>
 </context>
 <context>
@@ -787,35 +791,35 @@
     </message>
     <message>
         <source>Waiting for confirmation to delete files</source>
-        <translation type="unfinished"/>
+        <translation>ファイルを削除するための確認認証を待っています</translation>
     </message>
     <message>
         <source>The path %1 contains symbols that are not supported by the Windows system.</source>
-        <translation type="unfinished"/>
+        <translation>パス %1 にはWindowsシステムがサポートしていないシンボルが含まれています</translation>
     </message>
     <message>
         <source>Failed to upload file blocks. Please check network or firewall.</source>
-        <translation type="unfinished"/>
+        <translation>ファイル%1をアップロードするのに失敗しました。ネットワークまたはファイアウォールをチェックしてください</translation>
     </message>
     <message>
         <source>Failed to download file. Please check disk space or folder permissions</source>
-        <translation type="unfinished"/>
+        <translation>ファイルをダウンロードするのに失敗しました。ディスクスペースまたはフォルダ権限をチェックしてください</translation>
     </message>
     <message>
         <source>Library cannot be synced since it has too many files.</source>
-        <translation type="unfinished"/>
+        <translation>ライブラリはファイル数が多すぎ、同期が拒否されました</translation>
     </message>
     <message>
         <source>Files cannot be uploaded to this library due to file number limit settings.</source>
-        <translation type="unfinished"/>
+        <translation>ファイルをアップロードするのに失敗しました。ファイル数制限設定により拒否されました</translation>
     </message>
     <message>
         <source>Path has character case conflict with existing file or folder. Will not be downloaded</source>
-        <translation type="unfinished"/>
+        <translation>パスは既存のファイルまたはフォルダの文字小文字が矛盾しています。ダウンロードされません</translation>
     </message>
     <message>
         <source>Failed to change library name since some files are opened in it</source>
-        <translation type="unfinished"/>
+        <translation>ライブラリ名を変更するのに失敗しました。ライブラリ内に開かれているファイルが存在します</translation>
     </message>
 </context>
 <context>
@@ -826,42 +830,42 @@
     </message>
     <message>
         <source>Authorization expired, please re-login. You can find files that are not uploaded yet at ~/Library/CloudStorage</source>
-        <translation type="unfinished"/>
+        <translation>承認の期限が切れました。再ログインしてください。まだアップロードされていないファイルは~/Library/CloudStorageに存在します</translation>
     </message>
 </context>
 <context>
     <name>SeaDriveRootDialog</name>
     <message>
         <source>Choose SeaDrive Cache Folder</source>
-        <translation type="unfinished"/>
+        <translation>SeaDriveのキャッシュフォルダを選択</translation>
     </message>
     <message>
         <source>Your files will appear in a local cache folder. Please choose the folder:</source>
-        <translation type="unfinished"/>
+        <translation>ファイルはロ ルキャッシュフォルダに表示されます。フォルダを選択してください：</translation>
     </message>
     <message>
         <source>choose...</source>
-        <translation type="unfinished"/>
+        <translation>選択</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Choose %1 Cache Folder </source>
-        <translation type="unfinished"/>
+        <translation>%1のキャッシュフォルダを選択</translation>
     </message>
     <message>
         <source>Choose %1 Cache Folder</source>
-        <translation type="unfinished"/>
+        <translation>%1のキャッシュフォルダを選択</translation>
     </message>
     <message>
         <source>Please choose %1 cache folder</source>
-        <translation type="unfinished"/>
+        <translation>%1 のキャッシュフォルダを選択してください</translation>
     </message>
     <message>
         <source>Create %1 folder failed!</source>
-        <translation type="unfinished"/>
+        <translation>%1 のフォルダーの作成に失敗しました</translation>
     </message>
 </context>
 <context>
@@ -928,55 +932,55 @@
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation>設定</translation>
     </message>
     <message>
         <source>Faild to migrate old data</source>
-        <translation type="unfinished"/>
+        <translation>旧データの移行に失敗しました</translation>
     </message>
     <message>
         <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
-        <translation type="unfinished"/>
+        <translation>SeaDrive %1 は、macOS バージョンが 14.4 以下の場合、複数のアカウントをサポートしません。macOSをアップグレードまたはSeaDriveをダウングレードしてください。</translation>
     </message>
     <message>
         <source>To start %1 extension for account %2, you need to click the %3 entry in Finder</source>
-        <translation type="unfinished"/>
+        <translation>%1 拡張子を開始するには %2、Finderで ％3 エントリをクリックしてください</translation>
     </message>
 </context>
 <context>
     <name>SeafileExtensionHandler</name>
     <message>
         <source>Failed to get upload link information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>%1のアップロードリンクの情報の取得に失敗しました %1 </translation>
     </message>
     <message>
         <source>No permissions to create a shared link</source>
-        <translation type="unfinished"/>
+        <translation>共有リンクを作成する権限がありません</translation>
     </message>
     <message>
         <source>failed get internal link %1</source>
-        <translation type="unfinished"/>
+        <translation>%1の内部リンクの取得に失敗しました</translation>
     </message>
     <message>
         <source>Failed to lock file</source>
-        <translation type="unfinished"/>
+        <translation>ファイルをロックに失敗しました</translation>
     </message>
     <message>
         <source>Failed to unlock file</source>
-        <translation type="unfinished"/>
+        <translation>ファイルをアンロックに失敗しました</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
+        <translation>%1は %2 によってロックされています</translation>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>%1のロック情報の取得に失敗しました</translation>
     </message>
     <message>
         <source>Failed to get share link %1
 </source>
-        <translation type="unfinished"/>
+        <translation>%1の共有リンクの取得に失敗しました</translation>
     </message>
 </context>
 <context>
@@ -1085,96 +1089,96 @@
     </message>
     <message>
         <source>Starting ...</source>
-        <translation type="unfinished"/>
+        <translation>開始中...</translation>
     </message>
     <message>
         <source>Resync</source>
-        <translation type="unfinished"/>
+        <translation>再同期</translation>
     </message>
     <message>
         <source>There are changes being uploaded under the account, please try again later</source>
-        <translation type="unfinished"/>
+        <translation>アカウントに変更がアップロード中です。後で試してください。</translation>
     </message>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;? After removing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
-        <translation type="unfinished"/>
+        <translation>アカウントを削除しますか？削除後、ダウンロードされたファイルは残ります。</translation>
     </message>
     <message>
         <source>Failed to connect to background process, please try again later</source>
-        <translation type="unfinished"/>
+        <translation>背景プロセスへの接続に失敗しました。後で試してください。</translation>
     </message>
     <message>
         <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
-        <translation type="unfinished"/>
+        <translation>SeaDrive %1 は、macOS 14.4 未満のバージョンでは動作しません。macOSをアップグレードまたはSeaDriveをダウングレードしてください。</translation>
     </message>
     <message>
         <source>Search files</source>
-        <translation type="unfinished"/>
+        <translation>ファイルを検索</translation>
     </message>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;? Downloaded and uploading files will not be removed.</source>
-        <translation type="unfinished"/>
+        <translation>アカウントを削除しますか？ダウンロードされたファイルとアップロード中のファイルは削除されません。</translation>
     </message>
     <message>
         <source>Are you sure to resync account from &quot;%1&quot;? Downloaded and uploading files will not be removed</source>
-        <translation type="unfinished"/>
+        <translation>アカウントを再同期しますか？ダウンロードされたファイルとアップロード中のファイルは再同期されません。</translation>
     </message>
     <message>
         <source>Are you sure to resync account from &quot;%1&quot;? After resyncing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
-        <translation type="unfinished"/>
+        <translation>アカウントを再同期しますか？再同期後、ダウンロードされたファイルは残ります。</translation>
     </message>
 </context>
 <context>
     <name>SearchDialog</name>
     <message>
         <source>Search files</source>
-        <translation type="unfinished"/>
+        <translation>ファイルを検索</translation>
     </message>
     <message>
         <source>All file types</source>
-        <translation type="unfinished"/>
+        <translation>すべてのファイルタイプ</translation>
     </message>
     <message>
         <source>Custom file type</source>
-        <translation type="unfinished"/>
+        <translation>customファイルタイプ</translation>
     </message>
     <message>
         <source>retry</source>
-        <translation type="unfinished"/>
+        <translation>再試行</translation>
     </message>
     <message>
         <source>Failed to search&lt;br/&gt;Please %1</source>
-        <translation type="unfinished"/>
+        <translation>検索に失敗しました。%1</translation>
     </message>
     <message>
         <source>No result found</source>
-        <translation type="unfinished"/>
+        <translation> 検索結果がありません</translation>
     </message>
 </context>
 <context>
     <name>SearchItemsTableModel</name>
     <message>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>名前</translation>
     </message>
     <message>
         <source>Kind</source>
-        <translation type="unfinished"/>
+        <translation>種類</translation>
     </message>
 </context>
 <context>
     <name>SearchItemsTableView</name>
     <message>
         <source>&amp;Open the file</source>
-        <translation type="unfinished"/>
+        <translation>ファイルを開く</translation>
     </message>
     <message>
         <source>&amp;Show in folder</source>
-        <translation type="unfinished"/>
+        <translation>フォルダで表示</translation>
     </message>
     <message>
         <source>File not found, maybe not synchorized yet</source>
-        <translation type="unfinished"/>
+        <translation>ファイルが見つかりません。同期中です。</translation>
     </message>
 </context>
 <context>
@@ -1353,15 +1357,15 @@
     </message>
     <message>
         <source>0</source>
-        <translation type="unfinished"/>
+        <translation>0</translation>
     </message>
     <message>
         <source>Hide Windows incompatibility paths Message</source>
-        <translation type="unfinished"/>
+        <translation>Windows不互換なパスを非表示にする</translation>
     </message>
     <message>
         <source>Confirm before deleting files more than</source>
-        <translation type="unfinished"/>
+        <translation>ファイルを削除する前に確認</translation>
     </message>
 </context>
 <context>
@@ -1396,17 +1400,25 @@
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"/>
+        <translation>パスワード</translation>
     </message>
     <message>
         <source>Failed to generate share link: %1</source>
-        <translation type="unfinished"/>
+        <translation>共有リンクの生成に失敗しました。%1</translation>
     </message>
 </context>
 <context>
     <name>ShibLoginDialog</name>
     <message>
         <source>Single Sign On</source>
+        <translation>単一ログイン</translation>
+    </message>
+    <message>
+        <source>A sync root folder with this name already exists.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to fetch account information: %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1414,19 +1426,19 @@
     <name>SyncCommand</name>
     <message>
         <source>No permissions to create a shared link</source>
-        <translation type="unfinished"/>
+        <translation>共有リンクを作成する権限がありません</translation>
     </message>
     <message>
         <source>failed to get share link %1</source>
-        <translation type="unfinished"/>
+        <translation>共有リンクを取得に失敗しました。%1</translation>
     </message>
     <message>
         <source>failed get internal link %1</source>
-        <translation type="unfinished"/>
+        <translation>内部リンクを取得に失敗しました。%1</translation>
     </message>
     <message>
         <source>Failed to get upload link for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>ファイル %1 へのアップロードリンクを取得に失敗しました。</translation>
     </message>
 </context>
 <context>
@@ -1441,7 +1453,7 @@
     </message>
     <message>
         <source>Descriptions for sync errors</source>
-        <translation type="unfinished"/>
+        <translation>同期エラーの説明</translation>
     </message>
 </context>
 <context>
@@ -1471,37 +1483,41 @@
     <name>SyncErrorsTableView</name>
     <message>
         <source>delete</source>
-        <translation type="unfinished"/>
+        <translation>削除</translation>
     </message>
     <message>
         <source>Delete file sync error failed</source>
-        <translation type="unfinished"/>
+        <translation>ファイル同期エラーを削除に失敗しました。</translation>
     </message>
 </context>
 <context>
     <name>SyncRootNameDialog</name>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose a sync root folder name. Files in this account will be synced under the path like &apos;C:\Users\Jim\seadrive_root\&amp;lt;sync root folder name&amp;gt;&apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>同期ルートルダ名を選択してください。このアカウントのファイルは、パスC:\Users\Jim\seadrive_root\同期ルートルダ名に同期されます。</translation>
     </message>
     <message>
         <source>Use default name</source>
-        <translation type="unfinished"/>
+        <translation>デフォルト名を使用</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Sync Root Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>同期ルートルダ名</translation>
     </message>
     <message>
         <source>Sync root name cannot be empty.</source>
-        <translation type="unfinished"/>
+        <translation>同期ルートルダ名は空にできません。</translation>
     </message>
     <message>
         <source>Sync root name cannot contain the following characters: &lt; &gt; : &quot; / \ | ? *</source>
+        <translation>同期ルートルダ名には、次の文字が含まれることはできません。</translation>
+    </message>
+    <message>
+        <source>A sync root folder with this name already exists.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1525,11 +1541,11 @@
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"/>
+        <translation>サーバー</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"/>
+        <translation>ユーザー名</translation>
     </message>
 </context>
 <context>
@@ -1582,11 +1598,11 @@
     <name>UploadLinkDialog</name>
     <message>
         <source>Upload Link</source>
-        <translation type="unfinished"/>
+        <translation>アップロードリンク</translation>
     </message>
     <message>
         <source>Upload link:</source>
-        <translation type="unfinished"/>
+        <translation>アップロードリンク:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
