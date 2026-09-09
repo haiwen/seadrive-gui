@@ -379,6 +379,10 @@
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;예: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <source>A sync root folder with this name already exists.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MessagePoller</name>
@@ -1410,6 +1414,14 @@
         <source>Single Sign On</source>
         <translation>단일 로그인</translation>
     </message>
+    <message>
+        <source>A sync root folder with this name already exists.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to fetch account information: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SyncCommand</name>
@@ -1504,6 +1516,10 @@
     <message>
         <source>Sync root name cannot contain the following characters: &lt; &gt; : &quot; / \ | ? *</source>
         <translation>동기화 루트 이름은 다음 문자를 포함할 수 없습니다: &lt; &gt; : &quot; / | ? *</translation>
+    </message>
+    <message>
+        <source>A sync root folder with this name already exists.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

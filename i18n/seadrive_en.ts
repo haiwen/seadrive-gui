@@ -380,6 +380,10 @@
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>A sync root folder with this name already exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MessagePoller</name>
@@ -1410,6 +1414,14 @@
         <source>Single Sign On</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>A sync root folder with this name already exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to fetch account information: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SyncCommand</name>
@@ -1503,6 +1515,10 @@
     </message>
     <message>
         <source>Sync root name cannot contain the following characters: &lt; &gt; : &quot; / \ | ? *</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A sync root folder with this name already exists.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

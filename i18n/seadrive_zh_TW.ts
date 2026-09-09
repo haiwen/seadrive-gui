@@ -3,23 +3,23 @@
     <name>AboutDialog</name>
     <message>
         <source>About %1</source>
-        <translation type="unfinished"/>
+        <translation>關於 %1</translation>
     </message>
     <message>
         <source>&lt;h4&gt;Seafile Drive Client %2&lt;/h4&gt;</source>
-        <translation type="unfinished"/>
+        <translation>Seafile Drive Client %2</translation>
     </message>
     <message>
         <source>&lt;h5&gt; REV %1 &lt;/h5&gt;</source>
-        <translation type="unfinished"/>
+        <translation>REV %1</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"/>
+        <translation>關於</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>確定</translation>
     </message>
 </context>
 <context>
@@ -33,202 +33,202 @@
     <name>AutoLogonDialog</name>
     <message>
         <source>auto login</source>
-        <translation type="unfinished"/>
+        <translation>自動登錄</translation>
     </message>
     <message>
         <source>auto logining, please wait a moment</source>
-        <translation type="unfinished"/>
+        <translation>自動登錄中，請稍後</translation>
     </message>
     <message>
         <source>Please input server address</source>
-        <translation type="unfinished"/>
+        <translation>請輸入伺服器地址</translation>
     </message>
     <message>
         <source>address</source>
-        <translation type="unfinished"/>
+        <translation>伺服器地址</translation>
     </message>
     <message>
         <source>Please enter the server address</source>
-        <translation type="unfinished"/>
+        <translation>請輸入伺服器地址</translation>
     </message>
     <message>
         <source>%1 is not a valid server address</source>
-        <translation type="unfinished"/>
+        <translation>%1 不是有效的伺服器地址</translation>
     </message>
     <message>
         <source>login failed</source>
-        <translation type="unfinished"/>
+        <translation>登錄失敗</translation>
     </message>
 </context>
 <context>
     <name>DaemonManager</name>
     <message>
         <source>%1 failed to initialize</source>
-        <translation type="unfinished"/>
+        <translation>%1 初始化失敗</translation>
     </message>
     <message>
         <source>%1 exited unexpectedly</source>
-        <translation type="unfinished"/>
+        <translation>%1 非常退出</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create seadrive mount folder</source>
-        <translation type="unfinished"/>
+        <translation>初始化失敗：無法創建Seafile Drive挂載目錄</translation>
     </message>
 </context>
 <context>
     <name>EncryptedReposDialog</name>
     <message>
         <source>Encrypted Libraries</source>
-        <translation type="unfinished"/>
+        <translation>加密庫庫</translation>
     </message>
     <message>
         <source>No Encrypted Library.</source>
-        <translation type="unfinished"/>
+        <translation>沒有加密庫庫</translation>
     </message>
 </context>
 <context>
     <name>EncryptedReposTableModel</name>
     <message>
         <source>Failed to set encrypted library password</source>
-        <translation type="unfinished"/>
+        <translation>設定加密庫庫密碼失敗</translation>
     </message>
     <message>
         <source>Password error</source>
-        <translation type="unfinished"/>
+        <translation>密碼錯誤</translation>
     </message>
     <message>
         <source>Failed to clear encrypted library password</source>
-        <translation type="unfinished"/>
+        <translation>清除加密庫庫密碼失敗</translation>
     </message>
     <message>
         <source>Right click this item to sync or unsync the encrypted library</source>
-        <translation type="unfinished"/>
+        <translation>右鍵點擊此項目以同步或取消同步加密庫庫</translation>
     </message>
     <message>
         <source>Library</source>
-        <translation type="unfinished"/>
+        <translation>庫庫</translation>
     </message>
     <message>
         <source>Sync status</source>
-        <translation type="unfinished"/>
+        <translation>同步狀態</translation>
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"/>
+        <translation>伺服器</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"/>
+        <translation>用戶名</translation>
     </message>
 </context>
 <context>
     <name>EncryptedReposTableView</name>
     <message>
         <source>Unsync</source>
-        <translation type="unfinished"/>
+        <translation>取消同步</translation>
     </message>
     <message>
         <source>Sync</source>
-        <translation type="unfinished"/>
+        <translation>同步</translation>
     </message>
     <message>
         <source>After unsyncing, the local encryption key of this library will be cleared and this library cannot be accessed in virtual drive. Are you sure to unsync?</source>
-        <translation type="unfinished"/>
+        <translation>取消同步後，此加密庫庫的本地加密金鑰將被清除，此加密庫庫無法在虛擬驅動器中訪問。您確定要取消同步嗎？</translation>
     </message>
     <message>
         <source>Enter library password to sync</source>
-        <translation type="unfinished"/>
+        <translation>輸入加密庫庫密碼以同步</translation>
     </message>
 </context>
 <context>
     <name>ExtCommandsHandler</name>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;? Downloaded and uploading files will not be removed.</source>
-        <translation type="unfinished"/>
+        <translation>您確定要從&quot;%1&quot;移除帳號嗎？下載和上傳的文件將被保留。</translation>
     </message>
     <message>
         <source>Failed to connect to background process, please try again later</source>
-        <translation type="unfinished"/>
+        <translation>連接背景處理程序失敗，請稍後再試</translation>
     </message>
     <message>
         <source>Are you sure to resync account from &quot;%1&quot;? Downloaded and uploading files will not be removed</source>
-        <translation type="unfinished"/>
+        <translation>您確定要重新同步&quot;%1&quot;帳號嗎？下載和上傳的文件將被保留。</translation>
     </message>
 </context>
 <context>
     <name>FileProviderManager</name>
     <message>
         <source>%1 will ask permissions to enable Finder plugin.</source>
-        <translation type="unfinished"/>
+        <translation>％1 將要求您授予权限以啟用 Finder 插件。</translation>
     </message>
 </context>
 <context>
     <name>FilterMenu</name>
     <message>
         <source>FilterMenu</source>
-        <translation type="unfinished"/>
+        <translation>篩選</translation>
     </message>
     <message>
         <source>Text file    </source>
-        <translation type="unfinished"/>
+        <translation>文字文件</translation>
     </message>
     <message>
         <source>Document    </source>
-        <translation type="unfinished"/>
+        <translation>文件</translation>
     </message>
     <message>
         <source>Image    </source>
-        <translation type="unfinished"/>
+        <translation>圖片</translation>
     </message>
     <message>
         <source>Video    </source>
-        <translation type="unfinished"/>
+        <translation>視頻</translation>
     </message>
     <message>
         <source>Audio    </source>
-        <translation type="unfinished"/>
+        <translation>音頻</translation>
     </message>
     <message>
         <source>Markdown</source>
-        <translation type="unfinished"/>
+        <translation>Markdown</translation>
     </message>
 </context>
 <context>
     <name>InitSyncDialog</name>
     <message>
         <source>Download files list</source>
-        <translation type="unfinished"/>
+        <translation>下載文件列表</translation>
     </message>
     <message>
         <source>%1 is fetching the files list, please wait</source>
-        <translation type="unfinished"/>
+        <translation>%1 正在下載文件列表，請稍後</translation>
     </message>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"/>
+        <translation>對話框</translation>
     </message>
     <message>
         <source>logo</source>
-        <translation type="unfinished"/>
+        <translation>logo</translation>
     </message>
     <message>
         <source>Run in Background</source>
-        <translation type="unfinished"/>
+        <translation>在背景執行</translation>
     </message>
     <message>
         <source>Finish</source>
-        <translation type="unfinished"/>
+        <translation>完成</translation>
     </message>
     <message>
         <source>%1 has downloaded your files list.</source>
-        <translation type="unfinished"/>
+        <translation>％1 已下載您的文件列表。</translation>
     </message>
 </context>
 <context>
     <name>LoadMoreButton</name>
     <message>
         <source>load more</source>
-        <translation type="unfinished"/>
+        <translation>加載更多</translation>
     </message>
 </context>
 <context>
@@ -239,7 +239,7 @@
     </message>
     <message>
         <source>Single Sign On</source>
-        <translation type="unfinished"/>
+        <translation>單點登錄</translation>
     </message>
     <message>
         <source>Re-login</source>
@@ -277,11 +277,11 @@
     </message>
     <message>
         <source>Two Factor Authentication</source>
-        <translation type="unfinished"/>
+        <translation>雙因素認證</translation>
     </message>
     <message>
         <source>%1 Server Address</source>
-        <translation type="unfinished"/>
+        <translation>％1 伺服器地址</translation>
     </message>
     <message>
         <source>Please enter the password</source>
@@ -289,7 +289,7 @@
     </message>
     <message>
         <source>Enter the two factor authentication token</source>
-        <translation type="unfinished"/>
+        <translation>請輸入雙因素認證令牌</translation>
     </message>
     <message>
         <source>Incorrect email or password</source>
@@ -333,7 +333,7 @@
     </message>
     <message>
         <source>Automatic Login</source>
-        <translation type="unfinished"/>
+        <translation>自動登入</translation>
     </message>
     <message>
         <source>status text</source>
@@ -345,7 +345,7 @@
     </message>
     <message>
         <source>Email / Username:</source>
-        <translation type="unfinished"/>
+        <translation>郵件地址 /用戶名：</translation>
     </message>
     <message>
         <source>e.g. Jim&apos;s laptop</source>
@@ -361,22 +361,26 @@
     </message>
     <message>
         <source>Failed to get server info. Please check the server address.</source>
-        <translation type="unfinished"/>
+        <translation>無法獲取伺服器信息。請檢查伺服器地址。</translation>
     </message>
     <message>
         <source>Failed to get client sso link.</source>
-        <translation type="unfinished"/>
+        <translation>無法獲取客戶端單點登錄鏈接。</translation>
     </message>
     <message>
         <source>SSO login failed.</source>
-        <translation type="unfinished"/>
+        <translation>單點登錄失敗。</translation>
     </message>
     <message>
         <source>Failed to get client sso status.</source>
-        <translation type="unfinished"/>
+        <translation>無法獲取客戶端單點登錄狀態。</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For example: https://example.your-server.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>例如：https://example.your-server.com</translation>
+    </message>
+    <message>
+        <source>A sync root folder with this name already exists.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -384,186 +388,186 @@
     <name>MessagePoller</name>
     <message>
         <source>&quot;%1&quot; is synchronized</source>
-        <translation type="unfinished"/>
+        <translation>％1 已同步</translation>
     </message>
     <message>
         <source>Error when syncing &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>同步％1 時發生錯誤</translation>
     </message>
     <message>
         <source>Error when syncing</source>
-        <translation type="unfinished"/>
+        <translation>同步時發生錯誤</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is being uploaded</source>
-        <translation type="unfinished"/>
+        <translation>％1 正在上傳</translation>
     </message>
     <message>
         <source>Starting to move &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>開始移動％1</translation>
     </message>
     <message>
         <source>Starting to move &quot;%1&quot; to &quot;%2&quot;</source>
-        <translation type="unfinished"/>
+        <translation>開始移動％1 到％2</translation>
     </message>
     <message>
         <source>Successfully moved &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>％1 已成功移動</translation>
     </message>
     <message>
         <source>Successfully moved &quot;%1&quot; to &quot;%2&quot;</source>
-        <translation type="unfinished"/>
+        <translation>％1 已成功移動到％2</translation>
     </message>
     <message>
         <source>Failed to move &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>無法移動％1</translation>
     </message>
     <message>
         <source>Failed to move &quot;%1&quot; to &quot;%2&quot;</source>
-        <translation type="unfinished"/>
+        <translation>無法移動％1 到％2</translation>
     </message>
     <message>
         <source>Download file</source>
-        <translation type="unfinished"/>
+        <translation>下載文件</translation>
     </message>
     <message>
         <source>Start to download file &quot;%1&quot; </source>
-        <translation type="unfinished"/>
+        <translation>開始下載文件％1</translation>
     </message>
     <message>
         <source>file &quot;%1&quot; has been downloaded </source>
-        <translation type="unfinished"/>
+        <translation>％1 已下載</translation>
     </message>
     <message>
         <source>Failed to create file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>無法創建文件％1</translation>
     </message>
     <message>
         <source>Failed to delete folder</source>
-        <translation type="unfinished"/>
+        <translation>無法刪除文件夾</translation>
     </message>
     <message>
         <source>You can&apos;t delete the library &quot;%1&quot; directly</source>
-        <translation type="unfinished"/>
+        <translation>無法直接刪除庫％1</translation>
     </message>
     <message>
         <source>Libraries are ready</source>
-        <translation type="unfinished"/>
+        <translation>庫已準備好</translation>
     </message>
     <message>
         <source>All libraries are loaded and ready to use.</source>
-        <translation type="unfinished"/>
+        <translation>所有庫已加載並準備好使用</translation>
     </message>
     <message>
         <source>Deleted &quot;%1&quot; and %2 more files.</source>
-        <translation type="unfinished"/>
+        <translation>％1 已刪除，並刪除 %2 個更多文件</translation>
     </message>
     <message>
         <source>You can&apos;t create files in the mount folder directly</source>
-        <translation type="unfinished"/>
+        <translation>無法直接創建文件在挂載文件夾中</translation>
     </message>
     <message>
         <source>Do you want to delete files in library &quot;%1&quot; ?</source>
-        <translation type="unfinished"/>
+        <translation>是否刪除庫％1 中的文件？</translation>
     </message>
     <message>
         <source>Deleted library &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>％1 已刪除</translation>
     </message>
     <message>
         <source>Confirm to delete library &quot;%1&quot; ?</source>
-        <translation type="unfinished"/>
+        <translation>是否確認刪除庫％1？</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>File %1 is locked by other programs</source>
-        <translation type="unfinished"/>
+        <translation>文件％1 已被其他程序鎖定</translation>
     </message>
     <message>
         <source>Some file is locked by other programs</source>
-        <translation type="unfinished"/>
+        <translation>某些文件已被其他程序鎖定</translation>
     </message>
     <message>
         <source>Folder %1 is locked by other programs</source>
-        <translation type="unfinished"/>
+        <translation>文件夾％1 已被其他程序鎖定</translation>
     </message>
     <message>
         <source>Some folder is locked by other programs</source>
-        <translation type="unfinished"/>
+        <translation>某些文件夾已被其他程序鎖定</translation>
     </message>
     <message>
         <source>File %1 is locked by another user</source>
-        <translation type="unfinished"/>
+        <translation>文件％1 已被其他用戶鎖定</translation>
     </message>
     <message>
         <source>Some file is locked by another user</source>
-        <translation type="unfinished"/>
+        <translation>某些文件已被其他用戶鎖定</translation>
     </message>
     <message>
         <source>Invalid path %1</source>
-        <translation type="unfinished"/>
+        <translation>無效路徑％1</translation>
     </message>
     <message>
         <source>Trying to access an invalid path</source>
-        <translation type="unfinished"/>
+        <translation>嘗試訪問無效路徑</translation>
     </message>
     <message>
         <source>Error when indexing file %1</source>
-        <translation type="unfinished"/>
+        <translation>索引文件％1 時發生錯誤</translation>
     </message>
     <message>
         <source>Error when indexing files</source>
-        <translation type="unfinished"/>
+        <translation>索引文件時發生錯誤</translation>
     </message>
     <message>
         <source>You don&apos;t have enough permission for this library</source>
-        <translation type="unfinished"/>
+        <translation>您沒有足夠權限使用庫</translation>
     </message>
     <message>
         <source>Network error</source>
-        <translation type="unfinished"/>
+        <translation>網絡錯誤</translation>
     </message>
     <message>
         <source>Failed to resolve network proxy</source>
-        <translation type="unfinished"/>
+        <translation>無法解析網絡代理</translation>
     </message>
     <message>
         <source>Failed to resolve remote server</source>
-        <translation type="unfinished"/>
+        <translation>無法解析遠端伺服器</translation>
     </message>
     <message>
         <source>Failed to connect to server</source>
-        <translation type="unfinished"/>
+        <translation>無法連接到伺服器</translation>
     </message>
     <message>
         <source>SSL error</source>
-        <translation type="unfinished"/>
+        <translation>SSL 錯誤</translation>
     </message>
     <message>
         <source>Error in network transmission</source>
-        <translation type="unfinished"/>
+        <translation>網絡傳輸錯誤</translation>
     </message>
     <message>
         <source>Timeout in network transmission</source>
-        <translation type="unfinished"/>
+        <translation>網絡傳輸超時</translation>
     </message>
     <message>
         <source>Failed to handle http redirection</source>
-        <translation type="unfinished"/>
+        <translation>無法處理 HTTP 重定向</translation>
     </message>
     <message>
         <source>Server internal error</source>
-        <translation type="unfinished"/>
+        <translation>伺服器內部錯誤</translation>
     </message>
     <message>
         <source>Local data is corrupt</source>
-        <translation type="unfinished"/>
+        <translation>本地數據已損毀</translation>
     </message>
     <message>
         <source>Failed to write local data</source>
-        <translation type="unfinished"/>
+        <translation>無法寫入本地數據</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -615,7 +619,7 @@
     </message>
     <message>
         <source>Added or modified</source>
-        <translation type="unfinished"/>
+        <translation>新增或修改的</translation>
     </message>
     <message>
         <source>Moved</source>
@@ -667,7 +671,7 @@
     </message>
     <message>
         <source>Auto merge by %1 system</source>
-        <translation type="unfinished"/>
+        <translation>自動合併 %1 系統</translation>
     </message>
     <message>
         <source>Just now</source>
@@ -743,247 +747,248 @@
     </message>
     <message>
         <source>%1 Client is already running</source>
-        <translation type="unfinished"/>
+        <translation>％1 客端端已運行</translation>
     </message>
     <message>
         <source>Choose the disk letter for %1</source>
-        <translation type="unfinished"/>
+        <translation>選擇 %1 的磁碟字母</translation>
     </message>
     <message>
         <source>Update to file %1 denied by folder permission setting</source>
-        <translation type="unfinished"/>
+        <translation>更新檔案 %1 被目錄權限設定拒絕</translation>
     </message>
     <message>
         <source>Path %1 ends with space or period character</source>
-        <translation type="unfinished"/>
+        <translation>路徑 %1 結尾為空格或點號</translation>
     </message>
     <message>
         <source>Path %1 contains invalid characters like &apos;|&apos; or &apos;:&apos;</source>
-        <translation type="unfinished"/>
+        <translation>路徑 %1 包含無效字元</translation>
     </message>
     <message>
         <source>Created or updated a file %1 in a non-writable library or folder</source>
-        <translation type="unfinished"/>
+        <translation>新增或更新的檔案 %1 在非可寫的庫或目錄中</translation>
     </message>
     <message>
         <source>Concurrent updates to file %1. File is saved as conflict file</source>
-        <translation type="unfinished"/>
+        <translation>檔案 %1 請勿在多個用戶端上更新</translation>
     </message>
     <message>
         <source>%1 is not added to a library and will not be uploaded</source>
-        <translation type="unfinished"/>
+        <translation>％1 未被新增到庫庫，將不會上傳</translation>
     </message>
     <message>
         <source>You can only move files/folders within a library or from one library to another library</source>
-        <translation type="unfinished"/>
+        <translation>您只能在庫庫內移動檔案或資料夾，或從一個庫庫移動到另一個庫庫</translation>
     </message>
     <message>
         <source>Syncing is denied by cloud-only permission settings</source>
-        <translation type="unfinished"/>
+        <translation>同步被拒絕，因為您只擁有雲端庫的權限</translation>
     </message>
     <message>
         <source>Do not have write permission to the library</source>
-        <translation type="unfinished"/>
+        <translation>您沒有庫庫的寫入權限</translation>
     </message>
     <message>
         <source>Waiting for confirmation to delete files</source>
-        <translation type="unfinished"/>
+        <translation>等待確認刪除檔案</translation>
     </message>
     <message>
         <source>The path %1 contains symbols that are not supported by the Windows system.</source>
-        <translation type="unfinished"/>
+        <translation>路徑 %1 包含不支持的符號</translation>
     </message>
     <message>
         <source>Failed to upload file blocks. Please check network or firewall.</source>
-        <translation type="unfinished"/>
+        <translation>上傳檔案塊失敗，請檢查網路或防火牆</translation>
     </message>
     <message>
         <source>Failed to download file. Please check disk space or folder permissions</source>
-        <translation type="unfinished"/>
+        <translation>下載檔案失敗，請檢查磁碟空間或目錄權限</translation>
     </message>
     <message>
         <source>Library cannot be synced since it has too many files.</source>
-        <translation type="unfinished"/>
+        <translation>庫庫不能同步，因為它包含太多檔案</translation>
     </message>
     <message>
         <source>Files cannot be uploaded to this library due to file number limit settings.</source>
-        <translation type="unfinished"/>
+        <translation>庫庫不能上傳檔案，因為它包含太多檔案</translation>
     </message>
     <message>
         <source>Path has character case conflict with existing file or folder. Will not be downloaded</source>
-        <translation type="unfinished"/>
+        <translation>路徑 %1 包含字元大小寫衝突，將不會下載</translation>
     </message>
     <message>
         <source>Failed to change library name since some files are opened in it</source>
-        <translation type="unfinished"/>
+        <translation>庫庫名稱不能變更，因為它包含打開的檔案</translation>
     </message>
 </context>
 <context>
     <name>RemoteWipeService</name>
     <message>
         <source>Authorization expired, please re-login</source>
-        <translation type="unfinished"/>
+        <translation>授權已過期，請重新登錄</translation>
     </message>
     <message>
         <source>Authorization expired, please re-login. You can find files that are not uploaded yet at ~/Library/CloudStorage</source>
-        <translation type="unfinished"/>
+        <translation>授權已過期，請重新登錄。您可以在 ~/Library/CloudStorage 找到未上傳的檔案</translation>
     </message>
 </context>
 <context>
     <name>SeaDriveRootDialog</name>
     <message>
         <source>Choose SeaDrive Cache Folder</source>
-        <translation type="unfinished"/>
+        <translation>選擇 SeaDrive 缓存目錄</translation>
     </message>
     <message>
         <source>Your files will appear in a local cache folder. Please choose the folder:</source>
-        <translation type="unfinished"/>
+        <translation>您的檔案將在本地目錄中顯示。請選擇目錄：</translation>
     </message>
     <message>
         <source>choose...</source>
-        <translation type="unfinished"/>
+        <translation>選擇...</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>確定</translation>
     </message>
     <message>
         <source>Choose %1 Cache Folder </source>
-        <translation type="unfinished"/>
+        <translation>選擇 %1 缓存目錄</translation>
     </message>
     <message>
         <source>Choose %1 Cache Folder</source>
-        <translation type="unfinished"/>
+        <translation>選擇 %1 缓存目錄</translation>
     </message>
     <message>
         <source>Please choose %1 cache folder</source>
-        <translation type="unfinished"/>
+        <translation>請選擇 %1 缓存目錄</translation>
     </message>
     <message>
         <source>Create %1 folder failed!</source>
-        <translation type="unfinished"/>
+        <translation>創建目錄 %1 失敗！</translation>
     </message>
 </context>
 <context>
     <name>SeadriveGui</name>
     <message>
         <source>Failed to initialize log: %1</source>
-        <translation type="unfinished"/>
+        <translation>初始化日誌失敗： %1</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>確定</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"/>
+        <translation>是</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"/>
+        <translation>否</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>取消</translation>
     </message>
     <message>
         <source>failed to save client id</source>
-        <translation type="unfinished"/>
+        <translation>保存客戶端ID失敗</translation>
     </message>
     <message>
         <source>failed to access %1</source>
-        <translation type="unfinished"/>
+        <translation>訪問%1失敗</translation>
     </message>
     <message>
         <source>incorrect client id</source>
-        <translation type="unfinished"/>
+        <translation>客戶端ID不正確</translation>
     </message>
     <message>
         <source>failed to read %1</source>
-        <translation type="unfinished"/>
+        <translation>讀取%1失敗</translation>
     </message>
     <message>
         <source>Auto logon failed, fall back to manual login</source>
-        <translation type="unfinished"/>
+        <translation>自動登錄失敗，返回手動登錄</translation>
     </message>
     <message>
         <source>Faild to choose a cache directory</source>
-        <translation type="unfinished"/>
+        <translation>選擇緩存目錄失敗</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create %1 folder</source>
-        <translation type="unfinished"/>
+        <translation>初始化失敗：創建%1文件夾失敗</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create %1 logs folder</source>
-        <translation type="unfinished"/>
+        <translation>初始化失敗：創建%1日誌文件夾失敗</translation>
     </message>
     <message>
         <source>Failed to initialize: failed to create %1 data folder</source>
-        <translation type="unfinished"/>
+        <translation>初始化失敗：創建%1數據文件夾失敗</translation>
     </message>
     <message>
         <source>Failed to create seadrive cache directory</source>
-        <translation type="unfinished"/>
+        <translation>創建seadrive緩存目錄失敗</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation>設置</translation>
     </message>
     <message>
         <source>Faild to migrate old data</source>
-        <translation type="unfinished"/>
+        <translation>遷移舊數據失敗</translation>
     </message>
     <message>
         <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
-        <translation type="unfinished"/>
+        <translation>多賬戶SeaDrive %1無法在低於14.4版本的macOS上運行。請升級您的macOS或將SeaDrive降級至3.0.9</translation>
     </message>
     <message>
         <source>To start %1 extension for account %2, you need to click the %3 entry in Finder</source>
-        <translation type="unfinished"/>
+        <translation>要為帳戶%2啟動%1擴展，您需要點擊Finder中的%3條目</translation>
     </message>
 </context>
 <context>
     <name>SeafileExtensionHandler</name>
     <message>
         <source>Failed to get upload link information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>獲取文件&quot;%1&quot;的上傳鏈接信息失敗</translation>
     </message>
     <message>
         <source>No permissions to create a shared link</source>
-        <translation type="unfinished"/>
+        <translation>沒有權限創建共享鏈接</translation>
     </message>
     <message>
         <source>failed get internal link %1</source>
-        <translation type="unfinished"/>
+        <translation>獲取內部鏈接%1失敗</translation>
     </message>
     <message>
         <source>Failed to lock file</source>
-        <translation type="unfinished"/>
+        <translation>鎖定文件失敗</translation>
     </message>
     <message>
         <source>Failed to unlock file</source>
-        <translation type="unfinished"/>
+        <translation>解鎖文件失敗</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; is locked by %2</source>
-        <translation type="unfinished"/>
+        <translation>文件&quot;%1&quot;已被%2鎖定</translation>
     </message>
     <message>
         <source>Failed to get lock information for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>獲取文件&quot;%1&quot;的鎖定信息失敗</translation>
     </message>
     <message>
         <source>Failed to get share link %1
 </source>
-        <translation type="unfinished"/>
+        <translation>獲取共享鏈接%1失敗
+</translation>
     </message>
 </context>
 <context>
     <name>SeafileLinkDialog</name>
     <message>
         <source>%1 Internal Link</source>
-        <translation type="unfinished"/>
+        <translation>%1內部鏈接</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -991,7 +996,7 @@
     </message>
     <message>
         <source>%1 Internal Link:</source>
-        <translation type="unfinished"/>
+        <translation>%1內部鏈接：</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1002,7 +1007,7 @@
     <name>SeafileRpcClient</name>
     <message>
         <source>internal error: failed to connect to %1 daemon</source>
-        <translation type="unfinished"/>
+        <translation>內部錯誤：連接到%1守護進程失敗</translation>
     </message>
 </context>
 <context>
@@ -1017,7 +1022,7 @@
     </message>
     <message>
         <source>Show file sync errors</source>
-        <translation type="unfinished"/>
+        <translation>顯示文件同步錯誤</translation>
     </message>
     <message>
         <source>Open &amp;logs folder</source>
@@ -1037,19 +1042,19 @@
     </message>
     <message>
         <source>Accounts</source>
-        <translation type="unfinished"/>
+        <translation>帳戶</translation>
     </message>
     <message>
         <source>not logged in</source>
-        <translation type="unfinished"/>
+        <translation>未登錄</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>刪除</translation>
     </message>
     <message>
         <source>Add an account</source>
-        <translation type="unfinished"/>
+        <translation>添加帳戶</translation>
     </message>
     <message>
         <source>File</source>
@@ -1057,11 +1062,11 @@
     </message>
     <message>
         <source>&lt;h2&gt;Seafile Drive Client %2&lt;/h2&gt;</source>
-        <translation type="unfinished"/>
+        <translation>Seafile Drive Client %2</translation>
     </message>
     <message>
         <source>Up %1, Down %2</source>
-        <translation type="unfinished"/>
+        <translation>上傳 %1, 下載 %2</translation>
     </message>
     <message>
         <source>About %1</source>
@@ -1069,7 +1074,7 @@
     </message>
     <message>
         <source>Transfer progress</source>
-        <translation type="unfinished"/>
+        <translation>轉移進度</translation>
     </message>
     <message>
         <source>open %1 log folder</source>
@@ -1081,100 +1086,100 @@
     </message>
     <message>
         <source>Show encrypted libraries</source>
-        <translation type="unfinished"/>
+        <translation>顯示加密庫</translation>
     </message>
     <message>
         <source>Starting ...</source>
-        <translation type="unfinished"/>
+        <translation>啟動中...</translation>
     </message>
     <message>
         <source>Resync</source>
-        <translation type="unfinished"/>
+        <translation>重新同步</translation>
     </message>
     <message>
         <source>There are changes being uploaded under the account, please try again later</source>
-        <translation type="unfinished"/>
+        <translation>帳戶下有變更正在上傳，請稍後再試</translation>
     </message>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;? After removing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
-        <translation type="unfinished"/>
+        <translation>確認刪除帳戶&quot;%1&quot;嗎？刪除後，您仍可以在~/Library/CloudStorage中找到下載的檔案。</translation>
     </message>
     <message>
         <source>Failed to connect to background process, please try again later</source>
-        <translation type="unfinished"/>
+        <translation>連接到背景進程失敗，請稍後再試</translation>
     </message>
     <message>
         <source>SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. Please upgrade your macOS or downgrade SeaDrive to 3.0.9</source>
-        <translation type="unfinished"/>
+        <translation>SeaDrive %1 有多個帳戶，無法在 macOS 版本低於 14.4 時運行。請升級您的 macOS 或降級 SeaDrive 到 3.0.9</translation>
     </message>
     <message>
         <source>Search files</source>
-        <translation type="unfinished"/>
+        <translation>搜索檔案</translation>
     </message>
     <message>
         <source>Are you sure to remove account from &quot;%1&quot;? Downloaded and uploading files will not be removed.</source>
-        <translation type="unfinished"/>
+        <translation>確認刪除帳戶&quot;%1&quot;嗎？刪除後，您仍可以在~/Library/CloudStorage中找到下載的檔案。</translation>
     </message>
     <message>
         <source>Are you sure to resync account from &quot;%1&quot;? Downloaded and uploading files will not be removed</source>
-        <translation type="unfinished"/>
+        <translation>確認重新同步帳戶&quot;%1&quot;嗎？重新同步後，您仍可以在~/Library/CloudStorage中找到下載的檔案。</translation>
     </message>
     <message>
         <source>Are you sure to resync account from &quot;%1&quot;? After resyncing account, you can still find downloaded files at ~/Library/CloudStorage.</source>
-        <translation type="unfinished"/>
+        <translation>確認重新同步帳戶&quot;%1&quot;嗎？重新同步後，您仍可以在~/Library/CloudStorage中找到下載的檔案。</translation>
     </message>
 </context>
 <context>
     <name>SearchDialog</name>
     <message>
         <source>Search files</source>
-        <translation type="unfinished"/>
+        <translation>搜索檔案</translation>
     </message>
     <message>
         <source>All file types</source>
-        <translation type="unfinished"/>
+        <translation>所有檔案類型</translation>
     </message>
     <message>
         <source>Custom file type</source>
-        <translation type="unfinished"/>
+        <translation>custom file type</translation>
     </message>
     <message>
         <source>retry</source>
-        <translation type="unfinished"/>
+        <translation>重試</translation>
     </message>
     <message>
         <source>Failed to search&lt;br/&gt;Please %1</source>
-        <translation type="unfinished"/>
+        <translation>搜索失敗，請 %1</translation>
     </message>
     <message>
         <source>No result found</source>
-        <translation type="unfinished"/>
+        <translation>未找到結果</translation>
     </message>
 </context>
 <context>
     <name>SearchItemsTableModel</name>
     <message>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>名稱</translation>
     </message>
     <message>
         <source>Kind</source>
-        <translation type="unfinished"/>
+        <translation>類型</translation>
     </message>
 </context>
 <context>
     <name>SearchItemsTableView</name>
     <message>
         <source>&amp;Open the file</source>
-        <translation type="unfinished"/>
+        <translation>開啟檔案</translation>
     </message>
     <message>
         <source>&amp;Show in folder</source>
-        <translation type="unfinished"/>
+        <translation>顯示在資料夾中</translation>
     </message>
     <message>
         <source>File not found, maybe not synchorized yet</source>
-        <translation type="unfinished"/>
+        <translation>未找到檔案，可能未同步</translation>
     </message>
 </context>
 <context>
@@ -1185,15 +1190,15 @@
     </message>
     <message>
         <source>Auto start %1 after login</source>
-        <translation type="unfinished"/>
+        <translation>自動啟動 %1</translation>
     </message>
     <message>
         <source>Cache directory:</source>
-        <translation type="unfinished"/>
+        <translation>緩存目錄：</translation>
     </message>
     <message>
         <source>Enable search</source>
-        <translation type="unfinished"/>
+        <translation>啟用搜索</translation>
     </message>
     <message>
         <source>None</source>
@@ -1209,39 +1214,39 @@
     </message>
     <message>
         <source>System Proxy</source>
-        <translation type="unfinished"/>
+        <translation>系統代理</translation>
     </message>
     <message>
         <source>enabled search</source>
-        <translation type="unfinished"/>
+        <translation>啟用搜索</translation>
     </message>
     <message>
         <source>disabled search</source>
-        <translation type="unfinished"/>
+        <translation>禁用搜索</translation>
     </message>
     <message>
         <source>You have %1. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>您有 %1，是否重新啟動以應用它？</translation>
     </message>
     <message>
         <source>Please choose the cache folder</source>
-        <translation type="unfinished"/>
+        <translation>請選擇緩存目錄</translation>
     </message>
     <message>
         <source>The proxy host address can&apos;t be empty</source>
-        <translation type="unfinished"/>
+        <translation>代理主機地址址不能為空</translation>
     </message>
     <message>
         <source>The proxy port is incorrect</source>
-        <translation type="unfinished"/>
+        <translation>代理埠號錯誤</translation>
     </message>
     <message>
         <source>Proxy username can&apos;t be empty</source>
-        <translation type="unfinished"/>
+        <translation>代理用戶名不能為空</translation>
     </message>
     <message>
         <source>Proxy password can&apos;t be empty</source>
-        <translation type="unfinished"/>
+        <translation>代理密碼不能為空</translation>
     </message>
     <message>
         <source>Dialog</source>
@@ -1277,15 +1282,15 @@
     </message>
     <message>
         <source>Cache clean interval (in minutes):</source>
-        <translation type="unfinished"/>
+        <translation>緩存清除間隔 (分鐘)：</translation>
     </message>
     <message>
         <source>Cache size limit (in GB):</source>
-        <translation type="unfinished"/>
+        <translation>緩存大小限制 (GB)：</translation>
     </message>
     <message>
         <source>select...</source>
-        <translation type="unfinished"/>
+        <translation>選擇...</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -1337,31 +1342,31 @@
     </message>
     <message>
         <source>Enable search in finder</source>
-        <translation type="unfinished"/>
+        <translation>在Finder中啟用搜索</translation>
     </message>
     <message>
         <source>You have changed language, Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>您已更改語言，是否重新啟動以應用更改？</translation>
     </message>
     <message>
         <source>You have changed cache directory. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>您已更改緩存目錄，是否重新啟動以應用更改？</translation>
     </message>
     <message>
         <source>You have changed %1 cache folder. Restart to apply it?</source>
-        <translation type="unfinished"/>
+        <translation>您已更改%1緩存文件夾，是否重新啟動以應用更改？</translation>
     </message>
     <message>
         <source>0</source>
-        <translation type="unfinished"/>
+        <translation>0</translation>
     </message>
     <message>
         <source>Hide Windows incompatibility paths Message</source>
-        <translation type="unfinished"/>
+        <translation>隱藏Windows不兼容路徑消息</translation>
     </message>
     <message>
         <source>Confirm before deleting files more than</source>
-        <translation type="unfinished"/>
+        <translation>刪除超過此數量的文件前需確認</translation>
     </message>
 </context>
 <context>
@@ -1384,29 +1389,37 @@
     </message>
     <message>
         <source>Show password</source>
-        <translation type="unfinished"/>
+        <translation>顯示密碼</translation>
     </message>
     <message>
         <source>Expire days</source>
-        <translation type="unfinished"/>
+        <translation>過期天數</translation>
     </message>
     <message>
         <source>Generate link</source>
-        <translation type="unfinished"/>
+        <translation>生成鏈接</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"/>
+        <translation>密碼</translation>
     </message>
     <message>
         <source>Failed to generate share link: %1</source>
-        <translation type="unfinished"/>
+        <translation>生成共享鏈接失敗：%1</translation>
     </message>
 </context>
 <context>
     <name>ShibLoginDialog</name>
     <message>
         <source>Single Sign On</source>
+        <translation>單一登入</translation>
+    </message>
+    <message>
+        <source>A sync root folder with this name already exists.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to fetch account information: %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1414,94 +1427,98 @@
     <name>SyncCommand</name>
     <message>
         <source>No permissions to create a shared link</source>
-        <translation type="unfinished"/>
+        <translation>沒有權限創建共享鏈接</translation>
     </message>
     <message>
         <source>failed to get share link %1</source>
-        <translation type="unfinished"/>
+        <translation>獲取共享鏈接%1失敗</translation>
     </message>
     <message>
         <source>failed get internal link %1</source>
-        <translation type="unfinished"/>
+        <translation>獲取內部鏈接%1失敗</translation>
     </message>
     <message>
         <source>Failed to get upload link for file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>獲取文件&quot;%1&quot;的上傳鏈接失敗</translation>
     </message>
 </context>
 <context>
     <name>SyncErrorsDialog</name>
     <message>
         <source>File Sync Errors</source>
-        <translation type="unfinished"/>
+        <translation>文件同步錯誤</translation>
     </message>
     <message>
         <source>No sync errors.</source>
-        <translation type="unfinished"/>
+        <translation>無同步錯誤。</translation>
     </message>
     <message>
         <source>Descriptions for sync errors</source>
-        <translation type="unfinished"/>
+        <translation>同步錯誤說明</translation>
     </message>
 </context>
 <context>
     <name>SyncErrorsTableModel</name>
     <message>
         <source>Double click to open the library</source>
-        <translation type="unfinished"/>
+        <translation>雙擊打開資料庫</translation>
     </message>
     <message>
         <source>Library</source>
-        <translation type="unfinished"/>
+        <translation>資料庫</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>路徑</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>錯誤</translation>
     </message>
     <message>
         <source>Time</source>
-        <translation type="unfinished"/>
+        <translation>時間</translation>
     </message>
 </context>
 <context>
     <name>SyncErrorsTableView</name>
     <message>
         <source>delete</source>
-        <translation type="unfinished"/>
+        <translation>刪除</translation>
     </message>
     <message>
         <source>Delete file sync error failed</source>
-        <translation type="unfinished"/>
+        <translation>刪除文件同步錯誤失敗</translation>
     </message>
 </context>
 <context>
     <name>SyncRootNameDialog</name>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose a sync root folder name. Files in this account will be synced under the path like &apos;C:\Users\Jim\seadrive_root\&amp;lt;sync root folder name&amp;gt;&apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;選擇一個同步根文件夾名稱。此帳戶中的文件將在類似於&quot;C:\Users\Jim\seadrive_root\&amp;lt;同步根文件夾名稱&amp;gt;&quot;的路徑下同步&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Use default name</source>
-        <translation type="unfinished"/>
+        <translation>使用默認名稱</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>確認</translation>
     </message>
     <message>
         <source>Sync Root Folder Name</source>
-        <translation type="unfinished"/>
+        <translation>同步根文件夾名稱</translation>
     </message>
     <message>
         <source>Sync root name cannot be empty.</source>
-        <translation type="unfinished"/>
+        <translation>同步根名稱不能為空。</translation>
     </message>
     <message>
         <source>Sync root name cannot contain the following characters: &lt; &gt; : &quot; / \ | ? *</source>
+        <translation>同步根名稱不能包含以下字符：&lt; &gt; : &quot; / \ | ? *</translation>
+    </message>
+    <message>
+        <source>A sync root folder with this name already exists.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1509,92 +1526,92 @@
     <name>TransferItemsTableModel</name>
     <message>
         <source>finished</source>
-        <translation type="unfinished"/>
+        <translation>已完成</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>名稱</translation>
     </message>
     <message>
         <source>Progress</source>
-        <translation type="unfinished"/>
+        <translation>進度</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>大小</translation>
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"/>
+        <translation>服務器</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"/>
+        <translation>用戶名</translation>
     </message>
 </context>
 <context>
     <name>TransferProgressDialog</name>
     <message>
         <source>Transfer Progress</source>
-        <translation type="unfinished"/>
+        <translation>傳輸進度</translation>
     </message>
     <message>
         <source>Upload</source>
-        <translation type="unfinished"/>
+        <translation>上傳</translation>
     </message>
     <message>
         <source>Download</source>
-        <translation type="unfinished"/>
+        <translation>下載</translation>
     </message>
 </context>
 <context>
     <name>UninstallHelperDialog</name>
     <message>
         <source>Uninstall %1</source>
-        <translation type="unfinished"/>
+        <translation>卸載%1</translation>
     </message>
     <message>
         <source>Do you want to remove the %1 account information?</source>
-        <translation type="unfinished"/>
+        <translation>您是否要刪除%1帳戶信息？</translation>
     </message>
     <message>
         <source>Removing account information...</source>
-        <translation type="unfinished"/>
+        <translation>正在刪除帳戶信息...</translation>
     </message>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"/>
+        <translation>對話框</translation>
     </message>
     <message>
         <source>text</source>
-        <translation type="unfinished"/>
+        <translation>文本</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"/>
+        <translation>是</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"/>
+        <translation>否</translation>
     </message>
 </context>
 <context>
     <name>UploadLinkDialog</name>
     <message>
         <source>Upload Link</source>
-        <translation type="unfinished"/>
+        <translation>上傳鏈接</translation>
     </message>
     <message>
         <source>Upload link:</source>
-        <translation type="unfinished"/>
+        <translation>上傳鏈接：</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>複製到剪貼簿</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"/>
+        <translation>確認</translation>
     </message>
 </context>
 </TS>
