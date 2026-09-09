@@ -23,6 +23,8 @@
 #include "utils/json-utils.h"
 
 #ifdef Q_OS_WIN32
+const char *const kPreconfigureCustomSyncRootName = "PreconfigureCustomSyncRootName";
+
 #include "utils/file-utils.h"
 #include "win-sso/auto-logon-dialog.h"
 #endif
@@ -814,21 +816,26 @@ QString AccountManager::getPreviousSyncRootName(const Account& account)
     return QString();
 }
 
+bool AccountManager::isSyncRootNameUsed(const QString& name) const
+{
+    foreach (const SyncRootInfo& sync_root_info, sync_root_infos_) {
+        if (sync_root_info.syncRootName().compare(name, Qt::CaseInsensitive) == 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
 const QString AccountManager::genSyncRootName(const Account& account)
 {
     QString url = account.serverUrl.toString();
     QString nickname = account.accountInfo.name;
     QString email = account.username;
     QString seadrive_root = gui->seadriveRoot();
-    QString sync_root_path, sync_root_name;
+    QString sync_root_name;
 
     qDebug("[%s] url is %s, nickname is %s, email is %s", __func__,
                         toCStr(url), toCStr(nickname), toCStr(email));
-
-    QString old_sync_dir = getOldSyncRootDir(account);
-    if (!old_sync_dir.isEmpty()) {
-        return old_sync_dir;
-    }
 
     foreach (SyncRootInfo sync_root_info, sync_root_infos_)
     {
@@ -841,9 +848,8 @@ const QString AccountManager::genSyncRootName(const Account& account)
         }
     }
 
-    if (!nickname.isEmpty()) {
-        sync_root_name = toCStr(nickname);
-    } else {
+    sync_root_name = nickname;
+    if (sync_root_name.isEmpty()) {
         int pos = email.indexOf("@");
         sync_root_name = email.left(pos);
     }
@@ -873,7 +879,7 @@ const QString AccountManager::genSyncRootName(const Account& account)
     QVector<QString> other_account_sync_root_names;
     foreach (SyncRootInfo sync_root_info, sync_root_infos_)
     {
-        if (sync_root_info.getUrl() != url || sync_root_info.getUserName() != sync_root_name) {
+        if (sync_root_info.getUrl() != url || sync_root_info.getUserName() != email) {
             QString sync_root_name = sync_root_info.syncRootName();
             other_account_sync_root_names.push_back(sync_root_name);
         }
@@ -887,7 +893,17 @@ const QString AccountManager::genSyncRootName(const Account& account)
         i++;
     }
 
-    while (other_account_sync_root_names.contains(new_sync_root_name)) {
+    while (true) {
+        bool name_used = false;
+        foreach (const QString& other_name, other_account_sync_root_names) {
+            if (other_name.compare(new_sync_root_name, Qt::CaseInsensitive) == 0) {
+                name_used = true;
+                break;
+            }
+        }
+        if (!name_used) {
+            break;
+        }
         new_sync_root_name = QString("%1_%2").arg(new_sync_root_name).arg(i);
         i++;
     }
@@ -896,26 +912,6 @@ const QString AccountManager::genSyncRootName(const Account& account)
 
     qDebug("[%s] This a new accout gen a new sync root name is %s", __func__, toCStr(new_sync_root_name));
     return new_sync_root_name;
-}
-
-const QString AccountManager::getOldSyncRootDir(const Account& account)
-{
-
-    QString username = account.username;
-    QString addr = account.serverUrl.host();
-
-    QString sync_dir = QString("%1_%2").arg(addr).arg(username);
-    QByteArray sync_dir_md5 = QCryptographicHash::hash(sync_dir.toUtf8(),
-                                                    QCryptographicHash::Md5).toHex();
-
-    QString mid_sync_dir_md5 = sync_dir_md5.mid(0, 8);
-
-    QDir dir(gui->seadriveRoot());
-    if (dir.exists(mid_sync_dir_md5)) {
-        return mid_sync_dir_md5;
-    }
-
-    return "";
 }
 
 void AccountManager::setSyncRootName(const Account& account, const QString& custom_name)

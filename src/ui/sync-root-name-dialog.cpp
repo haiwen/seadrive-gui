@@ -41,6 +41,13 @@ void SyncRootNameDialog::accept()
         return;
     }
 
+#ifdef Q_OS_WIN32
+    if (gui->accountManager()->isSyncRootNameUsed(name)) {
+        gui->warningBox(tr("A sync root folder with this name already exists."), this);
+        return;
+    }
+#endif
+
     custom_name_ = name;
 
     QDialog::accept();

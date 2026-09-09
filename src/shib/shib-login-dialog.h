@@ -48,6 +48,8 @@ private slots:
     void onNewCookieCreated(const QUrl& url, const QNetworkCookie& cookie);
     void onWebEngineCookieAdded(const QNetworkCookie& cookie);
     void updateAddressBar(const QUrl& url);
+    void onFetchAccountInfoSuccess(const AccountInfo& info);
+    void onFetchAccountInfoFailed(const ApiError& error);
 
 private:
     Account parseAccount(const QString& txt);
@@ -69,6 +71,7 @@ private:
     bool cookie_seen_;
 
     Account account_;
+    FetchAccountInfoRequest *account_info_req_;
 };
 
 

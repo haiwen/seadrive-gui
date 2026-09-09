@@ -54,9 +54,9 @@ public:
     QString getUniqueClientId();
 
     // Read preconfigure settings
-    QVariant readPreconfigureEntry(const QString& key, const QVariant& default_value = QVariant());
+    QVariant readPreconfigureEntry(const QString& key, const QVariant& default_value = QVariant(), bool user_registry_only = false);
     // ExpandedVars String
-    QString readPreconfigureExpandedString(const QString& key, const QVariant& default_value = QVariant());
+    QString readPreconfigureExpandedString(const QString& key, const QVariant& default_value = QVariant(), bool user_registry_only = false);
 
     // Accessors.
     bool isDevMode() const { return dev_mode_; }

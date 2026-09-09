@@ -1023,10 +1023,15 @@ bool SeadriveGui::deletingConfirmationBox(const QString& text, const QString& in
     return false;
 }
 
-QVariant SeadriveGui::readPreconfigureEntry(const QString& key, const QVariant& default_value)
+QVariant SeadriveGui::readPreconfigureEntry(const QString& key, const QVariant& default_value, bool user_registry_only)
 {
 #ifdef Q_OS_WIN32
-    QVariant v = RegElement::getPreconfigureValue(key);
+    QVariant v;
+    if (user_registry_only) {
+        v = RegElement::getPreconfigureUserValue(key);
+    } else {
+        v = RegElement::getPreconfigureValue(key);
+    }
     if (!v.isNull()) {
         return v;
     }
@@ -1041,9 +1046,9 @@ QVariant SeadriveGui::readPreconfigureEntry(const QString& key, const QVariant& 
     return value;
 }
 
-QString SeadriveGui::readPreconfigureExpandedString(const QString& key, const QVariant& default_value)
+QString SeadriveGui::readPreconfigureExpandedString(const QString& key, const QVariant& default_value, bool user_registry_only)
 {
-    QVariant retval = readPreconfigureEntry(key, default_value);
+    QVariant retval = readPreconfigureEntry(key, default_value, user_registry_only);
     if (retval.isNull() || retval.type() != QVariant::String)
         return QString();
     return expandVars(retval.toString());

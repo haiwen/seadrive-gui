@@ -53,6 +53,7 @@ public:
     static QString getPreconfigureStringValue(const QString& name);
 
     static QVariant getPreconfigureValue(const QString& name);
+    static QVariant getPreconfigureUserValue(const QString& name);
     static QVariant getValue(HKEY root, const QString& path, const QString& name);
     static void removeAllSyncRootManagerItem();
     static void installCustomUrlHandler();

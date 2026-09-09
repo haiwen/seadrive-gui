@@ -613,6 +613,11 @@ QVariant RegElement::getPreconfigureValue(const QString& name)
     return v.isNull() ? getValue(HKEY_LOCAL_MACHINE, softwareSeafile(), name) : v;
 }
 
+QVariant RegElement::getPreconfigureUserValue(const QString& name)
+{
+    return getValue(HKEY_CURRENT_USER, softwareSeafile(), name);
+}
+
 QVariant RegElement::getValue(HKEY root,
                               const QString& path,
                               const QString& name)
