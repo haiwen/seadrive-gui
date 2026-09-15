@@ -297,6 +297,7 @@ void AccountManager::loadAccounts()
             continue;
         }
 
+        // update Accounts
         char *update_sql = sqlite3_mprintf(
             "UPDATE Accounts SET url = %Q WHERE url = %Q AND username = %Q",
             normalized_url.toEncoded().data(),
@@ -305,7 +306,17 @@ void AccountManager::loadAccounts()
         sqlite_query_exec(db, update_sql);
         sqlite3_free(update_sql);
 
+        // update ServerInfo
+        update_sql = sqlite3_mprintf(
+            "UPDATE ServerInfo SET url = %Q WHERE url = %Q AND username = %Q",
+            normalized_url.toEncoded().data(),
+            original_url.toEncoded().data(),
+            account.username.toUtf8().data());
+        sqlite_query_exec(db, update_sql);
+        sqlite3_free(update_sql);
+
 #ifdef Q_OS_WIN32
+        // update SyncRootInfo
         update_sql = sqlite3_mprintf(
             "UPDATE SyncRootInfo SET url = %Q WHERE url = %Q AND username = %Q",
             normalized_url.toEncoded().data(),
@@ -823,7 +834,7 @@ void AccountManager::updateSyncRootInfo(SyncRootInfo& sync_root_info)
             "REPLACE INTO SyncRootInfo(url, username, syncrootpath)"
             "VALUES (%Q, %Q, %Q) ",
             // url
-            sync_root_info.getUrl().toUtf8().data(),
+            sync_root_info.getUrl().toEncoded().data(),
             // username
             sync_root_info.getUserName().toUtf8().data(),
             // sync root name
@@ -835,7 +846,7 @@ void AccountManager::updateSyncRootInfo(SyncRootInfo& sync_root_info)
 QString AccountManager::getPreviousSyncRootName(const Account& account)
 {
     for (auto& sync_root_info : sync_root_infos_) {
-        if (sync_root_info.getUrl() == account.serverUrl.toString() &&
+        if (sync_root_info.getUrl() == account.serverUrl.toString(QUrl::FullyEncoded) &&
             sync_root_info.getUserName() == account.username) {
             return sync_root_info.syncRootName();
         }
@@ -845,7 +856,7 @@ QString AccountManager::getPreviousSyncRootName(const Account& account)
 
 const QString AccountManager::genSyncRootName(const Account& account)
 {
-    QString url = account.serverUrl.toString();
+    QString url = account.serverUrl.toString(QUrl::FullyEncoded);
     QString nickname = account.accountInfo.name;
     QString email = account.username;
     QString seadrive_root = gui->seadriveRoot();
@@ -951,7 +962,7 @@ void AccountManager::setSyncRootName(const Account& account, const QString& cust
 {
     custom_sync_root_names_[account] = custom_name;
 
-    SyncRootInfo sync_root_info(account.serverUrl.toString(),
+    SyncRootInfo sync_root_info(account.serverUrl.toString(QUrl::FullyEncoded),
                                 account.username,
                                 custom_name);
     updateSyncRootInfo(sync_root_info);
