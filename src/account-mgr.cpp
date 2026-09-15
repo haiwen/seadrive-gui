@@ -293,10 +293,6 @@ void AccountManager::loadAccounts()
         account.normalizedServerUrl();
         const QUrl normalized_url = account.serverUrl;
 
-        if (normalized_url == original_url) {
-            continue;
-        }
-
         // update Accounts
         char *update_sql = sqlite3_mprintf(
             "UPDATE Accounts SET url = %Q WHERE url = %Q AND username = %Q",
@@ -834,7 +830,7 @@ void AccountManager::updateSyncRootInfo(SyncRootInfo& sync_root_info)
             "REPLACE INTO SyncRootInfo(url, username, syncrootpath)"
             "VALUES (%Q, %Q, %Q) ",
             // url
-            sync_root_info.getUrl().toEncoded().data(),
+            sync_root_info.getUrl().toUtf8().data(),
             // username
             sync_root_info.getUserName().toUtf8().data(),
             // sync root name
