@@ -16,6 +16,16 @@ QString Account::getSignature() const
     return ::md5(serverUrl.host() + username).left(7);
 }
 
+void Account::normalizedServerUrl()
+{
+    QString serverAddr = serverUrl.toString(QUrl::FullyEncoded);
+    while (serverAddr.endsWith('/')) {
+        serverAddr.chop(1);
+    }
+
+    serverUrl = QUrl(serverAddr);
+}
+
 QString Account::domainID() const {
 #ifdef Q_OS_MAC
     if (!isValid()) {

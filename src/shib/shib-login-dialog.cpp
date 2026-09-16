@@ -216,7 +216,10 @@ Account ShibLoginDialog::parseAccount(const QString& cookie_value)
     if (email.isEmpty() or token.isEmpty()) {
         return Account();
     }
-    return Account(url_, email, token, 0, true);
+    Account account(url_, email, token, 0, true);
+    account.normalizedServerUrl();
+
+    return account;
 }
 
 void ShibLoginDialog::onWebEngineCookieAdded(const QNetworkCookie& cookie)

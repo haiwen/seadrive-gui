@@ -253,8 +253,12 @@ void LoginDialog::loginSuccess(const QString& token)
     if (account_info_req_) {
         account_info_req_->deleteLater();
     }
+
+    Account account(url_, username_, token);
+    account.normalizedServerUrl();
+
     account_info_req_ =
-        new FetchAccountInfoRequest(Account(url_, username_, token));
+        new FetchAccountInfoRequest(account);
     connect(account_info_req_, SIGNAL(success(const AccountInfo&)), this,
             SLOT(onFetchAccountInfoSuccess(const AccountInfo&)));
     connect(account_info_req_, SIGNAL(failed(const ApiError&)), this,
@@ -519,6 +523,7 @@ void LoginDialog::clientSSOStatusSuccess(const ClientSSOStatus& status)
     qInfo() << "client sso login success" << status.username;
 
     Account account(sso_server_, status.username, status.api_token);
+    account.normalizedServerUrl();
     account_info_req_ = new FetchAccountInfoRequest(account);
     connect(account_info_req_, SIGNAL(success(const AccountInfo&)),
             this, SLOT(onFetchAccountInfoSuccess(const AccountInfo&)));
