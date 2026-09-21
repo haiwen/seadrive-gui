@@ -1,4 +1,4 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8.9)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.16)
 
 PROJECT(seadrive-gui)
 
@@ -54,11 +54,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   endif()
 endif()
 
-IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "BSD")
-    INCLUDE_DIRECTORIES(${QT_QTDBUS_INCLUDE_DIR})
-    LINK_DIRECTORIES(${QT_QTDBUS_LIBRARIES})
-    SET(EXTRA_LIBS ${EXTRA_LIBS} ${QT_QTDBUS_LIBRARIES})
-ELSEIF (APPLE)
+IF (APPLE)
     SET(platform_specific_sources ${platform_specific_sources}
       src/application.cpp
       src/file-provider-mgr.cpp
@@ -85,18 +81,42 @@ ENDIF()
 ###### BEGIN: QT configuration
 ####################
 
-FIND_PROGRAM(qmake_executable NAMES qmake qmake.exe)
-EXECUTE_PROCESS(COMMAND
-    bash -c "${qmake_executable} --version | grep -iE '^using qt version [0-9.]+' | awk '{print $4}'"
-    OUTPUT_VARIABLE DETECTED_QT_VERSION
-    OUTPUT_STRIP_TRAILING_WHITESPACE)
-MESSAGE("Qt version: ${DETECTED_QT_VERSION}")
+SET(CMAKE_AUTOMOC ON)
+SET(CMAKE_AUTOUIC ON)
+SET(CMAKE_AUTORCC ON)
 
-EXECUTE_PROCESS(COMMAND
-    bash -c "qmake --version|grep -iE '^using qt version [0-9]'|awk '{print $4}'|grep -iE '^[0-9]'|awk -F . '{print $1}'"
-    OUTPUT_VARIABLE QT_VERSION_MAJOR
-    OUTPUT_STRIP_TRAILING_WHITESPACE)
-MESSAGE("QT_VERSION_MAJOR: ${QT_VERSION_MAJOR}")
+set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_SOURCE_DIR}/ui)
+
+FIND_PACKAGE(Qt6 QUIET COMPONENTS Core)
+IF(Qt6_FOUND)
+    SET(QT_PACKAGE Qt6)
+    SET(QT_VERSION_MAJOR 6)
+    SET(CMAKE_CXX_STANDARD 17)
+    SET(USE_QT_LIBRARIES
+        Core Gui Widgets LinguistTools Network Test
+        Core5Compat WebEngineCore WebEngineWidgets
+    )
+ELSE()
+    SET(QT_PACKAGE Qt5)
+    SET(QT_VERSION_MAJOR 5)
+    SET(CMAKE_CXX_STANDARD 11)
+    SET(USE_QT_LIBRARIES
+        Core Gui Widgets LinguistTools Network Test
+    )
+ENDIF()
+
+# Add DBus on Linux
+IF(UNIX AND NOT APPLE)
+    LIST(APPEND USE_QT_LIBRARIES DBus)
+ENDIF()
+
+# Find the chosen Qt package with the right components
+FIND_PACKAGE(${QT_PACKAGE} REQUIRED COMPONENTS ${USE_QT_LIBRARIES})
+
+# Pick the right lupdate executable automatically
+SET(QT_LUPDATE_EXECUTABLE ${${QT_PACKAGE}_LUPDATE_EXECUTABLE})
+
+MESSAGE(STATUS "Using ${QT_PACKAGE} (Qt ${QT_VERSION_MAJOR}) with components: ${USE_QT_LIBRARIES}")
 
 IF(USE_QT_WEBKIT)
     ADD_DEFINITIONS(-DSEAFILE_USE_WEBKIT)
@@ -107,30 +127,6 @@ ELSE()
     SET(WEBENGINE_CORE "WebEngineCore")
     SET(WEBKIT_WIDGETS_NAME "WebEngineWidgets")
     SET(SHIB_EXTRA_HEADER "src/shib/shib-helper.h")
-ENDIF()
-
-IF(QT_VERSION_MAJOR EQUAL 6)
-    SET(USE_QT_LIBRARIES Core Gui Widgets LinguistTools Network Test Core5Compat WebEngineCore WebEngineWidgets)
-ELSE()
-    SET(USE_QT_LIBRARIES Core Gui Widgets LinguistTools Network Test)
-ENDIF()
-
-IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-    SET(USE_QT_LIBRARIES ${USE_QT_LIBRARIES} "DBus")
-ENDIF()
-
-IF(QT_VERSION_MAJOR EQUAL 6)
-    FIND_PACKAGE(Qt6 COMPONENTS ${USE_QT_LIBRARIES} REQUIRED)
-ELSE()
-    FIND_PACKAGE(Qt5 REQUIRED ${USE_QT_LIBRARIES})
-ENDIF()
-
-SET(QT_LUPDATE_EXECUTABLE ${Qt5_LUPDATE_EXECUTABLE})
-
-IF(QT_VERSION_MAJOR EQUAL 6)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
-ELSE()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 ENDIF()
 
 # for OS X, we requires libc++ instead
@@ -198,12 +194,6 @@ IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "BSD")
         src/ext-handler.h)
 ENDIF()
 
-IF(QT_VERSION_MAJOR EQUAL 6)
-    QT6_WRAP_CPP(moc_output ${moc_headers})
-ELSE()
-    QT5_WRAP_CPP(moc_output ${moc_headers})
-ENDIF()
-
 SET(ui_files
   ui/uninstall-helper-dialog.ui
   ui/filter-menu.ui
@@ -213,26 +203,11 @@ SET(ui_files
   ui/about-dialog.ui
   ui/sync-root-name-dialog.ui
 )
-IF(QT_VERSION_MAJOR EQUAL 6)
-    QT6_WRAP_UI(ui_output ${ui_files})
-ELSE()
-    QT5_WRAP_UI(ui_output ${ui_files})
-ENDIF()
 
-# resources files
-IF(QT_VERSION_MAJOR EQUAL 6)
-  QT6_ADD_RESOURCES(
-    resources_ouput
+SET(qrc_files
     seadrive-gui.qrc
     third_party/QtAwesome/QtAwesome.qrc
-  )
-ELSE()
-  QT5_ADD_RESOURCES(
-    resources_ouput
-    seadrive-gui.qrc
-    third_party/QtAwesome/QtAwesome.qrc
-  )
-ENDIF()
+)
 
 # MESSAGE("moc output: ${moc_output}")
 # MESSAGE("ui output: ${ui_output}")
@@ -350,16 +325,6 @@ INCLUDE_DIRECTORIES(
   ${CMAKE_CURRENT_SOURCE_DIR}/third_party/QtAwesome
   )
 
-FOREACH(USE_QT_LIBRARY ${USE_QT_LIBRARIES})
-INCLUDE_DIRECTORIES(
-IF(QT_VERSION_MAJOR EQUAL 6)
-    ${Qt6${USE_QT_LIBRARY}_INCLUDE_DIRS}
-ELSE()
-    ${Qt5${USE_QT_LIBRARY}_INCLUDE_DIRS}
-ENDIF()
-)
-ENDFOREACH()
-
 INCLUDE_DIRECTORIES(
   ${GLIB2_INCLUDE_DIRS}
   ${JANSSON_INCLUDE_DIRS}
@@ -373,7 +338,6 @@ LINK_DIRECTORIES(
   ${JANSSON_LIBRARRY_DIRS}
   ${LIBSEARPC_LIBRARY_DIRS}
   ${OPENSSL_LIBRARY_DIRS}
-  ${QT_LIBRARY_DIR}
   ${SQLITE3_LIBRARRY_DIRS}
 )
 
@@ -394,27 +358,17 @@ FUNCTION(ADD_SC_LIBRARY name)
     CMAKE_PARSE_ARGUMENTS(ARG
       ""
       ""
-      "MOC_HEADERS;UI_FILES;DEPENDS;LINK_LIBS"
+      "DEPENDS;LINK_LIBS"
       ${ARGN})
-    IF(ARG_MOC_HEADERS)
-        IF(QT_VERSION_MAJOR EQUAL 6)
-            QT6_WRAP_CPP(MOC_OUTPUT ${ARG_MOC_HEADERS})
-        ELSE()
-            QT5_WRAP_CPP(MOC_OUTPUT ${ARG_MOC_HEADERS})
-        ENDIF()
-    ENDIF()
-    IF(ARG_UI_FILES)
-        IF(QT_VERSION_MAJOR EQUAL 6)
-            QT6_WRAP_UI(UI_OUTPUT ${ARG_UI_FILES})
-        ELSE()
-            QT5_WRAP_UI(UI_OUTPUT ${ARG_UI_FILES})
-        ENDIF()
-    ENDIF()
 
-    ADD_LIBRARY(${name} STATIC ${ARG_UNPARSED_ARGUMENTS}
-      ${MOC_OUTPUT} ${UI_OUTPUT})
+    ADD_LIBRARY(${name} STATIC ${ARG_UNPARSED_ARGUMENTS})
 
-    TARGET_LINK_LIBRARIES(${name} ${QT_LIBRARIES}
+    foreach(lib ${USE_QT_LIBRARIES})
+      if(NOT lib STREQUAL "LinguistTools")
+        target_link_libraries(${name} PRIVATE ${QT_PACKAGE}::${lib})
+      endif()
+    endforeach()
+    TARGET_LINK_LIBRARIES(${name} PRIVATE
         ${SQLITE3_LIBRARIES} ${JANSSON_LIBRARIES}
         ${EXTRA_LIBS} -lglib-2.0 ${ARG_LINK_LIBS})
 ENDFUNCTION(ADD_SC_LIBRARY)
@@ -548,15 +502,15 @@ install(FILES
 
 ADD_EXECUTABLE(seadrive-gui ${GUI_TYPE}
   ${seadrive_gui_sources}
-  ${moc_output}
-  ${ui_output}
-  ${resources_ouput}
   ${EXTRA_SOURCES}
+  ${moc_headers}
+  ${ui_files}
+  ${qrc_files}
 )
 
 INSTALL(TARGETS seadrive-gui DESTINATION bin)
 
-TARGET_LINK_LIBRARIES(seadrive-gui
+TARGET_LINK_LIBRARIES(seadrive-gui PRIVATE
   ${SPARKLE_LIBS}
   ${SC_LIBS}
 
@@ -564,7 +518,6 @@ TARGET_LINK_LIBRARIES(seadrive-gui
   ${JANSSON_LIBRARIES}
   ${LIBSEARPC_LIBRARIES}
   ${OPENSSL_LIBRARIES}
-  ${QT_LIBRARIES}
   ${SQLITE3_LIBRARIES}
 
   ${EXTRA_LIBS}
@@ -572,11 +525,10 @@ TARGET_LINK_LIBRARIES(seadrive-gui
 
 IF(QT_VERSION_MAJOR EQUAL 6)
     FIND_PACKAGE(Qt6 COMPONENTS Core Gui Widgets Network ${WEBKIT_WIDGETS_NAME} ${WEBENGINE_CORE}  REQUIRED)
-    TARGET_LINK_LIBRARIES(seadrive-gui Qt6::Core Qt6::Gui Qt6::Widgets Qt6::Network Qt6::${WEBKIT_WIDGETS_NAME} Qt6::${WEBENGINE_CORE} Qt6::Core5Compat)
-
+    TARGET_LINK_LIBRARIES(seadrive-gui PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets Qt6::Network Qt6::${WEBKIT_WIDGETS_NAME} Qt6::${WEBENGINE_CORE} Qt6::Core5Compat)
 ELSE()
-    QT5_USE_MODULES(seadrive-gui Core Gui Widgets Network)
-    QT5_USE_MODULES(seadrive-gui ${WEBKIT_NAME} ${WEBKIT_WIDGETS_NAME})
+    FIND_PACKAGE(Qt5 COMPONENTS Core Gui Widgets Network ${WEBKIT_NAME} ${WEBKIT_WIDGETS_NAME} REQUIRED)
+    TARGET_LINK_LIBRARIES(seadrive-gui PRIVATE Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Network Qt5::${WEBKIT_NAME} Qt5::${WEBKIT_WIDGETS_NAME})
 ENDIF()
 
 ## QtBus
@@ -585,8 +537,8 @@ IF(QT_VERSION_MAJOR EQUAL 6)
     FIND_PACKAGE(Qt6 COMPONENTS DBus REQUIRED)
     TARGET_LINK_LIBRARIES(seadrive-gui PRIVATE Qt6::DBus)
 ELSE()
-    TARGET_LINK_LIBRARIES(seadrive-gui ${QT_QTDBUS_LIBRARIES})
-    QT5_USE_MODULES(seadrive-gui ${USE_QT_LIBRARIES})
+    FIND_PACKAGE(Qt5 COMPONENTS DBus REQUIRED)
+    TARGET_LINK_LIBRARIES(seadrive-gui PRIVATE Qt5::DBus)
 ENDIF()
 
 ENDIF()
