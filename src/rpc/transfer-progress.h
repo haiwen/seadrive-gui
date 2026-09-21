@@ -29,6 +29,7 @@ class TransferProgress {
 public:
     QList<TransferringInfo> uploading_files, downloading_files;
     QList<TransferredInfo> uploaded_files, downloaded_files;
+    int n_pending_files = 0;
 
     static void fromJSON(const json_t *upload,
                          const json_t *download,
