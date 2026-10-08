@@ -12,16 +12,18 @@ class Account;
 class OpenLocalHelper : public QObject
 {
     Q_OBJECT
+
 public:
     static OpenLocalHelper* instance();
-
-    bool openLocalFile(const QUrl &url);
 
     void setUrl(const QString &url) { url_ = url; }
 
     void handleOpenLocalFromCommandLine(const QString &url);
 
     void checkPendingOpenLocalRequest();
+
+public slots:
+    bool openLocalFile(const QUrl &url);
 
 private:
     static OpenLocalHelper* singleton_;
