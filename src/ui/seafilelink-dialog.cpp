@@ -129,7 +129,7 @@ void SeafileLinkDialog::onCopyWebText()
 {
 // for mac, qt copys many minedatas beside public.utf8-plain-text
 // e.g. public.vcard, which we don't want to use
-#ifndef Q_OS_MAC
+#ifndef Q_OS_MACOS
     QApplication::clipboard()->setText(web_link_);
 #else
     utils::mac::copyTextToPasteboard(web_link_);
@@ -140,7 +140,7 @@ void SeafileLinkDialog::onCopyProtocolText()
 {
 // for mac, qt copys many minedatas beside public.utf8-plain-text
 // e.g. public.vcard, which we don't want to use
-#ifndef Q_OS_MAC
+#ifndef Q_OS_MACOS
     QApplication::clipboard()->setText(protocol_link_);
 #else
     utils::mac::copyTextToPasteboard(protocol_link_);

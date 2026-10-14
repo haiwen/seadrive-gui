@@ -331,7 +331,7 @@ void LoginDialog::onFetchAccountInfoSuccess(const AccountInfo& info)
 
     gui->initSyncDialog()->markNewLogin();
 
-#ifndef Q_OS_MAC
+#ifndef Q_OS_MACOS
     gui->initSyncDialog()->launch(EMPTY_DOMAIN_ID);
 #endif
 

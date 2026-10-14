@@ -258,7 +258,7 @@ void SearchDialog::createTable()
     search_view_->setObjectName("searchResult");
     search_model_ = new SearchItemsTableModel(this);
     search_view_->setModel(search_model_);
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     search_view_->setAttribute(Qt::WA_MacShowFocusRect, 0);
 #endif
     search_delegate_ = new SearchItemsDelegate(this);
@@ -535,7 +535,7 @@ void SearchItemsTableView::openDirectory(bool open_file)
         return;
     }
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     QString root = gui->fileProviderManager()->rootPath(search_model_->account_);
 #endif
 #ifdef Q_OS_WIN32
@@ -583,7 +583,7 @@ void SearchItemsTableView::onItemDoubleClick(const QModelIndex& index)
         return;
     }
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     QString root = gui->fileProviderManager()->rootPath(search_model_->account_);
 #endif
 #ifdef Q_OS_WIN32

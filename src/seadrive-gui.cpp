@@ -46,7 +46,7 @@
 #include "ext-handler.h"
 #endif
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
 #include "utils/utils-mac.h"
 #endif
 
@@ -178,7 +178,7 @@ bool debugEnabledInDebugFlagFile()
 }
 
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
 void writeCABundleForCurl()
 {
     QString dir = seadriveInternalDir();
@@ -235,7 +235,7 @@ SeadriveGui::SeadriveGui(bool dev_mode)
     about_dlg_ = new AboutDialog();
     init_sync_dlg_ = new InitSyncDialog();
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     file_provider_mgr_ = new FileProviderManager();
 #endif
 
@@ -262,7 +262,7 @@ SeadriveGui::~SeadriveGui()
         delete message_poller;
     }
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     delete file_provider_mgr_;
 #endif
 
@@ -307,7 +307,7 @@ bool loadConfigCB(sqlite3_stmt *stmt, void *data)
         int threshold = atoi(value);
         mgr->setDeleteConfirmThreshold(threshold);
     } else if (strcmp(key, "hide_windows_incompatible_path_notification") == 0) {
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
         if (strcmp(value, "true") == 0) {
             mgr->setHideWindowsIncompatibilityPathMsg(true);
         } else {
@@ -338,7 +338,7 @@ void SeadriveGui::migrateOldConfig(const QString& dataDir)
     sqlite3_close(db);
 }
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
 void SeadriveGui::migrateOldData()
 {
     QString data_dir = QDir(seadriveInternalDir()).filePath("data");
@@ -389,7 +389,7 @@ void SeadriveGui::start()
 
     account_mgr_->start();
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     auto accounts = account_mgr_->activeAccounts();
     if (!checkOSVersion144() && accounts.size() > 1) {
         errorAndExit(tr("SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. "
@@ -398,7 +398,7 @@ void SeadriveGui::start()
     }
 #endif
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     migrateOldData();
 #else
     if (!settings_mgr_->getMigrateStatus()) {
@@ -413,7 +413,7 @@ void SeadriveGui::start()
     if (!account_mgr_->allAccounts().empty()) {
         url = account_mgr_->allAccounts().front().serverUrl;
     }
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     settings_mgr_->writeSystemProxyInfo(
         url, QDir(seadriveInternalDir()).filePath("system-proxy.txt"));
 #else
@@ -470,7 +470,7 @@ void SeadriveGui::start()
             this, SLOT(onDaemonRestarted()));
     daemon_mgr_->startSeadriveDaemon();
 
-#elif defined(Q_OS_MAC)
+#elif defined(Q_OS_MACOS)
     writeCABundleForCurl();
 
     settings_mgr_->loadProxySettings();
@@ -548,7 +548,7 @@ void SeadriveGui::loginAccounts()
 
 void SeadriveGui::onDaemonStarted()
 {
-#ifndef Q_OS_MAC
+#ifndef Q_OS_MACOS
     SeafileRpcClient *rpc_client = rpcClient(EMPTY_DOMAIN_ID);
     if (!rpc_client) {
         rpc_client = new SeafileRpcClient(EMPTY_DOMAIN_ID);
@@ -596,7 +596,7 @@ void SeadriveGui::onDaemonStarted()
 
 void SeadriveGui::onDaemonRestarted()
 {
-#ifndef Q_OS_MAC
+#ifndef Q_OS_MACOS
     qDebug("reviving rpc client when daemon is restarted");
     SeafileRpcClient *rpc_client = rpcClient(EMPTY_DOMAIN_ID);
     if (rpc_client) {
@@ -627,7 +627,7 @@ void SeadriveGui::onDaemonRestarted()
 
 void SeadriveGui::onDaemonRestarted(const QString& domain_id)
 {
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     auto account = account_mgr_->getAccountByDomainID(domain_id);
     account_mgr_->setAccountAdded(account, false);
 #endif
@@ -636,7 +636,7 @@ void SeadriveGui::onDaemonRestarted(const QString& domain_id)
 // Traverse all accounts in the account manager every second, create an rpc client and connect to the domain for each account.
 void SeadriveGui::connectDaemon()
 {
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     bool success = false;
     auto accounts = account_mgr_->activeAccounts();
 
@@ -726,7 +726,7 @@ void SeadriveGui::connectDaemon()
 #endif
 }
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
 void SeadriveGui::logoutAccountsFromDaemon(const Account& account)
 {
     SeafileRpcClient *rpc_client = rpcClient(account.domainID());
@@ -742,7 +742,7 @@ void SeadriveGui::onAboutToQuit()
 {
     tray_icon_->hide();
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     auto accounts = account_mgr_->activeAccounts();
     for (int i = 0; i < accounts.size(); i++) {
         logoutAccountsFromDaemon(accounts.at(i));
@@ -811,7 +811,7 @@ bool SeadriveGui::initLog()
         errorAndExit(tr("Failed to initialize: failed to create %1 logs folder").arg(getBrand()));
         return false;
     }
-#if !defined(Q_OS_MAC)
+#if !defined(Q_OS_MACOS)
     if (checkdir_with_mkdir(toCStr(seadriveDataDir())) < 0) {
         errorAndExit(tr("Failed to initialize: failed to create %1 data folder").arg(getBrand()));
         return false;

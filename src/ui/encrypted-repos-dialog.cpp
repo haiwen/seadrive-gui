@@ -59,7 +59,7 @@ EncryptedRepoInfo EncryptedRepoInfo::fromJSON(const json_t *root) {
     enc_repo_info.repo_server = json.getString("server");
     enc_repo_info.repo_username = json.getString("username");
     enc_repo_info.is_password_set  = json.getBool("is_passwd_set");
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     enc_repo_info.domain_id = json.getString("domain_id");
 #else
     enc_repo_info.domain_id = EMPTY_DOMAIN_ID;
@@ -266,7 +266,7 @@ EncryptedReposTableModel::EncryptedReposTableModel(QObject *parent)
 
 }
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
 void EncryptedReposTableModel::updateEncryptRepoList()
 {
     QList<EncryptedRepoInfo> enc_repo_infos;

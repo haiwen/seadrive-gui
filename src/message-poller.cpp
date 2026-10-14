@@ -16,7 +16,7 @@
 #include "account-mgr.h"
 
 #include "message-poller.h"
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
 #include "sync-command.h"
 #endif
 
@@ -73,7 +73,7 @@ public:
 MessagePoller::MessagePoller(QObject *parent): QObject(parent)
 {
     check_notification_timer_ = new QTimer(this);
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     sync_command_ = new SyncCommand();
 #endif
     connect(check_notification_timer_, SIGNAL(timeout()), this, SLOT(checkSeaDriveEvents()));
@@ -84,7 +84,7 @@ MessagePoller::MessagePoller(QObject *parent): QObject(parent)
 
 MessagePoller::~MessagePoller()
 {
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     delete sync_command_;
 #endif
 }
@@ -194,7 +194,7 @@ void MessagePoller::processNotification(const SyncNotification& notification)
             notification.commit_id,
             notification.parent_commit_id);
     } else if (notification.type == "sync.error") {
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
         if (notification.error_id == SYNC_ERROR_ID_INVALID_PATH_ON_WINDOWS &&
             gui->settingsManager()->getHideWindowsIncompatibilityPathMsg()) {
             return;
@@ -295,7 +295,7 @@ void MessagePoller::processNotification(const SyncNotification& notification)
             rpc_client_->addDelConfirmation(notification.confirmation_id, true);
         }
     } else if (notification.type == "action.get_share_link") {
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
         Account account = gui->accountManager()->getAccountByDomainID(notification.domain_id);
         if (!account.isValid()) {
             return;
@@ -303,7 +303,7 @@ void MessagePoller::processNotification(const SyncNotification& notification)
         sync_command_->doShareLink(account, notification.repo_id, notification.repo_path);
 #endif
     } else if (notification.type == "action.get_internal_link") {
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
         Account account = gui->accountManager()->getAccountByDomainID(notification.domain_id);
         if (!account.isValid()) {
             return;
@@ -311,7 +311,7 @@ void MessagePoller::processNotification(const SyncNotification& notification)
         sync_command_->doInternalLink(account, notification.repo_id, notification.repo_path, notification.is_dir);
 #endif
     } else if (notification.type == "action.get_upload_link") {
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
         Account account = gui->accountManager()->getAccountByDomainID(notification.domain_id);
         if (!account.isValid()) {
             return;
@@ -319,7 +319,7 @@ void MessagePoller::processNotification(const SyncNotification& notification)
         sync_command_->doGetUploadLink(account, notification.repo_id, notification.repo_path);
 #endif
     } else if (notification.type == "action.view_file_history") {
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
         Account account = gui->accountManager()->getAccountByDomainID(notification.domain_id);
         if (!account.isValid()) {
             return;

@@ -27,7 +27,7 @@
 #include "utils/utils-win.h"
 #include "utils/file-utils.h"
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     #include <sys/sysctl.h>
 #elif defined(Q_OS_WIN32)
     #include <windows.h>
@@ -51,7 +51,7 @@
 namespace {
 
 const char *kSeafileClientBrand = "SeaDrive";
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
 const char *kSeadriveWorkDir = "Library/Containers/com.seafile.seadrive.fprovider/Data";
 const char *kSeadriveInternalDir = "Documents";
 const char *kSeadirveProcName = "SeaDrive File Provider";
@@ -114,7 +114,7 @@ bool getOpenApplicationFromXdgUtils(const QString &mime, QString *application)
 } // namespace
 
 QString seadriveWorkDir() {
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     QString seadriveWorkPath = QDir(QDir::homePath()).filePath(kSeadriveWorkDir);
     return seadriveWorkPath;
 #else
@@ -152,7 +152,7 @@ bool openInNativeExtension(const QString &path) {
 #if defined(Q_OS_WIN32)
     //call ShellExecute internally
     return openUrl(QUrl::fromLocalFile(path));
-#elif defined(Q_OS_MAC)
+#elif defined(Q_OS_MACOS)
     // mac's open program, it will fork to open the file in a subprocess
     // so we will wait for it to check whether it succeeds or not
     QProcess subprocess;
@@ -193,7 +193,7 @@ bool showInGraphicalShell(const QString& path) {
         params << QLatin1String("/select,");
     params << QDir::toNativeSeparators(path);
     return QProcess::startDetached(QLatin1String("explorer.exe"), params);
-#elif defined(Q_OS_MAC)
+#elif defined(Q_OS_MACOS)
     QStringList scriptArgs;
     scriptArgs << QLatin1String("-e")
                << QString::fromLatin1("tell application \"Finder\" to reveal POSIX file \"%1\"")
@@ -407,7 +407,7 @@ set_seafile_auto_start(bool on)
     return result;
 }
 
-#elif defined(Q_OS_MAC)
+#elif defined(Q_OS_MACOS)
 int
 get_seafile_auto_start()
 {
@@ -440,7 +440,7 @@ set_seafile_auto_start(bool /* on */)
 int
 set_seafile_dock_icon_style(bool hidden)
 {
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     utils::mac::setDockIconStyle(hidden);
 #endif
     return 0;
@@ -868,7 +868,7 @@ QString trimNULL(QString& s) {
     return s;
 }
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
 bool checkOSVersion144() {
     QOperatingSystemVersion currentVersion = QOperatingSystemVersion::current();
     QOperatingSystemVersion minAllowedVersion(QOperatingSystemVersion::MacOS, 14, 4);

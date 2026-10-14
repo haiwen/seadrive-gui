@@ -61,7 +61,7 @@ public:
     // Accessors.
     bool isDevMode() const { return dev_mode_; }
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     void migrateOldData();
 #endif
 
@@ -124,7 +124,7 @@ private:
 
     void loginAccounts();
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     void logoutAccountsFromDaemon(const Account& account);
 #endif
 

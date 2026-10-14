@@ -27,7 +27,7 @@ void Account::normalizedServerUrl()
 }
 
 QString Account::domainID() const {
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     if (!isValid()) {
         return "";
     }

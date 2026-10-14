@@ -19,7 +19,7 @@
 #if defined(Q_OS_WIN32)
 #include "utils/utils-win.h"
 #endif
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
 #include "application.h"
 #include "utils/utils-mac.h"
 #endif
@@ -72,7 +72,7 @@ void setupHDPIFix()
     if (!utils::win::fixQtHDPINonIntegerScaling()) {
         qApp->setAttribute(Qt::AA_EnableHighDpiScaling);
     }
-  #elif !defined(Q_OS_MAC)
+  #elif !defined(Q_OS_MACOS)
     // Enable HDPI auto detection.
     // See http://blog.qt.io/blog/2016/01/26/high-dpi-support-in-qt-5-6/
     qApp->setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -160,7 +160,7 @@ int main(int argc, char *argv[])
     // location.
     QDir::setCurrent(seadriveWorkDir());
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     Application app(argc, argv);
 #else
     QApplication app(argc, argv);

@@ -394,7 +394,7 @@ int AccountManager::removeAccount(const Account& account)
             accounts_.end());
     }
 
-#ifndef Q_OS_MAC
+#ifndef Q_OS_MACOS
     SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
     if (rpc_client) {
         rpc_client->deleteAccount(account, false);
@@ -429,7 +429,7 @@ int AccountManager::resyncAccount(const Account& account)
     if (!rpc_client || !rpc_client->isConnected()) {
         return 0;
     }
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     rpc_client->deleteAccount(updated_account, true);
     gui->fileProviderManager()->registerDomain(updated_account);
     setAccountAdded(updated_account, false);
@@ -618,7 +618,7 @@ void AccountManager::addAccountToDaemon(const Account& account)
         // setAccountSyncRoot will update the syncRoot in added_account variable, so subsequent methods (e.g. addAccount()) can get the sync root.
         setAccountSyncRoot(added_account);
     }
-#elif defined(Q_OS_MAC)
+#elif defined(Q_OS_MACOS)
     if (added_account.isValid()) {
         gui->fileProviderManager()->registerDomain(added_account);
         gui->fileProviderManager()->askUserToEnable();
@@ -629,7 +629,7 @@ void AccountManager::addAccountToDaemon(const Account& account)
     }
 #endif
 
-#ifndef Q_OS_MAC
+#ifndef Q_OS_MACOS
     SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
     if (rpc_client) {
         rpc_client->addAccount(added_account);

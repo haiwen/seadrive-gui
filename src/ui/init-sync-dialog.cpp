@@ -46,7 +46,7 @@ bool InitSyncDialog::hasNewLogin()
 
 void InitSyncDialog::launch(const QString& domain_id)
 {
-#if !defined(Q_OS_MAC)
+#if !defined(Q_OS_MACOS)
     if (!pollers_.contains(domain_id)) {
         MessagePoller *message_poller = gui->messagePoller(domain_id);
         if (!message_poller) {
