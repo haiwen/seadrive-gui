@@ -26,12 +26,13 @@ const int kDefaultColumnWidth = 120;
 const int kDefaultColumnHeight = 40;
 
 const int kRepoNameColumnWidth = 100;
+const int kServerColumnWidth = 150;
 const int kPathColumnWidth = 150;
 const int kErrorColumnWidth = 200;
 const int kTimestampColumnWidth = 80;
 const int kExtraPadding = 80;
 
-const int kDefaultColumnSum = kRepoNameColumnWidth + kPathColumnWidth + kErrorColumnWidth + kTimestampColumnWidth + kExtraPadding;
+const int kDefaultColumnSum = kRepoNameColumnWidth + kServerColumnWidth + kPathColumnWidth + kErrorColumnWidth + kTimestampColumnWidth + kExtraPadding;
 
 enum {
     INDEX_EMPTY_VIEW = 0,
@@ -40,6 +41,7 @@ enum {
 
 enum {
     COLUMN_REPO_NAME = 0,
+    COLUMN_SERVER,
     COLUMN_PATH,
     COLUMN_ERROR_STR,
     COLUMN_TIMESTAMP,
@@ -297,6 +299,7 @@ QString SyncErrorsTableView::findLocalPathFromError(const SyncError& error)
 SyncErrorsTableModel::SyncErrorsTableModel(QObject *parent)
     : QAbstractTableModel(parent),
       repo_name_column_width_(kRepoNameColumnWidth),
+      server_column_width_(kServerColumnWidth),
       path_column_width_(kPathColumnWidth),
       error_column_width_(kErrorColumnWidth)
 {
@@ -358,9 +361,10 @@ int SyncErrorsTableModel::columnCount(const QModelIndex& parent) const
 void SyncErrorsTableModel::onResize(const QSize &size)
 {
     int extra_width = size.width() - kDefaultColumnSum;
-    int extra_width_per_column = extra_width / 3;
+    int extra_width_per_column = extra_width / 4;
 
     repo_name_column_width_ = kRepoNameColumnWidth + extra_width_per_column;
+    server_column_width_ = kServerColumnWidth + extra_width_per_column;
     path_column_width_ = kPathColumnWidth + extra_width_per_column;
     error_column_width_ = kErrorColumnWidth + extra_width_per_column;
 
@@ -370,7 +374,7 @@ void SyncErrorsTableModel::onResize(const QSize &size)
 
     // printf ("path_column_width_ = %d\n", path_column_width_);
     emit dataChanged(
-        index(0, COLUMN_ERROR_STR),
+        index(0, COLUMN_REPO_NAME),
         index(errors_.size() - 1 , COLUMN_ERROR_STR));
 }
 
@@ -399,6 +403,9 @@ QVariant SyncErrorsTableModel::data(const QModelIndex & index, int role) const
         case COLUMN_REPO_NAME:
             w = repo_name_column_width_;
             break;
+        case COLUMN_SERVER:
+            w = server_column_width_;
+            break;
         case COLUMN_PATH:
             w = path_column_width_;
             break;
@@ -422,6 +429,8 @@ QVariant SyncErrorsTableModel::data(const QModelIndex & index, int role) const
 
     if (column == COLUMN_REPO_NAME) {
         return error.repo_name;
+    } else if (column == COLUMN_SERVER) {
+        return error.server;
     } else if (column == COLUMN_PATH) {
         return QDir::toNativeSeparators(error.path);
     } else if (column == COLUMN_ERROR_STR) {
@@ -453,6 +462,8 @@ QVariant SyncErrorsTableModel::headerData(int section,
 
     if (section == COLUMN_REPO_NAME) {
         return tr("Library");
+    } else if (section == COLUMN_SERVER) {
+        return tr("Server");
     } else if (section == COLUMN_PATH) {
         return tr("Path");
     } else if (section == COLUMN_ERROR_STR) {
