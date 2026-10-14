@@ -380,7 +380,7 @@
     </message>
     <message>
         <source>A sync root folder with this name already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Un dossier racine de synchronisation avec ce nom existe déjà.</translation>
     </message>
 </context>
 <context>
@@ -1415,11 +1415,11 @@
     </message>
     <message>
         <source>A sync root folder with this name already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Un dossier racine de synchronisation avec ce nom existe déjà.</translation>
     </message>
     <message>
         <source>Unable to fetch account information: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossible d&apos;obtenir les informations du compte &amp; #160;: %1</translation>
     </message>
 </context>
 <context>
@@ -1478,16 +1478,20 @@
         <source>Time</source>
         <translation>Heure</translation>
     </message>
+    <message>
+        <source>Server</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SyncErrorsTableView</name>
     <message>
         <source>delete</source>
-        <translation type="unfinished"/>
+        <translation>supprimer</translation>
     </message>
     <message>
         <source>Delete file sync error failed</source>
-        <translation type="unfinished"/>
+        <translation>Erreur de synchronisation de suppression de fichier échouée</translation>
     </message>
 </context>
 <context>
@@ -1518,7 +1522,7 @@
     </message>
     <message>
         <source>A sync root folder with this name already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Un dossier racine de synchronisation avec ce nom existe déjà.</translation>
     </message>
 </context>
 <context>

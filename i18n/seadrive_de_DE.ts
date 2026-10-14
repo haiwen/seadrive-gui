@@ -381,7 +381,7 @@
     </message>
     <message>
         <source>A sync root folder with this name already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Ein Synchronisierungs-Stammordner mit diesem Namen existiert bereits.</translation>
     </message>
 </context>
 <context>
@@ -1416,11 +1416,11 @@
     </message>
     <message>
         <source>A sync root folder with this name already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Ein Synchronisierungs-Stammordner mit diesem Namen existiert bereits.</translation>
     </message>
     <message>
         <source>Unable to fetch account information: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kontoinformationen können nicht abgerufen werden: %1</translation>
     </message>
 </context>
 <context>
@@ -1479,6 +1479,10 @@
         <source>Time</source>
         <translation>Zeit</translation>
     </message>
+    <message>
+        <source>Server</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SyncErrorsTableView</name>
@@ -1519,7 +1523,7 @@
     </message>
     <message>
         <source>A sync root folder with this name already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Ein Synchronisierungs-Stammordner mit diesem Namen existiert bereits.</translation>
     </message>
 </context>
 <context>
