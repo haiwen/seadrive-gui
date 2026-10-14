@@ -381,7 +381,7 @@
     </message>
     <message>
         <source>A sync root folder with this name already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Корневая папка синхронизации с таким именем уже существует.</translation>
     </message>
 </context>
 <context>
@@ -1417,11 +1417,11 @@
     </message>
     <message>
         <source>A sync root folder with this name already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Корневая папка синхронизации с таким именем уже существует.</translation>
     </message>
     <message>
         <source>Unable to fetch account information: %1</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось получить информацию об аккаунте: %1</translation>
     </message>
 </context>
 <context>
@@ -1480,6 +1480,10 @@
         <source>Time</source>
         <translation>Время</translation>
     </message>
+    <message>
+        <source>Server</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SyncErrorsTableView</name>
@@ -1520,7 +1524,7 @@
     </message>
     <message>
         <source>A sync root folder with this name already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Корневая папка синхронизации с таким именем уже существует.</translation>
     </message>
 </context>
 <context>

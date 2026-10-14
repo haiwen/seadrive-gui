@@ -1479,6 +1479,10 @@
         <source>Time</source>
         <translation>시간</translation>
     </message>
+    <message>
+        <source>Server</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SyncErrorsTableView</name>
