@@ -32,7 +32,7 @@
 
 #include "tray-icon.h"
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
 #include "traynotificationmanager.h"
 // QT's platform apis
 // http://qt-project.org/doc/qt-4.8/exportedfunctions.html
@@ -99,7 +99,7 @@ SeafileTrayIcon::SeafileTrayIcon(QObject *parent)
     hide();
 
     createGlobalMenuBar();
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     tnm = new TrayNotificationManager(this);
 #endif
 }
@@ -197,7 +197,7 @@ void SeafileTrayIcon::prepareContextMenu()
     auto accounts = gui->accountManager()->allAccounts();
 
     search_action_->setVisible(false);
-#if defined(Q_OS_MAC) || defined(Q_OS_WIN32)
+#if defined(Q_OS_MACOS) || defined(Q_OS_WIN32)
     for (int i = 0; i < accounts.size(); i++) {
         if (accounts.at(i).isPro()) {
             search_action_->setVisible(true);
@@ -284,7 +284,7 @@ void SeafileTrayIcon::createGlobalMenuBar()
 {
     // support it only on mac os x currently
     // TODO: destroy the objects when seafile closes
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     // create qmenu used in menubar and docker menu
     global_menu_ = new QMenu(tr("File"));
     global_menu_->addAction(open_log_directory_action_);
@@ -300,7 +300,7 @@ void SeafileTrayIcon::createGlobalMenuBar()
     global_menu_->setAsDockMenu(); // available after qt5.2.0
     // create QMenuBar that has no parent, so we can share the global menubar
 
-#endif // Q_OS_MAC
+#endif // Q_OS_MACOS
 }
 
 void SeafileTrayIcon::rotate(bool start)
@@ -400,7 +400,7 @@ QIcon SeafileTrayIcon::getIcon(const QString& name)
     }
 
     QIcon icon(name);
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     // The icon style has been changed to monochrome on macOS.
     icon.setIsMask(true);
 #endif
@@ -446,7 +446,7 @@ QIcon SeafileTrayIcon::stateToIcon(TrayState state)
     }
     QString full_icon_name = QString(":/images/win/%1.ico").arg(icon_name);
     return getIcon(full_icon_name);
-#elif defined(Q_OS_MAC)
+#elif defined(Q_OS_MACOS)
     QString icon_name;
 
     switch (state) {
@@ -522,13 +522,13 @@ void SeafileTrayIcon::openHelp()
 {
     QString url;
     if (QLocale::system().name() == "zh_CN") {
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
         url = "https://cloud.seafile.com/published/seafile-user-manual/seadrive_client/SeaDrive%20for%20MacOS.md";
 #else
         url = "https://cloud.seafile.com/published/seafile-user-manual/seadrive_client/Seadrive%203.0%20for%20Windows10.md";
 #endif
     } else {
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
         url = "https://help.seafile.com/drive_client/drive_client_for_macos/";
 #else
         url = "https://help.seafile.com/drive_client/drive_client_for_win10/";
@@ -570,7 +570,7 @@ void SeafileTrayIcon::clearDialog()
 
 void SeafileTrayIcon::showLoginDialog()
 {
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     auto accounts = gui->accountManager()->activeAccounts();
     if (!checkOSVersion144() && accounts.size() >= 1) {
         gui->warningBox(tr("SeaDrive %1 with multiple accounts cannot work with macOS version lower than 14.4. "
@@ -607,7 +607,7 @@ void SeafileTrayIcon::showAboutDialog()
 
 void SeafileTrayIcon::onActivated(QSystemTrayIcon::ActivationReason reason)
 {
-#if !defined(Q_OS_MAC)
+#if !defined(Q_OS_MACOS)
     switch(reason) {
     case QSystemTrayIcon::Trigger: // single click
         openUrl(QUrl::fromLocalFile(gui->seadriveRoot()));
@@ -658,7 +658,7 @@ void SeafileTrayIcon::checkTrayIconMessageQueue()
     //        QDateTime::currentDateTime().toString().toUtf8().data(),
     //        msg.message.toUtf8().data());
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     if (!utils::mac::isOSXMountainLionOrGreater()) {
         QIcon info_icon(":/images/info.png");
         TrayNotificationWidget* trayNotification = new TrayNotificationWidget(info_icon.pixmap(32, 32), msg.title, msg.message);
@@ -712,7 +712,7 @@ void SeafileTrayIcon::deleteAccount()
     Account account = qvariant_cast<Account>(action->data());
 
     SeafileRpcClient *rpc_client = gui->rpcClient(account.domainID());
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     if (!rpc_client || !rpc_client->isConnected()) {
         gui->warningBox (tr("Failed to connect to background process, please try again later"));
         return;
@@ -761,7 +761,7 @@ void SeafileTrayIcon::resyncAccount()
 
 #if defined(Q_OS_WIN32)
     QString question = tr("Are you sure to resync account from \"%1\"? Downloaded and uploading files will not be removed").arg(account.serverUrl.toString());
-#elif defined(Q_OS_MAC)
+#elif defined(Q_OS_MACOS)
     QString question = tr("Are you sure to resync account from \"%1\"? After resyncing account, you can still find downloaded files at ~/Library/CloudStorage.").arg(account.serverUrl.toString());
 #else
     QString question = tr("Are you sure to resync account from \"%1\"? Downloaded and uploading files will not be removed").arg(account.serverUrl.toString());

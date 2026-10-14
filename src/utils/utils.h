@@ -109,7 +109,7 @@ int runAsCommand(const QString &binary, const QStringList &arguments, QString *o
 
 QString trimNULL(QString& s);
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
 bool checkOSVersion144();
 void stopDaemon();
 #endif

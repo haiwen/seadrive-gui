@@ -87,7 +87,7 @@ bool UninstallHelperDialog::loadQss(const QString& path)
 
 void RemoveSeafileDataThread::run()
 {
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     QString seadrive_data_dir = seadriveInternalDir();
 #else
     QString seadrive_data_dir = seadriveDataDir();

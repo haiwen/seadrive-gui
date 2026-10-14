@@ -39,7 +39,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
 
     mLanguageComboBox->addItems(I18NHelper::getInstance()->getLanguages());
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     mCacheLabel->hide();
     mShowCacheDir->hide();
     mSelectBtn->hide();
@@ -58,7 +58,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent),
     connect(mProxyRequirePassword, SIGNAL(stateChanged(int)),
             this, SLOT(proxyRequirePasswordChanged(int)));
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     layout()->setContentsMargins(8, 9, 9, 4);
     layout()->setSpacing(5);
 
@@ -100,7 +100,7 @@ void SettingsDialog::updateSettings()
         mgr->setShellExtensionEnabled(mShellExtCheckBox->checkState() == Qt::Checked);
 #endif
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
         mgr->setHideWindowsIncompatibilityPathMsg(mHideWindowsIncompatibilityCheckBox->checkState() == Qt::Checked);
 #endif
     }
@@ -191,7 +191,7 @@ void SettingsDialog::showEvent(QShowEvent *event)
     // currently supports windows only
     state = mgr->autoStart() ? Qt::Checked : Qt::Unchecked;
     mAutoStartCheckBox->setCheckState(state);
-#if !defined(Q_OS_WIN32) && !defined(Q_OS_MAC)
+#if !defined(Q_OS_WIN32) && !defined(Q_OS_MACOS)
     mAutoStartCheckBox->hide();
 #endif
 
@@ -219,7 +219,7 @@ void SettingsDialog::showEvent(QShowEvent *event)
     value = mgr->getDeleteConfirmThreshold();
     mDeleteConfirmSpinBox->setValue(value);
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     state = mgr->getHideWindowsIncompatibilityPathMsg() ? Qt::Checked : Qt::Unchecked;
     mHideWindowsIncompatibilityCheckBox->setCheckState(state);
 #else

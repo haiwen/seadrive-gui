@@ -34,7 +34,7 @@ public:
     ~SeafileRpcClient();
     void connectDaemon();
     bool tryConnectDaemon();
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     void checkDaemon();
 #endif
 
@@ -93,7 +93,7 @@ public:
 
     bool logoutAccount(const Account& account);
     bool deleteAccount(const Account& account, bool remove_cache);
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     bool deleteDomainAccount(const QString& domain_id);
 #endif
     bool isAccountUploading(const Account& account);

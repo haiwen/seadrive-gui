@@ -27,7 +27,7 @@
 #include "rpc/rpc-client.h"
 #include "utils/utils-win.h"
 #include "i18n.h"
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
 #include "utils/utils-mac.h"
 #endif
 
@@ -95,7 +95,7 @@ DaemonManager::DaemonManager()
 }
 
 DaemonManager::~DaemonManager() {
-#if !defined(Q_OS_MAC)
+#if !defined(Q_OS_MACOS)
     stopAllDaemon();
 #endif
 }

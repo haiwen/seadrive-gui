@@ -39,7 +39,7 @@ SeafileRpcClient::SeafileRpcClient(const QString& domain_id)
       domain_id_(domain_id),
       first_(true)
 {
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     check_daemon_timer_ = new QTimer(this);
     connect(check_daemon_timer_, SIGNAL(timeout()), this, SLOT(checkDaemonAlive()));
 #endif
@@ -62,7 +62,7 @@ void SeafileRpcClient::connectDaemon()
 #if defined(Q_OS_WIN32)
         pipe_client = searpc_create_named_pipe_client(
             utils::win::getLocalPipeName(kSeadriveSockName).c_str());
-#elif defined(Q_OS_MAC)
+#elif defined(Q_OS_MACOS)
         QString data_dir = QDir(seadriveInternalDir()).filePath(domain_id_);
         pipe_client = searpc_create_named_pipe_client(
             toCStr(QDir(data_dir).filePath(kSeadriveSockName)));
@@ -88,7 +88,7 @@ void SeafileRpcClient::connectDaemon()
 
 void SeafileRpcClient::checkDaemonAlive()
 {
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     GError *error = NULL;
     if (connected_) {
         char *ret = searpc_client_call__string (seadrive_rpc_client_,
@@ -113,7 +113,7 @@ void SeafileRpcClient::checkDaemonAlive()
 #endif
 }
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
 void SeafileRpcClient::checkDaemon() {
     check_daemon_timer_->start(kCheckDaemonIntervalMsec);
 
@@ -127,7 +127,7 @@ bool SeafileRpcClient::tryConnectDaemon() {
 #if defined(Q_OS_WIN32)
     pipe_client = searpc_create_named_pipe_client(
         utils::win::getLocalPipeName(kSeadriveSockName).c_str());
-#elif defined(Q_OS_MAC)
+#elif defined(Q_OS_MACOS)
     QString data_dir = QDir(seadriveInternalDir()).filePath(domain_id_);
     pipe_client = searpc_create_named_pipe_client(
         toCStr(QDir(data_dir).filePath(kSeadriveSockName)));
@@ -145,7 +145,7 @@ bool SeafileRpcClient::tryConnectDaemon() {
     }
 
     // The rpc client will check whether the daemon is alive and reconnect by itself on macOS.
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     if (first_) {
         checkDaemon ();
         first_ = false;
@@ -613,7 +613,7 @@ bool SeafileRpcClient::addAccount(const Account& account)
     return true;
 }
 
-#elif defined(Q_OS_MAC)
+#elif defined(Q_OS_MACOS)
 bool SeafileRpcClient::addAccount(const Account& account)
 {
     if (!connected_) {
@@ -708,7 +708,7 @@ bool SeafileRpcClient::deleteAccount(const Account& account, bool remove_cache)
     return true;
 }
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
 bool SeafileRpcClient::deleteDomainAccount(const QString& domain_id)
 {
     if (!connected_) {

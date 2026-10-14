@@ -115,7 +115,7 @@ public:
     void setDataDir(const QString& current_data_dir);
 #endif
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     bool getHideWindowsIncompatibilityPathMsg();
     void setHideWindowsIncompatibilityPathMsg(bool enabled);
 #else

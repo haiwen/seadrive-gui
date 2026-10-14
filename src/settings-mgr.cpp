@@ -53,7 +53,7 @@ const char *kProxyAddr = "proxy_addr";
 const char *kProxyPort = "proxy_port";
 const char *kProxyUsername = "proxy_username";
 const char *kProxyPassword = "proxy_password";
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
 const char * kHideWindowsIncompatiblePathNotification = "hide_windows_incompatible_path_notification";
 #endif
 
@@ -177,7 +177,7 @@ void SettingsManager::setNotify(bool notify)
     if (bubbleNotifycation_ != notify) {
         bubbleNotifycation_ = notify;
     }
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     auto accounts = gui->accountManager()->activeAccounts();
     for (int i = 0; i <  accounts.size(); i++) {
         SeafileRpcClient *rpc_client = gui->rpcClient(accounts.at(i).domainID());
@@ -225,7 +225,7 @@ void SettingsManager::setMaxDownloadRatio(unsigned int ratio)
     if (maxDownloadRatio_ != ratio) {
         maxDownloadRatio_ = ratio;
     }
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     auto accounts = gui->accountManager()->activeAccounts();
     for (int i = 0; i <  accounts.size(); i++) {
         SeafileRpcClient *rpc_client = gui->rpcClient(accounts.at(i).domainID());
@@ -264,7 +264,7 @@ void SettingsManager::setMaxUploadRatio(unsigned int ratio)
         maxUploadRatio_ = ratio;
     }
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     auto accounts = gui->accountManager()->activeAccounts();
     for (int i = 0; i <  accounts.size(); i++) {
         SeafileRpcClient *rpc_client = gui->rpcClient(accounts.at(i).domainID());
@@ -303,7 +303,7 @@ void SettingsManager::setCacheCleanIntervalMinutes(int interval)
         cache_clean_limit_minutes_ = interval;
     }
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     auto accounts = gui->accountManager()->activeAccounts();
     for (int i = 0; i <  accounts.size(); i++) {
         SeafileRpcClient *rpc_client = gui->rpcClient(accounts.at(i).domainID());
@@ -342,7 +342,7 @@ void SettingsManager::setCacheSizeLimitGB(int limit)
         cache_size_limit_gb_ = limit;
     }
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     auto accounts = gui->accountManager()->activeAccounts();
     for (int i = 0; i <  accounts.size(); i++) {
         SeafileRpcClient *rpc_client = gui->rpcClient(accounts.at(i).domainID());
@@ -417,7 +417,7 @@ void SettingsManager::setSyncExtraTempFile(bool sync)
         sync_extra_temp_file_ = sync;
     }
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     auto accounts = gui->accountManager()->activeAccounts();
     for (int i = 0; i <  accounts.size(); i++) {
         SeafileRpcClient *rpc_client = gui->rpcClient(accounts.at(i).domainID());
@@ -541,7 +541,7 @@ void SettingsManager::setProxy(const SeafileProxy &proxy)
 
     writeProxySettings(proxy);
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     auto accounts = gui->accountManager()->activeAccounts();
     for (int i = 0; i <  accounts.size(); i++) {
         SeafileRpcClient *rpc_client = gui->rpcClient(accounts.at(i).domainID());
@@ -652,7 +652,7 @@ void SettingsManager::writeSettingsToDaemon()
     bool disabled = getHttpSyncCertVerifyDisabled();
     setHttpSyncCertVerifyDisabled(disabled);
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     bool enabled = getHideWindowsIncompatibilityPathMsg();
     setHideWindowsIncompatibilityPathMsg(enabled);
 #endif
@@ -666,7 +666,7 @@ void SettingsManager::writeSettingsToDaemon()
     int value = getDeleteConfirmThreshold();
     setDeleteConfirmThreshold(value);
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     auto accounts = gui->accountManager()->activeAccounts();
     for (int i = 0; i <  accounts.size(); i++) {
         writeProxySettingsToDaemon(accounts.at(i).domainID(), getProxy());
@@ -687,7 +687,7 @@ void SettingsManager::setHttpSyncCertVerifyDisabled(bool disabled)
         verify_http_sync_cert_disabled_ = disabled;
     }
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     auto accounts = gui->accountManager()->activeAccounts();
     for (int i = 0; i <  accounts.size(); i++) {
         SeafileRpcClient *rpc_client = gui->rpcClient(accounts.at(i).domainID());
@@ -728,7 +728,7 @@ void SettingsManager::setDeleteConfirmThreshold(int value)
         delete_confirm_threshold_ = value;
     }
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     auto accounts = gui->accountManager()->activeAccounts();
     for (int i = 0; i <  accounts.size(); i++) {
         SeafileRpcClient *rpc_client = gui->rpcClient(accounts.at(i).domainID());
@@ -758,7 +758,7 @@ int SettingsManager::getDeleteConfirmThreshold()
     return value;
 }
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
 bool SettingsManager::getHideWindowsIncompatibilityPathMsg()
 {
     QSettings settings;
@@ -779,7 +779,7 @@ void SettingsManager::setHideWindowsIncompatibilityPathMsg(bool enabled)
     settings.endGroup();
 
     QString set_value = enabled == true ? "true" : "false";
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     auto accounts = gui->accountManager()->activeAccounts();
     for (int i = 0; i <  accounts.size(); i++) {
         SeafileRpcClient *rpc_client = gui->rpcClient(accounts.at(i).domainID());
@@ -997,7 +997,7 @@ SystemProxyPoller::SystemProxyPoller(const QUrl &url) : url_(url)
 {
 }
 
-#ifndef Q_OS_MAC
+#ifndef Q_OS_MACOS
 bool SettingsManager::getMigrateStatus()
 {
     QSettings settings;

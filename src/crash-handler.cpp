@@ -10,7 +10,7 @@
 #include "client/windows/handler/exception_handler.h"
 #elif defined(__MINGW32__)
 #include "breakpad/client/windows/handler/exception_handler.h"
-#elif defined(Q_OS_MAC)
+#elif defined(Q_OS_MACOS)
 #include "breakpad/client/mac/handler/exception_handler.h"
 #endif
 
@@ -37,7 +37,7 @@ public:
     static bool DumpCallback(const google_breakpad::MinidumpDescriptor &md,
                              void *context,
                              bool success);
-#elif defined(Q_OS_MAC)
+#elif defined(Q_OS_MACOS)
     static bool DumpCallback(const char* _dump_dir,
                              const char* _minidump_id,
                              void *context,
@@ -61,7 +61,7 @@ bool CrashHandlerPrivate::DumpCallback(const wchar_t* _dump_dir,
 bool CrashHandlerPrivate::DumpCallback(const google_breakpad::MinidumpDescriptor &md,
                                        void *context,
                                        bool success)
-#elif defined(Q_OS_MAC)
+#elif defined(Q_OS_MACOS)
 bool CrashHandlerPrivate::DumpCallback(const char* _dump_dir,
                                        const char* _minidump_id,
                                        void *context,
@@ -119,7 +119,7 @@ bool CrashHandlerPrivate::DumpCallback(const char* _dump_dir,
             true,
             -1
             );
-#elif defined(Q_OS_MAC)
+#elif defined(Q_OS_MACOS)
         std::string pathAsStr = dumpPath.toStdString();
         handler = new google_breakpad::ExceptionHandler(
             pathAsStr,
@@ -160,4 +160,3 @@ bool CrashHandlerPrivate::DumpCallback(const char* _dump_dir,
     }
 }
 #endif // SEADRIVE_CLIENT_HAS_CRASH_REPORTER
-
