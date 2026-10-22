@@ -134,6 +134,9 @@ void LoginDialog::doLogin()
     }
 
     request_ = new LoginRequest(url_, username_, password_, computer_name_);
+    // Send the token up front when the user provided one. Some servers do
+    // not answer with "X-Seafile-OTP: required" (e.g. they return 404), so
+    // we can't rely on the server asking for it.
     if (!two_factor_auth_token_.isEmpty()) {
         request_->setHeader(kSeafileOTPHeader, two_factor_auth_token_);
     }
@@ -152,6 +155,7 @@ void LoginDialog::disableInputs()
     mServerAddr->setEnabled(false);
     mUsername->setEnabled(false);
     mPassword->setEnabled(false);
+    mTwoFactorToken->setEnabled(false);
     mSubmitBtn->setEnabled(false);
     mComputerName->setEnabled(false);
     mSSOBtn->setEnabled(false);
@@ -162,6 +166,7 @@ void LoginDialog::enableInputs()
     mServerAddr->setEnabled(true);
     mUsername->setEnabled(true);
     mPassword->setEnabled(true);
+    mTwoFactorToken->setEnabled(true);
     mSubmitBtn->setEnabled(true);
     mComputerName->setEnabled(true);
     mSSOBtn->setEnabled(true);
@@ -234,6 +239,7 @@ bool LoginDialog::validateInputs()
     username_ = mUsername->text();
     password_ = mPassword->text();
     computer_name_ = mComputerName->text();
+    two_factor_auth_token_ = mTwoFactorToken->text().trimmed();
 
     gui->settingsManager()->setComputerName(computer_name_);
 
@@ -343,13 +349,14 @@ void LoginDialog::onHttpError(int code)
     const QNetworkReply* reply = request_->reply();
     if (reply->hasRawHeader(kSeafileOTPHeader) &&
         QString(reply->rawHeader(kSeafileOTPHeader)) == "required") {
-        two_factor_auth_token_ = QInputDialog::getText(
+        QString token = QInputDialog::getText(
             this,
             tr("Two Factor Authentication"),
             tr("Enter the two factor authentication token"),
             QLineEdit::Normal,
-            "");
-        if (!two_factor_auth_token_.isEmpty()) {
+            "").trimmed();
+        if (!token.isEmpty()) {
+            mTwoFactorToken->setText(token);
             doLogin();
             return;
         }
@@ -357,6 +364,8 @@ void LoginDialog::onHttpError(int code)
         QString err_msg, reason;
         if (code == 400) {
             reason = tr("Incorrect email or password");
+        } else if (code == 404 && two_factor_auth_token_.isEmpty()) {
+            reason = tr("If two factor authentication is enabled for this account, please enter the 2FA token and try again");
         } else if (code == 429) {
             reason = tr("Logging in too frequently, please wait a minute");
         } else if (code == 500) {
