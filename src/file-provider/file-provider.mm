@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QMutex>
 #include <QWaitCondition>
+#include <QSemaphore>
 
 #import <FinderSync/FinderSync.h>
 #import <FileProvider/FileProvider.h>
@@ -176,27 +177,28 @@ bool fileProviderGetUserVisibleURL(const QString domain_id, const QString displa
     qInfo() << "[File Provider] Placeholder URL";
 
     bool success = false;
-    QMutex mutex;
-    QWaitCondition condition;
+    QSemaphore completed;
 
     NSFileProviderDomain *domain = [[NSFileProviderDomain alloc] initWithIdentifier:domain_id.toNSString() displayName:display_name.toNSString()];
     NSFileProviderManager *mgr = [NSFileProviderManager managerForDomain:domain];
 
+    if (mgr == nil)
+        return false;
+
     [mgr getUserVisibleURLForItemIdentifier:NSFileProviderRootContainerItemIdentifier completionHandler:[&](NSURL *userVisibleFile, NSError *error) {
-        if (error != nil) {
+        if (error != nil || userVisibleFile == nil) {
             qWarning() << "[File Provider] Error get user visible URL:" << error;
-            condition.wakeOne();
+            completed.release();
             return;
         }
 
         *url = QUrl::fromNSURL(userVisibleFile);
         success = true;
-        condition.wakeOne();
+        completed.release();
     }];
 
-    mutex.lock();
-    condition.wait(&mutex);
-    mutex.unlock();
+    // The callback may finish before this thread starts waiting.
+    completed.acquire();
 
     return success;
 }

@@ -48,7 +48,6 @@ bool Application::event(QEvent *e)
         // this event has native mac handler callee
         if(event && event->url().scheme() == "seafile")
         {
-            qWarning("[FileOpen] trying to open %s\n", event->url().toEncoded().data());
             if (!gui->started())
                 OpenLocalHelper::instance()->setUrl(event->url().toEncoded().data());
             else

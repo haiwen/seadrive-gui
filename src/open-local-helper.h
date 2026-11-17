@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QUrl>
 #include <QString>
+#include <QList>
 class Account;
 
 /**
@@ -16,7 +17,7 @@ class OpenLocalHelper : public QObject
 public:
     static OpenLocalHelper* instance();
 
-    void setUrl(const QString &url) { url_ = url; }
+    void setUrl(const QString &url);
 
     void handleOpenLocalFromCommandLine(const QString &url);
 
@@ -33,7 +34,12 @@ private:
 
     void messageBox(const QString& msg);
 
-    QString url_;
+    bool dispatch(const QUrl &url, bool *pending);
+#ifdef Q_OS_MACOS
+    QString readiness() const;
+    QString last_readiness_;
+#endif
+    QList<QUrl> pending_urls_;
 };
 
 
