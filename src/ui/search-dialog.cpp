@@ -6,16 +6,34 @@
 #include <QScopedPointer>
 
 #include "seadrive-gui.h"
-#include "rpc/rpc-client.h"
+#include "open-local-helper.h"
 #include "api/api-request.h"
 #include "utils/utils.h"
 #include "utils/paint-utils.h"
 #include "utils/file-utils.h"
 #include "ui/loading-view.h"
-#include "file-provider-mgr.h"
 
 namespace
 {
+void openSearchTarget(const QString& path, bool open_file, QWidget* parent)
+{
+    bool submitted;
+    QString action;
+    if (open_file) {
+        action = QStringLiteral("open");
+        submitted = openUrl(QUrl::fromLocalFile(path));
+    } else {
+        action = QStringLiteral("show");
+        submitted = showInGraphicalShell(path);
+    }
+    if (!submitted) {
+        qWarning().noquote() << QStringLiteral("[Search] The system could not %1 \"%2\".")
+            .arg(action, path);
+        gui->warningBox(QCoreApplication::translate("SearchItemsTableView",
+            "The system could not open or show the file or directory."), parent);
+    }
+}
+
 enum {
     FILE_COLUMN_NAME = 0,
     FILE_COLUMN_KIND,
@@ -528,36 +546,24 @@ void SearchItemsTableView::openDirectory(bool open_file)
 {
     FileSearchResult result =
         qvariant_cast<FileSearchResult>(open_directory_action_->data());
-    QString repo_name;
-    auto client = gui->rpcClient(search_model_->account_.domainID());
-    if (!client->getRepoUnameById(result.repo_id, &repo_name)) {
-        gui->warningBox(tr("File not found, maybe not synchorized yet"), this);
-        return;
-    }
-
-#ifdef Q_OS_MACOS
-    QString root = gui->fileProviderManager()->rootPath(search_model_->account_);
-#endif
-#ifdef Q_OS_WIN32
-    QString root = search_model_->account_.syncRoot;
-#endif
-#ifdef Q_OS_LINUX
-    QString root = gui->seadriveRoot();
-    if (gui->accountManager()->activeAccounts().size() > 1) {
-        root = ::pathJoin(root, search_model_->account_.displayName);
-    }
-#endif
-    if (root.isEmpty()) {
-        qWarning() << "failed to get root path";
-        return;
-    }
-
-    QString path = ::pathJoin(root, repo_name, result.fullpath);
-    if (open_file) {
-        openUrl(QUrl::fromLocalFile(path));
+    OpenLocalHelper::LocalPath local_path;
+    auto error = OpenLocalHelper::resolveLocalPath(
+        search_model_->account_, result.repo_id, result.fullpath, &local_path);
+    QString message;
+    if (error == OpenLocalHelper::LocalPathError::RpcUnavailable) {
+        message = tr("SeaDrive service is not ready. Please try again later.");
+    } else if (error == OpenLocalHelper::LocalPathError::RepoUnavailable) {
+        message = tr("Unable to get local information for this library. Please try again later.");
+    } else if (error == OpenLocalHelper::LocalPathError::RootUnavailable) {
+        message = tr("Unable to get the local access directory. Please check that SeaDrive is running normally and try again.");
     } else {
-        showInGraphicalShell(path);
+        openSearchTarget(local_path.target_path, open_file, this);
+        return;
     }
+
+    qWarning().noquote() << QStringLiteral("[Search] Cannot resolve library \"%1\", path \"%2\": %3")
+        .arg(result.repo_id, result.fullpath, message);
+    gui->warningBox(message, this);
 }
 
 void SearchItemsTableView::resizeEvent(QResizeEvent* event)
@@ -576,32 +582,24 @@ void SearchItemsTableView::onItemDoubleClick(const QModelIndex& index)
 //    if (result.fullpath.endsWith("/"))
 //        emit clearSearchBar();
 
-    QString repo_name;
-    auto client = gui->rpcClient(search_model_->account_.domainID());
-    if (!client->getRepoUnameById(result.repo_id, &repo_name)) {
-        gui->warningBox(tr("File not found, maybe not synchorized yet"), this);
+    OpenLocalHelper::LocalPath local_path;
+    auto error = OpenLocalHelper::resolveLocalPath(
+        search_model_->account_, result.repo_id, result.fullpath, &local_path);
+    QString message;
+    if (error == OpenLocalHelper::LocalPathError::RpcUnavailable) {
+        message = tr("SeaDrive service is not ready. Please try again later.");
+    } else if (error == OpenLocalHelper::LocalPathError::RepoUnavailable) {
+        message = tr("Unable to get local information for this library. Please try again later.");
+    } else if (error == OpenLocalHelper::LocalPathError::RootUnavailable) {
+        message = tr("Unable to get the local access directory. Please check that SeaDrive is running normally and try again.");
+    } else {
+        openSearchTarget(local_path.target_path, false, this);
         return;
     }
 
-#ifdef Q_OS_MACOS
-    QString root = gui->fileProviderManager()->rootPath(search_model_->account_);
-#endif
-#ifdef Q_OS_WIN32
-    QString root = search_model_->account_.syncRoot;
-#endif
-#ifdef Q_OS_LINUX
-    QString root = gui->seadriveRoot();
-    if (gui->accountManager()->activeAccounts().size() > 1) {
-        root = ::pathJoin(root, search_model_->account_.displayName);
-    }
-#endif
-    if (root.isEmpty()) {
-        qWarning() << "failed to get root path";
-        return;
-    }
-
-    QString path = ::pathJoin(root, repo_name, result.fullpath);
-    showInGraphicalShell(path);
+    qWarning().noquote() << QStringLiteral("[Search] Cannot resolve library \"%1\", path \"%2\": %3")
+        .arg(result.repo_id, result.fullpath, message);
+    gui->warningBox(message, this);
 }
 
 void SearchItemsTableView::setModel(QAbstractItemModel* model)
