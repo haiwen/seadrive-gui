@@ -50,6 +50,18 @@ void getTransferringListFromJSON(
     }
 }
 
+void getPendingFilesFromJSON(
+    const json_t *json,
+    int *total)
+{
+    QString json_object_name = "pending_files";
+
+    json_t* n_pending= json_object_get(
+        json, json_object_name.toUtf8().data());
+    if (n_pending)
+        *total = json_integer_value (n_pending);
+}
+
 void getTransferredListFromJSON(
     const json_t *json, TransferType type,
     QList<TransferredInfo> *list)
@@ -92,6 +104,8 @@ void TransferProgress::fromJSON(
         upload, UPLOAD, &transfer_progress.uploading_files);
     getTransferringListFromJSON(
         download, DOWNLOAD, &transfer_progress.downloading_files);
+    getPendingFilesFromJSON(
+        upload, &transfer_progress.n_pending_files);
     getTransferredListFromJSON(
         upload, UPLOAD, &transfer_progress.uploaded_files);
     getTransferredListFromJSON(
