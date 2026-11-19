@@ -73,7 +73,6 @@ private:
                                        QString* error);
 
     void clearPendingRequest();
-    void logRequest(quint64 id, const QString& message, bool warning = false);
 
     QString pending_repo_id_;
     QString pending_path_;
@@ -83,6 +82,9 @@ private:
     QString last_wait_reason_;
     bool processing_started_ = false;
     bool processing_ = false;
+#ifdef Q_OS_MACOS
+    bool reenumerate_requested_ = false;
+#endif
 };
 
 

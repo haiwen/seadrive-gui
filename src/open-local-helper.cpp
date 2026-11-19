@@ -199,6 +199,8 @@ OpenLocalHelper::OpenLocalStatus OpenLocalHelper::findLocalAccount(
             return username_order < 0;
         }
     });
+
+    // Prefer an already available match over waking other account domains.
     for (const Account& candidate : accounts) {
         auto client = gui->rpcClient(candidate.domainID());
         if (!candidate.added || !client || !client->isConnected()) {
@@ -207,13 +209,26 @@ OpenLocalHelper::OpenLocalStatus OpenLocalHelper::findLocalAccount(
         QString repo_name;
         if (client->getRepoUnameById(repo_id, &repo_name) && !repo_name.isEmpty()) {
             *account = candidate;
-            break;
+            return OpenLocalStatus::Success;
         }
     }
-    if (!account->isValid()) {
-        *error = tr("Waiting for the library to become available in a connected account.");
-        return OpenLocalStatus::NotReady;
+
+    // No match is available. Request enumeration once per link for disconnected
+    // domains, then let the existing RPC reconnection and request retry proceed.
+    if (!reenumerate_requested_) {
+        for (const Account& candidate : accounts) {
+            auto client = gui->rpcClient(candidate.domainID());
+            if (client && client->isConnected()) {
+                continue;
+            }
+            reenumerate_requested_ = true;
+            qInfo().noquote() << QStringLiteral("[OpenLocal] Request #%1: Requesting working-set enumeration for domain \"%2\" because its RPC connection is unavailable.")
+                .arg(request_id_).arg(candidate.domainID());
+            gui->fileProviderManager()->reenumerate(candidate);
+        }
     }
+    *error = tr("Waiting for the library to become available in a connected account.");
+    return OpenLocalStatus::NotReady;
 #else
     SeafileRpcClient *rpc_client = gui->rpcClient(EMPTY_DOMAIN_ID);
     if (!rpc_client || !rpc_client->isConnected()) {
@@ -232,12 +247,9 @@ OpenLocalHelper::OpenLocalStatus OpenLocalHelper::findLocalAccount(
     if (!account->isValid()) {
         *error = tr("The local account for this library is unavailable.");
         return OpenLocalStatus::Failed;
-    } else if (!account->added) {
-        *error = tr("Waiting for the account to be added to the service.");
-        return OpenLocalStatus::NotReady;
     }
-#endif
     return OpenLocalStatus::Success;
+#endif
 }
 
 OpenLocalHelper::OpenLocalStatus OpenLocalHelper::validateLocalPath(
@@ -348,7 +360,7 @@ OpenLocalHelper::OpenLocalHelper()
     connect(&retry_timer_, &QTimer::timeout,
             this, &OpenLocalHelper::checkPendingOpenLocalRequest);
 
-    QDesktopServices::setUrlHandler(kSeafileProtocolScheme, this, SLOT(openLocalFile(QUrl)));
+    QDesktopServices::setUrlHandler(kSeafileProtocolScheme, this, "openLocalFile");
 }
 
 OpenLocalHelper::~OpenLocalHelper()
@@ -365,16 +377,6 @@ OpenLocalHelper::instance()
     }
 
     return singleton_;
-}
-
-void OpenLocalHelper::logRequest(quint64 id, const QString& message, bool warning)
-{
-    const QString line = QStringLiteral("[OpenLocal] Request #%1: %2").arg(id).arg(message);
-    if (warning) {
-        qWarning().noquote() << line;
-    } else {
-        qInfo().noquote() << line;
-    }
 }
 
 bool OpenLocalHelper::openLocalFile(const QUrl& url)
@@ -394,13 +396,16 @@ bool OpenLocalHelper::openLocalFile(const QUrl& url)
     }
 
     if (!pending_repo_id_.isEmpty()) {
-        logRequest(request_id_, QStringLiteral("Replaced by request #%1 after %2 ms.")
-                       .arg(request_id_ + 1).arg(pending_elapsed_.elapsed()));
+        qInfo().noquote() << QStringLiteral("[OpenLocal] Request #%1: Replaced by request #%2 after %3 ms.")
+            .arg(request_id_).arg(request_id_ + 1).arg(pending_elapsed_.elapsed());
     }
     pending_repo_id_ = repo_id;
     pending_path_ = path;
     ++request_id_;
     processing_started_ = false;
+#ifdef Q_OS_MACOS
+    reenumerate_requested_ = false;
+#endif
     last_wait_reason_.clear();
     pending_elapsed_.start();
     retry_timer_.start();
@@ -454,8 +459,8 @@ void OpenLocalHelper::checkPendingOpenLocalRequest()
     // Do not consume this one-time message during a cold-start callback.
     if (!processing_started_ && gui->accountsInitialized()) {
         processing_started_ = true;
-        logRequest(request_id_, QStringLiteral("Processing library \"%1\", path \"%2\".")
-                       .arg(pending_repo_id_, pending_path_));
+        qInfo().noquote() << QStringLiteral("[OpenLocal] Request #%1: Processing library \"%2\", path \"%3\".")
+            .arg(request_id_).arg(pending_repo_id_, pending_path_);
     }
     if (pending_elapsed_.elapsed() >= kPendingTimeoutMs) {
         QString reason;
@@ -464,10 +469,8 @@ void OpenLocalHelper::checkPendingOpenLocalRequest()
         } else {
             reason = QStringLiteral("Last waiting state: %1").arg(last_wait_reason_);
         }
-        logRequest(request_id_,
-                   QStringLiteral("Timed out after %1 ms. %2")
-                       .arg(pending_elapsed_.elapsed())
-                       .arg(reason), true);
+        qWarning().noquote() << QStringLiteral("[OpenLocal] Request #%1: Timed out after %2 ms. %3")
+            .arg(request_id_).arg(pending_elapsed_.elapsed()).arg(reason);
         clearPendingRequest();
         gui->messageBox(tr("The service or local library is not ready. Please try again later."));
         return;
@@ -485,7 +488,8 @@ void OpenLocalHelper::checkPendingOpenLocalRequest()
     if (status == OpenLocalStatus::NotReady) {
         if (error != last_wait_reason_) {
             last_wait_reason_ = error;
-            logRequest(request_id, error);
+            qInfo().noquote() << QStringLiteral("[OpenLocal] Request #%1: %2")
+                .arg(request_id).arg(error);
         }
         return;
     }
@@ -498,10 +502,13 @@ void OpenLocalHelper::checkPendingOpenLocalRequest()
     } else {
         message = QStringLiteral("Failed to open the target: %1").arg(error);
     }
-    logRequest(request_id, QStringLiteral("%1 Elapsed time: %2 ms.")
-                   .arg(message)
-                   .arg(pending_elapsed_.elapsed()),
-               status == OpenLocalStatus::Failed);
+    const QString line = QStringLiteral("[OpenLocal] Request #%1: %2 Elapsed time: %3 ms.")
+        .arg(request_id).arg(message).arg(pending_elapsed_.elapsed());
+    if (status == OpenLocalStatus::Failed) {
+        qWarning().noquote() << line;
+    } else {
+        qInfo().noquote() << line;
+    }
     clearPendingRequest();
     if (status == OpenLocalStatus::Failed) {
         gui->messageBox(error);
@@ -513,6 +520,9 @@ void OpenLocalHelper::clearPendingRequest()
     pending_repo_id_.clear();
     pending_path_.clear();
     processing_started_ = false;
+#ifdef Q_OS_MACOS
+    reenumerate_requested_ = false;
+#endif
     last_wait_reason_.clear();
     pending_elapsed_.invalidate();
     retry_timer_.stop();
