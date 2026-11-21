@@ -111,8 +111,8 @@ public:
 #endif
 
 #if defined(Q_OS_LINUX)
-    bool getDataDir(QString *current_data_dir);
-    void setDataDir(const QString& current_data_dir);
+    static bool getDataDir(QString *current_data_dir);
+    static void setDataDir(const QString& current_data_dir);
 #endif
 
 #if defined(Q_OS_MACOS)

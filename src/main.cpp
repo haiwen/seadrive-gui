@@ -41,9 +41,7 @@ const char *seadriveName = "seadrive.exe";
 
 bool dev_mode = false;
 bool stop_app = false;
-#if defined(Q_OS_WIN32) || defined(Q_OS_MACOS)
 bool open_local_file = false;
-#endif
 
 void initGlib()
 {
@@ -144,9 +142,7 @@ void handleCommandLineOption(const QApplication &app)
         exit(0);
     }
     if (parser.isSet("f")) {
-#if defined(Q_OS_WIN32) || defined(Q_OS_MACOS)
         open_local_file = true;
-#endif
         OpenLocalHelper::instance()->handleOpenLocalFromCommandLine(parser.value("f"));
     }
 }
@@ -194,7 +190,6 @@ int main(int argc, char *argv[])
     // start applet
     handleCommandLineOption(app);
 
-#if defined(Q_OS_WIN32) || defined(Q_OS_MACOS)
     // A starting instance may not accept RPC yet. Do not clean up its daemon.
     // Keep the existing stop-command path separate from normal startup.
     if (!stop_app && count_process(appName) > 1) {
@@ -207,7 +202,6 @@ int main(int argc, char *argv[])
         QMessageBox::warning(nullptr, getBrand(), message, QMessageBox::Ok);
         return -1;
     }
-#endif
 
     SeadriveGui mGui(dev_mode);
     gui = &mGui;
@@ -228,14 +222,6 @@ int main(int argc, char *argv[])
         exit(0);
     }
 
-#if !defined(Q_OS_WIN32) && !defined(Q_OS_MACOS)
-    if (count_process(appName) > 1) {
-        QMessageBox::warning(NULL, getBrand(),
-                             QObject::tr("%1 Client is already running").arg(getBrand()),
-                             QMessageBox::Ok);
-        return -1;
-    }
-#endif
     // init qtawesome component
     awesome = new QtAwesome(qApp);
     awesome->initFontAwesome();
