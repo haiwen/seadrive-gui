@@ -130,7 +130,7 @@ void SettingsDialog::updateSettings()
 #elif defined(Q_OS_LINUX)
         if (mShowCacheDir->text() != current_data_dir_) {
             cache_dir_changed = true;
-            mgr->setDataDir(mShowCacheDir->text());
+            SettingsManager::setDataDir(mShowCacheDir->text());
         }
 #endif
     }
@@ -233,7 +233,7 @@ void SettingsDialog::showEvent(QShowEvent *event)
     mShowCacheDir->setText(current_seadrive_root_);
     mShowCacheDir->setReadOnly(true);
 #elif defined(Q_OS_LINUX)
-    if (!mgr->getDataDir(&current_data_dir_))
+    if (!SettingsManager::getDataDir(&current_data_dir_))
         current_data_dir_ = QDir(seadriveDataDir()).absolutePath();
     mShowCacheDir->setText(current_data_dir_);
     mShowCacheDir->setReadOnly(true);
