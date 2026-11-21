@@ -719,6 +719,8 @@ void SeadriveGui::connectDaemon()
         }
     }
 
+    OpenLocalHelper::instance()->checkPendingOpenLocalRequest();
+
     if (success && !tray_icon_started_) {
         tray_icon_started_ = true;
         tray_icon_->start();
