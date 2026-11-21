@@ -27,6 +27,8 @@ public:
 
     void connect(const Account account);
 
+    void reenumerate(const Account& account);
+
     QString rootPath(const Account account);
 
 private:

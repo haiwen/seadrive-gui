@@ -48,11 +48,8 @@ bool Application::event(QEvent *e)
         // this event has native mac handler callee
         if(event && event->url().scheme() == "seafile")
         {
-            qWarning("[FileOpen] trying to open %s\n", event->url().toEncoded().data());
-            if (!gui->started())
-                OpenLocalHelper::instance()->setUrl(event->url().toEncoded().data());
-            else
-                OpenLocalHelper::instance()->openLocalFile(event->url());
+            qInfo("[OpenLocal] Received a macOS file-open event: %s", event->url().toEncoded().constData());
+            OpenLocalHelper::instance()->openLocalFile(event->url());
             return true;
         }
     }

@@ -111,6 +111,10 @@ void FileProviderManager::connect(const Account account) {
     fileProviderConnect (id, name);
 }
 
+void FileProviderManager::reenumerate(const Account& account) {
+    fileProviderReenumerate(account.domainID(), displayName(account));
+}
+
 QString FileProviderManager::rootPath(const Account account) {
     QString id = account.domainID();
     QString name = displayName(account);
