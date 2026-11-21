@@ -198,12 +198,21 @@ bool showInGraphicalShell(const QString& path) {
     scriptArgs << QLatin1String("-e")
                << QString::fromLatin1("tell application \"Finder\" to reveal POSIX file \"%1\"")
                                      .arg(path);
-    QProcess::execute(QLatin1String("/usr/bin/osascript"), scriptArgs);
+    const int reveal_result = QProcess::execute(QLatin1String("/usr/bin/osascript"), scriptArgs);
+    if (reveal_result != 0) {
+        qWarning().noquote() << QStringLiteral("[FileManager] Finder could not reveal \"%1\"; osascript returned %2.")
+            .arg(path).arg(reveal_result);
+        return false;
+    }
     scriptArgs.clear();
     scriptArgs << QLatin1String("-e")
                << QLatin1String("tell application \"Finder\" to activate");
-    QProcess::execute("/usr/bin/osascript", scriptArgs);
-    return true;
+    const int activate_result = QProcess::execute("/usr/bin/osascript", scriptArgs);
+    if (activate_result != 0) {
+        qWarning().noquote() << QStringLiteral("[FileManager] Finder revealed \"%1\" but could not be activated; osascript returned %2.")
+            .arg(path).arg(activate_result);
+    }
+    return activate_result == 0;
 #else
     return openUrl(QUrl::fromLocalFile(QFileInfo(path).absolutePath()));
 #endif

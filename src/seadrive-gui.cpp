@@ -32,7 +32,6 @@
 #include "remote-wipe-service.h"
 #include "account-info-service.h"
 #include "file-provider-mgr.h"
-#include "open-local-helper.h"
 #if defined(Q_OS_WIN32)
 #include "thumbnail-service.h"
 #endif
@@ -222,6 +221,7 @@ SeadriveGui *gui;
 SeadriveGui::SeadriveGui(bool dev_mode)
     : dev_mode_(dev_mode),
       started_(false),
+      accounts_initialized_(false),
       in_exit_(false),
       first_use_(false),
       tray_icon_started_(false)
@@ -387,7 +387,10 @@ void SeadriveGui::start()
 
     qWarning("seadrive gui started");
 
-    account_mgr_->start();
+    if (account_mgr_->start() < 0) {
+        return;
+    }
+    accounts_initialized_ = true;
 
 #ifdef Q_OS_MACOS
     auto accounts = account_mgr_->activeAccounts();
@@ -589,7 +592,6 @@ void SeadriveGui::onDaemonStarted()
 
 #if defined(Q_OS_WIN32)
     ThumbnailService::instance()->start();
-    OpenLocalHelper::instance()->checkPendingOpenLocalRequest();
 #endif
 #endif
 }

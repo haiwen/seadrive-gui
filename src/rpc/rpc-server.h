@@ -19,6 +19,7 @@ public:
 
     class Client {
     public:
+        virtual ~Client() = default;
         virtual bool connect() = 0;
         virtual bool sendExitCommand() = 0;
         virtual bool sendOpenSeafileUrlCommand(const QUrl& url) = 0;
