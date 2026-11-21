@@ -141,6 +141,7 @@ bool ThumbnailService::getThumbnailFromCache(const QString &repo_id,
 
 void ThumbnailService::start()
 {
+    // We need to return thumbnail file path to the extension, so use absolute path.
     thumbnails_dir_ = QDir(seadriveInternalDir()).absoluteFilePath("thumbs");
     checkdir_with_mkdir(toCStr(thumbnails_dir_));
     schedule_timer_->start(kScheduleIntervalSecs * 1000);
