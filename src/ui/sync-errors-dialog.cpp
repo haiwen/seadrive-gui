@@ -293,6 +293,8 @@ QString SyncErrorsTableView::findLocalPathFromError(const SyncError& error)
     }
 
     return local_path;
+#else
+    return "";
 #endif
 }
 
