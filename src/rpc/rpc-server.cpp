@@ -185,11 +185,9 @@ SeaDriveRpcServer::~SeaDriveRpcServer()
 void SeaDriveRpcServer::start()
 {
     register_rpc_service();
-    qWarning("starting applet rpc service");
+    qInfo("[rpc server] Starting the applet RPC service.");
     if (searpc_named_pipe_server_start(priv_->pipe_server) < 0) {
-        qWarning("[OpenLocal] Failed to start the RPC service. Links cannot be forwarded to this process.");
-    } else {
-        qInfo("[OpenLocal] The RPC service is ready to receive forwarded links.");
+        qWarning("[rpc server] Failed to start the applet RPC service.");
     }
 }
 

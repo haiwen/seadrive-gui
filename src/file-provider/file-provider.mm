@@ -1,8 +1,7 @@
 #include "file-provider.h"
 
 #include <QDebug>
-#include <QMutex>
-#include <QWaitCondition>
+#include <QSemaphore>
 
 #import <FinderSync/FinderSync.h>
 #import <FileProvider/FileProvider.h>
@@ -15,32 +14,26 @@ bool fileProviderListDomains(QMap<QString, Domain> *domains) {
     qInfo() << "[File Provider] Listing domains";
 
     bool success = false;
-    QMutex mutex;
-    QWaitCondition condition;
+    QSemaphore completed;
 
     [NSFileProviderManager getDomainsWithCompletionHandler:[&](NSArray<NSFileProviderDomain *> *nsdomains, NSError *error) {
         if (error != nil) {
             qWarning() << "[File Provider] Error listing domains:" << error;
-            condition.wakeOne();
-            return;
+        } else {
+            domains->clear();
+            for (NSFileProviderDomain *nsdomain in nsdomains) {
+                Domain domain;
+                domain.identifier = QString::fromNSString(nsdomain.identifier);
+                domain.userEnabled = nsdomain.userEnabled;
+
+                domains->insert(domain.identifier, domain);
+            }
+            success = true;
         }
-
-        domains->clear();
-        for (NSFileProviderDomain *nsdomain in nsdomains) {
-            Domain domain;
-            domain.identifier = QString::fromNSString(nsdomain.identifier);
-            domain.userEnabled = nsdomain.userEnabled;
-
-            domains->insert(domain.identifier, domain);
-        }
-
-        success = true;
-        condition.wakeOne();
+        completed.release();
     }];
 
-    mutex.lock();
-    condition.wait(&mutex);
-    mutex.unlock();
+    completed.acquire();
 
     return success;
 }
@@ -49,8 +42,7 @@ bool fileProviderAddDomain(const QString domain_id, const QString display_name, 
     qInfo() << "[File Provider] Adding domain" << domain_id << display_name;
 
     bool success = false;
-    QMutex mutex;
-    QWaitCondition condition;
+    QSemaphore completed;
 
     NSFileProviderDomain *domain = [[NSFileProviderDomain alloc] initWithIdentifier:domain_id.toNSString() displayName:display_name.toNSString()];
     domain.hidden = hidden;
@@ -62,17 +54,13 @@ bool fileProviderAddDomain(const QString domain_id, const QString display_name, 
     [NSFileProviderManager addDomain:domain completionHandler:[&](NSError *error) {
         if (error != nil) {
             qWarning() << "[File Provider] Error adding domain:" << error;
-            condition.wakeOne();
-            return;
+        } else {
+            success = true;
         }
-
-        success = true;
-        condition.wakeOne();
+        completed.release();
     }];
 
-    mutex.lock();
-    condition.wait(&mutex);
-    mutex.unlock();
+    completed.acquire();
 
     return success;
 }
@@ -81,24 +69,19 @@ bool fileProviderRemoveDomain(const QString domain_id, const QString display_nam
     qInfo() << "[File Provider] Removing domain" << domain_id << display_name;
 
     bool success = false;
-    QMutex mutex;
-    QWaitCondition condition;
+    QSemaphore completed;
 
     NSFileProviderDomain *domain = [[NSFileProviderDomain alloc] initWithIdentifier:domain_id.toNSString() displayName:display_name.toNSString()];
     [NSFileProviderManager removeDomain:domain completionHandler:[&](NSError *error) {
         if (error != nil) {
             qWarning() << "[File Provider] Error removing domain:" << error;
-            condition.wakeOne();
-            return;
+        } else {
+            success = true;
         }
-
-        success = true;
-        condition.wakeOne();
+        completed.release();
     }];
 
-    mutex.lock();
-    condition.wait(&mutex);
-    mutex.unlock();
+    completed.acquire();
 
     return success;
 }
@@ -106,69 +89,70 @@ bool fileProviderRemoveDomain(const QString domain_id, const QString display_nam
 void fileProviderReenumerate(const QString domain_id, const QString display_name) {
     qInfo() << "[File Provider] Reenumerating items";
 
-    QMutex mutex;
-    QWaitCondition condition;
+    QSemaphore completed;
 
     NSFileProviderDomain *domain = [[NSFileProviderDomain alloc] initWithIdentifier:domain_id.toNSString() displayName:display_name.toNSString()];
     NSFileProviderManager *mgr = [NSFileProviderManager managerForDomain:domain];
 
+    if (mgr == nil) {
+        qWarning() << "[File Provider] Cannot reenumerate items because the manager is unavailable for domain" << domain_id;
+        return;
+    }
+
     [mgr signalEnumeratorForContainerItemIdentifier: NSFileProviderWorkingSetContainerItemIdentifier completionHandler:[&](NSError *error) {
         if (error != nil) {
             qWarning() << "[File Provider] Error reenumerating items:" << error;
-            condition.wakeOne();
-            return;
         }
-
-        condition.wakeOne();
+        completed.release();
     }];
 
-    mutex.lock();
-    condition.wait(&mutex);
-    mutex.unlock();
+    completed.acquire();
 }
 
 void fileProviderDisconnect(const QString domain_id, const QString display_name) {
     qInfo() << "[File Provider] Disconnect domain";
 
-    QMutex mutex;
-    QWaitCondition condition;
+    QSemaphore completed;
 
     NSFileProviderDomain *domain = [[NSFileProviderDomain alloc] initWithIdentifier:domain_id.toNSString() displayName:display_name.toNSString()];
     NSFileProviderManager *mgr = [NSFileProviderManager managerForDomain:domain];
 
+    if (mgr == nil) {
+        qWarning() << "[File Provider] Cannot disconnect because the manager is unavailable for domain" << domain_id;
+        return;
+    }
+
     [mgr disconnectWithReason:@"Upgrading SeaDrive" options:NSFileProviderManagerDisconnectionOptionsTemporary completionHandler:[&](NSError *error) {
         if (error != nil) {
-            qWarning() << "[File Provider] Error disconnect domainn:" << error;
+            qWarning() << "[File Provider] Error disconnecting domain:" << error;
         }
-        condition.wakeOne();
-        return;
+        completed.release();
     }];
 
-    mutex.lock();
-    condition.wait(&mutex);
-    mutex.unlock();
+    completed.acquire();
 }
 
 void fileProviderConnect (const QString domain_id, const QString display_name) {
     qInfo() << "[File Provider] Connect domain";
 
-    QMutex mutex;
-    QWaitCondition condition;
+    QSemaphore completed;
 
     NSFileProviderDomain *domain = [[NSFileProviderDomain alloc] initWithIdentifier:domain_id.toNSString() displayName:display_name.toNSString()];
     NSFileProviderManager *mgr = [NSFileProviderManager managerForDomain:domain];
+
+    if (mgr == nil) {
+        qWarning() << "[File Provider] Cannot reconnect because the manager is unavailable for domain" << domain_id;
+        return;
+    }
 
     [mgr reconnectWithCompletionHandler:[&](NSError *error) {
         if (error != nil) {
             qWarning() << "[File Provider] Error connect domain:" << error;
         }
-        condition.wakeOne();
-        return;
+        completed.release();
     }];
 
-    mutex.lock();
-    condition.wait(&mutex);
-    mutex.unlock();
+    completed.acquire();
 }
 
 bool fileProviderGetUserVisibleURL(const QString domain_id, const QString display_name, QUrl *url)
@@ -176,27 +160,30 @@ bool fileProviderGetUserVisibleURL(const QString domain_id, const QString displa
     qInfo() << "[File Provider] Placeholder URL";
 
     bool success = false;
-    QMutex mutex;
-    QWaitCondition condition;
+    QSemaphore completed;
 
     NSFileProviderDomain *domain = [[NSFileProviderDomain alloc] initWithIdentifier:domain_id.toNSString() displayName:display_name.toNSString()];
     NSFileProviderManager *mgr = [NSFileProviderManager managerForDomain:domain];
 
+    if (mgr == nil) {
+        qWarning() << "[File Provider] Cannot get the user-visible root URL because the manager is unavailable for domain" << domain_id;
+        return false;
+    }
+
     [mgr getUserVisibleURLForItemIdentifier:NSFileProviderRootContainerItemIdentifier completionHandler:[&](NSURL *userVisibleFile, NSError *error) {
         if (error != nil) {
-            qWarning() << "[File Provider] Error get user visible URL:" << error;
-            condition.wakeOne();
-            return;
+            qWarning() << "[File Provider] Failed to get the user-visible root URL for domain" << domain_id << ":" << error;
+        } else if (userVisibleFile == nil) {
+            qWarning() << "[File Provider] No user-visible root URL was returned for domain" << domain_id;
+        } else {
+            *url = QUrl::fromNSURL(userVisibleFile);
+            success = true;
         }
-
-        *url = QUrl::fromNSURL(userVisibleFile);
-        success = true;
-        condition.wakeOne();
+        completed.release();
     }];
 
-    mutex.lock();
-    condition.wait(&mutex);
-    mutex.unlock();
+    // Preserve completion even if the callback runs before we start waiting.
+    completed.acquire();
 
     return success;
 }
