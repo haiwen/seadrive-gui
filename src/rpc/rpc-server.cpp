@@ -68,7 +68,9 @@ handle_exit_command (GError **error)
 int
 handle_open_seafile_url_command (const char *url, GError **error)
 {
-    qWarning("[rpc server] opening seafile url %s", url);
+    // Record transport receipt before queuing: a blocked GUI thread must not
+    // look like a failure to forward the command.
+    qInfo("[OpenLocal] Received a forwarded link: %s", url);
     RpcServerProxy::instance()->proxyOpenSeafileUrlCommand(QUrl::fromEncoded(url));
     return 0;
  }
@@ -102,6 +104,12 @@ handle_open_seafile_url_command (const char *url, GError **error)
 
 class AppletRpcClient : public SeaDriveRpcServer::Client {
 public:
+    ~AppletRpcClient() override {
+        if (seadrive_rpc_client_) {
+            searpc_free_client_with_pipe_transport(seadrive_rpc_client_);
+        }
+    }
+
     bool connect() {
         seadrive_rpc_client_ = createSearpcClientWithPipeTransport(kSeaDriveRpcService);
         if (!seadrive_rpc_client_) {
@@ -143,7 +151,7 @@ public:
     }
 
 private:
-    SearpcClient *seadrive_rpc_client_;
+    SearpcClient *seadrive_rpc_client_ = nullptr;
 
  };
 
@@ -165,7 +173,8 @@ SeaDriveRpcServer::SeaDriveRpcServer()
     connect(proxy,
             SIGNAL(openSeafileUrlCommand(const QUrl &)),
             this,
-            SLOT(handleOpenSeafileUrlCommand(const QUrl &)));
+            SLOT(handleOpenSeafileUrlCommand(const QUrl &)),
+            Qt::QueuedConnection);
 }
 
 SeaDriveRpcServer::~SeaDriveRpcServer()
@@ -176,11 +185,9 @@ SeaDriveRpcServer::~SeaDriveRpcServer()
 void SeaDriveRpcServer::start()
 {
     register_rpc_service();
-    qWarning("starting applet rpc service");
+    qInfo("[rpc server] Starting the applet RPC service.");
     if (searpc_named_pipe_server_start(priv_->pipe_server) < 0) {
-        qWarning("failed to start rpc service");
-    } else {
-        qWarning("applet rpc service started");
+        qWarning("[rpc server] Failed to start the applet RPC service.");
     }
 }
 

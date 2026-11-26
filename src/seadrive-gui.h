@@ -100,6 +100,7 @@ public:
     // CertsManager *certsManager() { return certs_mgr_; }
 
     bool started() { return started_; }
+    bool accountsInitialized() const { return accounts_initialized_; }
     bool inExit() { return in_exit_; }
     qint64 startupTime() const { return startup_time_; }
 
@@ -155,6 +156,7 @@ private:
     // CertsManager *certs_mgr_;
 
     bool started_;
+    bool accounts_initialized_;
 
     bool in_exit_;
 
