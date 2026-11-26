@@ -37,7 +37,7 @@ QString getAppletRpcPipePath()
 
 #elif defined(Q_OS_LINUX)
     QString current_data_dir;
-    if (!gui->settingsManager()->getDataDir(&current_data_dir)) {
+    if (!SettingsManager::getDataDir(&current_data_dir)) {
         current_data_dir = seadriveDataDir();
     }
     if (QDir::isAbsolutePath(current_data_dir)) {

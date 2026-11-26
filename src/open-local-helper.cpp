@@ -416,7 +416,6 @@ bool OpenLocalHelper::openLocalFile(const QUrl& url)
 
 void OpenLocalHelper::handleOpenLocalFromCommandLine(const QString &url)
 {
-#if defined(Q_OS_WIN32) || defined(Q_OS_MACOS)
     bool connected;
     bool sent = false;
     {
@@ -436,17 +435,6 @@ void OpenLocalHelper::handleOpenLocalFromCommandLine(const QString &url)
         exit(EXIT_FAILURE);
     }
     openLocalFile(QUrl(url));
-#else
-    SeaDriveRpcServer::Client *client = SeaDriveRpcServer::getClient();
-    if (client->connect()) {
-        // An instance of seadrive applet is running
-        client->sendOpenSeafileUrlCommand(QUrl(url));
-        exit(0);
-    } else {
-        // Queue the parsed request while the applet starts.
-        openLocalFile(QUrl(url));
-    }
-#endif
 }
 
 void OpenLocalHelper::checkPendingOpenLocalRequest()
