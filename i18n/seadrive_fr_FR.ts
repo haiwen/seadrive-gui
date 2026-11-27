@@ -479,6 +479,81 @@
     </message>
 </context>
 <context>
+    <name>OpenLocalHelper</name>
+    <message>
+        <source>Waiting for account initialization.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please log in to SeaDrive before opening this link.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Waiting for the library to become available in a connected account.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Waiting for the RPC connection.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Waiting for the local account of this library.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The local account for this library is unavailable.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>This link points outside the local library and cannot be opened.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Waiting for the local account directory: &quot;%1&quot;.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Waiting for the local library directory: &quot;%1&quot;.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to verify that the path belongs to the local library.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The file does not exist or is not yet available locally.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The file or directory is not accessible.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Waiting for the local library name.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Waiting for the local account root.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The system could not open the file or directory.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid local file link.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to send this link to the running client. Please try again later.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The service or local library is not ready. Please try again later.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>File %1 is locked by other programs</source>
@@ -819,6 +894,10 @@
     <message>
         <source>Failed to change library name since some files are opened in it</source>
         <translation>Impossible de modifier le nom de la bibliothèque car certains fichiers y sont ouverts.</translation>
+    </message>
+    <message>
+        <source>%1 Client is already running or starting. Please try opening the link again later.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1177,8 +1256,20 @@
         <translation>&amp;Afficher dans le dossier</translation>
     </message>
     <message>
-        <source>File not found, maybe not synchorized yet</source>
-        <translation>Fichier non trouvé, peut-être qu&apos;il n&apos;est pas encore synchronisé.</translation>
+        <source>The system could not open or show the file or directory.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SeaDrive service is not ready. Please try again later.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to get local information for this library. Please try again later.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to get the local access directory. Please check that SeaDrive is running normally and try again.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1480,7 +1571,7 @@
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"/>
+        <translation>Serveur</translation>
     </message>
 </context>
 <context>

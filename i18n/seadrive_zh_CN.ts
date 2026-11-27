@@ -480,6 +480,81 @@
     </message>
 </context>
 <context>
+    <name>OpenLocalHelper</name>
+    <message>
+        <source>Waiting for account initialization.</source>
+        <translation>正在等待账号初始化。</translation>
+    </message>
+    <message>
+        <source>Please log in to SeaDrive before opening this link.</source>
+        <translation>请先登录 SeaDrive，再打开此链接。</translation>
+    </message>
+    <message>
+        <source>Waiting for the library to become available in a connected account.</source>
+        <translation>正在等待资料库在已连接的账号中可用。</translation>
+    </message>
+    <message>
+        <source>Waiting for the RPC connection.</source>
+        <translation>正在等待 RPC 连接。</translation>
+    </message>
+    <message>
+        <source>Waiting for the local account of this library.</source>
+        <translation>正在等待此资料库的本地账号。</translation>
+    </message>
+    <message>
+        <source>The local account for this library is unavailable.</source>
+        <translation>此资料库的本地账号不可用。</translation>
+    </message>
+    <message>
+        <source>This link points outside the local library and cannot be opened.</source>
+        <translation>此链接指向本地资料库之外，无法打开。</translation>
+    </message>
+    <message>
+        <source>Waiting for the local account directory: &quot;%1&quot;.</source>
+        <translation>正在等待本地账号目录：&quot;%1&quot;。</translation>
+    </message>
+    <message>
+        <source>Waiting for the local library directory: &quot;%1&quot;.</source>
+        <translation>正在等待本地资料库目录：&quot;%1&quot;。</translation>
+    </message>
+    <message>
+        <source>Unable to verify that the path belongs to the local library.</source>
+        <translation>无法确认此路径属于本地资料库。</translation>
+    </message>
+    <message>
+        <source>The file does not exist or is not yet available locally.</source>
+        <translation>文件不存在，或尚未在本地可用。</translation>
+    </message>
+    <message>
+        <source>The file or directory is not accessible.</source>
+        <translation>无法访问此文件或目录。</translation>
+    </message>
+    <message>
+        <source>Waiting for the local library name.</source>
+        <translation>正在等待本地资料库名称。</translation>
+    </message>
+    <message>
+        <source>Waiting for the local account root.</source>
+        <translation>正在等待本地账号根目录。</translation>
+    </message>
+    <message>
+        <source>The system could not open the file or directory.</source>
+        <translation>系统无法打开此文件或目录。</translation>
+    </message>
+    <message>
+        <source>Invalid local file link.</source>
+        <translation>本地文件链接无效。</translation>
+    </message>
+    <message>
+        <source>Unable to send this link to the running client. Please try again later.</source>
+        <translation>无法将此链接发送给正在运行的客户端。请稍后重试。</translation>
+    </message>
+    <message>
+        <source>The service or local library is not ready. Please try again later.</source>
+        <translation>服务或本地资料库尚未就绪。请稍后重试。</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>File %1 is locked by other programs</source>
@@ -820,6 +895,10 @@
     <message>
         <source>Failed to change library name since some files are opened in it</source>
         <translation>无法修改资料库名称，部分文件正在使用中</translation>
+    </message>
+    <message>
+        <source>%1 Client is already running or starting. Please try opening the link again later.</source>
+        <translation>%1 客户端正在运行或启动中。请稍后再次尝试打开链接。</translation>
     </message>
 </context>
 <context>
@@ -1178,8 +1257,20 @@
         <translation>&amp;在文件夹里显示</translation>
     </message>
     <message>
-        <source>File not found, maybe not synchorized yet</source>
-        <translation>未找到文件，可能尚未同步</translation>
+        <source>The system could not open or show the file or directory.</source>
+        <translation>系统无法打开或显示此文件或目录。</translation>
+    </message>
+    <message>
+        <source>SeaDrive service is not ready. Please try again later.</source>
+        <translation>SeaDrive 服务尚未就绪。请稍后重试。</translation>
+    </message>
+    <message>
+        <source>Unable to get local information for this library. Please try again later.</source>
+        <translation>无法获取此资料库的本地信息。请稍后重试。</translation>
+    </message>
+    <message>
+        <source>Unable to get the local access directory. Please check that SeaDrive is running normally and try again.</source>
+        <translation>无法获取本地访问目录。请检查 SeaDrive 是否正常运行，然后重试。</translation>
     </message>
 </context>
 <context>
