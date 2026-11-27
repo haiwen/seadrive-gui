@@ -669,8 +669,8 @@ void ExtConnectionListenerThread::run()
 void ExtConnectionListenerThread::run()
 {
     QString data_dir = seadriveInternalDir();
-    QString socket_path = pathJoin(data_dir, kSeafExtPipeName);
-    const char *un_path = toCStr(socket_path);
+    QByteArray socket_path = pathJoin(data_dir, kSeafExtPipeName).toUtf8();
+    const char *un_path = socket_path.constData();
     qWarning("[ext] listening on %s", un_path);
     int pipe_fd = -1;
 
