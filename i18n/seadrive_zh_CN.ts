@@ -510,14 +510,6 @@
         <translation>此链接指向本地资料库之外，无法打开。</translation>
     </message>
     <message>
-        <source>Waiting for the local account directory: &quot;%1&quot;.</source>
-        <translation>正在等待本地账号目录：&quot;%1&quot;。</translation>
-    </message>
-    <message>
-        <source>Waiting for the local library directory: &quot;%1&quot;.</source>
-        <translation>正在等待本地资料库目录：&quot;%1&quot;。</translation>
-    </message>
-    <message>
         <source>Unable to verify that the path belongs to the local library.</source>
         <translation>无法确认此路径属于本地资料库。</translation>
     </message>
@@ -526,20 +518,8 @@
         <translation>文件不存在，或尚未在本地可用。</translation>
     </message>
     <message>
-        <source>The file or directory is not accessible.</source>
-        <translation>无法访问此文件或目录。</translation>
-    </message>
-    <message>
         <source>Waiting for the local library name.</source>
         <translation>正在等待本地资料库名称。</translation>
-    </message>
-    <message>
-        <source>Waiting for the local account root.</source>
-        <translation>正在等待本地账号根目录。</translation>
-    </message>
-    <message>
-        <source>The system could not open the file or directory.</source>
-        <translation>系统无法打开此文件或目录。</translation>
     </message>
     <message>
         <source>Invalid local file link.</source>
@@ -552,6 +532,26 @@
     <message>
         <source>The service or local library is not ready. Please try again later.</source>
         <translation>服务或本地资料库尚未就绪。请稍后重试。</translation>
+    </message>
+    <message>
+        <source>Waiting for the virtual drive root folder: &quot;%1&quot;.</source>
+        <translation>正在等待虚拟盘根文件夹：&quot;%1&quot;。</translation>
+    </message>
+    <message>
+        <source>Waiting for the local library folder: &quot;%1&quot;.</source>
+        <translation>正在等待本地资料库文件夹：&quot;%1&quot;。</translation>
+    </message>
+    <message>
+        <source>The file or folder is not accessible.</source>
+        <translation>无法访问此文件或文件夹。</translation>
+    </message>
+    <message>
+        <source>Waiting for the virtual drive root folder.</source>
+        <translation>正在等待虚拟盘根文件夹。</translation>
+    </message>
+    <message>
+        <source>The system could not open the file or folder.</source>
+        <translation>系统无法打开此文件或文件夹。</translation>
     </message>
 </context>
 <context>
@@ -1257,10 +1257,6 @@
         <translation>&amp;在文件夹里显示</translation>
     </message>
     <message>
-        <source>The system could not open or show the file or directory.</source>
-        <translation>系统无法打开或显示此文件或目录。</translation>
-    </message>
-    <message>
         <source>SeaDrive service is not ready. Please try again later.</source>
         <translation>SeaDrive 服务尚未就绪。请稍后重试。</translation>
     </message>
@@ -1269,8 +1265,12 @@
         <translation>无法获取此资料库的本地信息。请稍后重试。</translation>
     </message>
     <message>
-        <source>Unable to get the local access directory. Please check that SeaDrive is running normally and try again.</source>
-        <translation>无法获取本地访问目录。请检查 SeaDrive 是否正常运行，然后重试。</translation>
+        <source>The system could not open or show the file or folder.</source>
+        <translation>系统无法打开或显示此文件或文件夹。</translation>
+    </message>
+    <message>
+        <source>Unable to get the virtual drive root folder. Please check that SeaDrive is running normally and try again.</source>
+        <translation>无法获取虚拟盘根文件夹。请检查 SeaDrive 是否正常运行，然后重试。</translation>
     </message>
 </context>
 <context>

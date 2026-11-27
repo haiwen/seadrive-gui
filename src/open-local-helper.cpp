@@ -275,10 +275,10 @@ OpenLocalHelper::OpenLocalStatus OpenLocalHelper::validateLocalPath(
     const QFileInfo account_root(local_path.account_root);
     const QFileInfo repo_root(repo_path);
     if (!account_root.isDir()) {
-        *error = tr("Waiting for the local account directory: \"%1\".").arg(local_path.account_root);
+        *error = tr("Waiting for the virtual drive root folder: \"%1\".").arg(local_path.account_root);
         return OpenLocalStatus::NotReady;
     } else if (!repo_root.isDir()) {
-        *error = tr("Waiting for the local library directory: \"%1\".").arg(repo_path);
+        *error = tr("Waiting for the local library folder: \"%1\".").arg(repo_path);
         return OpenLocalStatus::NotReady;
     }
     const QString actual_account_root = account_root.canonicalFilePath();
@@ -308,7 +308,7 @@ OpenLocalHelper::OpenLocalStatus OpenLocalHelper::validateLocalPath(
         return OpenLocalStatus::Failed;
     }
     if (!target.isFile() && !target.isDir()) {
-        *error = tr("The file or directory is not accessible.");
+        *error = tr("The file or folder is not accessible.");
         return OpenLocalStatus::Failed;
     }
 
@@ -335,7 +335,7 @@ OpenLocalHelper::OpenLocalStatus OpenLocalHelper::openLocalFileByRepo(
         } else if (path_error == LocalPathError::RepoUnavailable) {
             *error = tr("Waiting for the local library name.");
         } else {
-            *error = tr("Waiting for the local account root.");
+            *error = tr("Waiting for the virtual drive root folder.");
         }
         return OpenLocalStatus::NotReady;
     }
@@ -346,7 +346,7 @@ OpenLocalHelper::OpenLocalStatus OpenLocalHelper::openLocalFileByRepo(
         return status;
     }
     if (!openUrl(QUrl::fromLocalFile(path_to_open))) {
-        *error = tr("The system could not open the file or directory.");
+        *error = tr("The system could not open the file or folder.");
         return OpenLocalStatus::Failed;
     }
     return OpenLocalStatus::Success;

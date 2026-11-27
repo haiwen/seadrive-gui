@@ -512,14 +512,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Waiting for the local account directory: &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Waiting for the local library directory: &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Unable to verify that the path belongs to the local library.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -528,19 +520,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The file or directory is not accessible.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Waiting for the local library name.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Waiting for the local account root.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The system could not open the file or directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -553,6 +533,26 @@
     </message>
     <message>
         <source>The service or local library is not ready. Please try again later.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Waiting for the virtual drive root folder: &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Waiting for the local library folder: &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file or folder is not accessible.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Waiting for the virtual drive root folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The system could not open the file or folder.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1258,10 +1258,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The system could not open or show the file or directory.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>SeaDrive service is not ready. Please try again later.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1270,7 +1266,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to get the local access directory. Please check that SeaDrive is running normally and try again.</source>
+        <source>The system could not open or show the file or folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to get the virtual drive root folder. Please check that SeaDrive is running normally and try again.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
