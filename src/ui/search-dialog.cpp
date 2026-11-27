@@ -30,7 +30,7 @@ void openSearchTarget(const QString& path, bool open_file, QWidget* parent)
         qWarning().noquote() << QStringLiteral("[Search] The system could not %1 \"%2\".")
             .arg(action, path);
         gui->warningBox(QCoreApplication::translate("SearchItemsTableView",
-            "The system could not open or show the file or directory."), parent);
+            "The system could not open or show the file or folder."), parent);
     }
 }
 
@@ -555,7 +555,7 @@ void SearchItemsTableView::openDirectory(bool open_file)
     } else if (error == OpenLocalHelper::LocalPathError::RepoUnavailable) {
         message = tr("Unable to get local information for this library. Please try again later.");
     } else if (error == OpenLocalHelper::LocalPathError::RootUnavailable) {
-        message = tr("Unable to get the local access directory. Please check that SeaDrive is running normally and try again.");
+        message = tr("Unable to get the virtual drive root folder. Please check that SeaDrive is running normally and try again.");
     } else {
         openSearchTarget(local_path.target_path, open_file, this);
         return;
@@ -591,7 +591,7 @@ void SearchItemsTableView::onItemDoubleClick(const QModelIndex& index)
     } else if (error == OpenLocalHelper::LocalPathError::RepoUnavailable) {
         message = tr("Unable to get local information for this library. Please try again later.");
     } else if (error == OpenLocalHelper::LocalPathError::RootUnavailable) {
-        message = tr("Unable to get the local access directory. Please check that SeaDrive is running normally and try again.");
+        message = tr("Unable to get the virtual drive root folder. Please check that SeaDrive is running normally and try again.");
     } else {
         openSearchTarget(local_path.target_path, false, this);
         return;

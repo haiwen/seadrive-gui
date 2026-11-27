@@ -381,7 +381,7 @@
     </message>
     <message>
         <source>A sync root folder with this name already exists.</source>
-        <translation type="unfinished"/>
+        <translation>이 이름으로 동기화하려는 루트 폴더가 이미 있습니다.</translation>
     </message>
 </context>
 <context>
@@ -477,6 +477,81 @@
     <message>
         <source>Confirm to delete library &quot;%1&quot; ?</source>
         <translation>&quot;%1&quot; 라이브러리를 삭제할까요?</translation>
+    </message>
+</context>
+<context>
+    <name>OpenLocalHelper</name>
+    <message>
+        <source>Waiting for account initialization.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please log in to SeaDrive before opening this link.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Waiting for the library to become available in a connected account.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Waiting for the RPC connection.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Waiting for the local account of this library.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The local account for this library is unavailable.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>This link points outside the local library and cannot be opened.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to verify that the path belongs to the local library.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The file does not exist or is not yet available locally.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Waiting for the local library name.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid local file link.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to send this link to the running client. Please try again later.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The service or local library is not ready. Please try again later.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Waiting for the virtual drive root folder: &quot;%1&quot;.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Waiting for the local library folder: &quot;%1&quot;.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The file or folder is not accessible.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Waiting for the virtual drive root folder.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The system could not open the file or folder.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -820,6 +895,10 @@
     <message>
         <source>Failed to change library name since some files are opened in it</source>
         <translation>일부 파일이 열려 있기 때문에 라이브러리 이름을 변경할 수 없습니다.</translation>
+    </message>
+    <message>
+        <source>%1 Client is already running or starting. Please try opening the link again later.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1178,8 +1257,20 @@
         <translation>폴더에 표시(&amp;S)</translation>
     </message>
     <message>
-        <source>File not found, maybe not synchorized yet</source>
-        <translation>파일이 없습니다. 동기화 하지 않았을 수도 있습니다</translation>
+        <source>SeaDrive service is not ready. Please try again later.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to get local information for this library. Please try again later.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The system could not open or show the file or folder.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to get the virtual drive root folder. Please check that SeaDrive is running normally and try again.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1416,11 +1507,11 @@
     </message>
     <message>
         <source>A sync root folder with this name already exists.</source>
-        <translation type="unfinished"/>
+        <translation>이 이름으로 동기화하려는 루트 폴더가 이미 있습니다.</translation>
     </message>
     <message>
         <source>Unable to fetch account information: %1</source>
-        <translation type="unfinished"/>
+        <translation>계정 정보를 가져올 수 없습니다: %1</translation>
     </message>
 </context>
 <context>
@@ -1481,14 +1572,14 @@
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"/>
+        <translation>서버</translation>
     </message>
 </context>
 <context>
     <name>SyncErrorsTableView</name>
     <message>
         <source>delete</source>
-        <translation type="unfinished"/>
+        <translation>삭제</translation>
     </message>
     <message>
         <source>Delete file sync error failed</source>
@@ -1523,7 +1614,7 @@
     </message>
     <message>
         <source>A sync root folder with this name already exists.</source>
-        <translation type="unfinished"/>
+        <translation>이 이름으로 동기화하려는 루트 폴더가 이미 있습니다.</translation>
     </message>
 </context>
 <context>
