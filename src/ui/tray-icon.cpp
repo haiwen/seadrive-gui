@@ -342,7 +342,7 @@ void SeafileTrayIcon::showMessage(const QString &title,
     QString brand = getBrand();
     QString icon_name = "seadrive";
     hints["resident"] = QVariant(true);
-    hints["desktop-entry"] = QVariant(brand);
+    hints["desktop-entry"] = QVariant("seadrive");
     QList<QVariant> args = QList<QVariant>() << brand << quint32(0) << icon_name
                                              << title << message << QStringList () << hints << qint32(-1);
     QDBusMessage method = QDBusMessage::createMethodCall("org.freedesktop.Notifications","/org/freedesktop/Notifications", "org.freedesktop.Notifications", "Notify");
